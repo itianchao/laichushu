@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="edit">#666666</color>
+    <!--浅灰-->
+    <color name="frenchGrey">#F2F2F2</color>
+    <!-- hint -->
+    <color name="hint">#CCCCCC</color>
+    <!-- 自定义通知栏颜色  -->
+    <color name="title_bg_color">#3fabda</color>
+    <color name="title_bg_color1">#1F1D1E</color>
+    <!-- 全局色调 -->
+    <color name="global">#93C2B7</color>
+
+</resources>

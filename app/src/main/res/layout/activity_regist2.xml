@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/page_title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/msg"
+        android:textColor="@color/edit"
+        android:textSize="@dimen/edit2" />
+
+    <LinearLayout
+        style="@style/edit_ll_style"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/name"
+            android:textColor="@color/edit" />
+
+        <EditText
+            android:id="@+id/et_name"
+            style="@style/edit_item_style"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
+            android:hint="@string/fillin"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/edit_ll_style"
+        android:gravity="center_vertical"
+        android:singleLine="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/sex"
+            android:textColor="@color/edit" />
+
+        <TextView
+            android:id="@+id/tv_sex"
+            style="@style/edit_item_style"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
+            android:hint="@string/select" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/edit_ll_style"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/phone"
+            android:textColor="@color/edit" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            style="@style/edit_item_style"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
+            android:hint="@string/fillin"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/edit_ll_style"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/pwd"
+            android:textColor="@color/edit" />
+
+        <EditText
+            android:id="@+id/et_pwd"
+            style="@style/edit_item_style"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
+            android:hint="@string/fillin"
+            android:password="true"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_finish"
+        style="@style/button_login_style"
+        android:text="@string/finish" />
+</LinearLayout>

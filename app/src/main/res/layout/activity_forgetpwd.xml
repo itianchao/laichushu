@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/page_title" />
+    <LinearLayout
+        style="@style/edit_ll_style">
+        <EditText
+            android:id="@+id/et_phone"
+            android:hint="@string/phoneHint"
+            style="@style/edit_item_style" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/edit_ll_style">
+        <EditText
+            android:id="@+id/et_code"
+            android:hint="@string/codeHint"
+            style="@style/edit_item_style" />
+        <TextView
+            android:id="@+id/tv_getcode"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:text="@string/getcode"
+            android:textColor="@color/global"
+            android:textSize="@dimen/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/edit_ll_style">
+        <EditText
+            android:id="@+id/et_new_pwd"
+            android:hint="@string/newpwdHint"
+            style="@style/edit_item_style" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/edit_ll_style">
+        <EditText
+            android:id="@+id/et_re_pwd"
+            android:hint="@string/repwdHint"
+            style="@style/edit_item_style" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/bt_finish"
+        style="@style/button_login_style"
+        android:text="@string/finish" />
+</LinearLayout>

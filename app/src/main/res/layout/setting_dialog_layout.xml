@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="110dp"
+    android:layout_height="110dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:padding="12dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <com.sofacity.laichushu.ui.widget.ProgressView
+        xmlns:gyp="http://schemas.android.com/apk/res-auto"
+        gyp:indicator="BallClipRotatePulse"
+        gyp:indicator_color="@color/global"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        tools:text="加载中..."
+        android:textColor="@color/global"
+        android:textSize="15sp" />
+
+</LinearLayout>

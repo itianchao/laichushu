@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">来出书</string>
+    <string name="guide3_button">立刻体验</string>
+    <string name="usernameHint">请输入手机号码</string>
+    <string name="passworldHint">请输入密码</string>
+    <string name="writecodeHint">请输入验证码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="forget">忘记密码</string>
+    <string name="trilateral">使用第三方帐号登录</string>
+    <string name="errMsg1">网络连接失败，请检查网络设置</string>
+    <string name="errMsg2">账户已在其他设备登录</string>
+    <string name="errMsg3">账号不存在</string>
+    <string name="errMsg4">密码不正确</string>
+    <string name="phoneHint">手机号码</string>
+    <string name="codeHint">验证码</string>
+    <string name="newpwdHint">新密码</string>
+    <string name="repwdHint">确认密码</string>
+    <string name="getcode">获取验证码</string>
+    <string name="finish">完成</string>
+    <string name="regist1">勾选代表您已经同意来出书的</string>
+    <string name="regist2">用户协议</string>
+    <string name="next">下一步</string>
+    <string name="select">请选择</string>
+    <string name="fillin">请填写</string>
+    <string name="name">昵称</string>
+    <string name="sex">性别</string>
+    <string name="phone">手机号</string>
+    <string name="pwd">密码</string>
+    <string name="msg">请让我们对您有个初步的了解，以便给您更好的服务</string>
+
+</resources>
