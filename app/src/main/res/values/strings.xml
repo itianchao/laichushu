@@ -28,5 +28,6 @@
     <string name="phone">手机号</string>
     <string name="pwd">密码</string>
     <string name="msg">请让我们对您有个初步的了解，以便给您更好的服务</string>
+    <string name="repwd">确认密码</string>
 
 </resources>

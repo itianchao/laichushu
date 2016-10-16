@@ -67,12 +67,13 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
 
     @Override
     public void getDataSuccess(RegistModel model) {
+        //校验验证码
 
     }
 
     @Override
     public void getDataSuccess(RegistCodeModel model) {
-        updateBtnText();
+        //获取验证码
     }
 
     @Override
@@ -108,14 +109,21 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
                     ToastUtil.showToast("验证码不能为空!");
                     return;
                 }
+                if (!codeCk.isChecked()){
+                    ToastUtil.showToast("请同意来出书的用户协议!");
+                    return;
+                }
+                //校验验证码是否成功
                 Bundle bundle = new Bundle();
                 bundle.putString("phone", phone);
-                UIUtil.openActivity(mActivity,Regist2Activity.class,bundle);
+                UIUtil.openActivity(mActivity, Regist2Activity.class, bundle);
                 break;
+            //用户协议
             case R.id.tv_agreement:
-                mvpPresenter.loadCode(phone);
+
                 break;
             case R.id.tv_code:
+                updateBtnText();
                 break;
         }
     }
@@ -127,6 +135,8 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
             ToastUtil.showToast("手机号不能为空!");
             return;
         }
+        //请求服务器获取验证码
+        mvpPresenter.loadCode(phonenum);
         codeTv.setClickable(false);
         TIME = 60;
         new Thread(new Runnable() {

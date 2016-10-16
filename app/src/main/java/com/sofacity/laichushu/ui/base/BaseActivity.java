@@ -171,20 +171,24 @@ public class BaseActivity extends FragmentActivity {
     public LoadDialog progressDialog;
 
     public LoadDialog showProgressDialog() {
-        progressDialog = new LoadDialog(mActivity);
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setTitle("加载中");
-        progressDialog.show();
+        if (progressDialog == null) {
+            progressDialog = new LoadDialog(mActivity);
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setTitle("加载中");
+            progressDialog.show();
+        }
         return progressDialog;
     }
 
     public LoadDialog showProgressDialog(CharSequence message) {
-        progressDialog = new LoadDialog(mActivity);
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setTitle(message);
-        progressDialog.show();
+        if (progressDialog == null) {
+            progressDialog = new LoadDialog(mActivity);
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setTitle(message);
+            progressDialog.show();
+        }
         return progressDialog;
     }
 
