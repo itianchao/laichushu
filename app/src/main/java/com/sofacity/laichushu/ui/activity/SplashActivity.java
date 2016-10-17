@@ -58,7 +58,8 @@ public class SplashActivity extends BaseActivity {
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
-                UIUtil.openActivity(mActivity, loadActivity);
+//                UIUtil.openActivity(mActivity, loadActivity);
+                UIUtil.openActivity(mActivity, MainActivity.class);
                 finish();
             }
         }, 2000);
