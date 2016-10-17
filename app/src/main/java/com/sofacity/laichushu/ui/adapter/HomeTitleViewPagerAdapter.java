@@ -6,18 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 /**
- * 引导页viewpager 的控制器
- * Created by wangtong on 2016/10/11.
+ * 首页标题viewpager 的控制器
+ * Created by wangtong on 2016/10/17.
  */
-public class GuideAdapter extends PagerAdapter {
+public class HomeTitleViewPagerAdapter extends PagerAdapter {
 
-    private ArrayList<Integer> imageList;
+    private ArrayList<String> imageList;
     private Activity mActivity;
 
-    public GuideAdapter(ArrayList imageList,Activity mActivity) {
+    public HomeTitleViewPagerAdapter(ArrayList imageList, Activity mActivity) {
         this.imageList = imageList;
         this.mActivity = mActivity;
     }
@@ -40,7 +42,7 @@ public class GuideAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView v = new ImageView(mActivity);
-        v.setBackgroundResource(imageList.get(position));
+        Glide.with(mActivity).load(imageList.get(position)).centerCrop().into(v);
         container.addView(v);
         return v;
     }

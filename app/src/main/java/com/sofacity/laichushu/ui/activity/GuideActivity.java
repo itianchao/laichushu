@@ -22,20 +22,20 @@ import java.util.ArrayList;
  */
 public class GuideActivity extends BaseActivity implements ViewPager.OnPageChangeListener
 {
-    private Button btn_start;
-    private ImageView iv_red_point;
+    private Button startBtn;
+    private ImageView pointIv;
     private GuideAdapter adapter;
     private ArrayList<Integer> imageList;
     private LinearLayout ll_container;
     private int range;
-    private ViewPager vp_guide;
+    private ViewPager guideVp;
 
     @Override
     protected void initView() {
         setContentView(R.layout.activity_guide);
-        vp_guide = (ViewPager) findViewById(R.id.vp_guide);
-        btn_start = (Button) findViewById(R.id.btn_start);
-        iv_red_point = (ImageView) findViewById(R.id.iv_red_point);
+        guideVp = (ViewPager) findViewById(R.id.vp_guide);
+        startBtn = (Button) findViewById(R.id.btn_start);
+        pointIv = (ImageView) findViewById(R.id.iv_red_point);
         ll_container = (LinearLayout) findViewById(R.id.ll_container);
     }
 
@@ -47,8 +47,8 @@ public class GuideActivity extends BaseActivity implements ViewPager.OnPageChang
         imageList.add(R.drawable.img_guide2);
         imageList.add(R.drawable.img_guide3);
         adapter = new GuideAdapter(imageList,mActivity);
-        vp_guide.setAdapter(adapter);
-        btn_start.setOnClickListener(new View.OnClickListener() {
+        guideVp.setAdapter(adapter);
+        startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //设置不能再次进入引导页
@@ -57,11 +57,11 @@ public class GuideActivity extends BaseActivity implements ViewPager.OnPageChang
                 finish();
             }
         });
-        vp_guide.setOnPageChangeListener(this);
-        iv_red_point.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        guideVp.setOnPageChangeListener(this);
+        pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                iv_red_point.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 range = ll_container.getChildAt(1).getLeft() - ll_container.getChildAt(0).getLeft();
             }
         });
@@ -85,15 +85,15 @@ public class GuideActivity extends BaseActivity implements ViewPager.OnPageChang
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.leftMargin = move;
-        iv_red_point.setLayoutParams(params);
+        pointIv.setLayoutParams(params);
     }
 
     @Override
     public void onPageSelected(int position) {
         if(position == imageList.size()-1){
-            btn_start.setVisibility(View.VISIBLE);
+            startBtn.setVisibility(View.VISIBLE);
         }else {
-            btn_start.setVisibility(View.INVISIBLE);
+            startBtn.setVisibility(View.INVISIBLE);
         }
     }
 
