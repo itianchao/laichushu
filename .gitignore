@@ -6,3 +6,12 @@
 .DS_Store
 /build
 /captures
+/.idea/
+app/libs/
+app/src/main/java/com/sofacity/laichushu/bean/Jsonbean/
+app/src/main/java/com/sofacity/laichushu/broadcastreceiver/
+app/src/main/java/com/sofacity/laichushu/event/
+app/src/main/java/com/sofacity/laichushu/mvp/main/
+app/src/main/java/com/sofacity/laichushu/service/
+app/src/main/java/com/sofacity/laichushu/ui/fragment/
+app/src/main/java/com/sofacity/laichushu/ui/viewholder/

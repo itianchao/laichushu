@@ -3,20 +3,22 @@ package com.sofacity.laichushu.ui.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.mvp.regist2.RegistModel2;
 import com.sofacity.laichushu.mvp.regist2.RegistPresenter2;
 import com.sofacity.laichushu.mvp.regist2.RegistView2;
 import com.sofacity.laichushu.ui.base.MvpActivity;
-import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
+
+import java.net.InterfaceAddress;
+
+import rx.Observable;
+import rx.Observer;
 
 /**
  * 注册页面
@@ -52,6 +54,8 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
         sexTv.setOnClickListener(this);
         finishTv.setOnClickListener(this);
         finishBtn.setOnClickListener(this);
+        String phone = mActivity.getIntent().getStringExtra("phone");
+        phoneTv.setText(phone);
     }
 
     @Override
@@ -61,7 +65,8 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
 
     @Override
     public void getDataSuccess(RegistModel2 model) {
-
+        //登陆成功跳转页面
+        UIUtil.openActivity(mActivity, LoginActivity.class);
     }
 
     @Override
@@ -71,12 +76,12 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
 
     @Override
     public void showLoading() {
-
+        showProgressDialog();
     }
 
     @Override
     public void hideLoading() {
-
+        dismissProgressDialog();
     }
 
     @Override
@@ -91,45 +96,12 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
                 String phonenum = phoneTv.getText().toString().trim();
                 String pwd = pwdEt.getText().toString().trim();
                 String repwd = repwdEt.getText().toString().trim();
-                if ("".equals(name)) {
-                    ToastUtil.showToast("请输入昵称");
-                    return;
+                if (mvpPresenter.check(name, sex, pwd, repwd)) {
+                    //请求网络
                 }
-                if ("".equals(sex)) {
-                    ToastUtil.showToast("请选择性别");
-                    return;
-                }
-                if ("".equals(pwd)) {
-                    ToastUtil.showToast("请输入密码");
-                    return;
-                }
-                if ("".equals(repwd)) {
-                    ToastUtil.showToast("请输入密码");
-                    return;
-                }
-                if (!pwd.equals(repwd)) {
-                    ToastUtil.showToast("两次输入的密码不一致");
-                    return;
-                }
-                //请求网络
-                UIUtil.openActivity(mActivity, LoginActivity.class);
                 break;
             case R.id.tv_sex:
-                final String[] sexArray = {"男", "女"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(Regist2Activity.this);
-                final int[] posion = new int[1];
-                builder.setTitle("请选择性别")
-                        .setSingleChoiceItems(sexArray,0, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                posion[0] = which;
-                            }
-                        }).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                                sexTv.setText(sexArray[posion[0]]);
-                    }
-                }).show();
+                mvpPresenter.getSex(sexTv);
                 break;
         }
     }

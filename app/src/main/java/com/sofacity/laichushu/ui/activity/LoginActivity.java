@@ -65,7 +65,9 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
                 //登录
                 String username = usernameEt.getText().toString().trim();
                 String password = passwordEt.getText().toString().trim();
-                mvpPresenter.login(username, password);
+                if (mvpPresenter.login(username, password)) {
+                    //请求网络登录
+                }
                 break;
             case R.id.tv_register:
                 //注册

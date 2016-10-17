@@ -29,5 +29,7 @@
     <string name="pwd">密码</string>
     <string name="msg">请让我们对您有个初步的了解，以便给您更好的服务</string>
     <string name="repwd">确认密码</string>
-
+    <!-- 服务条款 -->
+    <string name="service_terms">
+        用户在本APP的任何行为必须遵循：\n(1) 传输资料时必须符合中国有关法规。\n(2) 使用信息服务不作非法用途和不道德行为。\n(3) 不干扰或混乱网络服务。\n(4) 遵守所有使用服务的网络协议、规定、程序和惯例。用户的行为准则是以因特网法规，政策、程序和惯例为根据的。</string>
 </resources>

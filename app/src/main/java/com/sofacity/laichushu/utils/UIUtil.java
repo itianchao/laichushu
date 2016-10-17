@@ -174,7 +174,6 @@ public class UIUtil
 	public static void openActivity(Activity activity, Class<?> pClass)
 	{
 		openActivity(activity, pClass, null);
-		activity.overridePendingTransition(R.anim.open_exit,R.anim.open_enter);
 	}
 
 	/**

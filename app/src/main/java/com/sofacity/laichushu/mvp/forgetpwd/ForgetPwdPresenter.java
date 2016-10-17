@@ -1,7 +1,14 @@
 package com.sofacity.laichushu.mvp.forgetpwd;
 
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.widget.TextView;
+
 import com.sofacity.laichushu.ui.activity.ForgetPwdActivity;
 import com.sofacity.laichushu.ui.base.BasePresenter;
+import com.sofacity.laichushu.utils.ToastUtil;
+import com.sofacity.laichushu.utils.Validator;
 
 /**
  * 重置密码 presenter
@@ -14,5 +21,102 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
     public ForgetPwdPresenter(ForgetPwdView view) {
         attachView(view);
         mActivity = (ForgetPwdActivity) view;
+    }
+
+    public void loadCode(String phone) {
+//        mvpView.showLoading();
+//        Login_Paramet paramet = new Login_Paramet();
+//        Logger.e("登录请求参数");
+//        Logger.json(new Gson().toJson(paramet));
+//        addSubscription(apiStores.loginLoadData(paramet),
+//                new ApiCallback<LoginModel>() {
+//                    @Override
+//                    public void onSuccess(LoginModel model) {
+//                        mvpView.getDataSuccess(model);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int code, String msg) {
+//                        mvpView.getDataFail("code+" + code + "/msg:" + msg);
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        mvpView.hideLoading();
+//                    }
+//
+//                });
+    }
+
+    //更新验证码显示
+
+    private int TIME = 60; // 倒计时60s
+    private static final int CODE_ING = 1;                // 已发送，倒计时
+    private static final int CODE_REPEAT = 2;                // 重新发送
+    private String content;
+    private TextView codeTv;
+
+    public void showCode(final TextView codeTv, String phonenum) {
+        this.codeTv = codeTv;
+        if (TextUtils.isEmpty(phonenum)) {
+            ToastUtil.showToast("手机号不能为空!");
+            return;
+        }
+        if (!Validator.isMobile(phonenum)) {
+            ToastUtil.showToast("请输入正确的手机号!");
+            return;
+        }
+        loadCode(phonenum);
+        codeTv.setClickable(false);
+        TIME = 60;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 60; i > 0; i--) {
+                    mHandler.sendEmptyMessage(CODE_ING);
+                    if (i <= 0) break;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                mHandler.sendEmptyMessage(CODE_REPEAT);
+            }
+        }).start();
+    }
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case CODE_ING:// 已发送,倒计时
+                    content = "重新发送(" + --TIME + "s)";
+                    break;
+                case CODE_REPEAT:// 重新发送
+                    content = "获取验证码";
+                    codeTv.setClickable(true);
+                    break;
+            }
+            codeTv.setText(getContent());
+        }
+    };
+
+    public String getContent() {
+        return content;
+    }
+
+    public boolean check(String code) {
+        boolean isCheck;
+        if (code.length() < 4) {
+            ToastUtil.showToast("验证码位数不正确，请重新输入！");
+            return isCheck = false;
+        } else if (code.length() < 8) {
+            ToastUtil.showToast("验证码位数不正确，请重新输入！");
+            return isCheck = false;
+        } else if (!Validator.isUsername(code)) {
+            ToastUtil.showToast("您输入的验证码含有汉字或特殊字符，请重新输入！");
+            return isCheck = false;
+        }
+        return isCheck = true;
     }
 }

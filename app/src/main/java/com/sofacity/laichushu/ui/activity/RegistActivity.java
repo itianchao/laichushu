@@ -1,9 +1,6 @@
 package com.sofacity.laichushu.ui.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,7 +14,7 @@ import com.sofacity.laichushu.mvp.regist.RegistModel;
 import com.sofacity.laichushu.mvp.regist.RegistPresenter;
 import com.sofacity.laichushu.mvp.regist.RegistView;
 import com.sofacity.laichushu.ui.base.MvpActivity;
-import com.sofacity.laichushu.utils.ToastUtil;
+import com.sofacity.laichushu.ui.widget.ServiceTermsDialog;
 import com.sofacity.laichushu.utils.UIUtil;
 
 /**
@@ -35,9 +32,6 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
     private TextView agreementTv;
     private Button nextBtn;
 
-    private int	TIME = 60; // 倒计时60s
-    private static final int	CODE_ING		= 1;				// 已发送，倒计时
-    private static final int	CODE_REPEAT		= 2;				// 重新发送
     @Override
     protected void initView() {
         setContentView(R.layout.activity_regist);
@@ -67,7 +61,7 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
 
     @Override
     public void getDataSuccess(RegistModel model) {
-        //校验验证码
+        //校验验证码是否正确
 
     }
 
@@ -100,73 +94,22 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
                 finish();
                 break;
             case R.id.bt_next:
-
-                if(TextUtils.isEmpty(phone)){
-                    ToastUtil.showToast("帐号不能为空!");
-                    return;
+                //前台校验是否成功
+                if (mvpPresenter.check(phone,code,!codeCk.isChecked())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("phone", phone);
+                    UIUtil.openActivity(mActivity, Regist2Activity.class, bundle);
                 }
-                if(TextUtils.isEmpty(code)){
-                    ToastUtil.showToast("验证码不能为空!");
-                    return;
-                }
-                if (!codeCk.isChecked()){
-                    ToastUtil.showToast("请同意来出书的用户协议!");
-                    return;
-                }
-                //校验验证码是否成功
-                Bundle bundle = new Bundle();
-                bundle.putString("phone", phone);
-                UIUtil.openActivity(mActivity, Regist2Activity.class, bundle);
                 break;
             //用户协议
             case R.id.tv_agreement:
-
+                new ServiceTermsDialog(mActivity).show();
                 break;
             case R.id.tv_code:
-                updateBtnText();
+                String phonenum = phoneEt.getText().toString().trim();
+                mvpPresenter.showCode(codeTv, phonenum);
                 break;
         }
     }
 
-    // 更新获取验证码按钮
-    private void updateBtnText(){
-        String phonenum = phoneEt.getText().toString().trim();
-        if(TextUtils.isEmpty(phonenum)){
-            ToastUtil.showToast("手机号不能为空!");
-            return;
-        }
-        //请求服务器获取验证码
-        mvpPresenter.loadCode(phonenum);
-        codeTv.setClickable(false);
-        TIME = 60;
-        new Thread(new Runnable() {
-            @Override
-            public void run(){
-                for (int i = 60; i > 0; i--){
-                    mHandler.sendEmptyMessage(CODE_ING);
-                    if (i <= 0) break;
-                    try{
-                        Thread.sleep(1000);
-                    }catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
-                }
-                mHandler.sendEmptyMessage(CODE_REPEAT);
-            }
-        }).start();
-    }
-
-    private Handler mHandler = new Handler(){
-        public void handleMessage(Message msg){
-            switch (msg.what){
-                case CODE_ING:// 已发送,倒计时
-                    codeTv.setText("重新发送(" + --TIME + "s)");
-                    break;
-                case CODE_REPEAT:// 重新发送
-                    codeTv.setText("获取验证码");
-                    codeTv.setClickable(true);
-                    break;
-            }
-        }
-    };
 }
