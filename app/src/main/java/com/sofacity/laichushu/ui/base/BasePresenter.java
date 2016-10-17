@@ -2,6 +2,8 @@ package com.sofacity.laichushu.ui.base;
 
 import com.sofacity.laichushu.retrofit.ApiStores;
 import com.sofacity.laichushu.retrofit.AppClient;
+import com.sofacity.laichushu.ui.widget.LoadDialog;
+import com.sofacity.laichushu.utils.UIUtil;
 
 import rx.Observable;
 import rx.Subscriber;
