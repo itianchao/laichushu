@@ -11,7 +11,9 @@ import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdModel;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdPresenter;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdView;
 import com.sofacity.laichushu.ui.base.MvpActivity;
+import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
+import com.sofacity.laichushu.utils.Validator;
 
 /**
  * 充值密码页面
@@ -76,14 +78,20 @@ public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implement
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.tv_getcode:
+                String phonenum = phoneEt.getText().toString().trim();
+                mvpPresenter.showCode(codeTv, phonenum);
                 break;
             case R.id.iv_title_finish:
                 finish();
                 break;
             case R.id.bt_finish:
-                UIUtil.openActivity(mActivity,LoginActivity.class);
+                String code = codeEt.getText().toString().trim();
+                if (mvpPresenter.check(code)) {
+                    //请求网络校验
+                    UIUtil.openActivity(mActivity, LoginActivity.class);
+                }
                 break;
         }
     }

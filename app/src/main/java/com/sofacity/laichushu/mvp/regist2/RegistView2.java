@@ -1,7 +1,5 @@
 package com.sofacity.laichushu.mvp.regist2;
 
-import com.sofacity.laichushu.mvp.regist.RegistModel;
-
 /**
  * 注册页面
  * Created by wangtong on 2016/10/12.

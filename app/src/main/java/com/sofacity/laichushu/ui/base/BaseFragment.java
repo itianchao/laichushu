@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
 
+import com.sofacity.laichushu.ui.widget.LoadDialog;
+import com.sofacity.laichushu.utils.UIUtil;
+
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -53,5 +56,39 @@ public class BaseFragment extends Fragment {
         mCompositeSubscription = new CompositeSubscription();
 //        }
         mCompositeSubscription.add(subscription);
+    }
+    public LoadDialog progressDialog;
+
+    public LoadDialog showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new LoadDialog(mActivity);
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setTitle("加载中");
+            progressDialog.show();
+        }
+        return progressDialog;
+    }
+
+    public LoadDialog showProgressDialog(CharSequence message) {
+        if (progressDialog == null) {
+            progressDialog = new LoadDialog(mActivity);
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setTitle(message);
+            progressDialog.show();
+        }
+        return progressDialog;
+    }
+
+    public void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                }
+            }, 1600);
+        }
     }
 }

@@ -29,7 +29,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.global.BaseApplication;
 
@@ -174,7 +173,6 @@ public class UIUtil
 	public static void openActivity(Activity activity, Class<?> pClass)
 	{
 		openActivity(activity, pClass, null);
-		activity.overridePendingTransition(R.anim.open_exit,R.anim.open_enter);
 	}
 
 	/**
@@ -190,7 +188,7 @@ public class UIUtil
 			intent.putExtras(pBundle);
 		}
 		activity.startActivityForResult(intent,0);
-		activity.overridePendingTransition(R.anim.open_enter,R.anim.open_exit);
+		activity.overridePendingTransition(R.anim.open_enter, R.anim.open_exit);
 	}
 
 	/**

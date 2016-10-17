@@ -1,6 +1,7 @@
 package com.sofacity.laichushu.ui.base;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
@@ -207,5 +208,11 @@ public class BaseActivity extends FragmentActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.close_enter,R.anim.close_exit);
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.open_exit, R.anim.open_enter);
     }
 }
