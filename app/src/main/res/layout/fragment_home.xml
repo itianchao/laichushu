@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <include layout="@layout/page_title2"/>
+    <include layout="@layout/item_distance"/>
 
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/ryv_home"

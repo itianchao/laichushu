@@ -37,6 +37,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     ArrayList<String> mTitleData = new ArrayList<>();
     private ArrayList mData = new ArrayList();
     private ArrayList mHotData = new ArrayList();
+    private HomeTitleViewPagerAdapter adapter;
+    private HomeRecyclerAdapter mAdapter;
+
     @Override
     protected HomePresenter createPresenter() {
         return new HomePresenter(this);
@@ -60,14 +63,22 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     }
 
     private void initRecycler() {
+        for (int i = 0; i < 9; i++) {
+            mHotData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
+        }
+        for (int i = 0; i < 9; i++) {
+            mData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
+        }
         mRecyclerView.setLinearLayout();
-        mRecyclerView.setAdapter(new HomeRecyclerAdapter(mData,mActivity,mHotData));
+        mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData);
+        mRecyclerView.setAdapter(mAdapter);
+
     }
 
     private void titleViewPager() {
         mTitleData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
         mTitleData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
-        HomeTitleViewPagerAdapter adapter = new HomeTitleViewPagerAdapter(mTitleData,mActivity);
+        adapter = new HomeTitleViewPagerAdapter(mTitleData,mActivity);
         homeVp.setAdapter(adapter);
         homeVp.setOnPageChangeListener(this);
         pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

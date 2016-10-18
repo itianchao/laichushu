@@ -19,4 +19,5 @@
     <color name="main_text_color">#5f5f5f</color>
     <!--搜索颜色-->
     <color name="search">#7f84898C</color>
+    <color name="black">#000000</color>
 </resources>

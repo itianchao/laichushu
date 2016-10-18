@@ -32,24 +32,28 @@
 
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.LoginActivity"
+        <activity
+            android:name=".ui.activity.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.activity.GuideActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.GuideActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.ForgetPwdActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.ForgetPwdActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.RegistActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.RegistActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.Regist2Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.Regist2Activity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
