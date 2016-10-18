@@ -9,12 +9,15 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.otherbean.HomeHotImgBean;
 import com.sofacity.laichushu.ui.widget.TypePopWindow;
+import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -27,14 +30,15 @@ import java.util.ArrayList;
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> implements View.OnClickListener {
 
     private Activity mActivity;
-    private ArrayList mData;
+    private ArrayList<String> mData;
     private ArrayList<String> mHotData;
     private RadioButton rankRbn;
 
     public HomeRecyclerAdapter(ArrayList mData, Activity mActivity, ArrayList mHotData) {
         this.mActivity = mActivity;
         this.mData = mData;
-        this.mHotData = mHotData;
+        this.mHotData = mHotData;//最热
+
         rankingList.add("排行");
         rankingList.add("评分最高");
         rankingList.add("打赏最多");
@@ -44,12 +48,18 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return mData == null ? 0 : mData.size();
+        return mData == null ? 0 : mData.size()+2;
     }
-
+    //多重行视图
     private final static int TYPE1 = 0;
     private final static int TYPE2 = 1;
     private final static int TYPE3 = 2;
+    //radiobutton 的状态
+    private static int STATE = 1;//状态默认点全部
+    private final static int STATE1 = 1;//全部
+    private final static int STATE2 = 2;//活动
+    private final static int STATE3 = 3;//同城
+    private final static int STATE4 = 4;//排行
 
     @Override
     public int getItemViewType(int position) {
@@ -66,7 +76,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public HomeRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
         ViewHolder holder = null;
-        switch(viewType) {
+        switch (viewType) {
             case TYPE1:
                 itemView = UIUtil.inflate(R.layout.item_home_hot);
                 holder = new ViewHolder1(itemView);
@@ -76,8 +86,24 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 holder = new ViewHolder2(itemView);
                 break;
             case TYPE3:
-                itemView = UIUtil.inflate(R.layout.item_home_book);
-                holder = new ViewHolder3(itemView);
+                switch(STATE){
+                    case STATE1://全部
+                        itemView = UIUtil.inflate(R.layout.item_home_book);
+                        holder = new ViewHolder3(itemView);
+                        break;
+                    case STATE2://活动
+                        itemView = UIUtil.inflate(R.layout.item_home_book);
+                        holder = new ViewHolder3(itemView);
+                        break;
+                    case STATE3://同城
+                        itemView = UIUtil.inflate(R.layout.item_home_book);
+                        holder = new ViewHolder3(itemView);
+                        break;
+                    case STATE4://排行
+                        itemView = UIUtil.inflate(R.layout.item_home_book);
+                        holder = new ViewHolder3(itemView);
+                    break;
+                }
                 break;
         }
         return holder;
@@ -89,47 +115,50 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         //处理数据
         HomeHotImgBean homeHotImgBean = null;
         for (int i = 0; i < mHotData.size(); i++) {
-            if (i%3 == 0){
+            if (i % 3 == 0) {
                 homeHotImgBean = new HomeHotImgBean();
                 homeHotImgBean.setFristImg(mHotData.get(i));
                 homeHotImgBean.setFristTitle("书名1");
                 homeHotImgBean.setFristName("作者名1");
-            }else if (i%3 ==1){
+            } else if (i % 3 == 1) {
                 homeHotImgBean.setSecondImg(mHotData.get(i));
                 homeHotImgBean.setSecondTitle("书名2");
                 homeHotImgBean.setSecondName("作者名2");
-            }else {
+            } else {
                 homeHotImgBean.setThirdImg(mHotData.get(i));
                 homeHotImgBean.setThirdTitle("书名3");
                 homeHotImgBean.setThirdName("作者名3");
             }
-            if (i!=0&&i%3 == 2||i == mHotData.size()-1){
+            if (i != 0 && i % 3 == 2 || i == mHotData.size() - 1) {
                 homeHotImgBeans.add(homeHotImgBean);
             }
         }
         //
         final int[] range = new int[1];
         if (position == 0) {
-            ((ViewHolder1)holder).hotVp.setAdapter(new HomeHotViewPagerAdapter(homeHotImgBeans,mActivity));
-            ((ViewHolder1)holder).pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            ((ViewHolder1) holder).hotVp.setAdapter(new HomeHotViewPagerAdapter(homeHotImgBeans, mActivity));
+            ((ViewHolder1) holder).pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
                     ((ViewHolder1) holder).pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     range[0] = ((ViewHolder1) holder).ll_container.getChildAt(1).getLeft() - ((ViewHolder1) holder).ll_container.getChildAt(0).getLeft();
                 }
             });
-            for (int i = 0; i < Math.ceil(mHotData.size()/3); i++) {
+            for (int i = 0; i < Math.ceil(mHotData.size() / 3); i++) {
+                if (((ViewHolder1) holder).ll_container.getChildCount()> Math.ceil(mHotData.size() / 3)-1){
+                    return;
+                }
                 ImageView imageView = new ImageView(mActivity);
                 imageView.setBackgroundResource(R.drawable.shape_point_hollow);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                if(i>0){
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                if (i > 0) {
                     params.leftMargin = UIUtil.px2dip(10);
                 }
                 imageView.setLayoutParams(params);
                 ((ViewHolder1) holder).ll_container.addView(imageView);
             }
-            ((ViewHolder1)holder).hotVp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            ((ViewHolder1) holder).hotVp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                     int move = (int) ((position + positionOffset) * range[0]);
@@ -149,8 +178,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
                 }
             });
-            if (mHotData.size()!=0){
-                ((ViewHolder1) holder).bookNumTv.setText(mHotData.size()+"本");
+            if (mHotData.size() != 0) {
+                ((ViewHolder1) holder).bookNumTv.setText(mHotData.size() + "本");
             }
         } else if (position == 1) {
             ((ViewHolder2) holder).allRbn.setOnClickListener(this);
@@ -158,7 +187,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             ((ViewHolder2) holder).cityRbn.setOnClickListener(this);
             ((ViewHolder2) holder).rankingRbn.setOnClickListener(this);
         } else {
-
+            GlideUitl.loadImg(mActivity, mData.get(position - 2), ((ViewHolder3) holder).bookIv);
         }
     }
 
@@ -168,6 +197,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             super(itemView);
         }
     }
+
     //最热
     public class ViewHolder1 extends ViewHolder {
 
@@ -184,6 +214,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             bookNumTv = (TextView) itemView.findViewById(R.id.tv_booknum);
         }
     }
+
     //全部、活动、同城、排行 选择容器
     public class ViewHolder2 extends ViewHolder {
 
@@ -201,33 +232,81 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             rankRbn = rankingRbn;
         }
     }
+
     //全部、活动、同城、排行 选择内容
     public class ViewHolder3 extends ViewHolder {
+
+        private ImageView bookIv;
+        private TextView titleTv;
+        private TextView typeTv;
+        private RatingBar numRb;
+        private TextView markTv;
+        private TextView commentTv;
+        private TextView authorTv;
+        private TextView wordTv;
+        private TextView moneyTv;
+        private TextView rewardTv;
+
         public ViewHolder3(View itemView) {
             super(itemView);
+            bookIv = (ImageView) itemView.findViewById(R.id.iv_book);
+            titleTv = (TextView) itemView.findViewById(R.id.tv_title);
+            typeTv = (TextView) itemView.findViewById(R.id.tv_type);
+            numRb = (RatingBar) itemView.findViewById(R.id.ratbar_num);
+            markTv = (TextView) itemView.findViewById(R.id.tv_mark);
+            commentTv = (TextView) itemView.findViewById(R.id.tv_comment);
+            authorTv = (TextView) itemView.findViewById(R.id.tv_author);
+            wordTv = (TextView) itemView.findViewById(R.id.tv_word);
+            moneyTv = (TextView) itemView.findViewById(R.id.tv_money);
+            rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
         }
     }
 
     //全部、活动、同城、排行 点击事件
     ArrayList<String> rankingList = new ArrayList<>();
+    int position = 0;
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.rbn_all:
+                if (position ==1){
+                    return;
+                }
+                STATE = STATE1;
+                mData.clear();
+                //请求网络
+                position = 1;
                 break;
             case R.id.rbn_activity:
+                if (position ==2){
+                    return;
+                }
+                STATE = STATE2;
+                mData.clear();
+                //请求网络
+                position = 2;
                 break;
             case R.id.rbn_citywide:
+                if (position ==3){
+                    return;
+                }
+                STATE = STATE3;
+                mData.clear();
+                //请求网络
+                position = 3;
                 break;
             case R.id.rbn_ranking:
-                TypePopWindow popWindow = new TypePopWindow(mActivity,rankingList);
+//                STATE = STATE4;
+                mData.clear();
+                //请求网络
+                TypePopWindow popWindow = new TypePopWindow(mActivity, rankingList);
                 popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
                     @Override
                     public void clickItem(int position) {
                         rankRbn.setText(rankingList.get(position));
                     }
                 });
-                popWindow.setWidth(v.getWidth()+UIUtil.dip2px(1));
+                popWindow.setWidth(v.getWidth() + UIUtil.dip2px(1));
                 popWindow.setHeight(UIUtil.dip2px(200));
                 popWindow.showAsDropDown(v);
                 break;

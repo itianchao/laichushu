@@ -38,6 +38,7 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -46,14 +47,17 @@
 
         <activity
             android:name=".ui.activity.ForgetPwdActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.RegistActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.Regist2Activity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
     </application>
 

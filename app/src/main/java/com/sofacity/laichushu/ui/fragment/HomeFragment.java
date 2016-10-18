@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * 首页
  * Created by wangtong on 2016/10/17.
  */
-public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView, ViewPager.OnPageChangeListener {
+public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView, ViewPager.OnPageChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private ImageView pointIv;
     private ViewPager homeVp;
@@ -63,6 +63,8 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     }
 
     private void initRecycler() {
+        mHotData.clear();
+        mData.clear();
         for (int i = 0; i < 9; i++) {
             mHotData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
         }
@@ -72,7 +74,8 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         mRecyclerView.setLinearLayout();
         mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData);
         mRecyclerView.setAdapter(mAdapter);
-
+        mRecyclerView.setFooterViewText("加载中");
+        mRecyclerView.setOnPullLoadMoreListener(this);
     }
 
     private void titleViewPager() {
@@ -136,5 +139,26 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     @Override
     public void onPageScrollStateChanged(int state) {
+    }
+
+    //下拉刷新
+    @Override
+    public void onRefresh() {
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setPullLoadMoreCompleted();
+            }
+        },2000);
+    }
+    //上拉刷新
+    @Override
+    public void onLoadMore() {
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setPullLoadMoreCompleted();
+            }
+        },2000);
     }
 }
