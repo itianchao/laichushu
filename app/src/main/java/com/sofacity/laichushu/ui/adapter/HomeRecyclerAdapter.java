@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.otherbean.HomeHotImgBean;
+import com.sofacity.laichushu.ui.widget.TypePopWindow;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -28,11 +29,17 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private Activity mActivity;
     private ArrayList mData;
     private ArrayList<String> mHotData;
+    private RadioButton rankRbn;
 
     public HomeRecyclerAdapter(ArrayList mData, Activity mActivity, ArrayList mHotData) {
         this.mActivity = mActivity;
         this.mData = mData;
         this.mHotData = mHotData;
+        rankingList.add("排行");
+        rankingList.add("评分最高");
+        rankingList.add("打赏最多");
+        rankingList.add("订阅最多");
+        rankingList.add("评论最多");
     }
 
     @Override
@@ -191,6 +198,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             activityRbn = (RadioButton) itemView.findViewById(R.id.rbn_activity);
             cityRbn = (RadioButton) itemView.findViewById(R.id.rbn_citywide);
             rankingRbn = (RadioButton) itemView.findViewById(R.id.rbn_ranking);
+            rankRbn = rankingRbn;
         }
     }
     //全部、活动、同城、排行 选择内容
@@ -201,6 +209,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     }
 
     //全部、活动、同城、排行 点击事件
+    ArrayList<String> rankingList = new ArrayList<>();
     @Override
     public void onClick(View v) {
         switch(v.getId()){
@@ -211,6 +220,16 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             case R.id.rbn_citywide:
                 break;
             case R.id.rbn_ranking:
+                TypePopWindow popWindow = new TypePopWindow(mActivity,rankingList);
+                popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
+                    @Override
+                    public void clickItem(int position) {
+                        rankRbn.setText(rankingList.get(position));
+                    }
+                });
+                popWindow.setWidth(v.getWidth()+UIUtil.dip2px(1));
+                popWindow.setHeight(UIUtil.dip2px(200));
+                popWindow.showAsDropDown(v);
                 break;
         }
     }
