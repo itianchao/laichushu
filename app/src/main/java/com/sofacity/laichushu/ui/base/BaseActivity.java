@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
+
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.retrofit.ApiStores;
 import com.sofacity.laichushu.retrofit.AppClient;
@@ -15,9 +15,11 @@ import com.sofacity.laichushu.ui.widget.LoadDialog;
 import com.sofacity.laichushu.utils.AppManager;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -207,7 +209,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.close_enter,R.anim.close_exit);
+        overridePendingTransition(R.anim.close_enter, R.anim.close_exit);
     }
 
     @Override
