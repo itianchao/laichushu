@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lay_home"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <!--全部 -->
+    <FrameLayout
+        android:id="@+id/fay_type_frist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/item_home_book" />
+    </FrameLayout>
+    <!--活动 -->
+    <FrameLayout
+        android:id="@+id/fay_type_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <include layout="@layout/item_home_activity" />
+    </FrameLayout>
+
+</FrameLayout>

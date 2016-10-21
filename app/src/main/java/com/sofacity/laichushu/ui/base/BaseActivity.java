@@ -213,6 +213,6 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
-        overridePendingTransition(R.anim.open_exit, R.anim.open_enter);
+        overridePendingTransition(R.anim.open_enter, R.anim.open_exit);
     }
 }

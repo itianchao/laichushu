@@ -1,7 +1,10 @@
 package com.sofacity.laichushu.mvp.login;
 
+import android.widget.EditText;
+
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
+import com.sofacity.laichushu.anim.ShakeAnim;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
 import com.sofacity.laichushu.retrofit.ApiCallback;
 import com.sofacity.laichushu.ui.activity.LoginActivity;
@@ -11,9 +14,6 @@ import com.sofacity.laichushu.utils.SharePrefManager;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 import com.sofacity.laichushu.utils.Validator;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 登录 presenter
@@ -42,28 +42,36 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     }
 
     //登陆
-    public boolean login(String username, String password) {
+    public boolean login(EditText usernameEt, EditText passwordEt) {
+        String username = usernameEt.getText().toString().trim();
+        String password = passwordEt.getText().toString().trim();
         boolean isLogin ;
         //校验
         if (username.isEmpty()) {
             ToastUtil.showToast("手机号不能为空！");
+            usernameEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         } else if (password.isEmpty()) {
             ToastUtil.showToast("密码不能为空！");
+            passwordEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         } else if (username.length() < 11) {
             ToastUtil.showToast("手机号11位！");
+            usernameEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         } else if (password.length() < 6) {
             ToastUtil.showToast("密码至少6位！");
+            passwordEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         }
         if (!Validator.isMobile(username)){
             ToastUtil.showToast("请输入正确的手机号!");
+            usernameEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         }
         if (!Validator.isUsername(password)) {
             ToastUtil.showToast("您输入的密码含有汉字或特殊字符，请重新输入！");
+            passwordEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         }
         loadData(username, password);

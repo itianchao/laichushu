@@ -62,6 +62,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         initRecycler();
     }
 
+    /**
+     * PullLoadMoreRecyclerView 的初始化
+     */
     private void initRecycler() {
         mHotData.clear();
         mData.clear();
@@ -72,12 +75,15 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             mData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
         }
         mRecyclerView.setLinearLayout();
-        mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData);
+        mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData,mvpPresenter);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setFooterViewText("加载中");
         mRecyclerView.setOnPullLoadMoreListener(this);
     }
 
+    /**
+     * 标题轮播图
+     */
     private void titleViewPager() {
         mTitleData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
         mTitleData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
@@ -92,6 +98,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             }
         });
         for (int i = 0; i < mTitleData.size(); i++) {
+            if (lineLyt.getChildCount()>mTitleData.size()-1){
+                return;
+            }
             ImageView imageView = new ImageView(mActivity);
             imageView.setBackgroundResource(R.drawable.shape_point_hollow);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -123,7 +132,19 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void hideLoading() {
         dismissProgressDialog();
     }
-    //滑动监听事件
+
+    @Override
+    public void initData() {
+        mData.clear();
+        for (int i = 0; i < 12; i++) {
+            mData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
+        }
+        mAdapter.setmData(mData);
+    }
+
+    /**
+     * 滑动监听事件
+     */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         int move = (int) ((position+positionOffset)*range);
@@ -141,7 +162,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void onPageScrollStateChanged(int state) {
     }
 
-    //下拉刷新
+    /**
+     * 下拉刷新
+     */
     @Override
     public void onRefresh() {
         UIUtil.postDelayed(new Runnable() {
@@ -151,7 +174,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             }
         },2000);
     }
-    //上拉刷新
+    /**
+     * 上拉刷新
+     */
     @Override
     public void onLoadMore() {
         UIUtil.postDelayed(new Runnable() {

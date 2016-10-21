@@ -1,5 +1,7 @@
 package com.sofacity.laichushu.ui.activity;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +14,7 @@ import com.sofacity.laichushu.mvp.login.LoginModel;
 import com.sofacity.laichushu.mvp.login.LoginPresenter;
 import com.sofacity.laichushu.mvp.login.LoginView;
 import com.sofacity.laichushu.ui.base.MvpActivity;
+import com.sofacity.laichushu.utils.AMUtils;
 import com.sofacity.laichushu.utils.DialogUtil;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
@@ -50,6 +53,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         registerTv.setOnClickListener(this);
         forgetTv.setOnClickListener(this);
         mvpPresenter.preLogin();
+        addEditListen();
     }
 
     //控制器
@@ -63,9 +67,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         switch (v.getId()) {
             case R.id.bt_login:
                 //登录
-                String username = usernameEt.getText().toString().trim();
-                String password = passwordEt.getText().toString().trim();
-                if (mvpPresenter.login(username, password)) {
+                if (mvpPresenter.login(usernameEt,passwordEt)) {
                     //请求网络登录
                 }
                 break;
@@ -116,5 +118,26 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     @Override
     public void hideLoading() {
         dismissProgressDialog();
+    }
+
+    private void addEditListen() {
+        usernameEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 11) {
+                    AMUtils.onInactive(mActivity, usernameEt);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 }

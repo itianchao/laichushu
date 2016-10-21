@@ -10,4 +10,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
     public HomePresenter(HomeView view) {
         attachView(view);
     }
+    public void initData(int state){
+
+        mvpView.initData();
+    }
 }

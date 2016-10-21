@@ -9,4 +9,5 @@ public interface HomeView {
     void getDataFail(String msg);
     void showLoading();
     void hideLoading();
+    void initData();
 }
