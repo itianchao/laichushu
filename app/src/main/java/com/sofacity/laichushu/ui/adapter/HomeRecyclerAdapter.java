@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.otherbean.HomeHotImgBean;
 import com.sofacity.laichushu.mvp.home.HomePresenter;
+import com.sofacity.laichushu.ui.activity.CampaignActivity;
 import com.sofacity.laichushu.ui.widget.TypePopWindow;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.UIUtil;
@@ -185,6 +186,23 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             ((ViewHolder2) holder).activityRbn.setOnClickListener(this);
             ((ViewHolder2) holder).cityRbn.setOnClickListener(this);
             ((ViewHolder2) holder).rankingRbn.setOnClickListener(this);
+            switch(this.position){
+                case 0:
+                    ((ViewHolder2) holder).allRbn.setChecked(true);
+                    break;
+                case 1:
+                    ((ViewHolder2) holder).allRbn.setChecked(true);
+                    break;
+                case 2:
+                    ((ViewHolder2) holder).activityRbn.setChecked(true);
+                    break;
+                case 3:
+                    ((ViewHolder2) holder).cityRbn.setChecked(true);
+                    break;
+                case 4:
+                    ((ViewHolder2) holder).rankingRbn.setChecked(true);
+                    break;
+            }
         } else {
             switch(STATE){
                 case STATE1://全部
@@ -207,6 +225,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                         @Override
                         public void onClick(View v) {
                             //跳转详情页
+                            UIUtil.openActivity(mActivity, CampaignActivity.class);
                         }
                     });
                     break;

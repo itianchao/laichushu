@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="@color/global">
@@ -26,5 +27,16 @@
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"
+        tools:src="@drawable/img_default" />
+
+    <ImageView
+        android:id="@+id/iv_title_another"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/iv_title_other"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/iv_title_other"
+        android:layout_toStartOf="@+id/iv_title_other"
+        tools:src="@drawable/img_default" />
 </RelativeLayout>

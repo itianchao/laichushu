@@ -59,6 +59,11 @@
             android:name=".ui.activity.Regist2Activity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.CampaignActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

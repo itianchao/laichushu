@@ -20,4 +20,5 @@
     <!--搜索颜色-->
     <color name="search">#7f84898C</color>
     <color name="black">#000000</color>
+    <color name="red">#dd0000</color>
 </resources>

@@ -98,7 +98,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             }
         });
         for (int i = 0; i < mTitleData.size(); i++) {
-            if (lineLyt.getChildCount()>mTitleData.size()-1){
+            if (lineLyt.getChildCount()>1){
                 return;
             }
             ImageView imageView = new ImageView(mActivity);
