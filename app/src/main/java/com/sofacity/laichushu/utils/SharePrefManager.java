@@ -99,4 +99,18 @@ public class SharePrefManager {
     public static boolean getFristLogin() {
         return CacheUtil.getBoolean(UIUtil.getContext(), "fristLogin", true);
     }
+
+    /**
+     * 保存home RadiuButton
+     */
+    public static void setPosition(int position) {
+        CacheUtil.setInt(UIUtil.getContext(), "position", position);
+    }
+
+    /**
+     * 获取home RadiuButton
+     */
+    public static int getPosition() {
+        return CacheUtil.getInt(UIUtil.getContext(), "position",0);
+    }
 }

@@ -20,6 +20,7 @@ import com.sofacity.laichushu.mvp.home.HomePresenter;
 import com.sofacity.laichushu.ui.activity.CampaignActivity;
 import com.sofacity.laichushu.ui.widget.TypePopWindow;
 import com.sofacity.laichushu.utils.GlideUitl;
+import com.sofacity.laichushu.utils.SharePrefManager;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -186,7 +187,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             ((ViewHolder2) holder).activityRbn.setOnClickListener(this);
             ((ViewHolder2) holder).cityRbn.setOnClickListener(this);
             ((ViewHolder2) holder).rankingRbn.setOnClickListener(this);
-            switch(this.position){
+            this.position = SharePrefManager.getPosition();
+            switch (this.position){
                 case 0:
                     ((ViewHolder2) holder).allRbn.setChecked(true);
                     break;
@@ -203,6 +205,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder2) holder).rankingRbn.setChecked(true);
                     break;
             }
+
         } else {
             switch(STATE){
                 case STATE1://全部
@@ -389,6 +392,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 popWindow.showAsDropDown(v);
                 break;
         }
+        SharePrefManager.setPosition(position);
         notifyDataSetChanged();
     }
 

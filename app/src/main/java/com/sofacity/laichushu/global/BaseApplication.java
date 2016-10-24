@@ -9,6 +9,7 @@ import android.os.Looper;
 import com.sofacity.laichushu.db.DaoMaster;
 import com.sofacity.laichushu.db.DaoSession;
 import com.sofacity.laichushu.db.UserDao;
+import com.sofacity.laichushu.utils.SharePrefManager;
 
 /**
  * 应用程序入口
@@ -31,7 +32,8 @@ public class BaseApplication extends Application {
         // 主线程handler
         mMainThreadHandler = new Handler();
         mMainThreadLooper = getMainLooper();
-
+        //首页RadiuButton设置
+        SharePrefManager.setPosition(0);
         //重写系统的异常处理器
 //        Thread.currentThread().setUncaughtExceptionHandler(new MyExceptionHandler());
     }
