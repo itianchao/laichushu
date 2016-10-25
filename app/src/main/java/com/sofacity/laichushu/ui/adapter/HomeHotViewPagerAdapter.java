@@ -69,6 +69,24 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
         if (!TextUtils.isEmpty(homeHotImgBean.getThirdImg())) {
             GlideUitl.loadImg(mActivity,homeHotImgBean.getThirdImg(),hot3Iv);
         }
+        hot1Iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转图书详情
+            }
+        });
+        hot2Iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转图书详情
+            }
+        });
+        hot3Iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转图书详情
+            }
+        });
         //设置书名
         if (!TextUtils.isEmpty(homeHotImgBean.getFristTitle())) {
             title1Tv.setText(homeHotImgBean.getFristTitle());

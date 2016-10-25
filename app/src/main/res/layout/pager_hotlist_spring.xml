@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/lay_all"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+            android:gravity="center"
+        android:layout_height="75dp">
+
+        <TextView
+            android:text="全部"
+            android:gravity="center"
+            android:drawablePadding="15dp"
+            android:drawableRight="@drawable/hotlist_spring"
+            android:textColor="@color/global"
+            android:textSize="@dimen/edit2"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp" />
+    </LinearLayout>
+    <View
+        android:background="@color/hint"
+        android:layout_width="0.5dp"
+        android:layout_height="20dp"/>
+    <LinearLayout
+        android:id="@+id/lay_news"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="75dp">
+
+        <TextView
+            android:text="新书"
+            android:gravity="center"
+            android:drawablePadding="15dp"
+            android:drawableRight="@drawable/hotlist_spring"
+            android:textColor="@color/global"
+            android:textSize="@dimen/edit2"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp" />
+    </LinearLayout>
+    <View
+        android:background="@color/hint"
+        android:layout_width="0.5dp"
+        android:layout_height="20dp"/>
+    <LinearLayout
+        android:id="@+id/lay_hot"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="75dp">
+
+        <TextView
+            android:text="热门"
+            android:gravity="center"
+            android:drawablePadding="15dp"
+            android:drawableRight="@drawable/hotlist_spring"
+            android:textColor="@color/global"
+            android:textSize="@dimen/edit2"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp" />
+    </LinearLayout>
+</LinearLayout>
