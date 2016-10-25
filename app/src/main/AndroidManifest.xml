@@ -64,6 +64,16 @@
             android:name=".ui.activity.CampaignActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.HotListActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.BookDetailActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

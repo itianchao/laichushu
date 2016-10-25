@@ -18,6 +18,7 @@ import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.otherbean.HomeHotImgBean;
 import com.sofacity.laichushu.mvp.home.HomePresenter;
 import com.sofacity.laichushu.ui.activity.CampaignActivity;
+import com.sofacity.laichushu.ui.activity.HotListActivity;
 import com.sofacity.laichushu.ui.widget.TypePopWindow;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.SharePrefManager;
@@ -180,6 +181,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 @Override
                 public void onClick(View v) {
                     //跳转热门详情页
+                    UIUtil.openActivity(mActivity, HotListActivity.class);
                 }
             });
         } else if (position == 1) {

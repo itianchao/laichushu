@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.otherbean.HomeHotImgBean;
+import com.sofacity.laichushu.ui.activity.BookDetailActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.UIUtil;
 
@@ -69,6 +70,27 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
         if (!TextUtils.isEmpty(homeHotImgBean.getThirdImg())) {
             GlideUitl.loadImg(mActivity,homeHotImgBean.getThirdImg(),hot3Iv);
         }
+        hot1Iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转图书详情
+                UIUtil.openActivity(mActivity, BookDetailActivity.class);
+            }
+        });
+        hot2Iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转图书详情
+                UIUtil.openActivity(mActivity, BookDetailActivity.class);
+            }
+        });
+        hot3Iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转图书详情
+                UIUtil.openActivity(mActivity, BookDetailActivity.class);
+            }
+        });
         //设置书名
         if (!TextUtils.isEmpty(homeHotImgBean.getFristTitle())) {
             title1Tv.setText(homeHotImgBean.getFristTitle());
