@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
+        <ImageView
+            android:id="@+id/iv_book"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            tools:scaleType="centerCrop"
+            tools:src="@drawable/img_default" />
+
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/title_bg_color1"
+                    android:textSize="16sp"
+                    tools:text="职场心计" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/ratbar_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16.5dp"
+                    android:layout_marginTop="3dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:progressDrawable="@drawable/ratingbar_home"
+                    android:rating="3"
+                    android:stepSize="1" />
+
+                <TextView
+                    android:id="@+id/tv_mark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp"
+                    tools:text="3.0分" />
+
+                <TextView
+                    android:id="@+id/tv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp"
+                    tools:text="(1852评论)" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小说作者："
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp"
+                    tools:text="金庸" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="类　　型："
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp"
+                    tools:text="武侠" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="字　　数："
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp"
+                    tools:text="约50万字" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="收到打赏："
+                        android:textColor="@color/main_text_color"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="12sp"
+                        tools:text="7450元" />
+
+                    <TextView
+                        android:id="@+id/tv_reward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="12sp"
+                        tools:text="(2029人打赏)" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

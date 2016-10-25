@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:text="作者"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit2" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/frenchGrey" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_author_head"
+            tools:src="@drawable/img_default"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="金庸"
+            android:id="@+id/tv_author_name"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/iv_author_head"
+            android:layout_toEndOf="@+id/iv_author_head" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已发表"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/tv_author_name"
+            android:layout_toRightOf="@+id/iv_author_head"
+            android:layout_toEndOf="@+id/iv_author_head" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/global"
+            tools:text="16"
+            android:id="@+id/textView4"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2"
+            android:layout_toEndOf="@+id/textView2" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="篇作品"
+            android:id="@+id/textView5"
+            android:layout_below="@+id/tv_author_name"
+            android:layout_toRightOf="@+id/textView4"
+            android:layout_toEndOf="@+id/textView4" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_author_brief"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="金庸，原名查良镛，1924年3月10日生于浙江省海宁市，武侠小说作家、新闻学家、企业家、政治评论家、社会活动家."/>
+</LinearLayout>
