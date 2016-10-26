@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/select_book"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edit"
+            android:textStyle="normal" />
+        <ListView
+            android:id="@+id/lv_join"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="2dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="取消"
+                android:background="@null"
+                android:textColor="@color/edit"
+                android:textSize="@dimen/edit2" />
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:background="@null"
+                android:text="确认"
+                android:textColor="@color/global"
+                android:textSize="@dimen/edit2" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

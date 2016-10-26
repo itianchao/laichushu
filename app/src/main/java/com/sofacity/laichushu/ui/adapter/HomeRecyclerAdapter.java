@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.otherbean.HomeHotImgBean;
 import com.sofacity.laichushu.mvp.home.HomePresenter;
+import com.sofacity.laichushu.ui.activity.BookDetailActivity;
 import com.sofacity.laichushu.ui.activity.CampaignActivity;
 import com.sofacity.laichushu.ui.activity.HotListActivity;
 import com.sofacity.laichushu.ui.widget.TypePopWindow;
@@ -217,8 +218,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder3) holder).fristFay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //跳转详情页
-
+                            //跳转图书详情页
+                            UIUtil.openActivity(mActivity, BookDetailActivity.class);
                         }
                     });
                     break;
@@ -229,7 +230,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder3) holder).secondFay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //跳转详情页
+                            //跳转活动详情页
                             UIUtil.openActivity(mActivity, CampaignActivity.class);
                         }
                     });

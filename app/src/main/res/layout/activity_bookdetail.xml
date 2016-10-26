@@ -73,7 +73,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_margin="5dp"
                         android:background="@drawable/shape_rectangle_fill_hint"
-                        android:padding="5dp"
+                        android:padding="3dp"
                         android:text="订阅更新"
                         android:textColor="@color/orange" />
 
@@ -133,6 +133,7 @@
             <include layout="@layout/line" />
 
             <LinearLayout
+                android:id="@+id/lay_read"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_margin="10dp"
@@ -172,7 +173,7 @@
                     tools:text="收到的打赏：568元(150人)" />
 
                 <TextView
-                    android:id="@+id/tv_reward"
+                    android:id="@+id/btn_reward"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_rectangle_fill_hint"
@@ -180,7 +181,7 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="5dp"
-                    android:text="打赏"
+                    android:text="@string/reward"
                     android:textColor="@color/red" />
             </LinearLayout>
 
@@ -195,6 +196,8 @@
             <include layout="@layout/item_distance" />
 
             <include layout="@layout/item_comment"/>
+
+            <include layout="@layout/item_like"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

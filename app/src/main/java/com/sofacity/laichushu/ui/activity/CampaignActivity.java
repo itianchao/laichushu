@@ -1,14 +1,23 @@
 package com.sofacity.laichushu.ui.activity;
 
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.ui.adapter.JoinActivityAdapter;
 import com.sofacity.laichushu.ui.base.BaseActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
+import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
+
+import java.util.ArrayList;
 
 /**
  * 活动详情
@@ -114,7 +123,69 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
             case R.id.iv_title_another://评论
                 break;
             case R.id.tv_join://参加活动
+                openAlertDialog();
                 break;
+        }
+    }
+    private void openAlertDialog(){
+        final ArrayList<Text> mData = new ArrayList<>();
+        mData.add(new Text("射雕英雄传",true));
+        mData.add(new Text("超体",false));
+        mData.add(new Text("三体",false));
+        mData.add(new Text("西游记",false));
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
+        final View customerView = UIUtil.inflate(R.layout.dialog_join);
+        ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
+        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mData,0);
+        joinLv.setAdapter(joinAdapter);
+
+        //取消
+        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showToast(mData.get(joinAdapter.getPosition()).getName());
+                dialogBuilder.dismiss();
+            }
+        });
+        dialogBuilder
+                .withTitle(null)                                  // 为null时不显示title
+                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, this)                // 添加自定义View
+                .show();
+    }
+    public class Text {
+        public Text(String name, boolean ischeck) {
+            this.name = name;
+            this.ischeck = ischeck;
+        }
+
+        String name;
+        boolean ischeck;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public boolean ischeck() {
+            return ischeck;
+        }
+
+        public void setIscheck(boolean ischeck) {
+            this.ischeck = ischeck;
         }
     }
 }

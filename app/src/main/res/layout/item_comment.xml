@@ -31,7 +31,58 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/frenchGrey" />
+        android:background="@color/hint" />
+    
+    <RadioGroup
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <RadioButton
+            android:id="@+id/rbn_reader"
+            android:background="@drawable/select_radiobutton"
+            android:checked="true"
+            android:gravity="center"
+            android:text="@string/reader"
+            android:textColor="@color/edit"
+            android:button="@null"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="40dp" />
+        <RadioButton
+            android:id="@+id/rbn_dresser"
+            android:background="@drawable/select_radiobutton"
+            android:gravity="center"
+            android:text="@string/dresser"
+            android:textColor="@color/edit"
+            android:button="@null"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="40dp" />
+    </RadioGroup>
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/hint" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/lay_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/hint" />
+    <TextView
+        android:id="@+id/tv_lookup"
+        android:gravity="center"
+        android:text="@string/lookup_allcomment"
+        android:textColor="@color/edit"
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/hint" />
 </LinearLayout>

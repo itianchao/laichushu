@@ -16,7 +16,7 @@ import com.sofacity.laichushu.utils.UIUtil;
 import com.sofacity.laichushu.utils.Validator;
 
 /**
- * 充值密码页面
+ * 重置密码页面
  * Created by wangtong on 2016/10/12.
  */
 public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implements ForgetPwdView, View.OnClickListener {

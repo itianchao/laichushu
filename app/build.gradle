@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
@@ -39,4 +44,5 @@ dependencies {
     compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.1'
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'de.greenrobot:greendao-generator:2.1.0'
+    compile(name: 'notify-dialog-library', ext: 'aar')
 }

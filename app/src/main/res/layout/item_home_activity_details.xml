@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <LinearLayout
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center_vertical"
@@ -51,4 +51,5 @@
             android:textSize="@dimen/edit3"
             tools:text="凡人修仙传" />
     </LinearLayout>
+    <include layout="@layout/line"/>
 </LinearLayout>

@@ -13,7 +13,7 @@
         android:paddingBottom="15dp">
 
         <ImageView
-            android:id="@+id/iv_book"
+            android:id="@+id/iv_detail_book"
             android:layout_width="100dp"
             android:layout_height="150dp"
             tools:scaleType="centerCrop"
@@ -34,7 +34,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_title"
+                    android:id="@+id/tv_detail_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -51,7 +51,7 @@
                 android:orientation="horizontal">
 
                 <RatingBar
-                    android:id="@+id/ratbar_num"
+                    android:id="@+id/ratbar_detail_num"
                     android:layout_width="wrap_content"
                     android:layout_height="16.5dp"
                     android:layout_marginTop="3dp"
@@ -62,7 +62,7 @@
                     android:stepSize="1" />
 
                 <TextView
-                    android:id="@+id/tv_mark"
+                    android:id="@+id/tv_detail_mark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -71,7 +71,7 @@
                     tools:text="3.0分" />
 
                 <TextView
-                    android:id="@+id/tv_comment"
+                    android:id="@+id/tv_detail_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -94,7 +94,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tv_author"
+                    android:id="@+id/tv_detail_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -117,7 +117,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tv_type"
+                    android:id="@+id/tv_detail_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -140,7 +140,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tv_word"
+                    android:id="@+id/tv_detail_word"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -168,7 +168,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_money"
+                        android:id="@+id/tv_detail_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -177,7 +177,7 @@
                         tools:text="7450元" />
 
                     <TextView
-                        android:id="@+id/tv_reward"
+                        android:id="@+id/tv_detail_reward"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"

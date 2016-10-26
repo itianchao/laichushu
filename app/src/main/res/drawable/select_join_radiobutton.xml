@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/activity_radiubutton_bg_fill" android:state_checked="true" />
+    <item android:drawable="@drawable/activity_radiubutton_bg_normal" android:state_checked="false" />
+</selector>

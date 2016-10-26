@@ -68,6 +68,12 @@ public class HotListActivity extends BaseActivity {
             moneyTv.setText("7678元");
             rewardTv.setText("(2029人打赏)");
             parentLay.addView(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UIUtil.openActivity(mActivity, BookDetailActivity.class);
+                }
+            });
         }
     }
 }

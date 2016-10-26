@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_comment_head"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        tools:src="@drawable/img_default" />
+
+    <TextView
+        android:id="@+id/tv_comment_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_toRightOf="@id/iv_comment_head"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit2"
+        tools:text="隐晓月" />
+
+    <TextView
+        android:id="@+id/tv_comment_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_comment_name"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/iv_comment_head"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/edit"
+        android:textSize="@dimen/edit3"
+        tools:text="凤凰评论是凤凰网评论部着力打造的专业性言论平台,包括凤凰论,第一解读,政能亮,高见,首席评论员等多个有影响力的品牌栏目,为公众提供更有价值的分析与判断。" />
+
+    <TextView
+        android:id="@+id/tv_comment_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_comment_content"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/iv_comment_head"
+        android:textColor="@color/edit"
+        android:textSize="@dimen/edit3"
+        tools:text="2016-10-26 17:29" />
+
+    <ImageView
+        android:id="@+id/iv_comment_in"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_comment_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/home_right" />
+
+    <TextView
+        android:id="@+id/tv_comment_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_comment_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/iv_comment_in"
+        tools:text="212" />
+    <ImageView
+        android:id="@+id/iv_comment"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_toLeftOf="@+id/tv_comment_number"
+        android:layout_below="@+id/tv_comment_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/icon_comment" />
+    <TextView
+        android:id="@+id/tv_comment_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_comment_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/iv_comment"
+        tools:text="115" />
+    <ImageView
+        android:id="@+id/iv_comment_like"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_toLeftOf="@+id/tv_comment_like"
+        android:layout_below="@+id/tv_comment_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/icon_like_normal" />
+</RelativeLayout>
