@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/page_title" />
+
+    <include layout="@layout/item_distance" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/marking"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edit2" />
+
+        <RatingBar
+            android:id="@+id/ratbar_num"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="16.5dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="3dp"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:progressDrawable="@drawable/ratingbar_home"
+            android:rating="3"
+            android:stepSize="1" />
+    </LinearLayout>
+
+    <include layout="@layout/item_distance" />
+
+    <EditText
+        android:id="@+id/et_comment"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="@null"
+        android:cursorVisible="true"
+        android:hint="@string/comment_hint"
+        android:textColorHint="@color/hint" />
+
+    <include layout="@layout/item_distance" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="全部评论"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit2" />
+
+    <include layout="@layout/line" />
+
+</LinearLayout>

@@ -154,7 +154,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             GlideUitl.loadImg(this,"",bookIv);
             likeLay.addView(likeItemView);
         }
-
+        lookupTv.setOnClickListener(this);
     }
 
     /**
@@ -171,6 +171,9 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.iv_title_other://分享
                 break;
             case R.id.iv_title_another://收藏
+                break;
+            case R.id.tv_lookup://查看更多评论
+                UIUtil.openActivity(this,AllCommentActivity.class);
                 break;
         }
     }
