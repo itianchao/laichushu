@@ -155,6 +155,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             likeLay.addView(likeItemView);
         }
         lookupTv.setOnClickListener(this);
+        readLay.setOnClickListener(this);
     }
 
     /**
@@ -174,6 +175,9 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.tv_lookup://查看更多评论
                 UIUtil.openActivity(this,AllCommentActivity.class);
+                break;
+            case R.id.lay_read://阅读
+//                UIUtil.openActivity(this,AllCommentActivity.class);
                 break;
         }
     }
