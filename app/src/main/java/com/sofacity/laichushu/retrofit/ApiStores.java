@@ -19,4 +19,5 @@ public interface ApiStores {
     //登录
     @POST("mobile/login")
     Observable<LoginModel> loginLoadData(@Body Login_Paramet paramet);
+
 }

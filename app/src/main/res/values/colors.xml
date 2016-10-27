@@ -23,4 +23,5 @@
     <color name="red">#F19393</color>
     <color name="orange">#EABB75</color>
     <color name="red2">#ff0000</color>
+    <color name="memubg_color">#aa000000</color>
 </resources>

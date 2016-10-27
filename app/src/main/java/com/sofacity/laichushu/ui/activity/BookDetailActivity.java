@@ -1,5 +1,8 @@
 package com.sofacity.laichushu.ui.activity;
 
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,8 +13,11 @@ import android.widget.TextView;
 
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.ui.base.BaseActivity;
+import com.sofacity.laichushu.ui.widget.BookPlayActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.UIUtil;
+
+import java.io.File;
 
 /**
  * 图书详情
@@ -24,10 +30,11 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private RelativeLayout nopublishRay;
     private LinearLayout publishLay, readLay, commentLay, likeLay;
     private TextView detailMarkTv, detailCommentTv, detailAuthorTv, detailTypeTv, detailWordTv,
-            detailMoneyTv,detailRewardTv, createtimeTv, refreshtimeTv, numberTv, subscriptionTv,
-            detailTitleTv, priceTv,lookupTv,probationTv, payTv, msgTv, rewardTv, briefTv,
+            detailMoneyTv, detailRewardTv, createtimeTv, refreshtimeTv, numberTv, subscriptionTv,
+            detailTitleTv, priceTv, lookupTv, probationTv, payTv, msgTv, rewardTv, briefTv,
             authorNameTv, individualTv, authorBriefTv, commentNumberTv;
     private RadioButton readerRbn, dresserRbn;
+
 
     @Override
     protected void initView() {
@@ -136,7 +143,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             TextView likeTv = (TextView) commentItemView.findViewById(R.id.tv_comment_like);
             TextView numberTv = (TextView) commentItemView.findViewById(R.id.tv_comment_number);
             ImageView inIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_in);
-            GlideUitl.loadRandImg(this,"",headIv);
+            GlideUitl.loadRandImg(this, "", headIv);
             commentLay.addView(commentItemView);
         }
         for (int i = 0; i < 4; i++) {
@@ -151,7 +158,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             TextView wordTv = (TextView) likeItemView.findViewById(R.id.tv_word);
             TextView moneyTv = (TextView) likeItemView.findViewById(R.id.tv_money);
             TextView rewardTv = (TextView) likeItemView.findViewById(R.id.tv_reward);
-            GlideUitl.loadImg(this,"",bookIv);
+            GlideUitl.loadImg(this, "", bookIv);
             likeLay.addView(likeItemView);
         }
         lookupTv.setOnClickListener(this);
@@ -174,10 +181,16 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.iv_title_another://收藏
                 break;
             case R.id.tv_lookup://查看更多评论
-                UIUtil.openActivity(this,AllCommentActivity.class);
+                UIUtil.openActivity(this, AllCommentActivity.class);
                 break;
             case R.id.lay_read://阅读
-//                UIUtil.openActivity(this,AllCommentActivity.class);
+                Bundle bundle = new Bundle();
+                String bookname = "12345";
+                String path = Environment.getExternalStorageDirectory()+ File.separator
+                        +"123.txt";
+                bundle.putString("bookname", bookname);
+                bundle.putString("bookpath", path);
+                UIUtil.openActivity(this, BookPlayActivity.class, bundle);
                 break;
         }
     }
