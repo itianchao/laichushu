@@ -11,12 +11,18 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.utils.SharePrefManager;
+import com.sofacity.laichushu.utils.ToastUtil;
+
+import java.text.DecimalFormat;
 
 
 public class TxtProgressMenu extends PopupWindow {
@@ -30,9 +36,12 @@ public class TxtProgressMenu extends PopupWindow {
 	private int pageindex = 1, pagecounts = 1;
 	private LinearLayout mLoadinglayout, mViewlayout;
 	private onProgressChangeListener mListener;
-
-	public TxtProgressMenu(Context context) {
+	private SeekBar mSeekBar;
+	private String mBookname;
+	private boolean isShowToast;
+	public TxtProgressMenu(Context context, String mBookname) {
 		this.mContext = context;
+		this.mBookname = mBookname;
 		inite();
 	}
 
@@ -50,7 +59,7 @@ public class TxtProgressMenu extends PopupWindow {
 		mWindow_Heigh = metrics.heightPixels;
 
 		int rootwith = mWindow_With;
-		int rootheigh = mWindow_Heigh / 7;
+		int rootheigh = mWindow_Heigh / 11;
 
 		RelativeLayout layout = (RelativeLayout) LinearLayout.inflate(mContext, R.layout.txtprogressmenu_layout, null);
 
@@ -68,6 +77,44 @@ public class TxtProgressMenu extends PopupWindow {
 		mText = (TextView) layout.findViewById(R.id.txtprogress_text);
 		mLoadinglayout = (LinearLayout) layout.findViewById(R.id.txtprogress_layout1);
 		mViewlayout = (LinearLayout) layout.findViewById(R.id.txtprogress_layout2);
+		mSeekBar = (SeekBar) layout.findViewById(R.id.txtprogress_seekbar);
+		ImageView preIv = (ImageView)layout.findViewById(R.id.iv_pre);
+		ImageView nextIv = (ImageView)layout.findViewById(R.id.iv_next);
+		preIv.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (pageindex > 1 && pageindex < pagecounts)
+				mSeekBar.setProgress(pageindex--);
+			}
+		});
+		nextIv.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (pageindex > 1 && pageindex < pagecounts)
+				mSeekBar.setProgress(pageindex++);
+			}
+		});
+		mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				if (mListener != null) {
+					mListener.onProgressChange(progress);
+					DecimalFormat df = new DecimalFormat("######0.00");
+					if (SharePrefManager.getIsShowToast())
+					ToastUtil.showToast(mBookname+"\n"+df.format(((double)progress)*100/pagecounts)+"%");
+				}
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
+		});
+
 		mConcern.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -112,11 +159,19 @@ public class TxtProgressMenu extends PopupWindow {
 	public void setPageIndex(int pageindex0, int pagecounts0) {
 		this.pagecounts = pagecounts0;
 		this.pageindex = pageindex0;
-		mText.post(new Runnable() {
+//		mText.post(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				mText.setText(pageindex + "/" + pagecounts);
+//			}
+//		});
+		mSeekBar.post(new Runnable() {
 
 			@Override
 			public void run() {
-				mText.setText(pageindex + "/" + pagecounts);
+				mSeekBar.setMax(pagecounts);
+				mSeekBar.setProgress(pageindex);
 			}
 		});
 	}
@@ -144,4 +199,17 @@ public class TxtProgressMenu extends PopupWindow {
 		return pagecounts;
 	}
 
+	public boolean getIsShowToast() {
+		return isShowToast;
+	}
+
+	public void setIsShowToast(boolean isShowToast) {
+		this.isShowToast = isShowToast;
+	}
+
+	@Override
+	public void dismiss() {
+		super.dismiss();
+		SharePrefManager.setIsShowToast(false);
+	}
 }

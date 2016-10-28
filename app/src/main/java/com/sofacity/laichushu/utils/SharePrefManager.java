@@ -1,6 +1,9 @@
 package com.sofacity.laichushu.utils;
 
+import com.sofacity.laichushu.R;
+
 public class SharePrefManager {
+
 
     /**
      * 初始化是否完成
@@ -111,6 +114,57 @@ public class SharePrefManager {
      * 获取home RadiuButton
      */
     public static int getPosition() {
-        return CacheUtil.getInt(UIUtil.getContext(), "position",0);
+        return CacheUtil.getInt(UIUtil.getContext(), "position", 0);
+    }
+
+    /**
+     * 保存TextSize 字体大小
+     */
+    public static void setTextSize(int textSize) {
+        CacheUtil.setInt(UIUtil.getContext(), "textSize", textSize);
+    }
+
+    /**
+     * 获取TextSize
+     */
+    public static int getTextSize() {
+        return CacheUtil.getInt(UIUtil.getContext(), "textSize",30);
+    }
+
+    /**
+     *  阅读设置是否显示toast
+     */
+    public static void setIsShowToast(boolean isShowToast) {
+        CacheUtil.setBoolean(UIUtil.getContext(), "isShowToast", isShowToast);
+    }
+    /**
+     *  阅读是否显示toast
+     */
+    public static boolean getIsShowToast() {
+        return CacheUtil.getBoolean(UIUtil.getContext(), "isShowToast", true);
+    }
+    /**
+     *  设置阅读样式
+     */
+    public static void setReadMoudle(int readMoudle) {
+        CacheUtil.setInt(UIUtil.getContext(), "readMoudle", readMoudle);
+    }
+    /**
+     *  阅读样式
+     */
+    public static int getReadMoudle() {
+        return CacheUtil.getInt(UIUtil.getContext(), "readMoudle", R.drawable.reading__reading_themes_vine_white);
+    }
+    /**
+     *  设置日间模式
+     */
+    public static void setReadState(int readState) {
+        CacheUtil.setInt(UIUtil.getContext(), "readState", readState);
+    }
+    /**
+     *  设置日间模式
+     */
+    public static int getReadState() {
+        return CacheUtil.getInt(UIUtil.getContext(), "readState", getReadMoudle());
     }
 }

@@ -485,7 +485,7 @@ public class TxtReadView extends View {
 		isOnAnimation = true;
 
 		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-		animator.setDuration(8000);
+		animator.setDuration(200);
 		animator.setInterpolator(new LinearInterpolator());
 		animator.addUpdateListener(new AnimatorUpdateListener() {
 
@@ -527,7 +527,7 @@ public class TxtReadView extends View {
 		isOnAnimation = true;
 
 		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-		animator.setDuration(5000);
+		animator.setDuration(200);
 		animator.setInterpolator(new LinearInterpolator());
 		final float leftwith = getViewWith() - divider_position;
 		animator.addUpdateListener(new AnimatorUpdateListener() {

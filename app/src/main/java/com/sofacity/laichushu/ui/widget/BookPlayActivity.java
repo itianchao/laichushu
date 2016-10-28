@@ -22,6 +22,7 @@ import com.sofacity.laichushu.menus.TxtProgressMenu;
 import com.sofacity.laichushu.menus.TxtStyleMenu;
 import com.sofacity.laichushu.menus.TxtTextMenu;
 import com.sofacity.laichushu.menus.TxtViewMenu;
+import com.sofacity.laichushu.utils.SharePrefManager;
 
 import hwtxtreader.bean.TxtFile;
 import hwtxtreader.bean.TxtLoadListsner;
@@ -36,14 +37,14 @@ import hwtxtreader.main.TxtViewCenterAreaTouchListener;
 
 public class BookPlayActivity extends Activity {
 
-    private TxtReadView txtreadview;
+    private TxtReadView txtreadview;//阅读主页
     private TxtManager txtManager;
-    private TxtViewMenu mMenu;
-    private TxtTextMenu mTxtTextMenu;
-    private RelativeLayout mTitlebar;
-    private TxtProgressMenu mProgressMenu;
-    private TxtStyleMenu mStyleMenu;
-    private TxtBrightMenu mBrightMenu;
+    private TxtViewMenu mMenu;//popwindow
+    private TxtTextMenu mTxtTextMenu;//字体
+    private RelativeLayout mTitlebar;//标题
+    private TxtProgressMenu mProgressMenu;//进度
+    private TxtBrightMenu mBrightMenu;//亮度
+    private TxtStyleMenu mStyleMenu;//样式
     private RelativeLayout mLoadingView;
     private RelativeLayout mNodataView;
     private AnimationDrawable mAnimation;
@@ -65,12 +66,7 @@ public class BookPlayActivity extends Activity {
     }
 
     private void initedata() {
-        mMenu = new TxtViewMenu(this);
-        mTxtTextMenu = new TxtTextMenu(this, 30);
-        mTitlebar.setVisibility(View.GONE);
-        mStyleMenu = new TxtStyleMenu(this);
-        mBrightMenu = new TxtBrightMenu(this);
-        mProgressMenu = new TxtProgressMenu(this);
+
         String path;
         Intent intent = getIntent();
         mBookname = intent.getStringExtra("bookname");
@@ -92,13 +88,31 @@ public class BookPlayActivity extends Activity {
 
                 showNodataViewMsg(txterror.message);
             }
+
         });
+
+        mMenu = new TxtViewMenu(this);
+        mTxtTextMenu = new TxtTextMenu(this, SharePrefManager.getTextSize());
+        mTitlebar.setVisibility(View.GONE);
+        mStyleMenu = new TxtStyleMenu(this);
+        mBrightMenu = new TxtBrightMenu(this);
+        mProgressMenu = new TxtProgressMenu(this,mBookname);
 
         txtFile.setFilepath(path);
         txtreadview.setTxtManager(txtManager);
         registListener();
         startloadbook();
-
+        //设置字体大小
+        txtManager.getViewConfig().setTextSize(SharePrefManager.getTextSize());
+        //设置样式
+        txtManager.getViewConfig().setBackBroundColor(SharePrefManager.getReadState());
+        if (SharePrefManager.getReadState() == R.drawable.reading__reading_themes_vine_dark) {
+            txtManager.getViewConfig().setTextColor(Color.WHITE);
+        } else {
+            txtManager.getViewConfig().setTextColor(Color.BLACK);
+        }
+        //提交设置
+        txtManager.CommitSetting();
     }
 
     private void startloadbook() {
@@ -247,7 +261,6 @@ public class BookPlayActivity extends Activity {
                 txtManager.getViewConfig().setTextSize(spTextsize);
                 txtManager.CommitSetting();
                 txtManager.jumptopage(1);
-
             }
 
             @Override
@@ -256,7 +269,6 @@ public class BookPlayActivity extends Activity {
                 txtManager.getViewConfig().setTextSort(textsort);
                 txtManager.CommitSetting();
                 txtManager.jumptopage(1);
-
             }
 
         });
@@ -275,7 +287,7 @@ public class BookPlayActivity extends Activity {
 
             @Override
             public void onStyleChange(int stylecolor) {
-                if (stylecolor == TxtStyleMenu.STYLE_BLACK) {
+                if (stylecolor == R.drawable.reading__reading_themes_vine_dark) {
                     txtManager.getViewConfig().setTextColor(Color.WHITE);
                 } else {
                     txtManager.getViewConfig().setTextColor(Color.BLACK);
@@ -285,7 +297,6 @@ public class BookPlayActivity extends Activity {
                 txtManager.refreshBitmapBackground();
             }
         });
-
     }
 
     // ------------------------------------view---------------------------------------------------
@@ -464,5 +475,13 @@ public class BookPlayActivity extends Activity {
         if (txtManager != null) {
             txtManager.Clear();
         }
+    }
+
+    public TxtManager getTxtManager() {
+        return txtManager;
+    }
+
+    public void setTxtManager(TxtManager txtManager) {
+        this.txtManager = txtManager;
     }
 }

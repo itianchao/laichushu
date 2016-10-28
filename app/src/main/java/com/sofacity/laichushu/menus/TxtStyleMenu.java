@@ -15,14 +15,15 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.utils.SharePrefManager;
 
 public class TxtStyleMenu extends PopupWindow {
 
-	public static final int STYLE_DEFOULT = R.drawable.reading__reading_themes_vine_paper;
-	public static final int STYLE_BLACK = R.drawable.reading__reading_themes_vine_dark;
-	public static final int STYLE_GRAY = R.drawable.reading__reading_themes_vine_green;
-	public static final int STYLE_BULE = R.drawable.reading__reading_themes_vine_white;
-	public static final int STYLE_YELLOW = R.drawable.reading__reading_themes_vine_yellow1;
+	public static final int STYLE_PAPE = R.drawable.reading__reading_themes_vine_pager;
+	public static final int STYLE_GREEN2 = R.drawable.reading__reading_themes_vine_green2;
+	public static final int STYLE_GREEN = R.drawable.reading__reading_themes_vine_green;
+	public static final int STYLE_DEFOULT = R.drawable.reading__reading_themes_vine_white;
+	public static final int STYLE_GRAY = R.drawable.reading__reading_themes_vine_gary;
 
 	private Context mContext;
 	private int mWindow_With;
@@ -80,10 +81,10 @@ public class TxtStyleMenu extends PopupWindow {
 		final View slid5 = layout.findViewById(R.id.txtstyle5_tag);
 
 		view1.setBackgroundResource(STYLE_DEFOULT);
-		view2.setBackgroundResource(STYLE_BLACK);
-		view3.setBackgroundResource(STYLE_GRAY);
-		view4.setBackgroundResource(STYLE_BULE);
-		view5.setBackgroundResource(STYLE_YELLOW);
+		view2.setBackgroundResource(STYLE_GREEN);
+		view3.setBackgroundResource(STYLE_PAPE);
+		view4.setBackgroundResource(STYLE_GREEN);
+		view5.setBackgroundResource(STYLE_GRAY);
 
 		mSelectedposition = 1;
 		SelectedTag = slid1;
@@ -92,16 +93,14 @@ public class TxtStyleMenu extends PopupWindow {
 
 			@Override
 			public void onClick(View arg0) {
-
-				if (mSelectedposition != 1) {
-
+				if (mSelectedposition!=1){
 					mListener.onStyleChange(STYLE_DEFOULT);
 					hideSlidtag(SelectedTag);
 					SelectedTag = slid1;
 					mSelectedposition = 1;
 					showSlidTag(SelectedTag);
+					SharePrefManager.setReadMoudle(STYLE_DEFOULT);
 				}
-
 			}
 		});
 
@@ -109,15 +108,14 @@ public class TxtStyleMenu extends PopupWindow {
 
 			@Override
 			public void onClick(View arg0) {
-
-				if (mSelectedposition != 2) {
-					mListener.onStyleChange(STYLE_BLACK);
+				if (mSelectedposition !=2) {
+					mListener.onStyleChange(STYLE_GREEN2);
 					hideSlidtag(SelectedTag);
 					SelectedTag = slid2;
 					mSelectedposition = 2;
 					showSlidTag(SelectedTag);
+					SharePrefManager.setReadMoudle(STYLE_GREEN2);
 				}
-
 			}
 		});
 
@@ -125,14 +123,14 @@ public class TxtStyleMenu extends PopupWindow {
 
 			@Override
 			public void onClick(View arg0) {
-				if (mSelectedposition != 3) {
-					mListener.onStyleChange(STYLE_GRAY);
+				if (mSelectedposition!=3){
+					mListener.onStyleChange(STYLE_PAPE);
 					hideSlidtag(SelectedTag);
 					SelectedTag = slid3;
 					mSelectedposition = 3;
 					showSlidTag(SelectedTag);
+					SharePrefManager.setReadMoudle(STYLE_PAPE);
 				}
-
 			}
 		});
 
@@ -140,14 +138,14 @@ public class TxtStyleMenu extends PopupWindow {
 
 			@Override
 			public void onClick(View arg0) {
-				if (mSelectedposition != 4) {
-					mListener.onStyleChange(STYLE_BULE);
+				if (mSelectedposition!=4){
+					mListener.onStyleChange(STYLE_GREEN2);
 					hideSlidtag(SelectedTag);
 					SelectedTag = slid4;
 					mSelectedposition = 4;
 					showSlidTag(SelectedTag);
+					SharePrefManager.setReadMoudle(STYLE_GREEN2);
 				}
-
 			}
 		});
 
@@ -155,19 +153,18 @@ public class TxtStyleMenu extends PopupWindow {
 
 			@Override
 			public void onClick(View arg0) {
-				if (mSelectedposition != 5) {
-					mListener.onStyleChange(STYLE_YELLOW);
+				if (mSelectedposition!=5) {
+					mListener.onStyleChange(STYLE_GRAY);
 					hideSlidtag(SelectedTag);
 					SelectedTag = slid5;
 					mSelectedposition = 5;
 					showSlidTag(SelectedTag);
+					SharePrefManager.setReadMoudle(STYLE_GRAY);
 				}
-
 			}
 		});
 
 		this.setBackgroundDrawable(dw);
-
 	}
 
 	private void hideSlidtag(View mSelectedTag) {
@@ -181,7 +178,5 @@ public class TxtStyleMenu extends PopupWindow {
 
 	public interface onTxtStyleChangeListener {
 		public void onStyleChange(int stylecolor);
-
 	}
-
 }

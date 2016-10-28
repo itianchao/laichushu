@@ -9,22 +9,26 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.utils.SharePrefManager;
 
-public class TxtTextMenu extends PopupWindow {
+public class TxtTextMenu extends PopupWindow implements OnClickListener {
 
     private final int MIN_TEXTSIZE = 30;
     private final int MAX_TEXTSIZE = 50;
     private Context mContext;
     private int mWindow_With;
     private int mWindow_Heigh;
-    private int TextSizee = MIN_TEXTSIZE;
+    private int TextSizee = 30;   //当前屏幕的字体大小需要保存
     private onTxtTextChangeListener mListener;
+    private TextView textsizeTv;
 
     public TxtTextMenu(Context context, int defualttextsize) {
         this.mContext = context;
@@ -45,7 +49,7 @@ public class TxtTextMenu extends PopupWindow {
         mWindow_Heigh = metrics.heightPixels;
 
         int rootwith = mWindow_With;
-        int rootheigh = mWindow_Heigh / 7;
+        int rootheigh = mWindow_Heigh / 11;
 
         LinearLayout layout = (LinearLayout) LinearLayout.inflate(mContext, R.layout.txttextmenu_layout, null);
 
@@ -57,37 +61,14 @@ public class TxtTextMenu extends PopupWindow {
         ColorDrawable dw = new ColorDrawable(Color.parseColor("#88000000"));
         this.setBackgroundDrawable(dw);
 
-        Button decreasetextsize = (Button) layout.findViewById(R.id.txttextmenu_textsize_decrease);
-        Button add = (Button) layout.findViewById(R.id.txttextmenu_textsize_add);
+        ImageView decreasetextsize = (ImageView) layout.findViewById(R.id.txttextmenu_textsize_decrease);
+        ImageView add = (ImageView) layout.findViewById(R.id.txttextmenu_textsize_add);
         RadioGroup group = (RadioGroup) layout.findViewById(R.id.txttextmenu_texsort_radiogroup);
-
-        decreasetextsize.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                TextSizee--;
-
-                if (mListener != null && TextSizee >= MIN_TEXTSIZE) {
-                    mListener.onTextSizeChange(TextSizee);
-                }
-
-                TextSizee = TextSizee < MIN_TEXTSIZE ? MIN_TEXTSIZE : TextSizee;
-            }
-        });
-
-        add.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                TextSizee++;
-
-                if (mListener != null && TextSizee <= MAX_TEXTSIZE) {
-                    mListener.onTextSizeChange(TextSizee);
-                }
-                TextSizee = TextSizee > MAX_TEXTSIZE ? MAX_TEXTSIZE : TextSizee;
-            }
-        });
-
+        textsizeTv = (TextView) layout.findViewById(R.id.txttextmenu_textsize_text);
+        textsizeTv.setText(TextSizee + "");
+        //改变字体大小的按纽
+        decreasetextsize.setOnClickListener(this);
+        add.setOnClickListener(this);
         group.check(R.id.txttextmenu_texsort_1);
 
         group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -115,6 +96,32 @@ public class TxtTextMenu extends PopupWindow {
 
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txttextmenu_textsize_decrease:
+
+                TextSizee--;
+                if (mListener != null && TextSizee >= MIN_TEXTSIZE) {
+                    mListener.onTextSizeChange(TextSizee);
+                    textsizeTv.setText(TextSizee + "");
+                    SharePrefManager.setTextSize(TextSizee);
+                }
+                TextSizee = TextSizee < MIN_TEXTSIZE ? MIN_TEXTSIZE : TextSizee;
+
+                break;
+            case R.id.txttextmenu_textsize_add:
+                TextSizee++;
+                if (mListener != null && TextSizee <= MAX_TEXTSIZE) {
+                    mListener.onTextSizeChange(TextSizee);
+                    textsizeTv.setText(TextSizee + "");
+                    SharePrefManager.setTextSize(TextSizee);
+                }
+                TextSizee = TextSizee > MAX_TEXTSIZE ? MAX_TEXTSIZE : TextSizee;
+                break;
+        }
     }
 
     public interface onTxtTextChangeListener {

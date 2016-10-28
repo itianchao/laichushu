@@ -14,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.utils.SharePrefManager;
 
 public class TxtViewMenu extends PopupWindow {
 	private Context mContext;
@@ -41,7 +42,7 @@ public class TxtViewMenu extends PopupWindow {
 		mWindow_Heigh = metrics.heightPixels;
 
 		int rootwith = mWindow_With;
-		int rootheigh = mWindow_Heigh / 7;
+		int rootheigh = mWindow_Heigh / 11;
 
 		LinearLayout layout = (LinearLayout) LinearLayout.inflate(mContext, R.layout.txtmenu_layout, null);
 
@@ -71,8 +72,10 @@ public class TxtViewMenu extends PopupWindow {
 
 			@Override
 			public void onClick(View arg0) {
-				if (mListener != null)
+				if (mListener != null){
 					mListener.onProgressMenuClicked();
+					SharePrefManager.setIsShowToast(true);
+				}
 			}
 		});
 

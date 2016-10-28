@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#a8000000"
     android:orientation="horizontal"
-    android:weightSum="4" >
+    android:weightSum="4">
 
     <RelativeLayout
         android:id="@+id/txtmenu_textlayout"
@@ -15,25 +15,18 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:background="@drawable/menu_bg_selector"
-        android:clickable="true" >
+        android:clickable="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:layout_centerInParent="true"
-            android:orientation="vertical" >
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/txt_text" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="字体"
-                android:textColor="@android:color/white" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -46,56 +39,19 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:background="@drawable/menu_bg_selector"
-        android:clickable="true" >
+        android:clickable="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/txt_progress" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="进度"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/txtmenu_stytlelayout"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/menu_bg_selector"
-        android:clickable="true" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/txt_style" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="风格"
-                android:textColor="@android:color/white" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -108,26 +64,44 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:background="@drawable/menu_bg_selector"
-        android:clickable="true" >
+        android:clickable="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/txt_light" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="亮度"
-                android:textColor="@android:color/white" />
         </LinearLayout>
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/txtmenu_stytlelayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:clickable="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/txt_style" />
+        </LinearLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>

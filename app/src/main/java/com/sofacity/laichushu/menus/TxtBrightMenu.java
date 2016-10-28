@@ -15,39 +15,46 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.ui.widget.BookPlayActivity;
+import com.sofacity.laichushu.utils.SharePrefManager;
 
-public class TxtBrightMenu extends PopupWindow {
+import hwtxtreader.main.TxtManager;
+
+public class TxtBrightMenu extends PopupWindow implements View.OnClickListener {
 	private Context mContext;
 	private int mWindow_With;
 	private int mWindow_Heigh;
 	private SeekBar mSeekBar;
 	private TextView mText;
 	private Button mConcern;
-
+	private int state;
+	private TxtManager txtManager;
 	public TxtBrightMenu(Context context) {
 		this.mContext = context;
 		inite();
 	}
 
 	private void inite() {
+		txtManager = ((BookPlayActivity) mContext).getTxtManager();
 		SaveSystemdefaultBrignhtness(mContext);
 		WindowManager m = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 		DisplayMetrics metrics = new DisplayMetrics();
 		m.getDefaultDisplay().getMetrics(metrics);
-
+		state = SharePrefManager.getReadMoudle();
 		mWindow_With = metrics.widthPixels;
 		mWindow_Heigh = metrics.heightPixels;
 
 		int rootwith = mWindow_With;
-		int rootheigh = mWindow_Heigh / 7;
+		int rootheigh = mWindow_Heigh / 11;
 
-		RelativeLayout layout = (RelativeLayout) LinearLayout.inflate(mContext, R.layout.txtlightmenu, null);
+		LinearLayout layout = (LinearLayout) LinearLayout.inflate(mContext, R.layout.txtlightmenu, null);
 
 		this.setWidth(rootwith);
 		this.setHeight(rootheigh);
@@ -61,7 +68,15 @@ public class TxtBrightMenu extends PopupWindow {
 		mConcern = (Button) layout.findViewById(R.id.txtprogress_concern);
 		mConcern.setVisibility(View.GONE);
 		mText = (TextView) layout.findViewById(R.id.txtprogress_text);
-
+		RadioButton sunRbn = (RadioButton) layout.findViewById(R.id.rbn_sun);
+		RadioButton moonRbn = (RadioButton) layout.findViewById(R.id.rbn_moon);
+		sunRbn.setOnClickListener(this);
+		moonRbn.setOnClickListener(this);
+		if (state == R.drawable.reading__reading_themes_vine_dark ){
+			onClick(moonRbn);
+		}else {
+			onClick(sunRbn);
+		}
 		int systembrightness = getSystemdefaultBrignhtness();
 		int p = systembrightness * 100 / 255;
 
@@ -130,6 +145,29 @@ public class TxtBrightMenu extends PopupWindow {
 
 	public void setBrightness(int progress) {
 		mSeekBar.setProgress(progress);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+			//切换模式
+		    case R.id.rbn_sun:
+				SharePrefManager.setReadState(SharePrefManager.getReadMoudle());
+				txtManager.getViewConfig().setBackBroundColor(SharePrefManager.getReadMoudle());
+				txtManager.getViewConfig().setTextColor(Color.BLACK);
+				txtManager.CommitSetting();
+				txtManager.refreshBitmapBackground();
+				break;
+		    case R.id.rbn_moon:
+				//设置颜色
+				SharePrefManager.setReadState(R.drawable.reading__reading_themes_vine_dark);
+				txtManager.getViewConfig().setBackBroundColor(SharePrefManager.getReadState());
+				txtManager.getViewConfig().setTextColor(Color.WHITE);
+				txtManager.CommitSetting();
+				txtManager.refreshBitmapBackground();
+		        break;
+		}
+
 	}
 
 }

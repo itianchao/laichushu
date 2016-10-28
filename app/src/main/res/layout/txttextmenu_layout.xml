@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="5dp"
     android:background="@color/memubg_color"
     android:orientation="vertical"
-    android:weightSum="2" >
+    android:gravity="center_vertical"
+    android:weightSum="2">
 
     <LinearLayout
         
@@ -18,6 +20,7 @@
         android:weightSum="8" >
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -25,33 +28,30 @@
             android:text="字号  "
             android:textColor="@android:color/white" />
 
-        <Button
+        <ImageView
             android:id="@+id/txttextmenu_textsize_decrease"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="@drawable/menu_bg_selector"
-            android:text="小"
-            android:textColor="@android:color/white" >
-        </Button>
+           android:src="@drawable/reduce_font" />
 
-        <View
+        <TextView
+            android:gravity="center"
             android:id="@+id/txttextmenu_textsize_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:textColor="@android:color/white" />
+            android:textSize="@dimen/edit2"
+            tools:text="12"
+            android:textColor="@color/fontsize" />
 
-        <Button
+        <ImageView
             android:id="@+id/txttextmenu_textsize_add"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="@drawable/menu_bg_selector"
-            android:text="大"
-            android:textColor="@android:color/white" >
-        </Button>
+            android:src="@drawable/add_font" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,6 +59,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:paddingRight="5dp"
         android:weightSum="8" >
@@ -75,7 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            
+
             android:id="@+id/txttextmenu_texsort_radiogroup"
             android:checkedButton="@+id/txttextmenu_texsort_1"
             android:orientation="horizontal"
@@ -83,9 +84,9 @@
 
             <RadioButton
                 android:id="@+id/txttextmenu_texsort_1"
-                android:layout_width="0dp"               
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"               
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/txttextmenu_radiobutton_selector"
                 android:button="@null"

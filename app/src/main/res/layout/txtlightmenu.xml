@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     android:background="@color/memubg_color" >
-
+    <RadioGroup
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_margin="10dp"
+            android:checked="true"
+            android:gravity="center"
+            android:text="日间模式"
+            android:textColor="@drawable/select_moon_color"
+            android:id="@+id/rbn_sun"
+            android:background="@drawable/select_moon_button"
+            android:button="@null"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="40dp" />
+        <RadioButton
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="夜间模式"
+            android:textColor="@drawable/select_moon_color"
+            android:id="@+id/rbn_moon"
+            android:background="@drawable/select_moon_button"
+            android:button="@null"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="40dp" />
+    </RadioGroup>
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/txtprogress_concern"
@@ -34,6 +64,7 @@
     </LinearLayout>
 
     <Button
+        android:visibility="gone"
         android:background="@drawable/txtprogressmenu_bt_selector"
         android:id="@+id/txtprogress_concern"
         android:layout_width="wrap_content"
@@ -45,4 +76,4 @@
         android:padding="5dp"
         android:text="确定" />
 
-</RelativeLayout>
+</LinearLayout>
