@@ -26,7 +26,7 @@ public class HomeTitleViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return imageList==null?0:imageList.size();
+        return imageList==null?0:Integer.MAX_VALUE;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class HomeTitleViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView v = new ImageView(mActivity);
-        Glide.with(mActivity).load(imageList.get(position)).centerCrop().into(v);
+        Glide.with(mActivity).load(imageList.get(position%imageList.size())).centerCrop().into(v);
         container.addView(v);
         return v;
     }
