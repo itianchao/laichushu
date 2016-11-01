@@ -6,8 +6,10 @@ package com.sofacity.laichushu.mvp.home;
  */
 public interface HomeView {
     void getDataSuccess(HomeModel model);
+    void getHotDataSuccess(HomeHotModel model);
     void getDataFail(String msg);
     void showLoading();
     void hideLoading();
     void initData();
+
 }

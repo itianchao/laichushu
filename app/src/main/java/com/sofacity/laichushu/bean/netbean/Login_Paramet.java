@@ -1,7 +1,7 @@
 package com.sofacity.laichushu.bean.netbean;
 
 /**
- * 登录
+ * 登录 参数
  * Created by wangtong on 2016/10/12.
  */
 public class Login_Paramet {

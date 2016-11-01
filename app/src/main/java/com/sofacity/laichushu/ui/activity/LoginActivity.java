@@ -67,9 +67,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         switch (v.getId()) {
             case R.id.bt_login:
                 //登录
-                if (mvpPresenter.login(usernameEt,passwordEt)) {
-                    //请求网络登录
-                }
+                mvpPresenter.login(usernameEt,passwordEt);
                 break;
             case R.id.tv_register:
                 //注册
@@ -89,7 +87,9 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         if (model.isSuccess()) {
             String username = usernameEt.getText().toString().trim();
             String password = passwordEt.getText().toString().trim();
-            mvpPresenter.lastLogin(username, password);
+            String userId = model.getUserId();
+            String token = model.getToken();
+            mvpPresenter.lastLogin(username, password,userId,token);
         } else {
             String errMsg = model.getErrMsg();
             if (errMsg.contains(UIUtil.getString(R.string.errMsg2))) {
@@ -103,10 +103,9 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             }
         }
     }
-
     @Override
     public void getDataFail(String msg) {
-        toastShow("网络连接失败，请检查网络设置");
+        toastShow(msg);
         Logger.e("网络失败原因：", msg);
     }
 

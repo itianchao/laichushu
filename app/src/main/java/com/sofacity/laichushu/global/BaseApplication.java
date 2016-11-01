@@ -8,7 +8,7 @@ import android.os.Looper;
 
 import com.sofacity.laichushu.db.DaoMaster;
 import com.sofacity.laichushu.db.DaoSession;
-import com.sofacity.laichushu.db.UserDao;
+import com.sofacity.laichushu.db.Search_HistoryDao;
 import com.sofacity.laichushu.utils.SharePrefManager;
 
 /**
@@ -69,14 +69,14 @@ public class BaseApplication extends Application {
          * 参数3 : CursorFactroy
          */
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "laichushu.db", null);
-        // 获取数据库
+//        // 获取数据库
         SQLiteDatabase database = helper.getWritableDatabase();
-        // 获取DaoMaster
+//        // 获取DaoMaster
         DaoMaster daoMaster = new DaoMaster(database);
-        // 获取Session
+//        // 获取Session
         DaoSession daoSession = daoMaster.newSession();
-        // 获取对应的表的DAO对象
-        UserDao mUserDao = daoSession.getUserDao();
+//        // 获取对应的表的DAO对象
+        Search_HistoryDao search_historyDao = daoSession.getSearch_HistoryDao();
     }
     private class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
         //当发现了未捕获异常的时候调用的方法

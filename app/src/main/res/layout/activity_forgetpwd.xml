@@ -7,6 +7,7 @@
     <LinearLayout
         style="@style/edit_ll_style">
         <EditText
+            android:imeOptions="actionNext"
             android:id="@+id/et_phone"
             android:hint="@string/phoneHint"
             style="@style/edit_item_style" />
@@ -19,6 +20,7 @@
             style="@style/edit_item_style" />
         <TextView
             android:id="@+id/tv_getcode"
+            android:imeOptions="actionNext"
             android:layout_marginRight="8dp"
             android:gravity="center"
             android:text="@string/getcode"
@@ -31,6 +33,7 @@
         style="@style/edit_ll_style">
         <EditText
             android:id="@+id/et_new_pwd"
+            android:imeOptions="actionNext"
             android:hint="@string/newpwdHint"
             style="@style/edit_item_style" />
     </LinearLayout>
@@ -39,6 +42,7 @@
         <EditText
             android:id="@+id/et_re_pwd"
             android:hint="@string/repwdHint"
+            android:imeOptions="actionGo"
             style="@style/edit_item_style" />
     </LinearLayout>
     <Button

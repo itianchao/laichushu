@@ -6,6 +6,7 @@ package com.sofacity.laichushu.mvp.forgetpwd;
  */
 public interface ForgetPwdView {
     void getDataSuccess(ForgetPwdModel model);
+    void getCodeDataSuccess(ForgetPwdCodeModel model);
     void getDataFail(String msg);
     void showLoading();
     void hideLoading();

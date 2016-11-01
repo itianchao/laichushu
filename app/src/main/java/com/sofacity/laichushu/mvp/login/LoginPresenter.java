@@ -104,9 +104,17 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 });
     }
 
-    public void lastLogin(String username, String password) {
+    public void lastLogin(String username, String password, String userId, String token) {
         //记住密码
         SharePrefManager.setLoginInfo(username + "," + password);
+        //保存userId
+        SharePrefManager.setUserId(userId);
+        //保存token
+        SharePrefManager.setToken(token);
+        //
+
+        //
+
         //延时跳转页面
         UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
             @Override

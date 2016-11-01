@@ -2,12 +2,17 @@ package com.sofacity.laichushu.retrofit;
 
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.BuildConfig;
+import com.sofacity.laichushu.utils.SharePrefManager;
 import com.sofacity.laichushu.utils.UIUtil;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -35,6 +40,18 @@ public class AppClient {
             builder.connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)
                     .writeTimeout(10, TimeUnit.SECONDS)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public Response intercept(Chain chain) throws IOException {
+                            Request request = chain.request()
+                                    .newBuilder()
+                                    .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                                    .addHeader("token", SharePrefManager.getToken())
+                                    .addHeader("userId", SharePrefManager.getUserId())
+                                    .build();
+                            return chain.proceed(request);
+                        }
+                    })
                     .cache(new Cache(UIUtil.getContext().getCacheDir(), 20 * 1024 * 1024));
             OkHttpClient okHttpClient = builder.build();
             mRetrofit = new Retrofit.Builder()

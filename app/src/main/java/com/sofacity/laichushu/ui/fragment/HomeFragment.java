@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.mvp.home.HomeModel;
 import com.sofacity.laichushu.mvp.home.HomePresenter;
 import com.sofacity.laichushu.mvp.home.HomeView;
@@ -20,10 +22,12 @@ import com.sofacity.laichushu.ui.activity.HomeSearchActivity;
 import com.sofacity.laichushu.ui.adapter.HomeRecyclerAdapter;
 import com.sofacity.laichushu.ui.adapter.HomeTitleViewPagerAdapter;
 import com.sofacity.laichushu.ui.base.MvpFragment;
+import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 首页
@@ -36,9 +40,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private LinearLayout lineLyt;
     private int range;
     private PullLoadMoreRecyclerView mRecyclerView;
-    ArrayList<String> mTitleData = new ArrayList<>();
+    ArrayList<HomeModel.DataBean> mTitleData = new ArrayList<>();
     private ArrayList mData = new ArrayList();
-    private ArrayList mHotData = new ArrayList();
+    private ArrayList<HomeHotModel.DataBean> mHotData = new ArrayList<>();
     private HomeTitleViewPagerAdapter adapter;
     private HomeRecyclerAdapter mAdapter;
     private int item;
@@ -69,12 +73,12 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         searchLyt.setOnClickListener(this);
         return mRootView;
     }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        titleViewPager();
         initRecycler();
+        mvpPresenter.loadHomeCarouseData();//请求网络获取轮播图
+        mvpPresenter.loadHomeHotData();//请求网络获取热门
     }
 
     /**
@@ -83,15 +87,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private void initRecycler() {
         mHotData.clear();
         mData.clear();
-        for (int i = 0; i < 9; i++) {
-            mHotData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
-        }
-        for (int i = 0; i < 9; i++) {
-            mData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
-        }
         mRecyclerView.setLinearLayout();
-        mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData,mvpPresenter);
-        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setFooterViewText("加载中");
         mRecyclerView.setOnPullLoadMoreListener(this);
     }
@@ -100,8 +96,6 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      * 标题轮播图
      */
     private void titleViewPager() {
-        mTitleData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
-        mTitleData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
         adapter = new HomeTitleViewPagerAdapter(mTitleData,mActivity);
         homeVp.setAdapter(adapter);
         int remainder = Integer.MAX_VALUE / 2 % mTitleData.size();
@@ -116,9 +110,6 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             }
         });
         for (int i = 0; i < mTitleData.size(); i++) {
-            if (lineLyt.getChildCount()>1){
-                return;
-            }
             ImageView imageView = new ImageView(mActivity);
             imageView.setBackgroundResource(R.drawable.shape_point_hollow);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -132,19 +123,23 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        mRefreshWidgetHandler.post(refreshThread);
+    public void getDataSuccess(HomeModel model) {
+        mTitleData = (ArrayList<HomeModel.DataBean>) model.getData();
+        titleViewPager();
+        mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData,mvpPresenter);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
-    public void getDataSuccess(HomeModel model) {
-
+    public void getHotDataSuccess(HomeHotModel model) {
+        mHotData = (ArrayList) model.getData();
+        mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData,mvpPresenter);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void getDataFail(String msg) {
-
+        Logger.e(msg);
     }
 
     @Override
@@ -209,14 +204,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             public void run() {
                 mRecyclerView.setPullLoadMoreCompleted();
             }
-        },2000);
+        }, 2000);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mRefreshWidgetHandler.removeCallbacks(refreshThread);
-    }
 
     @Override
     public void onClick(View v) {
@@ -224,6 +214,16 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             case R.id.lay_search:
                 UIUtil.openActivity(getActivity(), HomeSearchActivity.class);
                 break;
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+            mRefreshWidgetHandler.post(refreshThread);
+        }else {
+            mRefreshWidgetHandler.removeCallbacks(refreshThread);
         }
     }
 }

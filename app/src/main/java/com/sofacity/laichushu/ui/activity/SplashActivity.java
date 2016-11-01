@@ -43,7 +43,7 @@ public class SplashActivity extends BaseActivity {
         loadActivity();
     }
     private void loadActivity( ){
-        //如果保存了帐号和密码，跳转主页面
+//        如果保存了帐号和密码，跳转主页面
         if (!TextUtils.isEmpty(SharePrefManager.getLoginInfo())) {
             loadActivity = MainActivity.class;
         }else {
@@ -59,7 +59,6 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 UIUtil.openActivity(mActivity, loadActivity);
-//                UIUtil.openActivity(mActivity, MainActivity.class);
                 finish();
             }
         }, 2000);

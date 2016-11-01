@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.TextView;
 
+import com.sofacity.laichushu.bean.netbean.Regist_Paramet;
+import com.sofacity.laichushu.retrofit.ApiCallback;
+import com.sofacity.laichushu.retrofit.ApiStores;
 import com.sofacity.laichushu.ui.activity.Regist2Activity;
 import com.sofacity.laichushu.ui.base.BasePresenter;
 import com.sofacity.laichushu.utils.ToastUtil;
@@ -74,5 +77,31 @@ public class RegistPresenter2 extends BasePresenter<RegistView2> {
                     }
                 })
                 .show();
+    }
+
+    //注册请求网络
+    public void regist(String phonenum, String name, String sex, String pwd){
+        if (sex.equals("男")){
+            sex = "1";
+        }else{
+            sex = "2";
+        }
+        Regist_Paramet paramet = new Regist_Paramet(phonenum,name,sex,pwd);
+        addSubscription(apiStores.registData(paramet), new ApiCallback<RegistModel2>() {
+            @Override
+            public void onSuccess(RegistModel2 model) {
+                mvpView.getDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
     }
 }

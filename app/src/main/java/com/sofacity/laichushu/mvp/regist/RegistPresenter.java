@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
+import com.sofacity.laichushu.bean.netbean.RegistValid_Paramet;
 import com.sofacity.laichushu.mvp.login.LoginModel;
 import com.sofacity.laichushu.retrofit.ApiCallback;
 import com.sofacity.laichushu.ui.activity.RegistActivity;
@@ -32,14 +33,14 @@ public class RegistPresenter extends BasePresenter<RegistView> {
         mActivity = (RegistActivity) view;
     }
     public void loadCode(String phone){
-//        mvpView.showLoading();
-//        Login_Paramet paramet = new Login_Paramet();
-//        Logger.e("登录请求参数");
+        mvpView.showLoading();
+
+//        Logger.e("校验code参数");
 //        Logger.json(new Gson().toJson(paramet));
 //        addSubscription(apiStores.loginLoadData(paramet),
-//                new ApiCallback<LoginModel>() {
+//                new ApiCallback<RegistCodeModel>() {
 //                    @Override
-//                    public void onSuccess(LoginModel model) {
+//                    public void onSuccess(RegistCodeModel model) {
 //                        mvpView.getDataSuccess(model);
 //                    }
 //
@@ -73,7 +74,8 @@ public class RegistPresenter extends BasePresenter<RegistView> {
             ToastUtil.showToast("请输入正确的手机号!");
             return;
         }
-        loadCode(phonenum);
+        //
+        loadCode(phonenum);//发送验证码
         codeTv.setClickable(false);
         TIME = 60;
         new Thread(new Runnable() {
@@ -129,7 +131,7 @@ public class RegistPresenter extends BasePresenter<RegistView> {
             ToastUtil.showToast("验证码位数不正确，请重新输入！");
             return isCheck = false;
         }
-        if (code.length()<8){
+        if (code.length()>8){
             ToastUtil.showToast("验证码位数不正确，请重新输入！");
             return isCheck = false;
         }
@@ -151,5 +153,30 @@ public class RegistPresenter extends BasePresenter<RegistView> {
             return isCheck = false;
         }
         return isCheck = true;
+    }
+
+    /**
+     * 校验手机号和验证码
+     * @param phone
+     * @param code
+     */
+    public void valid(String phone, String code) {
+        RegistValid_Paramet paramet = new RegistValid_Paramet(phone,code);
+        addSubscription(apiStores.registCode(paramet), new ApiCallback<RegistModel>() {
+            @Override
+            public void onSuccess(RegistModel model) {
+                mvpView.getDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
     }
 }

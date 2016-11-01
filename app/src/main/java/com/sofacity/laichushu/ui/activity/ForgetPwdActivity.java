@@ -6,7 +6,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdCodeModel;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdModel;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdPresenter;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdView;
@@ -58,12 +60,28 @@ public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implement
 
     @Override
     public void getDataSuccess(ForgetPwdModel model) {
+        hideLoading();
+        if (model.isSuccess()) {
+            ToastUtil.showToast("修改密码成功");
+            UIUtil.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 1700);
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
 
+    @Override
+    public void getCodeDataSuccess(ForgetPwdCodeModel model) {
     }
 
     @Override
     public void getDataFail(String msg) {
-
+        toastShow(msg);
+        Logger.e("网络失败原因：", msg);
     }
 
     @Override
@@ -88,9 +106,12 @@ public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implement
                 break;
             case R.id.bt_finish:
                 String code = codeEt.getText().toString().trim();
-                if (mvpPresenter.check(code)) {
+                String phone = phoneEt.getText().toString().trim();
+                String newPwd = newPwdEt.getText().toString().trim();
+                String rePwd = rePwdEt.getText().toString().trim();
+                if (mvpPresenter.check(code,phone,newPwd,rePwd)) {
                     //请求网络校验
-                    UIUtil.openActivity(mActivity, LoginActivity.class);
+                    mvpPresenter.reset(phone,newPwd,rePwd);
                 }
                 break;
         }

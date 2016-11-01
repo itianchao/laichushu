@@ -8,11 +8,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.mvp.regist2.RegistModel2;
 import com.sofacity.laichushu.mvp.regist2.RegistPresenter2;
 import com.sofacity.laichushu.mvp.regist2.RegistView2;
 import com.sofacity.laichushu.ui.base.MvpActivity;
+import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.net.InterfaceAddress;
@@ -65,13 +67,25 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
 
     @Override
     public void getDataSuccess(RegistModel2 model) {
-        //登陆成功跳转页面
-        UIUtil.openActivity(mActivity, LoginActivity.class);
+        if (model.isSuccess()) {
+            //登陆成功跳转页面
+            ToastUtil.showToast("注册成功");
+            UIUtil.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    UIUtil.openActivity(mActivity, LoginActivity.class);
+                    finish();
+                }
+            }, 1700);
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
     }
 
     @Override
     public void getDataFail(String msg) {
-
+        toastShow(msg);
+        Logger.e("网络失败原因：", msg);
     }
 
     @Override
@@ -98,6 +112,8 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
                 String repwd = repwdEt.getText().toString().trim();
                 if (mvpPresenter.check(name, sex, pwd, repwd)) {
                     //请求网络
+                    showLoading();
+                    mvpPresenter.regist(phonenum, name, sex, pwd);
                 }
                 break;
             case R.id.tv_sex:

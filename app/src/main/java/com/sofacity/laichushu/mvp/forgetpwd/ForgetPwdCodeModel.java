@@ -1,10 +1,10 @@
 package com.sofacity.laichushu.mvp.forgetpwd;
 
 /**
- * 重置密码数据模型
+ * 重置密码 验证码 数据模型
  * Created by wangtong on 2016/10/12.
  */
-public class ForgetPwdModel {
+public class ForgetPwdCodeModel {
 
     /**
      * success : false
@@ -16,6 +16,7 @@ public class ForgetPwdModel {
 
     private boolean success;
     private String errMsg;
+    private String code;
 
     public boolean isSuccess() {
         return success;
@@ -31,5 +32,13 @@ public class ForgetPwdModel {
 
     public void setErrMsg(String errMsg) {
         this.errMsg = errMsg;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

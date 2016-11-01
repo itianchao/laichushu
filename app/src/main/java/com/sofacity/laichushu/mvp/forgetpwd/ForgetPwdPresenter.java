@@ -5,6 +5,10 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
+import com.sofacity.laichushu.bean.netbean.ForgetPwd_Paramet;
+import com.sofacity.laichushu.retrofit.ApiCallback;
 import com.sofacity.laichushu.ui.activity.ForgetPwdActivity;
 import com.sofacity.laichushu.ui.base.BasePresenter;
 import com.sofacity.laichushu.utils.ToastUtil;
@@ -25,13 +29,13 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
 
     public void loadCode(String phone) {
 //        mvpView.showLoading();
-//        Login_Paramet paramet = new Login_Paramet();
+//        ForgetPwd_Paramet paramet = new ForgetPwd_Paramet(,,);
 //        Logger.e("登录请求参数");
 //        Logger.json(new Gson().toJson(paramet));
-//        addSubscription(apiStores.loginLoadData(paramet),
-//                new ApiCallback<LoginModel>() {
+//        addSubscription(apiStores.forgetPwdData(paramet),
+//                new ApiCallback<ForgetPwdModel>() {
 //                    @Override
-//                    public void onSuccess(LoginModel model) {
+//                    public void onSuccess(ForgetPwdModel model) {
 //                        mvpView.getDataSuccess(model);
 //                    }
 //
@@ -105,12 +109,33 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
         return content;
     }
 
-    public boolean check(String code) {
+    public boolean check(String code, String phone, String newPwd, String rePwd) {
         boolean isCheck;
+        if (phone.isEmpty()) {
+            ToastUtil.showToast("手机号不能为空！");
+            return isCheck = false;
+        } else if (newPwd.isEmpty() || rePwd.isEmpty()) {
+            ToastUtil.showToast("密码不能为空！");
+            return isCheck = false;
+        } else if (phone.length() < 11) {
+            ToastUtil.showToast("手机号11位！");
+            return isCheck = false;
+        } else if (newPwd.length() < 6 || rePwd.length() < 6) {
+            ToastUtil.showToast("密码至少6位！");
+            return isCheck = false;
+        }
+        if (!Validator.isMobile(phone)) {
+            ToastUtil.showToast("请输入正确的手机号!");
+            return isCheck = false;
+        }
+        if (!Validator.isUsername(newPwd) || !Validator.isUsername(rePwd)) {
+            ToastUtil.showToast("您输入的密码含有汉字或特殊字符，请重新输入！");
+            return isCheck = false;
+        }
         if (code.length() < 4) {
             ToastUtil.showToast("验证码位数不正确，请重新输入！");
             return isCheck = false;
-        } else if (code.length() < 8) {
+        } else if (code.length() > 8) {
             ToastUtil.showToast("验证码位数不正确，请重新输入！");
             return isCheck = false;
         } else if (!Validator.isUsername(code)) {
@@ -118,5 +143,37 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
             return isCheck = false;
         }
         return isCheck = true;
+    }
+
+    /***
+     * 重置密码
+     *
+     * @param phone
+     * @param newPwd
+     * @param rePwd
+     */
+    public void reset(String phone, String newPwd, String rePwd) {
+        mvpView.showLoading();
+        ForgetPwd_Paramet paramet = new ForgetPwd_Paramet(phone, newPwd, rePwd);
+        Logger.e("登录请求参数");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.forgetPwdData(paramet),
+                new ApiCallback<ForgetPwdModel>() {
+                    @Override
+                    public void onSuccess(ForgetPwdModel model) {
+                        mvpView.getDataSuccess(model);
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mvpView.hideLoading();
+                    }
+
+                });
     }
 }

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.mvp.regist.RegistCodeModel;
 import com.sofacity.laichushu.mvp.regist.RegistModel;
@@ -15,6 +16,7 @@ import com.sofacity.laichushu.mvp.regist.RegistPresenter;
 import com.sofacity.laichushu.mvp.regist.RegistView;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.ui.widget.ServiceTermsDialog;
+import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 
 /**
@@ -61,8 +63,15 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
 
     @Override
     public void getDataSuccess(RegistModel model) {
-        //校验验证码是否正确
-
+        if (model.isSuccess()) {
+            String phone = phoneEt.getText().toString().trim();
+            //校验验证码是否正确
+            Bundle bundle = new Bundle();
+            bundle.putString("phone", phone);
+            UIUtil.openActivity(mActivity, Regist2Activity.class, bundle);
+        }else {
+            ToastUtil.showToast(model.getErrMsg().toString());
+        }
     }
 
     @Override
@@ -72,7 +81,8 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
 
     @Override
     public void getDataFail(String msg) {
-
+        toastShow(msg);
+        Logger.e("网络失败原因：", msg);
     }
 
     @Override
@@ -96,9 +106,8 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
             case R.id.bt_next:
                 //前台校验是否成功
                 if (mvpPresenter.check(phone,code,!codeCk.isChecked())) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("phone", phone);
-                    UIUtil.openActivity(mActivity, Regist2Activity.class, bundle);
+                    showLoading();
+                    mvpPresenter.valid(phone, code);
                 }
                 break;
             //用户协议
