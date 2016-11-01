@@ -1,6 +1,7 @@
 package com.sofacity.laichushu.ui.adapter;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.otherbean.HomeHotImgBean;
+import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.activity.BookDetailActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.UIUtil;
@@ -47,7 +49,7 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = UIUtil.inflate(R.layout.item_home_hot_child);
         ImageView hot1Iv = (ImageView) itemView.findViewById(R.id.iv_hot1);
         ImageView hot2Iv = (ImageView) itemView.findViewById(R.id.iv_hot2);
@@ -59,7 +61,7 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
         TextView name2Tv = (TextView) itemView.findViewById(R.id.tv_name2);
         TextView name3Tv = (TextView) itemView.findViewById(R.id.tv_name3);
 
-        HomeHotImgBean homeHotImgBean = imageList.get(position);
+        final HomeHotImgBean homeHotImgBean = imageList.get(position);
         //设置图片
         if (!TextUtils.isEmpty(homeHotImgBean.getFristImg())) {
             GlideUitl.loadImg(mActivity, homeHotImgBean.getFristImg(), hot1Iv);
@@ -74,21 +76,30 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 //跳转图书详情
-                UIUtil.openActivity(mActivity, BookDetailActivity.class);
+                HomeHotModel.DataBean fristBean = imageList.get(position).getFristBean();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bean",fristBean);
+                UIUtil.openActivity(mActivity, BookDetailActivity.class,bundle);
             }
         });
         hot2Iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //跳转图书详情
-                UIUtil.openActivity(mActivity, BookDetailActivity.class);
+                HomeHotModel.DataBean secondBean = imageList.get(position).getSecondBean();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bean",secondBean);
+                UIUtil.openActivity(mActivity, BookDetailActivity.class,bundle);
             }
         });
         hot3Iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //跳转图书详情
-                UIUtil.openActivity(mActivity, BookDetailActivity.class);
+                HomeHotModel.DataBean thirdtBean = imageList.get(position).getThirdtBean();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bean",thirdtBean);
+                UIUtil.openActivity(mActivity, BookDetailActivity.class,bundle);
             }
         });
         //设置书名

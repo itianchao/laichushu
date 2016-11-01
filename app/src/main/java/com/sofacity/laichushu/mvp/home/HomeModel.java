@@ -22,6 +22,7 @@ public class HomeModel {
      * status : 0
      * statusName : 鍚敤
      */
+    private String errorMsg;
 
     private List<DataBean> data;
 
@@ -39,6 +40,14 @@ public class HomeModel {
 
     public void setData(List<DataBean> data) {
         this.data = data;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     public static class DataBean {
@@ -96,5 +105,6 @@ public class HomeModel {
         public void setStatusName(String statusName) {
             this.statusName = statusName;
         }
+
     }
 }

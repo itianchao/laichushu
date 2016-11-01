@@ -77,8 +77,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRecycler();
-        mvpPresenter.loadHomeCarouseData();//请求网络获取轮播图
-        mvpPresenter.loadHomeHotData();//请求网络获取热门
+        this.setUserVisibleHint(true);
     }
 
     /**
@@ -124,17 +123,24 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     @Override
     public void getDataSuccess(HomeModel model) {
-        mTitleData = (ArrayList<HomeModel.DataBean>) model.getData();
-        titleViewPager();
-        mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData,mvpPresenter);
-        mRecyclerView.setAdapter(mAdapter);
+        hideLoading();
+        if (model.isSuccess()){
+            mTitleData = (ArrayList<HomeModel.DataBean>) model.getData();
+            titleViewPager();
+            mvpPresenter.loadHomeHotData();//请求网络获取热门
+        }else {
+            ToastUtil.showToast(model.getErrorMsg());
+        }
     }
 
     @Override
     public void getHotDataSuccess(HomeHotModel model) {
-        mHotData = (ArrayList) model.getData();
-        mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData,mvpPresenter);
-        mRecyclerView.setAdapter(mAdapter);
+        hideLoading();
+        if (model.isSuccess()){
+            mHotData = (ArrayList<HomeHotModel.DataBean>) model.getData();
+            mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData,mvpPresenter);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     @Override
@@ -155,9 +161,6 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     @Override
     public void initData() {
         mData.clear();
-        for (int i = 0; i < 12; i++) {
-            mData.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg");
-        }
         mAdapter.setmData(mData);
     }
 
@@ -218,12 +221,22 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mRefreshWidgetHandler.postDelayed(refreshThread,5000);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mRefreshWidgetHandler.removeCallbacks(refreshThread);
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser){
-            mRefreshWidgetHandler.post(refreshThread);
-        }else {
-            mRefreshWidgetHandler.removeCallbacks(refreshThread);
+            mvpPresenter.loadHomeCarouseData();//请求网络获取轮播图
         }
     }
 }

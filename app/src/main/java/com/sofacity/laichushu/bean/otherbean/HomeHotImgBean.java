@@ -1,5 +1,7 @@
 package com.sofacity.laichushu.bean.otherbean;
 
+import com.sofacity.laichushu.mvp.home.HomeHotModel;
+
 /**
  * 首页轮最热轮播图
  * Created by wangtong on 2016/10/18.
@@ -9,14 +11,18 @@ public class HomeHotImgBean {
     public String fristImg;
     public String fristTitle;
     public String fristName;
+    private HomeHotModel.DataBean fristBean;
 
     public String secondImg;
     public String secondTitle;
     public String secondName;
+    private HomeHotModel.DataBean secondBean;
 
     public String thirdImg;
     public String thirdTitle;
     public String thirdName;
+    private HomeHotModel.DataBean thirdtBean;
+
 
     public String getFristImg() {
         return fristImg;
@@ -88,5 +94,29 @@ public class HomeHotImgBean {
 
     public void setThirdName(String thirdName) {
         this.thirdName = thirdName;
+    }
+
+    public void setFristBean(HomeHotModel.DataBean fristBean) {
+        this.fristBean = fristBean;
+    }
+
+    public HomeHotModel.DataBean getFristBean() {
+        return fristBean;
+    }
+
+    public void setSecondBean(HomeHotModel.DataBean secondBean) {
+        this.secondBean = secondBean;
+    }
+
+    public HomeHotModel.DataBean getSecondBean() {
+        return secondBean;
+    }
+
+    public void setThirdtBean(HomeHotModel.DataBean thirdtBean) {
+        this.thirdtBean = thirdtBean;
+    }
+
+    public HomeHotModel.DataBean getThirdtBean() {
+        return thirdtBean;
     }
 }

@@ -3,6 +3,7 @@ package com.sofacity.laichushu.ui.activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.base.BaseActivity;
 import com.sofacity.laichushu.ui.widget.BookPlayActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
@@ -34,12 +36,13 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             detailTitleTv, priceTv, lookupTv, probationTv, payTv, msgTv, rewardTv, briefTv,
             authorNameTv, individualTv, authorBriefTv, commentNumberTv;
     private RadioButton readerRbn, dresserRbn;
-
+    private HomeHotModel.DataBean bean;
 
     @Override
     protected void initView() {
         setContentView(R.layout.activity_bookdetail);
         initTitleBar("图书详情");
+        bean = getIntent().getParcelableExtra("bean");
         initFindViewById();
     }
 
@@ -75,16 +78,25 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
      * 初始化图书详情
      */
     private void initDetailBook() {
-        detailBookIv = (ImageView) findViewById(R.id.iv_detail_book);
-        detailTitleTv = (TextView) findViewById(R.id.tv_detail_title);
+        detailBookIv = (ImageView) findViewById(R.id.iv_detail_book);//封面
+        detailTitleTv = (TextView) findViewById(R.id.tv_detail_title);//书名
         detailRatbarTv = (RatingBar) findViewById(R.id.ratbar_detail_num);
         detailMarkTv = (TextView) findViewById(R.id.tv_detail_mark);
-        detailCommentTv = (TextView) findViewById(R.id.tv_detail_comment);
-        detailAuthorTv = (TextView) findViewById(R.id.tv_detail_author);
-        detailTypeTv = (TextView) findViewById(R.id.tv_detail_type);
-        detailWordTv = (TextView) findViewById(R.id.tv_detail_word);
-        detailMoneyTv = (TextView) findViewById(R.id.tv_detail_money);
-        detailRewardTv = (TextView) findViewById(R.id.tv_detail_reward);
+        detailCommentTv = (TextView) findViewById(R.id.tv_detail_comment);//评论数
+        detailAuthorTv = (TextView) findViewById(R.id.tv_detail_author);//作者
+        detailTypeTv = (TextView) findViewById(R.id.tv_detail_type);//分类
+        detailWordTv = (TextView) findViewById(R.id.tv_detail_word);//字数
+        detailMoneyTv = (TextView) findViewById(R.id.tv_detail_money);//打赏金额
+        detailRewardTv = (TextView) findViewById(R.id.tv_detail_reward);//打赏人数
+        //设置数据
+        GlideUitl.loadImg(this, bean.getCoverUrl(), detailBookIv);//封面
+        detailTitleTv.setText(bean.getArticleName());//书名
+        detailCommentTv.setText("(" + bean.getCommentNum() + ")评论");//评论数
+        detailAuthorTv.setText(bean.getAuthorName());//作者
+        detailTypeTv.setText(bean.getTopCategoryName());//分类
+        detailWordTv.setText("约"+bean.getWordNum()+"字");//字数
+        detailMoneyTv.setText(bean.getAwardMoney() + "元");//打赏金额
+        detailRewardTv.setText(bean.getAwardNum() + "人打赏");//打赏人数
     }
 
     /**
@@ -92,16 +104,30 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
      */
     private void initPublic() {
         //未出版
-        nopublishRay = (RelativeLayout) findViewById(R.id.ray_nopublish);
-        createtimeTv = (TextView) findViewById(R.id.tv_createtime);
-        refreshtimeTv = (TextView) findViewById(R.id.tv_refreshtime);
-        numberTv = (TextView) findViewById(R.id.tv_number);
-        subscriptionTv = (TextView) findViewById(R.id.tv_subscription);
+        nopublishRay = (RelativeLayout) findViewById(R.id.ray_nopublish);//未出版布局
+        createtimeTv = (TextView) findViewById(R.id.tv_createtime);//更新时间
+        refreshtimeTv = (TextView) findViewById(R.id.tv_refreshtime);//刷新时间
+        numberTv = (TextView) findViewById(R.id.tv_number);//订阅人数
+        subscriptionTv = (TextView) findViewById(R.id.tv_subscription);//订阅按钮
         //已出版
-        publishLay = (LinearLayout) findViewById(R.id.lay_publish);
-        priceTv = (TextView) findViewById(R.id.tv_price);
-        probationTv = (TextView) findViewById(R.id.tv_probation);
-        payTv = (TextView) findViewById(R.id.tv_pay);
+        publishLay = (LinearLayout) findViewById(R.id.lay_publish);//已出版布局
+        priceTv = (TextView) findViewById(R.id.tv_price);//价格
+        probationTv = (TextView) findViewById(R.id.tv_probation);//免费试读按钮
+        payTv = (TextView) findViewById(R.id.tv_pay);//购买按钮
+        if (bean.getStatus().equals("1")) {//1 未出版
+            nopublishRay.setVisibility(View.VISIBLE);
+            publishLay.setVisibility(View.INVISIBLE);
+//            createtimeTv.setText();
+//            refreshtimeTv.setText();
+            numberTv.setText(bean.getSubscribeNum());
+            subscriptionTv.setOnClickListener(this);
+        } else {//2 已发表 3 出版
+            nopublishRay.setVisibility(View.INVISIBLE);
+            publishLay.setVisibility(View.VISIBLE);
+//            priceTv.setText(bean.);//价格
+            probationTv.setOnClickListener(this);//免费试读按钮
+            payTv.setOnClickListener(this);//购买按钮
+        }
     }
 
     /**
@@ -116,6 +142,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         authorNameTv = (TextView) findViewById(R.id.tv_author_name);
         individualTv = (TextView) findViewById(R.id.tv_individual);
         authorBriefTv = (TextView) findViewById(R.id.tv_author_brief);
+
     }
 
     /**
@@ -186,11 +213,20 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.lay_read://阅读
                 Bundle bundle = new Bundle();
                 String bookname = "12345";
-                String path = Environment.getExternalStorageDirectory()+ File.separator
-                        +"123.txt";
+                String path = Environment.getExternalStorageDirectory() + File.separator
+                        + "123.txt";
                 bundle.putString("bookname", bookname);
                 bundle.putString("bookpath", path);
                 UIUtil.openActivity(this, BookPlayActivity.class, bundle);
+                break;
+            case R.id.tv_subscription://订阅
+
+                break;
+             case R.id.tv_probation://免费试读
+
+                break;
+            case R.id.tv_pay://购买
+
                 break;
         }
     }

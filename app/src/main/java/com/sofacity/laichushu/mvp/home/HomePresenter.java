@@ -17,6 +17,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
     }
 
     public void loadHomeCarouseData() {
+        mvpView.showLoading();
         addSubscription(apiStores.homeCarouselData(),
                 new ApiCallback<HomeModel>() {
                     @Override
@@ -37,6 +38,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
     }
 
     public void loadHomeHotData() {
+        mvpView.showLoading();
         addSubscription(apiStores.homeHotData(), new ApiCallback<HomeHotModel>() {
             @Override
             public void onSuccess(HomeHotModel model) {

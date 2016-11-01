@@ -115,20 +115,25 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         for (int i = 0; i < mHotData.size(); i++) {
             HomeHotModel.DataBean dataBean = mHotData.get(i);
             String coverUrl = dataBean.getCoverUrl();
+            String articleName = dataBean.getArticleName();
+            String authorName = dataBean.getAuthorName();
             if (coverUrl != null) {
                 if (i % 3 == 0) {
                     homeHotImgBean = new HomeHotImgBean();
                     homeHotImgBean.setFristImg(coverUrl);
-                    homeHotImgBean.setFristTitle("书名1");
-                    homeHotImgBean.setFristName("作者名1");
+                    homeHotImgBean.setFristTitle(articleName);
+                    homeHotImgBean.setFristName(authorName);
+                    homeHotImgBean.setFristBean(dataBean);
                 } else if (i % 3 == 1) {
                     homeHotImgBean.setSecondImg(coverUrl);
-                    homeHotImgBean.setSecondTitle("书名2");
-                    homeHotImgBean.setSecondName("作者名2");
+                    homeHotImgBean.setSecondTitle(articleName);
+                    homeHotImgBean.setSecondName(authorName);
+                    homeHotImgBean.setSecondBean(dataBean);
                 } else {
                     homeHotImgBean.setThirdImg(coverUrl);
-                    homeHotImgBean.setThirdTitle("书名3");
-                    homeHotImgBean.setThirdName("作者名3");
+                    homeHotImgBean.setThirdTitle(articleName);
+                    homeHotImgBean.setThirdName(authorName);
+                    homeHotImgBean.setThirdtBean(dataBean);
                 }
                 if (i != 0 && i % 3 == 2 || i == mHotData.size() - 1) {
                     homeHotImgBeans.add(homeHotImgBean);
@@ -157,8 +162,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 @Override
                 public void onGlobalLayout() {
                     ((ViewHolder1) holder).pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    if(((ViewHolder1) holder).ll_container.getChildCount()>2)
-                    range[0] = ((ViewHolder1) holder).ll_container.getChildAt(1).getLeft() - ((ViewHolder1) holder).ll_container.getChildAt(0).getLeft();
+                    if (((ViewHolder1) holder).ll_container.getChildCount() > 2)
+                        range[0] = ((ViewHolder1) holder).ll_container.getChildAt(1).getLeft() - ((ViewHolder1) holder).ll_container.getChildAt(0).getLeft();
                 }
             });
             ((ViewHolder1) holder).hotVp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -191,6 +196,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     UIUtil.openActivity(mActivity, HotListActivity.class);
                 }
             });
+
         } else if (position == 1) {
             ((ViewHolder2) holder).allRbn.setOnClickListener(this);
             ((ViewHolder2) holder).activityRbn.setOnClickListener(this);
