@@ -91,6 +91,11 @@
             android:name=".ui.activity.HomeSearchActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.InitActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

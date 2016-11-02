@@ -1,6 +1,7 @@
 package com.sofacity.laichushu.ui.activity;
 
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,7 +10,9 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.ui.base.BaseActivity;
+import com.sofacity.laichushu.ui.base.BaseFragment;
 import com.sofacity.laichushu.ui.fragment.FragmentFactory;
+import com.sofacity.laichushu.ui.fragment.HomeFragment;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -49,7 +52,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.layFrame, FragmentFactory.getFragment(0));
+        HomeFragment fragment = (HomeFragment) FragmentFactory.getFragment(0);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("homeModel",getIntent().getParcelableExtra("homeModel"));
+        bundle.putParcelable("homeHotModel",getIntent().getParcelableExtra("homeHotModel"));
+        bundle.putParcelable("homeAllModel",getIntent().getParcelableExtra("homeAllModel"));
+        transaction.remove(fragment);
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.layFrame, fragment,"home");
         transaction.commit();
     }
 
@@ -98,4 +108,5 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public void onTabReselected(int position) {
 
     }
+
 }

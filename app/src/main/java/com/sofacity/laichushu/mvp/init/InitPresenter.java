@@ -1,19 +1,23 @@
-package com.sofacity.laichushu.mvp.home;
+package com.sofacity.laichushu.mvp.init;
 
 import com.sofacity.laichushu.bean.netbean.HomeAllBook_Paramet;
+import com.sofacity.laichushu.mvp.home.HomeAllModel;
+import com.sofacity.laichushu.mvp.home.HomeHotModel;
+import com.sofacity.laichushu.mvp.home.HomeModel;
+import com.sofacity.laichushu.mvp.home.HomeView;
 import com.sofacity.laichushu.retrofit.ApiCallback;
 import com.sofacity.laichushu.ui.base.BasePresenter;
 
 /**
- * 首页 presenter
+ * init presenter
  * Created by wangtong on 2016/10/17.
  */
-public class HomePresenter extends BasePresenter<HomeView> {
+public class InitPresenter extends BasePresenter<InitView> {
     private String pageSize = "10";
     private String pageNo = "1";
-    private HomeAllBook_Paramet paramet = paramet = new HomeAllBook_Paramet("1",pageSize,pageNo);
+    private HomeAllBook_Paramet paramet;
 
-    public HomePresenter(HomeView view) {
+    public InitPresenter(InitView view) {
         attachView(view);
     }
     public void loadHomeCarouseData() {
@@ -57,8 +61,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
         });
     }
     public void loadHomeAllData(String type) {
-        mvpView.showLoading();
-        getParamet().setSortWay(type);
+        paramet = new HomeAllBook_Paramet(type,pageSize,pageNo);
         mvpView.showLoading();
         addSubscription(apiStores.homeAllData(paramet), new ApiCallback<HomeHotModel>() {
             @Override

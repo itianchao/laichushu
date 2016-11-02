@@ -7,6 +7,7 @@ import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.anim.ShakeAnim;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
 import com.sofacity.laichushu.retrofit.ApiCallback;
+import com.sofacity.laichushu.ui.activity.InitActivity;
 import com.sofacity.laichushu.ui.activity.LoginActivity;
 import com.sofacity.laichushu.ui.activity.MainActivity;
 import com.sofacity.laichushu.ui.base.BasePresenter;
@@ -36,7 +37,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             String[] loginStrs = loginInfo.split(",");
             String username = loginStrs[0];
             String password = loginStrs[1];
-            UIUtil.openActivity(mActivity, MainActivity.class);
+            UIUtil.openActivity(mActivity, InitActivity.class);
             mActivity.finish();
         }
     }
@@ -119,7 +120,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                UIUtil.openActivity(mActivity, MainActivity.class);
+                UIUtil.openActivity(mActivity, InitActivity.class);
                 mActivity.finish();
             }
         }, 1710);

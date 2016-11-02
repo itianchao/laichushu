@@ -1,9 +1,7 @@
 package com.sofacity.laichushu.ui.activity;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -80,8 +78,8 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private void initDetailBook() {
         detailBookIv = (ImageView) findViewById(R.id.iv_detail_book);//封面
         detailTitleTv = (TextView) findViewById(R.id.tv_detail_title);//书名
-        detailRatbarTv = (RatingBar) findViewById(R.id.ratbar_detail_num);
-        detailMarkTv = (TextView) findViewById(R.id.tv_detail_mark);
+        detailRatbarTv = (RatingBar) findViewById(R.id.ratbar_detail_num);//星级
+        detailMarkTv = (TextView) findViewById(R.id.tv_detail_mark);//评分
         detailCommentTv = (TextView) findViewById(R.id.tv_detail_comment);//评论数
         detailAuthorTv = (TextView) findViewById(R.id.tv_detail_author);//作者
         detailTypeTv = (TextView) findViewById(R.id.tv_detail_type);//分类
@@ -94,9 +92,11 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         detailCommentTv.setText("(" + bean.getCommentNum() + ")评论");//评论数
         detailAuthorTv.setText(bean.getAuthorName());//作者
         detailTypeTv.setText(bean.getTopCategoryName());//分类
-        detailWordTv.setText("约"+bean.getWordNum()+"字");//字数
+        detailWordTv.setText("约" + bean.getWordNum() + "字");//字数
         detailMoneyTv.setText(bean.getAwardMoney() + "元");//打赏金额
-        detailRewardTv.setText(bean.getAwardNum() + "人打赏");//打赏人数
+        detailRewardTv.setText(bean.getAwardNum() + "人打赏");//打赏人
+        detailMarkTv.setText(bean.getScore() + "分");//评分
+        detailRatbarTv.setRating(bean.getLevel());//星级
     }
 
     /**
@@ -117,14 +117,14 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         if (bean.getStatus().equals("1")) {//1 未出版
             nopublishRay.setVisibility(View.VISIBLE);
             publishLay.setVisibility(View.INVISIBLE);
-//            createtimeTv.setText();
-//            refreshtimeTv.setText();
-            numberTv.setText(bean.getSubscribeNum());
+            createtimeTv.setText(bean.getCreateDate());
+            refreshtimeTv.setText(bean.getUpdateDate());
+            numberTv.setText(bean.getSubscribeNum() + "");
             subscriptionTv.setOnClickListener(this);
         } else {//2 已发表 3 出版
             nopublishRay.setVisibility(View.INVISIBLE);
             publishLay.setVisibility(View.VISIBLE);
-//            priceTv.setText(bean.);//价格
+            priceTv.setText("￥ " + bean.getPrice());//价格
             probationTv.setOnClickListener(this);//免费试读按钮
             payTv.setOnClickListener(this);//购买按钮
         }
@@ -222,7 +222,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.tv_subscription://订阅
 
                 break;
-             case R.id.tv_probation://免费试读
+            case R.id.tv_probation://免费试读
 
                 break;
             case R.id.tv_pay://购买

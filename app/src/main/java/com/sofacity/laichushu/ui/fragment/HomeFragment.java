@@ -1,5 +1,6 @@
 package com.sofacity.laichushu.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.sofacity.laichushu.mvp.home.HomeModel;
 import com.sofacity.laichushu.mvp.home.HomePresenter;
 import com.sofacity.laichushu.mvp.home.HomeView;
 import com.sofacity.laichushu.ui.activity.HomeSearchActivity;
+import com.sofacity.laichushu.ui.activity.MainActivity;
 import com.sofacity.laichushu.ui.adapter.HomeRecyclerAdapter;
 import com.sofacity.laichushu.ui.adapter.HomeTitleViewPagerAdapter;
 import com.sofacity.laichushu.ui.base.MvpFragment;
@@ -27,7 +29,6 @@ import com.sofacity.laichushu.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 首页
@@ -41,7 +42,8 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private int range;
     private PullLoadMoreRecyclerView mRecyclerView;
     ArrayList<HomeModel.DataBean> mTitleData = new ArrayList<>();
-    private ArrayList mData = new ArrayList();
+    private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
+    private ArrayList<HomeHotModel.DataBean> mAllData = new ArrayList<>();
     private ArrayList<HomeHotModel.DataBean> mHotData = new ArrayList<>();
     private HomeTitleViewPagerAdapter adapter;
     private HomeRecyclerAdapter mAdapter;
@@ -55,7 +57,20 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }
     };
     private LinearLayout searchLyt;
+    private String pageNo = "2";
+    private String type = "1";//类型
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Bundle bundle = getArguments();
+        HomeModel homeModel = bundle.getParcelable("homeModel");
+        HomeHotModel homeHotModel = bundle.getParcelable("homeHotModel");
+        HomeHotModel homeAllModel = bundle.getParcelable("homeAllModel");
+        mTitleData = homeModel.getData();
+        mHotData =  homeHotModel.getData();
+        mData = homeAllModel.getData();
+    }
     @Override
     protected HomePresenter createPresenter() {
         return new HomePresenter(this);
@@ -77,17 +92,17 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRecycler();
-        this.setUserVisibleHint(true);
+        titleViewPager();
     }
 
     /**
      * PullLoadMoreRecyclerView 的初始化
      */
     private void initRecycler() {
-        mHotData.clear();
-        mData.clear();
         mRecyclerView.setLinearLayout();
         mRecyclerView.setFooterViewText("加载中");
+        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity)getActivity(), mHotData,mvpPresenter);
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
     }
 
@@ -123,11 +138,11 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     @Override
     public void getDataSuccess(HomeModel model) {
+        mRecyclerView.setPullLoadMoreCompleted();
         hideLoading();
         if (model.isSuccess()){
-            mTitleData = (ArrayList<HomeModel.DataBean>) model.getData();
+            mTitleData = model.getData();
             titleViewPager();
-            mvpPresenter.loadHomeHotData();//请求网络获取热门
         }else {
             ToastUtil.showToast(model.getErrorMsg());
         }
@@ -135,11 +150,40 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     @Override
     public void getHotDataSuccess(HomeHotModel model) {
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
         hideLoading();
         if (model.isSuccess()){
-            mHotData = (ArrayList<HomeHotModel.DataBean>) model.getData();
-            mAdapter = new HomeRecyclerAdapter(mData, mActivity, mHotData,mvpPresenter);
+            mHotData = model.getData();
+            mAdapter = new HomeRecyclerAdapter(mData, (MainActivity)getActivity(), mHotData,mvpPresenter);
             mRecyclerView.setAdapter(mAdapter);
+        }else {
+            ToastUtil.showToast(model.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void getAllData(HomeHotModel model) {
+        hideLoading();
+        mAllData.clear();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        if (model.isSuccess()){
+            mAllData = model.getData();
+            mData.addAll(mAllData);
+            mAdapter.setmData(mData);
+            mAdapter.notifyDataSetChanged();
+            pageNo = Integer.parseInt(pageNo)+1+"";
+        }else {
+            ToastUtil.showToast(model.getErrorMsg());
         }
     }
 
@@ -156,12 +200,6 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     @Override
     public void hideLoading() {
         dismissProgressDialog();
-    }
-
-    @Override
-    public void initData() {
-        mData.clear();
-        mAdapter.setmData(mData);
     }
 
     /**
@@ -190,24 +228,20 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      */
     @Override
     public void onRefresh() {
-        UIUtil.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setPullLoadMoreCompleted();
-            }
-        },2000);
+        mHotData.clear();
+        mData.clear();
+        pageNo = "1";
+        mvpPresenter.getParamet().setPageNo(pageNo);
+        mvpPresenter.loadHomeHotData();//请求网络获取热门
+        mvpPresenter.loadHomeAllData(type);//请求网络获取全部活动等列表
     }
     /**
      * 上拉刷新
      */
     @Override
     public void onLoadMore() {
-        UIUtil.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setPullLoadMoreCompleted();
-            }
-        }, 2000);
+        mvpPresenter.getParamet().setPageNo(pageNo);
+        mvpPresenter.loadHomeAllData(type);
     }
 
 
@@ -232,11 +266,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         mRefreshWidgetHandler.removeCallbacks(refreshThread);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
-            mvpPresenter.loadHomeCarouseData();//请求网络获取轮播图
-        }
+    public void setType(String type) {
+        this.type = type;
     }
 }

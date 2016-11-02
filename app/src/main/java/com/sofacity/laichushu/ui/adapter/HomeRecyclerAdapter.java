@@ -1,6 +1,8 @@
 package com.sofacity.laichushu.ui.adapter;
 
-import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,6 +23,8 @@ import com.sofacity.laichushu.mvp.home.HomePresenter;
 import com.sofacity.laichushu.ui.activity.BookDetailActivity;
 import com.sofacity.laichushu.ui.activity.CampaignActivity;
 import com.sofacity.laichushu.ui.activity.HotListActivity;
+import com.sofacity.laichushu.ui.activity.MainActivity;
+import com.sofacity.laichushu.ui.fragment.HomeFragment;
 import com.sofacity.laichushu.ui.widget.TypePopWindow;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.SharePrefManager;
@@ -35,23 +39,22 @@ import java.util.ArrayList;
 
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> implements View.OnClickListener {
 
-    private Activity mActivity;
-    private ArrayList<String> mData;
+    private MainActivity mActivity;
+    private ArrayList<HomeHotModel.DataBean> mData;
     private ArrayList<HomeHotModel.DataBean> mHotData;
     private RadioButton rankRbn;
     public HomePresenter mvpPresenter;
 
-    public HomeRecyclerAdapter(ArrayList mData, Activity mActivity, ArrayList<HomeHotModel.DataBean> mHotData, HomePresenter mvpPresenter) {
+    public HomeRecyclerAdapter(ArrayList<HomeHotModel.DataBean> mData, MainActivity mActivity, ArrayList<HomeHotModel.DataBean> mHotData, HomePresenter mvpPresenter) {
         this.mActivity = mActivity;
         this.mData = mData;
         this.mHotData = mHotData;//最热
         this.mvpPresenter = mvpPresenter;
 
-        rankingList.add("排行");
-        rankingList.add("评分最高");
-        rankingList.add("打赏最多");
-        rankingList.add("订阅最多");
-        rankingList.add("评论最多");
+        rankingList.add("评分最高");//1
+        rankingList.add("订阅最多");//2
+        rankingList.add("打赏最多");//3
+        rankingList.add("评论最多");//4
     }
 
     @Override
@@ -226,19 +229,31 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 case STATE1://全部
                     ((ViewHolder3) holder).fristFay.setVisibility(View.VISIBLE);
                     ((ViewHolder3) holder).secondFay.setVisibility(View.GONE);
-                    GlideUitl.loadImg(mActivity, mData.get(position - 2), ((ViewHolder3) holder).bookIv);
+                    final HomeHotModel.DataBean dataBean = mData.get(position - 2);
+                    GlideUitl.loadImg(mActivity, dataBean.getCoverUrl(), ((ViewHolder3) holder).bookIv);
                     ((ViewHolder3) holder).fristFay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //跳转图书详情页
-                            UIUtil.openActivity(mActivity, BookDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("bean",dataBean);
+                            UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
                         }
                     });
+                    ((ViewHolder3) holder).titleTv.setText(dataBean.getArticleName());
+                    ((ViewHolder3) holder).typeTv.setText(dataBean.getTopCategoryName());
+                    ((ViewHolder3) holder).authorTv.setText(dataBean.getAuthorName());
+                    ((ViewHolder3) holder).numRb.setRating(dataBean.getLevel());
+                    ((ViewHolder3) holder).commentTv.setText("(" + dataBean.getCommentNum() + "评论)");
+                    ((ViewHolder3) holder).wordTv.setText("约" + dataBean.getWordNum());
+                    ((ViewHolder3) holder).moneyTv.setText(dataBean.getAwardMoney()+"元");
+                    ((ViewHolder3) holder).rewardTv.setText("("+dataBean.getAwardNum()+"人打赏)");
+                    ((ViewHolder3) holder).markTv.setText(dataBean.getScore()+"分");
                     break;
                 case STATE2://活动
                     ((ViewHolder3) holder).fristFay.setVisibility(View.GONE);
                     ((ViewHolder3) holder).secondFay.setVisibility(View.VISIBLE);
-                    GlideUitl.loadImg(mActivity, mData.get(position - 2), ((ViewHolder3) holder).activityIv);
+//                    GlideUitl.loadImg(mActivity, dataBean, ((ViewHolder3) holder).activityIv);
                     ((ViewHolder3) holder).secondFay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -370,7 +385,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 }
                 STATE = STATE1;
                 //请求网络
-                mvpPresenter.initData(STATE);
+                mvpPresenter.loadHomeAllData(STATE +"");
                 position = 1;
                 break;
             case R.id.rbn_activity:
@@ -379,7 +394,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 }
                 STATE = STATE2;
                 //请求网络
-                mvpPresenter.initData(STATE);
+//                mvpPresenter.initData(STATE);
                 position = 2;
                 break;
             case R.id.rbn_citywide:
@@ -393,13 +408,18 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 break;
             case R.id.rbn_ranking:
 //                STATE = STATE4;
-                mData.clear();
                 //请求网络
                 TypePopWindow popWindow = new TypePopWindow(mActivity, rankingList);
                 popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
                     @Override
                     public void clickItem(int position) {
+                        mData.clear();
                         rankRbn.setText(rankingList.get(position));
+                        FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
+                        HomeFragment home = (HomeFragment) fragmentManager.findFragmentByTag("home");
+                        home.setType(position + 1 + "");
+                        mvpPresenter.getParamet().setPageNo("1");
+                        mvpPresenter.loadHomeAllData(position + 1 + "");
                     }
                 });
                 popWindow.setWidth(v.getWidth() + UIUtil.dip2px(1));
@@ -411,7 +431,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         notifyDataSetChanged();
     }
 
-    public void setmData(ArrayList<String> mData) {
+    public void setmData(ArrayList<HomeHotModel.DataBean> mData) {
         this.mData = mData;
         notifyDataSetChanged();
     }

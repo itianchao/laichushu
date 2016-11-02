@@ -1,10 +1,14 @@
-package com.sofacity.laichushu.mvp.home;
+package com.sofacity.laichushu.mvp.init;
+
+import com.sofacity.laichushu.mvp.home.HomeAllModel;
+import com.sofacity.laichushu.mvp.home.HomeHotModel;
+import com.sofacity.laichushu.mvp.home.HomeModel;
 
 /**
- * 首页页面
+ * init页面
  * Created by wangtong on 2016/10/12.
  */
-public interface HomeView {
+public interface InitView {
     void getDataSuccess(HomeModel model);
     void getHotDataSuccess(HomeHotModel model);
     void getAllData(HomeHotModel model);

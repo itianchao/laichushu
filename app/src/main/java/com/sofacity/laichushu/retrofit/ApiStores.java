@@ -1,9 +1,12 @@
 package com.sofacity.laichushu.retrofit;
 
 import com.sofacity.laichushu.bean.netbean.ForgetPwd_Paramet;
+import com.sofacity.laichushu.bean.netbean.HomeAllBook_Paramet;
+import com.sofacity.laichushu.bean.netbean.HomeSearch_Paramet;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
 import com.sofacity.laichushu.bean.netbean.RegistValid_Paramet;
 import com.sofacity.laichushu.bean.netbean.Regist_Paramet;
+import com.sofacity.laichushu.mvp.HomeSearch.HomeSearchModel;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdModel;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.mvp.home.HomeModel;
@@ -42,6 +45,12 @@ public interface ApiStores {
     @POST("carousel/list")
     Observable<HomeModel> homeCarouselData();
     //home最热
-    @POST("suggest/list")
+    @POST("searchArticle/suggest")
     Observable<HomeHotModel> homeHotData();
+    //home全部图书
+    @POST("searchArticle/list")
+    Observable<HomeHotModel> homeAllData(@Body HomeAllBook_Paramet paramet);
+    //首页搜索
+    @POST("searchArticle/searchByName")
+    Observable<HomeHotModel> homeSearch(@Body HomeSearch_Paramet paramet);
 }

@@ -20,6 +20,8 @@ public class BaseApplication extends Application {
     private static long mMainThreadId;
     private static Handler mMainThreadHandler;
     private static Looper mMainThreadLooper;
+    private Search_HistoryDao search_historyDao;
+    private Search_HistoryDao search_historyDao1;
 
     @Override
     public void onCreate() {
@@ -76,7 +78,7 @@ public class BaseApplication extends Application {
 //        // 获取Session
         DaoSession daoSession = daoMaster.newSession();
 //        // 获取对应的表的DAO对象
-        Search_HistoryDao search_historyDao = daoSession.getSearch_HistoryDao();
+        search_historyDao1 = daoSession.getSearch_HistoryDao();
     }
     private class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
         //当发现了未捕获异常的时候调用的方法
@@ -84,5 +86,8 @@ public class BaseApplication extends Application {
         public void uncaughtException(Thread thread, Throwable ex) {
                 android.os.Process.killProcess(android.os.Process.myPid());
         }
+    }
+    public Search_HistoryDao getSearchHistory(){
+        return search_historyDao1;
     }
 }

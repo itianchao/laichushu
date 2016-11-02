@@ -3,13 +3,13 @@ package com.sofacity.laichushu.mvp.home;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * 首页热门
  * Created by wangtong on 2016/11/1.
  */
-public class HomeHotModel {
+public class HomeHotModel implements Parcelable {
 
     /**
      * success : true
@@ -35,8 +35,17 @@ public class HomeHotModel {
      * awardNum : 3
      * awardMoney : 30.0
      */
+    private String errorMsg;
 
-    private List<DataBean> data;
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    private ArrayList<DataBean> data;
 
     public boolean isSuccess() {
         return success;
@@ -46,11 +55,11 @@ public class HomeHotModel {
         this.success = success;
     }
 
-    public List<DataBean> getData() {
+    public ArrayList<DataBean> getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(ArrayList<DataBean> data) {
         this.data = data;
     }
 
@@ -71,6 +80,22 @@ public class HomeHotModel {
         private int commentNum;
         private int awardNum;
         private double awardMoney;
+
+        /**
+         * level : 3
+         * score : 6.0
+         * price : 1000.0
+         * createDate : 1476341995000
+         * updateDate : 1477901107000
+         */
+
+        private int level;
+        private double score;
+
+        private double price;
+
+        private String createDate;
+        private String updateDate;
 
         public String getArticleId() {
             return articleId;
@@ -200,6 +225,49 @@ public class HomeHotModel {
             this.awardMoney = awardMoney;
         }
 
+        public DataBean() {
+        }
+
+        public int getLevel() {
+            return level;
+        }
+
+        public void setLevel(int level) {
+            this.level = level;
+        }
+
+        public double getScore() {
+            return score;
+        }
+
+        public void setScore(double score) {
+            this.score = score;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+
+        public String getCreateDate() {
+            return createDate;
+        }
+
+        public void setCreateDate(String createDate) {
+            this.createDate = createDate;
+        }
+
+        public String getUpdateDate() {
+            return updateDate;
+        }
+
+        public void setUpdateDate(String updateDate) {
+            this.updateDate = updateDate;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -223,9 +291,11 @@ public class HomeHotModel {
             dest.writeInt(this.commentNum);
             dest.writeInt(this.awardNum);
             dest.writeDouble(this.awardMoney);
-        }
-
-        public DataBean() {
+            dest.writeInt(this.level);
+            dest.writeDouble(this.score);
+            dest.writeDouble(this.price);
+            dest.writeString(this.createDate);
+            dest.writeString(this.updateDate);
         }
 
         protected DataBean(Parcel in) {
@@ -245,9 +315,14 @@ public class HomeHotModel {
             this.commentNum = in.readInt();
             this.awardNum = in.readInt();
             this.awardMoney = in.readDouble();
+            this.level = in.readInt();
+            this.score = in.readDouble();
+            this.price = in.readDouble();
+            this.createDate = in.readString();
+            this.updateDate = in.readString();
         }
 
-        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);
@@ -259,4 +334,37 @@ public class HomeHotModel {
             }
         };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.success ? (byte) 1 : (byte) 0);
+        dest.writeString(this.errorMsg);
+        dest.writeTypedList(this.data);
+    }
+
+    public HomeHotModel() {
+    }
+
+    protected HomeHotModel(Parcel in) {
+        this.success = in.readByte() != 0;
+        this.errorMsg = in.readString();
+        this.data = in.createTypedArrayList(DataBean.CREATOR);
+    }
+
+    public static final Parcelable.Creator<HomeHotModel> CREATOR = new Parcelable.Creator<HomeHotModel>() {
+        @Override
+        public HomeHotModel createFromParcel(Parcel source) {
+            return new HomeHotModel(source);
+        }
+
+        @Override
+        public HomeHotModel[] newArray(int size) {
+            return new HomeHotModel[size];
+        }
+    };
 }

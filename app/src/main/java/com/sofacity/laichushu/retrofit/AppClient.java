@@ -46,8 +46,8 @@ public class AppClient {
                             Request request = chain.request()
                                     .newBuilder()
                                     .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                                    .addHeader("token", SharePrefManager.getToken())
-                                    .addHeader("userId", SharePrefManager.getUserId())
+                                    .addHeader("gis", SharePrefManager.getToken())
+                                    .addHeader("diu", SharePrefManager.getUserId())
                                     .build();
                             return chain.proceed(request);
                         }

@@ -1,12 +1,16 @@
 package com.sofacity.laichushu.mvp.home;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 首页 轮播图
  * Created by wangtong on 2016/10/17.
  */
-public class HomeModel {
+public class HomeModel implements Parcelable {
 
     /**
      * success : true
@@ -24,7 +28,7 @@ public class HomeModel {
      */
     private String errorMsg;
 
-    private List<DataBean> data;
+    private ArrayList<DataBean> data;
 
     public boolean isSuccess() {
         return success;
@@ -34,11 +38,11 @@ public class HomeModel {
         this.success = success;
     }
 
-    public List<DataBean> getData() {
+    public ArrayList<DataBean> getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(ArrayList<DataBean> data) {
         this.data = data;
     }
 
@@ -50,7 +54,7 @@ public class HomeModel {
         this.errorMsg = errorMsg;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         private String id;
         private String name;
         private String url;
@@ -106,5 +110,77 @@ public class HomeModel {
             this.statusName = statusName;
         }
 
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.name);
+            dest.writeString(this.url);
+            dest.writeInt(this.sort);
+            dest.writeInt(this.status);
+            dest.writeString(this.statusName);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.id = in.readString();
+            this.name = in.readString();
+            this.url = in.readString();
+            this.sort = in.readInt();
+            this.status = in.readInt();
+            this.statusName = in.readString();
+        }
+
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.success ? (byte) 1 : (byte) 0);
+        dest.writeString(this.errorMsg);
+        dest.writeList(this.data);
+    }
+
+    public HomeModel() {
+    }
+
+    protected HomeModel(Parcel in) {
+        this.success = in.readByte() != 0;
+        this.errorMsg = in.readString();
+        this.data = new ArrayList<DataBean>();
+        in.readList(this.data, DataBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<HomeModel> CREATOR = new Parcelable.Creator<HomeModel>() {
+        @Override
+        public HomeModel createFromParcel(Parcel source) {
+            return new HomeModel(source);
+        }
+
+        @Override
+        public HomeModel[] newArray(int size) {
+            return new HomeModel[size];
+        }
+    };
 }

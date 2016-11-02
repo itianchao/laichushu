@@ -45,7 +45,7 @@ public class SplashActivity extends BaseActivity {
     private void loadActivity( ){
 //        如果保存了帐号和密码，跳转主页面
         if (!TextUtils.isEmpty(SharePrefManager.getLoginInfo())) {
-            loadActivity = MainActivity.class;
+            loadActivity = InitActivity.class;
         }else {
             //如果第一次登录则跳转引导页
             if (SharePrefManager.getFristLogin()) {

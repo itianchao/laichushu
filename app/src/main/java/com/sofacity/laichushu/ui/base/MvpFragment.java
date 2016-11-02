@@ -4,9 +4,6 @@ package com.sofacity.laichushu.ui.base;
 import android.os.Bundle;
 import android.view.View;
 
-import com.sofacity.laichushu.ui.base.BaseFragment;
-import com.sofacity.laichushu.ui.base.BasePresenter;
-
 /**
  * Created by Wangtong on 2016/10/11.
  * mvpFragment抽取
