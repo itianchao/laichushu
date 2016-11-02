@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <LinearLayout
+        android:padding="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_history"
+            android:drawableLeft="@drawable/search_icon"
+            android:drawablePadding="15dp"
+            tools:text="老九门"
+            android:textSize="@dimen/edit"
+            android:textColor="@color/edit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/iv_delect"
+            android:src="@drawable/icon_delect"
+            android:layout_width="15dp"
+            android:layout_height="15dp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,6 +1,5 @@
 package com.sofacity.laichushu.ui.activity;
 
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -12,15 +11,14 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
-import com.sofacity.laichushu.db.DaoSession;
 import com.sofacity.laichushu.db.Search_History;
 import com.sofacity.laichushu.db.Search_HistoryDao;
 import com.sofacity.laichushu.global.BaseApplication;
-import com.sofacity.laichushu.mvp.HomeSearch.HomeSearchModel;
 import com.sofacity.laichushu.mvp.HomeSearch.HomeSearchPresenter;
 import com.sofacity.laichushu.mvp.HomeSearch.HomeSearchView;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.adapter.HomeSearchAdapter;
+import com.sofacity.laichushu.ui.adapter.HomeSearchHistoryAdapter;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
@@ -28,9 +26,6 @@ import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.dao.query.Query;
-import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * 首页搜索页面
@@ -51,6 +46,8 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
     private ArrayList<HomeHotModel.DataBean> mAllData = new ArrayList<>();
     private HomeSearchAdapter mAdapter;
     private Search_HistoryDao dao = new BaseApplication().getSearchHistory();
+    private HomeSearchHistoryAdapter historyAdapter;
+    private List<Search_History> list = new ArrayList<>();
 
     @Override
     protected void initView() {
@@ -69,14 +66,15 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
         bookRyv.setLinearLayout();//设置垂直的RecyclerView
         searchEt.setOnEditorActionListener(this);
         bookRyv.setOnPullLoadMoreListener(this);
-        mAdapter = new HomeSearchAdapter(mAllData,this);
+        mAdapter = new HomeSearchAdapter(mAllData, this);
         bookRyv.setAdapter(mAdapter);
     }
 
     @Override
     protected void initData() {
-        List<Search_History> list = dao.queryBuilder().build().list();
-//        searchLv.setAdapter(historyAdapter);
+        list = dao.queryBuilder().build().list();
+        historyAdapter = new HomeSearchHistoryAdapter(list);
+        searchLv.setAdapter(historyAdapter);
     }
 
     @Override
@@ -94,17 +92,17 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
                 bookRyv.setPullLoadMoreCompleted();
             }
         }, 300);
-        if (model.isSuccess()){
+        if (model.isSuccess()) {
             mData = model.getData();
-            if (!mData.isEmpty()){
+            if (!mData.isEmpty()) {
                 searchLay.setVisibility(View.GONE);
                 bookRyv.setVisibility(View.VISIBLE);
                 mAllData.addAll(mData);
                 mAdapter.setmAllData(mAllData);
                 mAdapter.notifyDataSetChanged();
             }
-            pageNo = Integer.parseInt(pageNo)+1+"";
-        }else {
+            pageNo = Integer.parseInt(pageNo) + 1 + "";
+        } else {
             ToastUtil.showToast(model.getErrorMsg());
         }
     }
@@ -126,11 +124,16 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch(v.getId()) {
             case R.id.iv_finish:
                 finish();
                 break;
             case R.id.tv_clear:
+                if (list != null) {
+                    dao.deleteAll();
+                    list.clear();
+                    historyAdapter.notifyDataSetChanged();
+                }
                 break;
             case R.id.et_search:
                 searchLay.setVisibility(View.VISIBLE);
@@ -141,6 +144,7 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
 
     /**
      * 搜素键盘监听事件
+     *
      * @param v
      * @param actionId
      * @param event
@@ -154,15 +158,17 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
             search = searchEt.getText().toString().trim();
             mvpPresenter.LoadData(search);
             //将记录添加到数据库中
-            Search_History history = new Search_History(null,search);
+            Search_History history = new Search_History(null, search);
             dao.insert(history);
+            list.add(history);
             List<Search_History> list = dao.queryBuilder().build().list();
-            if (list.size()>5){
+            if (list.size() > 5) {
                 dao.delete(list.get(0));
             }
         }
         return false;
     }
+
     /**
      * 下拉刷新
      */
@@ -173,6 +179,7 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
         mvpPresenter.getParamet().setPageNo(pageNo);
         mvpPresenter.LoadData(search);//请求网络获取搜索列表
     }
+
     /**
      * 上拉刷新
      */

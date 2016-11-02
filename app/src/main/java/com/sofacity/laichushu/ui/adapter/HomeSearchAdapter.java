@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -19,8 +18,8 @@ import com.sofacity.laichushu.utils.UIUtil;
 import java.util.ArrayList;
 
 /**
- * 搜索
- * Created by wangtong on 2016/11/2.
+ * 搜索 结果
+ * Created by wangtong on 22.
  */
 public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.ViewHolder> {
 
