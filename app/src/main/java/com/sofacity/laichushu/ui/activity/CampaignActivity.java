@@ -1,5 +1,6 @@
 package com.sofacity.laichushu.ui.activity;
 
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.adapter.JoinActivityAdapter;
 import com.sofacity.laichushu.ui.base.BaseActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
@@ -34,6 +36,7 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
     private TextView detailsTv;
     private LinearLayout parentLay;
     private ImageView stateIv;
+    private HomeHotModel.DataBean bean;
 
     @Override
     protected void initView() {
@@ -84,14 +87,15 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initData() {
+        bean = getIntent().getParcelableExtra("bean");
         joinTv.setOnClickListener(this);
         GlideUitl.loadImg(this, "", activityImgIv);
         GlideUitl.loadImg(this, R.drawable.activity_start, stateIv);
-        activityNameTv.setText("南昌市征文大赛");
-        startTimeTv.setText("开始时间：2016-07-09");
-        endTimeTv.setText("结束时间：2016-08-09");
-        numTv.setText("报名人数：88人");
-        detailsTv.setText("    个人简介，是当事人全面而简洁地介绍自身情况的一种书面表达方式。求职过程中撰写的个人简介是求职者向欲供职单位全面、简洁、条理清晰地自我介绍、自我推荐的文书。简介是应用写作学研究的一种日常应用文体。");
+        activityNameTv.setText(bean.getActivityName());
+        startTimeTv.setText("开始时间："+bean.getBeginTime());
+        endTimeTv.setText("结束时间："+bean.getEndTime());
+        numTv.setText("报名人数："+bean.getApplyAmount()+"人");
+        detailsTv.setText(bean.getDetail());
         for (int i = 1; i <= 20; i++) {
             View itemView = UIUtil.inflate(R.layout.item_home_activity_details);
             TextView bonusTv = (TextView) itemView.findViewById(R.id.tv_bonus);

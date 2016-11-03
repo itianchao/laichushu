@@ -59,5 +59,9 @@
         android:textSize="@dimen/edit2" />
 
     <include layout="@layout/line" />
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/ryv_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

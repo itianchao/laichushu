@@ -53,12 +53,13 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
         public void run() {
             homeVp.setCurrentItem(++item);
-            mRefreshWidgetHandler.postDelayed(refreshThread,5000);
+            mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
         }
     };
     private LinearLayout searchLyt;
     private String pageNo = "2";
     private String type = "1";//类型
+    private String pageNo2 = "2";
 
     @Override
     public void onAttach(Context context) {
@@ -68,9 +69,10 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         HomeHotModel homeHotModel = bundle.getParcelable("homeHotModel");
         HomeHotModel homeAllModel = bundle.getParcelable("homeAllModel");
         mTitleData = homeModel.getData();
-        mHotData =  homeHotModel.getData();
+        mHotData = homeHotModel.getData();
         mData = homeAllModel.getData();
     }
+
     @Override
     protected HomePresenter createPresenter() {
         return new HomePresenter(this);
@@ -88,6 +90,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         searchLyt.setOnClickListener(this);
         return mRootView;
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -101,7 +104,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private void initRecycler() {
         mRecyclerView.setLinearLayout();
         mRecyclerView.setFooterViewText("加载中");
-        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity)getActivity(), mHotData,mvpPresenter);
+        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
     }
@@ -110,10 +113,10 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      * 标题轮播图
      */
     private void titleViewPager() {
-        adapter = new HomeTitleViewPagerAdapter(mTitleData,mActivity);
+        adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity);
         homeVp.setAdapter(adapter);
         int remainder = Integer.MAX_VALUE / 2 % mTitleData.size();
-        item = Integer.MAX_VALUE/2 - remainder;
+        item = Integer.MAX_VALUE / 2 - remainder;
         homeVp.setCurrentItem(item);
         homeVp.setOnPageChangeListener(this);
         pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -127,8 +130,8 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             ImageView imageView = new ImageView(mActivity);
             imageView.setBackgroundResource(R.drawable.shape_point_hollow);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-            if(i>0){
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            if (i > 0) {
                 params.leftMargin = UIUtil.px2dip(10);
             }
             imageView.setLayoutParams(params);
@@ -140,10 +143,10 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void getDataSuccess(HomeModel model) {
         mRecyclerView.setPullLoadMoreCompleted();
         hideLoading();
-        if (model.isSuccess()){
+        if (model.isSuccess()) {
             mTitleData = model.getData();
             titleViewPager();
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrorMsg());
         }
     }
@@ -157,11 +160,11 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             }
         }, 300);
         hideLoading();
-        if (model.isSuccess()){
+        if (model.isSuccess()) {
             mHotData = model.getData();
-            mAdapter = new HomeRecyclerAdapter(mData, (MainActivity)getActivity(), mHotData,mvpPresenter);
+            mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter);
             mRecyclerView.setAdapter(mAdapter);
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrorMsg());
         }
     }
@@ -176,13 +179,37 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
                 mRecyclerView.setPullLoadMoreCompleted();
             }
         }, 300);
-        if (model.isSuccess()){
+        if (model.isSuccess()) {
             mAllData = model.getData();
             mData.addAll(mAllData);
             mAdapter.setmData(mData);
             mAdapter.notifyDataSetChanged();
-            pageNo = Integer.parseInt(pageNo)+1+"";
-        }else {
+            if (mAllData.size()!=0){
+                pageNo = Integer.parseInt(pageNo) + 1 + "";
+            }
+        } else {
+            ToastUtil.showToast(model.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void getActivityData(HomeHotModel model) {
+        hideLoading();
+        mAllData.clear();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        if (model.isSuccess()) {
+            mAllData = model.getData();
+            mData.addAll(mAllData);
+            mAdapter.notifyDataSetChanged();
+            if (mAllData.size()!=0){
+                pageNo2 = Integer.parseInt(pageNo2) + 1 + "";
+            }
+        } else {
             ToastUtil.showToast(model.getErrorMsg());
         }
     }
@@ -202,14 +229,15 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         dismissProgressDialog();
     }
 
+
     /**
      * 滑动监听事件
      */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        int move = (int) ((position%mTitleData.size()+positionOffset)*range);
+        int move = (int) ((position % mTitleData.size() + positionOffset) * range);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.leftMargin = move;
         pointIv.setLayoutParams(params);
         item = position;
@@ -230,24 +258,40 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void onRefresh() {
         mHotData.clear();
         mData.clear();
-        pageNo = "1";
-        mvpPresenter.getParamet().setPageNo(pageNo);
-        mvpPresenter.loadHomeHotData();//请求网络获取热门
-        mvpPresenter.loadHomeAllData(type);//请求网络获取全部活动等列表
+        int state = mvpPresenter.getState();//选择状态
+        if (state == 1) {
+            pageNo = "1";
+            mvpPresenter.getParamet().setPageNo(pageNo);
+            mvpPresenter.loadHomeHotData();//请求网络获取热门
+            mvpPresenter.loadHomeAllData(type);//请求网络获取全部活动等列表
+        } else if (state == 2) {
+            pageNo2 = "1";
+            mvpPresenter.getActivityListParamet().setPageNo(pageNo2);
+            mvpPresenter.loadHomeHotData();//请求网络获取热门
+            mvpPresenter.loadActivityData();//请求活动
+        }
+
     }
+
     /**
      * 上拉刷新
      */
     @Override
     public void onLoadMore() {
-        mvpPresenter.getParamet().setPageNo(pageNo);
-        mvpPresenter.loadHomeAllData(type);
+        int state = mvpPresenter.getState();
+        if (state == 1) {
+            mvpPresenter.getParamet().setPageNo(pageNo);
+            mvpPresenter.loadHomeAllData(type);
+        } else if (state == 2) {
+            mvpPresenter.getActivityListParamet().setPageNo(pageNo2);
+            mvpPresenter.loadActivityData();
+        }
     }
 
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.lay_search:
                 UIUtil.openActivity(getActivity(), HomeSearchActivity.class);
                 break;
@@ -257,7 +301,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     @Override
     public void onStart() {
         super.onStart();
-        mRefreshWidgetHandler.postDelayed(refreshThread,5000);
+        mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
     }
 
     @Override

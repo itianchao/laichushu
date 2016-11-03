@@ -80,6 +80,8 @@ public class HomeHotModel implements Parcelable {
         private int commentNum;
         private int awardNum;
         private double awardMoney;
+        private boolean isPurchase;
+        private boolean isSubscribe;
 
         /**
          * level : 3
@@ -96,6 +98,42 @@ public class HomeHotModel implements Parcelable {
 
         private String createDate;
         private String updateDate;
+        /**
+         * 活动
+         * activityId : 11
+         * activityName : 鍏呭�奸�佸ソ绀�
+         * beginTime : 1476787389000
+         * endTime : 1476787391000
+         * imgName : money.gif
+         * imgUrl : http://192.168.147.62/group1/M00/00/01/wKiTPlgbCPmACv6lAA1w0N-Cv1A434.gif
+         * detail : 鍏�100杩�100
+         * applyAmount : 1
+         */
+
+        private String activityId;
+        private String activityName;
+        private long beginTime;
+        private long endTime;
+        private String imgName;
+        private String imgUrl;
+        private String detail;
+        private int applyAmount;
+
+        public boolean isPurchase() {
+            return isPurchase;
+        }
+
+        public void setIsPurchase(boolean isPurchase) {
+            this.isPurchase = isPurchase;
+        }
+
+        public boolean isSubscribe() {
+            return isSubscribe;
+        }
+
+        public void setIsSubscribe(boolean isSubscribe) {
+            this.isSubscribe = isSubscribe;
+        }
 
         public String getArticleId() {
             return articleId;
@@ -268,6 +306,70 @@ public class HomeHotModel implements Parcelable {
             this.updateDate = updateDate;
         }
 
+        public String getActivityId() {
+            return activityId;
+        }
+
+        public void setActivityId(String activityId) {
+            this.activityId = activityId;
+        }
+
+        public String getActivityName() {
+            return activityName;
+        }
+
+        public void setActivityName(String activityName) {
+            this.activityName = activityName;
+        }
+
+        public long getBeginTime() {
+            return beginTime;
+        }
+
+        public void setBeginTime(long beginTime) {
+            this.beginTime = beginTime;
+        }
+
+        public long getEndTime() {
+            return endTime;
+        }
+
+        public void setEndTime(long endTime) {
+            this.endTime = endTime;
+        }
+
+        public String getImgName() {
+            return imgName;
+        }
+
+        public void setImgName(String imgName) {
+            this.imgName = imgName;
+        }
+
+        public String getImgUrl() {
+            return imgUrl;
+        }
+
+        public void setImgUrl(String imgUrl) {
+            this.imgUrl = imgUrl;
+        }
+
+        public String getDetail() {
+            return detail;
+        }
+
+        public void setDetail(String detail) {
+            this.detail = detail;
+        }
+
+        public int getApplyAmount() {
+            return applyAmount;
+        }
+
+        public void setApplyAmount(int applyAmount) {
+            this.applyAmount = applyAmount;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -291,11 +393,21 @@ public class HomeHotModel implements Parcelable {
             dest.writeInt(this.commentNum);
             dest.writeInt(this.awardNum);
             dest.writeDouble(this.awardMoney);
+            dest.writeByte(this.isPurchase ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.isSubscribe ? (byte) 1 : (byte) 0);
             dest.writeInt(this.level);
             dest.writeDouble(this.score);
             dest.writeDouble(this.price);
             dest.writeString(this.createDate);
             dest.writeString(this.updateDate);
+            dest.writeString(this.activityId);
+            dest.writeString(this.activityName);
+            dest.writeLong(this.beginTime);
+            dest.writeLong(this.endTime);
+            dest.writeString(this.imgName);
+            dest.writeString(this.imgUrl);
+            dest.writeString(this.detail);
+            dest.writeInt(this.applyAmount);
         }
 
         protected DataBean(Parcel in) {
@@ -315,11 +427,21 @@ public class HomeHotModel implements Parcelable {
             this.commentNum = in.readInt();
             this.awardNum = in.readInt();
             this.awardMoney = in.readDouble();
+            this.isPurchase = in.readByte() != 0;
+            this.isSubscribe = in.readByte() != 0;
             this.level = in.readInt();
             this.score = in.readDouble();
             this.price = in.readDouble();
             this.createDate = in.readString();
             this.updateDate = in.readString();
+            this.activityId = in.readString();
+            this.activityName = in.readString();
+            this.beginTime = in.readLong();
+            this.endTime = in.readLong();
+            this.imgName = in.readString();
+            this.imgUrl = in.readString();
+            this.detail = in.readString();
+            this.applyAmount = in.readInt();
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {

@@ -15,11 +15,21 @@ public class HomeAllBook_Paramet {
     private String sortWay;
     private String pageSize;
     private String pageNo;
+    private String userId;
 
-    public HomeAllBook_Paramet(String sortWay, String pageSize, String pageNo) {
+    public HomeAllBook_Paramet(String sortWay, String pageSize, String pageNo, String userId) {
         this.sortWay = sortWay;
         this.pageSize = pageSize;
         this.pageNo = pageNo;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getSortWay() {

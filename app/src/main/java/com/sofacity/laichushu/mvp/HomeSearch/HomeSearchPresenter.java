@@ -10,6 +10,7 @@ import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.retrofit.ApiCallback;
 import com.sofacity.laichushu.ui.activity.HomeSearchActivity;
 import com.sofacity.laichushu.ui.base.BasePresenter;
+import com.sofacity.laichushu.utils.SharePrefManager;
 
 /**
  * home 搜索
@@ -19,7 +20,8 @@ public class HomeSearchPresenter extends BasePresenter<HomeSearchView> {
     private HomeSearchActivity mActivity;
     private String pageSize = "10";
     private String pageNo = "1";
-    private HomeSearch_Paramet paramet = new HomeSearch_Paramet("",pageSize,pageNo);
+    private String userId = SharePrefManager.getUserId();
+    private HomeSearch_Paramet paramet = new HomeSearch_Paramet("",pageSize,pageNo,userId);
     private Search_HistoryDao search_historyDao;
 
     //初始化构造

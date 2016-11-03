@@ -28,6 +28,7 @@ import com.sofacity.laichushu.ui.fragment.HomeFragment;
 import com.sofacity.laichushu.ui.widget.TypePopWindow;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.SharePrefManager;
+import com.sofacity.laichushu.utils.StringUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return mData == null ? 0 : mData.size()+2;
+        return mData == null ? 0 : mData.size() + 2;
     }
 
     @Override
@@ -148,7 +149,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         if (position == 0) {
             ((ViewHolder1) holder).hotVp.setAdapter(new HomeHotViewPagerAdapter(homeHotImgBeans, mActivity));
             for (int i = 0; i < Math.ceil(mHotData.size() / 3); i++) {
-                if (((ViewHolder1) holder).ll_container.getChildCount()> Math.ceil(mHotData.size() / 3)-1){
+                if (((ViewHolder1) holder).ll_container.getChildCount() > Math.ceil(mHotData.size() / 3) - 1) {
                     return;
                 }
                 ImageView imageView = new ImageView(mActivity);
@@ -206,7 +207,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             ((ViewHolder2) holder).cityRbn.setOnClickListener(this);
             ((ViewHolder2) holder).rankingRbn.setOnClickListener(this);
             this.position = SharePrefManager.getPosition();
-            switch (this.position){
+            switch (this.position) {
                 case 0:
                     ((ViewHolder2) holder).allRbn.setChecked(true);
                     break;
@@ -225,7 +226,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             }
 
         } else {
-            switch(STATE){
+            switch (STATE) {
                 case STATE1://全部
                     ((ViewHolder3) holder).fristFay.setVisibility(View.VISIBLE);
                     ((ViewHolder3) holder).secondFay.setVisibility(View.GONE);
@@ -236,7 +237,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                         public void onClick(View v) {
                             //跳转图书详情页
                             Bundle bundle = new Bundle();
-                            bundle.putParcelable("bean",dataBean);
+                            bundle.putParcelable("bean", dataBean);
                             UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
                         }
                     });
@@ -246,21 +247,44 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder3) holder).numRb.setRating(dataBean.getLevel());
                     ((ViewHolder3) holder).commentTv.setText("(" + dataBean.getCommentNum() + "评论)");
                     ((ViewHolder3) holder).wordTv.setText("约" + dataBean.getWordNum());
-                    ((ViewHolder3) holder).moneyTv.setText(dataBean.getAwardMoney()+"元");
-                    ((ViewHolder3) holder).rewardTv.setText("("+dataBean.getAwardNum()+"人打赏)");
-                    ((ViewHolder3) holder).markTv.setText(dataBean.getScore()+"分");
+                    ((ViewHolder3) holder).moneyTv.setText(dataBean.getAwardMoney() + "元");
+                    ((ViewHolder3) holder).rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
+                    ((ViewHolder3) holder).markTv.setText(dataBean.getScore() + "分");
                     break;
                 case STATE2://活动
+                    final HomeHotModel.DataBean bean = mData.get(position - 2);
                     ((ViewHolder3) holder).fristFay.setVisibility(View.GONE);
                     ((ViewHolder3) holder).secondFay.setVisibility(View.VISIBLE);
-//                    GlideUitl.loadImg(mActivity, dataBean, ((ViewHolder3) holder).activityIv);
                     ((ViewHolder3) holder).secondFay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //跳转活动详情页
-                            UIUtil.openActivity(mActivity, CampaignActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("bean",bean);
+                            UIUtil.openActivity(mActivity, CampaignActivity.class,bundle);
                         }
                     });
+                    GlideUitl.loadImg(mActivity, bean.getImgUrl(), ((ViewHolder3) holder).activityIv);
+
+                    ((ViewHolder3) holder).nameTv.setText(bean.getActivityName());//活动name
+                    ((ViewHolder3) holder).briefTv.setText(bean.getDetail());//简介
+                    ((ViewHolder3) holder).startTimeTv.setText("开始时间：" + bean.getBeginTime());
+                    ((ViewHolder3) holder).endTimeTv.setText("开始时间：" + bean.getEndTime());
+                    ((ViewHolder3) holder).numberTv.setText(bean.getApplyAmount() + "人");
+                    switch (bean.getStatus()) {
+                        case "1":
+                            GlideUitl.loadImg(mActivity, R.drawable.activity_start, ((ViewHolder3) holder).stateIv);
+                            break;
+                        case "2":
+                            GlideUitl.loadImg(mActivity, R.drawable.activity_start, ((ViewHolder3) holder).stateIv);
+                            break;
+                        case "3":
+                            GlideUitl.loadImg(mActivity, R.drawable.activity_start, ((ViewHolder3) holder).stateIv);
+                            break;
+                        case "4":
+                            GlideUitl.loadImg(mActivity, R.drawable.activity_end, ((ViewHolder3) holder).stateIv);
+                            break;
+                    }
                     break;
                 case STATE3://同城
                     ((ViewHolder3) holder).fristFay.setVisibility(View.GONE);
@@ -273,6 +297,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             }
         }
     }
+
     /**
      * base
      */
@@ -281,6 +306,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             super(itemView);
         }
     }
+
     /**
      * 最热
      */
@@ -299,6 +325,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             bookNumTv = (TextView) itemView.findViewById(R.id.tv_booknum);
         }
     }
+
     /**
      * 全部、活动、同城、排行 选择容器
      */
@@ -371,34 +398,40 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             parentLyt = (LinearLayout) itemView.findViewById(R.id.lyt_parent);
         }
     }
+
     /**
      * 全部、活动、同城、排行 点击事件
      */
     ArrayList<String> rankingList = new ArrayList<>();
     int position = 0;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rbn_all:
-                if (position ==1){
+                if (position == 1) {
                     return;
                 }
+                mData.clear();
+                mvpPresenter.setState(STATE1);
                 STATE = STATE1;
                 //请求网络
-                mvpPresenter.loadHomeAllData(STATE +"");
+                mvpPresenter.loadHomeAllData(STATE + "");
                 position = 1;
                 break;
             case R.id.rbn_activity:
-                if (position ==2){
+                if (position == 2) {
                     return;
                 }
+                mvpPresenter.setState(STATE2);
                 STATE = STATE2;
                 //请求网络
-//                mvpPresenter.initData(STATE);
                 position = 2;
+                mData.clear();
+                mvpPresenter.loadActivityData();
                 break;
             case R.id.rbn_citywide:
-                if (position ==3){
+                if (position == 3) {
                     return;
                 }
                 STATE = STATE3;
@@ -434,9 +467,5 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public void setmData(ArrayList<HomeHotModel.DataBean> mData) {
         this.mData = mData;
         notifyDataSetChanged();
-    }
-
-    public void setmHotData(ArrayList<HomeHotModel.DataBean> mHotData) {
-        this.mHotData = mHotData;
     }
 }

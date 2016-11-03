@@ -10,20 +10,29 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
+import com.sofacity.laichushu.mvp.bookdetail.AuthorDetailModle;
+import com.sofacity.laichushu.mvp.bookdetail.BookDetailPresenter;
+import com.sofacity.laichushu.mvp.bookdetail.BookDetailView;
+import com.sofacity.laichushu.mvp.bookdetail.SubscribeArticleModle;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.base.BaseActivity;
+import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.ui.widget.BookPlayActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
+import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * 图书详情
  * Created by wangtong on 2016/10/25.
  */
-public class BookDetailActivity extends BaseActivity implements View.OnClickListener {
+public class BookDetailActivity extends MvpActivity<BookDetailPresenter> implements BookDetailView,View.OnClickListener {
 
     private ImageView detailBookIv, authorHeadIv;
     private RatingBar detailRatbarTv;
@@ -35,13 +44,19 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             authorNameTv, individualTv, authorBriefTv, commentNumberTv;
     private RadioButton readerRbn, dresserRbn;
     private HomeHotModel.DataBean bean;
-
+    private ArrayList<HomeHotModel.DataBean> mdata = new ArrayList();
+    private ArrayList<ArticleCommentModle.DataBean> mCommentdata = new ArrayList();
     @Override
     protected void initView() {
         setContentView(R.layout.activity_bookdetail);
         initTitleBar("图书详情");
         bean = getIntent().getParcelableExtra("bean");
         initFindViewById();
+        String authorId = bean.getAuthorId();
+        String articleId = bean.getArticleId();
+        mvpPresenter.loadAuthorData(authorId);
+        mvpPresenter.loadBestLikeSuggest(articleId);
+        mvpPresenter.loadCommentData(articleId);
     }
 
     /**
@@ -124,9 +139,22 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         } else {//2 已发表 3 出版
             nopublishRay.setVisibility(View.INVISIBLE);
             publishLay.setVisibility(View.VISIBLE);
-            priceTv.setText("￥ " + bean.getPrice());//价格
+            String price = "￥ " + bean.getPrice();
+            priceTv.setText(price);//价格
             probationTv.setOnClickListener(this);//免费试读按钮
             payTv.setOnClickListener(this);//购买按钮
+        }
+        if (bean.isSubscribe()) {
+            subscriptionTv.setText("订阅更新");
+        }else {
+            subscriptionTv.setText("已订阅");
+        }
+        if (bean.isPurchase()) {
+            payTv.setText("已购买");
+            probationTv.setVisibility(View.INVISIBLE);
+        }else {
+            payTv.setText("购买");
+            probationTv.setVisibility(View.VISIBLE);
         }
     }
 
@@ -142,6 +170,9 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         authorNameTv = (TextView) findViewById(R.id.tv_author_name);
         individualTv = (TextView) findViewById(R.id.tv_individual);
         authorBriefTv = (TextView) findViewById(R.id.tv_author_brief);
+        briefTv.setText(bean.getIntroduce());//简介
+        String msg = "收到的打赏："+bean.getAwardMoney()+"元("+bean.getAwardNum()+"人)";
+        msgTv.setText(msg);
 
     }
 
@@ -155,39 +186,12 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         commentLay = (LinearLayout) findViewById(R.id.lay_comment);
         lookupTv = (TextView) findViewById(R.id.tv_lookup);
         likeLay = (LinearLayout) findViewById(R.id.lay_like);
+        readerRbn.setOnClickListener(this);
+        dresserRbn.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
-        //书评和猜你喜欢
-        for (int i = 0; i < 4; i++) {
-            View commentItemView = UIUtil.inflate(R.layout.item_comment_connet);
-            ImageView headIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_head);
-            TextView nameTv = (TextView) commentItemView.findViewById(R.id.tv_comment_name);
-            TextView contentTv = (TextView) commentItemView.findViewById(R.id.tv_comment_content);
-            TextView timeTv = (TextView) commentItemView.findViewById(R.id.tv_comment_time);
-            ImageView likeIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_like);
-            TextView likeTv = (TextView) commentItemView.findViewById(R.id.tv_comment_like);
-            TextView numberTv = (TextView) commentItemView.findViewById(R.id.tv_comment_number);
-            ImageView inIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_in);
-            GlideUitl.loadRandImg(this, "", headIv);
-            commentLay.addView(commentItemView);
-        }
-        for (int i = 0; i < 4; i++) {
-            View likeItemView = UIUtil.inflate(R.layout.item_home_book);
-            ImageView bookIv = (ImageView) likeItemView.findViewById(R.id.iv_book);
-            TextView titleTv = (TextView) likeItemView.findViewById(R.id.tv_title);
-            TextView typeTv = (TextView) likeItemView.findViewById(R.id.tv_type);
-            RatingBar numRb = (RatingBar) likeItemView.findViewById(R.id.ratbar_num);
-            TextView markTv = (TextView) likeItemView.findViewById(R.id.tv_mark);
-            TextView commentTv = (TextView) likeItemView.findViewById(R.id.tv_comment);
-            TextView authorTv = (TextView) likeItemView.findViewById(R.id.tv_author);
-            TextView wordTv = (TextView) likeItemView.findViewById(R.id.tv_word);
-            TextView moneyTv = (TextView) likeItemView.findViewById(R.id.tv_money);
-            TextView rewardTv = (TextView) likeItemView.findViewById(R.id.tv_reward);
-            GlideUitl.loadImg(this, "", bookIv);
-            likeLay.addView(likeItemView);
-        }
         lookupTv.setOnClickListener(this);
         readLay.setOnClickListener(this);
     }
@@ -220,7 +224,11 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 UIUtil.openActivity(this, BookPlayActivity.class, bundle);
                 break;
             case R.id.tv_subscription://订阅
-
+                if (!subscriptionTv.getText().equals(" 已订阅 ")) {
+                    mvpPresenter.loadSubscribeArticle(bean.getArticleId());
+                }else {
+                    ToastUtil.showToast(" 已订阅 ");
+                }
                 break;
             case R.id.tv_probation://免费试读
 
@@ -228,6 +236,163 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.tv_pay://购买
 
                 break;
+            case R.id.rbn_dresser://大咖评论
+
+                break;
+            case R.id.rbn_reader://普通评论
+
+                break;
         }
     }
+
+    @Override
+    public void getAuthorDetailData(AuthorDetailModle model) {
+        if (model.isSuccess()) {
+            if (model.getData()!=null){
+                AuthorDetailModle.DataBean data = model.getData();
+                GlideUitl.loadRandImg(this,data.getPhoto(),authorHeadIv);
+                authorNameTv.setText(data.getNickName());//名字
+                authorBriefTv.setText(data.getAuthorIntroduction());//简介
+                individualTv.setText(data.getArticleNum()+"");//出版数量
+            }
+        }else {
+            ToastUtil.showToast(model.getErrorMsg());
+            Logger.e(model.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void getDataFail(String msg) {
+        Logger.e(msg);
+    }
+
+    @Override
+    public void showLoading() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void hideLoading() {
+        dismissProgressDialog();
+    }
+
+    @Override
+    public void getBestLikeSuggestlData(HomeHotModel model) {
+        if (model.isSuccess()) {
+            mdata.clear();
+            if (model.getData()!=null){
+                mdata = model.getData();
+                for (HomeHotModel.DataBean dataBean : mdata) {
+                    View likeItemView = UIUtil.inflate(R.layout.item_home_book);
+                    ImageView bookIv = (ImageView) likeItemView.findViewById(R.id.iv_book);
+                    TextView titleTv = (TextView) likeItemView.findViewById(R.id.tv_title);
+                    TextView typeTv = (TextView) likeItemView.findViewById(R.id.tv_type);
+                    RatingBar numRb = (RatingBar) likeItemView.findViewById(R.id.ratbar_num);
+                    TextView markTv = (TextView) likeItemView.findViewById(R.id.tv_mark);
+                    TextView commentTv = (TextView) likeItemView.findViewById(R.id.tv_comment);
+                    TextView authorTv = (TextView) likeItemView.findViewById(R.id.tv_author);
+                    TextView wordTv = (TextView) likeItemView.findViewById(R.id.tv_word);
+                    TextView moneyTv = (TextView) likeItemView.findViewById(R.id.tv_money);
+                    TextView rewardTv = (TextView) likeItemView.findViewById(R.id.tv_reward);
+
+                    GlideUitl.loadImg(this, dataBean.getCoverUrl(), bookIv);//封面
+                    titleTv.setText(dataBean.getArticleName());//书名
+                    commentTv.setText("(" + bean.getCommentNum() + ")评论");//评论数
+                    authorTv.setText(bean.getAuthorName());//作者
+                    typeTv.setText(bean.getTopCategoryName());//分类
+                    wordTv.setText("约" + bean.getWordNum() + "字");//字数
+                    moneyTv.setText(bean.getAwardMoney() + "元");//打赏金额
+                    rewardTv.setText(bean.getAwardNum() + "人打赏");//打赏人
+                    markTv.setText(bean.getScore() + "分");//评分
+                    numRb.setRating(bean.getLevel());//星级
+                    likeLay.addView(likeItemView);
+                    likeItemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("bean",bean);
+                            UIUtil.openActivity(mActivity,BookDetailActivity.class,bundle);
+                            finish();
+                        }
+                    });
+                }
+            }
+        }else {
+            ToastUtil.showToast(model.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void getSubscribeArticleData(SubscribeArticleModle model) {
+        if (model.isSuccess()) {
+            subscriptionTv.setText(" 已订阅 ");
+            int num = Integer.parseInt(numberTv.getText().toString())+1;
+            numberTv.setText(num+"");
+        }else {
+            ToastUtil.showToast(model.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void getArticleCommentData(ArticleCommentModle model) {
+        if (model.isSuccess()) {
+            if (model.getData()==null){
+                return;
+            }
+            mCommentdata = model.getData();
+            //书评
+            commentLay.removeAllViews();
+            for (int i = 0; i < mCommentdata.size(); i++) {
+                final ArticleCommentModle.DataBean dataBean = mCommentdata.get(i);
+                View commentItemView = UIUtil.inflate(R.layout.item_comment_connet);
+                ImageView headIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_head);
+                TextView nameTv = (TextView) commentItemView.findViewById(R.id.tv_comment_name);
+                TextView contentTv = (TextView) commentItemView.findViewById(R.id.tv_comment_content);
+                TextView timeTv = (TextView) commentItemView.findViewById(R.id.tv_comment_time);
+                final ImageView likeIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_like);
+                TextView likeTv = (TextView) commentItemView.findViewById(R.id.tv_comment_like);
+                TextView numberTv = (TextView) commentItemView.findViewById(R.id.tv_comment_number);
+                ImageView inIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_in);
+                GlideUitl.loadRandImg(this, dataBean.getPhoto(), headIv);//头像
+                nameTv.setText(dataBean.getNickName());//用户名
+                contentTv.setText(dataBean.getContent());//评论内容
+                timeTv.setText(dataBean.getCreateDate());//创建时间
+                likeTv.setText(dataBean.getLikeNum());//喜欢人数
+                numberTv.setText(dataBean.getReplyNum());//回复人数
+                if (dataBean.isIsLike()) {
+                    GlideUitl.loadImg(mActivity,R.drawable.icon_like_red,likeIv);
+                }else {
+                    GlideUitl.loadImg(mActivity,R.drawable.icon_like_normal,likeIv);
+                }
+                final boolean[] isLike = {dataBean.isIsLike()};
+                likeTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isLike[0]) {
+                            GlideUitl.loadImg(mActivity,R.drawable.icon_like_normal,likeIv);
+                            isLike[0] = false;
+                        }else {
+                            GlideUitl.loadImg(mActivity,R.drawable.icon_like_red,likeIv);
+                            isLike[0] = true;
+                        }
+                    }
+                });
+                commentItemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //去评论详情
+                    }
+                });
+                commentLay.addView(commentItemView);
+            }
+        }else {
+            ToastUtil.showToast(model.getErrorMsg());
+        }
+    }
+
+    @Override
+    protected BookDetailPresenter createPresenter() {
+        return new BookDetailPresenter(this);
+    }
+
 }
