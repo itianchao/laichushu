@@ -10,6 +10,7 @@ import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.db.Search_History;
 import com.sofacity.laichushu.db.Search_HistoryDao;
 import com.sofacity.laichushu.global.BaseApplication;
+import com.sofacity.laichushu.ui.activity.HomeSearchActivity;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.List;
@@ -21,9 +22,10 @@ import java.util.List;
 
 public class HomeSearchHistoryAdapter extends BaseAdapter {
     private List<Search_History> list;
-
-    public HomeSearchHistoryAdapter(List<Search_History> list) {
+    private HomeSearchActivity mActivity;
+    public HomeSearchHistoryAdapter(List<Search_History> list, HomeSearchActivity mActivity) {
         this.list = list;
+        this.mActivity = mActivity;
     }
 
     @Override
@@ -56,13 +58,17 @@ public class HomeSearchHistoryAdapter extends BaseAdapter {
         holder.delectIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Search_HistoryDao dao = new BaseApplication().getSearchHistory();
+                Search_HistoryDao dao = mActivity.getPresenter().getSearch_historyDao();
                 dao.delete(search_history);
                 list.remove(search_history);
                 notifyDataSetChanged();
             }
         });
         return convertView;
+    }
+
+    public void setList(List<Search_History> list) {
+        this.list = list;
     }
 
     class ViewHolder {
@@ -75,4 +81,5 @@ public class HomeSearchHistoryAdapter extends BaseAdapter {
             delectIv = (ImageView)itemView.findViewById(R.id.iv_delect);
         }
     }
+
 }
