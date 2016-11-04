@@ -14,7 +14,6 @@ import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.db.Search_History;
 import com.sofacity.laichushu.db.Search_HistoryDao;
-import com.sofacity.laichushu.global.BaseApplication;
 import com.sofacity.laichushu.mvp.HomeSearch.HomeSearchPresenter;
 import com.sofacity.laichushu.mvp.HomeSearch.HomeSearchView;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
@@ -171,10 +170,16 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
             search = searchEt.getText().toString().trim();
             mvpPresenter.LoadData(search);
             boolean isSearch = true;
-            if (list.size() != 0){
+            if (list.size() != 0) {
                 for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).getHistory().equals(search)){
+                    if (list.get(i).getHistory().equals(search)) {
                         isSearch = false;
+                        Search_History history1 = list.get(i);
+                        Search_History history2 = list.get((list.size() - 1));
+                        list.set(i, history2);
+                        list.set(list.size() - 1, history1);
+                        mAdapter.notifyDataSetChanged();
+                        dao.updateInTx(history1, history2);
                         break;
                     }
                 }
@@ -184,11 +189,11 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
                 Search_History history = new Search_History(null, search);
                 if (list.size() != 0) {
                     for (int i = list.size(); i > 0; i--) {
-                        if (i == list.size()){
+                        if (i == list.size()) {
                             list.add(list.get(i - 1));
-                        }else if (i == 1){
+                        } else if (i == 1) {
                             list.remove(1);
-                        }else {
+                        } else {
                             list.set(i, list.get(i - 1));
                         }
                     }
@@ -240,6 +245,6 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         searchEt.setText(list.get(position).getHistory());
-        onEditorAction(searchEt,EditorInfo.IME_ACTION_SEARCH,null);
+        onEditorAction(searchEt, EditorInfo.IME_ACTION_SEARCH, null);
     }
 }

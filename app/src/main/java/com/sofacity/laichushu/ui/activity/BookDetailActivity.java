@@ -18,7 +18,6 @@ import com.sofacity.laichushu.mvp.bookdetail.BookDetailPresenter;
 import com.sofacity.laichushu.mvp.bookdetail.BookDetailView;
 import com.sofacity.laichushu.mvp.bookdetail.SubscribeArticleModle;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
-import com.sofacity.laichushu.ui.base.BaseActivity;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.ui.widget.BookPlayActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
@@ -32,7 +31,7 @@ import java.util.ArrayList;
  * 图书详情
  * Created by wangtong on 2016/10/25.
  */
-public class BookDetailActivity extends MvpActivity<BookDetailPresenter> implements BookDetailView,View.OnClickListener {
+public class BookDetailActivity extends MvpActivity<BookDetailPresenter> implements BookDetailView, View.OnClickListener {
 
     private ImageView detailBookIv, authorHeadIv;
     private RatingBar detailRatbarTv;
@@ -46,6 +45,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     private HomeHotModel.DataBean bean;
     private ArrayList<HomeHotModel.DataBean> mdata = new ArrayList();
     private ArrayList<ArticleCommentModle.DataBean> mCommentdata = new ArrayList();
+
     @Override
     protected void initView() {
         setContentView(R.layout.activity_bookdetail);
@@ -146,13 +146,13 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         }
         if (bean.isSubscribe()) {
             subscriptionTv.setText("订阅更新");
-        }else {
+        } else {
             subscriptionTv.setText("已订阅");
         }
         if (bean.isPurchase()) {
             payTv.setText("已购买");
             probationTv.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             payTv.setText("购买");
             probationTv.setVisibility(View.VISIBLE);
         }
@@ -171,7 +171,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         individualTv = (TextView) findViewById(R.id.tv_individual);
         authorBriefTv = (TextView) findViewById(R.id.tv_author_brief);
         briefTv.setText(bean.getIntroduce());//简介
-        String msg = "收到的打赏："+bean.getAwardMoney()+"元("+bean.getAwardNum()+"人)";
+        String msg = "收到的打赏：" + bean.getAwardMoney() + "元(" + bean.getAwardNum() + "人)";
         msgTv.setText(msg);
 
     }
@@ -226,7 +226,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             case R.id.tv_subscription://订阅
                 if (!subscriptionTv.getText().equals(" 已订阅 ")) {
                     mvpPresenter.loadSubscribeArticle(bean.getArticleId());
-                }else {
+                } else {
                     ToastUtil.showToast(" 已订阅 ");
                 }
                 break;
@@ -248,14 +248,14 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     @Override
     public void getAuthorDetailData(AuthorDetailModle model) {
         if (model.isSuccess()) {
-            if (model.getData()!=null){
+            if (model.getData() != null) {
                 AuthorDetailModle.DataBean data = model.getData();
-                GlideUitl.loadRandImg(this,data.getPhoto(),authorHeadIv);
+                GlideUitl.loadRandImg(this, data.getPhoto(), authorHeadIv);
                 authorNameTv.setText(data.getNickName());//名字
                 authorBriefTv.setText(data.getAuthorIntroduction());//简介
-                individualTv.setText(data.getArticleNum()+"");//出版数量
+                individualTv.setText(data.getArticleNum() + "");//出版数量
             }
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrorMsg());
             Logger.e(model.getErrorMsg());
         }
@@ -280,7 +280,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     public void getBestLikeSuggestlData(HomeHotModel model) {
         if (model.isSuccess()) {
             mdata.clear();
-            if (model.getData()!=null){
+            if (model.getData() != null) {
                 mdata = model.getData();
                 for (HomeHotModel.DataBean dataBean : mdata) {
                     View likeItemView = UIUtil.inflate(R.layout.item_home_book);
@@ -310,14 +310,14 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                         @Override
                         public void onClick(View v) {
                             Bundle bundle = new Bundle();
-                            bundle.putParcelable("bean",bean);
-                            UIUtil.openActivity(mActivity,BookDetailActivity.class,bundle);
+                            bundle.putParcelable("bean", bean);
+                            UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
                             finish();
                         }
                     });
                 }
             }
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrorMsg());
         }
     }
@@ -326,9 +326,10 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     public void getSubscribeArticleData(SubscribeArticleModle model) {
         if (model.isSuccess()) {
             subscriptionTv.setText(" 已订阅 ");
-            int num = Integer.parseInt(numberTv.getText().toString())+1;
-            numberTv.setText(num+"");
-        }else {
+            int num = Integer.parseInt(numberTv.getText().toString()) + 1;
+            bean.setSubscribeNum(num);
+            numberTv.setText(bean.getSubscribeNum() + "");
+        } else {
             ToastUtil.showToast(model.getErrorMsg());
         }
     }
@@ -336,7 +337,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     @Override
     public void getArticleCommentData(ArticleCommentModle model) {
         if (model.isSuccess()) {
-            if (model.getData()==null){
+            if (model.getData() == null) {
                 return;
             }
             mCommentdata = model.getData();
@@ -357,22 +358,22 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 nameTv.setText(dataBean.getNickName());//用户名
                 contentTv.setText(dataBean.getContent());//评论内容
                 timeTv.setText(dataBean.getCreateDate());//创建时间
-                likeTv.setText(dataBean.getLikeNum());//喜欢人数
-                numberTv.setText(dataBean.getReplyNum());//回复人数
+                likeTv.setText(dataBean.getLikeNum() + "");//喜欢人数
+                numberTv.setText(dataBean.getReplyNum() + "");//回复人数
                 if (dataBean.isIsLike()) {
-                    GlideUitl.loadImg(mActivity,R.drawable.icon_like_red,likeIv);
-                }else {
-                    GlideUitl.loadImg(mActivity,R.drawable.icon_like_normal,likeIv);
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
+                } else {
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
                 }
                 final boolean[] isLike = {dataBean.isIsLike()};
                 likeTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (isLike[0]) {
-                            GlideUitl.loadImg(mActivity,R.drawable.icon_like_normal,likeIv);
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
                             isLike[0] = false;
-                        }else {
-                            GlideUitl.loadImg(mActivity,R.drawable.icon_like_red,likeIv);
+                        } else {
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
                             isLike[0] = true;
                         }
                     }
@@ -380,12 +381,12 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 commentItemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //去评论详情
+                        // TODO: 2016/11/4  去评论详情
                     }
                 });
                 commentLay.addView(commentItemView);
             }
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrorMsg());
         }
     }

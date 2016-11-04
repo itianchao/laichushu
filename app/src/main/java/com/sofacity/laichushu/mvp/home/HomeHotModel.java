@@ -82,6 +82,15 @@ public class HomeHotModel implements Parcelable {
         private double awardMoney;
         private boolean isPurchase;
         private boolean isSubscribe;
+        private boolean isParticipate;
+
+        public boolean isParticipate() {
+            return isParticipate;
+        }
+
+        public void setIsParticipate(boolean isParticipate) {
+            this.isParticipate = isParticipate;
+        }
 
         /**
          * level : 3
@@ -395,6 +404,7 @@ public class HomeHotModel implements Parcelable {
             dest.writeDouble(this.awardMoney);
             dest.writeByte(this.isPurchase ? (byte) 1 : (byte) 0);
             dest.writeByte(this.isSubscribe ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.isParticipate ? (byte) 1 : (byte) 0);
             dest.writeInt(this.level);
             dest.writeDouble(this.score);
             dest.writeDouble(this.price);
@@ -429,6 +439,7 @@ public class HomeHotModel implements Parcelable {
             this.awardMoney = in.readDouble();
             this.isPurchase = in.readByte() != 0;
             this.isSubscribe = in.readByte() != 0;
+            this.isParticipate = in.readByte() != 0;
             this.level = in.readInt();
             this.score = in.readDouble();
             this.price = in.readDouble();

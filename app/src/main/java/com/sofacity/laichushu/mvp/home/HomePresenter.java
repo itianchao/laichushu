@@ -19,7 +19,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
     private String pageNo2 = "1";
     private String userId = SharePrefManager.getUserId();
     private HomeAllBook_Paramet paramet = paramet = new HomeAllBook_Paramet("1",pageSize,pageNo,userId);
-    private ActivityList_Paramet activityListParamet = new ActivityList_Paramet(pageNo2,pageSize);;
+    private ActivityList_Paramet activityListParamet = new ActivityList_Paramet(pageNo2,pageSize,userId);;
     private int state = 1;
     public HomePresenter(HomeView view) {
         attachView(view);

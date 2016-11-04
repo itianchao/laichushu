@@ -7,10 +7,11 @@ package com.sofacity.laichushu.bean.netbean;
 public class ActivityList_Paramet {
     private String pageNo;
     private String pageSize;
-
-    public ActivityList_Paramet(String pageNo, String pageSize) {
+    private String userId;
+    public ActivityList_Paramet(String pageNo, String pageSize, String userId) {
         this.pageNo = pageNo;
         this.pageSize = pageSize;
+        this.userId = userId;
     }
 
     public String getPageNo() {
@@ -19,5 +20,21 @@ public class ActivityList_Paramet {
 
     public void setPageNo(String pageNo) {
         this.pageNo = pageNo;
+    }
+
+    public String getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(String pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

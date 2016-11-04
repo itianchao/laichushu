@@ -1,9 +1,6 @@
 package com.sofacity.laichushu.ui.activity;
 
-import android.os.Parcelable;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -11,10 +8,16 @@ import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.Campaign.AuthorWorksModle;
+import com.sofacity.laichushu.mvp.Campaign.CampaignJoinModel;
+import com.sofacity.laichushu.mvp.Campaign.CampaignModel;
+import com.sofacity.laichushu.mvp.Campaign.CampaignPresenter;
+import com.sofacity.laichushu.mvp.Campaign.CampaignView;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.adapter.JoinActivityAdapter;
-import com.sofacity.laichushu.ui.base.BaseActivity;
+import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
  * 活动详情
  * Created by wangtong on 2016/10/24.
  */
-public class CampaignActivity extends BaseActivity implements View.OnClickListener {
+public class CampaignActivity extends MvpActivity<CampaignPresenter> implements CampaignView, View.OnClickListener {
 
     private TextView joinTv;
     private TextView numTv;
@@ -37,6 +40,8 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
     private LinearLayout parentLay;
     private ImageView stateIv;
     private HomeHotModel.DataBean bean;
+    private ArrayList<CampaignModel.DataBean> mData = new ArrayList<>();
+    private ArrayList<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
 
     @Override
     protected void initView() {
@@ -88,27 +93,38 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initData() {
         bean = getIntent().getParcelableExtra("bean");
+        mvpPresenter.loadActivityResultData(bean.getActivityId());
+        mvpPresenter.loadAuthorWorksData();
         joinTv.setOnClickListener(this);
-        GlideUitl.loadImg(this, "", activityImgIv);
-        GlideUitl.loadImg(this, R.drawable.activity_start, stateIv);
-        activityNameTv.setText(bean.getActivityName());
-        startTimeTv.setText("开始时间："+bean.getBeginTime());
-        endTimeTv.setText("结束时间："+bean.getEndTime());
-        numTv.setText("报名人数："+bean.getApplyAmount()+"人");
-        detailsTv.setText(bean.getDetail());
-        for (int i = 1; i <= 20; i++) {
-            View itemView = UIUtil.inflate(R.layout.item_home_activity_details);
-            TextView bonusTv = (TextView) itemView.findViewById(R.id.tv_bonus);
-            ImageView headIv = (ImageView) itemView.findViewById(R.id.iv_head);
-            TextView usernameIv = (TextView) itemView.findViewById(R.id.iv_username);
-            TextView booknameIv = (TextView) itemView.findViewById(R.id.iv_bookname);
-            bonusTv.setText(i + "");
-            String path = "https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1476714818&di=2b104d4a35a140ed0a28e694a560e731&src=http://pic38.nipic.com/20140228/2531170_213554844000_2.jpg";
-            GlideUitl.loadRandImg(this, path, headIv);
-            usernameIv.setText("超人");
-            booknameIv.setText("雪中悍刀行");
-            parentLay.addView(itemView);
+        GlideUitl.loadImg(this, bean.getImgUrl(), activityImgIv);
+        if (bean.isParticipate()) {
+            joinTv.setText("已参加");
+        } else {
+            joinTv.setText("参加活动");
         }
+        switch (bean.getStatus()) {
+            case "1":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                joinTv.setVisibility(View.INVISIBLE);
+                break;
+            case "2":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                joinTv.setVisibility(View.VISIBLE);
+                break;
+            case "3":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                joinTv.setVisibility(View.VISIBLE);
+                break;
+            case "4":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
+                joinTv.setVisibility(View.INVISIBLE);
+                break;
+        }
+        activityNameTv.setText(bean.getActivityName());
+        startTimeTv.setText("开始时间：" + bean.getBeginTime());
+        endTimeTv.setText("结束时间：" + bean.getEndTime());
+        numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
+        detailsTv.setText(bean.getDetail());
     }
 
     /**
@@ -127,20 +143,37 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
             case R.id.iv_title_another://评论
                 break;
             case R.id.tv_join://参加活动
-                openAlertDialog();
+                if (mArticleData.size() == 0) {
+                    ToastUtil.showToast("您还没有作品");
+                } else {
+                    if (joinTv.getText().equals("参加活动")) {
+                        openAlertDialog();
+                        bean.setApplyAmount(bean.getApplyAmount() + 1);
+                        numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
+                    } else {
+                        ToastUtil.showToast("您已参加该活动");
+                    }
+                }
                 break;
         }
     }
-    private void openAlertDialog(){
-        final ArrayList<Text> mData = new ArrayList<>();
-        mData.add(new Text("射雕英雄传",true));
-        mData.add(new Text("超体",false));
-        mData.add(new Text("三体",false));
-        mData.add(new Text("西游记",false));
+
+    /**
+     * 参加活动 对话框
+     */
+    private void openAlertDialog() {
+        for (int i = 0; i < mArticleData.size(); i++) {
+            AuthorWorksModle.DataBean bean = mArticleData.get(i);
+            if (i == 0) {
+                bean.setIscheck(true);
+            } else {
+                bean.setIscheck(false);
+            }
+        }
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
         final View customerView = UIUtil.inflate(R.layout.dialog_join);
         ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
-        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mData,0);
+        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0);
         joinLv.setAdapter(joinAdapter);
 
         //取消
@@ -154,7 +187,8 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showToast(mData.get(joinAdapter.getPosition()).getName());
+                Logger.e(mArticleData.get(joinAdapter.getPosition()).getArticleName());
+                mvpPresenter.loadJoinActivityData(bean.getActivityId(), mArticleData.get(joinAdapter.getPosition()).getArticleId());
                 dialogBuilder.dismiss();
             }
         });
@@ -167,29 +201,79 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
                 .setCustomView(customerView, this)                // 添加自定义View
                 .show();
     }
-    public class Text {
-        public Text(String name, boolean ischeck) {
-            this.name = name;
-            this.ischeck = ischeck;
-        }
 
-        String name;
-        boolean ischeck;
-
-        public String getName() {
-            return name;
+    /**
+     * 比赛结束获取排名
+     *
+     * @param model
+     */
+    @Override
+    public void getDataSuccess(CampaignModel model) {
+        if (model.isSuccess()) {
+            mData.addAll(model.getData());
+            for (int i = 1; i <= mData.size(); i++) {
+                View itemView = UIUtil.inflate(R.layout.item_home_activity_details);
+                TextView bonusTv = (TextView) itemView.findViewById(R.id.tv_bonus);
+                ImageView headIv = (ImageView) itemView.findViewById(R.id.iv_head);
+                TextView usernameIv = (TextView) itemView.findViewById(R.id.iv_username);
+                TextView booknameIv = (TextView) itemView.findViewById(R.id.iv_bookname);
+                bonusTv.setText(i + "");
+                CampaignModel.DataBean bean = mData.get(i - 1);
+                GlideUitl.loadRandImg(this, bean.getPhoto(), headIv);
+                usernameIv.setText(bean.getNickName());
+                booknameIv.setText(bean.getArticleName());
+                parentLay.addView(itemView);
+            }
+        } else {
+            ToastUtil.showToast(model.getErrorMsg());
         }
+    }
 
-        public void setName(String name) {
-            this.name = name;
+    /**
+     * 参加活动
+     *
+     * @param model
+     */
+    @Override
+    public void getJoinDataSuccess(CampaignJoinModel model) {
+        if (model.isSuccess()) {
+            joinTv.setText("已参加");
+        } else {
+            ToastUtil.showToast(model.getErrorMsg());
         }
+    }
 
-        public boolean ischeck() {
-            return ischeck;
+    /**
+     * 获取作者作品信息
+     *
+     * @param model
+     */
+    @Override
+    public void getAuthorWorksDataSuccess(AuthorWorksModle model) {
+        if (model.isSuccess()) {
+            mArticleData.addAll(model.getData());
+        } else {
+            ToastUtil.showToast("获取作品失败");
         }
+    }
 
-        public void setIscheck(boolean ischeck) {
-            this.ischeck = ischeck;
-        }
+    @Override
+    public void getDataFail(String msg) {
+        Logger.e(msg);
+    }
+
+    @Override
+    public void showLoading() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void hideLoading() {
+        dismissProgressDialog();
+    }
+
+    @Override
+    protected CampaignPresenter createPresenter() {
+        return new CampaignPresenter(this);
     }
 }

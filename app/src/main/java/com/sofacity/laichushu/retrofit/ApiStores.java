@@ -1,18 +1,24 @@
 package com.sofacity.laichushu.retrofit;
 
 import com.sofacity.laichushu.bean.netbean.ActivityList_Paramet;
+import com.sofacity.laichushu.bean.netbean.ActivityResult_Paramet;
 import com.sofacity.laichushu.bean.netbean.AuthorDetail_Paramet;
+import com.sofacity.laichushu.bean.netbean.AuthorWorks_Paramet;
 import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
 import com.sofacity.laichushu.bean.netbean.ForgetPwd_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeAllBook_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeHot_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeSearch_Paramet;
+import com.sofacity.laichushu.bean.netbean.JoinActivity_Paramet;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
 import com.sofacity.laichushu.bean.netbean.RegistValid_Paramet;
 import com.sofacity.laichushu.bean.netbean.Regist_Paramet;
 import com.sofacity.laichushu.bean.netbean.SaveComment_Paramet;
 import com.sofacity.laichushu.bean.netbean.SubscribeArticle_Paramet;
+import com.sofacity.laichushu.mvp.Campaign.AuthorWorksModle;
+import com.sofacity.laichushu.mvp.Campaign.CampaignJoinModel;
+import com.sofacity.laichushu.mvp.Campaign.CampaignModel;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.mvp.bookdetail.AuthorDetailModle;
 import com.sofacity.laichushu.mvp.bookdetail.SubscribeArticleModle;
@@ -78,7 +84,7 @@ public interface ApiStores {
     @POST("reward/save")
     Observable rewardMoney();
     //图书评论查询接口
-    @POST("articleComment/list")
+    @POST("articleScore/list")
     Observable<ArticleCommentModle> articleComment(@Body Comment_Paramet paramet);
     //图书评论保存接口
     @POST("articleComment/save")
@@ -86,4 +92,13 @@ public interface ApiStores {
     //活动列表接口
     @POST("activity/list")
     Observable<HomeHotModel> activityList(@Body ActivityList_Paramet paramet);
+    //活动结果接口
+    @POST("activity/getActivityResult")
+    Observable<CampaignModel> getActivityResult(@Body ActivityResult_Paramet paramet);
+    //参加活动
+    @POST("activity/save")
+    Observable<CampaignJoinModel> joinActivity(@Body JoinActivity_Paramet paramet);
+    //获取作者作品
+    @POST("searchArticle/findArticleByAuthorId")
+    Observable<AuthorWorksModle> getAuthorWorks(@Body AuthorWorks_Paramet paramet);
 }

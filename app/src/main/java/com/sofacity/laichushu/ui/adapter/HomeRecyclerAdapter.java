@@ -1,7 +1,6 @@
 package com.sofacity.laichushu.ui.adapter;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +27,6 @@ import com.sofacity.laichushu.ui.fragment.HomeFragment;
 import com.sofacity.laichushu.ui.widget.TypePopWindow;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.SharePrefManager;
-import com.sofacity.laichushu.utils.StringUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -260,8 +258,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                         public void onClick(View v) {
                             //跳转活动详情页
                             Bundle bundle = new Bundle();
-                            bundle.putParcelable("bean",bean);
-                            UIUtil.openActivity(mActivity, CampaignActivity.class,bundle);
+                            bundle.putParcelable("bean", bean);
+                            UIUtil.openActivity(mActivity, CampaignActivity.class, bundle);
                         }
                     });
                     GlideUitl.loadImg(mActivity, bean.getImgUrl(), ((ViewHolder3) holder).activityIv);

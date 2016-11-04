@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.Campaign.AuthorWorksModle;
 import com.sofacity.laichushu.ui.activity.CampaignActivity;
 import com.sofacity.laichushu.utils.UIUtil;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/10/26.
  */
 public class JoinActivityAdapter extends BaseAdapter {
-    private ArrayList<CampaignActivity.Text> mData;
+    private ArrayList<AuthorWorksModle.DataBean> mData;
     private int position;
 
     public int getPosition() {
@@ -28,7 +29,7 @@ public class JoinActivityAdapter extends BaseAdapter {
         this.position = position;
     }
 
-    public JoinActivityAdapter(ArrayList<CampaignActivity.Text> mData,int position) {
+    public JoinActivityAdapter(ArrayList<AuthorWorksModle.DataBean> mData,int position) {
         this.mData = mData;
         this.position = position;
     }
@@ -58,9 +59,9 @@ public class JoinActivityAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder)convertView.getTag();
         }
-        CampaignActivity.Text text = mData.get(position);
-        holder.nameRbn.setText(text.getName());
-        if (text.ischeck()){
+        AuthorWorksModle.DataBean bean = mData.get(position);
+        holder.nameRbn.setText(bean.getArticleName());
+        if (bean.isIscheck()){
             holder.nameRbn.setChecked(true);
         }else {
             holder.nameRbn.setChecked(false);
