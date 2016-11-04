@@ -1,16 +1,12 @@
-package com.sofacity.laichushu.mvp.bookdetail;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.sofacity.laichushu.mvp.commentdetail;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * 图书评论
- * Created by wangtong on 2016/11/3.
+ * 评价详情 modle
+ * Created by wangtong on 2016/11/4.
  */
-public class ArticleCommentModle {
+public class CommentDetailModle {
 
     /**
      * success : true
@@ -58,7 +54,7 @@ public class ArticleCommentModle {
         this.data = data;
     }
 
-    public static class DataBean implements Parcelable {
+    public static class DataBean {
         private String scoreId;
         private String userId;
         private String articleId;
@@ -149,52 +145,5 @@ public class ArticleCommentModle {
         public void setIsLike(boolean isLike) {
             this.isLike = isLike;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.scoreId);
-            dest.writeString(this.userId);
-            dest.writeString(this.articleId);
-            dest.writeString(this.content);
-            dest.writeInt(this.replyNum);
-            dest.writeInt(this.likeNum);
-            dest.writeString(this.nickName);
-            dest.writeString(this.photo);
-            dest.writeString(this.createDate);
-            dest.writeByte(this.isLike ? (byte) 1 : (byte) 0);
-        }
-
-        public DataBean() {
-        }
-
-        protected DataBean(Parcel in) {
-            this.scoreId = in.readString();
-            this.userId = in.readString();
-            this.articleId = in.readString();
-            this.content = in.readString();
-            this.replyNum = in.readInt();
-            this.likeNum = in.readInt();
-            this.nickName = in.readString();
-            this.photo = in.readString();
-            this.createDate = in.readString();
-            this.isLike = in.readByte() != 0;
-        }
-
-        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
-            @Override
-            public DataBean createFromParcel(Parcel source) {
-                return new DataBean(source);
-            }
-
-            @Override
-            public DataBean[] newArray(int size) {
-                return new DataBean[size];
-            }
-        };
     }
 }

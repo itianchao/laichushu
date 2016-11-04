@@ -12,16 +12,20 @@ import com.sofacity.laichushu.bean.netbean.HomeHot_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeSearch_Paramet;
 import com.sofacity.laichushu.bean.netbean.JoinActivity_Paramet;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
+import com.sofacity.laichushu.bean.netbean.ReCommentList_Paramet;
+import com.sofacity.laichushu.bean.netbean.ReSavaComment_Paramet;
 import com.sofacity.laichushu.bean.netbean.RegistValid_Paramet;
 import com.sofacity.laichushu.bean.netbean.Regist_Paramet;
 import com.sofacity.laichushu.bean.netbean.SaveComment_Paramet;
 import com.sofacity.laichushu.bean.netbean.SubscribeArticle_Paramet;
-import com.sofacity.laichushu.mvp.Campaign.AuthorWorksModle;
-import com.sofacity.laichushu.mvp.Campaign.CampaignJoinModel;
-import com.sofacity.laichushu.mvp.Campaign.CampaignModel;
+import com.sofacity.laichushu.mvp.campaign.AuthorWorksModle;
+import com.sofacity.laichushu.mvp.campaign.CampaignJoinModel;
+import com.sofacity.laichushu.mvp.campaign.CampaignModel;
+import com.sofacity.laichushu.mvp.allcomment.SendCommentMoudle;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.mvp.bookdetail.AuthorDetailModle;
 import com.sofacity.laichushu.mvp.bookdetail.SubscribeArticleModle;
+import com.sofacity.laichushu.mvp.commentdetail.CommentDetailModle;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdModel;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.mvp.home.HomeModel;
@@ -87,8 +91,14 @@ public interface ApiStores {
     @POST("articleScore/list")
     Observable<ArticleCommentModle> articleComment(@Body Comment_Paramet paramet);
     //图书评论保存接口
+    @POST("articleScore/save")
+    Observable<SendCommentMoudle> saveComment(@Body SaveComment_Paramet paramet);
+    //回复评论接口
+    @POST("articleComment/list")
+    Observable<CommentDetailModle> CommentList(@Body ReCommentList_Paramet paramet);
+    //保存回复评论接口
     @POST("articleComment/save")
-    Observable saveComment(@Body SaveComment_Paramet paramet);
+    Observable<CommentDetailModle> saveComment(@Body ReSavaComment_Paramet paramet);
     //活动列表接口
     @POST("activity/list")
     Observable<HomeHotModel> activityList(@Body ActivityList_Paramet paramet);

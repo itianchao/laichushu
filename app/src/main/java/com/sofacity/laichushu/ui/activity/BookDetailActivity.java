@@ -212,7 +212,9 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             case R.id.iv_title_another://收藏
                 break;
             case R.id.tv_lookup://查看更多评论
-                UIUtil.openActivity(this, AllCommentActivity.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("articleId",bean.getArticleId());
+                UIUtil.openActivity(this, AllCommentActivity.class,bundle1);
                 break;
             case R.id.lay_read://阅读
                 Bundle bundle = new Bundle();
@@ -315,6 +317,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                             finish();
                         }
                     });
+
                 }
             }
         } else {
@@ -365,16 +368,15 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 } else {
                     GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
                 }
-                final boolean[] isLike = {dataBean.isIsLike()};
                 likeTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (isLike[0]) {
+                        if (dataBean.isIsLike()) {
                             GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
-                            isLike[0] = false;
+                            dataBean.setIsLike(false);
                         } else {
                             GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
-                            isLike[0] = true;
+                            dataBean.setIsLike(true);
                         }
                     }
                 });
@@ -382,9 +384,20 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                     @Override
                     public void onClick(View v) {
                         // TODO: 2016/11/4  去评论详情
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("bean",dataBean);
+                        UIUtil.openActivity(mActivity,CommentDetailActivity.class,bundle);
                     }
                 });
                 commentLay.addView(commentItemView);
+                numberTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("commentId", dataBean.getScoreId());
+                        UIUtil.openActivity(BookDetailActivity.this,CommentSendActivity.class,bundle);
+                    }
+                });
             }
         } else {
             ToastUtil.showToast(model.getErrorMsg());

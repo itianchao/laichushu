@@ -57,9 +57,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }
     };
     private LinearLayout searchLyt;
-    private String pageNo = "2";
+    private String pageNo = "2";//全部不加在
     private String type = "1";//类型
-    private String pageNo2 = "2";
+    private String pageNo2 = "1";//活动加载1次
 
     @Override
     public void onAttach(Context context) {
@@ -181,11 +181,11 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }, 300);
         if (model.isSuccess()) {
             mAllData = model.getData();
-            mData.addAll(mAllData);
-            mAdapter.setmData(mData);
-            mAdapter.notifyDataSetChanged();
             if (mAllData.size()!=0){
                 pageNo = Integer.parseInt(pageNo) + 1 + "";
+                mData.addAll(mAllData);
+                mAdapter.setmData(mData);
+                mAdapter.notifyDataSetChanged();
             }
         } else {
             ToastUtil.showToast(model.getErrorMsg());
@@ -204,10 +204,10 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }, 300);
         if (model.isSuccess()) {
             mAllData = model.getData();
-            mData.addAll(mAllData);
-            mAdapter.notifyDataSetChanged();
             if (mAllData.size()!=0){
                 pageNo2 = Integer.parseInt(pageNo2) + 1 + "";
+                mData.addAll(mAllData);
+                mAdapter.notifyDataSetChanged();
             }
         } else {
             ToastUtil.showToast(model.getErrorMsg());
@@ -216,6 +216,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     @Override
     public void getDataFail(String msg) {
+        mRecyclerView.setPullLoadMoreCompleted();
         Logger.e(msg);
     }
 

@@ -12,16 +12,31 @@ public class SaveComment_Paramet {
      * content : 3
      */
 
-    private String sourceId;
+    private String articleId;
     private String userId;
     private String content;
-
-    public String getSourceId() {
-        return sourceId;
+    private String starLevel;
+    public SaveComment_Paramet(String articleId, String userId, String content,String starLevel) {
+        this.articleId = articleId;
+        this.userId = userId;
+        this.content = content;
+        this.starLevel = starLevel;
     }
 
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
+    public String getStarLevel() {
+        return starLevel;
+    }
+
+    public void setStarLevel(String starLevel) {
+        this.starLevel = starLevel;
+    }
+
+    public String getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
     }
 
     public String getUserId() {
