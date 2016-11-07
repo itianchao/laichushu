@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/global">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbn_material"
+                android:layout_width="95dp"
+                android:layout_height="35dp"
+                android:background="@drawable/select_radio"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="素材模式"
+                android:textColor="@drawable/select_radio_color" />
+
+            <RadioButton
+                android:id="@+id/rbn_dir"
+                android:layout_width="95dp"
+                android:layout_height="35dp"
+                android:background="@drawable/select_radio"
+                android:button="@null"
+                android:gravity="center"
+                android:text="目录模式"
+                android:textColor="@drawable/select_radio_color" />
+        </RadioGroup>
+
+        <ImageView
+            android:id="@+id/iv_title_finish"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_finish" />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/lv_dir"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <ListView
+        android:id="@+id/lv_book"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

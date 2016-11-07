@@ -217,13 +217,17 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 UIUtil.openActivity(this, AllCommentActivity.class,bundle1);
                 break;
             case R.id.lay_read://阅读
+//                Bundle bundle = new Bundle();
+//                String bookname = "12345";
+//                String path = Environment.getExternalStorageDirectory() + File.separator
+//                        + "123.txt";
+//                bundle.putString("bookname", bookname);
+//                bundle.putString("bookpath", path);
+//                UIUtil.openActivity(this, BookPlayActivity.class, bundle);
                 Bundle bundle = new Bundle();
-                String bookname = "12345";
-                String path = Environment.getExternalStorageDirectory() + File.separator
-                        + "123.txt";
-                bundle.putString("bookname", bookname);
-                bundle.putString("bookpath", path);
-                UIUtil.openActivity(this, BookPlayActivity.class, bundle);
+                bundle.putString("articleId", bean.getArticleId());
+                UIUtil.openActivity(this, DirectoriesActivity.class, bundle);
+                // TODO: 2016/11/7 阅读
                 break;
             case R.id.tv_subscription://订阅
                 if (!subscriptionTv.getText().equals(" 已订阅 ")) {

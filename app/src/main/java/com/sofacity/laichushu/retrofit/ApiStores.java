@@ -12,6 +12,8 @@ import com.sofacity.laichushu.bean.netbean.HomeHot_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeSearch_Paramet;
 import com.sofacity.laichushu.bean.netbean.JoinActivity_Paramet;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
+import com.sofacity.laichushu.bean.netbean.MaterialContent_Paramet;
+import com.sofacity.laichushu.bean.netbean.MaterialList_Paramet;
 import com.sofacity.laichushu.bean.netbean.ReCommentList_Paramet;
 import com.sofacity.laichushu.bean.netbean.ReSavaComment_Paramet;
 import com.sofacity.laichushu.bean.netbean.RegistValid_Paramet;
@@ -26,6 +28,8 @@ import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.mvp.bookdetail.AuthorDetailModle;
 import com.sofacity.laichushu.mvp.bookdetail.SubscribeArticleModle;
 import com.sofacity.laichushu.mvp.commentdetail.CommentDetailModle;
+import com.sofacity.laichushu.mvp.directories.MaterialContentModel;
+import com.sofacity.laichushu.mvp.directories.MaterialListModel;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdModel;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.mvp.home.HomeModel;
@@ -45,7 +49,7 @@ import rx.Observable;
 public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
-    String API_SERVER_URL = "http://192.168.147.115:8082/book-app/";//张峰
+    String API_SERVER_URL = "http://192.168.147.117:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 
     //登录接口
@@ -111,4 +115,11 @@ public interface ApiStores {
     //获取作者作品
     @POST("searchArticle/findArticleByAuthorId")
     Observable<AuthorWorksModle> getAuthorWorks(@Body AuthorWorks_Paramet paramet);
+    //获取素材列表接口
+    @POST("material/list")
+    Observable<MaterialListModel> getMaterialList(@Body MaterialList_Paramet paramet);
+    //获取素材内容接口
+    @POST("readMaterial/list")
+    Observable<MaterialContentModel> getMaterialContent(@Body MaterialContent_Paramet paramet);
+
 }
