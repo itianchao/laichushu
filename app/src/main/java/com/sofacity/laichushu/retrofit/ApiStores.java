@@ -5,6 +5,7 @@ import com.sofacity.laichushu.bean.netbean.ActivityResult_Paramet;
 import com.sofacity.laichushu.bean.netbean.AuthorDetail_Paramet;
 import com.sofacity.laichushu.bean.netbean.AuthorWorks_Paramet;
 import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
+import com.sofacity.laichushu.bean.netbean.BookList_Patamet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
 import com.sofacity.laichushu.bean.netbean.ForgetPwd_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeAllBook_Paramet;
@@ -20,14 +21,16 @@ import com.sofacity.laichushu.bean.netbean.RegistValid_Paramet;
 import com.sofacity.laichushu.bean.netbean.Regist_Paramet;
 import com.sofacity.laichushu.bean.netbean.SaveComment_Paramet;
 import com.sofacity.laichushu.bean.netbean.SubscribeArticle_Paramet;
-import com.sofacity.laichushu.mvp.campaign.AuthorWorksModle;
-import com.sofacity.laichushu.mvp.campaign.CampaignJoinModel;
-import com.sofacity.laichushu.mvp.campaign.CampaignModel;
+
+import com.sofacity.laichushu.mvp.Campaign.AuthorWorksModle;
+import com.sofacity.laichushu.mvp.Campaign.CampaignJoinModel;
+import com.sofacity.laichushu.mvp.Campaign.CampaignModel;
 import com.sofacity.laichushu.mvp.allcomment.SendCommentMoudle;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.mvp.bookdetail.AuthorDetailModle;
 import com.sofacity.laichushu.mvp.bookdetail.SubscribeArticleModle;
 import com.sofacity.laichushu.mvp.commentdetail.CommentDetailModle;
+import com.sofacity.laichushu.mvp.directories.BookMoudle;
 import com.sofacity.laichushu.mvp.directories.MaterialContentModel;
 import com.sofacity.laichushu.mvp.directories.MaterialListModel;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdModel;
@@ -121,5 +124,7 @@ public interface ApiStores {
     //获取素材内容接口
     @POST("readMaterial/list")
     Observable<MaterialContentModel> getMaterialContent(@Body MaterialContent_Paramet paramet);
-
+    //获取目录接口
+    @POST("readChapter/list")
+    Observable<BookMoudle> getBookList(@Body BookList_Patamet patamet);
 }

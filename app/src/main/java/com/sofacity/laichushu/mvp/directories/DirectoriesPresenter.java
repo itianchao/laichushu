@@ -63,4 +63,9 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
             }
         });
     }
+
+    public void loadBookData{
+        Logger.e("获取素材列表");
+//        Logger.json(new Gson().toJson(paramet));
+    }
 }

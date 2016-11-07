@@ -102,6 +102,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 bookLv.setVisibility(View.GONE);
                 break;
             case R.id.rbn_dir:
+//                mvpPresenter.
                 dirLv.setVisibility(View.GONE);
                 bookLv.setVisibility(View.VISIBLE);
                 break;
