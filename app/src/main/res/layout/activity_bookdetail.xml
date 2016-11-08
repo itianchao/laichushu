@@ -65,27 +65,26 @@
                         android:text="人订阅" />
 
                     <TextView
-                        android:id="@+id/tv_subscription"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/shape_rectangle_fill_hint"
-                        android:padding="3dp"
-                        android:text="订阅更新"
-                        android:textColor="@color/orange" />
-
-                    <TextView
+                        android:layout_marginRight="15dp"
                         android:id="@+id/tv_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/tv_subscription"
-                        android:layout_alignStart="@+id/tv_subscription"
                         android:layout_alignTop="@+id/textView3"
                         android:textColor="@color/global"
-                        tools:text="30" />
+                        tools:text="300" />
+
+                    <TextView
+                        android:id="@+id/tv_subscription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_rectangle_fill_hint"
+                        android:padding="3dp"
+                        android:text="订阅更新"
+                        android:textColor="@color/orange"
+                        android:layout_alignTop="@+id/tv_refreshtime"
+                        android:layout_alignRight="@+id/textView3"
+                        android:layout_alignEnd="@+id/textView3" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -126,6 +125,7 @@
                         android:paddingRight="15dp"
                         android:paddingTop="5dp"
                         android:text="购买"
+                        android:textSize="@dimen/edit3"
                         android:textColor="@color/white" />
                 </LinearLayout>
             </FrameLayout>

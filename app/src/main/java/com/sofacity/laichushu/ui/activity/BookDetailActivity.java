@@ -144,9 +144,9 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             payTv.setOnClickListener(this);//购买按钮
         }
         if (bean.isSubscribe()) {
-            subscriptionTv.setText("订阅更新");
+            subscriptionTv.setText(" 已订阅 ");
         } else {
-            subscriptionTv.setText("已订阅");
+            subscriptionTv.setText("订阅更新");
         }
         if (bean.isPurchase()) {
             payTv.setText("已购买");
@@ -240,9 +240,11 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 break;
             case R.id.tv_pay://购买
                 //弹出对话框确认
-                String articleId = bean.getArticleId();
-                double payMoney = bean.getPrice();
-                mvpPresenter.showdialog(articleId, payMoney+"");
+                if (!payTv.getText().toString().equals("已购买")){
+                    String articleId = bean.getArticleId();
+                    double payMoney = bean.getPrice();
+                    mvpPresenter.showdialog(articleId, payMoney+"");
+                }
                 break;
             case R.id.rbn_dresser://大咖评论
 
