@@ -31,17 +31,17 @@ public class HomeAllModel implements Parcelable {
      * price : 200.0
      * awardMoney : 90.0
      */
-    private String errorMsg;
+    private String errMsg;
 
     private ArrayList<DataBean> data;
 
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 
     public boolean isSuccess() {
@@ -231,7 +231,7 @@ public class HomeAllModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte(this.success ? (byte) 1 : (byte) 0);
-        dest.writeString(this.errorMsg);
+        dest.writeString(this.errMsg);
         dest.writeTypedList(this.data);
     }
 
@@ -240,7 +240,7 @@ public class HomeAllModel implements Parcelable {
 
     protected HomeAllModel(Parcel in) {
         this.success = in.readByte() != 0;
-        this.errorMsg = in.readString();
+        this.errMsg = in.readString();
         this.data = in.createTypedArrayList(DataBean.CREATOR);
     }
 

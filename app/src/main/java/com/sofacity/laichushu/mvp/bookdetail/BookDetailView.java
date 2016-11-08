@@ -1,5 +1,6 @@
 package com.sofacity.laichushu.mvp.bookdetail;
 
+import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 
 /**
@@ -9,9 +10,11 @@ import com.sofacity.laichushu.mvp.home.HomeHotModel;
 public interface BookDetailView {
     void getAuthorDetailData(AuthorDetailModle model);
     void getDataFail(String msg);
+    void getPayResult(RewardResult model);
     void showLoading();
     void hideLoading();
     void getBestLikeSuggestlData(HomeHotModel model);
     void getSubscribeArticleData(SubscribeArticleModle model);
     void getArticleCommentData(ArticleCommentModle model);
+
 }

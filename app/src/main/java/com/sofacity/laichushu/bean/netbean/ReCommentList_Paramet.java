@@ -13,24 +13,24 @@ public class ReCommentList_Paramet {
      * pageSize : 10
      */
 
-    private String commentId;
+    private String scoreId;
     private String userId;
     private String pageNo;
     private String pageSize;
 
-    public ReCommentList_Paramet(String commentId, String userId, String pageNo, String pageSize) {
-        this.commentId = commentId;
+    public ReCommentList_Paramet(String scoreId, String userId, String pageNo, String pageSize) {
+        this.scoreId = scoreId;
         this.userId = userId;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
     }
 
-    public String getCommentId() {
-        return commentId;
+    public String getScoreId() {
+        return scoreId;
     }
 
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
+    public void setScoreId(String scoreId) {
+        this.scoreId = scoreId;
     }
 
     public String getUserId() {

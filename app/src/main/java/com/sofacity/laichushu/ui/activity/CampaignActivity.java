@@ -226,7 +226,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 parentLay.addView(itemView);
             }
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
@@ -240,7 +240,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
         if (model.isSuccess()) {
             joinTv.setText("已参加");
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 

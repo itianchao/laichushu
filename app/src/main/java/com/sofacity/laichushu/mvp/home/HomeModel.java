@@ -26,7 +26,7 @@ public class HomeModel implements Parcelable {
      * status : 0
      * statusName : 鍚敤
      */
-    private String errorMsg;
+    private String errMsg;
 
     private ArrayList<DataBean> data;
 
@@ -46,12 +46,12 @@ public class HomeModel implements Parcelable {
         this.data = data;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 
     public static class DataBean implements Parcelable {
@@ -158,7 +158,7 @@ public class HomeModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte(this.success ? (byte) 1 : (byte) 0);
-        dest.writeString(this.errorMsg);
+        dest.writeString(this.errMsg);
         dest.writeList(this.data);
     }
 
@@ -167,7 +167,7 @@ public class HomeModel implements Parcelable {
 
     protected HomeModel(Parcel in) {
         this.success = in.readByte() != 0;
-        this.errorMsg = in.readString();
+        this.errMsg = in.readString();
         this.data = new ArrayList<DataBean>();
         in.readList(this.data, DataBean.class.getClassLoader());
     }

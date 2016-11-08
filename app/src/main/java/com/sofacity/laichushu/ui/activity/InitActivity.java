@@ -75,8 +75,8 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
             msg.obj = frist;
             mhandler.sendMessage(msg);
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
-            getDataFail(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
+            getDataFail(model.getErrMsg());
         }
     }
 
@@ -90,8 +90,8 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
             msg.obj = second;
             mhandler.sendMessage(msg);
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
-            getDataFail(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
+            getDataFail(model.getErrMsg());
         }
     }
 
@@ -105,8 +105,8 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
             msg.what = 3;
             mhandler.sendMessage(msg);
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
-            getDataFail(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
+            getDataFail(model.getErrMsg());
         }
     }
 

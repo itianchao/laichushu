@@ -1,10 +1,15 @@
 package com.sofacity.laichushu.mvp.bookdetail;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
+import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.bean.netbean.AuthorDetail_Paramet;
 import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
+import com.sofacity.laichushu.bean.netbean.Purchase_Paramet;
 import com.sofacity.laichushu.bean.netbean.SubscribeArticle_Paramet;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.retrofit.ApiCallback;
@@ -75,7 +80,6 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                     public void onFinish() {
                         mvpView.hideLoading();
                     }
-
                 });
     }
 
@@ -131,5 +135,56 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                 mvpView.hideLoading();
             }
         });
+    }
+
+    /**
+     * 买书
+     * @param articleId
+     * @param payMoney
+     */
+    public void buyBook(String articleId, String payMoney) {
+        mvpView.showLoading();
+        Purchase_Paramet paramet = new Purchase_Paramet(articleId,userId,payMoney);
+        Logger.e("评论参数");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.payBook(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getPayResult(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 购买确认对话框
+     * @param articleId
+     * @param payMoney
+     */
+    public void showdialog(final String articleId, final String payMoney) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setMessage("确认购买本书吗？").setTitle("提示");
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                buyBook(articleId, payMoney);
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
     }
 }

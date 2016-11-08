@@ -115,7 +115,7 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
             }
             pageNo = Integer.parseInt(pageNo) + 1 + "";
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 

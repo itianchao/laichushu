@@ -3,7 +3,7 @@ package com.sofacity.laichushu.mvp.directories;
 import java.util.ArrayList;
 
 /**
- *
+ *  素材列表
  * Created by wangtong on 2016/11/7.
  */
 public class MaterialListModel {

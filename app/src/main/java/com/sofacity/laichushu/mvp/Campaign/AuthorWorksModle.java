@@ -20,7 +20,7 @@ public class AuthorWorksModle {
      */
 
     private ArrayList<DataBean> data;
-    private String errorMsg;
+    private String errMsg;
 
     public boolean isSuccess() {
         return success;
@@ -38,12 +38,12 @@ public class AuthorWorksModle {
         this.data = data;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 
     public static class DataBean {

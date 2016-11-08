@@ -22,6 +22,11 @@ public class CustomDAOGenerater {
         entity.addIdProperty();// 该字段为id
         entity.addStringProperty("history");// String类型字段
         // 生成数据库相关类
+        Entity cache = schema.addEntity("Cache_Json");
+        // 为表添加字段
+        cache.addIdProperty();// 该字段为id
+        cache.addStringProperty("inter");// String类型字段
+        cache.addStringProperty("json");// String类型字段
         //第二个参数指定生成文件的本次存储路径,AndroidStudio工程指定到当前工程的java路径
         new DaoGenerator().generateAll(schema, "D:\\code\\laichushu\\app\\src\\main\\java");
     }

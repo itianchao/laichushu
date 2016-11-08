@@ -10,6 +10,7 @@ import com.sofacity.laichushu.bean.netbean.Balance_Paramet;
 import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
 import com.sofacity.laichushu.bean.netbean.BookList_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
+import com.sofacity.laichushu.bean.netbean.Complaint_Paramet;
 import com.sofacity.laichushu.bean.netbean.ForgetPwd_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeAllBook_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeHot_Paramet;
@@ -133,6 +134,9 @@ public interface ApiStores {
     @POST("reward/save")
     Observable<RewardResult> rewardMoney(@Body RewardMoney_Paramet paramet);
     //购买图书接口
-//    @POST("purchase/save")
-//    Observable<> payBook(@Body Purchase_Paramet paramet);
+    @POST("purchase/save")
+    Observable<RewardResult> payBook(@Body Purchase_Paramet paramet);
+    //举报
+    @POST("complaint/save")
+    Observable<RewardResult> complaint(@Body Complaint_Paramet paramet);
 }

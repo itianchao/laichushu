@@ -24,6 +24,7 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
         mActivity = (DirectoriesActivity) view;
     }
     public void loadMaterialListData(String articleId){
+        mvpView.showLoading();
         MaterialList_Paramet paramet = new MaterialList_Paramet(articleId);
         Logger.e("获取素材列表");
         Logger.json(new Gson().toJson(paramet));
@@ -46,6 +47,7 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
     }
 
     public void loadMaterialContentData(String parentId){
+        mvpView.showLoading();
         MaterialContent_Paramet patamet = new MaterialContent_Paramet(parentId);
         Logger.e("获取素材列表");
         Logger.json(new Gson().toJson(patamet));
@@ -68,6 +70,7 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
     }
 
     public void loadBookData(String articleId){
+        mvpView.showLoading();
         patamet.setArticleId(articleId);
         Logger.e("获取素材列表");
         Logger.json(new Gson().toJson(patamet));

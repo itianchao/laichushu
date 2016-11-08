@@ -1,7 +1,7 @@
 package com.sofacity.laichushu.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.mvp.bookdetail.AuthorDetailModle;
 import com.sofacity.laichushu.mvp.bookdetail.BookDetailPresenter;
@@ -19,12 +20,10 @@ import com.sofacity.laichushu.mvp.bookdetail.BookDetailView;
 import com.sofacity.laichushu.mvp.bookdetail.SubscribeArticleModle;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.base.MvpActivity;
-import com.sofacity.laichushu.ui.widget.BookPlayActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -240,7 +239,10 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
 
                 break;
             case R.id.tv_pay://购买
-
+                //弹出对话框确认
+                String articleId = bean.getArticleId();
+                double payMoney = bean.getPrice();
+                mvpPresenter.showdialog(articleId, payMoney+"");
                 break;
             case R.id.rbn_dresser://大咖评论
 
@@ -262,14 +264,28 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 individualTv.setText(data.getArticleNum() + "");//出版数量
             }
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
-            Logger.e(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
+            Logger.e(model.getErrMsg());
         }
     }
 
     @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
+    }
+
+    /**
+     * 购买结果
+     * @param model
+     */
+    @Override
+    public void getPayResult(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("购买成功");
+            payTv.setText("已购买");
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
     }
 
     @Override
@@ -325,7 +341,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 }
             }
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
@@ -412,5 +428,4 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     protected BookDetailPresenter createPresenter() {
         return new BookDetailPresenter(this);
     }
-
 }

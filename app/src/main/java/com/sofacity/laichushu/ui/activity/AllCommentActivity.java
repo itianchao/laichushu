@@ -111,7 +111,7 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
             ToastUtil.showToast("发送成功");
             onRefresh();
         }else {
-            String errorMsg = model.getErrorMsg();
+            String errorMsg = model.getErrMsg();
             if (errorMsg.contains("该用户已经评分了")){
                 ToastUtil.showToast(errorMsg);
             }else {

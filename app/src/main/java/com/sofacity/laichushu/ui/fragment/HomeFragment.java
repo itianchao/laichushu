@@ -147,7 +147,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             mTitleData = model.getData();
             titleViewPager();
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
@@ -165,7 +165,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter);
             mRecyclerView.setAdapter(mAdapter);
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
@@ -188,7 +188,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
                 mAdapter.notifyDataSetChanged();
             }
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
@@ -210,7 +210,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
                 mAdapter.notifyDataSetChanged();
             }
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 

@@ -19,14 +19,14 @@ public class AuthorDetailModle {
      * articleNum : 19  发表数
      * authorIntroduction 简介
      */
-    private String errorMsg;
+    private String errMsg;
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 
     private DataBean data;

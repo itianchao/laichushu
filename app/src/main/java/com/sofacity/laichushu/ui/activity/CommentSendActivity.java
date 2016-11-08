@@ -81,7 +81,7 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
                                 }
                             },1700);
                         }else {
-                            String errorMsg = model.getErrorMsg();
+                            String errorMsg = model.getErrMsg();
                             if (errorMsg.contains("该用户已经评分了")){
                                 ToastUtil.showToast(errorMsg);
                             }else {

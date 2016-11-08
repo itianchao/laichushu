@@ -20,6 +20,15 @@ public class MaterialContentModel {
      * articleId : 74
      * parentId : 173
      */
+    private String errMsg;
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
+    }
 
     private List<DataBean> data;
 

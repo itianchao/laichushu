@@ -6,7 +6,7 @@ package com.sofacity.laichushu.mvp.allcomment;
  */
 public class SendCommentMoudle {
     private boolean success;
-    private String errorMsg;
+    private String errMsg;
 
     public boolean isSuccess() {
         return success;
@@ -16,11 +16,11 @@ public class SendCommentMoudle {
         this.success = success;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 }

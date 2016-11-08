@@ -26,7 +26,7 @@ public class CommentDetailPersenter extends BasePresenter<CommentDetailView> {
     }
 
     public void loadCommentData(String commentId) {
-        getParamet().setCommentId(commentId);
+        getParamet().setScoreId(commentId);
         Logger.e("获取全部评论");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.CommentList(paramet), new ApiCallback<CommentDetailModle>() {

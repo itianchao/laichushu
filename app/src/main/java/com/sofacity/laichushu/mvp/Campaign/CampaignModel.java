@@ -24,14 +24,14 @@ public class CampaignModel {
      * resultType : 1
      * resultDesn : 澶囨敞澶囨敞澶囨敞澶囨敞
      */
-    private String errorMsg;
+    private String errMsg;
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 
     private ArrayList<DataBean> data;

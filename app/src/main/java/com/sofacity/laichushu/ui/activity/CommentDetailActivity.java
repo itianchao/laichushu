@@ -128,7 +128,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
                 mAdapter.notifyDataSetChanged();
             }
         } else {
-            ToastUtil.showToast(model.getErrorMsg());
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
