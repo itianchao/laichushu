@@ -52,4 +52,5 @@
     <string name="marking">轻触打分</string>
     <string name="comment_hint">请留下你对本书的想法及感受</string>
     <string name="comment">轻触评论</string>
+    <string name="reward_dialog">感谢你对作者的支持</string>
 </resources>

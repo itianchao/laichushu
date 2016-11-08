@@ -1,5 +1,6 @@
 package com.sofacity.laichushu.mvp.bookdetail;
 
+import com.sofacity.laichushu.bean.JsonBean.BalanceBean;
 import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 
@@ -16,5 +17,8 @@ public interface BookDetailView {
     void getBestLikeSuggestlData(HomeHotModel model);
     void getSubscribeArticleData(SubscribeArticleModle model);
     void getArticleCommentData(ArticleCommentModle model);
+    void getBalanceData(BalanceBean model);
+    void getBalance2Data(BalanceBean model);
+    void getRewardMoneyData(RewardResult model);
 
 }

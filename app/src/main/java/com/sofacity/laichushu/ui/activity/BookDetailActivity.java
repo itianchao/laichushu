@@ -1,6 +1,5 @@
 package com.sofacity.laichushu.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.bean.JsonBean.BalanceBean;
 import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.mvp.bookdetail.AuthorDetailModle;
@@ -111,6 +111,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         detailRewardTv.setText(bean.getAwardNum() + "人打赏");//打赏人
         detailMarkTv.setText(bean.getScore() + "分");//评分
         detailRatbarTv.setRating(bean.getLevel());//星级
+        detailRewardTv.setOnClickListener(this);
     }
 
     /**
@@ -240,17 +241,16 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 break;
             case R.id.tv_pay://购买
                 //弹出对话框确认
-                if (!payTv.getText().toString().equals("已购买")){
-                    String articleId = bean.getArticleId();
-                    double payMoney = bean.getPrice();
-                    mvpPresenter.showdialog(articleId, payMoney+"");
-                }
+                mvpPresenter.getBalace();
                 break;
             case R.id.rbn_dresser://大咖评论
 
                 break;
             case R.id.rbn_reader://普通评论
 
+                break;
+            case R.id.tv_detail_reward:
+                mvpPresenter.getBalace2();
                 break;
         }
     }
@@ -423,6 +423,41 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             }
         } else {
             ToastUtil.showToast(model.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void getBalanceData(BalanceBean model) {
+        if (model.isSuccess()){
+            double balance = model.getData();
+            if (!payTv.getText().toString().equals("已购买")){
+                String articleId = bean.getArticleId();
+                double payMoney = bean.getPrice();
+                double price = bean.getPrice();
+                mvpPresenter.showdialog(articleId, payMoney+"",balance,price);
+            }
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+
+    }
+
+    @Override
+    public void getBalance2Data(BalanceBean model) {
+        if (model.isSuccess()){
+            double balance = model.getData();
+            mvpPresenter.openReward(balance+"");
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
+    public void getRewardMoneyData(RewardResult model) {
+        if (model.isSuccess()){
+            ToastUtil.showToast("打赏成功，感谢支持");
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
