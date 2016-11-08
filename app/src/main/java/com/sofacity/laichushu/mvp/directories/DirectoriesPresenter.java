@@ -2,7 +2,7 @@ package com.sofacity.laichushu.mvp.directories;
 
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
-import com.sofacity.laichushu.bean.netbean.BookList_Patamet;
+import com.sofacity.laichushu.bean.netbean.BookList_Paramet;
 import com.sofacity.laichushu.bean.netbean.MaterialContent_Paramet;
 import com.sofacity.laichushu.bean.netbean.MaterialList_Paramet;
 import com.sofacity.laichushu.retrofit.ApiCallback;
@@ -15,7 +15,9 @@ import com.sofacity.laichushu.ui.base.BasePresenter;
  */
 public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
     private DirectoriesActivity mActivity;
-
+    private String pageNo = "1";
+    private String pageSize = "2000";
+    BookList_Paramet patamet = new BookList_Paramet("",pageNo,pageSize);
     //初始化构造
     public DirectoriesPresenter(DirectoriesView view) {
         attachView(view);
@@ -66,7 +68,7 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
     }
 
     public void loadBookData(String articleId){
-        BookList_Patamet patamet = new BookList_Patamet(articleId);
+        patamet.setArticleId(articleId);
         Logger.e("获取素材列表");
         Logger.json(new Gson().toJson(patamet));
         addSubscription(apiStores.getBookList(patamet), new ApiCallback<BookMoudle>() {
@@ -85,5 +87,13 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
                 mvpView.hideLoading();
             }
         });
+    }
+
+    public BookList_Paramet getPatamet() {
+        return patamet;
+    }
+
+    public void setPatamet(BookList_Paramet patamet) {
+        this.patamet = patamet;
     }
 }

@@ -6,7 +6,8 @@ import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 
 import com.sofacity.laichushu.R;
-import com.sofacity.laichushu.mvp.campaign.AuthorWorksModle;
+
+import com.sofacity.laichushu.mvp.Campaign.AuthorWorksModle;
 import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;

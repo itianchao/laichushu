@@ -1,11 +1,14 @@
 package com.sofacity.laichushu.retrofit;
 
+import com.sofacity.laichushu.bean.JsonBean.BalanceBean;
+import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.bean.netbean.ActivityList_Paramet;
 import com.sofacity.laichushu.bean.netbean.ActivityResult_Paramet;
 import com.sofacity.laichushu.bean.netbean.AuthorDetail_Paramet;
 import com.sofacity.laichushu.bean.netbean.AuthorWorks_Paramet;
+import com.sofacity.laichushu.bean.netbean.Balance_Paramet;
 import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
-import com.sofacity.laichushu.bean.netbean.BookList_Patamet;
+import com.sofacity.laichushu.bean.netbean.BookList_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
 import com.sofacity.laichushu.bean.netbean.ForgetPwd_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeAllBook_Paramet;
@@ -19,6 +22,7 @@ import com.sofacity.laichushu.bean.netbean.ReCommentList_Paramet;
 import com.sofacity.laichushu.bean.netbean.ReSavaComment_Paramet;
 import com.sofacity.laichushu.bean.netbean.RegistValid_Paramet;
 import com.sofacity.laichushu.bean.netbean.Regist_Paramet;
+import com.sofacity.laichushu.bean.netbean.RewardMoney_Paramet;
 import com.sofacity.laichushu.bean.netbean.SaveComment_Paramet;
 import com.sofacity.laichushu.bean.netbean.SubscribeArticle_Paramet;
 
@@ -88,12 +92,6 @@ public interface ApiStores {
     //图书订阅接口
     @POST("subscribeArticle/save")
     Observable<SubscribeArticleModle> subscribeArticle (@Body SubscribeArticle_Paramet paramet);
-    //打赏账户查询余额接口
-    @POST("reward/getMoney")
-    Observable balance();
-    //图书打赏接口
-    @POST("reward/save")
-    Observable rewardMoney();
     //图书评论查询接口
     @POST("articleScore/list")
     Observable<ArticleCommentModle> articleComment(@Body Comment_Paramet paramet);
@@ -126,5 +124,12 @@ public interface ApiStores {
     Observable<MaterialContentModel> getMaterialContent(@Body MaterialContent_Paramet paramet);
     //获取目录接口
     @POST("readChapter/list")
-    Observable<BookMoudle> getBookList(@Body BookList_Patamet patamet);
+    Observable<BookMoudle> getBookList(@Body BookList_Paramet paramet);
+    //查询余额接口
+    @POST("reward/getMoney")
+    Observable<BalanceBean> getBalance(@Body Balance_Paramet paramet);
+    //图书打赏接口
+    @POST("reward/save")
+    Observable<RewardResult> rewardMoney(@Body RewardMoney_Paramet paramet);
+
 }
