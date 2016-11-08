@@ -1,6 +1,7 @@
 package com.sofacity.laichushu.ui.activity;
 
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  * 目录
  * Created by wangtong on 2016/11/7.
  */
-public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> implements DirectoriesView, View.OnClickListener {
+public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> implements DirectoriesView, View.OnClickListener, AdapterView.OnItemClickListener {
 
     private ImageView finishIv;
     private RadioButton materialRbn;
@@ -53,6 +54,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
         dirLv.setAdapter(directoriesAdapter);
         bookListAdapter = new BookListAdapter(this, mBookdata);
         bookLv.setAdapter(bookListAdapter);
+        bookLv.setOnItemClickListener(this);
     }
 
     @Override
@@ -129,5 +131,10 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // TODO: 2016/11/8  跳转书籍
     }
 }

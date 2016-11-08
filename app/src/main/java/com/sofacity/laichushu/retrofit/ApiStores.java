@@ -18,6 +18,7 @@ import com.sofacity.laichushu.bean.netbean.JoinActivity_Paramet;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
 import com.sofacity.laichushu.bean.netbean.MaterialContent_Paramet;
 import com.sofacity.laichushu.bean.netbean.MaterialList_Paramet;
+import com.sofacity.laichushu.bean.netbean.Purchase_Paramet;
 import com.sofacity.laichushu.bean.netbean.ReCommentList_Paramet;
 import com.sofacity.laichushu.bean.netbean.ReSavaComment_Paramet;
 import com.sofacity.laichushu.bean.netbean.RegistValid_Paramet;
@@ -131,5 +132,7 @@ public interface ApiStores {
     //图书打赏接口
     @POST("reward/save")
     Observable<RewardResult> rewardMoney(@Body RewardMoney_Paramet paramet);
-
+    //购买图书接口
+//    @POST("purchase/save")
+//    Observable<> payBook(@Body Purchase_Paramet paramet);
 }
