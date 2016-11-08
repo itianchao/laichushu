@@ -2,6 +2,7 @@ package com.sofacity.laichushu.mvp.directories;
 
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
+import com.sofacity.laichushu.bean.netbean.BookList_Patamet;
 import com.sofacity.laichushu.bean.netbean.MaterialContent_Paramet;
 import com.sofacity.laichushu.bean.netbean.MaterialList_Paramet;
 import com.sofacity.laichushu.retrofit.ApiCallback;
@@ -43,10 +44,10 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
     }
 
     public void loadMaterialContentData(String parentId){
-        MaterialContent_Paramet paramet = new MaterialContent_Paramet(parentId);
+        MaterialContent_Paramet patamet = new MaterialContent_Paramet(parentId);
         Logger.e("获取素材列表");
-        Logger.json(new Gson().toJson(paramet));
-        addSubscription(apiStores.getMaterialContent(paramet), new ApiCallback<MaterialContentModel>() {
+        Logger.json(new Gson().toJson(patamet));
+        addSubscription(apiStores.getMaterialContent(patamet), new ApiCallback<MaterialContentModel>() {
             @Override
             public void onSuccess(MaterialContentModel model) {
                 mvpView.getMaterialContentData(model);
@@ -64,8 +65,25 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
         });
     }
 
-    public void loadBookData{
+    public void loadBookData(String articleId){
+        BookList_Patamet patamet = new BookList_Patamet(articleId);
         Logger.e("获取素材列表");
-//        Logger.json(new Gson().toJson(paramet));
+        Logger.json(new Gson().toJson(patamet));
+        addSubscription(apiStores.getBookList(patamet), new ApiCallback<BookMoudle>() {
+            @Override
+            public void onSuccess(BookMoudle model) {
+                mvpView.getBookListData(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
     }
 }

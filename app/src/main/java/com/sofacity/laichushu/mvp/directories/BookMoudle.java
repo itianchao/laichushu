@@ -1,6 +1,6 @@
 package com.sofacity.laichushu.mvp.directories;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by wangtong on 2016/11/7.
@@ -19,7 +19,16 @@ public class BookMoudle {
      * isSection : true
      */
 
-    private List<DataBean> data;
+    private ArrayList<DataBean> data;
+    private String errMsg;
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
+    }
 
     public boolean isSuccess() {
         return success;
@@ -29,11 +38,11 @@ public class BookMoudle {
         this.success = success;
     }
 
-    public List<DataBean> getData() {
+    public ArrayList<DataBean> getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(ArrayList<DataBean> data) {
         this.data = data;
     }
 

@@ -52,7 +52,7 @@ import rx.Observable;
 public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
-    String API_SERVER_URL = "http://192.168.147.117:8082/book-app/";//张峰
+    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 
     //登录接口

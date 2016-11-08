@@ -7,10 +7,12 @@ import android.widget.RadioButton;
 
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.directories.BookMoudle;
 import com.sofacity.laichushu.mvp.directories.DirectoriesPresenter;
 import com.sofacity.laichushu.mvp.directories.DirectoriesView;
 import com.sofacity.laichushu.mvp.directories.MaterialContentModel;
 import com.sofacity.laichushu.mvp.directories.MaterialListModel;
+import com.sofacity.laichushu.ui.adapter.BookListAdapter;
 import com.sofacity.laichushu.ui.adapter.DirectoriesAdapter;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.utils.ToastUtil;
@@ -31,6 +33,8 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
     private ArrayList<MaterialListModel.DataBean> mData = new ArrayList<>();
     private DirectoriesAdapter directoriesAdapter;
     private ListView bookLv;
+    private ArrayList<BookMoudle.DataBean> mBookdata = new ArrayList<>();
+    private BookListAdapter bookListAdapter;
 
     @Override
     protected void initView() {
@@ -47,12 +51,15 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
         dirRbn.setOnClickListener(this);
         directoriesAdapter = new DirectoriesAdapter(this, mData);
         dirLv.setAdapter(directoriesAdapter);
+        bookListAdapter = new BookListAdapter(this, mBookdata);
+        bookLv.setAdapter(bookListAdapter);
     }
 
     @Override
     protected void initData() {
         articleId = getIntent().getStringExtra("articleId");//图书Id
         mvpPresenter.loadMaterialListData(articleId);
+        mvpPresenter.loadBookData(articleId);
     }
 
     @Override
@@ -79,6 +86,19 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
     }
 
     @Override
+    public void getBookListData(BookMoudle model) {
+        if (model.isSuccess()) {
+            if (model.getData() != null) {
+                mBookdata = model.getData();
+                bookListAdapter.setmBookdata(mBookdata);
+                bookListAdapter.notifyDataSetChanged();
+            }
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
     public void getDataFail(String msg) {
         ToastUtil.showToast("网络获取数据失败！");
         Logger.e(msg);
@@ -102,7 +122,6 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 bookLv.setVisibility(View.GONE);
                 break;
             case R.id.rbn_dir:
-//                mvpPresenter.
                 dirLv.setVisibility(View.GONE);
                 bookLv.setVisibility(View.VISIBLE);
                 break;

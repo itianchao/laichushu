@@ -7,7 +7,9 @@ package com.sofacity.laichushu.mvp.directories;
 public interface DirectoriesView {
     void getDataSuccess(MaterialListModel model);
     void getMaterialContentData(MaterialContentModel model);
+    void getBookListData(BookMoudle model);
     void getDataFail(String msg);
     void showLoading();
     void hideLoading();
+
 }

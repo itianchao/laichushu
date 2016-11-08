@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/LightGrey"
+    android:orientation="vertical">
+
+    <TextView
+        android:textSize="@dimen/edit"
+        android:textColor="@color/edit"
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        tools:text="第一章 神秘秃头男子光剑杀四方" />
+
+    <View
+        android:layout_marginLeft="10dp"
+        android:background="@color/hint"
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"/>
+</LinearLayout>
