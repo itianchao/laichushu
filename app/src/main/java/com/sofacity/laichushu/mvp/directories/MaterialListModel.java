@@ -60,7 +60,7 @@ public class MaterialListModel {
     public static class DataBean {
         private String parentId;
         private String name;
-        private int count;
+        private String count;
         /**
          * id : 176
          * name : 绱犳潗鑺備竴
@@ -86,11 +86,11 @@ public class MaterialListModel {
             this.name = name;
         }
 
-        public int getCount() {
+        public String getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(String count) {
             this.count = count;
         }
 

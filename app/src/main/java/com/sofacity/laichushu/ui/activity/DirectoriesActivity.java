@@ -1,5 +1,7 @@
 package com.sofacity.laichushu.ui.activity;
 
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import com.sofacity.laichushu.ui.adapter.BookListAdapter;
 import com.sofacity.laichushu.ui.adapter.DirectoriesAdapter;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.utils.ToastUtil;
+import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;
 
@@ -136,5 +139,13 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // TODO: 2016/11/8  跳转书籍
+        Bundle bundle = new Bundle();
+        String path = mData.get(position).getCount();
+        String name = mData.get(position).getName();
+        bundle.putString("path",path);
+        bundle.putString("title",name);
+        if (!TextUtils.isEmpty(path)){
+            UIUtil.openActivity(this,NopublishBookActivity.class,bundle);
+        }
     }
 }

@@ -51,8 +51,9 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initData() {
-        titleTv.setText("");
-        url = "";
+        String title = getIntent().getStringExtra("title");
+        titleTv.setText(title);
+        url = getIntent().getStringExtra("path");
 // 设置可以访问文件
         mWebView.getSettings().setAllowFileAccess(true);
         //如果访问的页面中有Javascript，则webview必须设置支持Javascript

@@ -29,6 +29,7 @@
             android:checked="true"
             android:drawableTop="@drawable/select_bar_home"
             android:gravity="center"
+            android:textColor="@drawable/select_bar_color"
             android:text="首页" />
 
         <RadioButton
