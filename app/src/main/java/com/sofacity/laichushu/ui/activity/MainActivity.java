@@ -5,47 +5,34 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.RadioButton;
 
-import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.ui.base.BaseActivity;
-import com.sofacity.laichushu.ui.base.BaseFragment;
 import com.sofacity.laichushu.ui.fragment.FragmentFactory;
 import com.sofacity.laichushu.ui.fragment.HomeFragment;
-import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends BaseActivity implements  View.OnClickListener {
     private ArrayList<Fragment> fragments;
-    private BottomNavigationBar bottomNavigationBar;
-
+    private int position;
     @Override
     protected void initView() {
         setContentView(R.layout.activity_main);
-        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bnb_bar);
-        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
-        bottomNavigationBar
-        .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        BottomNavigationItem home = new BottomNavigationItem(R.drawable.navigation_home_normal, UIUtil.getString(R.string.home));
-        BottomNavigationItem find = new BottomNavigationItem(R.drawable.navigation_find_normal, UIUtil.getString(R.string.find));
-        BottomNavigationItem write = new BottomNavigationItem(R.drawable.navigation_write_normal, null);
-        BottomNavigationItem msg = new BottomNavigationItem(R.drawable.navigation_message_normal, UIUtil.getString(R.string.message));
-        BottomNavigationItem mine = new BottomNavigationItem(R.drawable.navigation_mine_normal,  UIUtil.getString(R.string.mine));
-
-        bottomNavigationBar
-                .addItem(home).setActiveColor(R.color.global)
-                .addItem(find).setActiveColor(R.color.global)
-                .addItem(write)
-                .addItem(msg).setActiveColor(R.color.global)
-                .addItem(mine).setActiveColor(R.color.global)
-                .setFirstSelectedPosition(0)
-                .initialise();
-        bottomNavigationBar.setTabSelectedListener(this);
         fragments = getFragments();
+        RadioButton homeRbn = (RadioButton) findViewById(R.id.rbn_home);
+        RadioButton findRbn = (RadioButton) findViewById(R.id.rbn_find);
+        RadioButton writeRbn = (RadioButton) findViewById(R.id.rbn_write);
+        RadioButton msgRbn = (RadioButton) findViewById(R.id.rbn_msg);
+        RadioButton mindRbn = (RadioButton) findViewById(R.id.rbn_mind);
+        homeRbn.setOnClickListener(this);
+        findRbn.setOnClickListener(this);
+        writeRbn.setOnClickListener(this);
+        msgRbn.setOnClickListener(this);
+        mindRbn.setOnClickListener(this);
         setDefaultFragment();
-        bottomNavigationBar.setTabSelectedListener(this);
     }
 
     /** * 设置默认的 */
@@ -61,6 +48,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         fragment.setArguments(bundle);
         transaction.replace(R.id.layFrame, fragment,"home");
         transaction.commit();
+        position = 0;
     }
 
     private ArrayList<Fragment> getFragments() {
@@ -73,7 +61,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         return fragments;
     }
 
-    @Override
+    /**
+     * 替换fragment
+     * @param position
+     */
     public void onTabSelected(int position) {
         if (fragments != null) {
             if (position < fragments.size()) {
@@ -91,22 +82,43 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     }
 
+    /**
+     * 切换
+     * @param v
+     */
     @Override
-    public void onTabUnselected(int position) {
-        if (fragments != null) {
-            if (position < fragments.size()) {
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment fragment = fragments.get(position);
-                ft.remove(fragment);
-                ft.commitAllowingStateLoss();
-            }
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.rbn_home:
+                if (position!=0){
+                    position = 0;
+                    onTabSelected(position);
+                }
+                break;
+            case R.id.rbn_find:
+                if (position!=1){
+                    position = 1;
+                    onTabSelected(position);
+                }
+                break;
+            case R.id.rbn_write:
+                if (position!=2){
+                    position = 2;
+                    onTabSelected(position);
+                }
+                break;
+            case R.id.rbn_msg:
+                if (position!=3){
+                    position = 3;
+                    onTabSelected(position);
+                }
+                break;
+            case R.id.rbn_mind:
+                if (position!=4){
+                    position = 4;
+                    onTabSelected(position);
+                }
+                break;
         }
     }
-
-    @Override
-    public void onTabReselected(int position) {
-
-    }
-
 }

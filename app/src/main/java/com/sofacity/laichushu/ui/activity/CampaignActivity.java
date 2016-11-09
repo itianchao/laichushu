@@ -189,7 +189,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
             @Override
             public void onClick(View v) {
                 Logger.e(mArticleData.get(joinAdapter.getPosition()).getArticleName());
-                mvpPresenter.loadJoinActivityData(bean.getActivityId(), mArticleData.get(joinAdapter.getPosition()).getArticleId());
+                mvpPresenter.loadJoinActivityData(bean.getActivityId(), mArticleData.get(joinAdapter.getPosition()).getArticleId(), type);
                 dialogBuilder.dismiss();
             }
         });
@@ -234,9 +234,10 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
      * 参加活动
      *
      * @param model
+     * @param type
      */
     @Override
-    public void getJoinDataSuccess(CampaignJoinModel model) {
+    public void getJoinDataSuccess(CampaignJoinModel model, String type) {
         if (model.isSuccess()) {
             joinTv.setText("已参加");
         } else {

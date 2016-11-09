@@ -7,10 +7,20 @@ package com.sofacity.laichushu.bean.netbean;
 public class SubscribeArticle_Paramet {
     private String userId;
     private String articleId;
+    private String type;
 
-    public SubscribeArticle_Paramet(String userId, String articleId) {
+    public SubscribeArticle_Paramet(String userId, String articleId, String type) {
         this.userId = userId;
         this.articleId = articleId;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUserId() {

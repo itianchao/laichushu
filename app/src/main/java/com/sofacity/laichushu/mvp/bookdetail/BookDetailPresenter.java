@@ -20,6 +20,7 @@ import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
 import com.sofacity.laichushu.bean.netbean.Purchase_Paramet;
 import com.sofacity.laichushu.bean.netbean.RewardMoney_Paramet;
+import com.sofacity.laichushu.bean.netbean.ScoreLike_Paramet;
 import com.sofacity.laichushu.bean.netbean.SubscribeArticle_Paramet;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.retrofit.ApiCallback;
@@ -103,15 +104,15 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
         this.paramet = paramet;
     }
 
-    public void loadSubscribeArticle(String aricleId) {
+    public void loadSubscribeArticle(String aricleId, final String type) {
         mvpView.showLoading();
-        SubscribeArticle_Paramet paramet = new SubscribeArticle_Paramet(userId, aricleId);
+        SubscribeArticle_Paramet paramet = new SubscribeArticle_Paramet(userId, aricleId,type);
         Logger.e("订阅求参数");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.subscribeArticle(paramet), new ApiCallback<SubscribeArticleModle>() {
             @Override
             public void onSuccess(SubscribeArticleModle model) {
-                mvpView.getSubscribeArticleData(model);
+                mvpView.getSubscribeArticleData(model,type);
             }
 
             @Override
@@ -190,22 +191,33 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      * @param balance
      * @param price
      */
-    public void showdialog(final String articleId, final String payMoney, double balance, double price) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-        builder.setMessage("您的余额为" + balance + "，确认购买本书吗？").setTitle("本书" + price + "元");
-        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+    public void showdialog(final String articleId, final String payMoney, double balance, double price,String bookName,String authorName) {
 
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_pay);
+        TextView balaneTv = (TextView) customerView.findViewById(R.id.tv_balance);
+        TextView priceTv = (TextView) customerView.findViewById(R.id.tv_price);
+        TextView bookTv = (TextView) customerView.findViewById(R.id.tv_book);
+        TextView authorTv = (TextView) customerView.findViewById(R.id.tv_author);
+        balaneTv.setText("当前余额：" + balance);
+        priceTv.setText("￥" + price);
+        bookTv.setText("书名" + bookName);
+        authorTv.setText("作者" + authorName);
+        //取消
+        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
                 buyBook(articleId, payMoney);
             }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        }).show();
+        });
     }
 
     /**
@@ -257,9 +269,8 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     }
     /**
      * 打赏 对话框
-     * @param balance
      */
-    public void openReward(String balance) {
+    public void openReward(String balance, final String accepterId, final String articleId) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_reward);
         final EditText payEt =  (EditText)customerView.findViewById(R.id.et_pay);
@@ -281,10 +292,13 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
                 if (TextUtils.isEmpty(pay)){
                     ToastUtil.showToast("请输入打赏金额");
-                }
-                if (Integer.parseInt(pay)>0||Integer.parseInt(pay)<100){
-                    // TODO: 2016/11/8 请求打赏
-//                    rewardMoney(pay);
+                }else {
+                    if (Integer.parseInt(pay)>0||Integer.parseInt(pay)<100){
+                        // TODO: 2016/11/8 请求打赏
+                        rewardMoney(userId,accepterId,articleId,pay);
+                    }else {
+                        ToastUtil.showToast("只能打赏1-100金额");
+                    }
                 }
             }
         });
@@ -298,7 +312,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                 .show();
     }
     /**
-     * 打赏
+     * 打赏请求
      * @param money
      * @param articleId
      * @param accepterId
@@ -313,6 +327,34 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.getRewardMoneyData(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 点赞 取消赞
+     * @param sourceId
+     * @param type
+     */
+    public void saveScoreLikeData(String sourceId, final String type){
+        mvpView.showLoading();
+        ScoreLike_Paramet paramet = new ScoreLike_Paramet(sourceId,userId,type);
+        Logger.e("点赞");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.SaveScoreLikeData(model,type);
             }
 
             @Override

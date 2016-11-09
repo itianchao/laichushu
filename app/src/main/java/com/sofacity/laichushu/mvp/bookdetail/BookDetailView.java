@@ -15,10 +15,10 @@ public interface BookDetailView {
     void showLoading();
     void hideLoading();
     void getBestLikeSuggestlData(HomeHotModel model);
-    void getSubscribeArticleData(SubscribeArticleModle model);
+    void getSubscribeArticleData(SubscribeArticleModle model, String type);
     void getArticleCommentData(ArticleCommentModle model);
     void getBalanceData(BalanceBean model);
     void getBalance2Data(BalanceBean model);
     void getRewardMoneyData(RewardResult model);
-
+    void SaveScoreLikeData(RewardResult model, String type);
 }

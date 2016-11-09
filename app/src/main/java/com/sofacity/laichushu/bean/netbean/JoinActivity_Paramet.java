@@ -8,11 +8,21 @@ public class JoinActivity_Paramet {
     private String activityId;
     private String articleId;
     private String userId;
+    private String type;
 
-    public JoinActivity_Paramet(String activityId, String articleId, String userId) {
+    public JoinActivity_Paramet(String activityId, String articleId, String userId, String type) {
         this.activityId = activityId;
         this.articleId = articleId;
         this.userId = userId;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getActivityId() {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.mvp.allcomment.AllCommentMoudle;
 import com.sofacity.laichushu.mvp.allcomment.AllCommentPresenter;
 import com.sofacity.laichushu.mvp.allcomment.AllCommentView;
@@ -51,7 +52,7 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
         commentEt = (EditText)findViewById(R.id.et_comment);
         numRb = (RatingBar)findViewById(R.id.ratbar_num);
         commentRyv.setLinearLayout();
-        mAdapter = new CommentAllAdapter(this, mData);
+        mAdapter = new CommentAllAdapter(this, mData,mvpPresenter);
         commentRyv.setAdapter(mAdapter);
         commentRyv.setOnPullLoadMoreListener(this);
         articleId = getIntent().getStringExtra("articleId");
@@ -120,6 +121,24 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
         }
     }
 
+    /**
+     * 点赞
+     * @param model
+     * @param type
+     */
+    @Override
+    public void SaveScoreLikeData(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (type.equals("0")){//点赞
+                Logger.e("点赞");
+            }else {//取消赞
+                Logger.e("取消赞");
+            }
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
     @Override
     public void getDataFail(String msg) {
         ToastUtil.showToast("请检查网络");
@@ -170,4 +189,5 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
         }
         return false;
     }
+
 }

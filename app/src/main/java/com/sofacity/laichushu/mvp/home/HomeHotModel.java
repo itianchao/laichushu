@@ -121,8 +121,8 @@ public class HomeHotModel implements Parcelable {
 
         private String activityId;
         private String activityName;
-        private long beginTime;
-        private long endTime;
+        private String beginTime;
+        private String endTime;
         private String imgName;
         private String imgUrl;
         private String detail;
@@ -331,19 +331,19 @@ public class HomeHotModel implements Parcelable {
             this.activityName = activityName;
         }
 
-        public long getBeginTime() {
+        public String getBeginTime() {
             return beginTime;
         }
 
-        public void setBeginTime(long beginTime) {
+        public void setBeginTime(String beginTime) {
             this.beginTime = beginTime;
         }
 
-        public long getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(long endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
@@ -412,8 +412,8 @@ public class HomeHotModel implements Parcelable {
             dest.writeString(this.updateDate);
             dest.writeString(this.activityId);
             dest.writeString(this.activityName);
-            dest.writeLong(this.beginTime);
-            dest.writeLong(this.endTime);
+            dest.writeString(this.beginTime);
+            dest.writeString(this.endTime);
             dest.writeString(this.imgName);
             dest.writeString(this.imgUrl);
             dest.writeString(this.detail);
@@ -447,8 +447,8 @@ public class HomeHotModel implements Parcelable {
             this.updateDate = in.readString();
             this.activityId = in.readString();
             this.activityName = in.readString();
-            this.beginTime = in.readLong();
-            this.endTime = in.readLong();
+            this.beginTime = in.readString();
+            this.endTime = in.readString();
             this.imgName = in.readString();
             this.imgUrl = in.readString();
             this.detail = in.readString();

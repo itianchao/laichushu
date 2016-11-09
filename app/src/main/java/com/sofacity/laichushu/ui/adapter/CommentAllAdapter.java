@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.allcomment.AllCommentPresenter;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.ui.activity.AllCommentActivity;
 import com.sofacity.laichushu.ui.activity.CommentDetailActivity;
@@ -24,10 +25,11 @@ import java.util.ArrayList;
 public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.CommentViewHolder> {
     private AllCommentActivity mActivity;
     private ArrayList<ArticleCommentModle.DataBean> mData;
-
-    public CommentAllAdapter(AllCommentActivity mActivity, ArrayList<ArticleCommentModle.DataBean> mData) {
+    private AllCommentPresenter mvpPresenter;
+    public CommentAllAdapter(AllCommentActivity mActivity, ArrayList<ArticleCommentModle.DataBean> mData, AllCommentPresenter mvpPresenter) {
         this.mActivity = mActivity;
         this.mData = mData;
+        this.mvpPresenter = mvpPresenter;
     }
 
     @Override
@@ -67,11 +69,17 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
             @Override
             public void onClick(View v) {
                 if (dataBean.isIsLike()) {
+                    mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"1");
                     GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
                     dataBean.setIsLike(false);
+                    dataBean.setLikeNum(dataBean.getLikeNum()-1);
+                    holder.likeTv.setText(dataBean.getLikeNum() + "");
                 } else {
+                    mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"0");
                     GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
                     dataBean.setIsLike(true);
+                    dataBean.setLikeNum(dataBean.getLikeNum()+1);
+                    holder.likeTv.setText(dataBean.getLikeNum() + "");
                 }
             }
         });

@@ -1,5 +1,6 @@
 package com.sofacity.laichushu.mvp.commentdetail;
 
+import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.mvp.home.HomeModel;
 
@@ -10,6 +11,8 @@ import com.sofacity.laichushu.mvp.home.HomeModel;
 public interface CommentDetailView {
     void getDataSuccess(CommentDetailModle model);
     void getDataFail(String msg);
+    void SaveScoreLikeData(RewardResult model, String type);
     void showLoading();
     void hideLoading();
+
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textColor="@color/edit"
+        android:textSize="@dimen/edit"
+        tools:text="￥ 18.00" />
+
+    <TextView
+        android:id="@+id/tv_balance"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:textSize="@dimen/edit2"
+        tools:text="当前余额：￥ 200.00" />
+
+    <View
+        android:layout_width="200dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/hint" />
+
+    <TextView
+        android:id="@+id/tv_book"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        tools:text="书名：abc" />
+
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        tools:text="作者：abc" />
+
+    <View
+        android:layout_width="200dp"
+        android:layout_height="0.5dp"
+        android:background="@color/hint" />
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/red"
+        android:text="确认购买"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/divider_line_color"
+        android:text="取消"
+        android:textColor="@color/edit" />
+</LinearLayout>

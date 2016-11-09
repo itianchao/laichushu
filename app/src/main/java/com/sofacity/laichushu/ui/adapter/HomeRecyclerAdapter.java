@@ -267,8 +267,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder3) holder).nameTv.setText(bean.getActivityName());//活动name
                     ((ViewHolder3) holder).briefTv.setText(bean.getDetail());//简介
                     ((ViewHolder3) holder).startTimeTv.setText("开始时间：" + bean.getBeginTime());
-                    ((ViewHolder3) holder).endTimeTv.setText("开始时间：" + bean.getEndTime());
-                    ((ViewHolder3) holder).numberTv.setText(bean.getApplyAmount() + "人");
+                    ((ViewHolder3) holder).endTimeTv.setText("结束时间：" + bean.getEndTime());
+                    ((ViewHolder3) holder).numberTv.setText("报名人数：" +bean.getApplyAmount() + "人");
                     switch (bean.getStatus()) {
                         case "1":
                             GlideUitl.loadImg(mActivity, R.drawable.activity_start, ((ViewHolder3) holder).stateIv);

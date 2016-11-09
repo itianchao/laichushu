@@ -6,7 +6,7 @@ package com.sofacity.laichushu.mvp.Campaign;
  */
 public interface CampaignView {
     void getDataSuccess(CampaignModel model);
-    void getJoinDataSuccess(CampaignJoinModel model);
+    void getJoinDataSuccess(CampaignJoinModel model, String type);
     void getAuthorWorksDataSuccess(AuthorWorksModle model);
     void getDataFail(String msg);
     void showLoading();

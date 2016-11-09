@@ -11,12 +11,15 @@ import android.widget.TextView;
 
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.netbean.ReSavaComment_Paramet;
+import com.sofacity.laichushu.event.RefurshCommentListEvent;
 import com.sofacity.laichushu.mvp.commentdetail.CommentDetailModle;
 import com.sofacity.laichushu.retrofit.ApiCallback;
 import com.sofacity.laichushu.ui.base.BaseActivity;
 import com.sofacity.laichushu.utils.SharePrefManager;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 发送回复评论
@@ -27,7 +30,6 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
     private EditText commentEt;
     private String userId = SharePrefManager.getUserId();
     private String commentId;
-
     @Override
     protected void initView() {
         setContentView(R.layout.activity_commentsend);
@@ -74,6 +76,8 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
                         dismissProgressDialog();
                         if (model.isSuccess()) {
                             ToastUtil.showToast("发送成功");
+                            RefurshCommentListEvent event = new RefurshCommentListEvent(true);
+                            EventBus.getDefault().postSticky(event);
                             UIUtil.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -108,4 +112,5 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
         }
         return false;
     }
+
 }

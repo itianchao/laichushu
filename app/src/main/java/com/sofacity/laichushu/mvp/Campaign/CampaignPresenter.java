@@ -46,15 +46,15 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
             }
         });
     }
-    public void loadJoinActivityData(String activityId,String articleId) {
+    public void loadJoinActivityData(String activityId, String articleId, final String type) {
         mvpView.showLoading();
-        JoinActivity_Paramet paramet = new JoinActivity_Paramet(activityId,articleId,userId);
-        Logger.e("获取活动结果");
+        JoinActivity_Paramet paramet = new JoinActivity_Paramet(activityId,articleId,userId,type);
+        Logger.e("参加活动");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.joinActivity(paramet), new ApiCallback<CampaignJoinModel>() {
             @Override
             public void onSuccess(CampaignJoinModel model) {
-                mvpView.getJoinDataSuccess(model);
+                mvpView.getJoinDataSuccess(model,type);
             }
 
             @Override

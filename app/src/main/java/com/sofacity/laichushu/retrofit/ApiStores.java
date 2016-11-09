@@ -26,6 +26,7 @@ import com.sofacity.laichushu.bean.netbean.RegistValid_Paramet;
 import com.sofacity.laichushu.bean.netbean.Regist_Paramet;
 import com.sofacity.laichushu.bean.netbean.RewardMoney_Paramet;
 import com.sofacity.laichushu.bean.netbean.SaveComment_Paramet;
+import com.sofacity.laichushu.bean.netbean.ScoreLike_Paramet;
 import com.sofacity.laichushu.bean.netbean.SubscribeArticle_Paramet;
 
 import com.sofacity.laichushu.mvp.Campaign.AuthorWorksModle;
@@ -91,7 +92,7 @@ public interface ApiStores {
     //图书详情-喜欢本书的也喜欢接口
     @POST("searchArticle/bestLikeSuggest")
     Observable<HomeHotModel> bestLikeSuggest (@Body BestLike_Paramet paramet);
-    //图书订阅接口
+    //图书订阅 or 取消订阅 接口
     @POST("subscribeArticle/save")
     Observable<SubscribeArticleModle> subscribeArticle (@Body SubscribeArticle_Paramet paramet);
     //图书评论查询接口
@@ -139,4 +140,10 @@ public interface ApiStores {
     //举报
     @POST("complaint/save")
     Observable<RewardResult> complaint(@Body Complaint_Paramet paramet);
+    //点赞
+    @POST("scoreLike/save")
+    Observable<RewardResult> saveScoreLike(@Body ScoreLike_Paramet paramet);
+    //取消赞
+    @POST("scoreLike/delete")
+    Observable<RewardResult> deleteScoreLike(@Body ScoreLike_Paramet paramet);
 }

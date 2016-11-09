@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/page_title" />
+
+    <WebView
+        android:id="@+id/webadd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_bar"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_error_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_bar"
+        android:layout_centerInParent="true"
+        android:background="#EEEEEE"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_error_page" />
+
+        <Button
+            android:id="@+id/error_btn_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/select_login_button"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="加载失败,点击重试"
+            android:textColor="@drawable/select_login_color"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_bar"
+        android:background="#EEEEEE"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDrawable="@drawable/progress_big"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>

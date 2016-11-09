@@ -1,5 +1,6 @@
 package com.sofacity.laichushu.mvp.allcomment;
 
+import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 
 /**
@@ -9,6 +10,7 @@ import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 public interface AllCommentView {
     void getDataSuccess(ArticleCommentModle model);
     void getSendDataSuccess(SendCommentMoudle model);
+    void SaveScoreLikeData(RewardResult model, String type);
     void getDataFail(String msg);
     void showLoading();
     void hideLoading();

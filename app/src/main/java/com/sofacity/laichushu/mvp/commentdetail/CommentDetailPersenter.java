@@ -2,7 +2,9 @@ package com.sofacity.laichushu.mvp.commentdetail;
 
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
+import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.bean.netbean.ReCommentList_Paramet;
+import com.sofacity.laichushu.bean.netbean.ScoreLike_Paramet;
 import com.sofacity.laichushu.retrofit.ApiCallback;
 import com.sofacity.laichushu.ui.activity.CommentDetailActivity;
 import com.sofacity.laichushu.ui.base.BasePresenter;
@@ -53,5 +55,32 @@ public class CommentDetailPersenter extends BasePresenter<CommentDetailView> {
 
     public void setParamet(ReCommentList_Paramet paramet) {
         this.paramet = paramet;
+    }
+    /**
+     * 点赞 取消赞
+     * @param sourceId
+     * @param type
+     */
+    public void saveScoreLikeData(String sourceId, final String type){
+        mvpView.showLoading();
+        ScoreLike_Paramet paramet = new ScoreLike_Paramet(sourceId,userId,type);
+        Logger.e("点赞");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.SaveScoreLikeData(model,type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
     }
 }

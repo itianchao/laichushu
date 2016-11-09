@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.mvp.commentdetail.CommentDetailModle;
 import com.sofacity.laichushu.mvp.commentdetail.CommentDetailPersenter;
@@ -101,11 +102,17 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
             @Override
             public void onClick(View v) {
                 if (dataBean.isIsLike()) {
+                    mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"1");
                     GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
                     dataBean.setIsLike(false);
+                    dataBean.setLikeNum(dataBean.getLikeNum()-1);
+                    likeTv.setText(dataBean.getLikeNum() + "");
                 } else {
+                    mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"0");
                     GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
                     dataBean.setIsLike(true);
+                    dataBean.setLikeNum(dataBean.getLikeNum()+1);
+                    likeTv.setText(dataBean.getLikeNum() + "");
                 }
             }
         });
@@ -137,6 +144,19 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         ToastUtil.showToast("请检查网络");
         commentRyv.setPullLoadMoreCompleted();
         Logger.e(msg);
+    }
+
+    @Override
+    public void SaveScoreLikeData(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (type.equals("0")){//点赞
+                Logger.e("点赞");
+            }else {//取消赞
+                Logger.e("取消赞");
+            }
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
     }
 
     @Override
