@@ -149,10 +149,9 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 } else {
                     if (joinTv.getText().equals("参加活动")) {
                         openAlertDialog();
-                        bean.setApplyAmount(bean.getApplyAmount() + 1);
-                        numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
                     } else {
-                        ToastUtil.showToast("您已参加该活动");
+                        mvpPresenter.loadJoinActivityData(bean.getActivityId(),"", "1");
+                        joinTv.setEnabled(false);
                     }
                 }
                 break;
@@ -189,7 +188,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
             @Override
             public void onClick(View v) {
                 Logger.e(mArticleData.get(joinAdapter.getPosition()).getArticleName());
-                mvpPresenter.loadJoinActivityData(bean.getActivityId(), mArticleData.get(joinAdapter.getPosition()).getArticleId(), type);
+                mvpPresenter.loadJoinActivityData(bean.getActivityId(), mArticleData.get(joinAdapter.getPosition()).getArticleId(), "0");
                 dialogBuilder.dismiss();
             }
         });
@@ -238,8 +237,17 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
      */
     @Override
     public void getJoinDataSuccess(CampaignJoinModel model, String type) {
+        joinTv.setEnabled(true);
         if (model.isSuccess()) {
-            joinTv.setText("已参加");
+            if (type.equals("0")){
+                joinTv.setText("已参加");
+                bean.setApplyAmount(bean.getApplyAmount() + 1);
+                numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
+            }else {
+                joinTv.setText("参加活动");
+                bean.setApplyAmount(bean.getApplyAmount() - 1);
+                numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
+            }
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
