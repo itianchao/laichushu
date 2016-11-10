@@ -1,10 +1,19 @@
 package com.sofacity.laichushu.ui.activity;
 
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.mvp.homecategory.CategoryModle;
 import com.sofacity.laichushu.mvp.homecategory.CategoryPresenter;
 import com.sofacity.laichushu.mvp.homecategory.CategoryView;
+import com.sofacity.laichushu.ui.adapter.CategoryChildAdapter;
+import com.sofacity.laichushu.ui.adapter.CategoryParentAdapter;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.utils.ToastUtil;
 
@@ -15,25 +24,50 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/11/10.
  */
 
-public class CategoryActivity extends MvpActivity<CategoryPresenter> implements CategoryView {
+public class CategoryActivity extends MvpActivity<CategoryPresenter> implements CategoryView, View.OnClickListener, AdapterView.OnItemClickListener {
 
-    private ArrayList<CategoryModle.DataBean> mParentData;
+    private ArrayList<CategoryModle.DataBean> mParentData = new ArrayList<>();
+    private ArrayList<CategoryModle.DataBean.ChildBean> mChildDate = new ArrayList<>();
+    private TextView titleTv;
+    private ImageView finishIv;
+    private ListView parentLv;
+    private TextView nameTv;
+    private GridView childGv;
+    private CategoryParentAdapter categoryParentAdapter;
+    private CategoryChildAdapter categoryChildAdapter;
 
     @Override
     protected void initView() {
         setContentView(R.layout.activity_category);
+        titleTv = (TextView) findViewById(R.id.tv_title);
+        finishIv = (ImageView) findViewById(R.id.iv_title_finish);
+        parentLv = (ListView) findViewById(R.id.lv_parent);
+        nameTv = (TextView) findViewById(R.id.tv_name);
+        childGv = (GridView) findViewById(R.id.gv_child);
+        titleTv.setText("分类");
+        finishIv.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
-
+        mvpPresenter.loadCategoryData();
+        categoryParentAdapter = new CategoryParentAdapter(mParentData);
+        parentLv.setAdapter(categoryParentAdapter);
+        parentLv.setOnItemClickListener(this);
+        categoryChildAdapter = new CategoryChildAdapter(mChildDate);
+        childGv.setAdapter(categoryChildAdapter);
+        childGv.setOnItemClickListener(this);
     }
 
     @Override
     public void getDataSuccess(CategoryModle model) {
         if (model.isSuccess()) {
             mParentData = model.getData();
-        }else {
+            checkItem(0);
+            categoryParentAdapter.setmParentData(mParentData);
+            categoryParentAdapter.notifyDataSetChanged();
+            onItemClick(parentLv,parentLv,0,0);
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -57,5 +91,44 @@ public class CategoryActivity extends MvpActivity<CategoryPresenter> implements 
     @Override
     protected CategoryPresenter createPresenter() {
         return new CategoryPresenter(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_title_finish:
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch(parent.getId()){
+            case R.id.lv_parent:
+                String name = "全部" + mParentData.get(position).getName();
+                nameTv.setText(name);
+                checkItem(position);
+                categoryParentAdapter.setmParentData(mParentData);
+                categoryParentAdapter.notifyDataSetChanged();
+                ArrayList<CategoryModle.DataBean.ChildBean> mChildDate = mParentData.get(position).getChild();
+                categoryChildAdapter.setmParentData(mChildDate);
+                categoryChildAdapter.notifyDataSetChanged();
+                break;
+            case R.id.gv_child:
+
+                break;
+        }
+    }
+
+    public void checkItem(int position) {
+        for (int i = 0; i < mParentData.size(); i++) {
+            CategoryModle.DataBean dataBean = mParentData.get(i);
+            if (i == position) {
+                dataBean.setPressd(true);
+            } else {
+                dataBean.setPressd(false);
+            }
+        }
     }
 }

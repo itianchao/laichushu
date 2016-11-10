@@ -43,12 +43,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private ArrayList<HomeHotModel.DataBean> mHotData;
     private RadioButton rankRbn;
     public HomePresenter mvpPresenter;
-
-    public HomeRecyclerAdapter(ArrayList<HomeHotModel.DataBean> mData, MainActivity mActivity, ArrayList<HomeHotModel.DataBean> mHotData, HomePresenter mvpPresenter) {
+    private HomeFragment homeFragment;
+    public HomeRecyclerAdapter(ArrayList<HomeHotModel.DataBean> mData, MainActivity mActivity, ArrayList<HomeHotModel.DataBean> mHotData, HomePresenter mvpPresenter, HomeFragment homeFragment) {
         this.mActivity = mActivity;
         this.mData = mData;
         this.mHotData = mHotData;//最热
         this.mvpPresenter = mvpPresenter;
+        this.homeFragment = homeFragment;
 
         rankingList.add("评分最高");//1
         rankingList.add("订阅最多");//2
@@ -111,7 +112,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        ArrayList<HomeHotImgBean> homeHotImgBeans = new ArrayList<>();
+        final ArrayList<HomeHotImgBean> homeHotImgBeans = new ArrayList<>();
         //处理数据
         HomeHotImgBean homeHotImgBean = null;
         for (int i = 0; i < mHotData.size(); i++) {
@@ -195,7 +196,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 @Override
                 public void onClick(View v) {
                     //跳转热门详情页
-                    UIUtil.openActivity(mActivity, HotListActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("bean",homeFragment.getModel());
+                    UIUtil.openActivity(mActivity, HotListActivity.class,bundle);
                 }
             });
 

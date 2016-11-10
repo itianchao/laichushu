@@ -468,6 +468,9 @@ public class HomeHotModel implements Parcelable {
         };
     }
 
+    public HomeHotModel() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -480,16 +483,13 @@ public class HomeHotModel implements Parcelable {
         dest.writeTypedList(this.data);
     }
 
-    public HomeHotModel() {
-    }
-
     protected HomeHotModel(Parcel in) {
         this.success = in.readByte() != 0;
         this.errMsg = in.readString();
         this.data = in.createTypedArrayList(DataBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<HomeHotModel> CREATOR = new Parcelable.Creator<HomeHotModel>() {
+    public static final Creator<HomeHotModel> CREATOR = new Creator<HomeHotModel>() {
         @Override
         public HomeHotModel createFromParcel(Parcel source) {
             return new HomeHotModel(source);

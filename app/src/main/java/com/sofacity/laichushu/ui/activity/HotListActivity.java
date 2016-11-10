@@ -1,5 +1,7 @@
 package com.sofacity.laichushu.ui.activity;
 
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -8,9 +10,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.sofacity.laichushu.R;
+import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.base.BaseActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.UIUtil;
+
+import java.util.ArrayList;
 
 /**
  * 最热列表
@@ -45,7 +50,9 @@ public class HotListActivity extends BaseActivity {
     private TextView rewardTv;
     @Override
     protected void initData() {
-        for (int i = 0 ;i<29;i++){
+        HomeHotModel modle = getIntent().getParcelableExtra("bean");
+        ArrayList<HomeHotModel.DataBean> beanList = modle.getData();
+        for (int i = 0 ;i<beanList.size();i++){
             View itemView = UIUtil.inflate(R.layout.item_home_book);
             bookIv = (ImageView) itemView.findViewById(R.id.iv_book);
             titleTv = (TextView) itemView.findViewById(R.id.tv_title);
@@ -57,21 +64,24 @@ public class HotListActivity extends BaseActivity {
             wordTv = (TextView) itemView.findViewById(R.id.tv_word);
             moneyTv = (TextView) itemView.findViewById(R.id.tv_money);
             rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
-            //添加假数据
-            GlideUitl.loadImg(this,"",bookIv);
-            titleTv.setText("职场心计");
-            typeTv.setText("文学");
-            markTv.setText("3.0");
-            commentTv.setText("(1010评论)");
-            authorTv.setText("金庸");
-            wordTv.setText("50万");
-            moneyTv.setText("7678元");
-            rewardTv.setText("(2029人打赏)");
+            //添加数据
+            final HomeHotModel.DataBean bean = beanList.get(i);
+            GlideUitl.loadImg(this,bean.getCoverUrl(),bookIv);
+            titleTv.setText(bean.getArticleName());
+            typeTv.setText(bean.getTopCategoryName());
+            markTv.setText(bean.getScore()+"分");
+            commentTv.setText("("+bean.getCommentNum()+"评论)");
+            authorTv.setText(bean.getAuthorName());
+            wordTv.setText("约"+bean.getWordNum());
+            moneyTv.setText(bean.getAwardMoney()+"元");
+            rewardTv.setText("("+bean.getAwardNum()+"人打赏)");
             parentLay.addView(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UIUtil.openActivity(mActivity, BookDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("bean",bean);
+                    UIUtil.openActivity(mActivity, BookDetailActivity.class,bundle);
                 }
             });
         }

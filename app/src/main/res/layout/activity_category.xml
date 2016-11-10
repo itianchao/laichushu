@@ -1,20 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/page_title"
+        layout="@layout/page_title" />
 
     <ListView
         android:id="@+id/lv_parent"
         android:layout_width="85dp"
-        android:layout_height="match_parent"/>
+        android:background="@color/frenchGrey"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/page_title" />
+
     <View
+        android:layout_below="@+id/page_title"
         android:id="@+id/line"
-        android:layout_alignRight="@+id/lv_parent"
-        android:background="@color/hint"
         android:layout_width="1dp"
-        android:layout_height="match_parent"/>
-    <TextView
+        android:layout_height="match_parent"
         android:layout_alignRight="@+id/lv_parent"
+        android:background="@color/hint" />
+
+    <TextView
+        android:id="@+id/tv_name"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="51dp"
+        android:gravity="center"
+        android:textColor="@color/global"
+        android:textSize="@dimen/edit"
+        tools:text="全部"
+        android:background="@color/white"
+        android:layout_below="@+id/page_title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/lv_parent"
+        android:layout_toEndOf="@+id/lv_parent" />
+    <View
+        android:layout_below="@+id/tv_name"
+        android:background="@color/hint"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/line"
+        android:layout_alignStart="@+id/line"
+        android:id="@+id/view" />
+
+    <GridView
+        android:id="@+id/gv_child"
+        android:numColumns="2"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view"
+        android:layout_alignLeft="@+id/line"
+        android:layout_alignStart="@+id/line">
+    </GridView>
 </RelativeLayout>

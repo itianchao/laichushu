@@ -89,7 +89,7 @@ public interface ApiStores {
     @POST("searchArticle/list")
     Observable<HomeHotModel> homeAllData(@Body HomeAllBook_Paramet paramet);
     //home分类
-    @POST("searchArticle/list")
+    @POST("searchArticle/findArticleByCategoryId")
     Observable<HomeHotModel> gethomeCategroyData(@Body HomeCategroyListBook_Paramet paramet);
     //首页搜索接口
     @POST("searchArticle/searchByName")

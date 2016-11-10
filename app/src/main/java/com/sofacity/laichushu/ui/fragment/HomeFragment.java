@@ -19,6 +19,7 @@ import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.mvp.home.HomeModel;
 import com.sofacity.laichushu.mvp.home.HomePresenter;
 import com.sofacity.laichushu.mvp.home.HomeView;
+import com.sofacity.laichushu.ui.activity.CategoryActivity;
 import com.sofacity.laichushu.ui.activity.HomeSearchActivity;
 import com.sofacity.laichushu.ui.activity.MainActivity;
 import com.sofacity.laichushu.ui.adapter.HomeRecyclerAdapter;
@@ -60,7 +61,8 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private String pageNo = "2";//全部不加在
     private String type = "1";//类型
     private String pageNo2 = "1";//活动加载1次
-
+    private ImageView categoryIv;
+    private HomeHotModel model;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -83,11 +85,12 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         View mRootView = UIUtil.inflate(R.layout.fragment_home);
         homeVp = (ViewPager) mRootView.findViewById(R.id.vp_home_title);
         pointIv = (ImageView) mRootView.findViewById(R.id.iv_red_point);
+        categoryIv = (ImageView) mRootView.findViewById(R.id.iv_category);
         lineLyt = (LinearLayout) mRootView.findViewById(R.id.ll_container);
         searchLyt = (LinearLayout) mRootView.findViewById(R.id.lay_search);
         mRecyclerView = (PullLoadMoreRecyclerView) mRootView.findViewById(R.id.ryv_home);
-        lineLyt.setOnClickListener(this);
         searchLyt.setOnClickListener(this);
+        categoryIv.setOnClickListener(this);
         return mRootView;
     }
 
@@ -104,7 +107,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private void initRecycler() {
         mRecyclerView.setLinearLayout();
         mRecyclerView.setFooterViewText("加载中");
-        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter);
+        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter,this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
     }
@@ -161,8 +164,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }, 300);
         hideLoading();
         if (model.isSuccess()) {
+            this.model = model;
             mHotData = model.getData();
-            mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter);
+            mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter, this);
             mRecyclerView.setAdapter(mAdapter);
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -296,6 +300,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             case R.id.lay_search:
                 UIUtil.openActivity(getActivity(), HomeSearchActivity.class);
                 break;
+            case R.id.iv_category:
+                UIUtil.openActivity(getActivity(), CategoryActivity.class);
+                break;
         }
     }
 
@@ -313,5 +320,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public HomeHotModel getModel() {
+        return model;
     }
 }

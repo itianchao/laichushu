@@ -65,6 +65,15 @@ public class CategoryModle {
          */
 
         private ArrayList<ChildBean> child;
+        public boolean pressd;
+
+        public boolean isPressd() {
+            return pressd;
+        }
+
+        public void setPressd(boolean pressd) {
+            this.pressd = pressd;
+        }
 
         public String getId() {
             return id;
