@@ -9,16 +9,19 @@ import com.sofacity.laichushu.bean.netbean.AuthorWorks_Paramet;
 import com.sofacity.laichushu.bean.netbean.Balance_Paramet;
 import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
 import com.sofacity.laichushu.bean.netbean.BookList_Paramet;
+import com.sofacity.laichushu.bean.netbean.Comment2_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
 import com.sofacity.laichushu.bean.netbean.Complaint_Paramet;
 import com.sofacity.laichushu.bean.netbean.ForgetPwd_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeAllBook_Paramet;
+import com.sofacity.laichushu.bean.netbean.HomeCategroyListBook_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeHot_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeSearch_Paramet;
 import com.sofacity.laichushu.bean.netbean.JoinActivity_Paramet;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
 import com.sofacity.laichushu.bean.netbean.MaterialContent_Paramet;
 import com.sofacity.laichushu.bean.netbean.MaterialList_Paramet;
+import com.sofacity.laichushu.bean.netbean.PartList_Paramet;
 import com.sofacity.laichushu.bean.netbean.Purchase_Paramet;
 import com.sofacity.laichushu.bean.netbean.ReCommentList_Paramet;
 import com.sofacity.laichushu.bean.netbean.ReSavaComment_Paramet;
@@ -43,7 +46,9 @@ import com.sofacity.laichushu.mvp.directories.MaterialListModel;
 import com.sofacity.laichushu.mvp.forgetpwd.ForgetPwdModel;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.mvp.home.HomeModel;
+import com.sofacity.laichushu.mvp.homecategory.CategoryModle;
 import com.sofacity.laichushu.mvp.login.LoginModel;
+import com.sofacity.laichushu.mvp.part.PartModel;
 import com.sofacity.laichushu.mvp.regist.RegistModel;
 import com.sofacity.laichushu.mvp.regist2.RegistModel2;
 
@@ -83,6 +88,9 @@ public interface ApiStores {
     //home全部图书接口
     @POST("searchArticle/list")
     Observable<HomeHotModel> homeAllData(@Body HomeAllBook_Paramet paramet);
+    //home分类
+    @POST("searchArticle/list")
+    Observable<HomeHotModel> gethomeCategroyData(@Body HomeCategroyListBook_Paramet paramet);
     //首页搜索接口
     @POST("searchArticle/searchByName")
     Observable<HomeHotModel> homeSearch(@Body HomeSearch_Paramet paramet);
@@ -95,9 +103,12 @@ public interface ApiStores {
     //图书订阅 or 取消订阅 接口
     @POST("subscribeArticle/save")
     Observable<SubscribeArticleModle> subscribeArticle (@Body SubscribeArticle_Paramet paramet);
-    //图书评论查询接口
+    //图书普通or大咖评论查询接口
     @POST("articleScore/list")
     Observable<ArticleCommentModle> articleComment(@Body Comment_Paramet paramet);
+    //图书全部评论查询接口
+    @POST("articleScore/list")
+    Observable<ArticleCommentModle> articleComment(@Body Comment2_Paramet paramet);
     //图书评论保存接口
     @POST("articleScore/save")
     Observable<SendCommentMoudle> saveComment(@Body SaveComment_Paramet paramet);
@@ -128,6 +139,9 @@ public interface ApiStores {
     //获取目录接口
     @POST("readChapter/list")
     Observable<BookMoudle> getBookList(@Body BookList_Paramet paramet);
+    //获取目录接口
+    @POST("readChapter/list")
+    Observable<PartModel> getPartList(@Body PartList_Paramet paramet);
     //查询余额接口
     @POST("reward/getMoney")
     Observable<BalanceBean> getBalance(@Body Balance_Paramet paramet);
@@ -146,4 +160,7 @@ public interface ApiStores {
     //取消赞
     @POST("scoreLike/delete")
     Observable<RewardResult> deleteScoreLike(@Body ScoreLike_Paramet paramet);
+    //首页分类接口
+    @POST("category/findCategoryList")
+    Observable<CategoryModle> getCategoryList();
 }

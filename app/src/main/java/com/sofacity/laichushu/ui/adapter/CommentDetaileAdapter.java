@@ -52,23 +52,30 @@ public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAd
 //        holder.numberTv.setText(dataBean.getReplyNum() + "");//回复人数
         holder.numberTv.setVisibility(View.INVISIBLE);
         holder.commentIv.setVisibility(View.INVISIBLE);
-        if (dataBean.isIsLike()) {
-            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
-        } else {
-            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
-        }
-        holder.likeTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (dataBean.isIsLike()) {
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
-                    dataBean.setIsLike(false);
-                } else {
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
-                    dataBean.setIsLike(true);
-                }
-            }
-        });
+        holder.likeTv.setVisibility(View.INVISIBLE);
+        holder.likeIv.setVisibility(View.INVISIBLE);
+
+//        if (dataBean.isIsLike()) {
+//            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
+//        } else {
+//            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
+//        }
+//        holder.likeIv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (dataBean.isIsLike()) {
+//                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
+//                    dataBean.setIsLike(false);
+//                    dataBean.setLikeNum(dataBean.getLikeNum()-1);
+//                    holder.likeTv.setText(dataBean.getLikeNum() + "");
+//                } else {
+//                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
+//                    dataBean.setIsLike(true);
+//                    dataBean.setLikeNum(dataBean.getLikeNum()+1);
+//                    holder.likeTv.setText(dataBean.getLikeNum() + "");
+//                }
+//            }
+//        });
 //        holder.commentItemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

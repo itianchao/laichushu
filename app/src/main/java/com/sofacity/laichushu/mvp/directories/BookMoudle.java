@@ -50,6 +50,23 @@ public class BookMoudle {
         private String id;
         private String name;
         private boolean isSection;
+        private String content;
+
+        public boolean isSection() {
+            return isSection;
+        }
+
+        public void setSection(boolean section) {
+            isSection = section;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
 
         public String getId() {
             return id;

@@ -1,8 +1,6 @@
 package com.sofacity.laichushu.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +8,7 @@ import android.widget.TextView;
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.JsonBean.RewardResult;
+import com.sofacity.laichushu.event.RefurshCommentListEvent;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.mvp.commentdetail.CommentDetailModle;
 import com.sofacity.laichushu.mvp.commentdetail.CommentDetailPersenter;
@@ -20,6 +19,10 @@ import com.sofacity.laichushu.utils.GlideUitl;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -41,10 +44,13 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     private CommentDetaileAdapter mAdapter;
     private PullLoadMoreRecyclerView commentRyv;
     private String commentId;
+    private ArticleCommentModle.DataBean dataBean;
+    private String type;
 
     @Override
     protected void initView() {
         setContentView(R.layout.activity_commentdetail);
+        EventBus.getDefault().register(this);
         initTitleBar("详情");
         commentRyv = (PullLoadMoreRecyclerView) findViewById(R.id.ryv_comment);
         commentRyv.setLinearLayout();
@@ -75,7 +81,8 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
 
     @Override
     protected void initData() {
-        final ArticleCommentModle.DataBean dataBean = getIntent().getParcelableExtra("bean");
+        dataBean = getIntent().getParcelableExtra("bean");
+        type = getIntent().getStringExtra("type");
         commentId = dataBean.getScoreId();
         onRefresh();
         GlideUitl.loadRandImg(this, dataBean.getPhoto(), headIv);//头像
@@ -98,7 +105,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         } else {
             GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
         }
-        likeTv.setOnClickListener(new View.OnClickListener() {
+        likeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (dataBean.isIsLike()) {
@@ -199,13 +206,17 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         switch(v.getId()){
             case R.id.iv_title_finish:
                 finish();
+                RefurshCommentListEvent event = new RefurshCommentListEvent(true);
+                EventBus.getDefault().postSticky(event);
                 break;
         }
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        onRefresh();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefurshCommentListEvent event){
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            onRefresh();
+            dataBean.setReplyNum(dataBean.getReplyNum()+1);
+        }
     }
 }

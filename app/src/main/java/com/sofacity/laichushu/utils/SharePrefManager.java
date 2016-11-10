@@ -166,5 +166,16 @@ public class SharePrefManager {
      */
     public static int getReadState() {
         return CacheUtil.getInt(UIUtil.getContext(), "readState", getReadMoudle());
+    }/**
+     *  设置日间模式
+     */
+    public static void setType(String type) {
+        CacheUtil.setString(UIUtil.getContext(), "type",type);
+    }
+    /**
+     *  设置日间模式
+     */
+    public static String getType() {
+        return CacheUtil.getString(UIUtil.getContext(), "type");
     }
 }

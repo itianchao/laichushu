@@ -30,6 +30,7 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
     private EditText commentEt;
     private String userId = SharePrefManager.getUserId();
     private String commentId;
+
     @Override
     protected void initView() {
         setContentView(R.layout.activity_commentsend);
@@ -58,6 +59,8 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.iv_title_finish:
+                RefurshCommentListEvent event = new RefurshCommentListEvent(true);
+                EventBus.getDefault().postSticky(event);
                 finish();
                 break;
         }

@@ -1,6 +1,5 @@
 package com.sofacity.laichushu.ui.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;

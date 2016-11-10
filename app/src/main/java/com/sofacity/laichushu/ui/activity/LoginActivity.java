@@ -89,7 +89,8 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             String password = passwordEt.getText().toString().trim();
             String userId = model.getUserId();
             String token = model.getToken();
-            mvpPresenter.lastLogin(username, password,userId,token);
+            String type = "1";
+            mvpPresenter.lastLogin(username, password,userId,token, type);
         } else {
             String errMsg = model.getErrMsg();
             if (errMsg.contains(UIUtil.getString(R.string.errMsg2))) {

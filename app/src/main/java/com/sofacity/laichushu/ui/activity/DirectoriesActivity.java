@@ -140,12 +140,18 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // TODO: 2016/11/8  跳转书籍
         Bundle bundle = new Bundle();
-        String path = mData.get(position).getCount();
-        String name = mData.get(position).getName();
+        String path = mBookdata.get(position).getContent();
+        String name = mBookdata.get(position).getName();
+        String parentId = mBookdata.get(position).getId();
         bundle.putString("path",path);
         bundle.putString("title",name);
-        if (!TextUtils.isEmpty(path)){
-            UIUtil.openActivity(this,NopublishBookActivity.class,bundle);
+        bundle.putString("parentId",parentId);
+        if (mBookdata.get(position).isIsSection()) {
+            UIUtil.openActivity(this,PartActivity.class,bundle);
+        }else {
+            if (!TextUtils.isEmpty(path)){
+                UIUtil.openActivity(this,NopublishBookActivity.class,bundle);
+            }
         }
     }
 }

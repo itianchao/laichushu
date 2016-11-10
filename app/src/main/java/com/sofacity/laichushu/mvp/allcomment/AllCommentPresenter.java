@@ -3,6 +3,7 @@ package com.sofacity.laichushu.mvp.allcomment;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.bean.JsonBean.RewardResult;
+import com.sofacity.laichushu.bean.netbean.Comment2_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
 import com.sofacity.laichushu.bean.netbean.SaveComment_Paramet;
 import com.sofacity.laichushu.bean.netbean.ScoreLike_Paramet;
@@ -21,13 +22,13 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
     private String pageSize = "10";
     private String pageNo = "1";
     private String userId = SharePrefManager.getUserId();
-    private Comment_Paramet paramet = new Comment_Paramet("",pageSize,pageNo,userId);
+    private Comment2_Paramet paramet = new Comment2_Paramet("",pageSize,pageNo,userId);
 
-    public Comment_Paramet getParamet() {
+    public Comment2_Paramet getParamet() {
         return paramet;
     }
 
-    public void setParamet(Comment_Paramet paramet) {
+    public void setParamet(Comment2_Paramet paramet) {
         this.paramet = paramet;
     }
 
@@ -38,7 +39,7 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
     }
     public void loadAllCommentData(String articleId){
         getParamet().setArticleId(articleId);
-        Logger.e("获取全部评论");
+        Logger.e("全部评论");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.articleComment(paramet), new ApiCallback<ArticleCommentModle>() {
             @Override
@@ -58,7 +59,7 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
         });
     }
     public void loadSendCommentData(String sourceId,String content,String starLevel){
-        Logger.e("获取全部评论");
+        Logger.e("发送评论");
         Logger.json(new Gson().toJson(paramet));
         SaveComment_Paramet paramet = new SaveComment_Paramet(sourceId,userId,content,starLevel);
         addSubscription(apiStores.saveComment(paramet), new ApiCallback<SendCommentMoudle>() {

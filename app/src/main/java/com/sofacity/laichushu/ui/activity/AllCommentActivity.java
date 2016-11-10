@@ -12,17 +12,18 @@ import android.widget.TextView;
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.JsonBean.RewardResult;
-import com.sofacity.laichushu.mvp.allcomment.AllCommentMoudle;
+import com.sofacity.laichushu.event.RefurshCommentListEvent;
 import com.sofacity.laichushu.mvp.allcomment.AllCommentPresenter;
 import com.sofacity.laichushu.mvp.allcomment.AllCommentView;
 import com.sofacity.laichushu.mvp.allcomment.SendCommentMoudle;
 import com.sofacity.laichushu.mvp.bookdetail.ArticleCommentModle;
 import com.sofacity.laichushu.ui.adapter.CommentAllAdapter;
-import com.sofacity.laichushu.ui.base.BasePresenter;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,6 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
         commentRyv.setAdapter(mAdapter);
         commentRyv.setOnPullLoadMoreListener(this);
         articleId = getIntent().getStringExtra("articleId");
-        mvpPresenter.loadAllCommentData(articleId);
         commentEt.setOnEditorActionListener(this);
     }
 
@@ -80,6 +80,7 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
+                EventBus.getDefault().postSticky(new RefurshCommentListEvent(true));
                 finish();
                 break;
         }
@@ -190,4 +191,9 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
         return false;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        onRefresh();
+    }
 }

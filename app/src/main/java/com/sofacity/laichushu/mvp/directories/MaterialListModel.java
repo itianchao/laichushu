@@ -61,6 +61,7 @@ public class MaterialListModel {
         private String parentId;
         private String name;
         private String count;
+
         /**
          * id : 176
          * name : 绱犳潗鑺備竴
@@ -69,6 +70,19 @@ public class MaterialListModel {
          */
 
         private ArrayList<InDataBean> data;
+        /**
+         * isSection : false
+         */
+
+        private boolean isSection;
+
+        public boolean isSection() {
+            return isSection;
+        }
+
+        public void setSection(boolean section) {
+            isSection = section;
+        }
 
         public String getParentId() {
             return parentId;
@@ -100,6 +114,14 @@ public class MaterialListModel {
 
         public void setData(ArrayList<InDataBean> data) {
             this.data = data;
+        }
+
+        public boolean isIsSection() {
+            return isSection;
+        }
+
+        public void setIsSection(boolean isSection) {
+            this.isSection = isSection;
         }
 
         public static class InDataBean {

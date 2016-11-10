@@ -4,7 +4,7 @@ package com.sofacity.laichushu.bean.netbean;
  * 评论参数
  * Created by wangtong on 2016/11/3.
  */
-public class Comment_Paramet {
+public class Comment2_Paramet {
 
     /**
      * articleId : 3
@@ -15,29 +15,12 @@ public class Comment_Paramet {
     private String pageSize;
     private String pageNo;
     private String userId;
-    private String type;
 
-    public Comment_Paramet(String articleId, String pageSize, String pageNo,String userId,String type) {
+    public Comment2_Paramet(String articleId, String pageSize, String pageNo, String userId) {
         this.articleId = articleId;
         this.pageSize = pageSize;
         this.pageNo = pageNo;
         this.userId = userId;
-        this.type = type;
-    }
-
-    public Comment_Paramet(String articleId, String pageSize, String pageNo, String userId) {
-        this.articleId = articleId;
-        this.pageSize = pageSize;
-        this.pageNo = pageNo;
-        this.userId = userId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getUserId() {

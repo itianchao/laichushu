@@ -50,7 +50,7 @@ public class BaseActivity extends FragmentActivity {
         AppManager.getInstance().addActivity(this);
         AppManager.getActivityStackInfos();
         requestWindowFeature(Window.FEATURE_NO_TITLE); // 去掉标题
-        UIUtil.setNotifyBgColor(this, R.color.title_bg_color); // 设置通知栏颜色
+//        UIUtil.setNotifyBgColor(this, R.color.title_bg_color); // 设置通知栏颜色
         mActivity = this;
         synchronized (mActivities) {
             mActivities.add(this);

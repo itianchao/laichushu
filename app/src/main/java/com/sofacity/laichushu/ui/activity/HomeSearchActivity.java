@@ -52,6 +52,7 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
     private Search_HistoryDao dao;
     private HomeSearchHistoryAdapter historyAdapter;
     private List<Search_History> list = new ArrayList<>();
+    private ImageView emptyIv;
 
     @Override
     protected void initView() {
@@ -63,6 +64,7 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
         searchLv = (ListView) findViewById(R.id.lv_history);//搜索历史的容器
         childLay = (LinearLayout) findViewById(R.id.lay_hot_child);//hot容器
         bookRyv = (PullLoadMoreRecyclerView) findViewById(R.id.ryv_book);//搜索结果
+        emptyIv = (ImageView) findViewById(R.id.iv_empty);//搜索结果
 
         finishIV.setOnClickListener(this);
         clearTv.setOnClickListener(this);
@@ -112,6 +114,10 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
                 mAllData.addAll(mData);
                 mAdapter.setmAllData(mAllData);
                 mAdapter.notifyDataSetChanged();
+            }else {
+                emptyIv.setVisibility(View.VISIBLE);
+                searchLay.setVisibility(View.GONE);
+                bookRyv.setVisibility(View.GONE);
             }
             pageNo = Integer.parseInt(pageNo) + 1 + "";
         } else {
@@ -150,6 +156,7 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
             case R.id.et_search:
                 searchLay.setVisibility(View.VISIBLE);
                 bookRyv.setVisibility(View.GONE);
+                emptyIv.setVisibility(View.GONE);
                 break;
         }
     }
@@ -191,10 +198,11 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
                     for (int i = list.size(); i > 0; i--) {
                         if (i == list.size()) {
                             list.add(list.get(i - 1));
-                        } else if (i == 1) {
-                            list.remove(1);
                         } else {
                             list.set(i, list.get(i - 1));
+                        }
+                        if (i == 1) {
+                            list.remove(1);
                         }
                     }
                 }

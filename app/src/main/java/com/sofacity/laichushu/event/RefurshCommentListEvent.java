@@ -7,7 +7,16 @@ package com.sofacity.laichushu.event;
 
 public class RefurshCommentListEvent {
     public boolean isRefursh;
+    public String type;
     public RefurshCommentListEvent(boolean isRefursh) {
         this.isRefursh = isRefursh;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -130,10 +130,11 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     /**
      * 获取评论参数
      * @param articleId
+     * @param type
      */
-    public void loadCommentData(String articleId) {
+    public void loadCommentData(String articleId, String type) {
         mvpView.showLoading();
-        Comment_Paramet paramet = new Comment_Paramet(articleId, "5", "1", userId);
+        Comment_Paramet paramet = new Comment_Paramet(articleId, "5", "1", userId,type);
         Logger.e("评论参数");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.articleComment(paramet), new ApiCallback<ArticleCommentModle>() {

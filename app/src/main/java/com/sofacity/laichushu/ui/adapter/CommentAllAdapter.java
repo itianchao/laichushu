@@ -83,7 +83,7 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
                 }
             }
         });
-        holder.commentItemView.setOnClickListener(new View.OnClickListener() {
+        holder.inIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: 2016/11/4  去评论详情
