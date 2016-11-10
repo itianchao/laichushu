@@ -1,5 +1,6 @@
 package com.sofacity.laichushu.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -16,6 +17,7 @@ import com.sofacity.laichushu.ui.adapter.CategoryChildAdapter;
 import com.sofacity.laichushu.ui.adapter.CategoryParentAdapter;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.utils.ToastUtil;
+import com.sofacity.laichushu.utils.UIUtil;
 
 import java.util.ArrayList;
 
@@ -116,7 +118,12 @@ public class CategoryActivity extends MvpActivity<CategoryPresenter> implements 
                 categoryChildAdapter.notifyDataSetChanged();
                 break;
             case R.id.gv_child:
-
+                String categoryId = this.mChildDate.get(position).getId();
+                String title = this.mChildDate.get(position).getName();
+                Bundle bundle = new Bundle();
+                bundle.putString("categoryId",categoryId);
+                bundle.putString("title",title);
+                UIUtil.openActivity(this,CategoryListActivity.class,bundle);
                 break;
         }
     }

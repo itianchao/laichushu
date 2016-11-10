@@ -91,6 +91,9 @@ public interface ApiStores {
     //home分类
     @POST("searchArticle/findArticleByCategoryId")
     Observable<HomeHotModel> gethomeCategroyData(@Body HomeCategroyListBook_Paramet paramet);
+    //首页分类接口
+    @POST("category/findCategoryList")
+    Observable<CategoryModle> getCategoryList();
     //首页搜索接口
     @POST("searchArticle/searchByName")
     Observable<HomeHotModel> homeSearch(@Body HomeSearch_Paramet paramet);
@@ -160,7 +163,5 @@ public interface ApiStores {
     //取消赞
     @POST("scoreLike/delete")
     Observable<RewardResult> deleteScoreLike(@Body ScoreLike_Paramet paramet);
-    //首页分类接口
-    @POST("category/findCategoryList")
-    Observable<CategoryModle> getCategoryList();
+
 }
