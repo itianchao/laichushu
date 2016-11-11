@@ -53,7 +53,7 @@ public class PartListAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
-        String name = getItem(position).getName();
+        String name = mPartdata.get(position).getName();
         holder.titleTv.setText(name);
         return convertView;
     }

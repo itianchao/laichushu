@@ -10,11 +10,9 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
-import com.sofacity.laichushu.mvp.directories.BookMoudle;
 import com.sofacity.laichushu.mvp.part.PartModel;
 import com.sofacity.laichushu.mvp.part.PartPresenter;
 import com.sofacity.laichushu.mvp.part.PartView;
-import com.sofacity.laichushu.ui.adapter.BookListAdapter;
 import com.sofacity.laichushu.ui.adapter.PartListAdapter;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.utils.ToastUtil;
