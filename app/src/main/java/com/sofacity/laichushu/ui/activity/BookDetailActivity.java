@@ -22,7 +22,6 @@ import com.sofacity.laichushu.mvp.bookdetail.SubscribeArticleModle;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.base.MvpActivity;
 import com.sofacity.laichushu.utils.GlideUitl;
-import com.sofacity.laichushu.utils.SharePrefManager;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 
@@ -56,6 +55,8 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     private String type = "1";
     private String articleId;
     private int position = 0;
+    private String collectType = "0";
+    private ImageView comentIv;
 
     @Override
     protected void initView() {
@@ -90,7 +91,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         TextView titleTv = (TextView) findViewById(R.id.tv_title);
         ImageView finishIv = (ImageView) findViewById(R.id.iv_title_finish);
         ImageView shareIv = (ImageView) findViewById(R.id.iv_title_other);
-        ImageView comentIv = (ImageView) findViewById(R.id.iv_title_another);
+        comentIv = (ImageView) findViewById(R.id.iv_title_another);
         titleTv.setText(title);
         shareIv.setImageResource(R.drawable.activity_share);
         comentIv.setImageResource(R.drawable.activity_keep);
@@ -124,6 +125,12 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         detailRewardTv.setText(bean.getAwardNum() + "人打赏");//打赏人
         detailMarkTv.setText(bean.getScore() + "分");//评分
         detailRatbarTv.setRating(bean.getLevel());//星级
+        if (bean.isCollect()) {//已收藏
+            comentIv.setImageResource(R.drawable.activity_keep2);
+        }else {
+            comentIv.setImageResource(R.drawable.activity_keep);
+        }
+
     }
 
     /**
@@ -222,6 +229,8 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             case R.id.iv_title_other://分享
                 break;
             case R.id.iv_title_another://收藏
+                String booktype =  "1";
+                mvpPresenter.collectSave(articleId, booktype, collectType);
                 break;
             case R.id.tv_lookup://查看更多评论
                 Bundle bundle1 = new Bundle();
@@ -546,6 +555,27 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 Logger.e("点赞");
             }else {//取消赞
                 Logger.e("取消赞");
+            }
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    /**
+     * 收藏
+     * @param model
+     */
+    @Override
+    public void collectSaveData(RewardResult model) {
+        if (model.isSuccess()) {
+            if (collectType.equals("0")){
+                collectType = "1";
+                ToastUtil.showToast("收藏成功");
+                comentIv.setImageResource(R.drawable.activity_keep2);
+            }else {
+                comentIv.setImageResource(R.drawable.activity_keep);
+                collectType = "0";
+                ToastUtil.showToast("取消成功");
             }
         }else {
             ToastUtil.showToast(model.getErrMsg());

@@ -21,4 +21,5 @@ public interface BookDetailView {
     void getBalance2Data(BalanceBean model);
     void getRewardMoneyData(RewardResult model);
     void SaveScoreLikeData(RewardResult model, String type);
+    void collectSaveData(RewardResult model);
 }

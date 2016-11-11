@@ -99,6 +99,7 @@ public class HotListActivity extends BaseActivity {
                 moneyTv.setText(bean.getAwardMoney()+"元");
                 rewardTv.setText("("+bean.getAwardNum()+"人打赏)");
                 parentLay.addView(itemView);
+                numRb.setRating(bean.getLevel());
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -9,6 +9,7 @@ import com.sofacity.laichushu.bean.netbean.AuthorWorks_Paramet;
 import com.sofacity.laichushu.bean.netbean.Balance_Paramet;
 import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
 import com.sofacity.laichushu.bean.netbean.BookList_Paramet;
+import com.sofacity.laichushu.bean.netbean.CollectSave_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment2_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
 import com.sofacity.laichushu.bean.netbean.Complaint_Paramet;
@@ -163,5 +164,8 @@ public interface ApiStores {
     //取消赞
     @POST("scoreLike/delete")
     Observable<RewardResult> deleteScoreLike(@Body ScoreLike_Paramet paramet);
+    //收藏
+    @POST("collect/save ")
+    Observable<RewardResult> collectSave(@Body CollectSave_Paramet paramet);
 
 }

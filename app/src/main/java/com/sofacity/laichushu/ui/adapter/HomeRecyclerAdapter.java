@@ -405,7 +405,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
      */
     ArrayList<String> rankingList = new ArrayList<>();
     int position = 0;
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -441,12 +440,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 position = 3;
                 break;
             case R.id.rbn_ranking:
-//                STATE = STATE4;
                 //请求网络
                 TypePopWindow popWindow = new TypePopWindow(mActivity, rankingList);
                 popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
                     @Override
                     public void clickItem(int position) {
+                        STATE = STATE1;
+                        mvpPresenter.setState(STATE);
                         mData.clear();
                         rankRbn.setText(rankingList.get(position));
                         FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
@@ -457,7 +457,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     }
                 });
                 popWindow.setWidth(v.getWidth() + UIUtil.dip2px(1));
-                popWindow.setHeight(UIUtil.dip2px(200));
+                popWindow.setHeight(UIUtil.dip2px(160));
                 popWindow.showAsDropDown(v);
                 break;
         }

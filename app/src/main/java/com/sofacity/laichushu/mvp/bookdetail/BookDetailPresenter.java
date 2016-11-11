@@ -17,6 +17,7 @@ import com.sofacity.laichushu.bean.JsonBean.RewardResult;
 import com.sofacity.laichushu.bean.netbean.AuthorDetail_Paramet;
 import com.sofacity.laichushu.bean.netbean.Balance_Paramet;
 import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
+import com.sofacity.laichushu.bean.netbean.CollectSave_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
 import com.sofacity.laichushu.bean.netbean.Purchase_Paramet;
 import com.sofacity.laichushu.bean.netbean.RewardMoney_Paramet;
@@ -356,6 +357,35 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.SaveScoreLikeData(model,type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 收藏
+     * @param targetId
+     * @param type
+     * @param collectType
+     */
+    public void collectSave(String targetId, String type, String collectType) {
+        mvpView.showLoading();
+        CollectSave_Paramet paramet = new CollectSave_Paramet(userId,targetId,type,collectType);
+        Logger.e("点赞");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.collectSave(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.collectSaveData(model);
             }
 
             @Override
