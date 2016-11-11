@@ -126,6 +126,11 @@
             android:name=".ui.activity.CategoryActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.CategoryListActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

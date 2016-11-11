@@ -111,15 +111,16 @@ public class CategoryActivity extends MvpActivity<CategoryPresenter> implements 
                 String name = "全部" + mParentData.get(position).getName();
                 nameTv.setText(name);
                 checkItem(position);
+                mChildDate.clear();
+                mChildDate.addAll(mParentData.get(position).getChild());
                 categoryParentAdapter.setmParentData(mParentData);
                 categoryParentAdapter.notifyDataSetChanged();
-                ArrayList<CategoryModle.DataBean.ChildBean> mChildDate = mParentData.get(position).getChild();
                 categoryChildAdapter.setmParentData(mChildDate);
                 categoryChildAdapter.notifyDataSetChanged();
                 break;
             case R.id.gv_child:
-                String categoryId = this.mChildDate.get(position).getId();
-                String title = this.mChildDate.get(position).getName();
+                String categoryId = mChildDate.get(position).getId();
+                String title = mChildDate.get(position).getName();
                 Bundle bundle = new Bundle();
                 bundle.putString("categoryId",categoryId);
                 bundle.putString("title",title);

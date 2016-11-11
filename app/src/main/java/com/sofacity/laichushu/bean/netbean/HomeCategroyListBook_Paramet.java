@@ -12,13 +12,13 @@ public class HomeCategroyListBook_Paramet {
      * pageNo : 10
      */
 
-    private String categroyId;
+    private String categoryId;
     private String pageSize;
     private String pageNo;
     private String userId;
 
-    public HomeCategroyListBook_Paramet(String categroyId, String pageSize, String pageNo, String userId) {
-        this.categroyId = categroyId;
+    public HomeCategroyListBook_Paramet(String categoryId, String pageSize, String pageNo, String userId) {
+        this.categoryId = categoryId;
         this.pageSize = pageSize;
         this.pageNo = pageNo;
         this.userId = userId;
@@ -32,12 +32,12 @@ public class HomeCategroyListBook_Paramet {
         this.userId = userId;
     }
 
-    public String getCategroyId() {
-        return categroyId;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategroyId(String categroyId) {
-        this.categroyId = categroyId;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getPageSize() {

@@ -53,7 +53,7 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
         String categoryId = getIntent().getStringExtra("categoryId");
         String title = getIntent().getStringExtra("title");
         titleTv.setText(title);
-        getParamet().setCategroyId(categoryId);
+        getParamet().setCategoryId(categoryId);
         mAdapter = new CaregoryListAdapter(this, mAllData);
         categoryRyv.setAdapter(mAdapter);
         onRefresh();
