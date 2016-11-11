@@ -15,6 +15,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.sofacity.laichushu.R;
 import com.sofacity.laichushu.bean.otherbean.HomeHotImgBean;
 import com.sofacity.laichushu.mvp.home.HomeHotModel;
@@ -147,10 +148,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         final int[] range = new int[1];
         if (position == 0) {
             ((ViewHolder1) holder).hotVp.setAdapter(new HomeHotViewPagerAdapter(homeHotImgBeans, mActivity));
-            for (int i = 0; i < Math.ceil(mHotData.size() / 3); i++) {
-                if (((ViewHolder1) holder).ll_container.getChildCount() > Math.ceil(mHotData.size() / 3) - 1) {
-                    return;
-                }
+            ((ViewHolder1) holder).ll_container.removeAllViews();
+            for (int i = 0; i < Math.ceil(((double)mHotData.size()-1) / 3); i++) {
                 ImageView imageView = new ImageView(mActivity);
                 imageView.setBackgroundResource(R.drawable.shape_point_hollow);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -165,7 +164,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 @Override
                 public void onGlobalLayout() {
                     ((ViewHolder1) holder).pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    if (((ViewHolder1) holder).ll_container.getChildCount() > 2)
+                    if (((ViewHolder1) holder).ll_container.getChildCount() >= 2)
                         range[0] = ((ViewHolder1) holder).ll_container.getChildAt(1).getLeft() - ((ViewHolder1) holder).ll_container.getChildAt(0).getLeft();
                 }
             });
@@ -404,7 +403,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
      * 全部、活动、同城、排行 点击事件
      */
     ArrayList<String> rankingList = new ArrayList<>();
-    int position = 0;
+    int position = SharePrefManager.getPosition();
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -441,6 +440,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 break;
             case R.id.rbn_ranking:
                 //请求网络
+                position = 4;
                 TypePopWindow popWindow = new TypePopWindow(mActivity, rankingList);
                 popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
                     @Override
