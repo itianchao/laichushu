@@ -570,12 +570,14 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         if (model.isSuccess()) {
             if (collectType.equals("0")){
                 collectType = "1";
-                ToastUtil.showToast("收藏成功");
                 comentIv.setImageResource(R.drawable.activity_keep2);
+                ToastUtil.showToast("收藏成功");
+                bean.setCollect(true);
             }else {
                 comentIv.setImageResource(R.drawable.activity_keep);
                 collectType = "0";
                 ToastUtil.showToast("取消成功");
+                bean.setCollect(false);
             }
         }else {
             ToastUtil.showToast(model.getErrMsg());
