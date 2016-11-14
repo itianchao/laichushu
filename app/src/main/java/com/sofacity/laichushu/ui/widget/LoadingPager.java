@@ -12,22 +12,24 @@ import com.sofacity.laichushu.utils.UIUtil;
 /**
  * 先加顺序 load -->showPagerView-->createSuccessView
  *
- * @author wanghao
+ * @author wangtong
  *
  *在子类中 耗时操作放到 load中，然后load返回一个状态，在showPagerView中根据状态选择 显示的页面
  *如果装在是成功的。那么久显示 createSuccessView
  */
 public abstract class LoadingPager extends FrameLayout {
     //定义3种状态常量
-    enum PageState{
+    public enum PageState{
         STATE_LOADING,//加载中的状态
         STATE_ERROR,//加载失败的状态
-        STATE_SUCCESS;//加载成功的状态
+        STATE_SUCCESS,//加载成功的状态
+        STATE_EMPTY;//加载成功的状态
     }
     private PageState mState = PageState.STATE_LOADING;//表示界面当前的state，默认是加载中
     private View loadingView;
     private View errorView;
     private View successView;
+    private View emptyView;
 
     public LoadingPager(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -43,11 +45,16 @@ public abstract class LoadingPager extends FrameLayout {
     }
 
     /**
-     * 天然地往LoadingPage中添加3个view
+     * 天然地往LoadingPage中添加4个view
      */
     private void initLoadingPage(){
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
-        //1.依次添加3个view对象
+        //1.依次添加4个view对象
+        if(emptyView==null){
+            emptyView = UIUtil.inflate(R.layout.pager_empty);
+        }
+        addView(emptyView,params);
+
         if(loadingView==null){
             loadingView = UIUtil.inflate(R.layout.pager_loading);
         }
@@ -89,9 +96,10 @@ public abstract class LoadingPager extends FrameLayout {
      */
     private void showPage(){
         //1.先隐藏所有的view
-        loadingView.setVisibility(View.INVISIBLE);
-        errorView.setVisibility(View.INVISIBLE);
-        successView.setVisibility(View.INVISIBLE);
+        loadingView.setVisibility(INVISIBLE);
+        errorView.setVisibility(INVISIBLE);
+        successView.setVisibility(INVISIBLE);
+        emptyView.setVisibility(INVISIBLE);
         //2.谁的状态谁显示
         switch (mState) {
             case STATE_LOADING://加载中的状态
@@ -101,6 +109,9 @@ public abstract class LoadingPager extends FrameLayout {
                 errorView.setVisibility(View.VISIBLE);
                 break;
             case STATE_SUCCESS://加载成功的状态
+                successView.setVisibility(View.VISIBLE);
+                break;
+            case STATE_EMPTY://加载空的状态
                 successView.setVisibility(View.VISIBLE);
                 break;
         }
@@ -118,9 +129,11 @@ public abstract class LoadingPager extends FrameLayout {
                 mState = data==null?PageState.STATE_ERROR:PageState.STATE_SUCCESS;
                 if (data!=null){
                     String s = data.toString();
-                    if (s.contains("success:false")){
+                    if (s.contains("\"success\":false")){
                         mState = PageState.STATE_ERROR;
-                    }else {
+                    }else if(s.equals("data:[]")){
+                        mState = PageState.STATE_EMPTY;
+                    }else{
                         mState = PageState.STATE_SUCCESS;
                     }
                 }
@@ -136,7 +149,7 @@ public abstract class LoadingPager extends FrameLayout {
         }.start();
     }
     /**
-     * 请求数据，然后根据回来的数据去刷新Page
+     * 自定义状态
      */
     public void refreshPage(PageState type){
         mState = type;
