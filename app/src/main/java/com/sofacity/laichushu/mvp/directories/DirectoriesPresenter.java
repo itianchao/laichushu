@@ -8,6 +8,7 @@ import com.sofacity.laichushu.bean.netbean.MaterialList_Paramet;
 import com.sofacity.laichushu.retrofit.ApiCallback;
 import com.sofacity.laichushu.ui.activity.DirectoriesActivity;
 import com.sofacity.laichushu.ui.base.BasePresenter;
+import com.sofacity.laichushu.utils.SharePrefManager;
 
 /**
  * 目录 presenter
@@ -17,7 +18,8 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
     private DirectoriesActivity mActivity;
     private String pageNo = "1";
     private String pageSize = "2000";
-    BookList_Paramet patamet = new BookList_Paramet("",pageNo,pageSize);
+    private String userId = SharePrefManager.getUserId();
+    BookList_Paramet patamet = new BookList_Paramet("",userId,pageNo,pageSize);
     //初始化构造
     public DirectoriesPresenter(DirectoriesView view) {
         attachView(view);
@@ -72,7 +74,7 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
     public void loadBookData(String articleId){
         mvpView.showLoading();
         patamet.setArticleId(articleId);
-        Logger.e("获取素材列表");
+        Logger.e("获取章节列表");
         Logger.json(new Gson().toJson(patamet));
         addSubscription(apiStores.getBookList(patamet), new ApiCallback<BookMoudle>() {
             @Override

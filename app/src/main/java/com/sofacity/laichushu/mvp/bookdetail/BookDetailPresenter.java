@@ -19,6 +19,7 @@ import com.sofacity.laichushu.bean.netbean.Balance_Paramet;
 import com.sofacity.laichushu.bean.netbean.BestLike_Paramet;
 import com.sofacity.laichushu.bean.netbean.CollectSave_Paramet;
 import com.sofacity.laichushu.bean.netbean.Comment_Paramet;
+import com.sofacity.laichushu.bean.netbean.Jurisdiction_Paramet;
 import com.sofacity.laichushu.bean.netbean.Purchase_Paramet;
 import com.sofacity.laichushu.bean.netbean.RewardMoney_Paramet;
 import com.sofacity.laichushu.bean.netbean.ScoreLike_Paramet;
@@ -386,6 +387,29 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.collectSaveData(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    public void loadJurisdiction(String articleId) {
+        mvpView.showLoading();
+        Jurisdiction_Paramet paramet = new Jurisdiction_Paramet(articleId,userId,"1","1000");
+        Logger.e("阅读权限");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.getJurisdiction(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getJurisdictionData(model);
             }
 
             @Override

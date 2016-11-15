@@ -245,9 +245,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
 //                bundle.putString("bookname", bookname);
 //                bundle.putString("bookpath", path);
 //                UIUtil.openActivity(this, BookPlayActivity.class, bundle);
-                Bundle bundle = new Bundle();
-                bundle.putString("articleId", articleId);
-                UIUtil.openActivity(this, DirectoriesActivity.class, bundle);
+                mvpPresenter.loadJurisdiction(articleId);
                 // TODO: 2016/11/7 阅读
                 break;
             case R.id.tv_subscription://订阅
@@ -579,6 +577,17 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 ToastUtil.showToast("取消成功");
                 bean.setCollect(false);
             }
+        }else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
+    public void getJurisdictionData(RewardResult model) {
+        if (model.isSuccess()) {
+            Bundle bundle = new Bundle();
+            bundle.putString("articleId", articleId);
+            UIUtil.openActivity(this, DirectoriesActivity.class, bundle);
         }else {
             ToastUtil.showToast(model.getErrMsg());
         }
