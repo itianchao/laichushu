@@ -1,44 +1,37 @@
 package com.sofacity.laichushu.bean.netbean;
 
 /**
- * 章节列表
- * Created by wangtong on 2016/11/7.
+ * 阅读权限
+ * Created by wangtong on 2016/11/14.
  */
-public class BookList_Paramet {
+
+public class Jurisdiction_Paramet {
     private String articleId;
     private String userId;
-    private String pageNo;
     private String pageSize;
+    private String pageNo;
 
-    public BookList_Paramet(String articleId, String userId, String pageNo, String pageSize) {
+    public Jurisdiction_Paramet(String articleId, String userId, String pageSize, String pageNo) {
         this.articleId = articleId;
         this.userId = userId;
-        this.pageNo = pageNo;
         this.pageSize = pageSize;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getPageNo() {
-        return pageNo;
+        this.pageNo = pageNo;
     }
 
     public String getPageSize() {
         return pageSize;
     }
 
-    public void setPageNo(String pageNo) {
-        this.pageNo = pageNo;
-    }
-
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(String pageNo) {
+        this.pageNo = pageNo;
     }
 
     public String getArticleId() {
@@ -47,5 +40,13 @@ public class BookList_Paramet {
 
     public void setArticleId(String articleId) {
         this.articleId = articleId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

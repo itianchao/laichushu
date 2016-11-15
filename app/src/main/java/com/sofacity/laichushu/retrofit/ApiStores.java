@@ -19,6 +19,7 @@ import com.sofacity.laichushu.bean.netbean.HomeCategroyListBook_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeHot_Paramet;
 import com.sofacity.laichushu.bean.netbean.HomeSearch_Paramet;
 import com.sofacity.laichushu.bean.netbean.JoinActivity_Paramet;
+import com.sofacity.laichushu.bean.netbean.Jurisdiction_Paramet;
 import com.sofacity.laichushu.bean.netbean.Login_Paramet;
 import com.sofacity.laichushu.bean.netbean.MaterialContent_Paramet;
 import com.sofacity.laichushu.bean.netbean.MaterialList_Paramet;
@@ -141,10 +142,10 @@ public interface ApiStores {
     @POST("readMaterial/list")
     Observable<MaterialContentModel> getMaterialContent(@Body MaterialContent_Paramet paramet);
     //获取目录接口
-    @POST("readChapter/list")
+    @POST("chapter/list")
     Observable<BookMoudle> getBookList(@Body BookList_Paramet paramet);
     //获取目录接口
-    @POST("readChapter/list")
+    @POST("chapter/list")
     Observable<PartModel> getPartList(@Body PartList_Paramet paramet);
     //查询余额接口
     @POST("reward/getMoney")
@@ -167,5 +168,7 @@ public interface ApiStores {
     //收藏
     @POST("collect/save ")
     Observable<RewardResult> collectSave(@Body CollectSave_Paramet paramet);
-
+    //阅读
+    @POST("chapter/list")
+    Observable<RewardResult> getJurisdiction(@Body Jurisdiction_Paramet paramet);
 }

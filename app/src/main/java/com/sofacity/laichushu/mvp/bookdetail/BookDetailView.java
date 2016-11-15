@@ -22,4 +22,5 @@ public interface BookDetailView {
     void getRewardMoneyData(RewardResult model);
     void SaveScoreLikeData(RewardResult model, String type);
     void collectSaveData(RewardResult model);
+    void getJurisdictionData(RewardResult model);
 }

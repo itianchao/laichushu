@@ -309,6 +309,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     @Override
     public void onStart() {
         super.onStart();
+        onRefresh();
         mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
     }
 
