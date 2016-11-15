@@ -127,8 +127,11 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         detailRatbarTv.setRating(bean.getLevel());//星级
         if (bean.isCollect()) {//已收藏
             comentIv.setImageResource(R.drawable.activity_keep2);
+            collectType = "1";
         }else {
             comentIv.setImageResource(R.drawable.activity_keep);
+            collectType = "0";
+
         }
 
     }
@@ -230,7 +233,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 break;
             case R.id.iv_title_another://收藏
                 String booktype =  "1";
-                mvpPresenter.collectSave(articleId, booktype, collectType);
+                mvpPresenter.collectSave(articleId, collectType,booktype);
                 break;
             case R.id.tv_lookup://查看更多评论
                 Bundle bundle1 = new Bundle();

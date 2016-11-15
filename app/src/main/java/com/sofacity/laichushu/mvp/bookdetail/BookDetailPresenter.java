@@ -381,7 +381,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     public void collectSave(String targetId, String type, String collectType) {
         mvpView.showLoading();
         CollectSave_Paramet paramet = new CollectSave_Paramet(userId,targetId,type,collectType);
-        Logger.e("点赞");
+        Logger.e("收藏");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.collectSave(paramet), new ApiCallback<RewardResult>() {
             @Override
