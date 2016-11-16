@@ -19,7 +19,6 @@ public class CategoryPresenter extends BasePresenter<CategoryView> {
     }
 
     public void loadCategoryData(){
-        mvpView.showLoading();
         Logger.e("分类请求");
         addSubscription(apiStores.getCategoryList(), new ApiCallback<CategoryModle>() {
             @Override
@@ -34,7 +33,6 @@ public class CategoryPresenter extends BasePresenter<CategoryView> {
 
             @Override
             public void onFinish() {
-                mvpView.hideLoading();
             }
         });
     }

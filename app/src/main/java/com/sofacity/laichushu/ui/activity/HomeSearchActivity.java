@@ -20,6 +20,8 @@ import com.sofacity.laichushu.mvp.home.HomeHotModel;
 import com.sofacity.laichushu.ui.adapter.HomeSearchAdapter;
 import com.sofacity.laichushu.ui.adapter.HomeSearchHistoryAdapter;
 import com.sofacity.laichushu.ui.base.MvpActivity;
+import com.sofacity.laichushu.ui.base.MvpActivity2;
+import com.sofacity.laichushu.ui.widget.LoadingPager;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -35,7 +37,7 @@ import de.greenrobot.dao.query.QueryBuilder;
  * 首页搜索页面
  * Created by wangtong on 2016/10/31.
  */
-public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> implements HomeSearchView, View.OnClickListener, TextView.OnEditorActionListener, PullLoadMoreRecyclerView.PullLoadMoreListener, AdapterView.OnItemClickListener {
+public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implements HomeSearchView, View.OnClickListener, TextView.OnEditorActionListener, PullLoadMoreRecyclerView.PullLoadMoreListener, AdapterView.OnItemClickListener {
 
     private ImageView finishIV;
     private EditText searchEt;
@@ -54,34 +56,12 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
     private List<Search_History> list = new ArrayList<>();
     private ImageView emptyIv;
 
-    @Override
-    protected void initView() {
-        setContentView(R.layout.activity_homesearch);//页面布局
-        finishIV = (ImageView) findViewById(R.id.iv_finish);//返回
-        searchEt = (EditText) findViewById(R.id.et_search);//搜索
-        clearTv = (TextView) findViewById(R.id.tv_clear);//清除搜索历史
-        searchLay = (LinearLayout) findViewById(R.id.lay_search);//整个搜索布局
-        searchLv = (ListView) findViewById(R.id.lv_history);//搜索历史的容器
-        childLay = (LinearLayout) findViewById(R.id.lay_hot_child);//hot容器
-        bookRyv = (PullLoadMoreRecyclerView) findViewById(R.id.ryv_book);//搜索结果
-        emptyIv = (ImageView) findViewById(R.id.iv_empty);//搜索结果
-
-        finishIV.setOnClickListener(this);
-        clearTv.setOnClickListener(this);
-        searchEt.setOnClickListener(this);
-        bookRyv.setLinearLayout();//设置垂直的RecyclerView
-        searchEt.setOnEditorActionListener(this);
-        bookRyv.setOnPullLoadMoreListener(this);
-        searchLv.setOnItemClickListener(this);
-        mAdapter = new HomeSearchAdapter(mAllData, this);
-        bookRyv.setAdapter(mAdapter);
-    }
 
     @Override
     protected void initData() {
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         mvpPresenter.setupDatabase();
         dao = mvpPresenter.getSearch_historyDao();
-
         if (getHistoryList() != null) {
             this.list.addAll(getHistoryList());
             Collections.reverse(list);
@@ -97,8 +77,31 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
     }
 
     @Override
+    protected View createSuccessView() {
+        View successView = UIUtil.inflate(R.layout.activity_homesearch);//页面布局
+        finishIV = (ImageView) successView.findViewById(R.id.iv_finish);//返回
+        searchEt = (EditText) successView.findViewById(R.id.et_search);//搜索
+        clearTv = (TextView) successView.findViewById(R.id.tv_clear);//清除搜索历史
+        searchLay = (LinearLayout) successView.findViewById(R.id.lay_search);//整个搜索布局
+        searchLv = (ListView) successView.findViewById(R.id.lv_history);//搜索历史的容器
+        childLay = (LinearLayout) successView.findViewById(R.id.lay_hot_child);//hot容器
+        bookRyv = (PullLoadMoreRecyclerView) successView.findViewById(R.id.ryv_book);//搜索结果
+        emptyIv = (ImageView) successView.findViewById(R.id.iv_empty);//搜索结果
+
+        finishIV.setOnClickListener(this);
+        clearTv.setOnClickListener(this);
+        searchEt.setOnClickListener(this);
+        bookRyv.setLinearLayout();//设置垂直的RecyclerView
+        searchEt.setOnEditorActionListener(this);
+        bookRyv.setOnPullLoadMoreListener(this);
+        searchLv.setOnItemClickListener(this);
+        mAdapter = new HomeSearchAdapter(mAllData, this);
+        bookRyv.setAdapter(mAdapter);
+        return successView;
+    }
+
+    @Override
     public void getDataSuccess(HomeHotModel model) {
-        hideLoading();
         mData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -108,19 +111,21 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
         }, 300);
         if (model.isSuccess()) {
             mData = model.getData();
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!mData.isEmpty()) {
                 searchLay.setVisibility(View.GONE);
                 bookRyv.setVisibility(View.VISIBLE);
                 mAllData.addAll(mData);
                 mAdapter.setmAllData(mAllData);
                 mAdapter.notifyDataSetChanged();
+                pageNo = Integer.parseInt(pageNo) + 1 + "";
             }else {
                 emptyIv.setVisibility(View.VISIBLE);
                 searchLay.setVisibility(View.GONE);
                 bookRyv.setVisibility(View.GONE);
             }
-            pageNo = Integer.parseInt(pageNo) + 1 + "";
         } else {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -128,16 +133,6 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
     @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
-    }
-
-    @Override
-    public void showLoading() {
-        showProgressDialog();
-    }
-
-    @Override
-    public void hideLoading() {
-        dismissProgressDialog();
     }
 
     @Override
@@ -175,6 +170,7 @@ public class HomeSearchActivity extends MvpActivity<HomeSearchPresenter> impleme
             //处理事件
             mAllData.clear();
             search = searchEt.getText().toString().trim();
+            refreshPage(LoadingPager.PageState.STATE_LOADING);
             mvpPresenter.LoadData(search);
             boolean isSearch = true;
             if (list.size() != 0) {

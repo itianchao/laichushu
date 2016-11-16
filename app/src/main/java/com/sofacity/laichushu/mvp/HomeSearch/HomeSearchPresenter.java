@@ -31,7 +31,6 @@ public class HomeSearchPresenter extends BasePresenter<HomeSearchView> {
         mActivity = (HomeSearchActivity) view;
     }
     public void LoadData(String name){
-        mvpView.showLoading();
         getParamet().setComplexName(name);
         addSubscription(apiStores.homeSearch(paramet), new ApiCallback<HomeHotModel>() {
             @Override
@@ -46,7 +45,7 @@ public class HomeSearchPresenter extends BasePresenter<HomeSearchView> {
 
             @Override
             public void onFinish() {
-                mvpView.hideLoading();
+
             }
         });
     }

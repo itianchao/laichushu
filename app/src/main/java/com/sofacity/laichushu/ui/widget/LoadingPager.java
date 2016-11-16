@@ -123,22 +123,23 @@ public abstract class LoadingPager extends FrameLayout {
         new Thread(){
             public void run() {
 
-                //1.去服务器请求数据，
-                Object data = loadData();
-                //2.判断data是否为空，如果为空则为error，否则为success状态
-                mState = data==null?PageState.STATE_ERROR:PageState.STATE_SUCCESS;
-                if (data!=null){
-                    String s = data.toString();
-                    if (s.contains("\"success\":false")){
-                        mState = PageState.STATE_ERROR;
-                    }else if(s.equals("data:[]")){
-                        mState = PageState.STATE_EMPTY;
-                    }else{
-                        mState = PageState.STATE_SUCCESS;
-                    }
-                }
+//                //1.去服务器请求数据，
+//                Object data = loadData();
+//                //2.判断data是否为空，如果为空则为error，否则为success状态
+//                mState = data==null?PageState.STATE_ERROR:PageState.STATE_SUCCESS;
+//                if (data!=null){
+//                    String s = data.toString();
+//                    if (s.contains("\"success\":false")){
+//                        mState = PageState.STATE_ERROR;
+//                    }else if(s.equals("data:[]")){
+//                        mState = PageState.STATE_EMPTY;
+//                    }else{
+//                        mState = PageState.STATE_SUCCESS;
+//                    }
+//                }
                 //3.根据新的state，更新page
                 //在主线程更新UI
+                mState = PageState.STATE_LOADING;
                 UIUtil.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -168,9 +169,9 @@ public abstract class LoadingPager extends FrameLayout {
      */
     public abstract View createSuccessView();
 
-    /**
-     * 去服务器请求数据，由于我不关心具体的数据类型，只需判断数据是否为空
-     * @return
-     */
-    public abstract Object loadData();
+//    /**
+//     * 去服务器请求数据，由于我不关心具体的数据类型，只需判断数据是否为空
+//     * @return
+//     */
+//    public abstract Object loadData();
 }

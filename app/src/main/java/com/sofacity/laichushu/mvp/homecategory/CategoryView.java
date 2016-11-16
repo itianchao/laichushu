@@ -8,6 +8,4 @@ package com.sofacity.laichushu.mvp.homecategory;
 public interface CategoryView {
     void getDataSuccess(CategoryModle model);
     void getDataFail(String msg);
-    void showLoading();
-    void hideLoading();
 }

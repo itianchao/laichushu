@@ -16,6 +16,8 @@ import com.sofacity.laichushu.mvp.homecategory.CategoryView;
 import com.sofacity.laichushu.ui.adapter.CategoryChildAdapter;
 import com.sofacity.laichushu.ui.adapter.CategoryParentAdapter;
 import com.sofacity.laichushu.ui.base.MvpActivity;
+import com.sofacity.laichushu.ui.base.MvpActivity2;
+import com.sofacity.laichushu.ui.widget.LoadingPager;
 import com.sofacity.laichushu.utils.ToastUtil;
 import com.sofacity.laichushu.utils.UIUtil;
 
@@ -26,7 +28,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/11/10.
  */
 
-public class CategoryActivity extends MvpActivity<CategoryPresenter> implements CategoryView, View.OnClickListener, AdapterView.OnItemClickListener {
+public class CategoryActivity extends MvpActivity2<CategoryPresenter> implements CategoryView, View.OnClickListener, AdapterView.OnItemClickListener {
 
     private ArrayList<CategoryModle.DataBean> mParentData = new ArrayList<>();
     private ArrayList<CategoryModle.DataBean.ChildBean> mChildDate = new ArrayList<>();
@@ -37,18 +39,6 @@ public class CategoryActivity extends MvpActivity<CategoryPresenter> implements 
     private GridView childGv;
     private CategoryParentAdapter categoryParentAdapter;
     private CategoryChildAdapter categoryChildAdapter;
-
-    @Override
-    protected void initView() {
-        setContentView(R.layout.activity_category);
-        titleTv = (TextView) findViewById(R.id.tv_title);
-        finishIv = (ImageView) findViewById(R.id.iv_title_finish);
-        parentLv = (ListView) findViewById(R.id.lv_parent);
-        nameTv = (TextView) findViewById(R.id.tv_name);
-        childGv = (GridView) findViewById(R.id.gv_child);
-        titleTv.setText("分类");
-        finishIv.setOnClickListener(this);
-    }
 
     @Override
     protected void initData() {
@@ -69,8 +59,10 @@ public class CategoryActivity extends MvpActivity<CategoryPresenter> implements 
             categoryParentAdapter.setmParentData(mParentData);
             categoryParentAdapter.notifyDataSetChanged();
             onItemClick(parentLv,parentLv,0,0);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
     }
 
@@ -78,21 +70,25 @@ public class CategoryActivity extends MvpActivity<CategoryPresenter> implements 
     public void getDataFail(String msg) {
         Logger.e(msg);
         ToastUtil.showToast("网络失败");
-    }
-
-    @Override
-    public void showLoading() {
-        showProgressDialog();
-    }
-
-    @Override
-    public void hideLoading() {
-        dismissProgressDialog();
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
     }
 
     @Override
     protected CategoryPresenter createPresenter() {
         return new CategoryPresenter(this);
+    }
+
+    @Override
+    protected View createSuccessView() {
+        View successView = UIUtil.inflate(R.layout.activity_category);
+        titleTv = (TextView) successView.findViewById(R.id.tv_title);
+        finishIv = (ImageView) successView.findViewById(R.id.iv_title_finish);
+        parentLv = (ListView) successView.findViewById(R.id.lv_parent);
+        nameTv = (TextView) successView.findViewById(R.id.tv_name);
+        childGv = (GridView) successView.findViewById(R.id.gv_child);
+        titleTv.setText("分类");
+        finishIv.setOnClickListener(this);
+        return successView;
     }
 
     @Override

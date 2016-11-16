@@ -9,6 +9,4 @@ import com.sofacity.laichushu.mvp.home.HomeHotModel;
 public interface HomeSearchView {
     void getDataSuccess(HomeHotModel model);
     void getDataFail(String msg);
-    void showLoading();
-    void hideLoading();
 }

@@ -28,17 +28,12 @@ public abstract class MvpActivity2<P extends BasePresenter> extends BaseActivity
             public View createSuccessView() {
                 return MvpActivity2.this.createSuccessView();
             }
-
-            @Override
-            public Object loadData() {
-                return MvpActivity2.this.loadData();
-            }
         };
+        setContentView(mPage);
     }
 
     protected abstract P createPresenter();
     protected abstract View createSuccessView();
-    protected abstract Object loadData();
 
     @Override
     protected void onDestroy() {
