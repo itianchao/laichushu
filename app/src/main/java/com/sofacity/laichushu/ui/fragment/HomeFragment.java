@@ -275,7 +275,6 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             mvpPresenter.loadHomeHotData();//请求网络获取热门
             mvpPresenter.loadActivityData();//请求活动
         }
-
     }
 
     /**

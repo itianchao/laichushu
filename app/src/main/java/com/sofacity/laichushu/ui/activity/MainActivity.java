@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements  View.OnClickListener 
                 } else {
                     ft.add(R.id.layFrame, fragment);
                 }
-                ft.commitAllowingStateLoss();
+                ft.commit();
             }
         }
 
