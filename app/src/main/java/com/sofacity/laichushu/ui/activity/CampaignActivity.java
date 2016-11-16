@@ -111,10 +111,12 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
             case "2":
                 GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
                 joinTv.setVisibility(View.VISIBLE);
+                parentLay.setVisibility(View.INVISIBLE);
                 break;
             case "3":
                 GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
                 joinTv.setVisibility(View.VISIBLE);
+                parentLay.setVisibility(View.INVISIBLE);
                 break;
             case "4":
                 GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
