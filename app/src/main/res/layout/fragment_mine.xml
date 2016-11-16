@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/mine_top"
+        layout="@layout/page_title" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mine_top"
+        android:layout_marginTop="1.5dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="82dp">
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_nickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5px"
+                android:layout_toRightOf="@+id/iv_head"
+                android:text="爱写书的小熊猫"
+                android:textSize="@dimen/edit2" />
+
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

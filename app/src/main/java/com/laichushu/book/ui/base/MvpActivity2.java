@@ -45,4 +45,5 @@ public abstract class MvpActivity2<P extends BasePresenter> extends BaseActivity
     public void refreshPage(LoadingPager.PageState type){
         mPage.refreshPage(type);
     }
+
 }
