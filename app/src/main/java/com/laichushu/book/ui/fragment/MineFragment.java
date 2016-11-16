@@ -27,7 +27,11 @@ public class MineFragment extends MvpFragment2 {
     @Override
     public View createSuccessView() {
         View createSuccessView = UIUtil.inflate(R.layout.fragment_mine);
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         return createSuccessView;
+    }
+
+    @Override
+    protected void initData() {
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 }
