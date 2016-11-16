@@ -52,4 +52,8 @@ public abstract class MvpFragment2<P extends BasePresenter> extends BaseFragment
         return mPage;
     }
     public abstract View createSuccessView();
+
+    public void refreshPage(LoadingPager.PageState type){
+        mPage.refreshPage(type);
+    }
 }
