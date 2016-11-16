@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sofacity.laichushu.ui.activity.MainActivity">
+    tools:context="com.laichushu.book.ui.activity.MainActivity">
     <ImageView
         android:id="@+id/iv_splash"
         android:background="@drawable/img_splash"
