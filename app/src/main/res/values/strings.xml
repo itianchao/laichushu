@@ -53,4 +53,5 @@
     <string name="comment_hint">请留下你对本书的想法及感受</string>
     <string name="comment">轻触评论</string>
     <string name="reward_dialog">感谢你对作者的支持</string>
+    <string name="add_newbook">点击创建新书</string>
 </resources>

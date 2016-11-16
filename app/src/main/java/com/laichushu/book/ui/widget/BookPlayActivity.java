@@ -33,7 +33,6 @@ import hwtxtreader.main.TxtPageChangeListsner;
 import hwtxtreader.main.TxtReadView;
 import hwtxtreader.main.TxtViewCenterAreaTouchListener;
 
-
 public class BookPlayActivity extends Activity {
 
     private TxtReadView txtreadview;//阅读主页

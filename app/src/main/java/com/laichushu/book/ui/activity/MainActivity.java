@@ -71,15 +71,10 @@ public class MainActivity extends BaseActivity implements  View.OnClickListener 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment fragment = fragments.get(position);
-                if (fragment.isAdded()) {
-                    ft.replace(R.id.layFrame, fragment);
-                } else {
-                    ft.add(R.id.layFrame, fragment);
-                }
+                ft.replace(R.id.layFrame, fragment);
                 ft.commit();
             }
         }
-
     }
 
     /**
