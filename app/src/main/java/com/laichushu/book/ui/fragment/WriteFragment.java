@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.fragment;
 
-import android.provider.Contacts;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,9 +42,9 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         LinearLayout addNewBookLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_add_newbook);
         titleTv.setText("来写书");
         addNewBookLay.setOnClickListener(this);
-        mRecyclerView = (PullLoadMoreRecyclerView)mSuccessView.findViewById(R.id.ryv_book);
+        mRecyclerView = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_book);
         mRecyclerView.setLinearLayout();
-        writeBookAdapter = new WriteBookAdapter(mData,mActivity);
+        writeBookAdapter = new WriteBookAdapter(mData, mActivity);
         mRecyclerView.setAdapter(writeBookAdapter);
         return mSuccessView;
     }
@@ -72,7 +71,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.lay_add_newbook://创建新书
                 UIUtil.openActivity(mActivity, CreateNewBookActivity.class);
                 break;
@@ -86,7 +85,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshWriteFragmentEvent event){
+    public void onEvent(RefurshWriteFragmentEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh()) {
             // TODO: 2016/11/17 刷新

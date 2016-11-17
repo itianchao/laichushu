@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.activity;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,12 +21,13 @@ import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
+import com.yanzhenjie.album.Album;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import io.github.lijunguan.imgselector.ImageSelector;
 
 /**
  * 创建新书
@@ -42,6 +44,7 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
     private Button createBtn;//创建
     private EditText briefEt;//简介
     private ImageView coverIv;//封面
+    private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
 
     @Override
     protected CreateNewBookPersenter createPresenter() {
@@ -141,8 +144,10 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageSelector imageSelector = ImageSelector.getInstance();
-                mvpPresenter.loadConfig(imageSelector).startSelect(mActivity);
+                Album.startAlbum(mActivity, ACTIVITY_REQUEST_SELECT_PHOTO
+                        , 1                                                         // 指定选择数量。
+                        , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
+                        , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
                 dialogBuilder.dismiss();
             }
         });
@@ -162,13 +167,11 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ImageSelector.REQUEST_SELECT_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                ArrayList<String> imagesPath = data.getStringArrayListExtra(ImageSelector.SELECTED_RESULT);
-                if (imagesPath != null && imagesPath.size()>0) {
-                    String path = imagesPath.get(0);
-                    GlideUitl.loadImg(mActivity,path,coverIv);
-                }
+        if (requestCode == 100&& resultCode == RESULT_OK) {
+            List<String> imagesPath = Album.parseResult(data);
+            if (imagesPath != null && imagesPath.size()>0) {
+                String path = imagesPath.get(0);
+                GlideUitl.loadImg(mActivity,path,coverIv);
             }
         }
     }

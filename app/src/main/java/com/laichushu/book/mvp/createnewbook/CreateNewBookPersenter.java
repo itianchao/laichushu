@@ -5,7 +5,6 @@ import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.SharePrefManager;
 import com.orhanobut.logger.Logger;
 
-import io.github.lijunguan.imgselector.ImageSelector;
 
 /**
  * 评价详情
@@ -32,16 +31,5 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
      */
     public void commitNewBook(){
         Logger.e("创建新书");
-    }
-    /**
-     * 设置选择相册
-     * @param imageSelector
-     * @return
-     */
-    public ImageSelector loadConfig(ImageSelector imageSelector) {
-        imageSelector.setSelectModel(ImageSelector.MULTI_MODE);
-        imageSelector.setMaxCount(1);
-        imageSelector.setGridColumns(3);
-        return imageSelector;
     }
 }
