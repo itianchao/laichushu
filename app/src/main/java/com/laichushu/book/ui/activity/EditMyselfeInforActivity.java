@@ -19,6 +19,7 @@ import com.laichushu.book.ui.widget.TypePopWindow;
 import com.laichushu.book.utils.DateUtil;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.StringUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -81,7 +82,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                     return;
                 }
                 UpdatePersonalInfor_Parmet paramet = new UpdatePersonalInfor_Parmet(SharePrefManager.getUserId().toString(),
-                        edNickName.getText().toString(), tvSex.getText().toString(), edCity.getText().toString(), edSign.getText().toString(), DateUtil.getDate(edBirthday.getText().toString()));
+                        edNickName.getText().toString(), tvSex.getText().toString(), edCity.getText().toString(), edSign.getText().toString(), edBirthday.getText().toString());
                 Logger.json(new Gson().toJson(paramet));
                 addSubscription(apiStores.getUpdateDetails(paramet), new ApiCallback<RewardResult>() {
                     @Override
@@ -122,7 +123,8 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         resultData = (PersonalCentreResult) getIntent().getSerializableExtra("result");
         if (resultData != null) {
             GlideUitl.loadRandImg(mActivity, resultData.getPhoto(), ivHead);
-            edNickName.setText(resultData.getName());
+
+            edNickName.setText(resultData.getNickName());
             tvSex.setText(resultData.getSex());
             if (!TextUtils.isEmpty(resultData.getBirthday())) {
                 edBirthday.setText(resultData.getBirthday().toString());
@@ -185,7 +187,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     }
 
     public void setPopWindow() {
-        List rankingList = new ArrayList();
+        final List<String> rankingList = new ArrayList();
         rankingList.clear();
         rankingList.add("男");
         rankingList.add("女");
@@ -193,11 +195,11 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
             @Override
             public void clickItem(int position) {
-
+                tvSex.setText(rankingList.get(position).toString());
             }
         });
-        popWindow.setWidth(tvSex.getWidth());
-        popWindow.setHeight((tvSex.getHeight()) * 2);
+        popWindow.setWidth(tvSex.getWidth()/3);
+        popWindow.setHeight(UIUtil.dip2px(100));
         popWindow.showAsDropDown(tvSex);
     }
 }
