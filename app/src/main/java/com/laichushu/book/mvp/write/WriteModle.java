@@ -6,4 +6,5 @@ package com.laichushu.book.mvp.write;
  */
 
 public class WriteModle {
+
 }

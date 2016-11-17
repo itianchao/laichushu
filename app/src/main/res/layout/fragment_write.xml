@@ -4,5 +4,9 @@
     android:layout_height="match_parent">
     <include layout="@layout/page_title"/>
     <include layout="@layout/page_add"/>
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/ryv_book"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

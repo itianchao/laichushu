@@ -54,4 +54,14 @@
     <string name="comment">轻触评论</string>
     <string name="reward_dialog">感谢你对作者的支持</string>
     <string name="add_newbook">点击创建新书</string>
+    <string name="draft">编辑草稿</string>
+    <string name="material">编辑素材</string>
+    <string name="submission">投稿</string>
+    <string name="delete">删除</string>
+    <string name="publishl">发表</string>
+    <string name="bookname">书 名 ：</string>
+    <string name="category">分 类 ：</string>
+    <string name="cover">封 面 ：</string>
+    <string name="permission">阅读权限 ：</string>
+    <string name="brief">简 介 ：</string>
 </resources>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/page_title" />
+
+    <include layout="@layout/item_distance2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/bookname"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edit2" />
+
+        <EditText
+            android:background="@null"
+            android:id="@+id/et_bookname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="《射雕英雄传》"
+            android:lines="1"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            android:textSize="@dimen/edit2" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/LightGrey" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/category"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edit2" />
+
+        <TextView
+            android:id="@+id/tv_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="  请选择书的类型"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            android:textSize="@dimen/edit2" />
+
+        <ImageView
+            android:id="@+id/iv_category"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/home_right" />
+    </LinearLayout>
+
+    <include layout="@layout/item_distance2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/cover"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edit2" />
+
+        <ImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_default" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:hint="给图书选择喜欢的封面"
+            android:lines="1"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            android:textSize="@dimen/edit2" />
+    </LinearLayout>
+
+    <include layout="@layout/item_distance2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/permission"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edit2" />
+
+        <TextView
+            android:id="@+id/tv_permission"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:hint="默认公开"
+            android:lines="1"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            android:textSize="@dimen/edit2" />
+
+        <ImageView
+            android:id="@+id/iv_permission"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/home_right" />
+    </LinearLayout>
+
+    <include layout="@layout/item_distance2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/brief"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edit2" />
+    </LinearLayout>
+
+    <EditText
+        android:gravity="top"
+        android:id="@+id/et_brief"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_rectangle_fill_hint"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit3" />
+
+    <include layout="@layout/item_distance2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/frenchGrey">
+
+        <Button
+            android:id="@+id/btn_create"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@color/global"
+            android:text="创建"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>

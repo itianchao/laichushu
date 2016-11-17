@@ -211,6 +211,11 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
                 break;
         }
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefurshCommentListEvent event){
         EventBus.getDefault().removeStickyEvent(event);
