@@ -39,4 +39,14 @@
         android:layout_toLeftOf="@+id/iv_title_other"
         android:layout_toStartOf="@+id/iv_title_other"
         tools:src="@drawable/img_default" />
+
+    <TextView
+        android:id="@+id/tv_title_right"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/iv_title_another"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/iv_title_another"
+        android:layout_toStartOf="@+id/iv_title_another"
+        android:visibility="gone" />
 </RelativeLayout>

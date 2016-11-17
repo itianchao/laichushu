@@ -7,6 +7,7 @@
     <color name="edit">#666666</color>
     <!--浅灰-->
     <color name="frenchGrey">#F2F2F2</color>
+    <color name="bgGrey">#F1F1F1</color>
     <!-- hint -->
     <color name="hint">#CCCCCC</color>
     <!-- 自定义通知栏颜色  -->
