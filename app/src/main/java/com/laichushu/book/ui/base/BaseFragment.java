@@ -10,10 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.laichushu.book.retrofit.ApiStores;
+import com.laichushu.book.retrofit.AppClient;
 import com.laichushu.book.ui.widget.LoadDialog;
 import com.laichushu.book.utils.UIUtil;
 
+import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -22,7 +28,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class BaseFragment extends Fragment {
     public Activity mActivity;
-
+    public ApiStores apiStores = AppClient.retrofit().create(ApiStores.class);
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,16 @@ public class BaseFragment extends Fragment {
         if (mCompositeSubscription != null) {
             mCompositeSubscription.unsubscribe();
         }
+    }
+    public void addSubscription(Observable observable, Subscriber subscriber) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.add(observable
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber));
     }
 
     public void addSubscription(Subscription subscription) {
