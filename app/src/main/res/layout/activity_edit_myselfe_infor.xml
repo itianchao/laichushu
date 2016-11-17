@@ -5,7 +5,7 @@
     android:background="@color/bgGrey">
 
     <include
-        android:id="@+id/mine_top"
+        android:id="@+id/edit_top"
         layout="@layout/page_title" />
 
     <LinearLayout
@@ -14,36 +14,38 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/mine_top"
+        android:layout_below="@+id/edit_top"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl_head"
+            android:id="@+id/rl_headImg"
             android:layout_width="match_parent"
             android:layout_height="82dp"
             android:layout_marginTop="5dp"
             android:background="@color/white">
 
+            <TextView
+                android:id="@+id/tv_editHead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:text="头像"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+
             <ImageView
-                android:id="@+id/iv_minaHead"
+                android:id="@+id/iv_editHead"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/iv_editHeadInto" />
 
-            <TextView
-                android:id="@+id/tv_mineNickName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/iv_minaHead"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/iv_mineHeadInto"
+                android:id="@+id/iv_editHeadInto"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
@@ -53,181 +55,207 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_manage"
+            android:id="@+id/rl_nickName"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/tv_mineManage"
+                android:id="@+id/tv_nickName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:text="作品管理"
+                android:text="昵称"
+                android:background="@null"
                 android:textColor="@color/edit2"
                 android:textSize="@dimen/edit2"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_mineBookNum"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/ed_nickNameContent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@+id/iv_mineManageInto"
-                android:text="0部"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/iv_mineManageInto"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/home_right" />
+                android:gravity="right"
+                android:background="@null"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_bookCast"
+            android:id="@+id/rl_sex"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/tv_mineBookCast"
+                android:id="@+id/tv_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:text="我的书架"
+                android:text="性别"
                 android:textColor="@color/edit2"
                 android:textSize="@dimen/edit2"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/iv_mineBookCastInto"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+            <TextView
+                android:id="@+id/ed_sexContent"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:gravity="right"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/home_right" />
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:singleLine="true"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_Wallet"
+            android:id="@+id/rl_Birthday"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/tv_mineWallet"
+                android:id="@+id/tv_Birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:text="我的钱包"
+                android:text="生日"
                 android:textColor="@color/edit2"
                 android:textSize="@dimen/edit2"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/iv_mineWalletInto"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+            <EditText
+                android:id="@+id/ed_birthdayContent"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/home_right" />
+                android:background="@null"
+                android:gravity="right"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_service"
+            android:id="@+id/rl_area"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/tv_mineService"
+                android:id="@+id/tv_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:text="我的服务"
+                android:text="地区"
                 android:textColor="@color/edit2"
                 android:textSize="@dimen/edit2"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/iv_mineServiceInto"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/home_right" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_GeneralSetting"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white">
-
-            <TextView
-                android:id="@+id/tv_mineGeneralSetting"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/ed_areaContent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:text="通用设置"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/iv_mineGeneralSettingInto"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
                 android:layout_alignParentRight="true"
+                android:singleLine="true"
+                android:gravity="right"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/home_right" />
+                android:textColor="@color/edit2"
+                android:background="@null"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_Advice"
+            android:id="@+id/rl_idCard"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/tv_mineAdvice"
+                android:id="@+id/tv_idCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:text="意见反馈"
+                android:text="身份证"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_idCardContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:gravity="right"
+                android:layout_toLeftOf="@+id/iv_idCardInto"
+                android:text="未认证"
                 android:textColor="@color/edit2"
                 android:textSize="@dimen/edit2"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/iv_mineAdviceInto"
+                android:id="@+id/iv_idCardInto"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/home_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_signature"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_signature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="个性签名"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ed_signatureContent"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:singleLine="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_signature"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+
+                android:background="@null"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
         </RelativeLayout>
 
     </LinearLayout>
