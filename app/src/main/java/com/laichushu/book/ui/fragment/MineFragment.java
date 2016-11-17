@@ -28,7 +28,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     private TextView tvTitle, tvMineName, tvMinebookNum;
     private ImageView ivMineHead;
     private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice;
-    private PersonalCentreResult res;
+    private PersonalCentreResult res=new PersonalCentreResult();
     @Override
     protected BasePresenter createPresenter() {
 
@@ -59,7 +59,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         rlGeneralSetting.setOnClickListener(this);
         rlAdvice.setOnClickListener(this);
 
-        res=new PersonalCentreResult();
+
         tvTitle.setText("个人中心");
         return mRootView;
     }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class UpdatePersonalInfor_Parmet implements Serializable {
     private String userId, nickName, sex, city, sign;
-    private Date birthday;
+    private String birthday;
 
     public String getUserId() {
         return userId;
@@ -51,15 +51,15 @@ public class UpdatePersonalInfor_Parmet implements Serializable {
         this.sign = sign;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
-    public UpdatePersonalInfor_Parmet(String userId, String nickName, String sex, String city, String sign, Date birthday) {
+    public UpdatePersonalInfor_Parmet(String userId, String nickName, String sex, String city, String sign, String birthday) {
         this.userId = userId;
         this.nickName = nickName;
         this.sex = sex;
