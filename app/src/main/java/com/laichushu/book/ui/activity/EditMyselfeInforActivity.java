@@ -1,9 +1,12 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -11,15 +14,14 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.TypePopWindow;
-import com.laichushu.book.utils.DateUtil;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
-import com.laichushu.book.utils.StringUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -32,8 +34,9 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     private ImageView ivBack, ivHead;
     private TextView tvTitle, tvRight, tvIdCard, tvSex;
     private EditText edNickName, edCity, edSign, edBirthday;
-    private PersonalCentreResult resultData;
-    private boolean flg = false;
+    private PersonalCentreResult resultData = new PersonalCentreResult();
+    //    private Pop_Syllabus_Date pop_PlayPartner_Date;
+    private RelativeLayout rlIdCard;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -54,10 +57,14 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         edCity = ((EditText) inflate.findViewById(R.id.ed_areaContent));
         edSign = ((EditText) inflate.findViewById(R.id.ed_signatureContent));
         edBirthday = ((EditText) inflate.findViewById(R.id.ed_birthdayContent));
+        rlIdCard = ((RelativeLayout) inflate.findViewById(R.id.rl_idCard));
+
         //initListener;
         ivBack.setOnClickListener(this);
         tvRight.setOnClickListener(this);
         tvSex.setOnClickListener(this);
+        edBirthday.setOnClickListener(this);
+        rlIdCard.setOnClickListener(this);
         return inflate;
     }
 
@@ -91,6 +98,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                             ToastUtil.showToast("success");
                             mActivity.finish();
+                            updateDate();
                         } else {
                             ToastUtil.showToast(result.getErrMsg());
                             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -112,9 +120,18 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             case R.id.ed_sexContent:
                 setPopWindow();
                 break;
+            case R.id.ed_birthdayContent:
+                showBirthdayPop();
+                break;
+            case R.id.rl_idCard:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("idcard",resultData);
+                UIUtil.openActivity(this, IndentityAuthenActivity.class, bundle);
+                break;
         }
 
     }
+
 
     /**
      * 初始化数据
@@ -123,9 +140,12 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         resultData = (PersonalCentreResult) getIntent().getSerializableExtra("result");
         if (resultData != null) {
             GlideUitl.loadRandImg(mActivity, resultData.getPhoto(), ivHead);
-
             edNickName.setText(resultData.getNickName());
-            tvSex.setText(resultData.getSex());
+            if (TextUtils.isEmpty(resultData.getSex())) {
+                tvSex.setText("男");
+            } else {
+                tvSex.setText(resultData.getSex());
+            }
             if (!TextUtils.isEmpty(resultData.getBirthday())) {
                 edBirthday.setText(resultData.getBirthday().toString());
             }
@@ -164,7 +184,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
         if (TextUtils.isEmpty(edNickName.getText())) {
             ToastUtil.showToast("请输入昵称!");
-            ;
             return false;
         }
         if (TextUtils.isEmpty(tvSex.getText())) {
@@ -198,8 +217,24 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 tvSex.setText(rankingList.get(position).toString());
             }
         });
-        popWindow.setWidth(tvSex.getWidth()/3);
+        popWindow.setWidth(tvSex.getWidth() / 3);
         popWindow.setHeight(UIUtil.dip2px(100));
         popWindow.showAsDropDown(tvSex);
+    }
+
+    /**
+     * 通知fragment更新数据
+     */
+    private void updateDate() {
+        Intent intent = new Intent(ConstantValue.ACTION_UPDATE_DATA);
+        intent.addCategory(mActivity.getPackageName());
+        mActivity.sendBroadcast(intent);
+    }
+
+    private void showBirthdayPop() {
+        // 选择日期
+//        pop_PlayPartner_Date = new Pop_Syllabus_Date(
+//                mActivity, findViewById(R.id.rl_head),
+//                findViewById(R.id.rl_Birthday), "年--月--日", edBirthday);
     }
 }

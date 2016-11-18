@@ -36,13 +36,6 @@
             android:textColor="@color/title_bg_color1" />
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/vp_home_hot"
-        android:layout_width="match_parent"
-        android:layout_height="250dp" />
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,4 +56,11 @@
             android:layout_height="wrap_content"
             android:src="@drawable/shape_point_fill" />
     </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/vp_home_hot"
+        android:layout_width="match_parent"
+        android:layout_height="250dp" />
 </FrameLayout>
