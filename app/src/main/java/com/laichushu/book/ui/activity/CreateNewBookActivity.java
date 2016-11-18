@@ -1,24 +1,25 @@
 package com.laichushu.book.ui.activity;
 
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.laichushu.book.R;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.mvp.createnewbook.CreateNewBookModle;
 import com.laichushu.book.mvp.createnewbook.CreateNewBookPersenter;
 import com.laichushu.book.mvp.createnewbook.CreateNewBookView;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.homecategory.CategoryModle;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.ui.widget.TypeCategoryPopWindow;
+import com.laichushu.book.ui.widget.TypePopWindow;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.yanzhenjie.album.Album;
@@ -44,7 +45,8 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
     private Button createBtn;//创建
     private EditText briefEt;//简介
     private ImageView coverIv;//封面
-    private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
+    private ArrayList<CategoryModle.DataBean> mParentData = new ArrayList<>();
+    private LinearLayout categoryLay;
 
     @Override
     protected CreateNewBookPersenter createPresenter() {
@@ -64,17 +66,18 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         briefEt = (EditText) mSuccessView.findViewById(R.id.et_brief);//简介
         createBtn = (Button) mSuccessView.findViewById(R.id.btn_create);//创建
         coverIv = (ImageView) mSuccessView.findViewById(R.id.iv_cover);//封面
+        categoryLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_category);//封面
         finishIv.setOnClickListener(this);
-        createBtn.setOnClickListener(this);
+        categoryLay.setOnClickListener(this);
         coverIv.setOnClickListener(this);
         titleTv.setText("创建新书");
+        categoryIv.setOnClickListener(this);
         return mSuccessView;
     }
 
     @Override
     protected void initData() {
         mvpPresenter.loadCategoryData();
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -88,25 +91,47 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
 
                 break;
             case R.id.iv_cover://封面选择
-                openAlertDialog();
+                mvpPresenter.openAlertDialog();
+                break;
+            case R.id.lay_category://分类
+                final TypeCategoryPopWindow popWindow = new TypeCategoryPopWindow(mActivity, mParentData);
+                popWindow.setListItemClickListener(new TypeCategoryPopWindow.IListItemClickListener() {
+                    @Override
+                    public void clickItem(int position) {
+                        int i = popWindow.getCount()[0];
+                        categoryTv.setText(mParentData.get(i).getChild().get(position).getName());
+                    }
+                });
+                popWindow.setWidth(v.getWidth());
+                popWindow.setHeight(UIUtil.dip2px(300));
+                popWindow.showAsDropDown(v);
                 break;
         }
     }
 
     /**
      * 获取分类信息
+     *
      * @param modle
      */
     @Override
-    public void getCategoryDataSuccess(CreateNewBookModle modle) {
-
+    public void getCategoryDataSuccess(CategoryModle modle) {
+        if (modle.isSuccess()) {
+            mParentData = modle.getData();
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        } else {
+            ToastUtil.showToast(modle.getErrMsg());
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
     }
+
     /**
      * 提交服务器创建新书
+     *
      * @param modle
      */
     @Override
-    public void getDataSuccess(HomeHotModel modle) {
+    public void getDataSuccess(CreateNewBookModle modle) {
 
     }
 
@@ -126,40 +151,6 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         dismissProgressDialog();
     }
 
-    /**
-     * 选择模版 对话框
-     */
-    private void openAlertDialog() {
-        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
-        final View customerView = UIUtil.inflate(R.layout.dialog_photo);
-
-        //从模版中选择
-        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogBuilder.dismiss();
-            }
-        });
-        //从相册中选择
-        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Album.startAlbum(mActivity, ACTIVITY_REQUEST_SELECT_PHOTO
-                        , 1                                                         // 指定选择数量。
-                        , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
-                        , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
-                dialogBuilder.dismiss();
-            }
-        });
-        dialogBuilder
-                .withTitle(null)                                  // 为null时不显示title
-                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
-                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
-                .withDuration(500)                                // 对话框动画时间
-                .withEffect(Effectstype.Slidetop)                 // 动画形式
-                .setCustomView(customerView, this)                // 添加自定义View
-                .show();
-    }
 
     /**
      * 得到选择的图片路径集合
@@ -167,11 +158,11 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100&& resultCode == RESULT_OK) {
+        if (requestCode == 100 && resultCode == RESULT_OK) {
             List<String> imagesPath = Album.parseResult(data);
-            if (imagesPath != null && imagesPath.size()>0) {
+            if (imagesPath != null && imagesPath.size() > 0) {
                 String path = imagesPath.get(0);
-                GlideUitl.loadImg(mActivity,path,coverIv);
+                GlideUitl.loadImg(mActivity, path, coverIv);
             }
         }
     }

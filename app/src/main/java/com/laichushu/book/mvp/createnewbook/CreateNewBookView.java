@@ -1,6 +1,6 @@
 package com.laichushu.book.mvp.createnewbook;
 
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.homecategory.CategoryModle;
 
 /**
  * 创建新书
@@ -8,9 +8,9 @@ import com.laichushu.book.mvp.home.HomeHotModel;
  */
 
 public interface CreateNewBookView {
-    void getCategoryDataSuccess(CreateNewBookModle modle);
+    void getCategoryDataSuccess(CategoryModle modle);
 
-    void getDataSuccess(HomeHotModel modle);
+    void getDataSuccess(CreateNewBookModle modle);
 
     void getDataFail(String msg);
 
