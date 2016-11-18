@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.mvp.createnewbook.CreateNewBookModle;
 import com.laichushu.book.mvp.createnewbook.CreateNewBookPersenter;
@@ -17,7 +18,6 @@ import com.laichushu.book.mvp.homecategory.CategoryModle;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.TypeCategoryPopWindow;
-import com.laichushu.book.ui.widget.TypePopWindow;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -26,8 +26,12 @@ import com.yanzhenjie.album.Album;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
+
+import id.zelory.compressor.Compressor;
 
 
 /**
@@ -45,8 +49,13 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
     private Button createBtn;//创建
     private EditText briefEt;//简介
     private ImageView coverIv;//封面
+    private LinearLayout categoryLay;//分类容器
+    private LinearLayout permissionLay;//权限容器
     private ArrayList<CategoryModle.DataBean> mParentData = new ArrayList<>();
-    private LinearLayout categoryLay;
+    private File compressedImageFile;
+    private String permission = "1";
+    private String parentId;
+    private String childId;
 
     @Override
     protected CreateNewBookPersenter createPresenter() {
@@ -67,11 +76,14 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         createBtn = (Button) mSuccessView.findViewById(R.id.btn_create);//创建
         coverIv = (ImageView) mSuccessView.findViewById(R.id.iv_cover);//封面
         categoryLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_category);//封面
+        permissionLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_permission);//封面
         finishIv.setOnClickListener(this);
         categoryLay.setOnClickListener(this);
         coverIv.setOnClickListener(this);
         titleTv.setText("创建新书");
         categoryIv.setOnClickListener(this);
+        permissionLay.setOnClickListener(this);
+        createBtn.setOnClickListener(this);
         return mSuccessView;
     }
 
@@ -88,7 +100,9 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
                 EventBus.getDefault().postSticky(new RefurshWriteFragmentEvent(true));
                 break;
             case R.id.btn_create://创建
-
+                String name = booknameEt.getText().toString();
+                String introduce = briefEt.getText().toString();
+                mvpPresenter.commitNewBook(compressedImageFile, name, parentId, childId, permission, introduce);
                 break;
             case R.id.iv_cover://封面选择
                 mvpPresenter.openAlertDialog();
@@ -100,11 +114,16 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
                     public void clickItem(int position) {
                         int i = popWindow.getCount()[0];
                         categoryTv.setText(mParentData.get(i).getChild().get(position).getName());
+                        parentId = mParentData.get(i).getId();
+                        childId = mParentData.get(i).getChild().get(position).getId();
                     }
                 });
                 popWindow.setWidth(v.getWidth());
                 popWindow.setHeight(UIUtil.dip2px(300));
                 popWindow.showAsDropDown(v);
+                break;
+            case R.id.lay_permission:
+                mvpPresenter.openPermissionAlertDialog(permissionTv);
                 break;
         }
     }
@@ -125,18 +144,35 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         }
     }
 
+    @Override
+    public void getDataSuccess(CreateNewBookModle modle) {
+
+    }
     /**
      * 提交服务器创建新书
      *
      * @param modle
      */
-    @Override
-    public void getDataSuccess(CreateNewBookModle modle) {
 
+    @Override
+    public void commitNewBook(RewardResult modle) {
+        hideLoading();
+        if (modle.isSuccess()) {
+            ToastUtil.showToast("创建成功");
+            UIUtil.postDelayed(new TimerTask() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            },1700);
+        }else {
+            ToastUtil.showToast("创建失败");
+        }
     }
 
     @Override
     public void getDataFail(String msg) {
+        hideLoading();
         Logger.e(msg);
         refreshPage(LoadingPager.PageState.STATE_ERROR);
     }
@@ -163,7 +199,17 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
             if (imagesPath != null && imagesPath.size() > 0) {
                 String path = imagesPath.get(0);
                 GlideUitl.loadImg(mActivity, path, coverIv);
+                //压缩图片
+                compressedImageFile = new File(path);
             }
         }
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 }
