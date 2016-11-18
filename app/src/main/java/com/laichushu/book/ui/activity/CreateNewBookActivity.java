@@ -187,6 +187,12 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         dismissProgressDialog();
     }
 
+    @Override
+    public void getDataFail2(String s) {
+        Logger.e(s);
+        ToastUtil.showToast("加载失败");
+    }
+
 
     /**
      * 得到选择的图片路径集合

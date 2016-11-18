@@ -106,7 +106,7 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code:" + code + "\nmsg:" + msg);
+                mvpView.getDataFail2("code:" + code + "\nmsg:" + msg);
             }
 
             @Override

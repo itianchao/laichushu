@@ -20,4 +20,6 @@ public interface CreateNewBookView {
     void showLoading();
 
     void hideLoading();
+
+    void getDataFail2(String s);
 }
