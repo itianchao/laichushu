@@ -31,6 +31,7 @@ import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
+import com.laichushu.book.bean.netbean.UploadIdcardInfor_Parmet;
 import com.laichushu.book.mvp.Campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.Campaign.CampaignJoinModel;
 import com.laichushu.book.mvp.Campaign.CampaignModel;
@@ -215,4 +216,7 @@ public interface ApiStores {
     //个人主页更新用户详情
     @POST("perHome/edit")
     Observable<RewardResult> getUpdateDetails(@Body UpdatePersonalInfor_Parmet paramet);
+    //提交个人信息审核
+    @POST("perHome/atte")
+    Observable<RewardResult> getUploadInfor(@Body UploadIdcardInfor_Parmet paramet);
 }
