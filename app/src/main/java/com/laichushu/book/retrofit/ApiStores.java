@@ -1,13 +1,15 @@
 package com.laichushu.book.retrofit;
 
 import com.laichushu.book.bean.JsonBean.BalanceBean;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.ActivityList_Paramet;
 import com.laichushu.book.bean.netbean.ActivityResult_Paramet;
-import com.laichushu.book.bean.netbean.ArticleSave_Paramet;
 import com.laichushu.book.bean.netbean.AuthorDetail_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
 import com.laichushu.book.bean.netbean.Balance_Paramet;
 import com.laichushu.book.bean.netbean.BestLike_Paramet;
 import com.laichushu.book.bean.netbean.BookList_Paramet;
+import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.Comment2_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
 import com.laichushu.book.bean.netbean.Complaint_Paramet;
@@ -24,11 +26,13 @@ import com.laichushu.book.bean.netbean.MaterialList_Paramet;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
+import com.laichushu.book.bean.netbean.Purchase_Paramet;
 import com.laichushu.book.bean.netbean.ReCommentList_Paramet;
 import com.laichushu.book.bean.netbean.ReSavaComment_Paramet;
 import com.laichushu.book.bean.netbean.RegistValid_Paramet;
 import com.laichushu.book.bean.netbean.Regist_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
+import com.laichushu.book.bean.netbean.SaveComment_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
@@ -52,11 +56,6 @@ import com.laichushu.book.mvp.login.LoginModel;
 import com.laichushu.book.mvp.part.PartModel;
 import com.laichushu.book.mvp.regist.RegistModel;
 import com.laichushu.book.mvp.regist2.RegistModel2;
-import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.ActivityList_Paramet;
-import com.laichushu.book.bean.netbean.CollectSave_Paramet;
-import com.laichushu.book.bean.netbean.Purchase_Paramet;
-import com.laichushu.book.bean.netbean.SaveComment_Paramet;
 
 import java.util.Map;
 
