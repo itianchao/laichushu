@@ -11,7 +11,7 @@ public interface CreateNewDraftView {
 
     void getDataSuccess(RewardResult modle);
 
-    void getCommitPhotoDataSuccess(RewardResult modle);
+    void getCommitPhotoDataSuccess(CreateNewDraftModle modle);
 
     void getDataFail(String msg);
 

@@ -211,12 +211,11 @@ public class CreateNewDraftPersenter extends BasePresenter<CreateNewDraftView> {
         RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(file));
         RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), userId);
 
-        params.put("file", requestBody1);
         params.put("userId", requestBody2);
 
-        addSubscription(apiStores.uploadImg(requestBody1, params), new ApiCallback<RewardResult>() {
+        addSubscription(apiStores.uploadImg(requestBody1, params), new ApiCallback<CreateNewDraftModle>() {
             @Override
-            public void onSuccess(RewardResult model) {
+            public void onSuccess(CreateNewDraftModle model) {
                 mvpView.getCommitPhotoDataSuccess(model);
             }
 

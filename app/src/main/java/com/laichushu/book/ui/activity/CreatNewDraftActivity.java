@@ -12,10 +12,13 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftModle;
 import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftPersenter;
 import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -41,6 +44,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
     private Button createBtn;
     private StringBuilder builder;
     private String articleId;
+    private String path = "";
 
     @Override
     protected View createSuccessView() {
@@ -51,7 +55,6 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         draftmEt = (EditText) mSuccessView.findViewById(R.id.et_draft);
         mEditor = (RichEditor) mSuccessView.findViewById(R.id.editor);
         createBtn = (Button) mSuccessView.findViewById(R.id.btn_create);
-
         mEditor.setEditorHeight(200);
         mEditor.setEditorFontSize(22);
         mEditor.setEditorFontColor(Color.RED);
@@ -60,11 +63,12 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         //mEditor.setBackgroundResource(R.drawable.bg);
         mEditor.setPadding(10, 10, 10, 10);
         //    mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
-        mEditor.setPlaceholder("Insert text here...");
+        mEditor.setPlaceholder("从这里开始");
         mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
             @Override
             public void onTextChange(String text) {
                 builder = new StringBuilder(text);
+                LoggerUtil.e(builder.toString());
             }
         });
         mSuccessView.findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
@@ -75,7 +79,6 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
                         , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
                         , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
 
-                mEditor.insertImage("", "dachshund");
             }
         });
         mvpPresenter.setfunction(mSuccessView, mEditor);
@@ -112,8 +115,15 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
      * @param modle
      */
     @Override
-    public void getCommitPhotoDataSuccess(RewardResult modle) {
-
+    public void getCommitPhotoDataSuccess(CreateNewDraftModle modle) {
+        if (modle.isSuccess()) {
+            String data = modle.getData();
+            path = ConstantValue.PHOTO_SEVERCE_PATH + data;
+            LoggerUtil.e(path);
+            mEditor.insertImage(path, "dachshund");
+        } else {
+            ToastUtil.showToast("添加图片失败");
+        }
     }
 
     @Override

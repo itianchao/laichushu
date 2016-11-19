@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,6 +77,8 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
                 finish();
                 break;
             case R.id.lay_add_newbook://创建草稿
+                Bundle bundle = new Bundle();
+                bundle.putString("articleId",articleId);
                 UIUtil.openActivity(this,CreatNewDraftActivity.class);
                 break;
             case R.id.tv_title_right:

@@ -6,4 +6,28 @@ package com.laichushu.book.mvp.creatnewdraft;
  */
 
 public class CreateNewDraftModle {
+
+    /**
+     * success : true
+     * data : group1/M00/00/09/wKiTPlgwIiyAat4CAADZDgGfzZE019.jpg
+     */
+
+    private boolean success;
+    private String data;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 }

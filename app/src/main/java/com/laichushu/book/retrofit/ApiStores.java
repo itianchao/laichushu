@@ -49,6 +49,7 @@ import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.campaign.CampaignJoinModel;
 import com.laichushu.book.mvp.campaign.CampaignModel;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftModle;
 import com.laichushu.book.mvp.directories.BookMoudle;
 import com.laichushu.book.mvp.directories.MaterialContentModel;
 import com.laichushu.book.mvp.directories.MaterialListModel;
@@ -238,8 +239,9 @@ public interface ApiStores {
     Observable<RewardResult> createNewBook(@Part("file\"; filename=\"cover.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
 
     //本地图片转换
+    @Multipart
     @POST("file/upload")
-    Observable<RewardResult> uploadImg(@Part("file\"; filename=\"img.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
+    Observable<CreateNewDraftModle> uploadImg(@Part("file\"; filename=\"img.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
 
     //新建草稿
     @POST("chapter/save")

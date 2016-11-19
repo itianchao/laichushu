@@ -26,6 +26,7 @@
             android:textSize="@dimen/edit2" />
 
         <EditText
+            android:background="@null"
             android:id="@+id/et_draft"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
@@ -34,7 +35,7 @@
             android:textColor="@color/edit"
             android:textColorHint="@color/hint"
             android:textSize="@dimen/edit2"
-            tools:hint="请输入书名" />
+            android:hint="请输入书名" />
     </LinearLayout>
 
     <LinearLayout

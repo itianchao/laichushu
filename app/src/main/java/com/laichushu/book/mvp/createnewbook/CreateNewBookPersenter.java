@@ -90,7 +90,7 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
         RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"), permission);
         RequestBody requestBody7 = RequestBody.create(MediaType.parse("multipart/form-data"), introduce);
 
-        params.put("file", requestBody1);
+//        params.put("file", requestBody1);
         params.put("userId", requestBody2);
         params.put("name", requestBody3);
         params.put("topCategoryId", requestBody4);
