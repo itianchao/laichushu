@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.createnewbook;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.mvp.homecategory.CategoryModle;
 
 /**
@@ -12,9 +13,13 @@ public interface CreateNewBookView {
 
     void getDataSuccess(CreateNewBookModle modle);
 
+    void commitNewBook(RewardResult modle);
+
     void getDataFail(String msg);
 
     void showLoading();
 
     void hideLoading();
+
+    void getDataFail2(String s);
 }
