@@ -42,27 +42,27 @@ public class SplashActivity extends BaseActivity {
     }
     private void loadActivity( ){
 //        如果保存了帐号和密码，跳转主页面
-//        if (!TextUtils.isEmpty(SharePrefManager.getLoginInfo())) {
-//            loadActivity = InitActivity.class;
-//        }else {
-//            //如果第一次登录则跳转引导页
-//            if (SharePrefManager.getFristLogin()) {
-//                loadActivity = GuideActivity.class;
-//            //如果不是第一次登录则跳转登录页
-//            }else {
-//                loadActivity = LoginActivity.class;
-//            }
-//        }
-//        UIUtil.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                UIUtil.openActivity(mActivity, loadActivity);
-//                finish();
-//            }
-//        }, 2000);
-        String articleId = "74";
-        Bundle bundle = new Bundle();
-        bundle.putString("articleId",articleId);
-        UIUtil.openActivity(this,CreatNewDraftActivity.class);
+        if (!TextUtils.isEmpty(SharePrefManager.getLoginInfo())) {
+            loadActivity = InitActivity.class;
+        }else {
+            //如果第一次登录则跳转引导页
+            if (SharePrefManager.getFristLogin()) {
+                loadActivity = GuideActivity.class;
+            //如果不是第一次登录则跳转登录页
+            }else {
+                loadActivity = LoginActivity.class;
+            }
+        }
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                UIUtil.openActivity(mActivity, loadActivity);
+                finish();
+            }
+        }, 2000);
+//        String articleId = "74";
+//        Bundle bundle = new Bundle();
+//        bundle.putString("articleId",articleId);
+//        UIUtil.openActivity(this,CreatNewDraftActivity.class);
     }
 }
