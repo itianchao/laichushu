@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.bean.netbean.ReSavaComment_Paramet;
 import com.laichushu.book.event.RefurshCommentListEvent;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
@@ -27,7 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 public class CommentSendActivity extends BaseActivity implements View.OnClickListener, TextView.OnEditorActionListener {
 
     private EditText commentEt;
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;
     private String commentId;
 
     @Override

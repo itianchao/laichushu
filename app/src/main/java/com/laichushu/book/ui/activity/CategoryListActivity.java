@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
@@ -25,9 +26,9 @@ import java.util.ArrayList;
 
 public class CategoryListActivity extends BaseActivity implements View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
-    private String pageSize = "10";
+    private String pageSize = ConstantValue.PAGESIZE1;
     private int pageNo = 1;
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;
     private HomeCategroyListBook_Paramet paramet = new HomeCategroyListBook_Paramet("", pageSize, pageNo + "", userId);
     private PullLoadMoreRecyclerView categoryRyv;
     private TextView titleTv;

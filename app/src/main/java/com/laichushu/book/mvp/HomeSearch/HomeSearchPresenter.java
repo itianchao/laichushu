@@ -1,8 +1,9 @@
-package com.laichushu.book.mvp.HomeSearch;
+package com.laichushu.book.mvp.homesearch;
 
 import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.global.BaseApplication;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.SharePrefManager;
@@ -16,9 +17,9 @@ import com.laichushu.book.ui.activity.HomeSearchActivity;
  */
 public class HomeSearchPresenter extends BasePresenter<HomeSearchView> {
     private HomeSearchActivity mActivity;
-    private String pageSize = "10";
+    private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;
     private HomeSearch_Paramet paramet = new HomeSearch_Paramet("",pageSize,pageNo,userId);
     private Search_HistoryDao search_historyDao;
 

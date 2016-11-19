@@ -4,6 +4,7 @@ import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ActivityList_Paramet;
 import com.laichushu.book.bean.netbean.ActivityResult_Paramet;
+import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
 import com.laichushu.book.bean.netbean.AuthorDetail_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
 import com.laichushu.book.bean.netbean.Balance_Paramet;
@@ -13,6 +14,9 @@ import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.Comment2_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
 import com.laichushu.book.bean.netbean.Complaint_Paramet;
+import com.laichushu.book.bean.netbean.CreateNewDraft_Paramet;
+import com.laichushu.book.bean.netbean.DraftList_Paramet;
+import com.laichushu.book.bean.netbean.EditDraft_Paramet;
 import com.laichushu.book.bean.netbean.ForgetPwd_Paramet;
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
@@ -37,17 +41,18 @@ import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
 import com.laichushu.book.bean.netbean.UploadIdcardInfor_Parmet;
-import com.laichushu.book.mvp.Campaign.AuthorWorksModle;
-import com.laichushu.book.mvp.Campaign.CampaignJoinModel;
-import com.laichushu.book.mvp.Campaign.CampaignModel;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
 import com.laichushu.book.mvp.bookdetail.SubscribeArticleModle;
+import com.laichushu.book.mvp.campaign.AuthorWorksModle;
+import com.laichushu.book.mvp.campaign.CampaignJoinModel;
+import com.laichushu.book.mvp.campaign.CampaignModel;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.directories.BookMoudle;
 import com.laichushu.book.mvp.directories.MaterialContentModel;
 import com.laichushu.book.mvp.directories.MaterialListModel;
+import com.laichushu.book.mvp.draftmodle.DraftModle;
 import com.laichushu.book.mvp.forgetpwd.ForgetPwdModel;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
@@ -76,7 +81,8 @@ public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
     String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
-//    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇
+//    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
+//    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 
     //登录接口
@@ -227,11 +233,27 @@ public interface ApiStores {
     @POST("perHome/atte")
     Observable<RewardResult> getUploadInfor(@Body UploadIdcardInfor_Parmet paramet);
 
-//    //创建新书
-//    @Multipart
-//    @POST("article/save")
-//    Observable<RewardResult> createNewBook(@PartMap Map<String, RequestBody> params);    //创建新书
     @Multipart
     @POST("article/save")
-    Observable<RewardResult> createNewBook(@Part("file\"; filename=\"cover.jpg") RequestBody file,@PartMap Map<String, RequestBody> params);
+    Observable<RewardResult> createNewBook(@Part("file\"; filename=\"cover.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
+
+    //本地图片转换
+    @POST("file/upload")
+    Observable<RewardResult> uploadImg(@Part("file\"; filename=\"img.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
+
+    //新建草稿
+    @POST("chapter/save")
+    Observable<RewardResult> createNewDraft(@Body CreateNewDraft_Paramet paramet);
+
+    //修改草稿保存
+    @POST("chapter/edit")
+    Observable<RewardResult> editDraft(@Body EditDraft_Paramet paramet);
+
+    //书的章列表或者节列表
+    @POST("chapter/list")
+    Observable<DraftModle> getDraftList(@Body DraftList_Paramet paramet);
+
+    //书的列表
+    @POST("article/find")
+    Observable<HomeHotModel> getArticleBookList(@Body ArticleBookList_Paramet paramet);
 }

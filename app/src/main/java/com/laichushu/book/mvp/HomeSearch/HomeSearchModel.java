@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.HomeSearch;
+package com.laichushu.book.mvp.homesearch;
 
 /**
  * home页搜索

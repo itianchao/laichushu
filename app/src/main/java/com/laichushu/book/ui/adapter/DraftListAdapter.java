@@ -3,6 +3,7 @@ package com.laichushu.book.ui.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -15,6 +16,7 @@ import com.laichushu.book.utils.UIUtil;
 
 public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.DraftListViewHolder>{
 
+    private boolean isGone = false;
     @Override
     public DraftListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = UIUtil.inflate(R.layout.item_draft_list);
@@ -23,6 +25,12 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
 
     @Override
     public void onBindViewHolder(DraftListViewHolder holder, int position) {
+
+        if (isGone){
+            holder.deleteIv.setVisibility(View.GONE);
+        }else {
+            holder.deleteIv.setVisibility(View.VISIBLE);
+        }
         holder.numberTv.setText("");
         holder.nameTv.setText("");
         holder.renameTv.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +40,12 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
             }
         });
         holder.reviseTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        holder.deleteIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -50,6 +64,7 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
         private TextView nameTv;
         private TextView renameTv;
         private TextView reviseTv;
+        private ImageView deleteIv;
 
         public DraftListViewHolder(View itemView) {
             super(itemView);
@@ -57,6 +72,15 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
             nameTv = (TextView)itemView.findViewById(R.id.tv_name);
             renameTv = (TextView)itemView.findViewById(R.id.tv_rename);
             reviseTv = (TextView)itemView.findViewById(R.id.tv_revise);
+            deleteIv = (ImageView)itemView.findViewById(R.id.iv_delete);
         }
+    }
+
+    public boolean isGone() {
+        return isGone;
+    }
+
+    public void setGone(boolean gone) {
+        isGone = gone;
     }
 }

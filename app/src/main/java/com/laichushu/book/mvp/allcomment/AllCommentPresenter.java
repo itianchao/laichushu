@@ -1,6 +1,7 @@
 package com.laichushu.book.mvp.allcomment;
 
 import com.google.gson.Gson;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.SharePrefManager;
 import com.orhanobut.logger.Logger;
@@ -18,9 +19,9 @@ import com.laichushu.book.ui.activity.AllCommentActivity;
  */
 public class AllCommentPresenter extends BasePresenter<AllCommentView> {
     private AllCommentActivity mActivity;
-    private String pageSize = "10";
+    private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;
     private Comment2_Paramet paramet = new Comment2_Paramet("",pageSize,pageNo,userId);
 
     public Comment2_Paramet getParamet() {

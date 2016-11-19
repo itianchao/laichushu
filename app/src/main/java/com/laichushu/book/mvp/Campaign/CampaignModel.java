@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.Campaign;
+package com.laichushu.book.mvp.campaign;
 
 import java.util.ArrayList;
 

@@ -2,6 +2,7 @@ package com.laichushu.book.mvp.part;
 
 import com.google.gson.Gson;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.PartActivity;
 import com.laichushu.book.ui.base.BasePresenter;
@@ -14,7 +15,7 @@ import com.orhanobut.logger.Logger;
 public class PartPresenter extends BasePresenter<PartView> {
     private PartActivity mActivity;
     private String pageNo = "1";
-    private String pageSize = "2000";
+    private String pageSize = ConstantValue.PAGESIZE;
     private PartList_Paramet paramet = new PartList_Paramet("",pageNo,pageSize);
     //初始化构造
     public PartPresenter(PartView view) {

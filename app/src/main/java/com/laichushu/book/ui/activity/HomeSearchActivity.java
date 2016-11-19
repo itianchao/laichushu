@@ -11,8 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.laichushu.book.db.Search_History;
-import com.laichushu.book.mvp.HomeSearch.HomeSearchPresenter;
-import com.laichushu.book.mvp.HomeSearch.HomeSearchView;
+import com.laichushu.book.mvp.homesearch.HomeSearchPresenter;
+import com.laichushu.book.mvp.homesearch.HomeSearchView;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.adapter.HomeSearchAdapter;
 import com.laichushu.book.ui.adapter.HomeSearchHistoryAdapter;

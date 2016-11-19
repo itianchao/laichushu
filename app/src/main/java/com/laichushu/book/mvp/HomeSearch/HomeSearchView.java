@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.HomeSearch;
+package com.laichushu.book.mvp.homesearch;
 
 import com.laichushu.book.mvp.home.HomeHotModel;
 

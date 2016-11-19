@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ReCommentList_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.CommentDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
@@ -17,9 +18,9 @@ import com.orhanobut.logger.Logger;
 public class CommentDetailPersenter extends BasePresenter<CommentDetailView> {
 
     private CommentDetailActivity mActivity;
-    private String pageSize = "10";
+    private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;
     private ReCommentList_Paramet paramet = new ReCommentList_Paramet("", userId, pageNo, pageSize);
 
     public CommentDetailPersenter(CommentDetailView view) {

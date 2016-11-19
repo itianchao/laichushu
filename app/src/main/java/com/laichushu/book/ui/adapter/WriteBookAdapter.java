@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.adapter;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -63,14 +65,19 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.moneyTv.setText(dataBean.getAwardMoney() + "元");
         holder.rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
         holder.markTv.setText(dataBean.getScore() + "分");
+        /**
+         * 草稿
+         */
         holder.draftTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle bundle = new Bundle();
+                bundle.putString("articleId",dataBean.getArticleId());
+                UIUtil.openActivity(mActivity, DraftModleActivity.class,bundle);
             }
         });
         /**
-         * 草稿
+         * 素材
          */
         holder.materialTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +86,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             }
         });
         /**
-         * 素材
+         * 投稿
          */
         holder.submissionTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +95,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             }
         });
         /**
-         * 投稿
+         * 发表
          */
         holder.publishlTv.setOnClickListener(new View.OnClickListener() {
             @Override

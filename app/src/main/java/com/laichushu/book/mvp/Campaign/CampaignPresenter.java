@@ -1,6 +1,7 @@
-package com.laichushu.book.mvp.Campaign;
+package com.laichushu.book.mvp.campaign;
 
 import com.google.gson.Gson;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.bean.netbean.ActivityResult_Paramet;
@@ -16,7 +17,7 @@ import com.laichushu.book.utils.SharePrefManager;
  */
 public class CampaignPresenter extends BasePresenter<CampaignView> {
     private CampaignActivity mActivity;
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;;
 
     public CampaignPresenter(CampaignView view) {
         attachView(view);

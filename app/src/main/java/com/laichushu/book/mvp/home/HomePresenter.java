@@ -2,6 +2,7 @@ package com.laichushu.book.mvp.home;
 
 import com.google.gson.Gson;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.SharePrefManager;
 import com.orhanobut.logger.Logger;
@@ -14,10 +15,10 @@ import com.laichushu.book.retrofit.ApiCallback;
  * Created by wangtong on 2016/10/17.
  */
 public class HomePresenter extends BasePresenter<HomeView> {
-    private String pageSize = "10";
+    private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String pageNo2 = "1";
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;
     private HomeAllBook_Paramet paramet = paramet = new HomeAllBook_Paramet("1",pageSize,pageNo,userId);
     private ActivityList_Paramet activityListParamet = new ActivityList_Paramet(pageNo2,pageSize,userId);;
     private int state = 1;

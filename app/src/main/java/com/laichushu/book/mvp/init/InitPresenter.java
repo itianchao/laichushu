@@ -2,6 +2,7 @@ package com.laichushu.book.mvp.init;
 
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -13,10 +14,10 @@ import com.laichushu.book.utils.SharePrefManager;
  * Created by wangtong on 2016/10/17.
  */
 public class InitPresenter extends BasePresenter<InitView> {
-    private String pageSize = "10";
+    private String pageSize = ConstantValue.PAGESIZE1; ;
     private String pageNo = "1";
     private HomeAllBook_Paramet paramet;
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;
 
     public InitPresenter(InitView view) {
         attachView(view);

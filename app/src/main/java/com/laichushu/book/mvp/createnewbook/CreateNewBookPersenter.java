@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ArticleSave_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.homecategory.CategoryModle;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.CreateNewBookActivity;
@@ -36,8 +37,7 @@ import okhttp3.RequestBody;
 public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
     private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
     private CreateNewBookActivity mActivity;
-
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;
 
     public CreateNewBookPersenter(CreateNewBookView view) {
         attachView(view);

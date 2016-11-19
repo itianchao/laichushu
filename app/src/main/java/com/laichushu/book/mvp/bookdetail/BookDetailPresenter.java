@@ -21,6 +21,7 @@ import com.laichushu.book.bean.netbean.Purchase_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.BookDetailActivity;
@@ -39,7 +40,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     private String pageSize = "5";
     private String pageNo = "1";
     private BestLike_Paramet paramet;
-    private String userId = SharePrefManager.getUserId();
+    private String userId = ConstantValue.USERID;;
 
     //初始化构造
     public BookDetailPresenter(BookDetailView view) {

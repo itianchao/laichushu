@@ -21,6 +21,7 @@ android {
         flatDir {
             dirs 'libs'
         }
+        jcenter()
     }
 }
 allprojects {
@@ -50,6 +51,7 @@ dependencies {
     compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.1'
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'de.greenrobot:greendao-generator:2.1.0'
+    compile 'jp.wasabeef:richeditor-android:1.2.1'
     compile(name: 'notify-dialog-library', ext: 'aar')
     compile project(':hwTxtReader')
 }

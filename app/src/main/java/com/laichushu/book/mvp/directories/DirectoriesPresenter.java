@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.directories;
 import com.google.gson.Gson;
 import com.laichushu.book.bean.netbean.BookList_Paramet;
 import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.SharePrefManager;
 import com.orhanobut.logger.Logger;
@@ -17,8 +18,8 @@ import com.laichushu.book.ui.activity.DirectoriesActivity;
 public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
     private DirectoriesActivity mActivity;
     private String pageNo = "1";
-    private String pageSize = "2000";
-    private String userId = SharePrefManager.getUserId();
+    private String pageSize = ConstantValue.PAGESIZE;
+    private String userId = ConstantValue.USERID;
     BookList_Paramet patamet = new BookList_Paramet("",userId,pageNo,pageSize);
     //初始化构造
     public DirectoriesPresenter(DirectoriesView view) {
