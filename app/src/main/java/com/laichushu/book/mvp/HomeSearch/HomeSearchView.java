@@ -1,6 +1,6 @@
 package com.laichushu.book.mvp.homesearch;
 
-import com.laichushu.book.mvp.home.HomeHotModel;
+        import com.laichushu.book.mvp.home.HomeHotModel;
 
 /**
  * home 搜索
