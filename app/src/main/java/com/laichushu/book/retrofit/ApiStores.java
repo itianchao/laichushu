@@ -47,6 +47,7 @@ import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
 import com.laichushu.book.bean.netbean.UploadIdcardInfor_Parmet;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
+import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
 import com.laichushu.book.mvp.bookdetail.SubscribeArticleModle;
@@ -273,7 +274,15 @@ public interface ApiStores {
     @POST("article/issue")
     Observable<RewardResult> publishNewBook(@Body PublishNewBook_Paramet paramet);
 
-    //删除
+    //删除新书
     @POST("article/delete")
     Observable<RewardResult> deleteNewBook(@Body DeleteNewBook_Paramet paramet);
+
+    //删除草稿
+    @POST("chapter/delete")
+    Observable<RewardResult> deleteDraftBook(@Body DeleteDraft_Paramet paramet);
+
+    //收藏列表
+    @POST("collect/list")
+    Observable<BookCastModle> getCollectList(@Body CollectList_Paramet paramet);
 }
