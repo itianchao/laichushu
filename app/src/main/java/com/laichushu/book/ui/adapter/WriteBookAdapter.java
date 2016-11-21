@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -25,10 +26,12 @@ import java.util.ArrayList;
 public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.WriteBookViewHolder> {
     private ArrayList<HomeHotModel.DataBean> mData;
     private Activity mActivity;
+    private WritePresenter mvpPresenter;
 
-    public WriteBookAdapter(ArrayList<HomeHotModel.DataBean> mData, Activity mActivity) {
+    public WriteBookAdapter(ArrayList<HomeHotModel.DataBean> mData, Activity mActivity, WritePresenter mvpPresenter) {
         this.mData = mData;
         this.mActivity = mActivity;
+        this.mvpPresenter = mvpPresenter;
     }
 
     @Override
@@ -72,8 +75,8 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("articleId",dataBean.getArticleId());
-                UIUtil.openActivity(mActivity, DraftModleActivity.class,bundle);
+                bundle.putString("articleId", dataBean.getArticleId());
+                UIUtil.openActivity(mActivity, DraftModleActivity.class, bundle);
             }
         });
         /**
@@ -91,7 +94,9 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.submissionTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String articleId = dataBean.getArticleId();
+                String pressId = "";
+                mvpPresenter.voteBook(articleId, pressId);
             }
         });
         /**
@@ -100,7 +105,8 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.publishlTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String articleId = dataBean.getArticleId();
+                mvpPresenter.publishNewBook(articleId);
             }
         });
         /**
@@ -109,7 +115,8 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.deleteTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String articleId = dataBean.getArticleId();
+                mvpPresenter.deleteBook(articleId);
             }
         });
     }
@@ -153,5 +160,13 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             moneyTv = (TextView) itemView.findViewById(R.id.tv_money);
             rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
         }
+    }
+
+    public ArrayList<HomeHotModel.DataBean> getmData() {
+        return mData;
+    }
+
+    public void setmData(ArrayList<HomeHotModel.DataBean> mData) {
+        this.mData = mData;
     }
 }

@@ -18,6 +18,7 @@ import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftPersenter;
 import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.ui.widget.MineRichEditor;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -40,11 +41,12 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
     private TextView titleTv;
     private ImageView finishIv;
     private EditText draftmEt;
-    private RichEditor mEditor;
+    private MineRichEditor mEditor;
     private Button createBtn;
     private StringBuilder builder;
     private String articleId;
     private String path = "";
+    private String type;
 
     @Override
     protected View createSuccessView() {
@@ -53,11 +55,11 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
         finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
         draftmEt = (EditText) mSuccessView.findViewById(R.id.et_draft);
-        mEditor = (RichEditor) mSuccessView.findViewById(R.id.editor);
+        mEditor = (MineRichEditor) mSuccessView.findViewById(R.id.editor);
         createBtn = (Button) mSuccessView.findViewById(R.id.btn_create);
         mEditor.setEditorHeight(200);
         mEditor.setEditorFontSize(22);
-        mEditor.setEditorFontColor(Color.RED);
+        mEditor.setEditorFontColor(Color.BLACK);
         //mEditor.setEditorBackgroundColor(Color.BLUE);
         //mEditor.setBackgroundColor(Color.BLUE);
         //mEditor.setBackgroundResource(R.drawable.bg);
@@ -90,7 +92,13 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
 
     @Override
     protected void initData() {
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        type = getIntent().getStringExtra("type");
+        if (type.equals("1")){
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        }else {
+            //TODO: 2016/11/21 请求草稿 并设置进去
+//            mvpPresenter.
+        }
     }
 
     @Override

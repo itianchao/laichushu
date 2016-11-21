@@ -252,5 +252,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    <include layout="@layout/item_distance"/>
 </LinearLayout>

@@ -5,6 +5,7 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ActivityList_Paramet;
 import com.laichushu.book.bean.netbean.ActivityResult_Paramet;
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
+import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.AuthorDetail_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
 import com.laichushu.book.bean.netbean.Balance_Paramet;
@@ -15,6 +16,7 @@ import com.laichushu.book.bean.netbean.Comment2_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
 import com.laichushu.book.bean.netbean.Complaint_Paramet;
 import com.laichushu.book.bean.netbean.CreateNewDraft_Paramet;
+import com.laichushu.book.bean.netbean.DeleteNewBook_Paramet;
 import com.laichushu.book.bean.netbean.DraftList_Paramet;
 import com.laichushu.book.bean.netbean.EditDraft_Paramet;
 import com.laichushu.book.bean.netbean.ForgetPwd_Paramet;
@@ -30,6 +32,7 @@ import com.laichushu.book.bean.netbean.MaterialList_Paramet;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
+import com.laichushu.book.bean.netbean.PublishNewBook_Paramet;
 import com.laichushu.book.bean.netbean.Purchase_Paramet;
 import com.laichushu.book.bean.netbean.ReCommentList_Paramet;
 import com.laichushu.book.bean.netbean.ReSavaComment_Paramet;
@@ -234,6 +237,7 @@ public interface ApiStores {
     @POST("perHome/atte")
     Observable<RewardResult> getUploadInfor(@Body UploadIdcardInfor_Parmet paramet);
 
+    //创建新书
     @Multipart
     @POST("article/save")
     Observable<RewardResult> createNewBook(@Part("file\"; filename=\"cover.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
@@ -256,6 +260,18 @@ public interface ApiStores {
     Observable<DraftModle> getDraftList(@Body DraftList_Paramet paramet);
 
     //书的列表
-    @POST("article/find")
+    @POST("searchArticle/findArticleByAuthorId")
     Observable<HomeHotModel> getArticleBookList(@Body ArticleBookList_Paramet paramet);
+
+    //投稿
+    @POST("article/vote")
+    Observable<RewardResult> articleVote(@Body ArticleVote_Paramet paramet);
+
+    //发表
+    @POST("article/issue")
+    Observable<RewardResult> publishNewBook(@Body PublishNewBook_Paramet paramet);
+
+    //删除
+    @POST("article/delete")
+    Observable<RewardResult> deleteNewBook(@Body DeleteNewBook_Paramet paramet);
 }

@@ -14,9 +14,12 @@ import com.laichushu.book.mvp.draftmodle.DraftModleView;
 import com.laichushu.book.ui.adapter.DraftListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import java.util.ArrayList;
 
 /**
  * 草稿模式
@@ -35,7 +38,7 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     private DraftListAdapter mAdapter;
     private int pageNo = 1;
     private String articleId;
-
+    ArrayList<DraftModle.DataBean> mData = new ArrayList<>();
     @Override
     protected DraftModlePresenter createPresenter() {
         return new DraftModlePresenter(this);
@@ -50,14 +53,14 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
         titleRightTv = (TextView) mSuccseeView.findViewById(R.id.tv_title_right);
         finishIv = (ImageView) mSuccseeView.findViewById(R.id.iv_title_finish);
         newDraftLay = (LinearLayout) mSuccseeView.findViewById(R.id.lay_add_newbook);
-        draftRyv = (PullLoadMoreRecyclerView)mSuccseeView.findViewById(R.id.ryv_draft);
+        draftRyv = (PullLoadMoreRecyclerView) mSuccseeView.findViewById(R.id.ryv_draft);
         page = mSuccseeView.findViewById(R.id.layout_page_add);
         page.setVisibility(View.VISIBLE);
         draftRyv.setLinearLayout();
         titleRightTv.setVisibility(View.VISIBLE);
         titleRightTv.setText("管理");
         titleRightTv.setTextColor(Color.WHITE);
-        mAdapter = new DraftListAdapter();
+        mAdapter = new DraftListAdapter(this,mData);
         draftRyv.setAdapter(mAdapter);
         titleTv.setText("草稿模式");
         addTv.setText("添加草稿");
@@ -71,6 +74,11 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     }
 
     @Override
+    protected void initData() {
+        mvpPresenter.getDraftList(articleId);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
@@ -78,15 +86,16 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
                 break;
             case R.id.lay_add_newbook://创建草稿
                 Bundle bundle = new Bundle();
-                bundle.putString("articleId",articleId);
-                UIUtil.openActivity(this,CreatNewDraftActivity.class);
+                bundle.putString("articleId", articleId);
+                bundle.putString("type", "1");//1创建、2修改
+                UIUtil.openActivity(this, CreatNewDraftActivity.class, bundle);
                 break;
             case R.id.tv_title_right:
-                if (titleRightTv.getText().toString().equals("管理")){
+                if (titleRightTv.getText().toString().equals("管理")) {
                     titleRightTv.setText("完成");
                     page.setVisibility(View.GONE);
                     mAdapter.setGone(false);
-                }else {
+                } else {
                     titleRightTv.setText("管理");
                     page.setVisibility(View.VISIBLE);
                     mAdapter.setGone(true);
@@ -98,7 +107,16 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
 
     @Override
     public void getDataSuccess(DraftModle model) {
-        pageNo++;
+        if (model.isSuccess()) {
+            if (model.getData() != null && !model.getData().isEmpty()) {
+                mData.addAll(model.getData());
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                pageNo++;
+            }
+        } else {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ToastUtil.showToast(model.getErrMsg());
+        }
     }
 
     @Override
@@ -130,7 +148,7 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
      */
     @Override
     public void onLoadMore() {
-        mvpPresenter.getParamet().setPageNo(pageNo+"");
+        mvpPresenter.getParamet().setPageNo(pageNo + "");
         mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表
     }
 }

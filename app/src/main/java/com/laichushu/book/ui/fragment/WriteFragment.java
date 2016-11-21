@@ -1,10 +1,12 @@
 package com.laichushu.book.ui.fragment;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WriteModle;
@@ -14,6 +16,8 @@ import com.laichushu.book.ui.activity.CreateNewBookActivity;
 import com.laichushu.book.ui.adapter.WriteBookAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
@@ -44,15 +48,16 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         addNewBookLay.setOnClickListener(this);
         mRecyclerView = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_book);
         mRecyclerView.setLinearLayout();
-        writeBookAdapter = new WriteBookAdapter(mData, mActivity);
-        mRecyclerView.setAdapter(writeBookAdapter);
-
+        mRecyclerView.setPushRefreshEnable(false);
+        mRecyclerView.setPullRefreshEnable(false);
         return mSuccessView;
     }
 
     @Override
     protected void initData() {
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        writeBookAdapter = new WriteBookAdapter(mData, mActivity,mvpPresenter);
+        mRecyclerView.setAdapter(writeBookAdapter);
+        mvpPresenter.getArticleBookList();
     }
 
     @Override
@@ -62,12 +67,81 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     @Override
     public void getDataSuccess(HomeHotModel model) {
+        if (model.isSuccess()) {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            mData.addAll(model.getData());
+            writeBookAdapter.setmData(mData);
+            writeBookAdapter.notifyDataSetChanged();
+        }else {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
+    }
 
+    @Override
+    public void deleteNewBook(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("删除成功");
+            mData.clear();
+            refreshPage(LoadingPager.PageState.STATE_LOADING);
+            mvpPresenter.getArticleBookList();
+        }else {
+            ToastUtil.showToast("删除失败");
+        }
+    }
+
+    @Override
+    public void articleVote(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("投稿成功");
+        }else {
+            ToastUtil.showToast("投稿失败");
+        }
+    }
+
+    @Override
+    public void publishNewBook(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("发表成功");
+        }else {
+            ToastUtil.showToast("发表失败");
+        }
     }
 
     @Override
     public void getDataFail(String msg) {
         refreshPage(LoadingPager.PageState.STATE_ERROR);
+        LoggerUtil.e(msg);
+    }
+
+    @Override
+    public void getDataFail2(String msg) {
+        ToastUtil.showToast("删除失败");
+        LoggerUtil.e(msg);
+        hideLoading();
+    }
+
+    @Override
+    public void getDataFail3(String msg) {
+        ToastUtil.showToast("投稿失败");
+        LoggerUtil.e(msg);
+        hideLoading();
+    }
+
+    @Override
+    public void getDataFail4(String msg) {
+        ToastUtil.showToast("发表失败");
+        LoggerUtil.e(msg);
+        hideLoading();
+    }
+
+    @Override
+    public void showLoading() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void hideLoading() {
+        dismissProgressDialog();
     }
 
     @Override

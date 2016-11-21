@@ -7,16 +7,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.mvp.draftmodle.DraftModle;
+import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.utils.UIUtil;
+
+import java.util.ArrayList;
 
 /**
  * 草稿列表
  * Created by wangtong on 2016/11/18.
  */
 
-public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.DraftListViewHolder>{
+public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.DraftListViewHolder> {
 
     private boolean isGone = false;
+    private DraftModleActivity draftModleActivity;
+    private ArrayList<DraftModle.DataBean> mData;
+
+    public DraftListAdapter(DraftModleActivity draftModleActivity, ArrayList<DraftModle.DataBean> mData) {
+        this.draftModleActivity = draftModleActivity;
+        this.mData = mData;
+    }
+
     @Override
     public DraftListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = UIUtil.inflate(R.layout.item_draft_list);
@@ -26,13 +38,13 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
     @Override
     public void onBindViewHolder(DraftListViewHolder holder, int position) {
 
-        if (isGone){
+        if (isGone) {
             holder.deleteIv.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.deleteIv.setVisibility(View.VISIBLE);
         }
-        holder.numberTv.setText("");
-        holder.nameTv.setText("");
+        DraftModle.DataBean dataBean = mData.get(position);
+        holder.nameTv.setText(dataBean.getName());
         holder.renameTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +72,6 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
 
     class DraftListViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView numberTv;
         private TextView nameTv;
         private TextView renameTv;
         private TextView reviseTv;
@@ -68,11 +79,11 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
 
         public DraftListViewHolder(View itemView) {
             super(itemView);
-            numberTv = (TextView)itemView.findViewById(R.id.tv_number);
-            nameTv = (TextView)itemView.findViewById(R.id.tv_name);
-            renameTv = (TextView)itemView.findViewById(R.id.tv_rename);
-            reviseTv = (TextView)itemView.findViewById(R.id.tv_revise);
-            deleteIv = (ImageView)itemView.findViewById(R.id.iv_delete);
+
+            nameTv = (TextView) itemView.findViewById(R.id.tv_name);
+            renameTv = (TextView) itemView.findViewById(R.id.tv_rename);
+            reviseTv = (TextView) itemView.findViewById(R.id.tv_revise);
+            deleteIv = (ImageView) itemView.findViewById(R.id.iv_delete);
         }
     }
 
@@ -82,5 +93,13 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
 
     public void setGone(boolean gone) {
         isGone = gone;
+    }
+
+    public ArrayList<DraftModle.DataBean> getmData() {
+        return mData;
+    }
+
+    public void setmData(ArrayList<DraftModle.DataBean> mData) {
+        this.mData = mData;
     }
 }

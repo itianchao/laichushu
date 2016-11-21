@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.write;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.mvp.home.HomeHotModel;
 
 /**
@@ -9,5 +10,14 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 
 public interface WriteView {
     void getDataSuccess(HomeHotModel model);
+    void deleteNewBook(RewardResult model);
+    void articleVote(RewardResult model);
+    void publishNewBook(RewardResult model);
     void getDataFail(String msg);
+    void getDataFail2(String msg);
+    void getDataFail3(String msg);
+    void getDataFail4(String msg);
+    void showLoading();
+    void hideLoading();
+
 }
