@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.fragment;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -9,7 +8,6 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.mvp.write.WriteModle;
 import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.mvp.write.WriteView;
 import com.laichushu.book.ui.activity.CreateNewBookActivity;
@@ -36,6 +34,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     private PullLoadMoreRecyclerView mRecyclerView;
     private WriteBookAdapter writeBookAdapter;
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
+    private boolean isLoad = true;
 
     @Override
     public View createSuccessView() {
@@ -55,9 +54,14 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     @Override
     protected void initData() {
-        writeBookAdapter = new WriteBookAdapter(mData, mActivity,mvpPresenter);
+        if (isLoad) {//只执行一次
+            mvpPresenter.getArticleBookList();
+        }else {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        }
+        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter);
         mRecyclerView.setAdapter(writeBookAdapter);
-        mvpPresenter.getArticleBookList();
+        isLoad = false;
     }
 
     @Override
@@ -72,19 +76,19 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             mData.addAll(model.getData());
             writeBookAdapter.setmData(mData);
             writeBookAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
     }
 
     @Override
-    public void deleteNewBook(RewardResult model) {
+    public void deleteNewBook(RewardResult model, int position) {
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功");
-            mData.clear();
-            refreshPage(LoadingPager.PageState.STATE_LOADING);
-            mvpPresenter.getArticleBookList();
-        }else {
+            mData.remove(position);
+            writeBookAdapter.setmData(mData);
+            writeBookAdapter.notifyDataSetChanged();
+        } else {
             ToastUtil.showToast("删除失败");
         }
     }
@@ -93,7 +97,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     public void articleVote(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("投稿成功");
-        }else {
+        } else {
             ToastUtil.showToast("投稿失败");
         }
     }
@@ -102,7 +106,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     public void publishNewBook(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("发表成功");
-        }else {
+        } else {
             ToastUtil.showToast("发表失败");
         }
     }

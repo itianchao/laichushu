@@ -16,6 +16,7 @@ import com.laichushu.book.bean.netbean.Comment2_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
 import com.laichushu.book.bean.netbean.Complaint_Paramet;
 import com.laichushu.book.bean.netbean.CreateNewDraft_Paramet;
+import com.laichushu.book.bean.netbean.DeleteDraft_Paramet;
 import com.laichushu.book.bean.netbean.DeleteNewBook_Paramet;
 import com.laichushu.book.bean.netbean.DraftList_Paramet;
 import com.laichushu.book.bean.netbean.EditDraft_Paramet;
@@ -271,7 +272,11 @@ public interface ApiStores {
     @POST("article/issue")
     Observable<RewardResult> publishNewBook(@Body PublishNewBook_Paramet paramet);
 
-    //删除
+    //删除新书
     @POST("article/delete")
     Observable<RewardResult> deleteNewBook(@Body DeleteNewBook_Paramet paramet);
+
+    //删除草稿
+    @POST("chapter/delete")
+    Observable<RewardResult> deleteDraftBook(@Body DeleteDraft_Paramet paramet);
 }

@@ -47,7 +47,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
 
 
     @Override
-    public void onBindViewHolder(WriteBookViewHolder holder, int position) {
+    public void onBindViewHolder(WriteBookViewHolder holder, final int position) {
         final HomeHotModel.DataBean dataBean = mData.get(position);
         GlideUitl.loadImg(mActivity, dataBean.getCoverUrl(), holder.bookIv);
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +116,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             @Override
             public void onClick(View v) {
                 String articleId = dataBean.getArticleId();
-                mvpPresenter.deleteBook(articleId);
+                mvpPresenter.deleteBook(articleId,position);
             }
         });
     }
