@@ -8,18 +8,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
-import com.laichushu.book.mvp.directories.DirectoriesPresenter;
-import com.laichushu.book.mvp.directories.DirectoriesView;
-import com.laichushu.book.ui.adapter.DirectoriesAdapter;
-import com.laichushu.book.ui.base.MvpActivity;
-import com.laichushu.book.utils.ToastUtil;
-import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.directories.BookMoudle;
+import com.laichushu.book.mvp.directories.DirectoriesPresenter;
+import com.laichushu.book.mvp.directories.DirectoriesView;
 import com.laichushu.book.mvp.directories.MaterialContentModel;
 import com.laichushu.book.mvp.directories.MaterialListModel;
 import com.laichushu.book.ui.adapter.BookListAdapter;
+import com.laichushu.book.ui.adapter.DirectoriesAdapter;
+import com.laichushu.book.ui.base.MvpActivity;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -43,11 +43,11 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
     @Override
     protected void initView() {
         setContentView(R.layout.activity_directories);
-        finishIv = (ImageView)findViewById(R.id.iv_title_finish);
-        materialRbn = (RadioButton)findViewById(R.id.rbn_material);
-        dirRbn = (RadioButton)findViewById(R.id.rbn_dir);
-        dirLv = (ListView)findViewById(R.id.lv_dir);
-        bookLv = (ListView)findViewById(R.id.lv_book);
+        finishIv = (ImageView) findViewById(R.id.iv_title_finish);
+        materialRbn = (RadioButton) findViewById(R.id.rbn_material);
+        dirRbn = (RadioButton) findViewById(R.id.rbn_dir);
+        dirLv = (ListView) findViewById(R.id.lv_dir);
+        bookLv = (ListView) findViewById(R.id.lv_book);
         dirLv.setVisibility(View.VISIBLE);
         bookLv.setVisibility(View.GONE);
         finishIv.setOnClickListener(this);
@@ -80,7 +80,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 directoriesAdapter.setmData(mData);
                 directoriesAdapter.notifyDataSetChanged();
             }
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -98,7 +98,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 bookListAdapter.setmBookdata(mBookdata);
                 bookListAdapter.notifyDataSetChanged();
             }
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -121,7 +121,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.rbn_material:
                 dirLv.setVisibility(View.VISIBLE);
                 bookLv.setVisibility(View.GONE);
@@ -143,14 +143,14 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
         String path = mBookdata.get(position).getContent();
         String name = mBookdata.get(position).getName();
         String parentId = mBookdata.get(position).getId();
-        bundle.putString("path",path);
-        bundle.putString("title",name);
-        bundle.putString("parentId",parentId);
+        bundle.putString("path", path);
+        bundle.putString("title", name);
+        bundle.putString("parentId", parentId);
         if (mBookdata.get(position).isIsSection()) {
-            UIUtil.openActivity(this,PartActivity.class,bundle);
-        }else {
-            if (!TextUtils.isEmpty(path)){
-                UIUtil.openActivity(this,NopublishBookActivity.class,bundle);
+            UIUtil.openActivity(this, PartActivity.class, bundle);
+        } else {
+            if (!TextUtils.isEmpty(path)) {
+                UIUtil.openActivity(this, NopublishBookActivity.class, bundle);
             }
         }
     }

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:background="@color/white"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+
+    android:paddingBottom="1dp">
 
     <TextView
         android:id="@+id/tv_name"
@@ -22,11 +25,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"
+        android:text="重命名"
         android:textColor="@color/global"
-        android:textSize="@dimen/edit4"
-        tools:text="重命名" />
+        android:textSize="@dimen/edit4" />
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -35,9 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
+            android:text="修改草稿"
             android:textColor="@color/global"
-            android:textSize="@dimen/edit4"
-            tools:text="修改草稿" />
+            android:textSize="@dimen/edit4" />
 
         <ImageView
             android:id="@+id/iv_delete"
@@ -46,5 +49,6 @@
             android:layout_marginRight="5dp"
             android:src="@drawable/icon_delete"
             android:visibility="gone" />
-    </RelativeLayout>
+    </FrameLayout>
+
 </LinearLayout>

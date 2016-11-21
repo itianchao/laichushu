@@ -1,5 +1,7 @@
 package com.laichushu.book.mvp.draftmodle;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.DeleteDraft_Paramet;
 import com.laichushu.book.bean.netbean.DraftList_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -57,5 +59,29 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
 
     public void setParamet(DraftList_Paramet paramet) {
         this.paramet = paramet;
+    }
+
+    /**
+     * 删除草稿
+     */
+    public void deleteDraftBook(String articleId, final int position) {
+        Logger.e("删除草稿");
+        DeleteDraft_Paramet paramet = new DeleteDraft_Paramet(articleId,userId);
+        addSubscription(apiStores.deleteDraftBook(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getDeleteDraftBookDataSuccess(model,position);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail2("code:" + code + "\nmsg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
     }
 }
