@@ -17,28 +17,29 @@ import com.laichushu.book.utils.UIUtil;
 import java.util.List;
 
 /**
- * Created by PCPC on 2016/11/18.
+ * Created by PCPC on 2016/11/21.
  */
 
-public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.ViewHolder> {
+public class BookCastCollAdapter extends RecyclerView.Adapter<BookCastCollAdapter.ViewHolder> {
     private Context context;
-    private List<HomeHotModel.DataBean> dataBeen;
-    public MyBookCastAdapter(Context context, List<HomeHotModel.DataBean> dataBean) {
+    private List<BookCastModle.DataBean.CollectListBean> dataBeen;
+    public BookCastCollAdapter(Context context, List<BookCastModle.DataBean.CollectListBean> dataBean) {
         this.context = context;
         this.dataBeen = dataBean;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BookCastCollAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = UIUtil.inflate(R.layout.item_bookcast);
-        return new ViewHolder(itemView);
+        return new BookCastCollAdapter.ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivImg);
-        holder.tvItem.setText(dataBeen.get(position).getArticleName());
+        GlideUitl.loadImg(context, dataBeen.get(position).getArtCoverUrl(), holder.ivImg);
+        holder.tvItem.setText(dataBeen.get(position).getCollectName());
     }
+
 
     @Override
     public long getItemId(int position) {
@@ -50,7 +51,7 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
         return dataBeen == null ? 0 : dataBeen.size();
     }
 
-    public void refreshAdapter(List<HomeHotModel.DataBean> listData) {
+    public void refreshAdapter(List<BookCastModle.DataBean.CollectListBean> listData) {
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);

@@ -11,6 +11,7 @@ import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
 import com.laichushu.book.bean.netbean.Balance_Paramet;
 import com.laichushu.book.bean.netbean.BestLike_Paramet;
 import com.laichushu.book.bean.netbean.BookList_Paramet;
+import com.laichushu.book.bean.netbean.CollectList_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.Comment2_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
@@ -45,6 +46,7 @@ import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
 import com.laichushu.book.bean.netbean.UploadIdcardInfor_Parmet;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
+import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
 import com.laichushu.book.mvp.bookdetail.SubscribeArticleModle;
@@ -274,4 +276,7 @@ public interface ApiStores {
     //删除
     @POST("article/delete")
     Observable<RewardResult> deleteNewBook(@Body DeleteNewBook_Paramet paramet);
+    //收藏列表
+    @POST("collect/list")
+    Observable<BookCastModle> getCollectList(@Body CollectList_Paramet paramet);
 }

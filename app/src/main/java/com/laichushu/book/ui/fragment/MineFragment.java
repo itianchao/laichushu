@@ -51,7 +51,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         ivMineHead = (ImageView) mRootView.findViewById(R.id.iv_minaHead);
         tvMineName = (TextView) mRootView.findViewById(R.id.tv_mineNickName);
         tvMinebookNum = (TextView) mRootView.findViewById(R.id.tv_mineBookNum);
-        rlHead = (RelativeLayout) mRootView.findViewById(R.id.rl_head);
+        rlHead = ((RelativeLayout) mRootView.findViewById(R.id.rl_mainHead));
         rlManage = (RelativeLayout) mRootView.findViewById(R.id.rl_manage);
         rlBookCast = (RelativeLayout) mRootView.findViewById(R.id.rl_bookCast);
         rlWallet = (RelativeLayout) mRootView.findViewById(R.id.rl_Wallet);
@@ -108,7 +108,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_head:
+            case R.id.rl_mainHead:
                 Intent editAct = new Intent(mActivity, EditMyselfeInforActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result", res);

@@ -8,6 +8,6 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 
 public interface BookcastView {
     void getDataSuccess(HomeHotModel model);
-
+    void getCollectionDataSuccess(BookCastModle model);
     void getDataFail(String msg);
 }
