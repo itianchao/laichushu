@@ -8,53 +8,98 @@
         android:id="@+id/bookCast_top"
         layout="@layout/page_title" />
 
-    <RadioGroup
-        android:id="@+id/rg_bookList"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/bookCast_top"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rg_scan"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:button="@null"
-            android:checked="true"
-            android:text="浏览"
-            android:textColor="@drawable/rb_bg_selector"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="20dp"
-            android:layout_height="match_parent" />
+            <RadioGroup
+                android:id="@+id/rg_bookList"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/rb_collection"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:button="@null"
-            android:text="收藏"
-            android:textColor="@drawable/rb_bg_selector"
-            android:textStyle="bold" />
-    </RadioGroup>
-
-    <View
-        android:id="@+id/line_scan"
-        android:layout_width="25dp"
-        android:layout_height="1.0dp"
-        android:layout_alignLeft="@+id/rg_scan"
-        android:layout_below="@+id/rg_bookList"
-        android:background="@color/auditing" />
-
-    <View
-        android:id="@+id/line_collection"
-        android:layout_width="25dp"
-        android:layout_height="1.0dp"
-        android:layout_below="@+id/rg_bookList"
-        android:layout_toRightOf="@+id/line_scan"
-        android:background="@drawable/rb_bg_selector" />
+                <RadioButton
+                    android:id="@+id/rb_scan"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="浏览"
+                    android:textColor="@drawable/rb_bg_selector"
+                    android:textStyle="bold" />
 
 
+
+                <RadioButton
+                    android:id="@+id/rb_collection"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="收藏"
+                    android:textColor="@drawable/rb_bg_selector"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+
+                <View
+                    android:id="@+id/myCast_left"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_toLeftOf="@+id/middle_view"
+                    android:layout_weight="1"
+                    android:background="@color/auditing" />
+
+
+
+                <View
+                    android:id="@+id/myCast_right"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_toRightOf="@+id/middle_view"
+                    android:layout_weight="1"
+                    android:background="@color/auditing" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_bookCast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <GridView
+                android:id="@+id/gv_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="3"
+                android:verticalSpacing="20dp"></GridView>
+        </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
+    </LinearLayout>
 </RelativeLayout>

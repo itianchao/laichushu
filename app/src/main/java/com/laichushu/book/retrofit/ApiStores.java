@@ -254,8 +254,4 @@ public interface ApiStores {
     //书的章列表或者节列表
     @POST("chapter/list")
     Observable<DraftModle> getDraftList(@Body DraftList_Paramet paramet);
-
-    //书的列表
-    @POST("article/find")
-    Observable<HomeHotModel> getArticleBookList(@Body ArticleBookList_Paramet paramet);
 }
