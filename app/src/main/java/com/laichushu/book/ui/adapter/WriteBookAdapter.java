@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.sourcematerial.SourceMaterialView;
 import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.ui.activity.DraftModleActivity;
+import com.laichushu.book.ui.activity.SourceMaterialActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -85,7 +87,9 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.materialTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle bundle = new Bundle();
+                bundle.putString("articleId", dataBean.getArticleId());
+                UIUtil.openActivity(mActivity, SourceMaterialActivity.class, bundle);
             }
         });
         /**

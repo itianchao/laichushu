@@ -17,6 +17,8 @@ import com.laichushu.book.bean.netbean.Comment2_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
 import com.laichushu.book.bean.netbean.Complaint_Paramet;
 import com.laichushu.book.bean.netbean.CreateNewDraft_Paramet;
+import com.laichushu.book.bean.netbean.CreateSourceMaterialDir_Paramet;
+import com.laichushu.book.bean.netbean.CreateSourceMaterial_Paramet;
 import com.laichushu.book.bean.netbean.DeleteDraft_Paramet;
 import com.laichushu.book.bean.netbean.DeleteNewBook_Paramet;
 import com.laichushu.book.bean.netbean.DraftList_Paramet;
@@ -43,6 +45,7 @@ import com.laichushu.book.bean.netbean.Regist_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.netbean.SaveComment_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
+import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
 import com.laichushu.book.bean.netbean.UploadIdcardInfor_Parmet;
@@ -68,6 +71,7 @@ import com.laichushu.book.mvp.login.LoginModel;
 import com.laichushu.book.mvp.part.PartModel;
 import com.laichushu.book.mvp.regist.RegistModel;
 import com.laichushu.book.mvp.regist2.RegistModel2;
+import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
 
 import java.util.Map;
 
@@ -285,4 +289,16 @@ public interface ApiStores {
     //收藏列表
     @POST("collect/list")
     Observable<BookCastModle> getCollectList(@Body CollectList_Paramet paramet);
+
+    //添加素材文件夹
+    @POST("material/addfolder")
+    Observable<RewardResult> createSourceMaterialDir(@Body CreateSourceMaterialDir_Paramet paramet);
+
+    //添加素材
+    @POST("material/addmat")
+    Observable<RewardResult> createSourceMaterial(@Body CreateSourceMaterial_Paramet paramet);
+
+    //获取素材列表
+    @POST("material/list")
+    Observable<SourceMaterialModle> getSourceMaterialList(@Body SourceMaterialList_Paramet paramet);
 }

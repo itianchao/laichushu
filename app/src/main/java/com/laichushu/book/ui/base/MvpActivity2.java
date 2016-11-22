@@ -12,7 +12,7 @@ import com.laichushu.book.ui.widget.LoadingPager;
  */
 public abstract class MvpActivity2<P extends BasePresenter> extends BaseActivity {
     protected P mvpPresenter;
-    private LoadingPager mPage;
+    public LoadingPager mPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

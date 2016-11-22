@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.event.RefurshDraftEvent;
 import com.laichushu.book.mvp.draftmodle.DraftModle;
 import com.laichushu.book.mvp.draftmodle.DraftModlePresenter;
 import com.laichushu.book.mvp.draftmodle.DraftModleView;
@@ -19,6 +20,10 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -76,9 +81,10 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         if (isLoad) {//只执行一次
             mvpPresenter.getDraftList(articleId);
-        }else {
+        } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
         mAdapter = new DraftListAdapter(this, mData, mvpPresenter);
@@ -178,5 +184,21 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     public void onLoadMore() {
         mvpPresenter.getParamet().setPageNo(pageNo + "");
         mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefurshDraftEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            pageNo = 1;
+            mvpPresenter.getParamet().setPageNo(pageNo + "");
+            mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

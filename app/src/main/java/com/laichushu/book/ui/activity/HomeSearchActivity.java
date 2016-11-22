@@ -124,6 +124,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 bookRyv.setVisibility(View.GONE);
             }
         } else {
+            initListener();
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             ToastUtil.showToast(model.getErrMsg());
         }
@@ -132,6 +133,8 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
+        initListener();
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
     }
 
     @Override
@@ -249,5 +252,14 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         searchEt.setText(list.get(position).getHistory());
         onEditorAction(searchEt, EditorInfo.IME_ACTION_SEARCH, null);
+    }
+    public void initListener(){
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.LoadData(search);
+            }
+        });
     }
 }

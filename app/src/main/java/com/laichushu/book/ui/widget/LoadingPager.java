@@ -70,7 +70,7 @@ public abstract class LoadingPager extends FrameLayout {
                     mState = PageState.STATE_LOADING;
                     showPage();
                     //2.重新加载数据，然后刷新Page
-                    loadDataAndRefreshPage();
+                    mListener.reLoadData();
                 }
             });
         }
@@ -174,4 +174,16 @@ public abstract class LoadingPager extends FrameLayout {
 //     * @return
 //     */
 //    public abstract Object loadData();
+    public interface ReLoadDataListenListener{
+        void reLoadData();
+    }
+    private ReLoadDataListenListener mListener;
+
+    public ReLoadDataListenListener getmListener() {
+        return mListener;
+    }
+
+    public void setmListener(ReLoadDataListenListener mListener) {
+        this.mListener = mListener;
+    }
 }
