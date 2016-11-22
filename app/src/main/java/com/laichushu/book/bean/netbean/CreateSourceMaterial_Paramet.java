@@ -9,11 +9,21 @@ public class CreateSourceMaterial_Paramet {
     private String articleId;
     private String materialName;
     private String parentId;
+    private String content;
 
-    public CreateSourceMaterial_Paramet(String articleId, String materialName, String parentId) {
+    public CreateSourceMaterial_Paramet(String articleId, String materialName, String parentId, String content) {
         this.articleId = articleId;
         this.materialName = materialName;
         this.parentId = parentId;
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getArticleId() {

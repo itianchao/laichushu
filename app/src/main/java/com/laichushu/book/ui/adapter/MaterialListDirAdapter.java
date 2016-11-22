@@ -8,34 +8,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.draftmodle.DraftModle;
-import com.laichushu.book.mvp.draftmodle.DraftModlePresenter;
-import com.laichushu.book.ui.activity.DraftModleActivity;
-import com.laichushu.book.ui.activity.NopublishBookActivity;
+import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
+import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirPresenter;
+import com.laichushu.book.ui.activity.SourceMaterialActivity;
+import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
 
 /**
- * 草稿列表
+ * 素材文件夹列表
  * Created by wangtong on 2016/11/18.
  */
 
-public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.DraftListViewHolder> {
+public class MaterialListDirAdapter extends RecyclerView.Adapter<MaterialListDirAdapter.DraftListViewHolder> {
 
     private boolean isGone = false;
-    private DraftModleActivity mActivity;
-    private ArrayList<DraftModle.DataBean> mData;
-    private DraftModlePresenter mvpPresenter;
-    public DraftListAdapter(DraftModleActivity draftModleActivity, ArrayList<DraftModle.DataBean> mData, DraftModlePresenter mvpPresenter) {
-        this.mActivity = draftModleActivity;
+    private SourceMaterialDirActivity mActivity;
+    private ArrayList<SourceMaterialDirModle.DataBean> mData;
+    private SourceMaterialDirPresenter mvpPresenter;
+
+    public MaterialListDirAdapter(SourceMaterialDirActivity mActivity, ArrayList<SourceMaterialDirModle.DataBean> mData, SourceMaterialDirPresenter mvpPresenter) {
+        this.mActivity = mActivity;
         this.mData = mData;
         this.mvpPresenter = mvpPresenter;
     }
 
     @Override
     public DraftListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = UIUtil.inflate(R.layout.item_draft_list);
+        View itemView = UIUtil.inflate(R.layout.item_materia_list);
         return new DraftListViewHolder(itemView);
     }
 
@@ -45,13 +46,11 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
         if (isGone) {
             holder.deleteIv.setVisibility(View.VISIBLE);
             holder.renameTv.setVisibility(View.INVISIBLE);
-            holder.reviseTv.setVisibility(View.INVISIBLE);
         } else {
             holder.deleteIv.setVisibility(View.GONE);
             holder.renameTv.setVisibility(View.VISIBLE);
-            holder.reviseTv.setVisibility(View.VISIBLE);
         }
-        final DraftModle.DataBean dataBean = mData.get(position);
+        final SourceMaterialDirModle.DataBean dataBean = mData.get(position);
         holder.nameTv.setText(dataBean.getName());
         holder.renameTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,27 +58,16 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
 
             }
         });
-        holder.reviseTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        holder.deleteIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mvpPresenter.deleteDraftBook(dataBean.getId(),position);
-            }
-        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: 2016/11/22 跳转素材目录
                 Bundle bundle = new Bundle();
                 bundle.putString("title", dataBean.getName());
-                bundle.putString("path", dataBean.getContentUrlApp());
-                UIUtil.openActivity(mActivity, NopublishBookActivity.class, bundle);
+                bundle.putString("parentId", dataBean.getId());
+                bundle.putString("articleId", dataBean.getArticleId());
+                UIUtil.openActivity(mActivity, SourceMaterialActivity.class, bundle);
             }
         });
     }
@@ -93,7 +81,6 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
 
         private TextView nameTv;
         private TextView renameTv;
-        private TextView reviseTv;
         private ImageView deleteIv;
         private View itemView;
 
@@ -102,7 +89,6 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
             this.itemView = itemView;
             nameTv = (TextView) itemView.findViewById(R.id.tv_name);
             renameTv = (TextView) itemView.findViewById(R.id.tv_rename);
-            reviseTv = (TextView) itemView.findViewById(R.id.tv_revise);
             deleteIv = (ImageView) itemView.findViewById(R.id.iv_delete);
         }
     }
@@ -115,11 +101,11 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
         isGone = gone;
     }
 
-    public ArrayList<DraftModle.DataBean> getmData() {
+    public ArrayList<SourceMaterialDirModle.DataBean> getmData() {
         return mData;
     }
 
-    public void setmData(ArrayList<DraftModle.DataBean> mData) {
+    public void setmData(ArrayList<SourceMaterialDirModle.DataBean> mData) {
         this.mData = mData;
     }
 }

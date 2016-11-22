@@ -1,7 +1,7 @@
 package com.laichushu.book.mvp.sourcematerial;
 
 /**
- * 写作
+ * 素材view
  * Created by wangtong on 2016/11/16.
  */
 

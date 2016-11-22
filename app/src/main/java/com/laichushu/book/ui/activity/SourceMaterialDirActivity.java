@@ -9,11 +9,9 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.event.RefurshMaterialDirEvent;
-import com.laichushu.book.event.RefurshMaterialEvent;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialPresenter;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialView;
-import com.laichushu.book.ui.adapter.MaterialListAdapter;
+import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
+import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirPresenter;
+import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirView;
 import com.laichushu.book.ui.adapter.MaterialListDirAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -28,11 +26,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 
 /**
- * 素材页面
+ * 素材文件夹页面
  * Created by wangtong on 2016/11/22.
  */
 
-public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter> implements SourceMaterialView, View.OnClickListener {
+public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPresenter> implements SourceMaterialDirView, View.OnClickListener {
 
     private TextView addTv;
     private ImageView finishIv;
@@ -41,23 +39,20 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     private TextView titleRightTv;
     private LinearLayout newDraftLay;
     private View page;
-    private MaterialListAdapter mAdapter;
-    private ArrayList<SourceMaterialModle.DataBean> mData = new ArrayList<>();
-    private boolean isLoad = true;
-    private String parentId;
-    private String title;
+    private MaterialListDirAdapter mAdapter;
     private String articleId;
+    private ArrayList<SourceMaterialDirModle.DataBean> mData = new ArrayList<>();
+    private boolean isLoad = true;
 
     @Override
-    protected SourceMaterialPresenter createPresenter() {
-        return new SourceMaterialPresenter(this);
+    protected SourceMaterialDirPresenter createPresenter() {
+        return new SourceMaterialDirPresenter(this);
     }
 
     @Override
     protected View createSuccessView() {
-        View mSuccessView = UIUtil.inflate(R.layout.activity_sourcemateial);
-
-        title = getIntent().getStringExtra("title");
+        View mSuccessView = UIUtil.inflate(R.layout.activity_sourcemateialdir);
+        articleId = getIntent().getStringExtra("articleId");
         addTv = (TextView) mSuccessView.findViewById(R.id.tv_add);
         titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
         titleRightTv = (TextView) mSuccessView.findViewById(R.id.tv_title_right);
@@ -70,7 +65,7 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
         titleRightTv.setVisibility(View.VISIBLE);
         titleRightTv.setText("管理");
         titleRightTv.setTextColor(Color.WHITE);
-        titleTv.setText(title);
+        titleTv.setText("素材模式");
         addTv.setText("添加素材");
         finishIv.setOnClickListener(this);
         newDraftLay.setOnClickListener(this);
@@ -84,22 +79,20 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
 
     @Override
     protected void initData() {
-        parentId = getIntent().getStringExtra("parentId");
-        articleId = getIntent().getStringExtra("articleId");
         EventBus.getDefault().register(this);
         if (isLoad) {//只执行一次
-            mvpPresenter.getSourceMaterialList(parentId);
+            mvpPresenter.getSourceMaterialList(articleId);
         } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
-        mAdapter = new MaterialListAdapter(this, mData, mvpPresenter);
+        mAdapter = new MaterialListDirAdapter(this, mData, mvpPresenter);
         mateialRyv.setAdapter(mAdapter);
         isLoad = false;
 
     }
 
     @Override
-    public void getDataSuccess(SourceMaterialModle model) {
+    public void getDataSuccess(SourceMaterialDirModle model) {
         if (model.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (model.getData() != null) {
@@ -131,33 +124,6 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshMaterialEvent event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        if (event.isRefursh) {
-            mData.clear();
-            refreshPage(LoadingPager.PageState.STATE_LOADING);
-            mvpPresenter.getSourceMaterialList(parentId);
-        }
-    }
-
-    public void refursh() {
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                mData.clear();
-                refreshPage(LoadingPager.PageState.STATE_LOADING);
-                mvpPresenter.getSourceMaterialList(parentId);
-            }
-        });
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
@@ -166,10 +132,7 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
             case R.id.lay_add_newbook://创建素材
                 Bundle bundle = new Bundle();
                 bundle.putString("articleId", articleId);
-                bundle.putString("parentId", parentId);
-                bundle.putString("title", title);
-                bundle.putString("type","1");//1、新建2、编辑
-                UIUtil.openActivity(this, CreateMaterialActivity.class, bundle);
+                UIUtil.openActivity(this, CreateMaterialDirActivity.class, bundle);
                 break;
             case R.id.tv_title_right:
                 if (titleRightTv.getText().toString().equals("管理")) {
@@ -185,12 +148,42 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
                 break;
         }
     }
+//
+//    @Override
+//    public void onRefresh() {
+//
+//    }
+//
+//    @Override
+//    public void onLoadMore() {
+//
+//    }
 
-    public String getMaterialTitle() {
-        return title;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefurshMaterialDirEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            mData.clear();
+            refreshPage(LoadingPager.PageState.STATE_LOADING);
+            mvpPresenter.getSourceMaterialList(articleId);
+        }
+    }
+
+    public void refursh() {
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                mData.clear();
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.getSourceMaterialList(articleId);
+            }
+        });
     }
 }

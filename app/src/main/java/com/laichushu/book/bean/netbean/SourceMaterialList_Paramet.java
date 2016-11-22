@@ -6,17 +6,17 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class SourceMaterialList_Paramet {
-    private String  articleId;
+    private String parentId;
 
-    public SourceMaterialList_Paramet(String articleId) {
-        this.articleId = articleId;
+    public SourceMaterialList_Paramet(String parentId) {
+        this.parentId = parentId;
     }
 
-    public String getArticleId() {
-        return articleId;
+    public String getParentId() {
+        return parentId;
     }
 
-    public void setArticleId(String articleId) {
-        this.articleId = articleId;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

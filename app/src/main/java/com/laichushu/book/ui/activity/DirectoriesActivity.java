@@ -58,6 +58,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
         bookListAdapter = new BookListAdapter(this, mBookdata);
         bookLv.setAdapter(bookListAdapter);
         bookLv.setOnItemClickListener(this);
+        dirLv.setOnItemClickListener(this);
     }
 
     @Override
@@ -138,20 +139,41 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // TODO: 2016/11/8  跳转书籍
-        Bundle bundle = new Bundle();
-        String path = mBookdata.get(position).getContent();
-        String name = mBookdata.get(position).getName();
-        String parentId = mBookdata.get(position).getId();
-        bundle.putString("path", path);
-        bundle.putString("title", name);
-        bundle.putString("parentId", parentId);
-        if (mBookdata.get(position).isIsSection()) {
-            UIUtil.openActivity(this, PartActivity.class, bundle);
-        } else {
-            if (!TextUtils.isEmpty(path)) {
-                UIUtil.openActivity(this, NopublishBookActivity.class, bundle);
-            }
+        switch(parent.getId()){
+            case R.id.lv_book:
+                // TODO: 2016/11/8  跳转书籍
+                Bundle bundle = new Bundle();
+                String path = mBookdata.get(position).getContentUrlApp();
+                String name = mBookdata.get(position).getName();
+                String parentId = mBookdata.get(position).getId();
+                bundle.putString("path", path);
+                bundle.putString("title", name);
+                bundle.putString("parentId", parentId);
+                if (mBookdata.get(position).isIsSection()) {
+                    UIUtil.openActivity(this, PartActivity.class, bundle);
+                } else {
+                    if (!TextUtils.isEmpty(path)) {
+                        UIUtil.openActivity(this, NopublishBookActivity.class, bundle);
+                    }
+                }
+                break;
+            case R.id.lv_dir:
+                MaterialListModel.DataBean dataBean = mData.get(position);
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("title", dataBean.getName());
+                bundle2.putString("path", dataBean.getContentUrlApp());
+                bundle2.putString("parentId", dataBean.getParentId());
+                if (mData.get(position).isIsSection()) {
+                    UIUtil.openActivity(this, PartActivity.class, bundle2);
+                } else {
+                    if (!TextUtils.isEmpty(dataBean.getContentUrlApp())) {
+                        UIUtil.openActivity(mActivity, NopublishBookActivity.class, bundle2);
+                    }
+                }
+
+                break;
         }
+
     }
+
 }

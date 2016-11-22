@@ -23,6 +23,7 @@ import com.laichushu.book.bean.netbean.DeleteDraft_Paramet;
 import com.laichushu.book.bean.netbean.DeleteNewBook_Paramet;
 import com.laichushu.book.bean.netbean.DraftList_Paramet;
 import com.laichushu.book.bean.netbean.EditDraft_Paramet;
+import com.laichushu.book.bean.netbean.EditMaterialBook_Paramet;
 import com.laichushu.book.bean.netbean.ForgetPwd_Paramet;
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
@@ -45,6 +46,7 @@ import com.laichushu.book.bean.netbean.Regist_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.netbean.SaveComment_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
+import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
@@ -72,6 +74,7 @@ import com.laichushu.book.mvp.part.PartModel;
 import com.laichushu.book.mvp.regist.RegistModel;
 import com.laichushu.book.mvp.regist2.RegistModel2;
 import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
+import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
 
 import java.util.Map;
 
@@ -298,7 +301,16 @@ public interface ApiStores {
     @POST("material/addmat")
     Observable<RewardResult> createSourceMaterial(@Body CreateSourceMaterial_Paramet paramet);
 
+    //获取素材文件夹列表
+    @POST("material/list")
+    Observable<SourceMaterialDirModle> getSourceMaterialDirList(@Body SourceMaterialDirList_Paramet paramet);
+
     //获取素材列表
     @POST("material/list")
     Observable<SourceMaterialModle> getSourceMaterialList(@Body SourceMaterialList_Paramet paramet);
+
+    //获取素材列表
+    @POST("material/edit")
+    Observable<RewardResult> editMaterialBook(@Body EditMaterialBook_Paramet paramet);
+
 }

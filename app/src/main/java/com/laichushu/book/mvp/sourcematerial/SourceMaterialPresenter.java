@@ -12,19 +12,22 @@ import com.laichushu.book.utils.LoggerUtil;
  */
 public class SourceMaterialPresenter extends BasePresenter<SourceMaterialView> {
     private SourceMaterialActivity mActivity;
+
     //初始化构造
     public SourceMaterialPresenter(SourceMaterialView view) {
         attachView(view);
-        mActivity = (SourceMaterialActivity)view;
+        mActivity = (SourceMaterialActivity) view;
     }
 
     /**
-     * 获取文件夹列表
-     * @param articleId
+     * 获取素材列表
+     *
+     * @param parentId
      */
-    public void getSourceMaterialList(String articleId){
-        LoggerUtil.e("获取文件夹列表");
-        SourceMaterialList_Paramet paramet = new SourceMaterialList_Paramet(articleId);
+    public void getSourceMaterialList(String parentId) {
+        LoggerUtil.e("获取素材列表");
+        SourceMaterialList_Paramet paramet = new SourceMaterialList_Paramet(parentId);
+        LoggerUtil.toJson(paramet);
         addSubscription(apiStores.getSourceMaterialList(paramet), new ApiCallback<SourceMaterialModle>() {
             @Override
             public void onSuccess(SourceMaterialModle model) {
@@ -33,7 +36,7 @@ public class SourceMaterialPresenter extends BasePresenter<SourceMaterialView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code:"+code+"\nmsg:"+msg);
+                mvpView.getDataFail("code:" + code + "\nmsg:" + msg);
             }
 
             @Override
@@ -42,4 +45,5 @@ public class SourceMaterialPresenter extends BasePresenter<SourceMaterialView> {
             }
         });
     }
+
 }

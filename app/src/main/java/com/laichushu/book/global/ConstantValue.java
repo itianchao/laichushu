@@ -16,4 +16,5 @@ public class ConstantValue {
     public static String PAGESIZE3 = "30";//pageSize
     public static String PHOTO_SEVERCE_PATH = "http://101.254.183.67:9980/";//图片服务器路径
 
+    public static int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
 }

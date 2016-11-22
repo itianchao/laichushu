@@ -54,6 +54,32 @@ public class PartModel {
         private String name;
         private String content;
         private boolean isSection;
+        private String contentUrlPc;    	// pc端素材路径
+        private String contentUrlApp;   	// app 端素材路径
+
+        public boolean isSection() {
+            return isSection;
+        }
+
+        public void setSection(boolean section) {
+            isSection = section;
+        }
+
+        public String getContentUrlPc() {
+            return contentUrlPc;
+        }
+
+        public void setContentUrlPc(String contentUrlPc) {
+            this.contentUrlPc = contentUrlPc;
+        }
+
+        public String getContentUrlApp() {
+            return contentUrlApp;
+        }
+
+        public void setContentUrlApp(String contentUrlApp) {
+            this.contentUrlApp = contentUrlApp;
+        }
 
         public String getId() {
             return id;

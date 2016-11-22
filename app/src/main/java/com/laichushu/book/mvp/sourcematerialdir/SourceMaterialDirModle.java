@@ -1,13 +1,13 @@
-package com.laichushu.book.mvp.sourcematerial;
+package com.laichushu.book.mvp.sourcematerialdir;
 
 import java.util.ArrayList;
 
 /**
- * 素材modle
+ * 素材文件夹modle
  * Created by wangtong on 2016/11/22.
  */
 
-public class SourceMaterialModle {
+public class SourceMaterialDirModle {
     private boolean success;
     private String errMsg;
     private ArrayList<DataBean> data;
@@ -16,28 +16,10 @@ public class SourceMaterialModle {
         private String id;                    // 素材id
         private String name;                // 素材名
         private String content;                // 内容
-        private String contentUrlPc;        // pc端素材路径
-        private String contentUrlApp;    // app 端素材路径
         private String articleId;            // 作品id
         private String parentId;            // 父ID
         private String imageUrl;            // 上传图片路径
         private String imageName;        // 上传图片名称
-
-        public String getContentUrlPc() {
-            return contentUrlPc;
-        }
-
-        public void setContentUrlPc(String contentUrlPc) {
-            this.contentUrlPc = contentUrlPc;
-        }
-
-        public String getContentUrlApp() {
-            return contentUrlApp;
-        }
-
-        public void setContentUrlApp(String contentUrlApp) {
-            this.contentUrlApp = contentUrlApp;
-        }
 
         public String getId() {
             return id;

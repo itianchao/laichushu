@@ -190,6 +190,7 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     public void onEvent(RefurshDraftEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
+            mData.clear();
             pageNo = 1;
             mvpPresenter.getParamet().setPageNo(pageNo + "");
             mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表

@@ -40,7 +40,6 @@ import jp.wasabeef.richeditor.RichEditor;
 
 public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter> implements CreateNewDraftView, View.OnClickListener {
 
-    private static final int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
     private TextView titleTv;
     private ImageView finishIv;
     private EditText draftmEt;
@@ -68,7 +67,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         //mEditor.setBackgroundResource(R.drawable.bg);
         mEditor.setPadding(10, 10, 10, 10);
         //    mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
-        mEditor.setPlaceholder("从这里开始");
+        mEditor.setPlaceholder("");
 
         mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
             @Override
@@ -80,7 +79,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         mSuccessView.findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Album.startAlbum(mActivity, ACTIVITY_REQUEST_SELECT_PHOTO
+                Album.startAlbum(mActivity, ConstantValue.ACTIVITY_REQUEST_SELECT_PHOTO
                         , 1                                                         // 指定选择数量。
                         , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
                         , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
