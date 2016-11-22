@@ -32,6 +32,7 @@ public class PartActivity extends MvpActivity<PartPresenter> implements PartView
     private ArrayList<PartModel.DataBean> mPartdata = new ArrayList<>();
     private PartListAdapter partListAdapter;
     private TextView titleTv;
+    private String type;
 
     @Override
     protected void initView() {
@@ -49,7 +50,13 @@ public class PartActivity extends MvpActivity<PartPresenter> implements PartView
         titleTv.setText(title);
         partListAdapter = new PartListAdapter(this, mPartdata);
         bookLv.setAdapter(partListAdapter);
-        mvpPresenter.loadPartListData(parentId);
+        type = getIntent().getStringExtra("type");
+        if (type.equals("1")){
+            mvpPresenter.loadPartListData(parentId);
+        }else {
+            mvpPresenter.loadPartListData2(parentId);
+        }
+
         bookLv.setOnItemClickListener(this);
     }
 

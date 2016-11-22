@@ -195,6 +195,10 @@ public interface ApiStores {
     @POST("readMaterial/list")
     Observable<MaterialContentModel> getMaterialContent(@Body MaterialContent_Paramet paramet);
 
+    //获取素材列表
+    @POST("material/list")
+    Observable<PartModel> getMaterialList(@Body SourceMaterialList_Paramet paramet);
+
     //获取目录接口
     @POST("chapter/list")
     Observable<BookMoudle> getBookList(@Body BookList_Paramet paramet);

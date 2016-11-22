@@ -1,7 +1,9 @@
 package com.laichushu.book.mvp.part;
 
 import com.google.gson.Gson;
+import com.laichushu.book.bean.netbean.MaterialList_Paramet;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
+import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.PartActivity;
@@ -22,6 +24,10 @@ public class PartPresenter extends BasePresenter<PartView> {
         attachView(view);
         mActivity = (PartActivity) view;
     }
+    /**
+     * 获取目录
+     * @param parentId
+     */
     public void loadPartListData(String parentId){
         mvpView.showLoading();
         getParamet().setParentId(parentId);
@@ -45,6 +51,34 @@ public class PartPresenter extends BasePresenter<PartView> {
         });
     }
 
+    /**
+     * 获取素材
+     * @param parentId
+     */
+    public void loadPartListData2(String parentId){
+        mvpView.showLoading();
+        getParamet().setParentId(parentId);
+        Logger.e("获取节列表");
+
+        SourceMaterialList_Paramet paramet = new SourceMaterialList_Paramet(parentId);
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.getMaterialList(paramet), new ApiCallback<PartModel>() {
+            @Override
+            public void onSuccess(PartModel model) {
+                mvpView.getDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code："+code+" msg："+msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
     public PartList_Paramet getParamet() {
         return paramet;
     }

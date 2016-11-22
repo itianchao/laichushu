@@ -54,8 +54,44 @@ public class PartModel {
         private String name;
         private String content;
         private boolean isSection;
-        private String contentUrlPc;    	// pc端素材路径
-        private String contentUrlApp;   	// app 端素材路径
+        private String contentUrlPc;        // pc端素材路径
+        private String contentUrlApp;    // app 端素材路径
+        private String imageUrl;            // 上传图片路径
+        private String imageName;        // 上传图片名称
+        private String articleId;            // 作品id
+        private String parentId;            // 父ID
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public String getImageName() {
+            return imageName;
+        }
+
+        public void setImageName(String imageName) {
+            this.imageName = imageName;
+        }
+
+        public String getArticleId() {
+            return articleId;
+        }
+
+        public void setArticleId(String articleId) {
+            this.articleId = articleId;
+        }
+
+        public String getParentId() {
+            return parentId;
+        }
+
+        public void setParentId(String parentId) {
+            this.parentId = parentId;
+        }
 
         public boolean isSection() {
             return isSection;
