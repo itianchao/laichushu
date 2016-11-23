@@ -20,6 +20,7 @@ import com.laichushu.book.bean.netbean.CreateNewDraft_Paramet;
 import com.laichushu.book.bean.netbean.CreateSourceMaterialDir_Paramet;
 import com.laichushu.book.bean.netbean.CreateSourceMaterial_Paramet;
 import com.laichushu.book.bean.netbean.DeleteDraft_Paramet;
+import com.laichushu.book.bean.netbean.DeleteMaterial_Paramet;
 import com.laichushu.book.bean.netbean.DeleteNewBook_Paramet;
 import com.laichushu.book.bean.netbean.DraftList_Paramet;
 import com.laichushu.book.bean.netbean.EditDraft_Paramet;
@@ -336,5 +337,9 @@ public interface ApiStores {
     //获取素材列表
     @POST("material/edit")
     Observable<RewardResult> editMaterialBook(@Body EditMaterialBook_Paramet paramet);
+
+    //获取素材列表
+    @POST("material/delete")
+    Observable<RewardResult> deleteMaterial(@Body DeleteMaterial_Paramet paramet);
 
 }

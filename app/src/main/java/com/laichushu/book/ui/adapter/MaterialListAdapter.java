@@ -61,7 +61,12 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
 
             }
         });
-
+        holder.deleteIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mvpPresenter.openDeleteDialog(dataBean.getId(),position);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

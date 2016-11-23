@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.event.RefurshMaterialDirEvent;
 import com.laichushu.book.event.RefurshMaterialEvent;
 import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
@@ -17,6 +18,7 @@ import com.laichushu.book.ui.adapter.MaterialListAdapter;
 import com.laichushu.book.ui.adapter.MaterialListDirAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -114,10 +116,29 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     }
 
     @Override
+    public void getDeleteMateialDataSuccess(RewardResult model,int index) {
+        hideLoading();
+        if (model.isSuccess()) {
+            ToastUtil.showToast("删除成功");
+            mData.remove(index);
+            mAdapter.setmData(mData);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
     public void getDataFail(String msg) {
         refursh();
         refreshPage(LoadingPager.PageState.STATE_ERROR);
         ToastUtil.showToast(msg);
+    }
+
+    @Override
+    public void getDeleteMateialDataFail(String msg) {
+        ToastUtil.showToast("删除失败");
+        LoggerUtil.toJson(msg);
     }
 
     @Override
@@ -168,7 +189,7 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
                 bundle.putString("articleId", articleId);
                 bundle.putString("parentId", parentId);
                 bundle.putString("title", title);
-                bundle.putString("type","1");//1、新建2、编辑
+                bundle.putString("type", "1");//1、新建2、编辑
                 UIUtil.openActivity(this, CreateMaterialActivity.class, bundle);
                 break;
             case R.id.tv_title_right:

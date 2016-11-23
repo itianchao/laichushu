@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:text="确定删除"
+        android:textColor="@color/black"
+        android:textSize="@dimen/album_sp_20"
+        android:id="@+id/tv_dialog"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="90dp" />
+    <include layout="@layout/line"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:gravity="center"
+            android:id="@+id/btn_cancel"
+            android:text="取消"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp" />
+        <View
+            android:background="@color/frenchGrey"
+            android:textColor="@color/edit"
+            android:layout_width="1dp"
+            android:layout_height="50dp"/>
+        <TextView
+            android:gravity="center"
+            android:id="@+id/btn_ok"
+            android:textColor="@color/global"
+            android:text="确认"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp" />
+    </LinearLayout>
+</LinearLayout>
