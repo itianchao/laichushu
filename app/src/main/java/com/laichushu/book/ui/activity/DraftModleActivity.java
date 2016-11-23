@@ -131,6 +131,7 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
+            initListener();
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -151,6 +152,7 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     public void getDataFail(String msg) {
         Logger.e(msg);
         refreshPage(LoadingPager.PageState.STATE_ERROR);
+        initListener();
     }
 
     @Override
@@ -201,5 +203,17 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+    public void initListener(){
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                mData.clear();
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                pageNo = 1;
+                mvpPresenter.getParamet().setPageNo(pageNo + "");
+                mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表
+            }
+        });
     }
 }

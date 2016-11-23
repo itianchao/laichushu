@@ -67,6 +67,7 @@ import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.campaign.CampaignJoinModel;
 import com.laichushu.book.mvp.campaign.CampaignModel;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.coverdir.CoverDirModle;
 import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftModle;
 import com.laichushu.book.mvp.directories.BookMoudle;
 import com.laichushu.book.mvp.directories.MaterialContentModel;
@@ -341,5 +342,9 @@ public interface ApiStores {
     //获取素材列表
     @POST("material/delete")
     Observable<RewardResult> deleteMaterial(@Body DeleteMaterial_Paramet paramet);
+
+    //获取模版列表
+    @POST("cover/list")
+    Observable<CoverDirModle> deleteMaterial();
 
 }
