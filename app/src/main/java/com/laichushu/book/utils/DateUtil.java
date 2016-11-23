@@ -43,6 +43,11 @@ public static Date getDate(String time){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(date);
 	}
+	/** 将给定的date转换为string, 格式为 yyyy-MM-dd * */
+	public static String getFormatDateTime(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(date);
+	}
 
 	/** 得到系统当前日期及时间 格式为 yyyy-MM-dd HH:mm:ss * */
 	public static String getCurrentDateTime() {

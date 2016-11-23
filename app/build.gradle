@@ -30,7 +30,7 @@ allprojects {
     }
 }
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.yanzhenjie:album:1.0.0'
     compile 'com.android.support:appcompat-v7:23.1.1'
@@ -54,4 +54,5 @@ dependencies {
     compile 'jp.wasabeef:richeditor-android:1.2.1'
     compile(name: 'notify-dialog-library', ext: 'aar')
     compile project(':hwTxtReader')
+    compile project(':pickerView')
 }

@@ -7,6 +7,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.bookcast.BookcastPresener;
 import com.laichushu.book.mvp.bookcast.BookcastView;
@@ -32,7 +33,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     private View lineLeft, lineRight;
     private int PAGE_NO = 1;
     private List<HomeHotModel.DataBean> scanData = new ArrayList<>();
-    private List<BookCastModle.DataBean.CollectListBean> collData = new ArrayList<>();
+    private List<HomeHotModel.DataBean> collData = new ArrayList<>();
     private MyBookCastAdapter scanAdapter;
     private BookCastCollAdapter collAdapter;
     /**
@@ -80,13 +81,13 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         //初始化mRecyclerView Scan
         mRecyclerView.setGridLayout(3);
         mRecyclerView.setFooterViewText("加载中");
-        scanAdapter = new MyBookCastAdapter(mActivity, scanData);
+        scanAdapter = new MyBookCastAdapter(this, scanData);
         mRecyclerView.setAdapter(scanAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView Coll
         mCollRecyclerView.setGridLayout(3);
         mCollRecyclerView.setFooterViewText("加载中");
-        collAdapter = new BookCastCollAdapter(mActivity, collData);
+        collAdapter = new BookCastCollAdapter(this, collData);
         mCollRecyclerView.setAdapter(collAdapter);
         mCollRecyclerView.setOnPullLoadMoreListener(this);
     }
@@ -127,7 +128,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 lineLeft.setVisibility(View.INVISIBLE);
                 lineRight.setVisibility(View.VISIBLE);
                 if (!collDibble) {
-                    scanData.clear();
+                    collData.clear();
                     mvpPresenter.LoadCollectionData();
                 }
                 collDibble = true;
@@ -145,7 +146,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             mvpPresenter.LoadData();//请求网络获取搜索列表
         } else if (type == 2) {
             collData.clear();
-            mvpPresenter.getCollectionParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
         }
 
@@ -158,7 +159,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadData();//请求网络获取搜索列表
              }else if(type==2){
-            mvpPresenter.getCollectionParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadCollectionData();;//请求网络获取搜索列表
         }
 
@@ -184,13 +185,11 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
-
     @Override
-    public void getCollectionDataSuccess(BookCastModle model) {
+    public void getCollectionDataSuccess(HomeHotModel model) {
         scanData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -199,7 +198,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             }
         }, 300);
         if (model.isSuccess()) {
-            collData = model.getData().getCollectList();
+            collData = model.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!collData.isEmpty()) {
                 collAdapter.refreshAdapter(collData);

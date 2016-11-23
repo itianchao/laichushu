@@ -18,6 +18,7 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.EditMyselfeInforActivity;
 import com.laichushu.book.ui.activity.ManageWorksActivity;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
+import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -32,7 +33,7 @@ import com.laichushu.book.utils.UIUtil;
  */
 public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     private TextView tvTitle, tvMineName, tvMinebookNum;
-    private ImageView ivMineHead;
+    private ImageView ivMineHead,ivMineHeadInto;
     private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice;
     private PersonalCentreResult res = new PersonalCentreResult();
     private UpdateReceiver mUpdateReceiver;
@@ -49,6 +50,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         mRootView.findViewById(R.id.iv_title_finish).setVisibility(View.GONE);
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title);
         ivMineHead = (ImageView) mRootView.findViewById(R.id.iv_minaHead);
+        ivMineHeadInto = (ImageView) mRootView.findViewById(R.id.iv_mineHeadInto);
         tvMineName = (TextView) mRootView.findViewById(R.id.tv_mineNickName);
         tvMinebookNum = (TextView) mRootView.findViewById(R.id.tv_mineBookNum);
         rlHead = ((RelativeLayout) mRootView.findViewById(R.id.rl_mainHead));
@@ -66,7 +68,9 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         rlService.setOnClickListener(this);
         rlGeneralSetting.setOnClickListener(this);
         rlAdvice.setOnClickListener(this);
-
+        tvMineName.setOnClickListener(this);
+        ivMineHead.setOnClickListener(this);
+        ivMineHeadInto.setOnClickListener(this);
 
         tvTitle.setText("个人中心");
         return mRootView;
@@ -74,16 +78,23 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        registerPlayerReceiver();
         super.initData();
+
+        getData();
+    }
+
+    public void getData() {
+        registerPlayerReceiver();
+
         addSubscription(apiStores.getPersonalDetails(new PersonalCentre_Parmet(SharePrefManager.getUserId())), new ApiCallback<PersonalCentreResult>() {
             @Override
             public void onSuccess(PersonalCentreResult result) {
+
                 if (result.getSuccess()) {
                     res = result;
                     GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivMineHead);
-                    tvMineName.setText("  "+result.getNickName());
-                    tvMinebookNum.setText(result.getArticleCount()+"部  ");
+                    tvMineName.setText("  " + result.getNickName());
+                    tvMinebookNum.setText(result.getArticleCount() + "部  ");
                     refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 } else {
                     ToastUtil.showToast(result.getErrMsg());
@@ -108,7 +119,14 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_mainHead:
+
+            case R.id.iv_minaHead:
+                //作品管理
+                Bundle homePage = new Bundle();
+                UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, homePage);
+                break;
+            case R.id.tv_mineNickName:
+            case R.id.iv_mineHeadInto:
                 Intent editAct = new Intent(mActivity, EditMyselfeInforActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result", res);
