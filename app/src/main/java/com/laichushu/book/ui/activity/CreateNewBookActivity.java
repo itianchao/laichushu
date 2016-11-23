@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 
-import id.zelory.compressor.Compressor;
-
 
 /**
  * 创建新书

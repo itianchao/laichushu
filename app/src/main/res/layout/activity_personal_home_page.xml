@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_editHeadImg"
+        android:layout_width="match_parent"
+        android:layout_height="215dp"
+        android:background="@color/auditing">
+
+        <include
+            android:id="@+id/edit_top"
+            layout="@layout/page_title" />
+
+        <ImageView
+            android:id="@+id/iv_PerHeadImg"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_below="@+id/edit_top"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tv_PerNickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_PerHeadImg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_perGrade"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignTop="@+id/tv_PerNickName"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@+id/tv_PerNickName" />
+
+        <ImageView
+            android:id="@+id/iv_perDetails"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignTop="@+id/tv_PerNickName"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@+id/iv_perGrade" />
+
+        <TextView
+            android:id="@+id/tv_perRealName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_PerNickName"
+            android:layout_below="@+id/tv_PerNickName"
+            android:layout_marginTop="12dp"
+            android:text="chia"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_perAuthorAgree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_PerNickName"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/tv_PerNickName"
+            android:text="金牌作家"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bookCast_top"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <RadioGroup
+            android:id="@+id/rg_homeList"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_dynamic"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="动态"
+                android:textColor="@drawable/rb_bg_selector"
+                android:textStyle="bold" />
+
+
+            <RadioButton
+                android:id="@+id/rb_focusMe"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="关注我的"
+                android:textColor="@drawable/rb_bg_selector"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rb_focus"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="我关注的"
+                android:textColor="@drawable/rb_bg_selector"
+                android:textStyle="bold" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+
+            <View
+                android:id="@+id/line_dynamic"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/middle_view"
+                android:layout_weight="1"
+                android:background="@color/auditing" />
+
+            <View
+                android:id="@+id/line_focusMe"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/middle_view"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                android:background="@color/auditing" />
+
+
+            <View
+                android:id="@+id/line_focus"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_marginLeft="12dp"
+                android:visibility="invisible"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@+id/middle_view"
+                android:layout_weight="1"
+                android:background="@color/auditing" />
+        </LinearLayout>
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_dynamic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp" />
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_focusMe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_focus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</LinearLayout>

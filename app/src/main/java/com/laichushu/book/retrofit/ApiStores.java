@@ -24,11 +24,17 @@ import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
 import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
+import com.laichushu.book.bean.netbean.HomeUseDyrResult;
+import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
+import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
+import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.JoinActivity_Paramet;
 import com.laichushu.book.bean.netbean.Jurisdiction_Paramet;
 import com.laichushu.book.bean.netbean.Login_Paramet;
 import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
 import com.laichushu.book.bean.netbean.MaterialList_Paramet;
+import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
+import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
@@ -84,9 +90,10 @@ import rx.Observable;
 public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
-    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
+    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 
     //登录接口
@@ -263,6 +270,7 @@ public interface ApiStores {
     @POST("searchArticle/findArticleByAuthorId")
     Observable<HomeHotModel> getArticleBookList(@Body ArticleBookList_Paramet paramet);
 
+
     //投稿
     @POST("article/vote")
     Observable<RewardResult> articleVote(@Body ArticleVote_Paramet paramet);
@@ -274,4 +282,16 @@ public interface ApiStores {
     //删除
     @POST("article/delete")
     Observable<RewardResult> deleteNewBook(@Body DeleteNewBook_Paramet paramet);
+    //收藏列表
+    @POST("collect/list")
+    Observable<HomeHotModel> getCollectList(@Body  MyArticBooklist_paramet paramet);
+    //浏览
+    @POST("searchArticle/findArticleByAuthorId")
+    Observable<HomeHotModel> getArticleBookListScan(@Body MyArticBooklist_paramet paramet);
+    //个人主页用户信息
+    @POST("userDetail/find")
+    Observable<HomeUserResult> getHomeUserInforDetails(@Body HomeUserInfor_paramet paramet);
+    //个人主页动态
+    @POST("userDetail/findDy")
+    Observable<HomeUseDyrResult> getHomeUserDyDetails(@Body HomeUserDy_parmet paramet);
 }

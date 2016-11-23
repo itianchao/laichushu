@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/sex_btnCancel"
+            android:layout_width="60dp"
+            android:layout_height="34dp"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/auditing" />
+
+        <Button
+            android:id="@+id/sex_btnSubmit"
+            android:layout_width="60dp"
+            android:layout_height="34dp"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="@string/pwSubmit"
+            android:textColor="@color/auditing" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#D8D3D3" />
+
+    <RadioGroup
+        android:id="@+id/rg_sex"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/sex_man"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:text="男"
+            android:textColor="@drawable/rb_bg_selector"
+            android:textSize="@dimen/edit2"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/sex_femal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="女"
+            android:button="@null"
+            android:textColor="@drawable/rb_bg_selector"
+            android:textSize="@dimen/edit2"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+</LinearLayout>

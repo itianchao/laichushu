@@ -89,17 +89,15 @@
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_bookCast"
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"/>
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_bookCastColl"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
 
-            <GridView
-                android:id="@+id/gv_list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:listSelector="@android:color/transparent"
-                android:numColumns="3"
-                android:verticalSpacing="20dp"></GridView>
-        </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
     </LinearLayout>
 </RelativeLayout>
