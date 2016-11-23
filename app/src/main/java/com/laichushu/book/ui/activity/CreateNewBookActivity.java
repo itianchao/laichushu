@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.event.RefurshPhotoPathEvent;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.mvp.createnewbook.CreateNewBookModle;
 import com.laichushu.book.mvp.createnewbook.CreateNewBookPersenter;
@@ -25,6 +27,8 @@ import com.orhanobut.logger.Logger;
 import com.yanzhenjie.album.Album;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,6 +58,7 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
     private String permission = "1";
     private String parentId;
     private String childId;
+    private String path;
 
     @Override
     protected CreateNewBookPersenter createPresenter() {
@@ -88,6 +93,7 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
     @Override
     protected void initData() {
         mvpPresenter.loadCategoryData();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -98,12 +104,20 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
                 EventBus.getDefault().postSticky(new RefurshWriteFragmentEvent(true));
                 break;
             case R.id.btn_create://创建
-                String name = booknameEt.getText().toString();
-                String introduce = briefEt.getText().toString();
-                mvpPresenter.commitNewBook(compressedImageFile, name, parentId, childId, permission, introduce);
+                String name = booknameEt.getText().toString().trim();
+                String introduce = briefEt.getText().toString().trim();
+                String category = categoryTv.getText().toString().trim();
+                if(mvpPresenter.isCheck(name, introduce, category, path)){
+                    mvpPresenter.commitNewBook(compressedImageFile, name, parentId, childId, permission, introduce);
+                }
                 break;
             case R.id.iv_cover://封面选择
-                mvpPresenter.openAlertDialog();
+                String bookname = booknameEt.getText().toString().trim();
+                if (TextUtils.isEmpty(bookname)){
+                    ToastUtil.showToast("请先输入书名");
+                    return;
+                }
+                mvpPresenter.openAlertDialog(bookname);
                 break;
             case R.id.lay_category://分类
                 final TypeCategoryPopWindow popWindow = new TypeCategoryPopWindow(mActivity, mParentData);
@@ -201,7 +215,7 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         if (requestCode == 100 && resultCode == RESULT_OK) {
             List<String> imagesPath = Album.parseResult(data);
             if (imagesPath != null && imagesPath.size() > 0) {
-                String path = imagesPath.get(0);
+                path = imagesPath.get(0);
                 GlideUitl.loadImg(mActivity, path, coverIv);
                 //压缩图片
                 compressedImageFile = new File(path);
@@ -215,5 +229,20 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
 
     public void setPermission(String permission) {
         this.permission = permission;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefurshPhotoPathEvent event){
+        EventBus.getDefault().removeStickyEvent(event);
+        if (!TextUtils.isEmpty(event.url)){
+            path = event.url;
+            GlideUitl.loadImg(mActivity, path, coverIv);
+        }
     }
 }

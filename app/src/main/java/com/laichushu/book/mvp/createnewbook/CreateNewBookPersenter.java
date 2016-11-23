@@ -1,7 +1,9 @@
 package com.laichushu.book.mvp.createnewbook;
 
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -16,9 +18,11 @@ import com.laichushu.book.bean.netbean.ArticleSave_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.homecategory.CategoryModle;
 import com.laichushu.book.retrofit.ApiCallback;
+import com.laichushu.book.ui.activity.CoverDirActivity;
 import com.laichushu.book.ui.activity.CreateNewBookActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.yanzhenjie.album.Album;
@@ -118,8 +122,9 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
 
     /**
      * 选择模版 对话框
+     * @param bookname
      */
-    public void openAlertDialog() {
+    public void openAlertDialog(final String bookname) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_photo);
 
@@ -128,6 +133,9 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
             @Override
             public void onClick(View v) {
                 dialogBuilder.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putString("bookname",bookname);
+                UIUtil.openActivity(mActivity,CoverDirActivity.class,bundle);
             }
         });
         //从相册中选择
@@ -221,5 +229,24 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
                 .withEffect(Effectstype.Slidetop)                 // 动画形式
                 .setCustomView(customerView, mActivity)                // 添加自定义View
                 .show();
+    }
+
+    public boolean isCheck(String name, String introduce, String category, String path) {
+        if (TextUtils.isEmpty(name)){
+            ToastUtil.showToast("请输入书名");
+            return false;
+        }
+        if (TextUtils.isEmpty(introduce)){
+            ToastUtil.showToast("请输入简介");
+            return false;
+        }
+        if (TextUtils.isEmpty(category)){
+            ToastUtil.showToast("请选择分类");
+            return false;
+        }
+        if (TextUtils.isEmpty(path)){
+            ToastUtil.showToast("请选择图片");
+        }
+        return true;
     }
 }

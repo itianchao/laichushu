@@ -15,6 +15,9 @@ import com.laichushu.book.ui.fragment.HomeFragment;
 
 import java.util.ArrayList;
 
+/**
+ * 主页
+ */
 public class MainActivity extends BaseActivity implements  View.OnClickListener {
     private ArrayList<Fragment> fragments;
     private int position;

@@ -1,6 +1,7 @@
 package com.laichushu.book.retrofit;
 
 import com.laichushu.book.bean.JsonBean.BalanceBean;
+import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ActivityList_Paramet;
 import com.laichushu.book.bean.netbean.ActivityResult_Paramet;
@@ -16,6 +17,8 @@ import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.Comment2_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
 import com.laichushu.book.bean.netbean.Complaint_Paramet;
+import com.laichushu.book.bean.netbean.CoverDir_Paramet;
+import com.laichushu.book.bean.netbean.CoverMake_Paramet;
 import com.laichushu.book.bean.netbean.CreateNewDraft_Paramet;
 import com.laichushu.book.bean.netbean.CreateSourceMaterialDir_Paramet;
 import com.laichushu.book.bean.netbean.CreateSourceMaterial_Paramet;
@@ -104,8 +107,8 @@ import rx.Observable;
 public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
-    String API_SERVER_URL = "http://192.168.191.1:8082/book-app";
-//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
+    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
@@ -360,6 +363,10 @@ public interface ApiStores {
 
     //获取模版列表
     @POST("cover/list")
-    Observable<CoverDirModle> deleteMaterial();
+    Observable<CoverDirModle> getCoverList(@Body CoverDir_Paramet paramet);
+
+    //获取预览模版
+    @POST("cover/make")
+    Observable<PreviewCoverBean> makeCover(@Body CoverMake_Paramet paramet);
 
 }

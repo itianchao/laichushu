@@ -41,58 +41,48 @@
     </LinearLayout>
 
     <RadioGroup
-        android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp">
 
         <RadioButton
             android:id="@+id/rbn_public"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:checked="true"
             android:text="默认公开"
-            android:textColor="@color/black"
-            android:textSize="@dimen/edit2" />
+            android:checked="true"
+            android:drawableLeft="@drawable/select_permission_radiobutton"
+            style="@style/permission_select" />
 
         <include layout="@layout/line" />
 
         <RadioButton
             android:id="@+id/rbn_private"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:drawableLeft="@drawable/select_permission_radiobutton"
             android:text="仅个人"
-            android:textColor="@color/black"
-            android:textSize="@dimen/edit2" />
+            style="@style/permission_select" />
 
         <include layout="@layout/line" />
 
         <RadioButton
             android:id="@+id/rbn_master"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:drawableLeft="@drawable/select_permission_radiobutton"
             android:text="大咖"
-            android:textColor="@color/black"
-            android:textSize="@dimen/edit2" />
+            style="@style/permission_select" />
 
         <include layout="@layout/line" />
 
         <RadioButton
             android:id="@+id/rbn_press"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
             android:text="出版社"
-            android:textColor="@color/black"
-            android:textSize="@dimen/edit2" />
+            android:drawableLeft="@drawable/select_permission_radiobutton"
+            style="@style/permission_select" />
 
         <include layout="@layout/line" />
 
         <RadioButton
             android:id="@+id/rbn_fans"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:drawableLeft="@drawable/select_permission_radiobutton"
             android:text="粉丝"
-            android:textColor="@color/black"
-            android:textSize="@dimen/edit2" />
+            style="@style/permission_select" />
 
         <include layout="@layout/line" />
     </RadioGroup>
