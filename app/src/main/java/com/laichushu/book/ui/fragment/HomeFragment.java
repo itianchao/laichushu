@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.laichushu.book.event.RefurshDraftEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.home.HomePresenter;
@@ -28,6 +29,10 @@ import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
 import com.laichushu.book.ui.adapter.HomeTitleViewPagerAdapter;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -308,7 +313,6 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     @Override
     public void onStart() {
         super.onStart();
-        onRefresh();
         mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
     }
 
@@ -324,5 +328,13 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     public HomeHotModel getModel() {
         return model;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefurshDraftEvent event){
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            onRefresh();
+        }
     }
 }

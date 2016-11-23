@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.event.RefurshCommentListEvent;
+import com.laichushu.book.event.RefurshHomeEvent;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
 import com.laichushu.book.mvp.bookdetail.BookDetailPresenter;
@@ -227,6 +228,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
+                EventBus.getDefault().postSticky(new RefurshHomeEvent(true));
                 finish();
                 break;
             case R.id.iv_title_other://分享
