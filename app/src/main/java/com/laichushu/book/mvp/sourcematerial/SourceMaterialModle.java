@@ -22,6 +22,15 @@ public class SourceMaterialModle {
         private String parentId;            // 父ID
         private String imageUrl;            // 上传图片路径
         private String imageName;        // 上传图片名称
+        private boolean isSection;
+
+        public boolean isSection() {
+            return isSection;
+        }
+
+        public void setSection(boolean section) {
+            isSection = section;
+        }
 
         public String getContentUrlPc() {
             return contentUrlPc;

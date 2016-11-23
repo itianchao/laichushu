@@ -149,6 +149,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 bundle.putString("path", path);
                 bundle.putString("title", name);
                 bundle.putString("parentId", parentId);
+                bundle.putString("type", "1");
                 if (mBookdata.get(position).isIsSection()) {
                     UIUtil.openActivity(this, PartActivity.class, bundle);
                 } else {
@@ -162,7 +163,8 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("title", dataBean.getName());
                 bundle2.putString("path", dataBean.getContentUrlApp());
-                bundle2.putString("parentId", dataBean.getParentId());
+                bundle2.putString("parentId", dataBean.getId());
+                bundle2.putString("type", "2");
                 if (mData.get(position).isIsSection()) {
                     UIUtil.openActivity(this, PartActivity.class, bundle2);
                 } else {
@@ -170,7 +172,6 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                         UIUtil.openActivity(mActivity, NopublishBookActivity.class, bundle2);
                     }
                 }
-
                 break;
         }
 

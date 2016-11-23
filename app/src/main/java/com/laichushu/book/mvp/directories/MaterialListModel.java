@@ -58,7 +58,7 @@ public class MaterialListModel {
 
 
     public static class DataBean {
-        private String parentId;
+        private String id;
         private String name;
         private String count;
         private String contentUrlPc;    	// pc端素材路径
@@ -102,12 +102,12 @@ public class MaterialListModel {
             isSection = section;
         }
 
-        public String getParentId() {
-            return parentId;
+        public String getId() {
+            return id;
         }
 
-        public void setParentId(String parentId) {
-            this.parentId = parentId;
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getName() {
