@@ -101,7 +101,6 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         switch (v.getId()) {
             case R.id.iv_title_finish://关闭
                 finish();
-                EventBus.getDefault().postSticky(new RefurshWriteFragmentEvent(true));
                 break;
             case R.id.btn_create://创建
                 String name = booknameEt.getText().toString().trim();
@@ -174,6 +173,7 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
             UIUtil.postDelayed(new TimerTask() {
                 @Override
                 public void run() {
+                    EventBus.getDefault().postSticky(new RefurshWriteFragmentEvent(true));
                     finish();
                 }
             },1700);

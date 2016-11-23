@@ -246,6 +246,7 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
         }
         if (TextUtils.isEmpty(path)){
             ToastUtil.showToast("请选择图片");
+            return false;
         }
         return true;
     }
