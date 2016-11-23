@@ -6,6 +6,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.HomePageFocusBeResult;
+import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
@@ -13,29 +15,36 @@ import com.laichushu.book.mvp.HomePage.HomePagePresener;
 import com.laichushu.book.mvp.HomePage.HomePageView;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.adapter.HomePageDynamicAdapter;
+import com.laichushu.book.ui.adapter.HomePageFocusBeAdapter;
+import com.laichushu.book.ui.adapter.HomePageFocusMeAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
+import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivEdit, iv_headImg;
+    private ImageView ivBack, ivEdit, iv_headImg,ivGreadDetails;
     private TextView tvTitle, tvNickName, tvRealName, tvAuthorAgree;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
     private View lineDy, lineFocusMe, lineFocus;
     private List<HomeUseDyrResult.DataBean> dyData = new ArrayList<>();
-    private List<HomeUseDyrResult.DataBean> focusMeData = new ArrayList<>();
+    private List<HomePersonFocusResult.DataBean> focusMeData = new ArrayList<>();
+    private List<HomePageFocusBeResult.DataBean> focusBeData = new ArrayList<>();
     private HomePageDynamicAdapter dyAdapter;
+    private HomePageFocusMeAdapter fmAdapter;
+    private HomePageFocusBeAdapter fbAdapter;
     private int PAGE_NO = 1,type=1;
-    private boolean dibbleDy=false,dibbleFoMe=false,isDibbleFo=false;
+    private boolean dibbleDy=false,dibbleFoMe=false,dibbleFo=false;
     private List<View> lines = new ArrayList<>();
+    private List<View> pulls = new ArrayList<>();
     @Override
     protected HomePagePresener createPresenter() {
         return new HomePagePresener(this);
@@ -46,6 +55,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         View inflate = UIUtil.inflate(R.layout.activity_personal_home_page);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         ivEdit = ((ImageView) inflate.findViewById(R.id.iv_title_other));
+        ivGreadDetails = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetails));
         iv_headImg = ((ImageView) inflate.findViewById(R.id.iv_PerHeadImg));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_middleLeft));
         tvNickName = ((TextView) inflate.findViewById(R.id.tv_PerNickName));
@@ -68,21 +78,39 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         super.initData();
 
         lines.clear();
+        pulls.clear();
         lines.add(lineDy);
         lines.add(lineFocus);
         lines.add(lineFocusMe);
+        pulls.add(mDyRecyclerView);
+        pulls.add(mFocuMeRecyclerView);
+        pulls.add(mFocuRecyclerView);
+
         tvTitle.setText("个人主页");
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
+        ivGreadDetails.setOnClickListener(this);
         rgHomeList.setOnCheckedChangeListener(this);
         initHeadInfo();
-        //初始化mRecyclerView Scan
+        //初始化mRecyclerView 关注
         mDyRecyclerView.setGridLayout(1);
         mDyRecyclerView.setFooterViewText("加载中");
         dyAdapter = new HomePageDynamicAdapter(this, dyData);
         mDyRecyclerView.setAdapter(dyAdapter);
         mDyRecyclerView.setOnPullLoadMoreListener(this);
+        //初始化mRecyclerView 关注我的
+        mFocuMeRecyclerView.setGridLayout(1);
+        mFocuMeRecyclerView.setFooterViewText("加载中");
+        fmAdapter = new HomePageFocusMeAdapter(this, focusMeData);
+        mFocuMeRecyclerView.setAdapter(fmAdapter);
+        mFocuMeRecyclerView.setOnPullLoadMoreListener(this);
+        //初始化mRecyclerView 我关注的
+        mFocuRecyclerView.setGridLayout(1);
+        mFocuRecyclerView.setFooterViewText("加载中");
+        fbAdapter = new HomePageFocusBeAdapter(this, focusBeData);
+        mFocuRecyclerView.setAdapter(fmAdapter);
+        mFocuRecyclerView.setOnPullLoadMoreListener(this);
         //初始化动态
         mvpPresenter.LoadData();
         selectLine(0);
@@ -133,6 +161,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 //编辑
 
                 break;
+            case R.id.iv_perGradeDetails:
+                break;
         }
     }
 
@@ -161,8 +191,38 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     }
 
     @Override
-    public void getDataFail(String msg) {
+    public void getFocusMeDataSuccess(HomePersonFocusResult model) {
+        dyData.clear();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDyRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        if (model.isSuccess()) {
+            ToastUtil.showToast("HomeUseDyrResult");
+            focusMeData = model.getData();
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            if (!focusMeData.isEmpty()) {
+                fmAdapter.refreshAdapter(focusMeData);
+                PAGE_NO++;
+            } else {
 
+            }
+        } else {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
+    }
+
+    @Override
+    public void getFocusBeDataSuccess(HomePageFocusBeResult model) {
+
+    }
+
+
+    @Override
+    public void getDataFail(String msg) {
+        Logger.e(msg);
     }
 
     @Override
@@ -172,25 +232,73 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             case R.id.rb_dynamic:
                 // 动态
                 selectLine(0);
-                mvpPresenter.LoadData();
+                dibbleFo=false;
+                dibbleFoMe=false;
+                type=1;
+                if(!dibbleDy){
+                    dyData.clear();
+                    mvpPresenter.LoadData();
+                }
+                dibbleDy=true;
                 break;
             case R.id.rb_focusMe:
+                //关注我的
                 selectLine(1);
+                dibbleDy=false;
+                dibbleFoMe=false;
+                type=2;
+                if(!dibbleFoMe){
+                    focusMeData.clear();
+                    mvpPresenter.LoadFocusMeData();
+                }
+                dibbleFoMe=true;
                 break;
             case R.id.rb_focus:
                 selectLine(2);
+                dibbleDy=false;
+                dibbleFoMe=false;
+                type=3;
+                if(!dibbleFo){
+                    focusBeData.clear();
+                    mvpPresenter.LoadFocusBeData();
+                }
+                dibbleFo=true;
                 break;
         }
     }
 
     @Override
     public void onRefresh() {
-
+        PAGE_NO = 1;
+        if (type == 1) {
+            dyData.clear();
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadData();//请求网络获取搜索列表
+        }else if(type==2){
+            focusMeData.clear();
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadFocusMeData();//请求网络获取搜索列表
+        }else if(type==3){
+            focusBeData.clear();
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadFocusBeData();//请求网络获取搜索列表
+        }
     }
 
     @Override
     public void onLoadMore() {
-
+        if(type==1){
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadData();//请求网络获取搜索列表
+        }else if(type==2){
+            focusMeData.clear();
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadFocusMeData();//请求网络获取搜索列表
+        }else if(type==3){
+            focusBeData.clear();
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadFocusBeData();//请求网络获取搜索列表
+        }
     }
 
     /**
@@ -202,7 +310,12 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         for (int i = 0; i < 3; i++) {
             if (i != position) {
                 lines.get(i).setVisibility(View.INVISIBLE);
+                pulls.get(i).setVisibility(View.GONE);
+            }else{
+                lines.get(i).setVisibility(View.VISIBLE);
+                pulls.get(i).setVisibility(View.VISIBLE);
             }
+
         }
     }
 }

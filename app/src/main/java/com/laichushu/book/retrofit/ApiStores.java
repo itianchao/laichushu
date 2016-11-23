@@ -29,9 +29,11 @@ import com.laichushu.book.bean.netbean.ForgetPwd_Paramet;
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
+import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
+import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.JoinActivity_Paramet;
@@ -298,18 +300,30 @@ public interface ApiStores {
     //删除新书
     @POST("article/delete")
     Observable<RewardResult> deleteNewBook(@Body DeleteNewBook_Paramet paramet);
+
     //收藏列表
     @POST("collect/list")
-    Observable<HomeHotModel> getCollectList(@Body  MyArticBooklist_paramet paramet);
+    Observable<HomeHotModel> getCollectList(@Body MyArticBooklist_paramet paramet);
+
     //浏览
     @POST("searchArticle/findArticleByAuthorId")
     Observable<HomeHotModel> getArticleBookListScan(@Body MyArticBooklist_paramet paramet);
+
     //个人主页用户信息
     @POST("userDetail/find")
     Observable<HomeUserResult> getHomeUserInforDetails(@Body HomeUserInfor_paramet paramet);
+
     //个人主页动态
     @POST("userDetail/findDy")
     Observable<HomeUseDyrResult> getHomeUserDyDetails(@Body HomeUserDy_parmet paramet);
+
+    //个人主页关注我的
+    @POST("perFocus/findMy")
+    Observable<HomePersonFocusResult> getHomeUserFocusMeDetails(@Body HomeUserFocusMe_parmet paramet);
+
+    //个人主页我关注的
+    @POST("perFocus/findBe")
+    Observable<HomePersonFocusResult> getHomeUserFocusBeDetails(@Body HomeUserFocusMe_parmet paramet);
 
     //删除草稿
     @POST("chapter/delete")
