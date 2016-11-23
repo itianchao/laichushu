@@ -58,6 +58,6 @@
         android:layout_centerInParent="true"
         android:layout_marginRight="5dp"
         android:textColor="@color/white"
-        android:textSize="@dimen/title"
+        android:textSize="@dimen/edit"
         android:visibility="gone" />
 </RelativeLayout>

@@ -23,7 +23,8 @@
             android:gravity="center_vertical"
             android:text="@string/draftname"
             android:textColor="@color/black"
-            android:textSize="@dimen/edit2" />
+            android:textSize="@dimen/edit2"
+            android:id="@+id/textView4" />
 
         <EditText
             android:background="@null"
@@ -32,6 +33,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:gravity="center"
+            android:lines="1"
             android:textColor="@color/edit"
             android:textColorHint="@color/hint"
             android:textSize="@dimen/edit2"

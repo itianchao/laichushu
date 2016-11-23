@@ -61,7 +61,8 @@ public class MaterialListModel {
         private String parentId;
         private String name;
         private String count;
-
+        private String contentUrlPc;    	// pc端素材路径
+        private String contentUrlApp;   	// app 端素材路径
         /**
          * id : 176
          * name : 绱犳潗鑺備竴
@@ -70,6 +71,23 @@ public class MaterialListModel {
          */
 
         private ArrayList<InDataBean> data;
+
+        public String getContentUrlPc() {
+            return contentUrlPc;
+        }
+
+        public void setContentUrlPc(String contentUrlPc) {
+            this.contentUrlPc = contentUrlPc;
+        }
+
+        public String getContentUrlApp() {
+            return contentUrlApp;
+        }
+
+        public void setContentUrlApp(String contentUrlApp) {
+            this.contentUrlApp = contentUrlApp;
+        }
+
         /**
          * isSection : false
          */
@@ -131,6 +149,24 @@ public class MaterialListModel {
             private String parentId;
             private String imageName;
             private String imageUrl;
+            private String contentUrlPc;    	// pc端素材路径
+            private String contentUrlApp;   	// app 端素材路径
+
+            public String getContentUrlPc() {
+                return contentUrlPc;
+            }
+
+            public void setContentUrlPc(String contentUrlPc) {
+                this.contentUrlPc = contentUrlPc;
+            }
+
+            public String getContentUrlApp() {
+                return contentUrlApp;
+            }
+
+            public void setContentUrlApp(String contentUrlApp) {
+                this.contentUrlApp = contentUrlApp;
+            }
 
             public String getImageName() {
                 return imageName;

@@ -50,14 +50,14 @@ public class WritePresenter extends BasePresenter<WriteView> {
      * 删除
      * @param articleId
      */
-    public void deleteBook(String articleId) {
+    public void deleteBook(String articleId, final int position) {
         mvpView.showLoading();
         LoggerUtil.e("删除新书");
         DeleteNewBook_Paramet paramet = new DeleteNewBook_Paramet(articleId,ConstantValue.USERID);
         addSubscription(apiStores.deleteNewBook(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.deleteNewBook(model);
+                mvpView.deleteNewBook(model,position);
             }
 
             @Override

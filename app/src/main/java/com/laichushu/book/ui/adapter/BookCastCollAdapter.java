@@ -1,7 +1,10 @@
 package com.laichushu.book.ui.adapter;
 
 import android.content.Context;
+<<<<<<< HEAD
 import android.os.Bundle;
+=======
+>>>>>>> origin/master
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+<<<<<<< HEAD
 import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
+=======
+import com.laichushu.book.mvp.bookcast.BookCastModle;
+import com.laichushu.book.mvp.home.HomeHotModel;
+>>>>>>> origin/master
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 

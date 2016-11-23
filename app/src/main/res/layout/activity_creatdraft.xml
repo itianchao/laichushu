@@ -13,6 +13,7 @@
 
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/ryv_draft"
+        android:background="@color/ea"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

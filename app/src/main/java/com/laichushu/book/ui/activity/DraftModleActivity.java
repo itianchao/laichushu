@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.event.RefurshDraftEvent;
 import com.laichushu.book.mvp.draftmodle.DraftModle;
 import com.laichushu.book.mvp.draftmodle.DraftModlePresenter;
 import com.laichushu.book.mvp.draftmodle.DraftModleView;
@@ -18,6 +20,10 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -38,7 +44,9 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     private DraftListAdapter mAdapter;
     private int pageNo = 1;
     private String articleId;
-    ArrayList<DraftModle.DataBean> mData = new ArrayList<>();
+    private ArrayList<DraftModle.DataBean> mData = new ArrayList<>();
+    private boolean isLoad = true;
+
     @Override
     protected DraftModlePresenter createPresenter() {
         return new DraftModlePresenter(this);
@@ -60,8 +68,6 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
         titleRightTv.setVisibility(View.VISIBLE);
         titleRightTv.setText("管理");
         titleRightTv.setTextColor(Color.WHITE);
-        mAdapter = new DraftListAdapter(this,mData);
-        draftRyv.setAdapter(mAdapter);
         titleTv.setText("草稿模式");
         addTv.setText("添加草稿");
         finishIv.setOnClickListener(this);
@@ -75,7 +81,15 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
 
     @Override
     protected void initData() {
-        mvpPresenter.getDraftList(articleId);
+        EventBus.getDefault().register(this);
+        if (isLoad) {//只执行一次
+            mvpPresenter.getDraftList(articleId);
+        } else {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        }
+        mAdapter = new DraftListAdapter(this, mData, mvpPresenter);
+        draftRyv.setAdapter(mAdapter);
+        isLoad = false;
     }
 
     @Override
@@ -94,11 +108,11 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
                 if (titleRightTv.getText().toString().equals("管理")) {
                     titleRightTv.setText("完成");
                     page.setVisibility(View.GONE);
-                    mAdapter.setGone(false);
+                    mAdapter.setGone(true);
                 } else {
                     titleRightTv.setText("管理");
                     page.setVisibility(View.VISIBLE);
-                    mAdapter.setGone(true);
+                    mAdapter.setGone(false);
                 }
                 mAdapter.notifyDataSetChanged();
                 break;
@@ -110,6 +124,8 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
         if (model.isSuccess()) {
             if (model.getData() != null && !model.getData().isEmpty()) {
                 mData.addAll(model.getData());
+                mAdapter.setmData(mData);
+                mAdapter.notifyDataSetChanged();
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 pageNo++;
             }
@@ -120,9 +136,27 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     }
 
     @Override
+    public void getDeleteDraftBookDataSuccess(RewardResult model, int position) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("删除成功");
+            mData.remove(position);
+            mAdapter.setmData(mData);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
         refreshPage(LoadingPager.PageState.STATE_ERROR);
+    }
+
+    @Override
+    public void getDataFail2(String msg) {
+        Logger.e(msg);
+        ToastUtil.showToast("删除失败");
     }
 
     @Override
@@ -150,5 +184,22 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     public void onLoadMore() {
         mvpPresenter.getParamet().setPageNo(pageNo + "");
         mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefurshDraftEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            mData.clear();
+            pageNo = 1;
+            mvpPresenter.getParamet().setPageNo(pageNo + "");
+            mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

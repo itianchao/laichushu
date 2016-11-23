@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.event.RefurshDraftEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftModle;
 import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftPersenter;
@@ -25,6 +26,8 @@ import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.yanzhenjie.album.Album;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.List;
 
@@ -37,7 +40,6 @@ import jp.wasabeef.richeditor.RichEditor;
 
 public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter> implements CreateNewDraftView, View.OnClickListener {
 
-    private static final int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
     private TextView titleTv;
     private ImageView finishIv;
     private EditText draftmEt;
@@ -47,7 +49,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
     private String articleId;
     private String path = "";
     private String type;
-
+    
     @Override
     protected View createSuccessView() {
         articleId = getIntent().getStringExtra("articleId");
@@ -65,7 +67,8 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         //mEditor.setBackgroundResource(R.drawable.bg);
         mEditor.setPadding(10, 10, 10, 10);
         //    mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
-        mEditor.setPlaceholder("从这里开始");
+        mEditor.setPlaceholder("");
+
         mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
             @Override
             public void onTextChange(String text) {
@@ -76,7 +79,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         mSuccessView.findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Album.startAlbum(mActivity, ACTIVITY_REQUEST_SELECT_PHOTO
+                Album.startAlbum(mActivity, ConstantValue.ACTIVITY_REQUEST_SELECT_PHOTO
                         , 1                                                         // 指定选择数量。
                         , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
                         , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
@@ -111,6 +114,13 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         hideLoading();
         if (modle.isSuccess()) {
             ToastUtil.showToast("创建成功");
+            UIUtil.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    EventBus.getDefault().postSticky(new RefurshDraftEvent(true));
+                    finish();
+                }
+            },1700);
         } else {
             Logger.e(modle.getErrMsg());
             ToastUtil.showToast("创建失败");

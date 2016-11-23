@@ -113,6 +113,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
 
             }
         });
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override

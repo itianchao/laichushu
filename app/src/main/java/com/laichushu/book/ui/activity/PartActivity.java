@@ -89,7 +89,7 @@ public class PartActivity extends MvpActivity<PartPresenter> implements PartView
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // TODO: 2016/11/8  跳转书籍
         Bundle bundle = new Bundle();
-        String path = mPartdata.get(position).getContent();
+        String path = mPartdata.get(position).getContentUrlApp();
         String name = mPartdata.get(position).getName();
         bundle.putString("path",path);
         bundle.putString("title",name);

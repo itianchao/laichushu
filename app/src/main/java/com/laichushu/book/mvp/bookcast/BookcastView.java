@@ -1,6 +1,5 @@
 package com.laichushu.book.mvp.bookcast;
 
-import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.mvp.home.HomeHotModel;
 
 /**

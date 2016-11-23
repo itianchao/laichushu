@@ -13,6 +13,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.ui.activity.DraftModleActivity;
+import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -47,7 +48,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
 
 
     @Override
-    public void onBindViewHolder(WriteBookViewHolder holder, int position) {
+    public void onBindViewHolder(WriteBookViewHolder holder, final int position) {
         final HomeHotModel.DataBean dataBean = mData.get(position);
         GlideUitl.loadImg(mActivity, dataBean.getCoverUrl(), holder.bookIv);
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +86,9 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.materialTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle bundle = new Bundle();
+                bundle.putString("articleId", dataBean.getArticleId());
+                UIUtil.openActivity(mActivity, SourceMaterialDirActivity.class, bundle);
             }
         });
         /**
@@ -116,7 +119,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             @Override
             public void onClick(View v) {
                 String articleId = dataBean.getArticleId();
-                mvpPresenter.deleteBook(articleId);
+                mvpPresenter.deleteBook(articleId,position);
             }
         });
     }

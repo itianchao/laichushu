@@ -51,6 +51,24 @@ public class BookMoudle {
         private String name;
         private boolean isSection;
         private String content;
+        private String contentUrlPc;    	// pc端素材路径
+        private String contentUrlApp;   	// app 端素材路径
+
+        public String getContentUrlPc() {
+            return contentUrlPc;
+        }
+
+        public void setContentUrlPc(String contentUrlPc) {
+            this.contentUrlPc = contentUrlPc;
+        }
+
+        public String getContentUrlApp() {
+            return contentUrlApp;
+        }
+
+        public void setContentUrlApp(String contentUrlApp) {
+            this.contentUrlApp = contentUrlApp;
+        }
 
         public boolean isSection() {
             return isSection;

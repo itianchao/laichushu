@@ -10,7 +10,7 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 
 public interface WriteView {
     void getDataSuccess(HomeHotModel model);
-    void deleteNewBook(RewardResult model);
+    void deleteNewBook(RewardResult model, int position);
     void articleVote(RewardResult model);
     void publishNewBook(RewardResult model);
     void getDataFail(String msg);
