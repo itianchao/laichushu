@@ -82,6 +82,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     @Override
     protected HomePresenter createPresenter() {
+        EventBus.getDefault().register(this);
         return new HomePresenter(this);
     }
 
@@ -328,6 +329,12 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     public HomeHotModel getModel() {
         return model;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
