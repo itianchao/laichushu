@@ -1,2 +1,1 @@
-include ':app', ':hwTxtReader'
-include ':pickerView'
+include ':app', ':hwTxtReader',':pickerView'

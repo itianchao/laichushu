@@ -33,7 +33,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     private List<HomeUseDyrResult.DataBean> dyData = new ArrayList<>();
     private List<HomeUseDyrResult.DataBean> focusMeData = new ArrayList<>();
     private HomePageDynamicAdapter dyAdapter;
-    private int PAGE_NO = 1;
+    private int PAGE_NO = 1,type=1;
+    private boolean dibbleDy=false,dibbleFoMe=false,isDibbleFo=false;
     private List<View> lines = new ArrayList<>();
     @Override
     protected HomePagePresener createPresenter() {
@@ -166,10 +167,12 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        PAGE_NO = 1;
         switch (checkedId) {
             case R.id.rb_dynamic:
+                // 动态
                 selectLine(0);
-
+                mvpPresenter.LoadData();
                 break;
             case R.id.rb_focusMe:
                 selectLine(1);
@@ -198,7 +201,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     public void selectLine(int position) {
         for (int i = 0; i < 3; i++) {
             if (i != position) {
-                lines.get(i).setVisibility(View.GONE);
+                lines.get(i).setVisibility(View.INVISIBLE);
             }
         }
     }
