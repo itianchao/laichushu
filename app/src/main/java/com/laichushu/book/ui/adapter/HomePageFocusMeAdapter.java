@@ -1,0 +1,100 @@
+package com.laichushu.book.ui.adapter;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.HomePersonFocusResult;
+import com.laichushu.book.ui.activity.PersonalHomePageActivity;
+import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.UIUtil;
+
+import java.util.List;
+
+/**
+ * Created by PCPC on 2016/11/23.
+ */
+
+public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMeAdapter.ViewHolder> {
+    private PersonalHomePageActivity context;
+    private List<HomePersonFocusResult.DataBean> dataBeen;
+
+    public HomePageFocusMeAdapter(PersonalHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean) {
+        this.context = context;
+        this.dataBeen = dataBean;
+    }
+
+    @Override
+    public HomePageFocusMeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = UIUtil.inflate(R.layout.item_homepage_focusme);
+        return new HomePageFocusMeAdapter.ViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
+        holder.tvContent.setText(dataBeen.get(position).getNickName());
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!holder.checkBox.isChecked()) {
+                    holder.checkBox.setText("已关注");
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
+                } else {
+                    holder.checkBox.setText("关注");
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.bgGrey));
+                }
+
+            }
+        });
+//        holder.llItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+        //跳转图书详情页
+//                Bundle bundle = new Bundle();
+//                bundle.putParcelable("bean", dataBeen.get(position));
+//                UIUtil.openActivity(context, BookDetailActivity.class, bundle);
+//            }
+//        });
+    }
+
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return dataBeen == null ? 0 : dataBeen.size();
+    }
+
+    public void refreshAdapter(List<HomePersonFocusResult.DataBean> listData) {
+        dataBeen.clear();
+        if (listData.size() > 0) {
+            dataBeen.addAll(listData);
+            this.notifyDataSetChanged();
+        }
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public final TextView tvContent;
+        public final ImageView ivImg;
+        public final CheckBox checkBox;
+        public final View root;
+
+        public ViewHolder(View root) {
+            super(root);
+            tvContent = (TextView) root.findViewById(R.id.tv_dyContent);
+            ivImg = (ImageView) root.findViewById(R.id.iv_dyHead);
+            checkBox = (CheckBox) root.findViewById(R.id.cb_focus);
+            this.root = root;
+        }
+    }
+}
+
