@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomePageFocusBeResult;
+import com.laichushu.book.bean.netbean.HomePersonFocusResult;
+import com.laichushu.book.mvp.homePage.HomePagePresener;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -23,11 +25,12 @@ import java.util.List;
 
 public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBeAdapter.ViewHolder> {
     private PersonalHomePageActivity context;
-    private List<HomePageFocusBeResult.DataBean> dataBeen;
-
-    public HomePageFocusBeAdapter(PersonalHomePageActivity context, List<HomePageFocusBeResult.DataBean> dataBean) {
+    private List<HomePersonFocusResult.DataBean> dataBeen;
+    private HomePagePresener homePagePresener;
+    public HomePageFocusBeAdapter(PersonalHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean,HomePagePresener homePagePresener) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.homePagePresener=homePagePresener;
     }
 
     @Override
@@ -37,19 +40,27 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
     }
 
     @Override
-    public void onBindViewHolder(final HomePageFocusBeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final HomePageFocusBeAdapter.ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
         holder.tvContent.setText(dataBeen.get(position).getNickName());
+        holder.checkBox.setText("取消关注");
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!holder.checkBox.isChecked()) {
-                    holder.checkBox.setText("已关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
-                } else {
                     holder.checkBox.setText("关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.bgGrey));
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
+                    homePagePresener.getStatus().setStatus(true);
+                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
+                    homePagePresener.loadFocusBeStatus(true);
+                } else {
+                    holder.checkBox.setText("取消关注");
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
+                    homePagePresener.getStatus().setStatus(false);
+                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
+                    homePagePresener.loadFocusBeStatus(false);
                 }
+
 
             }
         });
@@ -75,7 +86,7 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
         return dataBeen == null ? 0 : dataBeen.size();
     }
 
-    public void refreshAdapter(List<HomePageFocusBeResult.DataBean> listData) {
+    public void refreshAdapter(List<HomePersonFocusResult.DataBean> listData) {
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);

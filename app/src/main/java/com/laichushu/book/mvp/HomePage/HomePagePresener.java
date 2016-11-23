@@ -1,11 +1,13 @@
-package com.laichushu.book.mvp.HomePage;
+package com.laichushu.book.mvp.homePage;
 
+import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePageFocusBeResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
+import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserResult;
+import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
@@ -68,11 +70,11 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
     }
 
     //我关注的
-    private HomeUserFocusMe_parmet paramet2 = new HomeUserFocusMe_parmet(userId, pageNo,pageSize);
+    private HomeUserFocusMe_parmet paramet2 = new HomeUserFocusMe_parmet(userId, pageNo, pageSize);
 
     public void LoadFocusMeData() {
 
-        LoggerUtil.toJson(paramet);
+        LoggerUtil.toJson(paramet2);
         addSubscription(apiStores.getHomeUserFocusMeDetails(paramet2), new ApiCallback<HomePersonFocusResult>() {
             @Override
             public void onSuccess(HomePersonFocusResult model) {
@@ -91,14 +93,84 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         });
     }
 
+    public HomeUserFocusBe_parmet getParamet3() {
+        return paramet3;
+    }
+
+    public void setParamet3(HomeUserFocusBe_parmet paramet3) {
+        this.paramet3 = paramet3;
+    }
+
+    //我关注的
+    private HomeUserFocusBe_parmet paramet3 = new HomeUserFocusBe_parmet(userId, pageNo, pageSize);
 
     public void LoadFocusBeData() {
 
-        LoggerUtil.toJson(paramet);
-        addSubscription(apiStores.getHomeUserFocusMeDetails(paramet2), new ApiCallback<HomePageFocusBeResult>() {
+        LoggerUtil.toJson(paramet3);
+        addSubscription(apiStores.getHomeUserFocusBeDetails(paramet3), new ApiCallback<HomePersonFocusResult>() {
             @Override
-            public void onSuccess(HomePageFocusBeResult model) {
+            public void onSuccess(HomePersonFocusResult model) {
                 mvpView.getFocusBeDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        targetId = targetId;
+    }
+
+    private String targetId;
+
+    public HomeUserFocusState_Paramet getStatus() {
+        return status;
+    }
+
+    public void setStatus(HomeUserFocusState_Paramet status) {
+        this.status = status;
+    }
+
+    private HomeUserFocusState_Paramet status = new HomeUserFocusState_Paramet(userId,targetId,false);
+//更新关注我的状态
+    public void loadFocusBeStatus(final boolean flg){
+        LoggerUtil.toJson(paramet3);
+                    addSubscription(apiStores.getHomeUserFocusBeStatus(status), new ApiCallback<HomeFocusResult>() {
+                        @Override
+                        public void onSuccess(HomeFocusResult model) {
+                            mvpView.getFocusBeStatus(model,flg);
+                        }
+
+                        @Override
+                        public void onFailure(int code, String msg) {
+                            mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                        }
+        });
+    }
+    //更新我关注的状态
+    public void loadFocusMeStatus(final boolean isFocus){
+        LoggerUtil.toJson(paramet3);
+        addSubscription(apiStores.getHomeUserFocusMeStatus(status), new ApiCallback<HomeFocusResult>() {
+            @Override
+            public void onSuccess(HomeFocusResult model) {
+                mvpView.getFocusMeStatus(model,isFocus);
             }
 
             @Override

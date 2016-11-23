@@ -27,11 +27,14 @@ import com.laichushu.book.bean.netbean.EditMaterialBook_Paramet;
 import com.laichushu.book.bean.netbean.ForgetPwd_Paramet;
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
+import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
+import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
+import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
@@ -41,7 +44,6 @@ import com.laichushu.book.bean.netbean.Login_Paramet;
 import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
 import com.laichushu.book.bean.netbean.MaterialList_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
-import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
@@ -316,13 +318,19 @@ public interface ApiStores {
     Observable<HomeUseDyrResult> getHomeUserDyDetails(@Body HomeUserDy_parmet paramet);
 
     //个人主页关注我的
-    @POST("perFocus/findMy")
+    @POST("perFocus/findBe")
     Observable<HomePersonFocusResult> getHomeUserFocusMeDetails(@Body HomeUserFocusMe_parmet paramet);
 
     //个人主页我关注的
-    @POST("perFocus/findBe")
-    Observable<HomePersonFocusResult> getHomeUserFocusBeDetails(@Body HomeUserFocusMe_parmet paramet);
+    @POST("perFocus/findMy")
+    Observable<HomePersonFocusResult> getHomeUserFocusBeDetails(@Body HomeUserFocusBe_parmet paramet);
+    //个人主页更新“关注我的”信息关注状态
+    @POST("perFocus/updateBe")
+    Observable<HomeFocusResult> getHomeUserFocusMeStatus(@Body HomeUserFocusState_Paramet paramet);
 
+    //个人主页更新“我关注的”信息关注状态
+    @POST("userDetail/updateHis")
+    Observable<HomeFocusResult> getHomeUserFocusBeStatus(@Body HomeUserFocusState_Paramet paramet);
     //删除草稿
     @POST("chapter/delete")
     Observable<RewardResult> deleteDraftBook(@Body DeleteDraft_Paramet paramet);
@@ -350,5 +358,7 @@ public interface ApiStores {
     //获取素材列表
     @POST("material/edit")
     Observable<RewardResult> editMaterialBook(@Body EditMaterialBook_Paramet paramet);
+
+
 
 }

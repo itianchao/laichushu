@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
+import com.laichushu.book.mvp.homePage.HomePagePresener;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -23,10 +24,11 @@ import java.util.List;
 public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMeAdapter.ViewHolder> {
     private PersonalHomePageActivity context;
     private List<HomePersonFocusResult.DataBean> dataBeen;
-
-    public HomePageFocusMeAdapter(PersonalHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean) {
+    private HomePagePresener homePagePresener;
+    public HomePageFocusMeAdapter(PersonalHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean, HomePagePresener homePagePresener) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.homePagePresener=homePagePresener;
     }
 
     @Override
@@ -36,18 +38,26 @@ public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMe
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
         holder.tvContent.setText(dataBeen.get(position).getNickName());
+        holder.checkBox.setText("关注");
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 if (!holder.checkBox.isChecked()) {
                     holder.checkBox.setText("已关注");
                     holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
+                    homePagePresener.getStatus().setStatus(true);
+                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
+                    homePagePresener.loadFocusMeStatus(true);
                 } else {
                     holder.checkBox.setText("关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.bgGrey));
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
+                    homePagePresener.getStatus().setStatus(false);
+                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
+                    homePagePresener.loadFocusMeStatus(false);
                 }
 
             }
