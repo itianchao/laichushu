@@ -168,6 +168,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh()) {
             // TODO: 2016/11/17 刷新
+            mData.clear();
             mvpPresenter.getArticleBookList();
         }
     }
