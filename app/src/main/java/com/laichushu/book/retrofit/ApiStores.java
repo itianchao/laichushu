@@ -268,6 +268,7 @@ public interface ApiStores {
     Observable<RewardResult> getUpdateDetails(@PartMap Map<String, RequestBody> params,@Part("photoFile\"; filename=\"head.jpg") RequestBody file);
 
     //提交个人信息审核@Body UploadIdcardInfor_Parmet paramet
+    @Multipart
     @POST("perHome/atte")
     Observable<RewardResult> getUploadInfor(@PartMap Map<String, RequestBody> params,@Part("idCardFront\"; filename=\"front.jpg") RequestBody front,@Part("idCardOppsite\"; filename=\"oppsite.jpg") RequestBody oppsite);
 

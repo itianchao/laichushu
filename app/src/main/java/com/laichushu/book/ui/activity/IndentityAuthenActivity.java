@@ -3,6 +3,7 @@ package com.laichushu.book.ui.activity;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.UploadIdcardInfor_Parmet;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -17,7 +19,9 @@ import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.yanzhenjie.album.Album;
 
@@ -90,34 +94,64 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
                 openAlertDialog();
                 break;
             case R.id.btn_idCardAuditing:
-                //提交审核
-                ArrayMap<String, RequestBody> params = new ArrayMap<>();
-                RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), SharePrefManager.getUserId().toString());
-                RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), edRealName.getText().toString());
-                RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), edIdCardNum.getText().toString());
-                RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(frontFile));
-                RequestBody requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(oppsiteFile));
-                params.put("userId", requestBody1);
-                params.put("name", requestBody2);
-                params.put("idCad", requestBody3);
-                addSubscription(apiStores.getUploadInfor(params, requestBody4, requestBody5), new ApiCallback() {
-                    @Override
-                    public void onSuccess(Object model) {
+                //判断空
+                if (judgeDate()) {
+                    //提交审核
+                    ArrayMap<String, RequestBody> params = new ArrayMap<>();
+                    RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), SharePrefManager.getUserId().toString());
+                    RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), edRealName.getText().toString());
+                    RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), edIdCardNum.getText().toString());
+                    RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(frontFile));
+                    RequestBody requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(oppsiteFile));
+                    params.put("userId", requestBody1);
+                    params.put("name", requestBody2);
+                    params.put("idCard", requestBody3);
+                    addSubscription(apiStores.getUploadInfor(params, requestBody4, requestBody5), new ApiCallback<RewardResult>() {
+                        @Override
+                        public void onSuccess(RewardResult model) {
+                            if (model.isSuccess()) {
+                                mActivity.finish();
+                                ToastUtil.showToast("审核成功！");
+                            } else {
+                                ToastUtil.showToast("审核失败！");
+                                LoggerUtil.e(model.getErrMsg().toString());
+                            }
+                        }
 
-                    }
+                        @Override
+                        public void onFailure(int code, String msg) {
 
-                    @Override
-                    public void onFailure(int code, String msg) {
+                        }
 
-                    }
+                        @Override
+                        public void onFinish() {
 
-                    @Override
-                    public void onFinish() {
+                        }
+                    });
+                }
 
-                    }
-                });
                 break;
         }
+    }
+
+    private boolean judgeDate() {
+        if (TextUtils.isEmpty(edRealName.getText())) {
+            ToastUtil.showToast("请输入姓名!");
+            return false;
+        }
+        if (TextUtils.isEmpty(edIdCardNum.getText())) {
+            ToastUtil.showToast("请输入身份证号!");
+            return false;
+        }
+        if (frontFile.exists()) {
+            ToastUtil.showToast("请上传身份证正面照!");
+            return false;
+        }
+        if (oppsiteFile.exists()) {
+            ToastUtil.showToast("请上传身份证反面照!");
+            return false;
+        }
+        return true;
     }
 
     /**

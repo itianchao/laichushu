@@ -327,7 +327,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     //选择日期
     private void setTimePopupwindow() {
         timePopupWindow = new TimePopupWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
-//        timePopupWindow.setti
         timePopupWindow.setOnTimeSelectListener(new TimePopupWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
@@ -355,7 +354,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         json.setBirthday(edBirthday.getText().toString());
         json.setCity(edCity.getText().toString());
         json.setSign(edSign.getText().toString());
-
+        json.setPhoto(imgUrl);
 //        json.setPhoto();
         //
         cache_json.setJson(new Gson().toJson(json));
