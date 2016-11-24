@@ -9,8 +9,10 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 public interface DraftModleView {
     void getDataSuccess(DraftModle model);
     void getDeleteDraftBookDataSuccess(RewardResult model, int position);
+    void getChapterRenameDataSuccess(RewardResult model, int index, String rename);
     void getDataFail(String msg);
     void getDataFail2(String msg);
+    void getChapterRenameDataFail(String s);
     void showLoading();
     void hideLoading();
 

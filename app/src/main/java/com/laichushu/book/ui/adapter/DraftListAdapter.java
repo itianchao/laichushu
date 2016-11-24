@@ -56,7 +56,7 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
         holder.renameTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mvpPresenter.openRameDialog(dataBean.getId(),position);
             }
         });
         holder.reviseTv.setOnClickListener(new View.OnClickListener() {

@@ -129,6 +129,20 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     }
 
     @Override
+    public void getMaterialRenameDataSuccess(RewardResult model, int index,String name) {
+        hideLoading();
+        if (model.isSuccess()) {
+            ToastUtil.showToast("重命名成功");
+            SourceMaterialModle.DataBean dataBean = mData.get(index);
+            dataBean.setName(name);
+            mAdapter.setmData(mData);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
     public void getDataFail(String msg) {
         refursh();
         refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -137,7 +151,15 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
 
     @Override
     public void getDeleteMateialDataFail(String msg) {
+        hideLoading();
         ToastUtil.showToast("删除失败");
+        LoggerUtil.toJson(msg);
+    }
+
+    @Override
+    public void getMaterialRenameDataFail(String msg) {
+        hideLoading();
+        ToastUtil.showToast("重命名失败");
         LoggerUtil.toJson(msg);
     }
 

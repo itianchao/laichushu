@@ -149,6 +149,19 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     }
 
     @Override
+    public void getChapterRenameDataSuccess(RewardResult model, int index, String rename) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("重命名成功");
+            DraftModle.DataBean dataBean = mData.get(index);
+            dataBean.setName(rename);
+            mAdapter.setmData(mData);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
         refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -157,8 +170,16 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
 
     @Override
     public void getDataFail2(String msg) {
+        hideLoading();
         Logger.e(msg);
         ToastUtil.showToast("删除失败");
+    }
+
+    @Override
+    public void getChapterRenameDataFail(String msg) {
+        hideLoading();
+        Logger.e(msg);
+        ToastUtil.showToast("重命名成功");
     }
 
     @Override
