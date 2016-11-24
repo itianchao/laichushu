@@ -24,7 +24,10 @@ import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
-import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
+import com.laichushu.book.db.Cache_Json;
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
@@ -35,7 +38,6 @@ import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
-import com.orhanobut.logger.Logger;
 import com.pickerview.OptionsPopupWindow;
 import com.pickerview.TimePopupWindow;
 import com.yanzhenjie.album.Album;
@@ -45,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
 import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -71,6 +75,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     private RadioGroup rgSex;
     private RadioButton tvMan, tvFeman;
     private String sexMsg;
+    private Cache_JsonDao cache_jsonDao;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -124,6 +129,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 break;
             case R.id.tv_title_right:
                 //测试
+                edSign.setText("123456789");
                 edCity.setText("01");
                 if (!judgeAttrbute()) {
                     return;
@@ -150,7 +156,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                             ToastUtil.showToast("success");
                             mActivity.finish();
-                            updateDate();
+//                            updateDate(url);
                         } else {
                             ToastUtil.showToast(result.getErrMsg());
                             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -334,7 +340,26 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     /**
      * 通知fragment更新数据
      */
-    private void updateDate() {
+    private void updateDate(String imgUrl) {
+        //更新本地数据
+        DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
+        cache_jsonDao = daoSession.getCache_JsonDao();
+        QueryBuilder<Cache_Json> userQueryBuilder = cache_jsonDao.queryBuilder();
+        QueryBuilder<Cache_Json> builder = userQueryBuilder.where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails"));
+        Query<Cache_Json> build = builder.build();
+        List<Cache_Json> cache_jsons = build.list();
+        Cache_Json cache_json = cache_jsons.get(0);
+        PersonalCentreResult json = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
+        json.setNickName(edNickName.getText().toString());
+        json.setSex(tvSex.getText().toString());
+        json.setBirthday(edBirthday.getText().toString());
+        json.setCity(edCity.getText().toString());
+        json.setSign(edSign.getText().toString());
+
+//        json.setPhoto();
+        //
+        cache_json.setJson(new Gson().toJson(json));
+        cache_jsonDao.update(cache_json);
         Intent intent = new Intent(ConstantValue.ACTION_UPDATE_DATA);
         intent.addCategory(mActivity.getPackageName());
         mActivity.sendBroadcast(intent);
@@ -342,38 +367,15 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
 
     /**
-     * 选择模版 对话框
+     * 打开相册
      */
     public void openAlertDialog() {
-        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
-        final View customerView = UIUtil.inflate(R.layout.dialog_photo);
 
-        //从模版中选择
-        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogBuilder.dismiss();
-            }
-        });
-        //从相册中选择
-        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Album.startAlbum(mActivity, ACTIVITY_REQUEST_SELECT_PHOTO
                         , 1                                                         // 指定选择数量。
                         , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
                         , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
-                dialogBuilder.dismiss();
-            }
-        });
-        dialogBuilder
-                .withTitle(null)                                  // 为null时不显示title
-                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
-                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
-                .withDuration(500)                                // 对话框动画时间
-                .withEffect(Effectstype.Slidetop)                 // 动画形式
-                .setCustomView(customerView, mActivity)                // 添加自定义View
-                .show();
+
     }
 
     /**

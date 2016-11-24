@@ -1,5 +1,6 @@
 package com.laichushu.book.bean.netbean;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -7,12 +8,15 @@ import java.io.Serializable;
  */
 
 public class UploadIdcardInfor_Parmet implements Serializable {
-    private String userId, idCard, name;
+    private String userId, name, idCard;
+    private File idCardFront, idCardOppsite;
 
-    public UploadIdcardInfor_Parmet(String userId, String idCard, String name) {
+    public UploadIdcardInfor_Parmet(String userId, String name, String idCard, File idCardFront, File idCardOppsite) {
         this.userId = userId;
-        this.idCard = idCard;
         this.name = name;
+        this.idCard = idCard;
+        this.idCardFront = idCardFront;
+        this.idCardOppsite = idCardOppsite;
     }
 
     public String getUserId() {
@@ -23,6 +27,14 @@ public class UploadIdcardInfor_Parmet implements Serializable {
         this.userId = userId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getIdCard() {
         return idCard;
     }
@@ -31,11 +43,19 @@ public class UploadIdcardInfor_Parmet implements Serializable {
         this.idCard = idCard;
     }
 
-    public String getName() {
-        return name;
+    public File getIdCardFront() {
+        return idCardFront;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdCardFront(File idCardFront) {
+        this.idCardFront = idCardFront;
+    }
+
+    public File getIdCardOppsite() {
+        return idCardOppsite;
+    }
+
+    public void setIdCardOppsite(File idCardOppsite) {
+        this.idCardOppsite = idCardOppsite;
     }
 }

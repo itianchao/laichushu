@@ -111,10 +111,10 @@ public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
-    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
-//    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
+    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 
     //登录接口
@@ -263,11 +263,11 @@ public interface ApiStores {
     //个人主页更新用户详情  @Body UpdatePersonalInfor_Parmet paramet
     @Multipart
     @POST("perHome/edit")
-    Observable<RewardResult> getUpdateDetails(@PartMap Map<String, RequestBody> params,@Part("file\"; filename=\"head.jpg") RequestBody file);
+    Observable<RewardResult> getUpdateDetails(@PartMap Map<String, RequestBody> params,@Part("photoFile\"; filename=\"head.jpg") RequestBody file);
 
-    //提交个人信息审核
+    //提交个人信息审核@Body UploadIdcardInfor_Parmet paramet
     @POST("perHome/atte")
-    Observable<RewardResult> getUploadInfor(@Body UploadIdcardInfor_Parmet paramet);
+    Observable<RewardResult> getUploadInfor(@PartMap Map<String, RequestBody> params,@Part("idCardFront\"; filename=\"front.jpg") RequestBody front,@Part("idCardOppsite\"; filename=\"oppsite.jpg") RequestBody oppsite);
 
     //创建新书 从相册
     @Multipart
