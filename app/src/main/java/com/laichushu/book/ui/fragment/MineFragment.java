@@ -107,6 +107,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         tvMineName.setText("  " + result.getNickName());
         tvMinebookNum.setText(result.getArticleCount() + "部  ");
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        res=result;
     }
 
     @Override
