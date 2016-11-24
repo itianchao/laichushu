@@ -260,10 +260,10 @@ public interface ApiStores {
     //个人中心
     @POST("perHome/find")
     Observable<PersonalCentreResult> getPersonalDetails(@Body PersonalCentre_Parmet paramet);
-
-    //个人主页更新用户详情
+    //个人主页更新用户详情  @Body UpdatePersonalInfor_Parmet paramet
+    @Multipart
     @POST("perHome/edit")
-    Observable<RewardResult> getUpdateDetails(@Body UpdatePersonalInfor_Parmet paramet);
+    Observable<RewardResult> getUpdateDetails(@PartMap Map<String, RequestBody> params,@Part("file\"; filename=\"head.jpg") RequestBody file);
 
     //提交个人信息审核
     @POST("perHome/atte")
@@ -273,7 +273,6 @@ public interface ApiStores {
     @Multipart
     @POST("article/save")
     Observable<RewardResult> createNewBook(@Part("file\"; filename=\"cover.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
-
     //本地图片转换
     @Multipart
     @POST("file/upload")

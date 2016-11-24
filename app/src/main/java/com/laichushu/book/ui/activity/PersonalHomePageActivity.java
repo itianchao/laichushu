@@ -8,13 +8,12 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
-import com.laichushu.book.bean.netbean.HomePageFocusBeResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
-import com.laichushu.book.mvp.homePage.HomePagePresener;
-import com.laichushu.book.mvp.homePage.HomePageView;
+import com.laichushu.book.mvp.homepage.HomePagePresener;
+import com.laichushu.book.mvp.homepage.HomePageView;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.adapter.HomePageDynamicAdapter;
 import com.laichushu.book.ui.adapter.HomePageFocusBeAdapter;

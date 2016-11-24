@@ -3,13 +3,13 @@ package com.laichushu.book.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.ArrayMap;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -30,7 +30,6 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
-import com.laichushu.book.ui.widget.TypePopWindow;
 import com.laichushu.book.utils.DateUtil;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
@@ -46,7 +45,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import id.zelory.compressor.Compressor;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
+
+/**
+ * 个人中心--编辑个人信息
+ * 2016年11月24日11:25:54
+ */
 public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private ImageView ivBack, ivHead;
     private TextView tvTitle, tvRight, tvIdCard, tvSex, edBirthday;
@@ -55,9 +62,10 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     //    private Pop_Syllabus_Date pop_PlayPartner_Date;
     private RelativeLayout rlIdCard, rlHead;
     private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
-    private File compressedImageFile;
+    private File photoFile;
     //时间选择器
     private TimePopupWindow timePopupWindow;
+    private OptionsPopupWindow sexPopupWindow;
     private PopupWindow sexPopWindow;
     private Button submit, cancle;
     private RadioGroup rgSex;
@@ -118,10 +126,22 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 if (!judgeAttrbute()) {
                     return;
                 }
-                UpdatePersonalInfor_Parmet paramet = new UpdatePersonalInfor_Parmet(SharePrefManager.getUserId().toString(),
-                        edNickName.getText().toString(), tvSex.getText().toString(), edCity.getText().toString(), edSign.getText().toString(), edBirthday.getText().toString());
-                Logger.json(new Gson().toJson(paramet));
-                addSubscription(apiStores.getUpdateDetails(paramet), new ApiCallback<RewardResult>() {
+                ArrayMap<String, RequestBody> params = new ArrayMap<>();
+                RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), SharePrefManager.getUserId().toString());
+                RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), edNickName.getText().toString());
+                RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), tvSex.getText().toString());
+                RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), edCity.getText().toString());
+                RequestBody requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), edSign.getText().toString());
+                RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"), edBirthday.getText().toString());
+                RequestBody requestBody7 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(photoFile));
+                params.put("userId", requestBody1);
+                params.put("nickName", requestBody2);
+                params.put("sex", requestBody3);
+                params.put("city", requestBody4);
+                params.put("sign", requestBody5);
+                params.put("birthday", requestBody6);
+                params.put("photoFile", requestBody7);
+                addSubscription(apiStores.getUpdateDetails(params, requestBody1), new ApiCallback<RewardResult>() {
                     @Override
                     public void onSuccess(RewardResult result) {
                         if (result.isSuccess()) {
@@ -148,7 +168,8 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
                 break;
             case R.id.ed_sexContent:
-                setPopWindow();
+//                setPopWindow();
+                setSexPopWindow();
                 break;
             case R.id.ed_birthdayContent:
 //                showBirthdayPop();
@@ -272,10 +293,33 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         sexPopWindow.setAnimationStyle(R.style.timepopwindow_anim_style);
     }
 
+    /**
+     * 设置性别
+     */
+    public void setSexPopWindow() {
+        final ArrayList<String> sexData = new ArrayList<>();
+        sexData.clear();
+        sexData.add("男");
+        sexData.add("女");
+        sexPopupWindow = new OptionsPopupWindow(this);
+        sexPopupWindow.setPicker(sexData);
+        sexPopupWindow.setCyclic(true);
+        sexPopupWindow.setTitleBackgroundColor(mActivity.getResources().getColor(R.color.auditing));
+        sexPopupWindow.setTitle("性别");
+        sexPopupWindow.setSelectOptions(Gravity.CENTER_HORIZONTAL);
+        sexPopupWindow.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                tvSex.setText(sexData.get(options1));
+            }
+        });
+        sexPopupWindow.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
+    }
 
     //选择日期
     private void setTimePopupwindow() {
         timePopupWindow = new TimePopupWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
+//        timePopupWindow.setti
         timePopupWindow.setOnTimeSelectListener(new TimePopupWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
@@ -294,12 +338,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         mActivity.sendBroadcast(intent);
     }
 
-    private void showBirthdayPop() {
-        // 选择日期
-//        pop_PlayPartner_Date = new Pop_Syllabus_Date(
-//                mActivity, findViewById(R.id.rl_head),
-//                findViewById(R.id.rl_Birthday), "年--月--日", edBirthday);
-    }
 
     /**
      * 选择模版 对话框
@@ -346,9 +384,9 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             List<String> imagesPath = Album.parseResult(data);
             if (imagesPath != null && imagesPath.size() > 0) {
                 String path = imagesPath.get(0);
-                GlideUitl.loadImg(mActivity, path, ivHead);
+                GlideUitl.loadRandImg(mActivity, path, ivHead);
                 //压缩图片
-                compressedImageFile = new File(path);
+                photoFile = new File(path);
             }
         }
     }

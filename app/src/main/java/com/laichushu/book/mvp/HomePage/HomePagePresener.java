@@ -1,7 +1,6 @@
-package com.laichushu.book.mvp.homePage;
+package com.laichushu.book.mvp.homepage;
 
 import com.laichushu.book.bean.netbean.HomeFocusResult;
-import com.laichushu.book.bean.netbean.HomePageFocusBeResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
-import com.laichushu.book.mvp.homePage.HomePagePresener;
+import com.laichushu.book.mvp.homepage.HomePagePresener;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;

@@ -1,5 +1,6 @@
 package com.laichushu.book.bean.netbean;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,6 +11,17 @@ import java.util.Date;
 public class UpdatePersonalInfor_Parmet implements Serializable {
     private String userId, nickName, sex, city, sign;
     private String birthday;
+    private File photoFile;
+
+    public UpdatePersonalInfor_Parmet(String userId, String nickName, String sex, String city, String sign, String birthday, File photoFile) {
+        this.userId = userId;
+        this.nickName = nickName;
+        this.sex = sex;
+        this.city = city;
+        this.sign = sign;
+        this.birthday = birthday;
+        this.photoFile = photoFile;
+    }
 
     public String getUserId() {
         return userId;
@@ -59,13 +71,11 @@ public class UpdatePersonalInfor_Parmet implements Serializable {
         this.birthday = birthday;
     }
 
-    public UpdatePersonalInfor_Parmet(String userId, String nickName, String sex, String city, String sign, String birthday) {
-        this.userId = userId;
-        this.nickName = nickName;
-        this.sex = sex;
-        this.city = city;
-        this.sign = sign;
-        this.birthday = birthday;
+    public File getPhotoFile() {
+        return photoFile;
+    }
 
+    public void setPhotoFile(File photoFile) {
+        this.photoFile = photoFile;
     }
 }
