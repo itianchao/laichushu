@@ -10,8 +10,10 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 public interface SourceMaterialDirView {
     void getDataSuccess(SourceMaterialDirModle model);
     void getDeleteMateialDataSuccess(RewardResult model, int index);
+    void getMaterialRenameDataSuccess(RewardResult model, int index, String rename);
     void getDataFail(String msg);
     void getDeleteMateialDataFail(String msg);
+    void getMaterialRenameDataFail(String s);
     void showLoading();
     void hideLoading();
 
