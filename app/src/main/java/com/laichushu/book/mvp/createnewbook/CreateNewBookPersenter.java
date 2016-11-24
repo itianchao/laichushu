@@ -32,6 +32,7 @@ import java.io.File;
 import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import rx.Observable;
 
 
 /**
@@ -72,37 +73,44 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
 
     /**
      * 提交服务器创建新书
-     *
-     * @param file
+     *  @param file
      * @param name
      * @param topCategoryId
      * @param subCategoryId
      * @param permission
      * @param introduce
+     * @param coverUrl
      */
-    public void commitNewBook(File file, String name, String topCategoryId, String subCategoryId, String permission, String introduce) {
+    public void commitNewBook(File file, String name, String topCategoryId, String subCategoryId, String permission, String introduce, String coverUrl) {
         Logger.e("创建新书");
         mvpView.showLoading();
         ArticleSave_Paramet paramet = new ArticleSave_Paramet(userId, name, topCategoryId, subCategoryId, permission, introduce, file);
         Logger.json(new Gson().toJson(paramet));
         ArrayMap<String, RequestBody> params = new ArrayMap<>();
-        RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(file));
+
         RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), userId);
         RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), name);
         RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), topCategoryId);
         RequestBody requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), subCategoryId);
         RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"), permission);
         RequestBody requestBody7 = RequestBody.create(MediaType.parse("multipart/form-data"), introduce);
+        RequestBody requestBody8 = RequestBody.create(MediaType.parse("multipart/form-data"), coverUrl);
 
-//        params.put("file", requestBody1);
         params.put("userId", requestBody2);
         params.put("name", requestBody3);
         params.put("topCategoryId", requestBody4);
         params.put("subCategoryId", requestBody5);
         params.put("permission", requestBody6);
         params.put("introduce", requestBody7);
-
-        addSubscription(apiStores.createNewBook(requestBody1, params), new ApiCallback<RewardResult>() {
+        params.put("coverUrl", requestBody8);
+        Observable<RewardResult> newBook;
+        if (null!=file){
+            RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(file));
+            newBook = apiStores.createNewBook(requestBody1, params);
+        }else {
+            newBook = apiStores.createNewBook(params);
+        }
+        addSubscription(newBook, new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.commitNewBook(model);

@@ -123,6 +123,7 @@ public class CoverListActivity extends MvpActivity2<CoverDirPresenter> implement
 
     @Override
     public void getDataFail2(String msg) {
+        dismissProgressDialog();
         ToastUtil.showToast("预览失败");
         LoggerUtil.e(msg);
     }
