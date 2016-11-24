@@ -142,13 +142,15 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
             List<String> imagesPath = Album.parseResult(data);
             if (imagesPath != null && imagesPath.size() > 0) {
                 String path = imagesPath.get(0);
-                GlideUitl.loadImg(mActivity, path, ivFront);
+
                 //压缩图片
                 switch (type) {
                     case 1:
+                        GlideUitl.loadImg(mActivity, path, ivFront);
                         frontFile = new File(path);
                         break;
                     case 2:
+                        GlideUitl.loadImg(mActivity, path, ivOpposite);
                         oppsiteFile = new File(path);
                         break;
                 }
