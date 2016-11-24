@@ -8,7 +8,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.laichushu.book.bean.netbean.PersonalCentreResult;
+import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
+import com.laichushu.book.db.Cache_Json;
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.init.InitPresenter;
+import com.laichushu.book.retrofit.ApiCallback;
+import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.home.HomeHotModel;
@@ -29,6 +40,7 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     private boolean frist = false;
     private boolean second = false;
     private boolean thried = false;
+    private boolean four = false;
 
     private HomeModel homeModel;
     private HomeHotModel homeHotModel;
@@ -36,17 +48,18 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     private Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (frist && second && thried) {
+            if (frist && second && thried && four) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("homeModel", homeModel);
                 bundle.putParcelable("homeHotModel", homeHotModel);
-                bundle.putParcelable("homeAllModel",homeAllModel);
+                bundle.putParcelable("homeAllModel", homeAllModel);
                 UIUtil.openActivity(InitActivity.this, MainActivity.class, bundle);
                 finish();
             }
             super.handleMessage(msg);
         }
     };
+    private Cache_JsonDao cache_jsonDao;
 
     @Override
     protected void initView() {
@@ -59,9 +72,14 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
 
     @Override
     protected void initData() {
+        DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
+        cache_jsonDao = daoSession.getCache_JsonDao();
+
         mvpPresenter.loadHomeCarouseData();
         mvpPresenter.loadHomeHotData();
         mvpPresenter.loadHomeAllData("1");
+
+        mvpPresenter.loadMineData();
     }
 
     @Override
@@ -110,6 +128,22 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     }
 
     @Override
+    public void loadMineDataSuccess(PersonalCentreResult model) {
+        if (model.getSuccess()) {
+            //本地存储
+            cache_jsonDao.insert(new Cache_Json(null, "PersonalDetails", new Gson().toJson(model)));
+            four = true;
+            Message msg = new Message();
+            msg.obj = four;
+            msg.what = 4;
+            mhandler.sendMessage(msg);
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+            getDataFail(model.getErrMsg());
+        }
+    }
+
+    @Override
     public void getDataFail(String msg) {
         errorLay.setVisibility(View.VISIBLE);
         loadingPb.setVisibility(View.GONE);
@@ -138,6 +172,7 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
                 mvpPresenter.loadHomeCarouseData();
                 mvpPresenter.loadHomeHotData();
                 mvpPresenter.loadHomeAllData("1");
+                mvpPresenter.loadMineData();
                 break;
         }
     }

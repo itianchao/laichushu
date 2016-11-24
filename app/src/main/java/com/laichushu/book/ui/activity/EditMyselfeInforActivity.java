@@ -123,6 +123,8 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 this.finish();
                 break;
             case R.id.tv_title_right:
+                //测试
+                edCity.setText("01");
                 if (!judgeAttrbute()) {
                     return;
                 }
@@ -140,8 +142,8 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 params.put("city", requestBody4);
                 params.put("sign", requestBody5);
                 params.put("birthday", requestBody6);
-                params.put("photoFile", requestBody7);
-                addSubscription(apiStores.getUpdateDetails(params, requestBody1), new ApiCallback<RewardResult>() {
+//                params.put("photoFile", requestBody7);
+                addSubscription(apiStores.getUpdateDetails(params, requestBody7), new ApiCallback<RewardResult>() {
                     @Override
                     public void onSuccess(RewardResult result) {
                         if (result.isSuccess()) {

@@ -10,9 +10,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
+import com.laichushu.book.db.Cache_Json;
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.EditMyselfeInforActivity;
@@ -27,6 +32,11 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
+import java.util.List;
+
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
+
 /**
  * 我的
  * Created by wangtong on 2016/10/17.
@@ -37,6 +47,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice;
     private PersonalCentreResult res = new PersonalCentreResult();
     private UpdateReceiver mUpdateReceiver;
+    private Cache_JsonDao cache_jsonDao;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -73,46 +84,28 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         ivMineHeadInto.setOnClickListener(this);
 
         tvTitle.setText("个人中心");
+
         return mRootView;
     }
 
     @Override
     protected void initData() {
         super.initData();
-
+        DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
+        cache_jsonDao = daoSession.getCache_JsonDao();
         getData();
     }
 
     public void getData() {
         registerPlayerReceiver();
-
-        addSubscription(apiStores.getPersonalDetails(new PersonalCentre_Parmet(SharePrefManager.getUserId())), new ApiCallback<PersonalCentreResult>() {
-            @Override
-            public void onSuccess(PersonalCentreResult result) {
-
-                if (result.getSuccess()) {
-                    res = result;
-                    GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivMineHead);
-                    tvMineName.setText("  " + result.getNickName());
-                    tvMinebookNum.setText(result.getArticleCount() + "部  ");
-                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                } else {
-                    ToastUtil.showToast(result.getErrMsg());
-                    refreshPage(LoadingPager.PageState.STATE_ERROR);
-                }
-
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                refreshPage(LoadingPager.PageState.STATE_ERROR);
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
+        QueryBuilder<Cache_Json> userQueryBuilder = cache_jsonDao.queryBuilder();
+        QueryBuilder<Cache_Json> builder = userQueryBuilder.where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails"));
+        Query<Cache_Json> build = builder.build();
+        List<Cache_Json> cache_jsons = build.list();
+        PersonalCentreResult result = new Gson().fromJson(cache_jsons.get(0).getJson(), PersonalCentreResult.class);
+        GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivMineHead);
+        tvMineName.setText("  " + result.getNickName());
+        tvMinebookNum.setText(result.getArticleCount() + "部  ");
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
