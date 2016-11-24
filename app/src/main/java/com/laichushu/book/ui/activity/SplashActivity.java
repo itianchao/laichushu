@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
+import com.laichushu.book.bean.netbean.ProvinceCityBean;
 import com.laichushu.book.utils.SharePrefManager;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.laichushu.book.R;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.UIUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 闪屏页
@@ -20,7 +25,7 @@ public class SplashActivity extends BaseActivity {
     private Class loadActivity;
     //启动页图片
     private ImageView splashIv;
-
+    private List<PreviewCoverBean> proData =new ArrayList<>();
     @Override
     protected void initView() {
         super.initView();
@@ -64,5 +69,9 @@ public class SplashActivity extends BaseActivity {
 //        Bundle bundle = new Bundle();
 //        bundle.putString("articleId",articleId);
 //        UIUtil.openActivity(this,CreatNewDraftActivity.class);
+    }
+    public List<ProvinceCityBean>  initProvinceDate(){
+
+        return null;
     }
 }
