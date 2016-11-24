@@ -414,6 +414,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 mvpPresenter.setState(STATE1);
                 STATE = STATE1;
                 //请求网络
+                mvpPresenter.getParamet().setPageNo("1");
                 mvpPresenter.loadHomeAllData(STATE + "");
                 position = 1;
                 break;
@@ -426,6 +427,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 //请求网络
                 position = 2;
                 mData.clear();
+                mvpPresenter.getActivityListParamet().setPageNo("1");
                 mvpPresenter.loadActivityData();
                 break;
             case R.id.rbn_citywide:

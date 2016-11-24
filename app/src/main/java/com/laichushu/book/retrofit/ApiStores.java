@@ -269,10 +269,15 @@ public interface ApiStores {
     @POST("perHome/atte")
     Observable<RewardResult> getUploadInfor(@Body UploadIdcardInfor_Parmet paramet);
 
-    //创建新书
+    //创建新书 从相册
     @Multipart
     @POST("article/save")
     Observable<RewardResult> createNewBook(@Part("file\"; filename=\"cover.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
+    //创建新书 从模版
+    @Multipart
+    @POST("article/save")
+    Observable<RewardResult> createNewBook(@PartMap Map<String, RequestBody> params);
+
     //本地图片转换
     @Multipart
     @POST("file/upload")
@@ -330,6 +335,7 @@ public interface ApiStores {
     //个人主页我关注的
     @POST("perFocus/findMy")
     Observable<HomePersonFocusResult> getHomeUserFocusBeDetails(@Body HomeUserFocusBe_parmet paramet);
+
     //个人主页更新“关注我的”信息关注状态
     @POST("perFocus/updateBe")
     Observable<HomeFocusResult> getHomeUserFocusMeStatus(@Body HomeUserFocusState_Paramet paramet);
@@ -337,6 +343,7 @@ public interface ApiStores {
     //个人主页更新“我关注的”信息关注状态
     @POST("userDetail/updateHis")
     Observable<HomeFocusResult> getHomeUserFocusBeStatus(@Body HomeUserFocusState_Paramet paramet);
+
     //删除草稿
     @POST("chapter/delete")
     Observable<RewardResult> deleteDraftBook(@Body DeleteDraft_Paramet paramet);

@@ -122,11 +122,11 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     @Override
     public void getDataSuccess(DraftModle model) {
         if (model.isSuccess()) {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (model.getData() != null && !model.getData().isEmpty()) {
                 mData.addAll(model.getData());
                 mAdapter.setmData(mData);
                 mAdapter.notifyDataSetChanged();
-                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 pageNo++;
             }
         } else {

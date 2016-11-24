@@ -107,10 +107,16 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
                 String introduce = briefEt.getText().toString().trim();
                 String category = categoryTv.getText().toString().trim();
                 if(mvpPresenter.isCheck(name, introduce, category, path)){
-                    mvpPresenter.commitNewBook(compressedImageFile, name, parentId, childId, permission, introduce);
+                    if (null!=compressedImageFile){
+                        mvpPresenter.commitNewBook(compressedImageFile, name, parentId, childId, permission, introduce, "");
+                    }else {
+                        mvpPresenter.commitNewBook(null, name, parentId, childId, permission, introduce, path);
+                    }
                 }
                 break;
             case R.id.iv_cover://封面选择
+                path = "";
+                compressedImageFile = null;
                 String bookname = booknameEt.getText().toString().trim();
                 if (TextUtils.isEmpty(bookname)){
                     ToastUtil.showToast("请先输入书名");
