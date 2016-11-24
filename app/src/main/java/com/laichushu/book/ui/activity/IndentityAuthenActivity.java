@@ -68,6 +68,8 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
         resultData = (PersonalCentreResult) getIntent().getSerializableExtra("idcard");
         ivBack.setOnClickListener(this);
         btnAuditing.setOnClickListener(this);
+        ivFront.setOnClickListener(this);
+        ivOpposite.setOnClickListener(this);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
