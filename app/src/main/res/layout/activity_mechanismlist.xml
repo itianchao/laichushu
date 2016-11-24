@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include layout="@layout/page_title"/>
+    <RadioGroup
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <RadioButton
+            android:button="@null"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textSize="@dimen/title"
+            android:textColor="@drawable/select_home_color"
+            android:layout_height="50dp"/>
+
+    </RadioGroup>
+</LinearLayout>

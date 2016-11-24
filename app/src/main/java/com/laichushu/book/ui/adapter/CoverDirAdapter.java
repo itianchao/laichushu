@@ -22,10 +22,10 @@ import java.util.ArrayList;
  */
 
 public class CoverDirAdapter extends RecyclerView.Adapter<CoverDirAdapter.CoverDirViewHolder> {
-    private ArrayList<CoverDirBean> mData;
+    private ArrayList<CoverDirBean.DateBean> mData;
     private CoverDirActivity mActivity;
 
-    public CoverDirAdapter(ArrayList<CoverDirBean> mData, CoverDirActivity mActivity) {
+    public CoverDirAdapter(ArrayList<CoverDirBean.DateBean> mData, CoverDirActivity mActivity) {
         this.mActivity = mActivity;
         this.mData = mData;
     }
@@ -38,11 +38,12 @@ public class CoverDirAdapter extends RecyclerView.Adapter<CoverDirAdapter.CoverD
 
     @Override
     public void onBindViewHolder(CoverDirViewHolder holder, final int position) {
-        CoverDirBean bean = mData.get(position);
-        final String name = bean.getName();
-        int drawableId = bean.getDrawableId();
-        holder.tv_imgname.setText(name);
-        GlideUitl.loadImg(mActivity,drawableId,holder.iv_cover);
+        CoverDirBean.DateBean bean = mData.get(position);
+        final String name = bean.getTypeName();
+        final String count = bean.getImgCount();
+        String url = bean.getMouldImg();
+        holder.tv_imgname.setText(name+"("+count+")");
+        GlideUitl.loadImg(mActivity,url,holder.iv_cover);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
