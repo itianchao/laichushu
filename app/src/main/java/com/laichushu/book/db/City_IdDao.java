@@ -26,8 +26,8 @@ public class City_IdDao extends AbstractDao<City_Id, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Province = new Property(1, String.class, "province", false, "PROVINCE");
         public final static Property City = new Property(2, String.class, "city", false, "CITY");
-        public final static Property ProCode = new Property(3, Integer.class, "proCode", false, "PRO_CODE");
-        public final static Property CityCode = new Property(4, Integer.class, "cityCode", false, "CITY_CODE");
+        public final static Property ProCode = new Property(3, String.class, "proCode", false, "PRO_CODE");
+        public final static Property CityCode = new Property(4, String.class, "cityCode", false, "CITY_CODE");
     };
 
 
@@ -46,8 +46,8 @@ public class City_IdDao extends AbstractDao<City_Id, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"PROVINCE\" TEXT," + // 1: province
                 "\"CITY\" TEXT," + // 2: city
-                "\"PRO_CODE\" INTEGER," + // 3: proCode
-                "\"CITY_CODE\" INTEGER);"); // 4: cityCode
+                "\"PRO_CODE\" TEXT," + // 3: proCode
+                "\"CITY_CODE\" TEXT);"); // 4: cityCode
     }
 
     /** Drops the underlying database table. */
@@ -76,14 +76,14 @@ public class City_IdDao extends AbstractDao<City_Id, Long> {
             stmt.bindString(3, city);
         }
  
-        Integer proCode = entity.getProCode();
+        String proCode = entity.getProCode();
         if (proCode != null) {
-            stmt.bindLong(4, proCode);
+            stmt.bindString(4, proCode);
         }
  
-        Integer cityCode = entity.getCityCode();
+        String cityCode = entity.getCityCode();
         if (cityCode != null) {
-            stmt.bindLong(5, cityCode);
+            stmt.bindString(5, cityCode);
         }
     }
 
@@ -100,8 +100,8 @@ public class City_IdDao extends AbstractDao<City_Id, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // province
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // city
-            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // proCode
-            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4) // cityCode
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // proCode
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // cityCode
         );
         return entity;
     }
@@ -112,8 +112,8 @@ public class City_IdDao extends AbstractDao<City_Id, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setProvince(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setCity(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setProCode(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
-        entity.setCityCode(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setProCode(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setCityCode(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     /** @inheritdoc */

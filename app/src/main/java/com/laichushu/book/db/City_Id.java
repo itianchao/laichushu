@@ -9,8 +9,8 @@ public class City_Id {
     private Long id;
     private String province;
     private String city;
-    private Integer proCode;
-    private Integer cityCode;
+    private String proCode;
+    private String cityCode;
 
     public City_Id() {
     }
@@ -19,7 +19,7 @@ public class City_Id {
         this.id = id;
     }
 
-    public City_Id(Long id, String province, String city, Integer proCode, Integer cityCode) {
+    public City_Id(Long id, String province, String city, String proCode, String cityCode) {
         this.id = id;
         this.province = province;
         this.city = city;
@@ -51,19 +51,19 @@ public class City_Id {
         this.city = city;
     }
 
-    public Integer getProCode() {
+    public String getProCode() {
         return proCode;
     }
 
-    public void setProCode(Integer proCode) {
+    public void setProCode(String proCode) {
         this.proCode = proCode;
     }
 
-    public Integer getCityCode() {
+    public String getCityCode() {
         return cityCode;
     }
 
-    public void setCityCode(Integer cityCode) {
+    public void setCityCode(String cityCode) {
         this.cityCode = cityCode;
     }
 

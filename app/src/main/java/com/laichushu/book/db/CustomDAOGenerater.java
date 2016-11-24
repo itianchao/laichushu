@@ -33,8 +33,8 @@ public class CustomDAOGenerater {
         city.addIdProperty();// 该字段为id
         city.addStringProperty("province");
         city.addStringProperty("city");
-        city.addIntProperty("proCode");
-        city.addIntProperty("cityCode");
+        city.addStringProperty("proCode");
+        city.addStringProperty("cityCode");
 
         //第二个参数指定生成文件的本次存储路径,AndroidStudio工程指定到当前工程的java路径
         new DaoGenerator().generateAll(schema, "D:\\laichushu\\app\\src\\main\\java");
