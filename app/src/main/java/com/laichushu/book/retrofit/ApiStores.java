@@ -52,6 +52,7 @@ import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
 import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
+import com.laichushu.book.bean.netbean.PersonInfoResultReward;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
 import com.laichushu.book.bean.netbean.PublishNewBook_Paramet;
@@ -265,7 +266,7 @@ public interface ApiStores {
     //个人主页更新用户详情  @Body UpdatePersonalInfor_Parmet paramet
     @Multipart
     @POST("perHome/edit")
-    Observable<RewardResult> getUpdateDetails(@PartMap Map<String, RequestBody> params,@Part("photoFile\"; filename=\"head.jpg") RequestBody file);
+    Observable<PersonInfoResultReward> getUpdateDetails(@PartMap Map<String, RequestBody> params, @Part("photoFile\"; filename=\"head.jpg") RequestBody file);
 
     //提交个人信息审核@Body UploadIdcardInfor_Parmet paramet
     @Multipart
@@ -328,7 +329,8 @@ public interface ApiStores {
     Observable<HomeUserResult> getHomeUserInforDetails(@Body HomeUserInfor_paramet paramet);
 
     //个人主页动态
-    @POST("userDetail/findDy")
+//    @POST("userDetail/findDy")
+    @POST("dynamic/find")
     Observable<HomeUseDyrResult> getHomeUserDyDetails(@Body HomeUserDy_parmet paramet);
 
     //个人主页关注我的

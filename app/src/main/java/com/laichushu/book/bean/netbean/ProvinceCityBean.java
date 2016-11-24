@@ -5,10 +5,9 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class ProvinceCityBean {
-    private String province, city;
-    private int proCode, cityCode;
+    private String province, city, proCode, cityCode;
 
-    public ProvinceCityBean(String province, String city, int proCode, int cityCode) {
+    public ProvinceCityBean(String province, String city, String proCode, String cityCode) {
         this.province = province;
         this.city = city;
         this.proCode = proCode;
@@ -31,19 +30,19 @@ public class ProvinceCityBean {
         this.city = city;
     }
 
-    public int getProCode() {
+    public String getProCode() {
         return proCode;
     }
 
-    public void setProCode(int proCode) {
+    public void setProCode(String proCode) {
         this.proCode = proCode;
     }
 
-    public int getCityCode() {
+    public String getCityCode() {
         return cityCode;
     }
 
-    public void setCityCode(int cityCode) {
+    public void setCityCode(String cityCode) {
         this.cityCode = cityCode;
     }
 }
