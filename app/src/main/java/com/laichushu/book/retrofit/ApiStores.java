@@ -12,6 +12,7 @@ import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
 import com.laichushu.book.bean.netbean.Balance_Paramet;
 import com.laichushu.book.bean.netbean.BestLike_Paramet;
 import com.laichushu.book.bean.netbean.BookList_Paramet;
+import com.laichushu.book.bean.netbean.ChapterRename_Paramet;
 import com.laichushu.book.bean.netbean.CollectList_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.Comment2_Paramet;
@@ -47,6 +48,7 @@ import com.laichushu.book.bean.netbean.Jurisdiction_Paramet;
 import com.laichushu.book.bean.netbean.Login_Paramet;
 import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
 import com.laichushu.book.bean.netbean.MaterialList_Paramet;
+import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
 import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
@@ -383,5 +385,13 @@ public interface ApiStores {
     //获取预览模版
     @POST("cover/make")
     Observable<PreviewCoverBean> makeCover(@Body CoverMake_Paramet paramet);
+
+    //素材重命名
+    @POST("material/editCatalog")
+    Observable<RewardResult> materialRename(@Body MaterialRename_Paramet paramet);
+
+    //草稿重命名
+    @POST("chapter/editCatalog")
+    Observable<RewardResult> chapterRename(@Body ChapterRename_Paramet paramet);
 
 }

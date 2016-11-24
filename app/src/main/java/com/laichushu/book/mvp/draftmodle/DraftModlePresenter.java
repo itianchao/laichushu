@@ -1,13 +1,25 @@
 package com.laichushu.book.mvp.draftmodle;
 
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.EditText;
+
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.laichushu.book.R;
+import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.ChapterRename_Paramet;
 import com.laichushu.book.bean.netbean.DeleteDraft_Paramet;
 import com.laichushu.book.bean.netbean.DraftList_Paramet;
+import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -83,5 +95,69 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
                 mvpView.hideLoading();
             }
         });
+    }
+
+
+    /**
+     * 草稿重命名接口
+     * @param index
+     */
+    public void chapterRename(String id, final String rename, final int index){
+        mvpView.showLoading();
+        LoggerUtil.e("草稿重命名");
+        ChapterRename_Paramet paramet = new ChapterRename_Paramet(id,rename,userId);
+        LoggerUtil.toJson(paramet);
+        addSubscription(apiStores.chapterRename(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getChapterRenameDataSuccess(model,index,rename);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getChapterRenameDataFail("code:"+code+"\nmsg:"+msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+    public void openRameDialog(final String id,final int index) {
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_rename);
+
+        //取消
+        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        final EditText dialogEt = (EditText) customerView.findViewById(R.id.et_dialog);
+
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = dialogEt.getText().toString().trim();
+                if(TextUtils.isEmpty(name)){
+                    dialogEt.startAnimation(ShakeAnim.shakeAnimation(3));
+                }else {
+                    chapterRename(id, name,index);//删除素材接口
+                    dialogBuilder.dismiss();
+                }
+            }
+        });
+
+        dialogBuilder
+                .withTitle(null)                                  // 为null时不显示title
+                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, mActivity)                // 添加自定义View
+                .show();
     }
 }

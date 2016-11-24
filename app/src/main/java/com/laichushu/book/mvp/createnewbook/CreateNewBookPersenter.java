@@ -162,7 +162,7 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
                 .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
                 .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
                 .withDuration(500)                                // 对话框动画时间
-                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .withEffect(Effectstype.SlideBottom)                 // 动画形式
                 .setCustomView(customerView, mActivity)                // 添加自定义View
                 .show();
     }

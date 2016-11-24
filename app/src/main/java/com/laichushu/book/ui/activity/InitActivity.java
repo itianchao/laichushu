@@ -28,6 +28,8 @@ import com.laichushu.book.mvp.init.InitView;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.UIUtil;
 
+import java.util.List;
+
 /**
  * 初始化 数据
  * Created by wangtong on 2016/11/2.
@@ -74,12 +76,16 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     protected void initData() {
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         cache_jsonDao = daoSession.getCache_JsonDao();
-
+        List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder()
+                .where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).list();
+        if (null != cache_jsons) {
+            mvpPresenter.loadMineData();
+        } else {
+            four = true;
+        }
         mvpPresenter.loadHomeCarouseData();
         mvpPresenter.loadHomeHotData();
         mvpPresenter.loadHomeAllData("1");
-
-        mvpPresenter.loadMineData();
     }
 
     @Override
@@ -169,10 +175,18 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.error_btn_retry:
-                mvpPresenter.loadHomeCarouseData();
-                mvpPresenter.loadHomeHotData();
-                mvpPresenter.loadHomeAllData("1");
-                mvpPresenter.loadMineData();
+                if (!frist) {
+                    mvpPresenter.loadHomeCarouseData();
+                }
+                if (!second) {
+                    mvpPresenter.loadHomeHotData();
+                }
+                if (!thried) {
+                    mvpPresenter.loadHomeAllData("1");
+                }
+                if (!four) {
+                    mvpPresenter.loadMineData();
+                }
                 break;
         }
     }

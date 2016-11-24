@@ -167,7 +167,8 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
     public void getCommitPhotoDataSuccess(CreateNewDraftModle modle) {
         if (modle.isSuccess()) {
             String data = modle.getData();
-            path = ConstantValue.PHOTO_SEVERCE_PATH + data;
+//            path = ConstantValue.PHOTO_SEVERCE_PATH + data;
+            path = data;
             LoggerUtil.e(path);
             mEditor.insertImage(path, "dachshund");
         } else {
