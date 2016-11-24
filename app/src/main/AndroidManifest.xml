@@ -120,7 +120,9 @@
             android:name=".ui.activity.CreateNewBookActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.activity.EditMyselfeInforActivity" />
+        <activity android:name=".ui.activity.EditMyselfeInforActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name="com.yanzhenjie.album.AlbumActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -176,9 +178,9 @@
             android:name=".ui.activity.PreviewCoverActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.activity.PersonalHomePageActivity" />
-        <activity android:name=".ui.activity.HomePageGradeDetailsActivity" />
-        <activity android:name=".ui.activity.WheelViewTimeActivity" />
+        <activity android:name=".ui.activity.HomePageGradeDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
