@@ -1,6 +1,7 @@
 package com.laichushu.book.bean.netbean;
 
 /**
+ * 投稿
  * Created by wangtong on 2016/11/21.
  */
 

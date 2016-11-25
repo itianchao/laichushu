@@ -10,7 +10,7 @@
         android:layout_width="130dp"
         android:layout_height="80dp"
         android:layout_margin="10dp"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         tools:src="@drawable/img_default" />
 
     <TextView

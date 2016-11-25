@@ -50,6 +50,19 @@ public class AuthorWorksModle {
         private String articleId;
         private String articleName;
         private boolean ischeck;
+        private boolean isMake;
+
+        public boolean isMake() {
+            return isMake;
+        }
+
+        public void setMake(boolean make) {
+            isMake = make;
+        }
+
+        public boolean ischeck() {
+            return ischeck;
+        }
 
         public String getArticleId() {
             return articleId;

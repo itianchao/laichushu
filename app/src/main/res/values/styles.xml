@@ -89,6 +89,15 @@
         <item name="android:textColor">@color/edit</item>
     </style>
 
+    <style name="mechanism_detail">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/edit3</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="permission_select">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
@@ -97,6 +106,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/edit2</item>
     </style>
+
     <style name="mechanism_select">
         <item name="android:gravity">center</item>
         <item name="android:button">@null</item>
