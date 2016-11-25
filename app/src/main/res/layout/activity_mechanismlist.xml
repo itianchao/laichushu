@@ -5,16 +5,30 @@
               android:layout_height="match_parent">
     <include layout="@layout/page_title"/>
     <RadioGroup
+        android:background="@color/white"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <RadioButton
-            android:button="@null"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:textSize="@dimen/title"
-            android:textColor="@drawable/select_home_color"
-            android:layout_height="50dp"/>
+            android:checked="true"
+            android:id="@+id/rbn_01"
+            android:text="专业社"
+            style="@style/mechanism_select"/>
+        <RadioButton
 
+            android:id="@+id/rbn_02"
+            android:text="教育社"
+            style="@style/mechanism_select"/>
+        <RadioButton
+            android:id="@+id/rbn_03"
+            android:text="大众社"
+            style="@style/mechanism_select"/>
     </RadioGroup>
+    <include layout="@layout/item_distance"/>
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/ryv_mechanism"
+        android:background="@color/frenchGrey"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>

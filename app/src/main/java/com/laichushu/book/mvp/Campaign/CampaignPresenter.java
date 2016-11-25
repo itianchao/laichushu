@@ -70,7 +70,7 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
     }
     public void loadAuthorWorksData(){
         mvpView.showLoading();
-        AuthorWorks_Paramet paramet = new AuthorWorks_Paramet(userId,"1000","1");
+        AuthorWorks_Paramet paramet = new AuthorWorks_Paramet(userId);
         Logger.e("获取作者作品结果");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.getAuthorWorks(paramet), new ApiCallback<AuthorWorksModle>() {

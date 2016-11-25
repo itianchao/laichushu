@@ -61,7 +61,6 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         }
         writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter);
         mRecyclerView.setAdapter(writeBookAdapter);
-        isLoad = false;
     }
 
     @Override
@@ -76,6 +75,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             mData.addAll(model.getData());
             writeBookAdapter.setmData(mData);
             writeBookAdapter.notifyDataSetChanged();
+            isLoad = false;
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
