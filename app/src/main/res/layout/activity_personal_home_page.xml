@@ -41,6 +41,7 @@
             android:layout_height="18dp"
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="12dp"
+            android:background="@color/red2"
             android:layout_toRightOf="@+id/tv_PerNickName" />
 
         <ImageView
@@ -49,6 +50,7 @@
             android:layout_height="18dp"
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="12dp"
+            android:background="@color/red"
             android:layout_toRightOf="@+id/iv_perGrade" />
 
         <TextView
@@ -58,7 +60,6 @@
             android:layout_alignLeft="@+id/tv_PerNickName"
             android:layout_below="@+id/tv_PerNickName"
             android:layout_marginTop="12dp"
-            android:text="chia"
             android:textColor="@color/white"
             android:textSize="@dimen/edit"
             android:textStyle="bold" />
@@ -71,7 +72,6 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/tv_PerNickName"
-            android:text="金牌作家"
             android:textColor="@color/white"
             android:textSize="@dimen/edit"
             android:textStyle="bold" />

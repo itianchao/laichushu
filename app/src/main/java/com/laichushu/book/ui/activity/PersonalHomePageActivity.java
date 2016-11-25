@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivEdit, iv_headImg, ivGreadDetails;
+    private ImageView ivBack, ivEdit, iv_headImg, ivGreadDetails, ivAnother;
     private TextView tvTitle, tvNickName, tvRealName, tvAuthorAgree;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
@@ -60,6 +60,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         ivEdit = ((ImageView) inflate.findViewById(R.id.iv_title_other));
         ivGreadDetails = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetails));
         iv_headImg = ((ImageView) inflate.findViewById(R.id.iv_PerHeadImg));
+        ivAnother = (ImageView) inflate.findViewById(R.id.iv_title_another);
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvNickName = ((TextView) inflate.findViewById(R.id.tv_PerNickName));
         tvRealName = ((TextView) inflate.findViewById(R.id.tv_perRealName));
@@ -91,9 +92,11 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
         tvTitle.setText("个人主页");
         tvTitle.setVisibility(View.VISIBLE);
+        GlideUitl.loadImg(mActivity, null, ivAnother);
         ivBack.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
         ivGreadDetails.setOnClickListener(this);
+        ivAnother.setOnClickListener(this);
         rgHomeList.setOnCheckedChangeListener(this);
         initHeadInfo();
         //初始化mRecyclerView 关注
@@ -160,6 +163,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             case R.id.iv_title_finish:
                 this.finish();
                 break;
+            case R.id.iv_title_another:
+                Bundle bunTopic = new Bundle();
+                UIUtil.openActivity(this, HomePublishTopicActivity.class, bunTopic);
+                break;
             case R.id.iv_title_other:
                 //编辑
 
@@ -208,7 +215,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         if (model.isSuccess()) {
             ToastUtil.showToast("HomeUseFocusMerResult");
             focusMeData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
             if (!focusMeData.isEmpty()) {
                 fmAdapter.refreshAdapter(focusMeData);
                 PAGE_NO++;
@@ -216,7 +223,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
             }
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+
         }
     }
 
@@ -232,7 +239,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         if (model.isSuccess()) {
             ToastUtil.showToast("HomeUseFocusBeResult");
             focusBeData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
             if (!focusBeData.isEmpty()) {
                 fbAdapter.refreshAdapter(focusBeData);
                 PAGE_NO++;
@@ -240,7 +247,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
             }
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ToastUtil.showToast("刷新失败！");
         }
     }
 
@@ -371,5 +378,28 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
 
         }
+    }
+
+    public void reLoadData() {
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                switch (type) {
+                    case 1:
+                        mvpPresenter.LoadData();
+                        break;
+                    case 2:
+                        mvpPresenter.LoadFocusMeData();
+                        break;
+                    case 3:
+                        mvpPresenter.LoadFocusBeData();
+                        break;
+                    default:
+                        initHeadInfo();
+                        break;
+                }
+            }
+        });
     }
 }

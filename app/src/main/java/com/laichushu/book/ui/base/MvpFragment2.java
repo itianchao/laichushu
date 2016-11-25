@@ -16,7 +16,7 @@ import com.laichushu.book.ui.widget.LoadingPager;
  */
 public abstract class MvpFragment2<P extends BasePresenter> extends BaseFragment {
     protected P mvpPresenter;
-    private LoadingPager mPage;
+    protected LoadingPager mPage;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

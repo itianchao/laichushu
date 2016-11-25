@@ -1,17 +1,20 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.mvp.homepage.HomePagePresener;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
+import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -60,18 +63,17 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
                     homePagePresener.loadFocusBeStatus(false);
                 }
 
-
             }
         });
-//        holder.llItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-        //跳转图书详情页
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("bean", dataBeen.get(position));
-//                UIUtil.openActivity(context, BookDetailActivity.class, bundle);
-//            }
-//        });
+        holder.rlItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转用户主页
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bean",dataBeen.get(position));
+                UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+            }
+        });
     }
 
 
@@ -94,6 +96,7 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public final RelativeLayout rlItem;
         public final TextView tvContent;
         public final ImageView ivImg;
         public final CheckBox checkBox;
@@ -101,6 +104,7 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
 
         public ViewHolder(View root) {
             super(root);
+            rlItem = (RelativeLayout) root.findViewById(R.id.rl_item);
             tvContent = (TextView) root.findViewById(R.id.tv_dyContent);
             ivImg = (ImageView) root.findViewById(R.id.iv_dyHead);
             checkBox = (CheckBox) root.findViewById(R.id.cb_focus);

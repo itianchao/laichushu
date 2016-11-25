@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/page_title" />
+
+    <EditText
+        android:id="@+id/ed_addTitle"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_rectangle_edit"
+        android:hint="添加标题"
+        android:paddingLeft="12dp"
+        android:paddingRight="24dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit2"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/ed_addContent"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@drawable/shape_rectangle_edit"
+        android:gravity="top"
+        android:hint="添加内容"
+        android:paddingLeft="12dp"
+        android:paddingTop="12dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit2"
+        android:textStyle="bold" />
+
+
+</LinearLayout>
