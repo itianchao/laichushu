@@ -10,6 +10,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
+import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.global.ConstantValue;
@@ -128,6 +129,32 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
             @Override
             public void onFailure(int code, String msg) {
                 mvpView.getDataFail3("code:"+code+"\nmsg:"+msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 收藏
+     */
+    public void collectSave(String targetId, String type, String collectType){
+        mvpView.showLoading();
+        Logger.e("收藏");
+        CollectSave_Paramet paramet = new CollectSave_Paramet(userId, targetId, type, collectType);
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.collectSave(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.collectSaveData(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail4("code+" + code + "/msg:" + msg);
             }
 
             @Override

@@ -41,6 +41,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     private ArrayList<AuthorWorksModle.DataBean> data = new ArrayList<>();
     private TextView mechanismTv;
     private TextView collectionCountTv;
+    private String collectType;
 
     @Override
     protected MechanismDetailPresenter createPresenter() {
@@ -114,6 +115,15 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     }
 
     @Override
+    public void collectSaveData(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("收藏成功");
+        }else {
+            ToastUtil.showToast("收藏失败");
+        }
+    }
+
+    @Override
     public void getDataFail(String msg) {
         hideLoading();
         LoggerUtil.e(msg);
@@ -130,6 +140,13 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     public void getDataFail3(String msg) {
         hideLoading();
         ToastUtil.showToast("投稿失败");
+        LoggerUtil.e(msg);
+    }
+
+    @Override
+    public void getDataFail4(String msg) {
+        hideLoading();
+        ToastUtil.showToast("收藏失败");
         LoggerUtil.e(msg);
     }
 
@@ -160,7 +177,12 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 mvpPresenter.loadAuthorWorksData();
                 break;
             case R.id.tv_collection:
-
+                if (collectionTv.getText().equals("收藏")) {
+                    collectType = "0";
+                }else {
+                    collectType = "1";
+                }
+                mvpPresenter.collectSave(bean.getId(),"4",collectType);
                 break;
         }
     }

@@ -14,11 +14,15 @@ public interface MechanismDetailView {
 
     void articleVote(RewardResult model);
 
+    void collectSaveData(RewardResult model);
+
     void getDataFail(String msg);
 
     void getDataFail2(String msg);
 
     void getDataFail3(String msg);
+
+    void getDataFail4(String msg);
 
     void showLoading();
 

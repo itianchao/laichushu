@@ -78,6 +78,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             isLoad = false;
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
+            refurshData();
         }
     }
 
@@ -120,6 +121,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     @Override
     public void getDataFail(String msg) {
         refreshPage(LoadingPager.PageState.STATE_ERROR);
+        refurshData();
         LoggerUtil.e(msg);
     }
 
@@ -179,6 +181,13 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         }
     }
     public void refurshData(){
-
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mData.clear();
+                mvpPresenter.getArticleBookList();
+            }
+        });
     }
 }

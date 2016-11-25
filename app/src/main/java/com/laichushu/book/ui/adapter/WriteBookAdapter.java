@@ -16,6 +16,7 @@ import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.ui.activity.MechanismListActivity;
 import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -81,9 +82,13 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.draftTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("articleId", dataBean.getArticleId());
-                UIUtil.openActivity(mActivity, DraftModleActivity.class, bundle);
+                if(dataBean.isMake()){
+                    ToastUtil.showToast("发表状态不能修改");
+                }else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("articleId", dataBean.getArticleId());
+                    UIUtil.openActivity(mActivity, DraftModleActivity.class, bundle);
+                }
             }
         });
         /**
@@ -92,9 +97,13 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.materialTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("articleId", dataBean.getArticleId());
-                UIUtil.openActivity(mActivity, SourceMaterialDirActivity.class, bundle);
+                if(dataBean.isMake()){
+                    ToastUtil.showToast("发表状态不能修改");
+                }else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("articleId", dataBean.getArticleId());
+                    UIUtil.openActivity(mActivity, SourceMaterialDirActivity.class, bundle);
+                }
             }
         });
         /**
