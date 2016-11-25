@@ -310,7 +310,7 @@ public interface ApiStores {
     Observable<RewardResult> articleVote(@Body ArticleVote_Paramet paramet);
 
     //发表
-    @POST("article/issue")
+    @POST("article/publish")
     Observable<RewardResult> publishNewBook(@Body PublishNewBook_Paramet paramet);
 
     //删除新书

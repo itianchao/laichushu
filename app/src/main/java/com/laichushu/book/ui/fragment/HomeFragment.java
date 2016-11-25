@@ -13,7 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.laichushu.book.event.RefurshDraftEvent;
+import com.laichushu.book.R;
+import com.laichushu.book.event.RefurshHomeEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.home.HomePresenter;
@@ -22,12 +23,11 @@ import com.laichushu.book.ui.activity.CategoryActivity;
 import com.laichushu.book.ui.activity.HomeSearchActivity;
 import com.laichushu.book.ui.activity.MainActivity;
 import com.laichushu.book.ui.adapter.HomeRecyclerAdapter;
+import com.laichushu.book.ui.adapter.HomeTitleViewPagerAdapter;
 import com.laichushu.book.ui.base.MvpFragment;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
-import com.laichushu.book.R;
-import com.laichushu.book.ui.adapter.HomeTitleViewPagerAdapter;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -338,7 +338,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshDraftEvent event){
+    public void onEvent(RefurshHomeEvent event){
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             onRefresh();

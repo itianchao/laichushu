@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <include layout="@layout/page_title"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+        <ImageView
+            tools:src="@drawable/img_default"
+            android:id="@+id/iv_mechanism"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="140dp" />
+        <LinearLayout
+            android:background="@android:color/transparent"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_mechanism"
+                android:gravity="center"
+                tools:text="知识产权出版社"
+                android:textSize="@dimen/title"
+                android:textColor="@color/white"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+
+            <TextView
+                android:id="@+id/tv_collection_count"
+                android:gravity="center"
+                tools:text="知识产权出版社"
+                android:textSize="@dimen/edit3"
+                android:textColor="@color/white"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="20dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_msg"
+                        style="@style/mechanism_detail"
+                        android:drawableLeft="@drawable/icon_comment"
+                        android:text="发消息" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_submission"
+                        style="@style/mechanism_detail"
+                        android:drawableLeft="@drawable/icon_share"
+                        android:text="投稿" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_collection"
+                        style="@style/mechanism_detail"
+                        android:drawableLeft="@drawable/activity_keep"
+                        android:text="收藏" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/fay_space"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+</LinearLayout>

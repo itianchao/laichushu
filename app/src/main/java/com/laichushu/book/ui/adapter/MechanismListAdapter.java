@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,9 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
+import com.laichushu.book.ui.activity.MechanismDetailActivity;
 import com.laichushu.book.ui.activity.MechanismListActivity;
 import com.laichushu.book.utils.GlideUitl;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -45,14 +46,16 @@ public class MechanismListAdapter extends RecyclerView.Adapter<MechanismListAdap
 
     @Override
     public void onBindViewHolder(AdapterViewHodler holder, int position) {
-        MechanismListBean.DataBean dataBean = mData.get(position);
+        final MechanismListBean.DataBean dataBean = mData.get(position);
         GlideUitl.loadImg(mActivity,dataBean.getLogoUrl(),holder.mechanismIv);
         holder.nameTv.setText(dataBean.getName());
         holder.addressTv.setText(dataBean.getAddress());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showToast("进入详情");
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bean",dataBean);
+                UIUtil.openActivity(mActivity,MechanismDetailActivity.class,bundle);
             }
         });
     }

@@ -18,6 +18,7 @@ import com.laichushu.book.utils.LoggerUtil;
 public class WritePresenter extends BasePresenter<WriteView> {
 
     private String pageNo = "1";
+    private String userId = ConstantValue.USERID;
 
     //初始化构造
     public WritePresenter(WriteView view) {
@@ -71,44 +72,21 @@ public class WritePresenter extends BasePresenter<WriteView> {
             }
         });
     }
-    /**
-     * 投稿
-     * @param articleId
-     * @param pressId
-     */
-    public void voteBook(String articleId, String pressId) {
-        mvpView.showLoading();
-        LoggerUtil.e("投稿");
-        ArticleVote_Paramet paramet = new ArticleVote_Paramet(articleId,ConstantValue.USERID,pressId);
-        addSubscription(apiStores.articleVote(paramet), new ApiCallback<RewardResult>() {
-            @Override
-            public void onSuccess(RewardResult model) {
-                mvpView.articleVote(model);
-            }
 
-            @Override
-            public void onFailure(int code, String msg) {
-                mvpView.getDataFail3("code:"+code+"\nmsg:"+msg);
-            }
-
-            @Override
-            public void onFinish() {
-                mvpView.hideLoading();
-            }
-        });
-    }
     /**
      * 发表
      * @param articleId
+     * @param type
+     * @param index
      */
-    public void publishNewBook(String articleId) {
+    public void publishNewBook(String articleId, final String type, final int index) {
         mvpView.showLoading();
         LoggerUtil.e("发表");
-        PublishNewBook_Paramet paramet = new PublishNewBook_Paramet(articleId);
+        PublishNewBook_Paramet paramet = new PublishNewBook_Paramet(articleId,userId,type);
         addSubscription(apiStores.publishNewBook(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.publishNewBook(model);
+                mvpView.publishNewBook(model,index,type);
             }
 
             @Override

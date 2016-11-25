@@ -56,7 +56,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     protected void initData() {
         if (isLoad) {//只执行一次
             mvpPresenter.getArticleBookList();
-        }else {
+        } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
         writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter);
@@ -103,9 +103,15 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     }
 
     @Override
-    public void publishNewBook(RewardResult model) {
+    public void publishNewBook(RewardResult model, int index, String type) {
         if (model.isSuccess()) {
-            ToastUtil.showToast("发表成功");
+            if (type.equals("1")) {
+                mData.get(index).setMake(false);
+            } else {
+                mData.get(index).setMake(true);
+            }
+            writeBookAdapter.setmData(mData);
+            writeBookAdapter.notifyDataSetChanged();
         } else {
             ToastUtil.showToast("发表失败");
         }
@@ -171,5 +177,8 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             mData.clear();
             mvpPresenter.getArticleBookList();
         }
+    }
+    public void refurshData(){
+
     }
 }

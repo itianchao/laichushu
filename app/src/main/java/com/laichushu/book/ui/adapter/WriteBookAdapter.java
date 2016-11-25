@@ -49,7 +49,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
 
 
     @Override
-    public void onBindViewHolder(WriteBookViewHolder holder, final int position) {
+    public void onBindViewHolder(final WriteBookViewHolder holder, final int position) {
         final HomeHotModel.DataBean dataBean = mData.get(position);
         GlideUitl.loadImg(mActivity, dataBean.getCoverUrl(), holder.bookIv);
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +70,11 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.moneyTv.setText(dataBean.getAwardMoney() + "元");
         holder.rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
         holder.markTv.setText(dataBean.getScore() + "分");
+        if (dataBean.isMake()) {
+            holder.publishlTv.setText("已发表");
+        } else {
+            holder.publishlTv.setText("发表");
+        }
         /**
          * 草稿
          */
@@ -111,7 +116,14 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             @Override
             public void onClick(View v) {
                 String articleId = dataBean.getArticleId();
-                mvpPresenter.publishNewBook(articleId);
+                String type;
+                String publishl = holder.publishlTv.getText().toString();
+                if (publishl.equals("已发表")) {
+                    type = "1";
+                } else {
+                    type = "0";
+                }
+                mvpPresenter.publishNewBook(articleId, type, position);
             }
         });
         /**
@@ -121,7 +133,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             @Override
             public void onClick(View v) {
                 String articleId = dataBean.getArticleId();
-                mvpPresenter.deleteBook(articleId,position);
+                mvpPresenter.deleteBook(articleId, position);
             }
         });
     }

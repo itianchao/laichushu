@@ -12,7 +12,7 @@ public interface WriteView {
     void getDataSuccess(HomeHotModel model);
     void deleteNewBook(RewardResult model, int position);
     void articleVote(RewardResult model);
-    void publishNewBook(RewardResult model);
+    void publishNewBook(RewardResult model,int index,String type);
     void getDataFail(String msg);
     void getDataFail2(String msg);
     void getDataFail3(String msg);

@@ -1,5 +1,8 @@
 package com.laichushu.book.bean.JsonBean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -36,7 +39,7 @@ public class MechanismListBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         /**
          * id : 1
          * name : 涓浗涔︾睄鍑虹増绀�
@@ -90,5 +93,42 @@ public class MechanismListBean {
         public void setLogoUrl(String logoUrl) {
             this.logoUrl = logoUrl;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.name);
+            dest.writeString(this.grade);
+            dest.writeString(this.address);
+            dest.writeString(this.logoUrl);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.id = in.readString();
+            this.name = in.readString();
+            this.grade = in.readString();
+            this.address = in.readString();
+            this.logoUrl = in.readString();
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
 }
