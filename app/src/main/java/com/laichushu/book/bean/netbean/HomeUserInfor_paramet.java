@@ -9,17 +9,17 @@ import java.io.Serializable;
 public class HomeUserInfor_paramet implements Serializable {
     private String targetId, userId;
 
-    public HomeUserInfor_paramet(String tagetId, String userId) {
-        this.targetId = tagetId;
+    public HomeUserInfor_paramet(String targetId, String userId) {
+        this.targetId = targetId;
         this.userId = userId;
     }
 
-    public String getTagetId() {
+    public String getTargetId() {
         return targetId;
     }
 
-    public void setTagetId(String tagetId) {
-        this.targetId = tagetId;
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
     }
 
     public String getUserId() {

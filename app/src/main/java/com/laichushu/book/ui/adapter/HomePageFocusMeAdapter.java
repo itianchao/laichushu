@@ -71,6 +71,7 @@ public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMe
             public void onClick(View v) {
                 //跳转用户主页
                 Bundle bundle = new Bundle();
+                bundle.putInt("type",1);
                 bundle.putSerializable("bean",dataBeen.get(position));
                 UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
             }

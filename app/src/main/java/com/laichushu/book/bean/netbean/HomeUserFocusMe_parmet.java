@@ -7,12 +7,13 @@ import java.io.Serializable;
  */
 
 public class HomeUserFocusMe_parmet implements Serializable {
-    private String userId, pageNo, pageSize;
+    private String userId, pageNo, pageSize, targetId;
 
-    public HomeUserFocusMe_parmet(String userId, String pageNo, String pageSize) {
+    public HomeUserFocusMe_parmet(String userId, String pageNo, String pageSize, String targetId) {
         this.userId = userId;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
+        this.targetId = targetId;
     }
 
     public String getUserId() {
@@ -37,5 +38,13 @@ public class HomeUserFocusMe_parmet implements Serializable {
 
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
     }
 }

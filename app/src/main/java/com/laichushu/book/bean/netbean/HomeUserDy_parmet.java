@@ -7,12 +7,13 @@ import java.io.Serializable;
  */
 
 public class HomeUserDy_parmet implements Serializable {
-    private String userId, pageSize, pageNo;
+    private String userId, pageSize, pageNo, targetId;
 
-    public HomeUserDy_parmet(String userId, String pageSize, String pageNo) {
+    public HomeUserDy_parmet(String userId, String pageSize, String pageNo, String targetId) {
         this.userId = userId;
         this.pageSize = pageSize;
         this.pageNo = pageNo;
+        this.targetId = targetId;
     }
 
     public String getUserId() {
@@ -37,5 +38,13 @@ public class HomeUserDy_parmet implements Serializable {
 
     public void setPageNo(String pageNo) {
         this.pageNo = pageNo;
+    }
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
     }
 }

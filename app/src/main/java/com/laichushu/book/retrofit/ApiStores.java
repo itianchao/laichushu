@@ -335,7 +335,7 @@ public interface ApiStores {
     Observable<HomeUserResult> getHomeUserInforDetails(@Body HomeUserInfor_paramet paramet);
 
     //个人主页用户信息   userID,target Id
-    @POST("userDetails/find")
+    @POST("userDetail/find")
     Observable<HomeUserResult> getUserInforDetails(@Body HomeUserInfor_paramet paramet);
 
     //个人主页动态

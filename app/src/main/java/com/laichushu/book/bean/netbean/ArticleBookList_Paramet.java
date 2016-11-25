@@ -9,11 +9,13 @@ public class ArticleBookList_Paramet {
     private String userId;
     private String pageNo;
     private String pageSize;
+    private String targetId;
 
-    public ArticleBookList_Paramet(String userId, String pageNo, String pageSize) {
+    public ArticleBookList_Paramet(String userId, String pageNo, String pageSize, String targetId) {
         this.userId = userId;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
+        this.targetId = targetId;
     }
 
     public String getUserId() {
@@ -38,5 +40,13 @@ public class ArticleBookList_Paramet {
 
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
     }
 }

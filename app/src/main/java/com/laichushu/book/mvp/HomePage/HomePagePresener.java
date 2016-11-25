@@ -31,7 +31,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         this.paramet = paramet;
     }
 
-    private HomeUserDy_parmet paramet = new HomeUserDy_parmet(userId, pageSize, pageNo);
+    private HomeUserDy_parmet paramet = new HomeUserDy_parmet(userId, pageSize, pageNo,"");
 
     public HomeUserDy_parmet getParamet2() {
         return paramet;
@@ -68,8 +68,8 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         this.paramet2 = paramet2;
     }
 
-    //我关注的
-    private HomeUserFocusMe_parmet paramet2 = new HomeUserFocusMe_parmet(userId, pageNo, pageSize);
+    //关注我的
+    private HomeUserFocusMe_parmet paramet2 = new HomeUserFocusMe_parmet(userId, pageNo, pageSize,userId);
 
     public void LoadFocusMeData() {
 
@@ -101,7 +101,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
     }
 
     //我关注的
-    private HomeUserFocusBe_parmet paramet3 = new HomeUserFocusBe_parmet(userId, pageNo, pageSize);
+    private HomeUserFocusBe_parmet paramet3 = new HomeUserFocusBe_parmet(userId, pageNo, pageSize,"");
 
     public void LoadFocusBeData() {
 

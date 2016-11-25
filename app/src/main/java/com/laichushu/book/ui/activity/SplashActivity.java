@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
-import com.laichushu.book.bean.netbean.ProvinceCityBean;
 import com.laichushu.book.db.City_Id;
 import com.laichushu.book.db.City_IdDao;
 import com.laichushu.book.db.DaoSession;

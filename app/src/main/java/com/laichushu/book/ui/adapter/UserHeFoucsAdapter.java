@@ -13,65 +13,64 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.mvp.homepage.HomePagePresener;
-import com.laichushu.book.ui.activity.PersonalHomePageActivity;
+import com.laichushu.book.mvp.userhomepage.UserHomePagePresener;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;
 
-
 /**
- * Created by PCPC on 2016/11/23.
+ * Created by PCPC on 2016/11/25.
  */
 
-public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBeAdapter.ViewHolder> {
-    private PersonalHomePageActivity context;
+public class UserHeFoucsAdapter extends RecyclerView.Adapter<UserHeFoucsAdapter.ViewHolder> {
+    private UserHomePageActivity context;
     private List<HomePersonFocusResult.DataBean> dataBeen;
-    private HomePagePresener homePagePresener;
-    public HomePageFocusBeAdapter(PersonalHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean,HomePagePresener homePagePresener) {
+    private UserHomePagePresener homePagePresener;
+
+    public UserHeFoucsAdapter(UserHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean, UserHomePagePresener homePagePresener) {
         this.context = context;
         this.dataBeen = dataBean;
-        this.homePagePresener=homePagePresener;
+        this.homePagePresener = homePagePresener;
     }
 
     @Override
-    public HomePageFocusBeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UserHeFoucsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = UIUtil.inflate(R.layout.item_homepage_focusme);
-        return new HomePageFocusBeAdapter.ViewHolder(itemView);
+        return new UserHeFoucsAdapter.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final HomePageFocusBeAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final UserHeFoucsAdapter.ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
         holder.tvContent.setText(dataBeen.get(position).getNickName());
         holder.checkBox.setText("取消关注");
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!holder.checkBox.isChecked()) {
-                    holder.checkBox.setText("关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
-                    homePagePresener.getStatus().setStatus(true);
-                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
-                    homePagePresener.loadFocusBeStatus(true);
-                } else {
-                    holder.checkBox.setText("取消关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
-                    homePagePresener.getStatus().setStatus(false);
-                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
-                    homePagePresener.loadFocusBeStatus(false);
-                }
-
-            }
-        });
+//        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (!holder.checkBox.isChecked()) {
+//                    holder.checkBox.setText("关注");
+//                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
+//                    homePagePresener.getStatus().setStatus(true);
+//                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
+//                    homePagePresener.loadFocusBeStatus(true);
+//                } else {
+//                    holder.checkBox.setText("取消关注");
+//                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
+//                    homePagePresener.getStatus().setStatus(false);
+//                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
+//                    homePagePresener.loadFocusBeStatus(false);
+//                }
+//
+//            }
+//        });
         holder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //跳转用户主页
                 Bundle bundle = new Bundle();
-                bundle.putInt("type",2);
-                bundle.putSerializable("bean",dataBeen.get(position));
+                bundle.putSerializable("bean", dataBeen.get(position));
                 UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
             }
         });
