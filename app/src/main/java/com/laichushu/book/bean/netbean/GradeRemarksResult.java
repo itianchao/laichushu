@@ -8,11 +8,15 @@ import java.io.Serializable;
 
 public class GradeRemarksResult implements Serializable {
     private boolean success;
-    private String remarks;
+    private String remarks,grade,typeName;
+    private int type;
 
-    public GradeRemarksResult(boolean success, String remarks) {
+    public GradeRemarksResult(boolean success, String remarks, String grade, String typeName, int type) {
         this.success = success;
         this.remarks = remarks;
+        this.grade = grade;
+        this.typeName = typeName;
+        this.type = type;
     }
 
     public boolean isSuccess() {
@@ -29,5 +33,29 @@ public class GradeRemarksResult implements Serializable {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

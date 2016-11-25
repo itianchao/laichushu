@@ -10,6 +10,8 @@
     <color name="frenchGrey">#F2F2F2</color>
     <color name="bgGrey">#F1F1F1</color>
     <color name="Grey">#aaa</color>
+    <color name="backGray">#F5F5F5</color>
+    <color name="characterGray">#9B9B9B</color>
     <!-- hint -->
     <color name="hint">#CCCCCC</color>
     <!-- 自定义通知栏颜色  -->

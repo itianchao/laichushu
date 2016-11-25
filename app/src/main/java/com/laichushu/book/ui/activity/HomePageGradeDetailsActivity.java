@@ -17,7 +17,7 @@ import com.laichushu.book.utils.UIUtil;
 
 public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.OnClickListener {
     private ImageView ivBack;
-    private TextView tvTitle, tvRemarks;
+    private TextView tvTitle, tvRemarks, total, flg;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -28,8 +28,10 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
     protected View createSuccessView() {
         View inflate = UIUtil.inflate(R.layout.activity_home_page_grade_details);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
-        tvTitle = ((TextView) inflate.findViewById(R.id.tv_middleLeft));
+        tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvRemarks = ((TextView) inflate.findViewById(R.id.tv_remarks));
+        total = ((TextView) inflate.findViewById(R.id.tv_gradeTotal));
+        flg = ((TextView) inflate.findViewById(R.id.tv_gradeFlg));
         return inflate;
     }
 
@@ -37,6 +39,7 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
     protected void initData() {
         super.initData();
         tvTitle.setText("等级分类");
+        tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         getRemarks();
     }
@@ -59,7 +62,21 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
             public void onSuccess(GradeRemarksResult result) {
                 if (result.isSuccess()) {
                     refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                    total.setText(result.getGrade() + "分，为");
                     tvRemarks.setText(result.getRemarks());
+                    String res = null;
+                    switch (result.getType()) {
+                        case 1:
+                            res = "金牌";
+                            break;
+                        case 2:
+                            res = "银牌";
+                            break;
+                        case 3:
+                            res = "铜牌";
+                            break;
+                    }
+                    flg.setText(res+(result.getTypeName()));
                 } else {
                     refreshPage(LoadingPager.PageState.STATE_ERROR);
                 }

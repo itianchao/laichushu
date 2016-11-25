@@ -72,6 +72,7 @@ import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
+import com.laichushu.book.bean.netbean.UserBookList_Paramet;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
@@ -118,10 +119,10 @@ public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
-    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
-//    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
+    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 
     //登录接口
@@ -305,10 +306,9 @@ public interface ApiStores {
     @POST("chapter/list")
     Observable<DraftModle> getDraftList(@Body DraftList_Paramet paramet);
 
-    //书的列表
+    //书的列表 <============>用户书的列表 userId传targetId
     @POST("searchArticle/findArticleByAuthorId")
     Observable<HomeHotModel> getArticleBookList(@Body ArticleBookList_Paramet paramet);
-
 
     //投稿
     @POST("article/vote")
@@ -369,7 +369,7 @@ public interface ApiStores {
     Observable<RewardResult> publishTopic(@Body PublishTopic_Paramet paramet);
 
     //个人主页等级分类详情
-    @POST("gradeDetails/find")
+    @POST("gradeDetail/find")
     Observable<GradeRemarksResult> gradeDetails(@Body GradeDetails_Paramet paramet);
 
     //删除草稿
