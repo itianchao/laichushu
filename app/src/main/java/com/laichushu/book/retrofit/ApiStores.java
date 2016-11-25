@@ -1,6 +1,7 @@
 package com.laichushu.book.retrofit;
 
 import com.laichushu.book.bean.JsonBean.BalanceBean;
+import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ActivityList_Paramet;
@@ -20,6 +21,7 @@ import com.laichushu.book.bean.netbean.Comment_Paramet;
 import com.laichushu.book.bean.netbean.Complaint_Paramet;
 import com.laichushu.book.bean.netbean.CoverDir_Paramet;
 import com.laichushu.book.bean.netbean.CoverMake_Paramet;
+import com.laichushu.book.bean.netbean.CoverModleList_Paramet;
 import com.laichushu.book.bean.netbean.CreateNewDraft_Paramet;
 import com.laichushu.book.bean.netbean.CreateSourceMaterialDir_Paramet;
 import com.laichushu.book.bean.netbean.CreateSourceMaterial_Paramet;
@@ -41,8 +43,8 @@ import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
+import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.JoinActivity_Paramet;
@@ -51,8 +53,8 @@ import com.laichushu.book.bean.netbean.Login_Paramet;
 import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
 import com.laichushu.book.bean.netbean.MaterialList_Paramet;
 import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
+import com.laichushu.book.bean.netbean.MechanismList_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
-import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
 import com.laichushu.book.bean.netbean.PersonInfoResultReward;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
@@ -70,8 +72,7 @@ import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
-import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
-import com.laichushu.book.bean.netbean.UploadIdcardInfor_Parmet;
+import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
@@ -117,10 +118,10 @@ public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
-//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
-    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
+//    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 
     //登录接口
@@ -208,7 +209,7 @@ public interface ApiStores {
     Observable<CampaignJoinModel> joinActivity(@Body JoinActivity_Paramet paramet);
 
     //获取作者作品
-    @POST("searchArticle/findArticleByAuthorId")
+    @POST("searchArticle/findExpressArticleByAuthorId")
     Observable<AuthorWorksModle> getAuthorWorks(@Body AuthorWorks_Paramet paramet);
 
     //获取素材列表接口
@@ -418,5 +419,13 @@ public interface ApiStores {
     //草稿重命名
     @POST("chapter/editCatalog")
     Observable<RewardResult> chapterRename(@Body ChapterRename_Paramet paramet);
+
+    //获取模板类型
+    @POST("cover/mouldList")
+    Observable<CoverDirBean> getCoverModleList(@Body CoverModleList_Paramet paramet);
+
+    //获取机构
+    @POST("party/list")
+    Observable<MechanismListBean> getMechanismList(@Body MechanismList_Paramet paramet);
 
 }

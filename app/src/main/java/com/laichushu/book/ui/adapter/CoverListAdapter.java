@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.coverdir.CoverDirModle;
@@ -41,13 +40,9 @@ public class CoverListAdapter extends RecyclerView.Adapter<CoverListAdapter.Cove
     @Override
     public void onBindViewHolder(CoverDirViewHolder holder, final int position) {
         CoverDirModle.DataBean bean = mData.get(position);
-        String imgName = bean.getImgName();
         String imgUrl = bean.getImgUrl();
         // TODO: 2016/11/23 作者名未确定先用id代替
         final String id = bean.getId();
-        imgName = imgName.replace(".jpg", "");
-        holder.tv_imgname.setText(imgName);
-        holder.tv_imgauthor.setText(id);
         GlideUitl.loadImg(mActivity, imgUrl, holder.iv_cover);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +58,7 @@ public class CoverListAdapter extends RecyclerView.Adapter<CoverListAdapter.Cove
     }
 
     class CoverDirViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv_imgname;
-        private TextView tv_imgauthor;
+
         private ImageView iv_cover;
         private View itemView;
 
@@ -72,8 +66,7 @@ public class CoverListAdapter extends RecyclerView.Adapter<CoverListAdapter.Cove
             super(itemView);
             this.itemView = itemView;
             iv_cover = (ImageView) itemView.findViewById(R.id.iv_cover);
-            tv_imgname = (TextView) itemView.findViewById(R.id.tv_imgname);
-            tv_imgauthor = (TextView) itemView.findViewById(R.id.tv_imgauthor);
+
         }
     }
 

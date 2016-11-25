@@ -13,6 +13,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.ui.activity.DraftModleActivity;
+import com.laichushu.book.ui.activity.MechanismListActivity;
 import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -97,9 +98,10 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.submissionTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String articleId = dataBean.getArticleId();
-                String pressId = "";
-                mvpPresenter.voteBook(articleId, pressId);
+                UIUtil.openActivity(mActivity, MechanismListActivity.class);
+//                String articleId = dataBean.getArticleId();
+//                String pressId = "";
+//                mvpPresenter.voteBook(articleId, pressId);
             }
         });
         /**

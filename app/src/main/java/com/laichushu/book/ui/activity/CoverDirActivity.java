@@ -5,13 +5,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.CoverModleList_Paramet;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
+import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.adapter.CoverDirAdapter;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
 import java.util.ArrayList;
 
 /**
@@ -26,17 +30,20 @@ public class CoverDirActivity extends MvpActivity2 implements View.OnClickListen
     private TextView titleTv;
     private ImageView finishIv;
     private boolean isInit = true;
+
     @Override
     protected BasePresenter createPresenter() {
         return null;
     }
-    private ArrayList<CoverDirBean> mData = new ArrayList();
+
+    private ArrayList<CoverDirBean.DateBean> mData = new ArrayList();
+
     @Override
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_coverdir);
-        titleTv = (TextView)mSuccessView.findViewById(R.id.tv_title);
-        finishIv = (ImageView)mSuccessView.findViewById(R.id.iv_title_finish);
-        mRecyclerView = (PullLoadMoreRecyclerView)mSuccessView.findViewById(R.id.ryv_coverdir);
+        titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
+        finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
+        mRecyclerView = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_coverdir);
         mRecyclerView.setGridLayout(3);
         mRecyclerView.setPushRefreshEnable(false);
         mRecyclerView.setPullRefreshEnable(false);
@@ -48,21 +55,50 @@ public class CoverDirActivity extends MvpActivity2 implements View.OnClickListen
     @Override
     protected void initData() {
         bookname = getIntent().getStringExtra("bookname");
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
         if (isInit) {
-            mData.add(new CoverDirBean("模版一",R.drawable.img_default));
-            mData.add(new CoverDirBean("模版二",R.drawable.img_default));
-            mData.add(new CoverDirBean("模版三",R.drawable.img_default));
-            mData.add(new CoverDirBean("模版四",R.drawable.img_default));
+            loadCoverDirListData();
         }
         isInit = false;
-        mRecyclerView.setAdapter(new CoverDirAdapter(mData,this));
 
+    }
+
+    private void loadCoverDirListData() {
+        addSubscription(apiStores.getCoverModleList(new CoverModleList_Paramet()), new ApiCallback<CoverDirBean>() {
+            @Override
+            public void onSuccess(CoverDirBean model) {
+                getDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                LoggerUtil.e("code:"+code+"msg:"+msg);
+                refreshPage(LoadingPager.PageState.STATE_ERROR);
+                refrushData();
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    public void getDataSuccess(CoverDirBean model) {
+        if (model.isSuccess()) {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            mData.addAll(model.getData());
+            mRecyclerView.setAdapter(new CoverDirAdapter(mData, this));
+        } else {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            LoggerUtil.e(model.getErrMsg());
+            refrushData();
+        }
     }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch(v.getId()) {
             case R.id.iv_title_finish:
                 finish();
                 break;
@@ -75,5 +111,16 @@ public class CoverDirActivity extends MvpActivity2 implements View.OnClickListen
 
     public void setBookname(String bookname) {
         this.bookname = bookname;
+    }
+
+    public void refrushData(){
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                mData.clear();
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                loadCoverDirListData();
+            }
+        });
     }
 }
