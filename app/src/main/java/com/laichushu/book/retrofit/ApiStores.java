@@ -1,6 +1,7 @@
 package com.laichushu.book.retrofit;
 
 import com.laichushu.book.bean.JsonBean.BalanceBean;
+import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ActivityList_Paramet;
@@ -20,6 +21,7 @@ import com.laichushu.book.bean.netbean.Comment_Paramet;
 import com.laichushu.book.bean.netbean.Complaint_Paramet;
 import com.laichushu.book.bean.netbean.CoverDir_Paramet;
 import com.laichushu.book.bean.netbean.CoverMake_Paramet;
+import com.laichushu.book.bean.netbean.CoverModleList_Paramet;
 import com.laichushu.book.bean.netbean.CreateNewDraft_Paramet;
 import com.laichushu.book.bean.netbean.CreateSourceMaterialDir_Paramet;
 import com.laichushu.book.bean.netbean.CreateSourceMaterial_Paramet;
@@ -39,8 +41,8 @@ import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
+import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.JoinActivity_Paramet;
@@ -49,9 +51,10 @@ import com.laichushu.book.bean.netbean.Login_Paramet;
 import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
 import com.laichushu.book.bean.netbean.MaterialList_Paramet;
 import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
+import com.laichushu.book.bean.netbean.MechanismList_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
-import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
+import com.laichushu.book.bean.netbean.PersonInfoResultReward;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
 import com.laichushu.book.bean.netbean.PublishNewBook_Paramet;
@@ -66,8 +69,7 @@ import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
-import com.laichushu.book.bean.netbean.UpdatePersonalInfor_Parmet;
-import com.laichushu.book.bean.netbean.UploadIdcardInfor_Parmet;
+import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
@@ -204,7 +206,7 @@ public interface ApiStores {
     Observable<CampaignJoinModel> joinActivity(@Body JoinActivity_Paramet paramet);
 
     //获取作者作品
-    @POST("searchArticle/findArticleByAuthorId")
+    @POST("searchArticle/findExpressArticleByAuthorId")
     Observable<AuthorWorksModle> getAuthorWorks(@Body AuthorWorks_Paramet paramet);
 
     //获取素材列表接口
@@ -265,7 +267,7 @@ public interface ApiStores {
     //个人主页更新用户详情  @Body UpdatePersonalInfor_Parmet paramet
     @Multipart
     @POST("perHome/edit")
-    Observable<RewardResult> getUpdateDetails(@PartMap Map<String, RequestBody> params,@Part("photoFile\"; filename=\"head.jpg") RequestBody file);
+    Observable<PersonInfoResultReward> getUpdateDetails(@PartMap Map<String, RequestBody> params, @Part("photoFile\"; filename=\"head.jpg") RequestBody file);
 
     //提交个人信息审核@Body UploadIdcardInfor_Parmet paramet
     @Multipart
@@ -328,7 +330,8 @@ public interface ApiStores {
     Observable<HomeUserResult> getHomeUserInforDetails(@Body HomeUserInfor_paramet paramet);
 
     //个人主页动态
-    @POST("userDetail/findDy")
+//    @POST("userDetail/findDy")
+    @POST("dynamic/find")
     Observable<HomeUseDyrResult> getHomeUserDyDetails(@Body HomeUserDy_parmet paramet);
 
     //个人主页关注我的
@@ -394,5 +397,13 @@ public interface ApiStores {
     //草稿重命名
     @POST("chapter/editCatalog")
     Observable<RewardResult> chapterRename(@Body ChapterRename_Paramet paramet);
+
+    //获取模板类型
+    @POST("cover/mouldList")
+    Observable<CoverDirBean> getCoverModleList(@Body CoverModleList_Paramet paramet);
+
+    //获取机构
+    @POST("party/list")
+    Observable<MechanismListBean> getMechanismList(@Body MechanismList_Paramet paramet);
 
 }

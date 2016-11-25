@@ -23,6 +23,7 @@ import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.PersonInfoResultReward;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
@@ -129,7 +130,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 break;
             case R.id.tv_title_right:
                 //测试
-                edSign.setText("123456789");
                 edCity.setText("01");
                 if (!judgeAttrbute()) {
                     return;
@@ -149,16 +149,15 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 params.put("sign", requestBody5);
                 params.put("birthday", requestBody6);
 //                params.put("photoFile", requestBody7);
-                addSubscription(apiStores.getUpdateDetails(params, requestBody7), new ApiCallback<RewardResult>() {
+                addSubscription(apiStores.getUpdateDetails(params, requestBody7), new ApiCallback<PersonInfoResultReward>() {
                     @Override
-                    public void onSuccess(RewardResult result) {
+                    public void onSuccess(PersonInfoResultReward result) {
                         if (result.isSuccess()) {
                             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                             ToastUtil.showToast("success");
                             mActivity.finish();
-//                            updateDate(url);
+                            updateDate(result);
                         } else {
-                            ToastUtil.showToast(result.getErrMsg());
                             refreshPage(LoadingPager.PageState.STATE_ERROR);
                         }
                     }
@@ -197,7 +196,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 if (!TextUtils.isEmpty(sexMsg)) {
                     tvSex.setText(sexMsg);
                 }
-
                 break;
             case R.id.sex_btnCancel:
                 sexPopWindow.dismiss();
@@ -277,6 +275,10 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             ToastUtil.showToast("请输入个性签名!");
             return false;
         }
+        if(photoFile==null){
+            ToastUtil.showToast("请选择头像!");
+            return false;
+        }
         return true;
     }
 
@@ -339,7 +341,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     /**
      * 通知fragment更新数据
      */
-    private void updateDate(String imgUrl) {
+    private void updateDate(PersonInfoResultReward result) {
         //更新本地数据
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         cache_jsonDao = daoSession.getCache_JsonDao();
@@ -349,12 +351,12 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         List<Cache_Json> cache_jsons = build.list();
         Cache_Json cache_json = cache_jsons.get(0);
         PersonalCentreResult json = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
-        json.setNickName(edNickName.getText().toString());
-        json.setSex(tvSex.getText().toString());
-        json.setBirthday(edBirthday.getText().toString());
-        json.setCity(edCity.getText().toString());
-        json.setSign(edSign.getText().toString());
-        json.setPhoto(imgUrl);
+        json.setNickName(result.getData().getNickName());
+        json.setSex(result.getData().getSex());
+        json.setBirthday(result.getData().getBirthday()+"");
+        json.setCity(result.getData().getCity());
+        json.setSign(result.getData().getSign());
+        json.setPhoto(result.getData().getPhoto());
 //        json.setPhoto();
         //
         cache_json.setJson(new Gson().toJson(json));

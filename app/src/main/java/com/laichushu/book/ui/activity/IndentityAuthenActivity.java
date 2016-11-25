@@ -19,6 +19,7 @@ import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.IDCardValidate;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
@@ -26,6 +27,7 @@ import com.laichushu.book.utils.UIUtil;
 import com.yanzhenjie.album.Album;
 
 import java.io.File;
+import java.text.ParseException;
 import java.util.List;
 
 import id.zelory.compressor.Compressor;
@@ -139,15 +141,18 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
             ToastUtil.showToast("请输入姓名!");
             return false;
         }
-        if (TextUtils.isEmpty(edIdCardNum.getText())) {
-            ToastUtil.showToast("请输入身份证号!");
-            return false;
+        //验证身份证
+        try {
+            String idCardValidate = IDCardValidate.IDCardValidate(edIdCardNum.getText().toString());
+            ToastUtil.showToast(idCardValidate);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        if (frontFile.exists()) {
+        if (frontFile!=null) {
             ToastUtil.showToast("请上传身份证正面照!");
             return false;
         }
-        if (oppsiteFile.exists()) {
+        if (oppsiteFile!=null) {
             ToastUtil.showToast("请上传身份证反面照!");
             return false;
         }
