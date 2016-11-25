@@ -3,6 +3,7 @@
     android:id="@+id/activity_home_page_grade_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backGray"
     android:orientation="vertical">
 
     <include
@@ -14,23 +15,25 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@+id/edit_top"
+        android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="12dp">
 
         <TextView
+            android:id="@+id/tv_gradeTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="你的得分为70分，为"
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/edit3" />
+            android:textSize="@dimen/edit2" />
 
         <TextView
+            android:id="@+id/tv_gradeFlg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/icon_like_red"
-            android:text="你的得分为70分，为"
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/edit3" />
+            android:textSize="@dimen/edit2" />
 
     </LinearLayout>
 
@@ -39,8 +42,10 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@+id/edit_top"
+        android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="12dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,7 +53,7 @@
             android:drawableRight="@drawable/icon_like_red"
             android:text="0-60分为"
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/edit3" />
+            android:textSize="@dimen/edit2" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,25 +61,33 @@
             android:drawableRight="@drawable/icon_like_red"
             android:text="铜级  61-80 "
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/edit3" />
+            android:textSize="@dimen/edit2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/icon_like_red"
+            android:text="银级  81-100为"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/edit2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/icon_like_red"
             android:text="金级"
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/edit3" />
+            android:textSize="@dimen/edit2" />
 
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_remarks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_middle"
         android:layout_marginTop="12dp"
         android:padding="12dp"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="@dimen/edit3" />
+        android:textColor="@color/characterGray"
+        android:textSize="@dimen/edit" />
 </LinearLayout>

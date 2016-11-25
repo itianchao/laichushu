@@ -32,6 +32,8 @@ import com.laichushu.book.bean.netbean.DraftList_Paramet;
 import com.laichushu.book.bean.netbean.EditDraft_Paramet;
 import com.laichushu.book.bean.netbean.EditMaterialBook_Paramet;
 import com.laichushu.book.bean.netbean.ForgetPwd_Paramet;
+import com.laichushu.book.bean.netbean.GradeDetails_Paramet;
+import com.laichushu.book.bean.netbean.GradeRemarksResult;
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
@@ -58,6 +60,7 @@ import com.laichushu.book.bean.netbean.PersonInfoResultReward;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
 import com.laichushu.book.bean.netbean.PublishNewBook_Paramet;
+import com.laichushu.book.bean.netbean.PublishTopic_Paramet;
 import com.laichushu.book.bean.netbean.Purchase_Paramet;
 import com.laichushu.book.bean.netbean.ReCommentList_Paramet;
 import com.laichushu.book.bean.netbean.ReSavaComment_Paramet;
@@ -69,6 +72,7 @@ import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
+import com.laichushu.book.bean.netbean.UserBookList_Paramet;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
@@ -115,10 +119,10 @@ public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
-    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
-//    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
+    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 
     //登录接口
@@ -264,6 +268,7 @@ public interface ApiStores {
     //个人中心
     @POST("perHome/find")
     Observable<PersonalCentreResult> getPersonalDetails(@Body PersonalCentre_Parmet paramet);
+
     //个人主页更新用户详情  @Body UpdatePersonalInfor_Parmet paramet
     @Multipart
     @POST("perHome/edit")
@@ -272,12 +277,13 @@ public interface ApiStores {
     //提交个人信息审核@Body UploadIdcardInfor_Parmet paramet
     @Multipart
     @POST("perHome/atte")
-    Observable<RewardResult> getUploadInfor(@PartMap Map<String, RequestBody> params,@Part("idCardFront\"; filename=\"front.jpg") RequestBody front,@Part("idCardOppsite\"; filename=\"oppsite.jpg") RequestBody oppsite);
+    Observable<RewardResult> getUploadInfor(@PartMap Map<String, RequestBody> params, @Part("idCardFront\"; filename=\"front.jpg") RequestBody front, @Part("idCardOppsite\"; filename=\"oppsite.jpg") RequestBody oppsite);
 
     //创建新书 从相册
     @Multipart
     @POST("article/save")
     Observable<RewardResult> createNewBook(@Part("file\"; filename=\"cover.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
+
     //创建新书 从模版
     @Multipart
     @POST("article/save")
@@ -300,10 +306,9 @@ public interface ApiStores {
     @POST("chapter/list")
     Observable<DraftModle> getDraftList(@Body DraftList_Paramet paramet);
 
-    //书的列表
+    //书的列表 <============>用户书的列表 userId传targetId
     @POST("searchArticle/findArticleByAuthorId")
     Observable<HomeHotModel> getArticleBookList(@Body ArticleBookList_Paramet paramet);
-
 
     //投稿
     @POST("article/vote")
@@ -325,14 +330,23 @@ public interface ApiStores {
     @POST("searchArticle/findArticleByAuthorId")
     Observable<HomeHotModel> getArticleBookListScan(@Body MyArticBooklist_paramet paramet);
 
-    //个人主页用户信息
-    @POST("userDetail/find")
+    //个人主页用户信息   userId
+    @POST("perHome/find")
     Observable<HomeUserResult> getHomeUserInforDetails(@Body HomeUserInfor_paramet paramet);
+
+    //个人主页用户信息   userID,target Id
+    @POST("userDetails/find")
+    Observable<HomeUserResult> getUserInforDetails(@Body HomeUserInfor_paramet paramet);
 
     //个人主页动态
 //    @POST("userDetail/findDy")
     @POST("dynamic/find")
     Observable<HomeUseDyrResult> getHomeUserDyDetails(@Body HomeUserDy_parmet paramet);
+
+    //用户主页动态
+    @POST("userDetail/findDy")
+//    @POST("dynamic/find")
+    Observable<HomeUseDyrResult> getUserHomeDyDetails(@Body HomeUserDy_parmet paramet);
 
     //个人主页关注我的
     @POST("perFocus/findBe")
@@ -349,6 +363,14 @@ public interface ApiStores {
     //个人主页更新“我关注的”信息关注状态
     @POST("userDetail/updateHis")
     Observable<HomeFocusResult> getHomeUserFocusBeStatus(@Body HomeUserFocusState_Paramet paramet);
+
+    //个人主页发表动态话题
+    @POST("topic/saveTopic")
+    Observable<RewardResult> publishTopic(@Body PublishTopic_Paramet paramet);
+
+    //个人主页等级分类详情
+    @POST("gradeDetail/find")
+    Observable<GradeRemarksResult> gradeDetails(@Body GradeDetails_Paramet paramet);
 
     //删除草稿
     @POST("chapter/delete")

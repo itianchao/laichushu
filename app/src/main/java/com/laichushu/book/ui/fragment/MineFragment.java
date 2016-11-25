@@ -84,7 +84,6 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         ivMineHeadInto.setOnClickListener(this);
 
         tvTitle.setText("个人中心");
-
         return mRootView;
     }
 
@@ -113,7 +112,6 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.iv_minaHead:
                 //作品管理
                 Bundle homePage = new Bundle();
@@ -171,4 +169,13 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
             mActivity.registerReceiver(mUpdateReceiver, filter);
         }
     }
+    public void reLoadData(){
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+            }
+        });
+    }
+
 }

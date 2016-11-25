@@ -33,7 +33,7 @@ public class HomePersonFocusResult implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * nickName : 閫椾綘鐜�
          * grade : 1
