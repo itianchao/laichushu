@@ -57,7 +57,7 @@
     <TextView
         android:id="@+id/tv_topic_name"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:textColor="@color/black"
         android:textSize="@dimen/edit"
