@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.activity;
 
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.laichushu.book.ui.adapter.CommentDetaileAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
@@ -40,6 +42,8 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     private CommentDetaileAdapter mAdapter;
     private ArrayList<CommentDetailModle.DataBean> mData = new ArrayList<>();
     private String topicId;
+    private EditText sendmsgEv;
+    private ImageView sendmsgIv;
 
     @Override
     protected TopicDetailPresenter createPresenter() {
@@ -57,12 +61,14 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         topicTiemTv = (TextView) mSuccessView.findViewById(R.id.tv_topic_time);
         topicNameTv = (TextView) mSuccessView.findViewById(R.id.tv_topic_name);
         commentRyv = (PullLoadMoreRecyclerView)mSuccessView.findViewById(R.id.ryv_comment);
+        sendmsgEv = (EditText)mSuccessView.findViewById(R.id.et_sendmsg);
+        sendmsgIv = (ImageView)mSuccessView.findViewById(R.id.iv_sendmsg);
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
-
         commentRyv.setAdapter(mAdapter);
         finishIv.setOnClickListener(this);
+        sendmsgIv.setOnClickListener(this);
         return mSuccessView;
     }
 
@@ -71,7 +77,6 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         bean = getIntent().getParcelableExtra("bean");
         topicId = bean.getId();
         mvpPresenter.loadCommentData(topicId);
-
     }
 
     @Override
@@ -104,6 +109,16 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     }
 
     @Override
+    public void getSendDataSuccess(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("发送成功");
+            onRefresh();
+        }else {
+            ToastUtil.showToast("发送失败");
+        }
+    }
+
+    @Override
     public void getDataFail(String msg) {
         refreshPage(LoadingPager.PageState.STATE_ERROR);
         reLoadDate();
@@ -111,7 +126,8 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
 
     @Override
     public void getDataFail2(String msg) {
-
+        hideLoading();
+        ToastUtil.showToast("发送失败");
     }
 
     @Override
@@ -129,6 +145,9 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         switch(v.getId()){
             case R.id.iv_title_finish:
                 finish();
+                break;
+            case R.id.iv_sendmsg:
+                mvpPresenter.topicDetailCommentSave(sendmsgEv, topicId);
                 break;
         }
     }
