@@ -121,6 +121,9 @@ public class MechanismListBean {
             this.logoUrl = logoUrl;
         }
 
+        public DataBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -133,9 +136,9 @@ public class MechanismListBean {
             dest.writeString(this.grade);
             dest.writeString(this.address);
             dest.writeString(this.logoUrl);
-        }
-
-        public DataBean() {
+            dest.writeInt(this.collectCount);
+            dest.writeByte(this.isCollect ? (byte) 1 : (byte) 0);
+            dest.writeString(this.introduce);
         }
 
         protected DataBean(Parcel in) {
@@ -144,9 +147,12 @@ public class MechanismListBean {
             this.grade = in.readString();
             this.address = in.readString();
             this.logoUrl = in.readString();
+            this.collectCount = in.readInt();
+            this.isCollect = in.readByte() != 0;
+            this.introduce = in.readString();
         }
 
-        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);

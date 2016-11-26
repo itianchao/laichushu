@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class NoticeFragment extends MvpFragment2<NoticePresenter> implements NoticeView, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private PullLoadMoreRecyclerView noticemRyv;
-    private boolean isLoad = true;
     private ArrayList<NoticeModle.DataBean> mData = new ArrayList<>();
     private int pageNo = 1;
     private String id;
@@ -49,18 +48,19 @@ public class NoticeFragment extends MvpFragment2<NoticePresenter> implements Not
 
     @Override
     protected void initData() {
-        if (isLoad) {
-            id = ((MechanismDetailActivity) getActivity()).getBean().getId();
-            mvpPresenter.loadNoticeListData(id);
-        }
 
+        id = ((MechanismDetailActivity) getActivity()).getBean().getId();
+        if (mData.isEmpty()) {
+            mvpPresenter.loadNoticeListData(id);
+        }else {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        }
     }
 
     @Override
     public void getDataSuccess(NoticeModle model) {
         noticemRyv.setPullLoadMoreCompleted();
         if (model.isSuccess()) {
-            isLoad = false;
             if (pageNo ==1){
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             }

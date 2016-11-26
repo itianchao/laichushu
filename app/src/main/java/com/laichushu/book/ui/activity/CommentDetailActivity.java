@@ -55,6 +55,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         commentRyv = (PullLoadMoreRecyclerView) findViewById(R.id.ryv_comment);
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
+        commentRyv.setFooterViewText("加载中");
         headIv = (ImageView) findViewById(R.id.iv_comment_head);
         nameTv = (TextView) findViewById(R.id.tv_comment_name);
         contentTv = (TextView) findViewById(R.id.tv_comment_content);

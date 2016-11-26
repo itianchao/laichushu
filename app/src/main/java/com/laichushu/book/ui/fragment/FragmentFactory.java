@@ -32,15 +32,6 @@ public class FragmentFactory {
                 case 4:
                     fragment = new MineFragment();//个人中心
                     break;
-                case 5:
-                    fragment = new NoticeFragment();//机构公告
-                    break;
-                case 6:
-                    fragment = new TopicListFragment();//机构话题
-                    break;
-                case 7:
-                    fragment = new BriefFragment();//机构简介
-                    break;
             }
             // 存储到缓存
             mCaches.put(position, fragment);

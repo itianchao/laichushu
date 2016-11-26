@@ -15,7 +15,6 @@ import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 话题列表
@@ -25,11 +24,11 @@ import java.util.List;
 public class TopicListFragment extends MvpFragment2<MechanismTopicListPresenter> implements MechanismTopicListView, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private PullLoadMoreRecyclerView topicRyc;
-    private boolean isLoad;
     private String id;//机构Id
     private int pageNo = 1;
     private MechanismTopicListAdapter mAdapter;
     private ArrayList<MechanismTopicListModel.DataBean> mData = new ArrayList<>();
+
     @Override
     protected MechanismTopicListPresenter createPresenter() {
         return new MechanismTopicListPresenter(this);
@@ -42,22 +41,25 @@ public class TopicListFragment extends MvpFragment2<MechanismTopicListPresenter>
         topicRyc.setLinearLayout();
         topicRyc.setOnPullLoadMoreListener(this);
         topicRyc.setFooterViewText("加载中");
-        mAdapter = new MechanismTopicListAdapter(mData,mActivity);
+        mAdapter = new MechanismTopicListAdapter(mData, mActivity);
         topicRyc.setAdapter(mAdapter);
         return mSuccessView;
     }
 
     @Override
     protected void initData() {
-        if (isLoad) {
-            id = ((MechanismDetailActivity) getActivity()).getBean().getId();
+        id = ((MechanismDetailActivity) getActivity()).getBean().getId();
+        if (mData.isEmpty()) {
             mvpPresenter.loadMechanismTopicListData(id);
+        }else {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
     }
 
     @Override
     public void onRefresh() {
         pageNo = 1;
+        mData.clear();
         mvpPresenter.loadMechanismTopicListData(id);
     }
 
@@ -73,8 +75,7 @@ public class TopicListFragment extends MvpFragment2<MechanismTopicListPresenter>
             if (pageNo == 1) {
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             }
-            isLoad = false;
-            if (model.getData()!=null&&model.getData().isEmpty()){
+            if (model.getData() != null && !model.getData().isEmpty()) {
                 mData.addAll(model.getData());
                 pageNo++;
                 mAdapter.setmData(mData);

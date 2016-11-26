@@ -77,6 +77,8 @@ import com.laichushu.book.bean.netbean.SendMsgToParty_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
+import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
+import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
 import com.laichushu.book.bean.netbean.UserBookList_Paramet;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
@@ -106,6 +108,7 @@ import com.laichushu.book.mvp.regist.RegistModel;
 import com.laichushu.book.mvp.regist2.RegistModel2;
 import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
 import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
+import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 
 import java.util.Map;
 
@@ -446,4 +449,12 @@ public interface ApiStores {
     //给机构发消息
     @POST("party/sendMsgToParty")
     Observable<RewardResult> sendMsgToParty(@Body SendMsgToParty_Paramet paramet);
+
+    //话题详情评论列表
+    @POST("topicComment/list")
+    Observable<TopicdetailModel> topicDetailCommentList(@Body TopicDetailCommentList_Paramet paramet);
+
+    //话题详情保存评论
+    @POST("topicComment/save")
+    Observable<RewardResult> topicDetailCommentSave(@Body TopicDetailCommentSave_Paramet paramet);
 }

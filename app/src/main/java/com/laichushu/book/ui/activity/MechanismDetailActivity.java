@@ -17,7 +17,10 @@ import com.laichushu.book.mvp.mechanismdetail.MechanisDetailModel;
 import com.laichushu.book.mvp.mechanismdetail.MechanismDetailPresenter;
 import com.laichushu.book.mvp.mechanismdetail.MechanismDetailView;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.fragment.BriefFragment;
 import com.laichushu.book.ui.fragment.FragmentFactory;
+import com.laichushu.book.ui.fragment.NoticeFragment;
+import com.laichushu.book.ui.fragment.TopicListFragment;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
@@ -222,18 +225,18 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 break;
             case R.id.rbn_01:
                 if (position != 1) {
-                    onTabSelected(5);
+                    onTabSelected(new NoticeFragment());
                 }
                 break;
             case R.id.rbn_02:
                 if (position != 2) {
-                    onTabSelected(6);
+                    onTabSelected(new TopicListFragment());
                     position = 2;
                 }
                 break;
             case R.id.rbn_03:
                 if (position != 3) {
-                    onTabSelected(7);
+                    onTabSelected(new BriefFragment());
                     position = 3;
                 }
                 break;
@@ -262,12 +265,11 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
 
     /**
      * 替换fragment
-     * @param position
      */
-    public void onTabSelected(int position) {
+    public void onTabSelected(Fragment mFragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        Fragment fragment = FragmentFactory.getFragment(position);
+        Fragment fragment = mFragment;
         ft.replace(R.id.fay_space, fragment);
         ft.commit();
     }

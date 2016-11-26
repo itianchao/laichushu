@@ -25,7 +25,7 @@
                 android:id="@+id/tv_mechanism"
                 android:gravity="center"
                 tools:text="知识产权出版社"
-                android:textSize="@dimen/title"
+                android:textSize="@dimen/edit"
                 android:textColor="@color/white"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
@@ -87,6 +87,7 @@
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
+
     <RadioGroup
         android:background="@color/white"
         android:orientation="horizontal"

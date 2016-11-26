@@ -1,5 +1,8 @@
 package com.laichushu.book.mvp.mechanismtopiclist;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +45,7 @@ public class MechanismTopicListModel {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         /**
          * id : 22
          * teamId : 14
@@ -186,5 +189,60 @@ public class MechanismTopicListModel {
         public void setCreaterPhoto(String createrPhoto) {
             this.createrPhoto = createrPhoto;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.teamId);
+            dest.writeString(this.teamName);
+            dest.writeString(this.title);
+            dest.writeString(this.content);
+            dest.writeInt(this.replyNum);
+            dest.writeInt(this.browseNum);
+            dest.writeString(this.createDate);
+            dest.writeString(this.topFlag);
+            dest.writeString(this.starterId);
+            dest.writeString(this.creatUserName);
+            dest.writeString(this.creatUserId);
+            dest.writeInt(this.type);
+            dest.writeString(this.createrPhoto);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.id = in.readString();
+            this.teamId = in.readString();
+            this.teamName = in.readString();
+            this.title = in.readString();
+            this.content = in.readString();
+            this.replyNum = in.readInt();
+            this.browseNum = in.readInt();
+            this.createDate = in.readString();
+            this.topFlag = in.readString();
+            this.starterId = in.readString();
+            this.creatUserName = in.readString();
+            this.creatUserId = in.readString();
+            this.type = in.readInt();
+            this.createrPhoto = in.readString();
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
 }

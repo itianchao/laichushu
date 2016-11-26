@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.adapter;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
+import com.laichushu.book.ui.activity.TopicDetilActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -38,11 +40,20 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
         holder.itemView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(
                 android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
                 android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
-        MechanismTopicListModel.DataBean dataBean = mData.get(position);
+        final MechanismTopicListModel.DataBean dataBean = mData.get(position);
         holder.topicNameTv.setText(dataBean.getTitle());
         holder.topicAuthorTv.setText(dataBean.getCreatUserName());
         holder.topicContentTv.setText(dataBean.getContent());
+        holder.topicTiemTv.setText(dataBean.getCreateDate());
         GlideUitl.loadRandImg(mActivity,dataBean.getCreaterPhoto(),holder.topicUserheadIv);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bean",dataBean);
+                UIUtil.openActivity(mActivity,TopicDetilActivity.class,bundle);
+            }
+        });
     }
 
     @Override
@@ -56,12 +67,14 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
         private TextView topicAuthorTv;
         private TextView topicNameTv;
         private TextView topicContentTv;
+        private TextView topicTiemTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
             topicUserheadIv = (ImageView) itemView.findViewById(R.id.iv_topic_userhead);
             topicAuthorTv = (TextView) itemView.findViewById(R.id.tv_topic_author);
             topicContentTv = (TextView) itemView.findViewById(R.id.tv_topic_content);
+            topicTiemTv = (TextView) itemView.findViewById(R.id.tv_topic_time);
             topicNameTv = (TextView) itemView.findViewById(R.id.tv_topic_name);
         }
     }

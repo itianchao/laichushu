@@ -18,7 +18,8 @@ import com.laichushu.book.utils.UIUtil;
 public class BriefFragment extends MvpFragment2 {
 
     private TextView briefTv;
-    private boolean isLoad = true;
+    private String introduce;
+
 
     @Override
     protected BasePresenter createPresenter() {
@@ -29,7 +30,7 @@ public class BriefFragment extends MvpFragment2 {
     public View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.fragment_brief);
         briefTv = (TextView) mSuccessView.findViewById(R.id.tv_brief);
-        String introduce = ((MechanismDetailActivity) getActivity()).getBean().getIntroduce();
+        introduce = ((MechanismDetailActivity) getActivity()).getBean().getIntroduce();
         briefTv.setText(introduce);
         return mSuccessView;
     }
