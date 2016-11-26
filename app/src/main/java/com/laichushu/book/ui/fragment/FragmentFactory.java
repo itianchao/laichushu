@@ -18,19 +18,19 @@ public class FragmentFactory {
         }else {
             switch (position) {
                 case 0:
-                    fragment = new HomeFragment();
+                    fragment = new HomeFragment();//首页
                     break;
                 case 1:
-                    fragment = new FindFragment();
+                    fragment = new FindFragment();//发现
                     break;
                 case 2:
-                    fragment = new WriteFragment();
+                    fragment = new WriteFragment();//写作
                     break;
                 case 3:
-                    fragment = new MsgFragment();
+                    fragment = new MsgFragment();//消息
                     break;
                 case 4:
-                    fragment = new MineFragment();
+                    fragment = new MineFragment();//个人中心
                     break;
             }
             // 存储到缓存

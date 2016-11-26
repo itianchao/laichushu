@@ -4,7 +4,7 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 
 /**
- * 注册页面
+ * 机构详情=页面
  * Created by wangtong on 2016/10/12.
  */
 public interface MechanismDetailView {
@@ -14,7 +14,9 @@ public interface MechanismDetailView {
 
     void articleVote(RewardResult model);
 
-    void collectSaveData(RewardResult model);
+    void collectSaveData(RewardResult model, boolean collect);
+
+    void getSendMsgToPartyDataSuccess(RewardResult model);
 
     void getDataFail(String msg);
 
@@ -23,6 +25,8 @@ public interface MechanismDetailView {
     void getDataFail3(String msg);
 
     void getDataFail4(String msg);
+
+    void getDataFail5(String s);
 
     void showLoading();
 

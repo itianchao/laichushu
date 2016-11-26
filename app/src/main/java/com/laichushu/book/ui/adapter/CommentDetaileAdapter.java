@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 import com.laichushu.book.R;
@@ -19,10 +20,10 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/11/4.
  */
 public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAdapter.CommentViewHolder> {
-    private CommentDetailActivity mActivity;
+    private BaseActivity mActivity;
     private ArrayList<CommentDetailModle.DataBean> mData;
 
-    public CommentDetaileAdapter(CommentDetailActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData) {
+    public CommentDetaileAdapter(BaseActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData) {
         this.mActivity = mActivity;
         this.mData = mData;
     }

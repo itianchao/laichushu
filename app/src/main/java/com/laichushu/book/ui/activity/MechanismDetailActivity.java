@@ -1,8 +1,12 @@
 package com.laichushu.book.ui.activity;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -13,6 +17,10 @@ import com.laichushu.book.mvp.mechanismdetail.MechanisDetailModel;
 import com.laichushu.book.mvp.mechanismdetail.MechanismDetailPresenter;
 import com.laichushu.book.mvp.mechanismdetail.MechanismDetailView;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.fragment.BriefFragment;
+import com.laichushu.book.ui.fragment.FragmentFactory;
+import com.laichushu.book.ui.fragment.NoticeFragment;
+import com.laichushu.book.ui.fragment.TopicListFragment;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
@@ -41,7 +49,10 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     private ArrayList<AuthorWorksModle.DataBean> data = new ArrayList<>();
     private TextView mechanismTv;
     private TextView collectionCountTv;
-    private String collectType;
+    private String cType;
+    private RadioButton firstRbn;
+    private RadioButton secondRbn;
+    private RadioButton thridRbn;
 
     @Override
     protected MechanismDetailPresenter createPresenter() {
@@ -56,6 +67,9 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         moreIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_other);
         shareIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_another);
         mechanismIv = (ImageView) mSuccessView.findViewById(R.id.iv_mechanism);//机构图片
+        firstRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_01);//公告
+        secondRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_02);//话题
+        thridRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_03);//简介
 
         msgTv = (TextView) mSuccessView.findViewById(R.id.tv_msg);
         submissionTv = (TextView) mSuccessView.findViewById(R.id.tv_submission);
@@ -70,6 +84,9 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         msgTv.setOnClickListener(this);
         submissionTv.setOnClickListener(this);
         collectionTv.setOnClickListener(this);
+        firstRbn.setOnClickListener(this);
+        secondRbn.setOnClickListener(this);
+        thridRbn.setOnClickListener(this);
         return mSuccessView;
     }
 
@@ -78,8 +95,16 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         bean = getIntent().getParcelableExtra("bean");
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         titleTv.setText("机构详情");//设置标题
-        GlideUitl.loadImg(mActivity,R.drawable.mechanism_detail_bg,mechanismIv);//设置机构图片
+        GlideUitl.loadImg(mActivity, R.drawable.mechanism_detail_bg, mechanismIv);//设置机构图片
         mechanismTv.setText(bean.getName());
+        if (bean.isCollect()) {
+            collectionTv.setText("已收藏");
+        } else {
+            collectionTv.setText("收藏");
+        }
+        collectionCountTv.setText("收藏:" + bean.getCollectCount() + "人");
+        position = 0;
+        onClick(firstRbn);
     }
 
     @Override
@@ -92,15 +117,15 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         hideLoading();
         if (model.isSuccess()) {
             data.clear();
-            if (model.getData()!=null){
+            if (model.getData() != null) {
                 data = model.getData();
                 if (!data.isEmpty()) {
                     mvpPresenter.openSelectBookDialog(data, bean.getId());
-                }else {
+                } else {
                     ToastUtil.showToast("您还没有作品");
                 }
             }
-        }else {
+        } else {
             ToastUtil.showToast("获取作品列表失败");
         }
     }
@@ -109,17 +134,33 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     public void articleVote(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("投稿成功，15日内通知审核结果");
-        }else {
+        } else {
             ToastUtil.showToast("投稿失败");
         }
     }
 
     @Override
-    public void collectSaveData(RewardResult model) {
+    public void collectSaveData(RewardResult model, boolean collect) {
+        collectionTv.setEnabled(true);
         if (model.isSuccess()) {
-            ToastUtil.showToast("收藏成功");
-        }else {
+            bean.setCollect(collect);
+            if (bean.isCollect()) {
+                collectionTv.setText("已收藏");
+            } else {
+                collectionTv.setText("收藏");
+            }
+        } else {
             ToastUtil.showToast("收藏失败");
+        }
+    }
+
+    @Override
+    public void getSendMsgToPartyDataSuccess(RewardResult model) {
+        hideLoading();
+        if (model.isSuccess()) {
+            ToastUtil.showToast("发送成功");
+        } else {
+            ToastUtil.showToast("发送失败");
         }
     }
 
@@ -145,8 +186,16 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
 
     @Override
     public void getDataFail4(String msg) {
+        collectionTv.setEnabled(true);
         hideLoading();
         ToastUtil.showToast("收藏失败");
+        LoggerUtil.e(msg);
+    }
+
+    @Override
+    public void getDataFail5(String msg) {
+        hideLoading();
+        ToastUtil.showToast("发送失败");
         LoggerUtil.e(msg);
     }
 
@@ -160,9 +209,10 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         dismissProgressDialog();
     }
 
+    int position = 0;
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.iv_title_other:
                 break;
             case R.id.iv_title_another:
@@ -171,19 +221,56 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 finish();
                 break;
             case R.id.tv_msg:
-
+                mvpPresenter.sendMsgToPartyDialog(bean.getId());
+                break;
+            case R.id.rbn_01:
+                if (position != 1) {
+                    onTabSelected(new NoticeFragment());
+                }
+                break;
+            case R.id.rbn_02:
+                if (position != 2) {
+                    onTabSelected(new TopicListFragment());
+                    position = 2;
+                }
+                break;
+            case R.id.rbn_03:
+                if (position != 3) {
+                    onTabSelected(new BriefFragment());
+                    position = 3;
+                }
                 break;
             case R.id.tv_submission:
                 mvpPresenter.loadAuthorWorksData();
                 break;
             case R.id.tv_collection:
                 if (collectionTv.getText().equals("收藏")) {
-                    collectType = "0";
-                }else {
-                    collectType = "1";
+                    cType = "0";
+                } else {
+                    cType = "1";
                 }
-                mvpPresenter.collectSave(bean.getId(),"4",collectType);
+                collectionTv.setEnabled(false);
+                mvpPresenter.collectSave(bean.getId(),cType, "4");
                 break;
         }
+    }
+
+    public MechanismListBean.DataBean getBean() {
+        return bean;
+    }
+
+    public void setBean(MechanismListBean.DataBean bean) {
+        this.bean = bean;
+    }
+
+    /**
+     * 替换fragment
+     */
+    public void onTabSelected(Fragment mFragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment fragment = mFragment;
+        ft.replace(R.id.fay_space, fragment);
+        ft.commit();
     }
 }

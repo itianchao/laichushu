@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.login;
 
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
@@ -42,7 +43,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     }
 
     //登陆
-    public boolean login(EditText usernameEt, EditText passwordEt) {
+    public boolean login(EditText usernameEt, EditText passwordEt, Button loginBtn) {
         String username = usernameEt.getText().toString().trim();
         String password = passwordEt.getText().toString().trim();
         boolean isLogin ;
@@ -74,6 +75,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             passwordEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         }
+        loginBtn.setEnabled(false);
         loadData(username, password);
         return isLogin = true;
     }

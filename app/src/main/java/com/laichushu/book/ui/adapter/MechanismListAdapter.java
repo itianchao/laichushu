@@ -47,6 +47,9 @@ public class MechanismListAdapter extends RecyclerView.Adapter<MechanismListAdap
     @Override
     public void onBindViewHolder(AdapterViewHodler holder, int position) {
         final MechanismListBean.DataBean dataBean = mData.get(position);
+        holder.itemView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(
+                android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
+                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
         GlideUitl.loadImg(mActivity,dataBean.getLogoUrl(),holder.mechanismIv);
         holder.nameTv.setText(dataBean.getName());
         holder.addressTv.setText(dataBean.getAddress());

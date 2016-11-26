@@ -2,6 +2,7 @@ package com.laichushu.book.retrofit;
 
 import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
+import com.laichushu.book.bean.JsonBean.MechanismBrieBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
@@ -54,8 +55,11 @@ import com.laichushu.book.bean.netbean.Login_Paramet;
 import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
 import com.laichushu.book.bean.netbean.MaterialList_Paramet;
 import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
+import com.laichushu.book.bean.netbean.MechanismBrie_Paramet;
 import com.laichushu.book.bean.netbean.MechanismList_Paramet;
+import com.laichushu.book.bean.netbean.MechanismTopicList_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
+import com.laichushu.book.bean.netbean.NoticesList_Paramet;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
 import com.laichushu.book.bean.netbean.PersonInfoResultReward;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
@@ -70,9 +74,13 @@ import com.laichushu.book.bean.netbean.Regist_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.netbean.SaveComment_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
+import com.laichushu.book.bean.netbean.SendMsgToParty_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
+import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
+import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
+import com.laichushu.book.bean.netbean.UserBookList_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
@@ -96,11 +104,14 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.homecategory.CategoryModle;
 import com.laichushu.book.mvp.login.LoginModel;
+import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
+import com.laichushu.book.mvp.notice.NoticeModle;
 import com.laichushu.book.mvp.part.PartModel;
 import com.laichushu.book.mvp.regist.RegistModel;
 import com.laichushu.book.mvp.regist2.RegistModel2;
 import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
 import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
+import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 
 import java.util.Map;
 
@@ -121,10 +132,10 @@ public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
-//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
-    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
+//    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 
     //登录接口
@@ -441,4 +452,23 @@ public interface ApiStores {
     @POST("wallet/find")
     Observable<WalletBalanceReward> getWithdrawalsDetails(@Body WalletBalanceRecord_Paramet paramet);
 
+    //获取机构公告列表
+    @POST("press/notices")
+    Observable<NoticeModle> getNoticesList(@Body NoticesList_Paramet paramet);
+
+    //获取机构话题
+    @POST("press/topics")
+    Observable<MechanismTopicListModel> getMechanismTopicList(@Body MechanismTopicList_Paramet paramet);
+
+    //给机构发消息
+    @POST("party/sendMsgToParty")
+    Observable<RewardResult> sendMsgToParty(@Body SendMsgToParty_Paramet paramet);
+
+    //话题详情评论列表
+    @POST("topicComment/list")
+    Observable<TopicdetailModel> topicDetailCommentList(@Body TopicDetailCommentList_Paramet paramet);
+
+    //话题详情保存评论
+    @POST("topicComment/save")
+    Observable<RewardResult> topicDetailCommentSave(@Body TopicDetailCommentSave_Paramet paramet);
 }
