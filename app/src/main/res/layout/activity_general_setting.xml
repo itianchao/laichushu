@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgGrey">
+
+    <include
+        android:id="@+id/mine_top"
+        layout="@layout/page_title" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mine_top"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_readeCharacter"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_mineManage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:text="阅读字号"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_characterNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/iv_settingInto"
+                android:text="中"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_settingInto"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/home_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_msgSend"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_msgSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:text="消息推送"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/iv_mineBookCastInto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_aboutApp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:text="关于来出书"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_aboutApp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/home_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_cleanCache"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_cleanCache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:text="清理缓存"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_cacheSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/iv_cacheInto"
+                android:text="0M"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_cacheInto"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/home_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_signOut"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_signOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:text="退出"
+                android:textColor="@color/edit2"
+                android:textSize="@dimen/edit2"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

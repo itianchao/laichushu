@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
 import com.laichushu.book.db.Cache_Json;
@@ -21,8 +22,11 @@ import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.EditMyselfeInforActivity;
+import com.laichushu.book.ui.activity.FeedbackActivity;
+import com.laichushu.book.ui.activity.GeneralSettingActivity;
 import com.laichushu.book.ui.activity.ManageWorksActivity;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
+import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpFragment2;
@@ -43,7 +47,7 @@ import de.greenrobot.dao.query.QueryBuilder;
  */
 public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     private TextView tvTitle, tvMineName, tvMinebookNum;
-    private ImageView ivMineHead,ivMineHeadInto;
+    private ImageView ivMineHead, ivMineHeadInto;
     private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice;
     private PersonalCentreResult res = new PersonalCentreResult();
     private UpdateReceiver mUpdateReceiver;
@@ -106,7 +110,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         tvMineName.setText("  " + result.getNickName());
         tvMinebookNum.setText(result.getArticleCount() + "部  ");
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-        res=result;
+        res = result;
     }
 
     @Override
@@ -136,12 +140,18 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
                 UIUtil.openActivity(mActivity, MyBookCastActivity.class, bookCastBundle);
                 break;
             case R.id.rl_Wallet:
+                //我的钱包
+                UIUtil.openActivity(mActivity, MyWalletDetailsActivity.class);
                 break;
             case R.id.rl_service:
                 break;
             case R.id.rl_GeneralSetting:
+                //通用设置
+                UIUtil.openActivity(mActivity, GeneralSettingActivity.class);
                 break;
             case R.id.rl_Advice:
+                //意见反馈
+                UIUtil.openActivity(mActivity, FeedbackActivity.class);
                 break;
         }
     }
@@ -169,7 +179,8 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
             mActivity.registerReceiver(mUpdateReceiver, filter);
         }
     }
-    public void reLoadData(){
+
+    public void reLoadData() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {

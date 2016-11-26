@@ -12,6 +12,7 @@
     <color name="Grey">#aaa</color>
     <color name="backGray">#F5F5F5</color>
     <color name="characterGray">#9B9B9B</color>
+    <color name="characterLightGray">#C1DAD4</color>
     <!-- hint -->
     <color name="hint">#CCCCCC</color>
     <!-- 自定义通知栏颜色  -->

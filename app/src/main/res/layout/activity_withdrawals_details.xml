@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgGrey">
+
+    <include
+        android:id="@+id/include_top"
+        layout="@layout/page_title" />
+
+    <LinearLayout
+        android:id="@+id/ll_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/include_top"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_accountName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center_vertical|right"
+                android:paddingRight="8dp"
+                android:text="当前账户余额"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_accountMoney"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:text="66元"
+                android:textColor="@color/auditing"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_withdrawalsNum"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center_vertical|right"
+                android:paddingRight="8dp"
+                android:text="提取金额"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ed_inputNum"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="5"
+                android:background="@drawable/shape_rectangle_edit_bg"
+                android:gravity="center_vertical"
+                android:hint="请输入金额"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/auditing"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/bgGrey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_withdrawalsAcc"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center_vertical|right"
+                android:paddingRight="8dp"
+                android:text="提取账户"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ed_inputAcc"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="5"
+                android:background="@drawable/shape_rectangle_edit_bg"
+                android:gravity="center_vertical"
+                android:hint="输入支付宝账号"
+                android:paddingLeft="12dp"
+                android:textColor="@color/auditing"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_Recharge"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/ll_item"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/white"
+        android:text="申请提现"
+        android:textColor="@color/auditing"
+        android:textSize="@dimen/edit" />
+
+
+</RelativeLayout>

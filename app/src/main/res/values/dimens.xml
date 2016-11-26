@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="title">25sp</dimen>
+    <dimen name="editBig">48sp</dimen>
     <dimen name="edit">18sp</dimen>
     <dimen name="edit2">15sp</dimen>
     <dimen name="edit3">12sp</dimen>

@@ -25,8 +25,11 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.PersonInfoResultReward;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
+import com.laichushu.book.bean.netbean.ProvinceCityBean;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.City_Id;
+import com.laichushu.book.db.City_IdDao;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
@@ -65,18 +68,16 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     private EditText edNickName, edCity, edSign;
     private PersonalCentreResult resultData = new PersonalCentreResult();
     //    private Pop_Syllabus_Date pop_PlayPartner_Date;
-    private RelativeLayout rlIdCard, rlHead;
+    private RelativeLayout rlIdCard, rlHead, rlArea;
     private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
     private File photoFile;
     //时间选择器
     private TimePopupWindow timePopupWindow;
-    private OptionsPopupWindow sexPopupWindow;
-    private PopupWindow sexPopWindow;
-    private Button submit, cancle;
-    private RadioGroup rgSex;
-    private RadioButton tvMan, tvFeman;
+    private OptionsPopupWindow sexPopupWindow, areaPopWindow;
     private String sexMsg;
     private Cache_JsonDao cache_jsonDao;
+    private City_IdDao city_idDao;
+    private List<City_Id> city_idList;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -99,6 +100,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         edBirthday = ((TextView) inflate.findViewById(R.id.ed_birthdayContent));
         rlIdCard = ((RelativeLayout) inflate.findViewById(R.id.rl_idCard));
         rlHead = ((RelativeLayout) inflate.findViewById(R.id.rl_editHeadImg));
+        rlArea = ((RelativeLayout) inflate.findViewById(R.id.rl_area));
 
         //initListener;
         ivBack.setOnClickListener(this);
@@ -107,6 +109,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         tvSex.setOnClickListener(this);
         edBirthday.setOnClickListener(this);
         rlIdCard.setOnClickListener(this);
+        rlArea.setOnClickListener(this);
         return inflate;
     }
 
@@ -119,6 +122,9 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         tvRight.setText("完成");
         edBirthday.setInputType(InputType.TYPE_NULL);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
+        DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
+        city_idDao = daoSession.getCity_IdDao();
     }
 
 
@@ -175,12 +181,13 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
                 break;
             case R.id.ed_sexContent:
-//                setPopWindow();
                 setSexPopWindow();
                 break;
             case R.id.ed_birthdayContent:
-//                showBirthdayPop();
                 setTimePopupwindow();
+                break;
+            case R.id.rl_area:
+                setAreaPopWindows();
                 break;
             case R.id.rl_idCard:
                 Bundle bundle = new Bundle();
@@ -189,16 +196,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 break;
             case R.id.rl_editHeadImg:
                 openAlertDialog();
-                break;
-
-            case R.id.sex_btnSubmit:
-                sexPopWindow.dismiss();
-                if (!TextUtils.isEmpty(sexMsg)) {
-                    tvSex.setText(sexMsg);
-                }
-                break;
-            case R.id.sex_btnCancel:
-                sexPopWindow.dismiss();
                 break;
         }
 
@@ -275,32 +272,11 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             ToastUtil.showToast("请输入个性签名!");
             return false;
         }
-        if(photoFile==null){
+        if (photoFile == null) {
             ToastUtil.showToast("请选择头像!");
             return false;
         }
         return true;
-    }
-
-    /**
-     * 设置性别
-     */
-    public void setPopWindow() {
-        View sexView = UIUtil.inflate(R.layout.pop_sex);
-        submit = (Button) sexView.findViewById(R.id.sex_btnSubmit);
-        cancle = (Button) sexView.findViewById(R.id.sex_btnCancel);
-        rgSex = (RadioGroup) sexView.findViewById(R.id.rg_sex);
-        tvMan = (RadioButton) sexView.findViewById(R.id.sex_man);
-        tvFeman = (RadioButton) sexView.findViewById(R.id.sex_femal);
-        rgSex.setOnCheckedChangeListener(this);
-        submit.setOnClickListener(this);
-        cancle.setOnClickListener(this);
-        sexPopWindow = new PopupWindow(sexView, WindowManager.LayoutParams.FILL_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT);
-        sexPopWindow.setFocusable(true);
-        sexPopWindow.setOutsideTouchable(true);
-        sexPopWindow.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
-        sexPopWindow.setAnimationStyle(R.style.timepopwindow_anim_style);
     }
 
     /**
@@ -326,6 +302,47 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         sexPopupWindow.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
     }
 
+    /**
+     * 地区选择器
+     */
+    private void setAreaPopWindows() {
+        city_idList = city_idDao.queryBuilder().build().list();
+        ArrayList<String> allProince = getAllProince();
+        ArrayList<String> city = getCity("01");
+        ArrayList<ArrayList<String>> allCity=new ArrayList<ArrayList<String>>();
+        allCity.add(city);
+        areaPopWindow = new OptionsPopupWindow(this);
+        areaPopWindow.setPicker(allProince,allCity,true);
+        areaPopWindow.setCyclic(true);
+        areaPopWindow.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
+    }
+
+    public ArrayList<String> getAllProince() {
+        ArrayList<String> proDate = new ArrayList<>();
+        proDate.clear();
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (!proDate.contains(city_idList.get(i).getProvince())) {
+                proDate.add(city_idList.get(i).getProvince());
+            }
+        }
+        return proDate;
+    }
+
+    /**
+     * @param proCode
+     * @return 根据proCode查询城市
+     */
+    private ArrayList<String> getCity(String proCode) {
+        ArrayList<String> cityDate = new ArrayList<>();
+        cityDate.clear();
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (proCode.equals(city_idList.get(i).getProCode())) {
+                cityDate.add(city_idList.get(i).getCity());
+            }
+        }
+        return cityDate;
+    }
+
     //选择日期
     private void setTimePopupwindow() {
         timePopupWindow = new TimePopupWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
@@ -337,6 +354,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         });
         timePopupWindow.showAtLocation(edBirthday, Gravity.BOTTOM, 0, 0, null);
     }
+
 
     /**
      * 通知fragment更新数据
@@ -353,7 +371,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         PersonalCentreResult json = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
         json.setNickName(result.getData().getNickName());
         json.setSex(result.getData().getSex());
-        json.setBirthday(result.getData().getBirthday()+"");
+        json.setBirthday(result.getData().getBirthday() + "");
         json.setCity(result.getData().getCity());
         json.setSign(result.getData().getSign());
         json.setPhoto(result.getData().getPhoto());
@@ -372,10 +390,10 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
      */
     public void openAlertDialog() {
 
-                Album.startAlbum(mActivity, ACTIVITY_REQUEST_SELECT_PHOTO
-                        , 1                                                         // 指定选择数量。
-                        , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
-                        , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
+        Album.startAlbum(mActivity, ACTIVITY_REQUEST_SELECT_PHOTO
+                , 1                                                         // 指定选择数量。
+                , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
+                , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
 
     }
 
@@ -408,4 +426,5 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         }
 
     }
+
 }

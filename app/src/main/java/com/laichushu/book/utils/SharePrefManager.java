@@ -4,7 +4,17 @@ import com.laichushu.book.R;
 
 public class SharePrefManager {
 
-
+    /**
+     * 保存阅读字体大小
+     */
+    public static void setCharacterNum(String characterNum) {
+        CacheUtil.setString(UIUtil.getContext(), "characterNum", characterNum);
+    } /**
+     * 保存消息推送状态
+     */
+    public static void setMsgState(String msgState) {
+        CacheUtil.setString(UIUtil.getContext(), "msgState", msgState);
+    }
     /**
      * 初始化是否完成
      */
