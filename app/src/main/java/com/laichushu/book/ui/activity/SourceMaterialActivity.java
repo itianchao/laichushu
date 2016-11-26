@@ -80,7 +80,6 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
 //        mateialRyv.setOnPullLoadMoreListener(this);
         mateialRyv.setPullRefreshEnable(false);//不需要下拉刷新
         mateialRyv.setPushRefreshEnable(false);//不需要上拉刷新
-        mateialRyv.setFooterViewText("loading");
         return mSuccessView;
     }
 

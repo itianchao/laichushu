@@ -75,7 +75,7 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
 //        mateialRyv.setOnPullLoadMoreListener(this);
         mateialRyv.setPullRefreshEnable(false);//不需要下拉刷新
         mateialRyv.setPushRefreshEnable(false);//不需要上拉刷新
-        mateialRyv.setFooterViewText("loading");
+        mateialRyv.setFooterViewText("加载中");
         return mSuccessView;
     }
 

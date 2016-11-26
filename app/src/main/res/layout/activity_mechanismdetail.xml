@@ -87,9 +87,30 @@
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
+    <RadioGroup
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/rbn_01"
+            android:text="公告"
+            style="@style/mechanism_select"/>
+        <RadioButton
+
+            android:id="@+id/rbn_02"
+            android:text="话题"
+            style="@style/mechanism_select"/>
+        <RadioButton
+            android:id="@+id/rbn_03"
+            android:text="简介"
+            style="@style/mechanism_select"/>
+    </RadioGroup>
     <FrameLayout
         android:id="@+id/fay_space"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
+
 </LinearLayout>

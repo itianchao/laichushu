@@ -53,6 +53,33 @@ public class MechanismListBean {
         private String grade;
         private String address;
         private String logoUrl;
+        private int collectCount;
+        private boolean isCollect;
+        private String introduce;
+
+        public String getIntroduce() {
+            return introduce;
+        }
+
+        public void setIntroduce(String introduce) {
+            this.introduce = introduce;
+        }
+
+        public int getCollectCount() {
+            return collectCount;
+        }
+
+        public void setCollectCount(int collectCount) {
+            this.collectCount = collectCount;
+        }
+
+        public boolean isCollect() {
+            return isCollect;
+        }
+
+        public void setCollect(boolean collect) {
+            isCollect = collect;
+        }
 
         public String getId() {
             return id;

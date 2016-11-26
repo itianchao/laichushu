@@ -417,5 +417,13 @@ public class UIUtil
 	 */
 	public static View inflate(int resId){
 		return LayoutInflater.from(getContext()).inflate(resId, null);
+	}/**
+	 * 添加view
+	 * @param resId
+	 * @param parent
+ * @return
+	 */
+	public static View inflate(int resId, ViewGroup parent){
+		return LayoutInflater.from(getContext()).inflate(resId, parent);
 	}
 }

@@ -29,7 +29,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     private ImageView backIv;
     private EditText usernameEt;
     private EditText passwordEt;
-    private Button loginBt;
+    private Button loginBtn;
     private TextView registerTv;
     private TextView forgetTv;
 
@@ -40,7 +40,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         backIv = (ImageView) findViewById(R.id.iv_title_finish);
         usernameEt = (EditText) findViewById(R.id.et_username);
         passwordEt = (EditText) findViewById(R.id.et_password);
-        loginBt = (Button) findViewById(R.id.bt_login);
+        loginBtn = (Button) findViewById(R.id.bt_login);
         registerTv = (TextView) findViewById(R.id.tv_register);
         forgetTv = (TextView) findViewById(R.id.tv_forget);
     }
@@ -49,7 +49,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     protected void initData() {
         titleTv.setText(UIUtil.getString(R.string.login));
         backIv.setVisibility(View.INVISIBLE);
-        loginBt.setOnClickListener(this);
+        loginBtn.setOnClickListener(this);
         registerTv.setOnClickListener(this);
         forgetTv.setOnClickListener(this);
         mvpPresenter.preLogin();
@@ -67,7 +67,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         switch (v.getId()) {
             case R.id.bt_login:
                 //登录
-                mvpPresenter.login(usernameEt,passwordEt);
+                mvpPresenter.login(usernameEt,passwordEt,loginBtn);
                 break;
             case R.id.tv_register:
                 //注册
@@ -83,6 +83,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     //视图
     @Override
     public void getDataSuccess(LoginModel model) {
+        loginBtn.setEnabled(true);
         hideLoading();
         if (model.isSuccess()) {
             String username = usernameEt.getText().toString().trim();
@@ -106,6 +107,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     }
     @Override
     public void getDataFail(String msg) {
+        loginBtn.setEnabled(true);
         hideLoading();
         toastShow(msg);
         Logger.e("网络失败原因：", msg);

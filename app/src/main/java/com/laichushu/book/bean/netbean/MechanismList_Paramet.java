@@ -6,12 +6,21 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class MechanismList_Paramet {
-    private String type,pageNo,pageSize;
+    private String type,pageNo,pageSize,userId;
 
-    public MechanismList_Paramet(String type, String pageSize, String pageNo) {
+    public MechanismList_Paramet(String type, String pageNo, String pageSize, String userId) {
         this.type = type;
-        this.pageSize = pageSize;
         this.pageNo = pageNo;
+        this.pageSize = pageSize;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getPageNo() {
