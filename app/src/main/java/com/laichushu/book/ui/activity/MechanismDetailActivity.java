@@ -226,6 +226,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
             case R.id.rbn_01:
                 if (position != 1) {
                     onTabSelected(new NoticeFragment());
+                    position = 1;
                 }
                 break;
             case R.id.rbn_02:

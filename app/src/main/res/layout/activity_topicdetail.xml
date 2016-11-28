@@ -29,16 +29,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
-            android:background="@drawable/shape_rectangle_edit"
+            android:background="@drawable/shape_rectangle_read_normal"
             android:hint="发表下自己的意见吧"
+            android:textColor="@color/black"
             android:textColorHighlight="@color/hint"
             android:id="@+id/et_sendmsg"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:lines="1"
+            android:textSize="@dimen/edit2"
             android:layout_height="wrap_content"/>
+
         <ImageView
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center"
             android:id="@+id/iv_sendmsg"
-            android:src="@drawable/img_default"
+            android:src="@drawable/icon_send"
             android:layout_width="25dp"
             android:layout_height="25dp"/>
     </LinearLayout>

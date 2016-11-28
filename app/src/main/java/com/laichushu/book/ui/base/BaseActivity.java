@@ -181,8 +181,8 @@ public class BaseActivity extends FragmentActivity {
             progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.setTitle("加载中");
-            progressDialog.show();
         }
+        progressDialog.show();
         return progressDialog;
     }
 
@@ -192,8 +192,8 @@ public class BaseActivity extends FragmentActivity {
             progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.setTitle(message);
-            progressDialog.show();
         }
+        progressDialog.show();
         return progressDialog;
     }
 

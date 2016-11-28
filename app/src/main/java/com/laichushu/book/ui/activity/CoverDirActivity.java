@@ -36,7 +36,7 @@ public class CoverDirActivity extends MvpActivity2 implements View.OnClickListen
         return null;
     }
 
-    private ArrayList<CoverDirBean.DateBean> mData = new ArrayList();
+    private ArrayList<CoverDirBean.DataBean> mData = new ArrayList();
 
     @Override
     protected View createSuccessView() {

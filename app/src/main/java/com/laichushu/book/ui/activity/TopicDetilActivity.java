@@ -66,6 +66,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
+        mAdapter = new CommentDetaileAdapter(this,mData);
         commentRyv.setAdapter(mAdapter);
         finishIv.setOnClickListener(this);
         sendmsgIv.setOnClickListener(this);
@@ -74,6 +75,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
 
     @Override
     protected void initData() {
+        titleTv.setText("话题详情");
         bean = getIntent().getParcelableExtra("bean");
         topicId = bean.getId();
         mvpPresenter.loadCommentData(topicId);
@@ -95,7 +97,6 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 topicContentTv.setText(bean.getContent());
                 topicTiemTv.setText(bean.getCreateDate());
                 GlideUitl.loadRandImg(mActivity,bean.getCreaterPhoto(),topicUserheadIv);
-                mAdapter = new CommentDetaileAdapter(this, mData);
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -112,6 +113,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     public void getSendDataSuccess(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("发送成功");
+            sendmsgEv.setText("");
             onRefresh();
         }else {
             ToastUtil.showToast("发送失败");

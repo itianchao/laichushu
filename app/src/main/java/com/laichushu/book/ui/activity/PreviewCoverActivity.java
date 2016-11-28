@@ -68,7 +68,9 @@ public class PreviewCoverActivity extends MvpActivity2 implements View.OnClickLi
         mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         mWebView.requestFocus();
         mWebView.setWebViewClient(wvc);
-//        mWebView.setWebChromeClient(wcc);
+//        mWebView.setWebChromeClient(wcc);LayoutAlgorithm.SINGLE_COLUMN
+
+        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
     }
 
     @Override
