@@ -6,24 +6,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.laichushu.book.R;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
-import com.laichushu.book.R;
-import com.laichushu.book.ui.activity.CommentDetailActivity;
 
 import java.util.ArrayList;
 
 /**
- * 详情评论
- * Created by wangtong on 2016/11/4.
+ * 话题详情评论
+ * Created by wangtong on 2016/11/28.
  */
-public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAdapter.CommentViewHolder> {
+public class TopicCommentDetaileAdapter extends RecyclerView.Adapter<TopicCommentDetaileAdapter.CommentViewHolder> {
     private BaseActivity mActivity;
     private ArrayList<CommentDetailModle.DataBean> mData;
 
-    public CommentDetaileAdapter(BaseActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData) {
+    public TopicCommentDetaileAdapter(BaseActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData) {
         this.mActivity = mActivity;
         this.mData = mData;
     }
@@ -52,7 +51,7 @@ public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAd
         holder.commentIv.setVisibility(View.INVISIBLE);
         holder.likeTv.setVisibility(View.INVISIBLE);
         holder.likeIv.setVisibility(View.INVISIBLE);
-
+        holder.inIv.setVisibility(View.INVISIBLE);
 //        if (dataBean.isIsLike()) {
 //            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
 //        } else {

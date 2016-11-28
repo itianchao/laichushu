@@ -6,17 +6,17 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class CoverDir_Paramet {
-    private String type;
+    private String id;
 
-    public CoverDir_Paramet(String type) {
-        this.type = type;
+    public CoverDir_Paramet(String id) {
+        this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getid() {
+        return id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setid(String id) {
+        this.id = id;
     }
 }

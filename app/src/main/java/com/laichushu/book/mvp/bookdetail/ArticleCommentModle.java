@@ -66,8 +66,24 @@ public class ArticleCommentModle {
         private int likeNum;
         private String nickName;
         private String photo;
-        private String createDate;
+        private String commentTime;
         private boolean isLike;
+
+        public String getCommentTime() {
+            return commentTime;
+        }
+
+        public void setCommentTime(String commentTime) {
+            this.commentTime = commentTime;
+        }
+
+        public boolean isLike() {
+            return isLike;
+        }
+
+        public void setLike(boolean like) {
+            isLike = like;
+        }
 
         public String getScoreId() {
             return scoreId;
@@ -133,13 +149,7 @@ public class ArticleCommentModle {
             this.photo = photo;
         }
 
-        public String getCreateDate() {
-            return createDate;
-        }
 
-        public void setCreateDate(String createDate) {
-            this.createDate = createDate;
-        }
 
         public boolean isIsLike() {
             return isLike;
@@ -147,6 +157,9 @@ public class ArticleCommentModle {
 
         public void setIsLike(boolean isLike) {
             this.isLike = isLike;
+        }
+
+        public DataBean() {
         }
 
         @Override
@@ -164,11 +177,8 @@ public class ArticleCommentModle {
             dest.writeInt(this.likeNum);
             dest.writeString(this.nickName);
             dest.writeString(this.photo);
-            dest.writeString(this.createDate);
+            dest.writeString(this.commentTime);
             dest.writeByte(this.isLike ? (byte) 1 : (byte) 0);
-        }
-
-        public DataBean() {
         }
 
         protected DataBean(Parcel in) {
@@ -180,11 +190,11 @@ public class ArticleCommentModle {
             this.likeNum = in.readInt();
             this.nickName = in.readString();
             this.photo = in.readString();
-            this.createDate = in.readString();
+            this.commentTime = in.readString();
             this.isLike = in.readByte() != 0;
         }
 
-        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);

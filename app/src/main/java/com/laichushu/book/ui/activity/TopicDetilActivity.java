@@ -13,6 +13,7 @@ import com.laichushu.book.mvp.topicdetail.TopicDetailPresenter;
 import com.laichushu.book.mvp.topicdetail.TopicDetailView;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.ui.adapter.CommentDetaileAdapter;
+import com.laichushu.book.ui.adapter.TopicCommentDetaileAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
@@ -39,7 +40,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     private ImageView finishIv;
     private PullLoadMoreRecyclerView commentRyv;
     private int pageNo = 1;
-    private CommentDetaileAdapter mAdapter;
+    private TopicCommentDetaileAdapter mAdapter;
     private ArrayList<CommentDetailModle.DataBean> mData = new ArrayList<>();
     private String topicId;
     private EditText sendmsgEv;
@@ -66,6 +67,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
+        mAdapter = new TopicCommentDetaileAdapter(this,mData);
         commentRyv.setAdapter(mAdapter);
         finishIv.setOnClickListener(this);
         sendmsgIv.setOnClickListener(this);
@@ -74,6 +76,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
 
     @Override
     protected void initData() {
+        titleTv.setText("话题详情");
         bean = getIntent().getParcelableExtra("bean");
         topicId = bean.getId();
         mvpPresenter.loadCommentData(topicId);
@@ -95,7 +98,6 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 topicContentTv.setText(bean.getContent());
                 topicTiemTv.setText(bean.getCreateDate());
                 GlideUitl.loadRandImg(mActivity,bean.getCreaterPhoto(),topicUserheadIv);
-                mAdapter = new CommentDetaileAdapter(this, mData);
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -112,6 +114,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     public void getSendDataSuccess(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("发送成功");
+            sendmsgEv.setText("");
             onRefresh();
         }else {
             ToastUtil.showToast("发送失败");

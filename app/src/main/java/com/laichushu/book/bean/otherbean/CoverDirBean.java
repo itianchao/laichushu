@@ -2,28 +2,20 @@ package com.laichushu.book.bean.otherbean;
 
 import java.util.ArrayList;
 
+
 /**
  * 封面模版
  * Created by wangtong on 2016/11/23.
  */
 
 public class CoverDirBean {
+
     /**
-     * type : 1
-     * mouldImg : /group1/M00/00/08/wKiTPlgv61WAOMT-AAB_giHF064935.jpg
-     * imgCount : 5
-     * typeName : 模板1
+     * success : true
+     * data : [{"id":"29","mouldImg":"http://101.254.183.67:9980/group1/M00/00/08/wKiTPlgv61WAOMT-AAB_giHF064935.jpg","imgCount":"4","typeName":"模板一"},{"id":"42","mouldImg":"http://101.254.183.67:9980/group1/M00/00/0E/wKiTPlg2qRyAVFcTAAFAggL7LlI061.jpg","imgCount":"4","typeName":"模板二"},{"id":"43","mouldImg":"http://101.254.183.67:9980/group1/M00/00/0E/wKiTPlg2qTOAcyKlAAFENBzGvxU506.jpg","imgCount":"5","typeName":"模板三"},{"id":"44","mouldImg":"http://101.254.183.67:9980/group1/M00/00/08/wKiTPlgv6_SADqhqAAB-kqDzTTQ012.jpg","imgCount":"4","typeName":"模板四"},{"mouldImg":"http://101.254.183.67:9980/group1/M00/00/10/wKiTPlg5XxeAZ5qzAAAUN0xQnnk899.jpg","typeName":"模板五"}]
      */
+
     private boolean success;
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
     private String errMsg;
 
     public String getErrMsg() {
@@ -34,28 +26,43 @@ public class CoverDirBean {
         this.errMsg = errMsg;
     }
 
-    private ArrayList<DateBean> data;
+    private ArrayList<DataBean> data;
 
-    public ArrayList<DateBean> getData() {
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public ArrayList<DataBean> getData() {
         return data;
     }
 
-    public void setData(ArrayList<DateBean> data) {
+    public void setData(ArrayList<DataBean> data) {
         this.data = data;
     }
 
-    public static class DateBean {
-        private String type;
+    public static class DataBean {
+        /**
+         * id : 29
+         * mouldImg : http://101.254.183.67:9980/group1/M00/00/08/wKiTPlgv61WAOMT-AAB_giHF064935.jpg
+         * imgCount : 4
+         * typeName : 模板一
+         */
+
+        private String id;
         private String mouldImg;
         private String imgCount;
         private String typeName;
 
-        public String getType() {
-            return type;
+        public String getId() {
+            return id;
         }
 
-        public void setType(String type) {
-            this.type = type;
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getMouldImg() {

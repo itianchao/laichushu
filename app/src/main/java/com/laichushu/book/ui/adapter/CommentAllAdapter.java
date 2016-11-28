@@ -49,7 +49,7 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
         GlideUitl.loadRandImg(mActivity, dataBean.getPhoto(), holder.headIv);//头像
         holder.nameTv.setText(dataBean.getNickName());//用户名
         holder.contentTv.setText(dataBean.getContent());//评论内容
-        holder.timeTv.setText(dataBean.getCreateDate());//创建时间
+        holder.timeTv.setText(dataBean.getCommentTime());//创建时间
         holder.likeTv.setText(dataBean.getLikeNum() + "");//喜欢人数
         holder.numberTv.setText(dataBean.getReplyNum() + "");//回复人数
         if (dataBean.isIsLike()) {

@@ -95,7 +95,7 @@ public class CoverListActivity extends MvpActivity2<CoverDirPresenter> implement
      */
     @Override
     public void getMakePreviewCover(PreviewCoverBean model) {
-        dismissProgressDialog();
+
         if (model.isSuccess()) {
             url = model.getData();
             if (!TextUtils.isEmpty(url)){
@@ -103,10 +103,12 @@ public class CoverListActivity extends MvpActivity2<CoverDirPresenter> implement
                 bundle.putString("path",url);
                 bundle.putString("title",title);
                 UIUtil.openActivity(mActivity,PreviewCoverActivity.class,bundle);
+                dismissProgressDialog();
             }
         }else {
             ToastUtil.showToast("预览失败");
             LoggerUtil.e(model.getErrMsg());
+            dismissProgressDialog();
         }
     }
 

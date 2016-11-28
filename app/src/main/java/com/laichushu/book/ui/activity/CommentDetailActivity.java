@@ -89,7 +89,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         GlideUitl.loadRandImg(this, dataBean.getPhoto(), headIv);//头像
         nameTv.setText(dataBean.getNickName());//用户名
         contentTv.setText(dataBean.getContent());//评论内容
-        timeTv.setText(dataBean.getCreateDate());//创建时间
+        timeTv.setText(dataBean.getCommentTime());//创建时间
         likeTv.setText(dataBean.getLikeNum() + "");//喜欢人数
         numberTv.setText(dataBean.getReplyNum() + "");//回复人数
         numberTv.setOnClickListener(new View.OnClickListener() {
