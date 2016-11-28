@@ -1,13 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_recharge_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.laichushu.book.ui.activity.RechargeDetailsActivity">
+    android:background="@color/bgGrey">
+
+    <include
+        android:id="@+id/include_top"
+        layout="@layout/page_title" />
+
+    <LinearLayout
+        android:id="@+id/ll_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/include_top"
+        android:background="@color/bgGrey"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_rechargeMoney"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:paddingRight="8dp"
+                android:text="充值金额"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ed_inputMoney"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:inputType="number"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="5"
+                android:background="@color/bgGrey"
+                android:gravity="center_vertical"
+                android:hint="输入金额"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/auditing"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingRight="8dp"
+                android:text="请选择支付方式"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/auditing"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/aliPay"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_aliIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_launcher"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/iv_aliIcon"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+              android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="支付宝支付"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+            <CheckBox
+                android:id="@+id/cb_aliPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:button="@null"
+                android:checked="true"
+                android:background="@drawable/checkbox"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/wxPay"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_wxIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_launcher"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/iv_wxIcon"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="微信支付"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+            <CheckBox
+                android:id="@+id/cb_wxPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:button="@null"
+                android:checked="true"
+                android:background="@drawable/checkbox"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/qqPay"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_qqIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_launcher"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/iv_qqIcon"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="QQ钱包支付"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+            <CheckBox
+                android:id="@+id/cb_qqPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:button="@null"
+                android:checked="true"
+                android:background="@drawable/checkbox"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_Recharge"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/ll_item"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/red"
+        android:text="确认充值"
+        android:textColor="@color/white"
+        android:textSize="@dimen/edit" />
+
 
 </RelativeLayout>

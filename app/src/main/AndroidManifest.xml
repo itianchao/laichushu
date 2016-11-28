@@ -162,7 +162,10 @@
             android:name=".ui.activity.CreateMaterialActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.activity.PersonalHomePageActivity" />
+        <activity
+            android:name=".ui.activity.PersonalHomePageActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.activity.CoverDirActivity"
             android:screenOrientation="portrait"
@@ -207,12 +210,23 @@
             android:name=".ui.activity.GeneralSettingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.activity.AboutAppDetails" />
-        <activity android:name=".ui.activity.MyWalletDetailsActivity" />
-        <activity android:name=".ui.activity.WithdrawalsDetails" />
-        <activity android:name=".ui.activity.RechargeDetailsActivity"></activity>
-            android:windowSoftInputMode="adjustPan" />
-        android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.activity.AboutAppDetails"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />/>
+        <activity
+            android:name=".ui.activity.MyWalletDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />/>
+        <activity
+            android:name=".ui.activity.WithdrawalsDetails"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />/>
+        <activity
+            android:name=".ui.activity.RechargeDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />/>
+
     </application>
 
 </manifest>

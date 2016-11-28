@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class HomeUserInfor_paramet implements Serializable {
     private String targetId, userId;
 
-    public HomeUserInfor_paramet(String targetId, String userId) {
+    public HomeUserInfor_paramet( String userId,String targetId) {
         this.targetId = targetId;
         this.userId = userId;
     }

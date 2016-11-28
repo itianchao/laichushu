@@ -1,7 +1,5 @@
 package com.laichushu.book.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,17 +7,12 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.UIUtil;
 
 public class RechargeDetailsActivity extends MvpActivity2 implements View.OnClickListener {
     private ImageView ivBack;
     private TextView tvTitle;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recharge_details);
-    }
 
     @Override
     protected BasePresenter createPresenter() {
@@ -40,6 +33,7 @@ public class RechargeDetailsActivity extends MvpActivity2 implements View.OnClic
         tvTitle.setText("充值");
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.laichushu.book.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +9,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.UIUtil;
 
 public class WithdrawalsDetails extends MvpActivity2 implements View.OnClickListener {
@@ -42,7 +41,7 @@ public class WithdrawalsDetails extends MvpActivity2 implements View.OnClickList
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         bean = (WalletBalanceReward) getIntent().getSerializableExtra("bean");
-
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
