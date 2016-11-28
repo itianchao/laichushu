@@ -41,8 +41,8 @@
             android:layout_height="18dp"
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="12dp"
-            android:background="@color/red2"
-            android:layout_toRightOf="@+id/tv_PerNickName" />
+            android:layout_toRightOf="@+id/tv_PerNickName"
+            android:background="@color/red2" />
 
         <ImageView
             android:id="@+id/iv_perGradeDetails"
@@ -50,8 +50,8 @@
             android:layout_height="18dp"
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="12dp"
-            android:background="@color/red"
-            android:layout_toRightOf="@+id/iv_perGrade" />
+            android:layout_toRightOf="@+id/iv_perGrade"
+            android:background="@color/red" />
 
         <TextView
             android:id="@+id/tv_perRealName"
@@ -89,87 +89,27 @@
         <RadioGroup
             android:id="@+id/rg_homeList"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rb_dynamic"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="动态"
-                android:textColor="@drawable/rb_bg_selector"
-                android:textStyle="bold" />
+                style="@style/mechanism_select"
+                android:checked="true"
+                android:text="动态" />
 
 
             <RadioButton
                 android:id="@+id/rb_focusMe"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="关注我的"
-                android:textColor="@drawable/rb_bg_selector"
-                android:textStyle="bold" />
+                style="@style/mechanism_select"
+                android:text="关注我的" />
 
             <RadioButton
                 android:id="@+id/rb_focus"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="我关注的"
-                android:textColor="@drawable/rb_bg_selector"
-                android:textStyle="bold" />
+                style="@style/mechanism_select"
+                android:text="我关注的" />
         </RadioGroup>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-
-
-            <View
-                android:id="@+id/line_dynamic"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_toLeftOf="@+id/middle_view"
-                android:layout_weight="1"
-                android:background="@color/auditing" />
-
-            <View
-                android:id="@+id/line_focusMe"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_toLeftOf="@+id/middle_view"
-                android:layout_weight="1"
-                android:visibility="invisible"
-                android:background="@color/auditing" />
-
-
-            <View
-                android:id="@+id/line_focus"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_marginLeft="12dp"
-                android:visibility="invisible"
-                android:layout_marginRight="12dp"
-                android:layout_toRightOf="@+id/middle_view"
-                android:layout_weight="1"
-                android:background="@color/auditing" />
-        </LinearLayout>
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_dynamic"

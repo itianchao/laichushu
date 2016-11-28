@@ -45,7 +45,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     private HomePageFocusBeAdapter fbAdapter;
     private int PAGE_NO = 1, type = 1;
     private boolean dibbleDy = false, dibbleFoMe = false, dibbleFo = false;
-    private List<View> lines = new ArrayList<>();
     private List<View> pulls = new ArrayList<>();
 
     @Override
@@ -67,9 +66,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perAuthorAgree));
 
         rgHomeList = ((RadioGroup) inflate.findViewById(R.id.rg_homeList));
-        lineDy = inflate.findViewById(R.id.line_dynamic);
-        lineFocusMe = inflate.findViewById(R.id.line_focusMe);
-        lineFocus = inflate.findViewById(R.id.line_focus);
         mDyRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_dynamic);
         mFocuMeRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_focusMe);
         mFocuRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_focus);
@@ -81,11 +77,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     protected void initData() {
         super.initData();
 
-        lines.clear();
         pulls.clear();
-        lines.add(lineDy);
-        lines.add(lineFocusMe);
-        lines.add(lineFocus);
         pulls.add(mDyRecyclerView);
         pulls.add(mFocuMeRecyclerView);
         pulls.add(mFocuRecyclerView);
@@ -126,7 +118,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
      * 个人信息
      */
     private void initHeadInfo() {
-        HomeUserInfor_paramet paramet = new HomeUserInfor_paramet( SharePrefManager.getUserId(),"");
+        HomeUserInfor_paramet paramet = new HomeUserInfor_paramet(SharePrefManager.getUserId(), "");
         addSubscription(apiStores.getHomeUserInforDetails(paramet), new ApiCallback<HomeUserResult>() {
             @Override
             public void onSuccess(HomeUserResult result) {
@@ -370,10 +362,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     public void selectLine(int position) {
         for (int i = 0; i < 3; i++) {
             if (i != position) {
-                lines.get(i).setVisibility(View.INVISIBLE);
                 pulls.get(i).setVisibility(View.GONE);
             } else {
-                lines.get(i).setVisibility(View.VISIBLE);
                 pulls.get(i).setVisibility(View.VISIBLE);
             }
 

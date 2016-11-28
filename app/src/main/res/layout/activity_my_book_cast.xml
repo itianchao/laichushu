@@ -16,88 +16,37 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/white"
-            android:orientation="vertical">
+        <RadioGroup
+            android:id="@+id/rg_bookList"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-            <RadioGroup
-                android:id="@+id/rg_bookList"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_scan"
+                style="@style/mechanism_select"
+                android:checked="true"
+                android:text="浏览" />
 
-                <RadioButton
-                    android:id="@+id/rb_scan"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="浏览"
-                    android:textColor="@drawable/rb_bg_selector"
-                    android:textStyle="bold" />
-
-
-
-                <RadioButton
-                    android:id="@+id/rb_collection"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="收藏"
-                    android:textColor="@drawable/rb_bg_selector"
-                    android:textStyle="bold" />
-            </RadioGroup>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-
-
-                <View
-                    android:id="@+id/myCast_left"
-                    android:layout_width="0dp"
-                    android:layout_height="4dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_toLeftOf="@+id/middle_view"
-                    android:layout_weight="1"
-                    android:background="@color/auditing" />
-
-
-
-                <View
-                    android:id="@+id/myCast_right"
-                    android:layout_width="0dp"
-                    android:layout_height="4dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_toRightOf="@+id/middle_view"
-                    android:layout_weight="1"
-                    android:background="@color/auditing" />
-            </LinearLayout>
-        </LinearLayout>
+            <RadioButton
+                android:id="@+id/rb_collection"
+                style="@style/mechanism_select"
+                android:text="收藏" />
+        </RadioGroup>
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_bookCast"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-            android:id="@+id/ryv_bookCastColl"
-            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:layout_marginTop="12dp" />
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_bookCastColl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 </RelativeLayout>

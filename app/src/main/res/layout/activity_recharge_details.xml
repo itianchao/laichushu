@@ -39,13 +39,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="8dp"
-                android:inputType="number"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="5"
                 android:background="@color/bgGrey"
                 android:gravity="center_vertical"
                 android:hint="输入金额"
+                android:inputType="number"
                 android:paddingBottom="4dp"
                 android:paddingLeft="12dp"
                 android:paddingTop="4dp"
@@ -111,27 +111,29 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/iv_aliIcon"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-              android:gravity="center_vertical"
+                android:layout_toRightOf="@id/iv_aliIcon"
+                android:gravity="center_vertical"
                 android:paddingLeft="12dp"
                 android:paddingTop="4dp"
                 android:text="支付宝支付"
                 android:textColor="@color/black"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
-            <CheckBox
+
+            <RadioButton
                 android:id="@+id/cb_aliPay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
+                android:background="@drawable/select_join_radiobutton"
+                android:src="@null"
                 android:button="@null"
-                android:checked="true"
-                android:background="@drawable/checkbox"/>
+                android:checked="true" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -155,10 +157,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/iv_wxIcon"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_wxIcon"
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
                 android:paddingTop="4dp"
@@ -166,60 +168,18 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
-            <CheckBox
+
+            <RadioButton
                 android:id="@+id/cb_wxPay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="180dp"
+                android:layout_height="37dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
-                android:button="@null"
-                android:checked="true"
-                android:background="@drawable/checkbox"/>
+                android:background="@drawable/select_join_radiobutton"
+                android:button="@null" />
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/qqPay"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="2dp"
-            android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/iv_qqIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="24dp"
-                android:paddingRight="8dp"
-                android:src="@drawable/ic_launcher"
-                android:textColor="@color/black"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/iv_qqIcon"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="12dp"
-                android:paddingTop="4dp"
-                android:text="QQ钱包支付"
-                android:textColor="@color/black"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
-            <CheckBox
-                android:id="@+id/cb_qqPay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="24dp"
-                android:button="@null"
-                android:checked="true"
-                android:background="@drawable/checkbox"/>
-        </RelativeLayout>
 
     </LinearLayout>
 

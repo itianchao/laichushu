@@ -20,99 +20,40 @@
         <RadioGroup
             android:id="@+id/rg_homeList"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:background="@color/white"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rb_perMsg"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
+                android:checked="true"
                 android:text="个人消息"
-                android:textColor="@drawable/rb_bg_selector"
-                android:textStyle="bold" />
+                style="@style/mechanism_select"/>
 
 
             <RadioButton
                 android:id="@+id/rb_submissionMsg"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="投稿消息"
-                android:textColor="@drawable/rb_bg_selector"
-                android:textStyle="bold" />
+                android:text="投稿信息"
+                style="@style/mechanism_select" />
 
             <RadioButton
                 android:id="@+id/rb_sysMsg"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
                 android:text="系统消息"
-                android:textColor="@drawable/rb_bg_selector"
-                android:textStyle="bold" />
+                style="@style/mechanism_select" />
         </RadioGroup>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
 
-
-            <View
-                android:id="@+id/line_per"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_toLeftOf="@+id/middle_view"
-                android:layout_weight="1"
-                android:background="@color/auditing" />
-
-            <View
-                android:id="@+id/line_submission"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_toLeftOf="@+id/middle_view"
-                android:layout_weight="1"
-                android:background="@color/auditing"
-                android:visibility="invisible" />
-
-
-            <View
-                android:id="@+id/line_sys"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_toRightOf="@+id/middle_view"
-                android:layout_weight="1"
-                android:background="@color/auditing"
-                android:visibility="invisible" />
-        </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/aliPay"
+            android:id="@+id/rl_comment"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="2dp"
             android:background="@color/white">
 
             <ImageView
-                android:id="@+id/iv_aliIcon"
+                android:id="@+id/iv_commentIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
@@ -126,163 +67,226 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@id/iv_aliIcon"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_commentIcon"
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
                 android:paddingTop="4dp"
-                android:text="支付宝支付"
-                android:textColor="@color/black"
+                android:text="评论"
+                android:textColor="@color/characterGray"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
-            <CheckBox
-                android:id="@+id/cb_aliPay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
-                android:button="@null"
-                android:checked="true"
-                android:background="@drawable/checkbox"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_bookCast"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white">
-
-            <TextView
-                android:id="@+id/tv_mineBookCast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:text="我的书架"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/iv_mineBookCastInto"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
                 android:background="@drawable/home_right" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_Wallet"
+            android:id="@+id/rl_like"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
             android:background="@color/white">
 
-            <TextView
-                android:id="@+id/tv_mineWallet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/iv_likeIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:text="我的钱包"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_launcher"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_likeIcon"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="喜欢"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/iv_mineWalletInto"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/home_right" />
         </RelativeLayout>
-
         <RelativeLayout
-            android:id="@+id/rl_service"
+            android:id="@+id/rl_reward"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
             android:background="@color/white">
 
-            <TextView
-                android:id="@+id/tv_mineService"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/iv_rewardIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:text="我的服务"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_launcher"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_rewardIcon"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="打赏"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/iv_mineServiceInto"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/home_right" />
+        </RelativeLayout> <RelativeLayout
+            android:id="@+id/rl_focus"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_focusIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_launcher"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_focusIcon"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="喜欢"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/home_right" />
+        </RelativeLayout> <RelativeLayout
+            android:id="@+id/rl_priLetter"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_peiLetterIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_launcher"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_peiLetterIcon"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="私信"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/home_right" />
         </RelativeLayout>
-
         <RelativeLayout
-            android:id="@+id/rl_GeneralSetting"
+            android:id="@+id/rl_subScribe"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="60dp"
             android:background="@color/white">
 
-            <TextView
-                android:id="@+id/tv_mineGeneralSetting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/iv_subScribeIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:text="通用设置"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_launcher"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_subScribeIcon"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="订阅"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/iv_mineGeneralSettingInto"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/home_right" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_Advice"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white">
-
-            <TextView
-                android:id="@+id/tv_mineAdvice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:text="意见反馈"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/iv_mineAdviceInto"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/home_right" />
         </RelativeLayout>
 
