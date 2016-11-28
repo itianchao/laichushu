@@ -45,6 +45,7 @@ public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMe
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
         holder.tvContent.setText(dataBeen.get(position).getNickName());
+//        if(dataBeen.get(position)position)
         holder.checkBox.setText("关注");
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
