@@ -211,7 +211,8 @@
         <activity android:name=".ui.activity.MyWalletDetailsActivity" />
         <activity android:name=".ui.activity.WithdrawalsDetails" />
         <activity android:name=".ui.activity.RechargeDetailsActivity"></activity>
-
+            android:windowSoftInputMode="adjustPan" />
+        android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
