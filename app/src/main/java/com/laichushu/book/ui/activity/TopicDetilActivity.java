@@ -13,6 +13,7 @@ import com.laichushu.book.mvp.topicdetail.TopicDetailPresenter;
 import com.laichushu.book.mvp.topicdetail.TopicDetailView;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.ui.adapter.CommentDetaileAdapter;
+import com.laichushu.book.ui.adapter.TopicCommentDetaileAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
@@ -39,7 +40,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     private ImageView finishIv;
     private PullLoadMoreRecyclerView commentRyv;
     private int pageNo = 1;
-    private CommentDetaileAdapter mAdapter;
+    private TopicCommentDetaileAdapter mAdapter;
     private ArrayList<CommentDetailModle.DataBean> mData = new ArrayList<>();
     private String topicId;
     private EditText sendmsgEv;
@@ -66,7 +67,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
-        mAdapter = new CommentDetaileAdapter(this,mData);
+        mAdapter = new TopicCommentDetaileAdapter(this,mData);
         commentRyv.setAdapter(mAdapter);
         finishIv.setOnClickListener(this);
         sendmsgIv.setOnClickListener(this);
