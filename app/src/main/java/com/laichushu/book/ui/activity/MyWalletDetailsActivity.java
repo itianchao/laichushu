@@ -54,6 +54,8 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
         tvTitle.setText("我的钱包");
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
+        btnRecharge.setOnClickListener(this);
+        btnWithdrawals.setOnClickListener(this);
 
         //初始化mRecyclerView 关注
         mRecordRecyclerView.setGridLayout(1);
@@ -73,12 +75,15 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
                 break;
             case R.id.btn_Recharge:
                 //充值
+                Bundle recharge = new Bundle();
+//                bundle.putSerializable("bean", bean);
+                UIUtil.openActivity(this, RechargeDetailsActivity.class, recharge);
                 break;
             case R.id.btn_withdrawals:
                 //提现
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("bean", bean);
-                UIUtil.openActivity(mActivity, WithdrawalsDetails.class,bundle);
+//                bundle.putSerializable("bean", bean);
+                UIUtil.openActivity(this, WithdrawalsDetails.class, bundle);
                 break;
         }
     }

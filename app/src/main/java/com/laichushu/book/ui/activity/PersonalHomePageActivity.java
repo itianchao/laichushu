@@ -126,7 +126,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
      * 个人信息
      */
     private void initHeadInfo() {
-        HomeUserInfor_paramet paramet = new HomeUserInfor_paramet("105", SharePrefManager.getUserId());
+        HomeUserInfor_paramet paramet = new HomeUserInfor_paramet( SharePrefManager.getUserId(),"");
         addSubscription(apiStores.getHomeUserInforDetails(paramet), new ApiCallback<HomeUserResult>() {
             @Override
             public void onSuccess(HomeUserResult result) {
