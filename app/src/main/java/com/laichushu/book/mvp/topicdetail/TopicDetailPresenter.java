@@ -1,15 +1,19 @@
 package com.laichushu.book.mvp.topicdetail;
 
+import android.text.TextUtils;
+import android.widget.EditText;
+
 import com.google.gson.Gson;
+import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.ReCommentList_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
+import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.TopicDetilActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.LoggerUtil;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -77,6 +81,38 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
             @Override
             public void onFailure(int code, String msg) {
                 mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 发送评论
+     * @param sendmsgEv
+     * @param topicId
+     */
+    public void topicDetailCommentSave(EditText sendmsgEv, String topicId) {
+        String msg = sendmsgEv.getText().toString().trim();
+        if (TextUtils.isEmpty(msg)) {
+            sendmsgEv.startAnimation(ShakeAnim.shakeAnimation(3));
+            return;
+        }
+        LoggerUtil.e("发送评论");
+        mvpView.showLoading();
+        TopicDetailCommentSave_Paramet paramet = new TopicDetailCommentSave_Paramet(userId,msg,topicId);
+        addSubscription(apiStores.topicDetailCommentSave(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getSendDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail2("code"+code+"msg:"+msg);
             }
 
             @Override

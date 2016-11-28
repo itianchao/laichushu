@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gitonway.lee.niftymodaldialogeffects.lib.effects.NewsPaper;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
@@ -148,11 +149,11 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (frontFile!=null) {
+        if (frontFile==null) {
             ToastUtil.showToast("请上传身份证正面照!");
             return false;
         }
-        if (oppsiteFile!=null) {
+        if (oppsiteFile==null) {
             ToastUtil.showToast("请上传身份证反面照!");
             return false;
         }
@@ -168,7 +169,6 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
                 , 1                                                         // 指定选择数量。
                 , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
                 , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
-
     }
 
     /**
@@ -178,10 +178,14 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
-            List<String> imagesPath = Album.parseResult(data);
+            List<String> imagesPath = null;
+            if (imagesPath!=null){
+                imagesPath.clear();
+            }
+            imagesPath =  Album.parseResult(data);
             if (imagesPath != null && imagesPath.size() > 0) {
                 String path = imagesPath.get(0);
-
+                ToastUtil.showToast(path);
                 //压缩图片
                 switch (type) {
                     case 1:

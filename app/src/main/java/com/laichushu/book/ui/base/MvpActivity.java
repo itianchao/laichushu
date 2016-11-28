@@ -8,7 +8,7 @@ import android.os.Bundle;
  * mvpActivity抽取
  */
 public abstract class MvpActivity<P extends BasePresenter> extends BaseActivity {
-    protected P mvpPresenter;
+    protected P     mvpPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

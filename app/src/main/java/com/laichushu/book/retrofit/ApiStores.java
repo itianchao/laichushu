@@ -1,5 +1,6 @@
 package com.laichushu.book.retrofit;
 
+import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.MechanismBrieBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
@@ -80,6 +81,8 @@ import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
 import com.laichushu.book.bean.netbean.UserBookList_Paramet;
+import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
+import com.laichushu.book.bean.netbean.WalletBalanceReward;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
@@ -361,6 +364,9 @@ public interface ApiStores {
     //个人主页关注我的
     @POST("perFocus/findBe")
     Observable<HomePersonFocusResult> getHomeUserFocusMeDetails(@Body HomeUserFocusMe_parmet paramet);
+    //意见反馈
+    @POST("feedback/save")
+    Observable<RewardResult> feedBackDetails(@Body FeedBack_parmet paramet);
 
     //个人主页我关注的
     @POST("perFocus/findMy")
@@ -437,6 +443,14 @@ public interface ApiStores {
     //获取机构
     @POST("party/list")
     Observable<MechanismListBean> getMechanismList(@Body MechanismList_Paramet paramet);
+    //我的钱包基本信息+交易记录
+    @POST("wallet/find")
+    Observable<WalletBalanceReward> getBalanceRecordDetails(@Body WalletBalanceRecord_Paramet paramet);
+    //我的钱包充值
+    @POST("wallet/find")
+    Observable<WalletBalanceReward> getRechargeDetails(@Body WalletBalanceRecord_Paramet paramet);//我的钱包提现
+    @POST("wallet/find")
+    Observable<WalletBalanceReward> getWithdrawalsDetails(@Body WalletBalanceRecord_Paramet paramet);
 
     //获取机构公告列表
     @POST("press/notices")

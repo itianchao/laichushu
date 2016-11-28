@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/tv_transName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingTop="24dp"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edit"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_transDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingTop="24dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edit"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_transState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_transName"
+            android:paddingLeft="12dp"
+            android:paddingTop="12dp"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/characterGray"
+            android:textSize="@dimen/edit"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_transDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_transName"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/characterGray"
+            android:textSize="@dimen/edit"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</RelativeLayout>

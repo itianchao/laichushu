@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:background="@color/bgGrey">
+
+    <include
+        android:id="@+id/inclod_top"
+        layout="@layout/page_title" />
+
+    <RelativeLayout
+        android:id="@+id/rl_head"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@+id/inclod_top"
+        android:background="@color/global">
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="60dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="12dp"
+            android:text="余额账号(元)"
+            android:textColor="@color/characterLightGray"
+            android:textSize="@dimen/edit"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_balanceShow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_balance"
+            android:layout_marginLeft="12dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="12dp"
+            android:text="45.26"
+            android:textColor="@color/characterLightGray"
+            android:textSize="@dimen/editBig"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_Recharge"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/rl_head"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/auditing"
+        android:text="充 值"
+        android:textColor="@color/white"
+        android:textSize="@dimen/edit" />
+
+    <Button
+        android:id="@+id/btn_withdrawals"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/btn_Recharge"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:text="提 现"
+        android:textColor="@color/auditing"
+        android:textSize="@dimen/edit" />
+
+    <TextView
+        android:id="@+id/tv_transRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_withdrawals"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="24dp"
+        android:text="提现记录"
+        android:textColor="@color/characterGray"
+        android:textSize="@dimen/edit"
+        android:textStyle="bold" />
+
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/ryv_transRecord"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_transRecord"
+        android:layout_marginTop="12dp" />
+</RelativeLayout>
