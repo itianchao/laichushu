@@ -51,8 +51,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private List<HomePersonFocusResult.DataBean> focusMeData = new ArrayList<>();
     private int PAGE_NO = 1, type = 1;
     private boolean dibbleDy = false, dibbleWorks = false, dibbleheFo = false, dibbleFoHe = false;
-    private View lineDy, lineWorks, lineHeFocus, lineFocusHe;
-    private List<View> lines = new ArrayList<>();
     private List<View> pulls = new ArrayList<>();
     private String userId;
 
@@ -80,10 +78,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         btnFocus = ((Button) inflate.findViewById(R.id.btn_userFocus));
 
         radioGroup = (RadioGroup) inflate.findViewById(R.id.rg_userList);
-        lineDy = inflate.findViewById(R.id.line_userDynamic);
-        lineWorks = inflate.findViewById(R.id.line_userWorks);
-        lineHeFocus = inflate.findViewById(R.id.line_userHeFocus);
-        lineFocusHe = inflate.findViewById(R.id.line_UserFocusHe);
         mDyRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_userDynamic);
         mWorksRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_userWorks);
         mHeFocusRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_userHeFocus);
@@ -95,12 +89,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     protected void initData() {
         super.initData();
-        lines.clear();
         pulls.clear();
-        lines.add(lineDy);
-        lines.add(lineWorks);
-        lines.add(lineHeFocus);
-        lines.add(lineFocusHe);
         pulls.add(mDyRecyclerView);
         pulls.add(mWorksRecyclerView);
         pulls.add(mHeFocusRecyclerView);
@@ -236,7 +225,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
             nickName.setText(result.getNickName());
             tvRealName.setText(result.getNickName());
-            userId=result.getUserId();
+            userId = result.getUserId();
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
@@ -391,10 +380,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     public void selectLine(int position) {
         for (int i = 0; i < 4; i++) {
             if (i != position) {
-                lines.get(i).setVisibility(View.INVISIBLE);
                 pulls.get(i).setVisibility(View.GONE);
             } else {
-                lines.get(i).setVisibility(View.VISIBLE);
                 pulls.get(i).setVisibility(View.VISIBLE);
             }
 

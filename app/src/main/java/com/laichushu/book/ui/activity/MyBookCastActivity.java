@@ -30,7 +30,6 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     private PullLoadMoreRecyclerView mRecyclerView,mCollRecyclerView;
     private RadioGroup radioGroup;
     private RadioButton rbScan, rbCollection;
-    private View lineLeft, lineRight;
     private int PAGE_NO = 1;
     private List<HomeHotModel.DataBean> scanData = new ArrayList<>();
     private List<HomeHotModel.DataBean> collData = new ArrayList<>();
@@ -55,8 +54,6 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         View bookCastView = UIUtil.inflate(R.layout.activity_my_book_cast);
         ivBack = ((ImageView) bookCastView.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) bookCastView.findViewById(R.id.tv_title));
-        lineLeft = bookCastView.findViewById(R.id.myCast_left);
-        lineRight = bookCastView.findViewById(R.id.myCast_right);
         mRecyclerView = (PullLoadMoreRecyclerView) bookCastView.findViewById(R.id.ryv_bookCast);
         mCollRecyclerView = (PullLoadMoreRecyclerView) bookCastView.findViewById(R.id.ryv_bookCastColl);
         radioGroup = ((RadioGroup) bookCastView.findViewById(R.id.rg_bookList));
@@ -70,13 +67,9 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     @Override
     protected void initData() {
         rbScan.setChecked(true);
-        lineLeft.setVisibility(View.VISIBLE);
-        lineRight.setVisibility(View.INVISIBLE);
         mvpPresenter.LoadData();
         tvTitle.setText("作品管理");
         ivBack.setOnClickListener(this);
-        lineLeft.setOnClickListener(this);
-        lineRight.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         //初始化mRecyclerView Scan
         mRecyclerView.setGridLayout(3);
@@ -111,8 +104,6 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 mRecyclerView.setVisibility(View.VISIBLE);
                 collDibble = false;
                 type = 1;
-                lineLeft.setVisibility(View.VISIBLE);
-                lineRight.setVisibility(View.INVISIBLE);
                 if (!scanDibble) {
                     scanData.clear();
                     mvpPresenter.LoadData();
@@ -125,8 +116,6 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 mRecyclerView.setVisibility(View.GONE);
                 scanDibble = false;
                 type = 2;
-                lineLeft.setVisibility(View.INVISIBLE);
-                lineRight.setVisibility(View.VISIBLE);
                 if (!collDibble) {
                     collData.clear();
                     mvpPresenter.LoadCollectionData();
