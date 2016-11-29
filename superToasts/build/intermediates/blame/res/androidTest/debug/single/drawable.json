@@ -1,102 +1,102 @@
 [
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\selector_kitkat_undobutton.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\selector_kitkat_undobutton.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_gray.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_gray.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_black.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_black.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_red.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_red.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_green.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_green.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_green.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_green.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_red.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_red.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\selector_kitkat_undobutton.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\selector_kitkat_undobutton.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_purple.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_purple.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_undobarselected.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_undobarselected.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_orange.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_orange.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_purple.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_purple.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_kitkat_square_undobarfocused.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_kitkat_square_undobarfocused.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_gray.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_gray.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_purple.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_purple.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_orange.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_orange.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_blue.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_blue.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_blue.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_blue.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_black.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_black.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_black.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_black.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_kitkat_undobarfocused.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_kitkat_undobarfocused.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\selector_kitkat_square_undobutton.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\selector_kitkat_square_undobutton.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_red.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_red.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_kitkat_undobarselected.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_kitkat_undobarselected.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_green.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_green.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_black.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_black.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_blue.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_blue.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_kitkat_square_undobarselected.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_kitkat_square_undobarselected.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_orange.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_orange.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_green.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_green.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_undobarselected.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_undobarselected.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_kitkat_square_undobarfocused.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_kitkat_square_undobarfocused.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_white.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_white.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_undobarfocused.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_undobarfocused.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_gray.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_gray.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_purple.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_purple.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_kitkat_square_undobarselected.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_kitkat_square_undobarselected.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_kitkat_undobarfocused.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_kitkat_undobarfocused.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\selector_kitkat_square_undobutton.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\selector_kitkat_square_undobutton.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_orange.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_orange.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_white.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_white.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_white.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_white.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\selector_undobutton.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\selector_undobutton.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\selector_undobutton.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\selector_undobutton.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_gray.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_gray.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_standard_blue.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_standard_blue.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_kitkat_undobarselected.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_kitkat_undobarselected.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_red.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_red.xml"
     },
     {
-        "merged": "D:\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_undobarfocused.xml",
-        "source": "D:\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_undobarfocused.xml"
+        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\background_kitkat_white.xml",
+        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\drawable\\background_kitkat_white.xml"
     }
 ]
