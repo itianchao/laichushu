@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.homepage;
 
+import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
@@ -64,15 +65,14 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         });
     }
 
-    public void setParamet2(HomeUserFocusMe_parmet paramet2) {
+    public void setParamet2(HomeUserFocusBe_parmet paramet2) {
         this.paramet2 = paramet2;
     }
 
     //关注我的
-    private HomeUserFocusMe_parmet paramet2 = new HomeUserFocusMe_parmet(userId, pageNo, pageSize,userId);
+    private HomeUserFocusBe_parmet paramet2 = new HomeUserFocusBe_parmet(userId, pageNo, pageSize);
 
     public void LoadFocusMeData() {
-
         LoggerUtil.toJson(paramet2);
         addSubscription(apiStores.getHomeUserFocusMeDetails(paramet2), new ApiCallback<HomePersonFocusResult>() {
             @Override
@@ -101,10 +101,9 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
     }
 
     //我关注的
-    private HomeUserFocusBe_parmet paramet3 = new HomeUserFocusBe_parmet(userId, pageNo, pageSize,"");
+    private HomeUserFocusBe_parmet paramet3 = new HomeUserFocusBe_parmet(userId, pageNo, pageSize);
 
     public void LoadFocusBeData() {
-
         LoggerUtil.toJson(paramet3);
         addSubscription(apiStores.getHomeUserFocusBeDetails(paramet3), new ApiCallback<HomePersonFocusResult>() {
             @Override
@@ -124,29 +123,20 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         });
     }
 
-    public String getTargetId() {
-        return targetId;
+    public ChangeFocusState_Paramet getAddFocus() {
+        return addFocus;
     }
 
-    public void setTargetId(String targetId) {
-        targetId = targetId;
+    public void setAddFocus(ChangeFocusState_Paramet addFocus) {
+        this.addFocus = addFocus;
     }
 
-    private String targetId;
-
-    public HomeUserFocusState_Paramet getStatus() {
-        return status;
-    }
-
-    public void setStatus(HomeUserFocusState_Paramet status) {
-        this.status = status;
-    }
-
-    private HomeUserFocusState_Paramet status = new HomeUserFocusState_Paramet(userId,targetId,false);
-//更新关注我的状态
-    public void loadFocusBeStatus(final boolean flg){
-        LoggerUtil.toJson(paramet3);
-                    addSubscription(apiStores.getHomeUserFocusBeStatus(status), new ApiCallback<HomeFocusResult>() {
+    private ChangeFocusState_Paramet addFocus = new ChangeFocusState_Paramet(userId,"");
+//添加关注
+    public void loadAddFocus(String userId,final boolean flg){
+        addFocus.setUserId(userId);
+        LoggerUtil.toJson(addFocus);
+                    addSubscription(apiStores.getAddFocus(addFocus), new ApiCallback<HomeFocusResult>() {
                         @Override
                         public void onSuccess(HomeFocusResult model) {
                             mvpView.getFocusBeStatus(model,flg);
@@ -163,10 +153,21 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
                         }
         });
     }
-    //更新我关注的状态
-    public void loadFocusMeStatus(final boolean isFocus){
-        LoggerUtil.toJson(paramet3);
-        addSubscription(apiStores.getHomeUserFocusMeStatus(status), new ApiCallback<HomeFocusResult>() {
+
+    public ChangeFocusState_Paramet getDelFocus() {
+        return delFocus;
+    }
+
+    public void setDelFocus(ChangeFocusState_Paramet delFocus) {
+        this.delFocus = delFocus;
+    }
+
+    private ChangeFocusState_Paramet delFocus = new ChangeFocusState_Paramet(userId,"");
+    //取消关注
+    public void loadDelFocus(String userId,final boolean isFocus){
+        delFocus.setUserId(userId);
+        LoggerUtil.toJson(delFocus);
+        addSubscription(apiStores.getDelFocus(delFocus), new ApiCallback<HomeFocusResult>() {
             @Override
             public void onSuccess(HomeFocusResult model) {
                 mvpView.getFocusMeStatus(model,isFocus);

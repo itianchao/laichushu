@@ -22,6 +22,7 @@ import java.util.List;
 
 
 /**
+ * 我关注的
  * Created by PCPC on 2016/11/23.
  */
 
@@ -29,10 +30,11 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
     private PersonalHomePageActivity context;
     private List<HomePersonFocusResult.DataBean> dataBeen;
     private HomePagePresener homePagePresener;
-    public HomePageFocusBeAdapter(PersonalHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean,HomePagePresener homePagePresener) {
+
+    public HomePageFocusBeAdapter(PersonalHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean, HomePagePresener homePagePresener) {
         this.context = context;
         this.dataBeen = dataBean;
-        this.homePagePresener=homePagePresener;
+        this.homePagePresener = homePagePresener;
     }
 
     @Override
@@ -45,22 +47,26 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
     public void onBindViewHolder(final HomePageFocusBeAdapter.ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
         holder.tvContent.setText(dataBeen.get(position).getNickName());
-        holder.checkBox.setText("取消关注");
+        //我关注的
+        if (dataBeen.get(position).isStatus()) {
+            holder.checkBox.setText("取消关注");
+        } else {
+            holder.checkBox.setText("关注");
+        }
+
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!holder.checkBox.isChecked()) {
-                    holder.checkBox.setText("关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
-                    homePagePresener.getStatus().setStatus(true);
-                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
-                    homePagePresener.loadFocusBeStatus(true);
-                } else {
+                if (!dataBeen.get(position).isStatus()) {
                     holder.checkBox.setText("取消关注");
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
+                    homePagePresener.loadAddFocus(dataBeen.get(position).getTargetUserId(),true);
+                    dataBeen.get(position).setStatus(true);
+                } else {
+                    holder.checkBox.setText("关注");
                     holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
-                    homePagePresener.getStatus().setStatus(false);
-                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
-                    homePagePresener.loadFocusBeStatus(false);
+                    homePagePresener.loadDelFocus(dataBeen.get(position).getTargetUserId(),false);
+                    dataBeen.get(position).setStatus(false);
                 }
 
             }
@@ -70,8 +76,8 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
             public void onClick(View v) {
                 //跳转用户主页
                 Bundle bundle = new Bundle();
-                bundle.putInt("type",2);
-                bundle.putSerializable("bean",dataBeen.get(position));
+                bundle.putInt("type", 2);
+                bundle.putSerializable("bean", dataBeen.get(position));
                 UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
             }
         });
@@ -92,8 +98,8 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);
-            this.notifyDataSetChanged();
         }
+        this.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

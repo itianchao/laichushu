@@ -15,6 +15,17 @@ public class HomePersonFocusResult implements Serializable {
      */
 
     private boolean success;
+
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
+    }
+
+    private String errMsg;
     private List<DataBean> data;
 
     public boolean isSuccess() {
@@ -47,6 +58,15 @@ public class HomePersonFocusResult implements Serializable {
         private String sourceUserId;
         private String targetUserId;
         private String photo;
+        private boolean status;
+
+        public boolean isStatus() {
+            return status;
+        }
+
+        public void setStatus(boolean status) {
+            this.status = status;
+        }
 
         public String getNickName() {
             return nickName;

@@ -48,7 +48,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     private TextView tvTitle, tvMineName, tvMinebookNum;
     private ImageView ivMineHead, ivMineHeadInto;
-    private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice;
+    private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice, rlBody;
     private PersonalCentreResult res = new PersonalCentreResult();
     private UpdateReceiver mUpdateReceiver;
     private Cache_JsonDao cache_jsonDao;
@@ -69,6 +69,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         tvMineName = (TextView) mRootView.findViewById(R.id.tv_mineNickName);
         tvMinebookNum = (TextView) mRootView.findViewById(R.id.tv_mineBookNum);
         rlHead = ((RelativeLayout) mRootView.findViewById(R.id.rl_mainHead));
+        rlBody = ((RelativeLayout) mRootView.findViewById(R.id.rl_headBody));
         rlManage = (RelativeLayout) mRootView.findViewById(R.id.rl_manage);
         rlBookCast = (RelativeLayout) mRootView.findViewById(R.id.rl_bookCast);
         rlWallet = (RelativeLayout) mRootView.findViewById(R.id.rl_Wallet);
@@ -86,6 +87,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         tvMineName.setOnClickListener(this);
         ivMineHead.setOnClickListener(this);
         ivMineHeadInto.setOnClickListener(this);
+        rlBody.setOnClickListener(this);
 
         tvTitle.setText("个人中心");
         return mRootView;
@@ -100,7 +102,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     }
 
     public void getData() {
-        registerPlayerReceiver();
+//        registerPlayerReceiver();
         QueryBuilder<Cache_Json> userQueryBuilder = cache_jsonDao.queryBuilder();
         QueryBuilder<Cache_Json> builder = userQueryBuilder.where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails"));
         Query<Cache_Json> build = builder.build();
@@ -123,6 +125,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
                 break;
             case R.id.tv_mineNickName:
             case R.id.iv_mineHeadInto:
+            case R.id.rl_headBody:
                 Intent editAct = new Intent(mActivity, EditMyselfeInforActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result", res);

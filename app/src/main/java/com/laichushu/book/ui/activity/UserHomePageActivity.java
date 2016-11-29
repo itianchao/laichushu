@@ -8,6 +8,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
@@ -22,6 +23,7 @@ import com.laichushu.book.ui.adapter.UserWorksListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -42,8 +44,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private PullLoadMoreRecyclerView mDyRecyclerView, mWorksRecyclerView, mHeFocusRecyclerView, mFocusHeRecyclerView;
     private UserDynamicAdapter dyAdapter;
     private UserWorksListAdapter worksAdapter;
-    private UserHeFoucsAdapter beAdapter;
-    private UserFocusHeAdapter heAdapter;
+    private UserHeFoucsAdapter beAdapter;//关注他的
+    private UserFocusHeAdapter heAdapter;//他关注的
     private RadioGroup radioGroup;
     private List<HomeUseDyrResult.DataBean> dyData = new ArrayList<>();
     private List<HomeHotModel.DataBean> worksData = new ArrayList<>();
@@ -126,7 +128,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         mFocusHeRecyclerView.setGridLayout(1);
         mFocusHeRecyclerView.setFooterViewText("加载中");
         heAdapter = new UserFocusHeAdapter(this, focusMeData, mvpPresenter);
-        mFocusHeRecyclerView.setAdapter(beAdapter);
+        mFocusHeRecyclerView.setAdapter(heAdapter);
         mFocusHeRecyclerView.setOnPullLoadMoreListener(this);
         // 初始化头像+动态
         dataBean = (HomePersonFocusResult.DataBean) getIntent().getSerializableExtra("bean");
@@ -182,7 +184,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleDy = false;
                 dibbleheFo = false;
                 dibbleFoHe = false;
-                type = 1;
+                type = 2;
                 if (!dibbleWorks) {
                     worksData.clear();
                     mvpPresenter.getUserBookListDate(userId);
@@ -195,9 +197,9 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleDy = false;
                 dibbleWorks = false;
                 dibbleFoHe = false;
-                type = 1;
+                type = 3;
                 if (!dibbleheFo) {
-                    focusBeData.clear();
+                    focusMeData.clear();
                     mvpPresenter.getUserHeFocusDate(userId);
                 }
                 dibbleheFo = true;
@@ -208,9 +210,9 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleWorks = false;
                 dibbleDy = false;
                 dibbleheFo = false;
-                type = 1;
+                type = 4;
                 if (!dibbleFoHe) {
-                    focusMeData.clear();
+                    focusBeData.clear();
                     mvpPresenter.getUserFocusHeDate(userId);
                 }
                 dibbleFoHe = true;
@@ -226,6 +228,11 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             nickName.setText(result.getNickName());
             tvRealName.setText(result.getNickName());
             userId = result.getUserId();
+            if (result.isBeFocused()) {
+                btnFocus.setText("已关注");
+            } else {
+                btnFocus.setText("关注");
+            }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
@@ -279,9 +286,14 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }
     }
 
+    /**
+     * 他关注的
+     *
+     * @param result
+     */
     @Override
     public void getUserHomeFocusHeSuccess(HomePersonFocusResult result) {
-        focusBeData.clear();
+        focusMeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -290,22 +302,28 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }, 300);
         if (result.isSuccess()) {
             ToastUtil.showToast("HomeUseDyrResult");
-            focusBeData = result.getData();
+            focusMeData = result.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!focusBeData.isEmpty()) {
-                beAdapter.refreshAdapter(focusBeData);
+            if (!focusMeData.isEmpty()) {
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(result.getErrMsg());
             }
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            ToastUtil.showToast(result.getErrMsg());
         }
+        heAdapter.refreshAdapter(focusMeData);
     }
 
+    /**
+     * 关注他的
+     *
+     * @param result
+     */
     @Override
     public void getUserHomeHeFocusSuccess(HomePersonFocusResult result) {
-        focusMeData.clear();
+        focusBeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -314,16 +332,53 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }, 300);
         if (result.isSuccess()) {
             ToastUtil.showToast("HomeUseDyrResult");
-            focusMeData = result.getData();
+            focusBeData = result.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!focusMeData.isEmpty()) {
-                heAdapter.refreshAdapter(focusMeData);
+            if (!focusBeData.isEmpty()) {
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(result.getErrMsg());
             }
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            beAdapter.refreshAdapter(focusBeData);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            ToastUtil.showToast(result.getErrMsg());
+        }
+        beAdapter.refreshAdapter(focusBeData);
+    }
+
+    /**
+     * 关注他的
+     *
+     * @param model
+     * @param flg
+     */
+    @Override
+    public void getFocusBeStatus(HomeFocusResult model, boolean flg) {
+        if (model.isSuccess()) {
+            if (flg) {
+                ToastUtil.showToast("关注成功！");
+            } else {
+                ToastUtil.showToast("取消关注成功！");
+            }
+        } else {
+            ToastUtil.showToast("关注失败！");
+            LoggerUtil.toJson(model);
+        }
+    }
+
+    @Override
+    public void getFocusMeStatus(HomeFocusResult model, boolean flg) {
+        if (model.isSuccess()) {
+            if (flg) {
+                ToastUtil.showToast("关注成功！");
+            } else {
+                ToastUtil.showToast("取消关注成功！");
+            }
+
+        } else {
+            ToastUtil.showToast("关注失败！");
+            LoggerUtil.toJson(model);
         }
     }
 
@@ -339,19 +394,19 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         if (type == 1) {
             dyData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserDynmicDate(dataBean.getSourceUserId());//请求网络获取搜索列表
+            mvpPresenter.getUserDynmicDate(dataBean.getSourceUserId());//动态
         } else if (type == 2) {
             worksData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserBookListDate(dataBean.getSourceUserId());//请求网络获取搜索列表
+            mvpPresenter.getUserBookListDate(dataBean.getSourceUserId());//作品
         } else if (type == 3) {
             focusBeData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserHeFocusDate(dataBean.getSourceUserId());//请求网络获取搜索列表
+            mvpPresenter.getUserHeFocusDate(dataBean.getSourceUserId());//他关注的
         } else if (type == 4) {
             focusMeData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserHeFocusDate(dataBean.getSourceUserId());//请求网络获取搜索列表
+            mvpPresenter.getUserHeFocusDate(dataBean.getSourceUserId());//关注他的
         }
     }
 

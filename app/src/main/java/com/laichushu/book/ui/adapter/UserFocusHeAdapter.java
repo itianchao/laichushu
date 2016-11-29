@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.mvp.userhomepage.UserHomePagePresener;
+import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;
@@ -43,33 +46,39 @@ public class UserFocusHeAdapter extends RecyclerView.Adapter<UserFocusHeAdapter.
     public void onBindViewHolder(final UserFocusHeAdapter.ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
         holder.tvContent.setText(dataBeen.get(position).getNickName());
-        holder.checkBox.setText("取消关注");
-//        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (!holder.checkBox.isChecked()) {
-//                    holder.checkBox.setText("关注");
-//                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
-//                    homePagePresener.getStatus().setStatus(true);
-//                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
-//                    homePagePresener.loadFocusBeStatus(true);
-//                } else {
-//                    holder.checkBox.setText("取消关注");
-//                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
-//                    homePagePresener.getStatus().setStatus(false);
-//                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
-//                    homePagePresener.loadFocusBeStatus(false);
-//                }
-//
-//            }
-//        });
+        if (dataBeen.get(position).isStatus()) {
+            holder.checkBox.setText("取消关注");
+        } else {
+            holder.checkBox.setText("关注");
+        }
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!dataBeen.get(position).isStatus()) {
+                    holder.checkBox.setText("取消关注");
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
+                    homePagePresener.loadAddFocus(dataBeen.get(position).getSourceUserId(), true);
+                    dataBeen.get(position).setStatus(true);
+                } else {
+                    holder.checkBox.setText("关注");
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
+                    homePagePresener.loadDelFocus(dataBeen.get(position).getSourceUserId(), false);
+                    dataBeen.get(position).setStatus(false);
+                }
+
+            }
+        });
         holder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //跳转用户主页
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bean", dataBeen.get(position));
-                UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSourceUserId())) {
+                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                } else {
+                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                }
             }
         });
     }
@@ -89,8 +98,8 @@ public class UserFocusHeAdapter extends RecyclerView.Adapter<UserFocusHeAdapter.
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);
-            this.notifyDataSetChanged();
         }
+        this.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
+import com.laichushu.book.bean.netbean.HomeInfo_paramet;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
@@ -36,13 +37,12 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     private TextView tvTitle, tvNickName, tvRealName, tvAuthorAgree;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
-    private View lineDy, lineFocusMe, lineFocus;
     private List<HomeUseDyrResult.DataBean> dyData = new ArrayList<>();
     private List<HomePersonFocusResult.DataBean> focusMeData = new ArrayList<>();
     private List<HomePersonFocusResult.DataBean> focusBeData = new ArrayList<>();
     private HomePageDynamicAdapter dyAdapter;
-    private HomePageFocusMeAdapter fmAdapter;
-    private HomePageFocusBeAdapter fbAdapter;
+    private HomePageFocusMeAdapter fmAdapter;//关注我的
+    private HomePageFocusBeAdapter fbAdapter;//我关注的
     private int PAGE_NO = 1, type = 1;
     private boolean dibbleDy = false, dibbleFoMe = false, dibbleFo = false;
     private List<View> pulls = new ArrayList<>();
@@ -118,7 +118,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
      * 个人信息
      */
     private void initHeadInfo() {
-        HomeUserInfor_paramet paramet = new HomeUserInfor_paramet(SharePrefManager.getUserId(), "");
+        HomeInfo_paramet paramet = new HomeInfo_paramet(SharePrefManager.getUserId(), SharePrefManager.getUserId());
         addSubscription(apiStores.getHomeUserInforDetails(paramet), new ApiCallback<HomeUserResult>() {
             @Override
             public void onSuccess(HomeUserResult result) {
@@ -195,6 +195,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         }
     }
 
+    /**
+     * 关注我的
+     * @param model
+     */
     @Override
     public void getFocusMeDataSuccess(HomePersonFocusResult model) {
         dyData.clear();
@@ -207,18 +211,22 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         if (model.isSuccess()) {
             ToastUtil.showToast("HomeUseFocusMerResult");
             focusMeData = model.getData();
-
             if (!focusMeData.isEmpty()) {
-                fmAdapter.refreshAdapter(focusMeData);
                 PAGE_NO++;
             } else {
 
             }
         } else {
-
+            ToastUtil.showToast(model.getErrMsg());
         }
+        fmAdapter.refreshAdapter(focusMeData);
     }
 
+    /**
+     *
+     *我关注的
+     * @param model
+     */
     @Override
     public void getFocusBeDataSuccess(HomePersonFocusResult model) {
         focusBeData.clear();
@@ -229,20 +237,22 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
         }, 300);
         if (model.isSuccess()) {
-            ToastUtil.showToast("HomeUseFocusBeResult");
             focusBeData = model.getData();
-
             if (!focusBeData.isEmpty()) {
-                fbAdapter.refreshAdapter(focusBeData);
                 PAGE_NO++;
             } else {
-
             }
         } else {
-            ToastUtil.showToast("刷新失败！");
+            fbAdapter.refreshAdapter(focusBeData);
+            ToastUtil.showToast(model.getErrMsg());
         }
+        fbAdapter.refreshAdapter(focusBeData);
     }
 
+    /**
+     * @param modle
+     * @param flg   添加关注
+     */
     @Override
     public void getFocusBeStatus(HomeFocusResult modle, boolean flg) {
         if (modle.isSuccess()) {
@@ -257,6 +267,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         }
     }
 
+    /**
+     * @param modle
+     * @param flg   取消关注
+     */
     @Override
     public void getFocusMeStatus(HomeFocusResult modle, boolean flg) {
         if (modle.isSuccess()) {
@@ -298,7 +312,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 //关注我的
                 selectLine(1);
                 dibbleDy = false;
-                dibbleFoMe = false;
+                dibbleFo = false;
                 type = 2;
                 if (!dibbleFoMe) {
                     focusMeData.clear();
@@ -307,6 +321,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 dibbleFoMe = true;
                 break;
             case R.id.rb_focus:
+                //我关注的
                 selectLine(2);
                 dibbleDy = false;
                 dibbleFoMe = false;
@@ -370,7 +385,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         }
     }
 
-    public void reLoadData() {
+    public void reLoadDatas() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {

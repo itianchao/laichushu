@@ -19,7 +19,8 @@ import com.laichushu.book.utils.ToastUtil;
  * Created by wangtong on 2016/10/17.
  */
 public class InitPresenter extends BasePresenter<InitView> {
-    private String pageSize = ConstantValue.PAGESIZE1; ;
+    private String pageSize = ConstantValue.PAGESIZE1;
+    ;
     private String pageNo = "1";
     private HomeAllBook_Paramet paramet;
     private String userId = ConstantValue.USERID;
@@ -27,6 +28,7 @@ public class InitPresenter extends BasePresenter<InitView> {
     public InitPresenter(InitView view) {
         attachView(view);
     }
+
     public void loadHomeCarouseData() {
         mvpView.showLoading();
         addSubscription(apiStores.homeCarouselData(),
@@ -67,8 +69,9 @@ public class InitPresenter extends BasePresenter<InitView> {
             }
         });
     }
+
     public void loadHomeAllData(String type) {
-        paramet = new HomeAllBook_Paramet(type,pageSize,pageNo,userId);
+        paramet = new HomeAllBook_Paramet(type, pageSize, pageNo, userId);
         mvpView.showLoading();
         addSubscription(apiStores.homeAllData(paramet), new ApiCallback<HomeHotModel>() {
             @Override
@@ -96,22 +99,23 @@ public class InitPresenter extends BasePresenter<InitView> {
         this.paramet = paramet;
     }
 
+    //获取我的--首页个人信息
     public void loadMineData() {
-            addSubscription(apiStores.getPersonalDetails(new PersonalCentre_Parmet(SharePrefManager.getUserId())), new ApiCallback<PersonalCentreResult>() {
-                @Override
-                public void onSuccess(PersonalCentreResult result) {
-                    mvpView.loadMineDataSuccess(result);
-                }
+        addSubscription(apiStores.getPersonalDetails(new PersonalCentre_Parmet(SharePrefManager.getUserId())), new ApiCallback<PersonalCentreResult>() {
+            @Override
+            public void onSuccess(PersonalCentreResult result) {
+                mvpView.loadMineDataSuccess(result);
+            }
 
-                @Override
-                public void onFailure(int code, String msg) {
-                    mvpView.getDataFail("code:"+code+"\nmsg:"+msg);
-                }
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code:" + code + "\nmsg:" + msg);
+            }
 
-                @Override
-                public void onFinish() {
+            @Override
+            public void onFinish() {
 
-                }
-            });
+            }
+        });
     }
 }

@@ -1,6 +1,8 @@
 package com.laichushu.book.mvp.userhomepage;
 
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
+import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
+import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
@@ -9,6 +11,7 @@ import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
+import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -42,11 +45,11 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
         this.headInfo = headInfo;
     }
 
-    //初始化头像信息
+    //初始化用户界面用户信息
     HomeUserInfor_paramet headInfo = new HomeUserInfor_paramet(SharePrefManager.getUserId(), "");
 
-    public void getUserHeadDate(String id) {
-        headInfo.setUserId(id);
+    public void getUserHeadDate(String userId) {
+        headInfo.setUserId(userId);
         LoggerUtil.toJson(headInfo);
         addSubscription(apiStores.getUserInforDetails(headInfo), new ApiCallback<HomeUserResult>() {
 
@@ -76,7 +79,7 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
     }
 
     //获取用户动态详情
-    private HomeUserDy_parmet paramet = new HomeUserDy_parmet("", pageSize, pageNo,userId);
+    private HomeUserDy_parmet paramet = new HomeUserDy_parmet("", pageSize, pageNo, userId);
 
     public void getUserDynmicDate(String id) {
         paramet.setUserId(id);
@@ -131,20 +134,53 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
     }
 
 
-    public HomeUserFocusBe_parmet getFocusMe_parmet() {
+    public UserFocusBe_parmet getFocusMe_parmet() {
         return focusMe_parmet;
     }
 
-    public void setFocusMe_parmet(HomeUserFocusBe_parmet focusMe_parmet) {
+    public void setFocusMe_parmet(UserFocusBe_parmet focusMe_parmet) {
         this.focusMe_parmet = focusMe_parmet;
     }
 
     //用户 他关注的
-    HomeUserFocusBe_parmet focusMe_parmet = new HomeUserFocusBe_parmet(SharePrefManager.getUserId(), pageNo, pageSize, "");
+    UserFocusBe_parmet focusMe_parmet = new UserFocusBe_parmet(SharePrefManager.getUserId(), "", pageNo, pageSize);
 
     public void getUserHeFocusDate(String id) {
         focusMe_parmet.setUserId(id);
-        addSubscription(apiStores.getHomeUserFocusBeDetails(focusMe_parmet), new ApiCallback<HomePersonFocusResult>() {
+        addSubscription(apiStores.getUserFocusBeDetails(focusMe_parmet), new ApiCallback<HomePersonFocusResult>() {
+
+            @Override
+            public void onSuccess(HomePersonFocusResult model) {
+                mvpView.getUserHomeHeFocusSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+
+    public UserFocusBe_parmet getFocusBe_parmet() {
+        return focusBe_parmet;
+    }
+
+    public void setFocusBe_parmet(UserFocusBe_parmet focusBe_parmet) {
+        this.focusBe_parmet = focusBe_parmet;
+    }
+
+    //用户界面 关注他的
+    UserFocusBe_parmet focusBe_parmet = new UserFocusBe_parmet(SharePrefManager.getUserId(), "", pageNo, pageSize);
+
+    public void getUserFocusHeDate(String userId) {
+        focusBe_parmet.setUserId(userId);
+        addSubscription(apiStores.getUserFocusMeDetails(focusBe_parmet), new ApiCallback<HomePersonFocusResult>() {
 
             @Override
             public void onSuccess(HomePersonFocusResult model) {
@@ -163,25 +199,24 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
         });
     }
 
-
-    public HomeUserFocusMe_parmet getFocusBe_parmet() {
-        return focusBe_parmet;
+    public ChangeFocusState_Paramet getAddFocus() {
+        return addFocus;
     }
 
-    public void setFocusBe_parmet(HomeUserFocusMe_parmet focusBe_parmet) {
-        this.focusBe_parmet = focusBe_parmet;
+    public void setAddFocus(ChangeFocusState_Paramet addFocus) {
+        this.addFocus = addFocus;
     }
 
-    //用户界面 关注他的
-    HomeUserFocusMe_parmet focusBe_parmet = new HomeUserFocusMe_parmet(SharePrefManager.getUserId(), pageNo, pageSize, "");
+    private ChangeFocusState_Paramet addFocus = new ChangeFocusState_Paramet(userId, "");
 
-    public void getUserFocusHeDate(String userId) {
-        focusBe_parmet.setTargetId(userId);
-        addSubscription(apiStores.getHomeUserFocusMeDetails(focusBe_parmet), new ApiCallback<HomePersonFocusResult>() {
-
+    //添加关注
+    public void loadAddFocus(String userId, final boolean flg) {
+        LoggerUtil.toJson(addFocus);
+        addFocus.setUserId(userId);
+        addSubscription(apiStores.getAddFocus(addFocus), new ApiCallback<HomeFocusResult>() {
             @Override
-            public void onSuccess(HomePersonFocusResult model) {
-                mvpView.getUserHomeHeFocusSuccess(model);
+            public void onSuccess(HomeFocusResult model) {
+                mvpView.getFocusBeStatus(model, flg);
             }
 
             @Override
@@ -195,4 +230,38 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
             }
         });
     }
+
+    public ChangeFocusState_Paramet getDelFocus() {
+        return delFocus;
+    }
+
+    public void setDelFocus(ChangeFocusState_Paramet delFocus) {
+        this.delFocus = delFocus;
+    }
+
+    private ChangeFocusState_Paramet delFocus = new ChangeFocusState_Paramet(userId, "");
+
+    //取消关注
+    public void loadDelFocus(String userId, final boolean isFocus) {
+        LoggerUtil.toJson(delFocus);
+        delFocus.setUserId(userId);
+        addSubscription(apiStores.getDelFocus(delFocus), new ApiCallback<HomeFocusResult>() {
+            @Override
+            public void onSuccess(HomeFocusResult model) {
+                mvpView.getFocusMeStatus(model, isFocus);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+
 }

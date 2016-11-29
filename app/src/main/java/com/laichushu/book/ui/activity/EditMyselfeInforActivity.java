@@ -289,7 +289,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         sexData.add("女");
         sexPopupWindow = new OptionsPopupWindow(this);
         sexPopupWindow.setPicker(sexData);
-        sexPopupWindow.setCyclic(true);
+        sexPopupWindow.setCyclic(false);
         sexPopupWindow.setTitleBackgroundColor(mActivity.getResources().getColor(R.color.auditing));
         sexPopupWindow.setTitle("性别");
         sexPopupWindow.setSelectOptions(Gravity.CENTER_HORIZONTAL);
