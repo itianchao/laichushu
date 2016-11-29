@@ -41,15 +41,6 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
-//        holder.llItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-        //跳转图书详情页
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("bean", dataBeen.get(position));
-//                UIUtil.openActivity(context, BookDetailActivity.class, bundle);
-//            }
-//        });
     }
 
 
@@ -72,7 +63,7 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView tvShopName, tvTime, tvTitle, tvTitleContent, tvMsg, tvFocus, tvScan;
+        public final TextView tvShopName, tvTime, tvTitle, tvTitleContent, tvMsg, tvScan;
         public final ImageView ivImg;
         public final View root;
 
@@ -83,7 +74,6 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
             tvTitle = (TextView) root.findViewById(R.id.tv_dyTitleName);
             tvTitleContent = (TextView) root.findViewById(R.id.tv_dyTitleContent);
             tvMsg = (TextView) root.findViewById(R.id.tv_msg);
-            tvFocus = (TextView) root.findViewById(R.id.tv_focus);
             tvScan = (TextView) root.findViewById(R.id.tv_scan);
             ivImg = (ImageView) root.findViewById(R.id.iv_dyHead);
             this.root = root;

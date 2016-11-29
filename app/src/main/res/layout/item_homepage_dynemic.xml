@@ -13,8 +13,7 @@
             android:id="@+id/iv_dyHead"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-             />
+            android:layout_marginLeft="12dp" />
 
         <TextView
             android:id="@+id/tv_dyName"
@@ -56,21 +55,6 @@
         android:textSize="@dimen/edit3"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:orientation="vertical">
-
-        <!--<GridView-->
-        <!--android:id="@+id/gv_list"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:listSelector="@android:color/transparent"-->
-        <!--android:numColumns="3"-->
-        <!--android:verticalSpacing="20dp" >-->
-        <!--</GridView>-->
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,6 +63,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ll_msg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -87,25 +72,28 @@
             <TextView
                 android:id="@+id/tv_msg"
                 style="@style/new_books"
-                android:drawableLeft="@drawable/navigation_message_fill"
-                android:text="666" />
+                android:drawableLeft="@drawable/icon_comment"
+                android:text="666"
+                android:visibility="invisible" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_collection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_focus"
+                android:id="@+id/tv_collection"
                 style="@style/new_books"
-                android:drawableLeft="@drawable/icon_like_normal"
+                android:drawableLeft="@drawable/icon_like_red"
                 android:text="666" />
         </LinearLayout>
 
 
         <LinearLayout
+            android:id="@+id/ll_scan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -114,7 +102,7 @@
             <TextView
                 android:id="@+id/tv_scan"
                 style="@style/new_books"
-                android:drawableLeft="@drawable/icon_like_red"
+                android:drawableLeft="@drawable/navigation_find_normal"
                 android:text="666" />
         </LinearLayout>
 

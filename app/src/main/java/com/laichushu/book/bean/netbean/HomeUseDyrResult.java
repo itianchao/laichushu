@@ -9,10 +9,9 @@ import java.util.List;
 
 public class HomeUseDyrResult implements Serializable{
 
-
     /**
      * success : true
-     * data : [{"id":"23","teamId":"14","title":"来世之人生赢家","content":"快来讨论下吧，很有意思的！","createDate":"2016-10-31 00:00:00","topFlag":"1","starterId":"14","creatUserId":"1","type":2},{"id":"24","teamId":"14","title":"今天好冷啊","content":"如何应对寒冬？","createDate":"2016-10-02 00:00:00","topFlag":"1","starterId":"14","creatUserId":"1","type":2},{"id":"22","teamId":"14","title":"今天不下雨，是说今天是晴天。","content":"今天不下雨，昨天也不下雨，今天能不能哗哗啦啦，（下场雷阵雨啊），我和我的步战车奔袭了八百里，再跑八百能不能，跑出这火辣辣地太阳地，壶里的水已经不多了战友们在传递，手中的枪是越来越沉更要精确射击，步战车还是嗷嗷叫他的速度不减，真是咱们全班的哥们儿铁了心的好伙计，老天爷他为什么他就是不下雨，冲一冲咱汗水湿透的迷彩绿军衣，老天爷快点快点下场大雨吧，顺便浇浇训练场边旱了的庄稼地，老天爷他为什么他就是不下雨，冲一冲咱汗水湿透的迷彩绿军衣，老天爷快点快点下场大雨吧，顺便浇一浇那旱了的庄稼地，热\u2026\u2026热\u2026\u2026\u2026\u2026，昨天不下雨今天不下雨，兄弟们的步战车一天一个，（一天一个桑拿浴啊），如果那明天后天大后天，它死活不下雨，咱就天天挥汗如雨滋润大地","createDate":"2016-10-27 00:00:00","topFlag":"0","starterId":"14","creatUserId":"1","type":2}]
+     * data : [{"id":"23","teamId":"112","teamName":"","title":"旅途通知我","content":"图我想问一下","browseNum":63,"createDate":"29天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":2,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"24","teamId":"112","teamName":"","title":"啦啦啦啦","content":"额得得得得得得","browseNum":88,"createDate":"58天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":2,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"25","teamId":"112","teamName":"","title":"兔兔在在在在在在","content":"龙门默默魔王","createDate":"4天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"26","teamId":"112","teamName":"","title":"可以找我呜呜呜呜呜呜呜呜","content":"唐知我者谓我心忧","createDate":"4天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"27","teamId":"112","teamName":"","title":"看了一下休息休息","content":"啦啦啦啦龙","createDate":"4天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"}]
      */
 
     private boolean success;
@@ -34,28 +33,36 @@ public class HomeUseDyrResult implements Serializable{
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * id : 23
-         * teamId : 14
-         * title : 来世之人生赢家
-         * content : 快来讨论下吧，很有意思的！
-         * createDate : 2016-10-31 00:00:00
-         * topFlag : 1
-         * starterId : 14
-         * creatUserId : 1
+         * teamId : 112
+         * teamName :
+         * title : 旅途通知我
+         * content : 图我想问一下
+         * browseNum : 63
+         * createDate : 29天前
+         * topFlag : 0
+         * starterId : 112
+         * creatUserName : 哦的的哦
+         * creatUserId : 112
          * type : 2
+         * createrPhoto : http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg
          */
 
         private String id;
         private String teamId;
+        private String teamName;
         private String title;
         private String content;
+        private int browseNum;
         private String createDate;
         private String topFlag;
         private String starterId;
+        private String creatUserName;
         private String creatUserId;
         private int type;
+        private String createrPhoto;
 
         public String getId() {
             return id;
@@ -73,6 +80,14 @@ public class HomeUseDyrResult implements Serializable{
             this.teamId = teamId;
         }
 
+        public String getTeamName() {
+            return teamName;
+        }
+
+        public void setTeamName(String teamName) {
+            this.teamName = teamName;
+        }
+
         public String getTitle() {
             return title;
         }
@@ -87,6 +102,14 @@ public class HomeUseDyrResult implements Serializable{
 
         public void setContent(String content) {
             this.content = content;
+        }
+
+        public int getBrowseNum() {
+            return browseNum;
+        }
+
+        public void setBrowseNum(int browseNum) {
+            this.browseNum = browseNum;
         }
 
         public String getCreateDate() {
@@ -113,6 +136,14 @@ public class HomeUseDyrResult implements Serializable{
             this.starterId = starterId;
         }
 
+        public String getCreatUserName() {
+            return creatUserName;
+        }
+
+        public void setCreatUserName(String creatUserName) {
+            this.creatUserName = creatUserName;
+        }
+
         public String getCreatUserId() {
             return creatUserId;
         }
@@ -127,6 +158,14 @@ public class HomeUseDyrResult implements Serializable{
 
         public void setType(int type) {
             this.type = type;
+        }
+
+        public String getCreaterPhoto() {
+            return createrPhoto;
+        }
+
+        public void setCreaterPhoto(String createrPhoto) {
+            this.createrPhoto = createrPhoto;
         }
     }
 }

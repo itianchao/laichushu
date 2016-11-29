@@ -9,12 +9,13 @@
     <RelativeLayout
         android:id="@+id/rl_editHeadImg"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@color/auditing">
+        android:layout_height="260dp"
+        android:background="@drawable/mine_bg">
 
         <include
             android:id="@+id/edit_top"
-            layout="@layout/page_title" />
+            android:background="#9000"
+            layout="@layout/page_title_trans"/>
 
         <ImageView
             android:id="@+id/iv_userHeadImg"
@@ -78,8 +79,8 @@
 
         <Button
             android:id="@+id/btn_userFocus"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tv_userAuthorGrade"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
@@ -87,6 +88,7 @@
             android:text="关注"
             android:textColor="@color/white"
             android:textSize="@dimen/edit"
+            android:layout_marginBottom="12dp"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -111,22 +113,18 @@
                 style="@style/mechanism_select"
                 android:checked="true"
                 android:text="动态" />
-
             <RadioButton
                 android:id="@+id/rb_userWorks"
-
                 style="@style/mechanism_select"
                 android:text="作品" />
 
             <RadioButton
                 android:id="@+id/rb_userHeFocus"
-
                 style="@style/mechanism_select"
                 android:text="他关注的" />
 
             <RadioButton
                 android:id="@+id/rb_userFocusHe"
-
                 style="@style/mechanism_select"
                 android:text="关注他的" />
         </RadioGroup>

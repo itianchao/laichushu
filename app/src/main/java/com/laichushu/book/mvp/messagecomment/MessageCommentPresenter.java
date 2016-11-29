@@ -24,7 +24,6 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
     //初始化构造
     public MessageCommentPresenter(MessageCommentView view) {
         attachView(view);
-        mActivity = (MessageCommentDetailsActivity) view;
     }
 
     public String getPageSize() {

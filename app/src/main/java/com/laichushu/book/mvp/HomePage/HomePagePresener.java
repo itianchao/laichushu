@@ -1,6 +1,7 @@
 package com.laichushu.book.mvp.homepage;
 
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
+import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
@@ -8,6 +9,7 @@ import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
+import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
@@ -23,7 +25,6 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
-
     public HomeUserDy_parmet getParamet() {
         return paramet;
     }
@@ -171,6 +172,53 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
             @Override
             public void onSuccess(HomeFocusResult model) {
                 mvpView.getFocusMeStatus(model,isFocus);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+
+
+    //点赞
+//    private ScoreLike_Paramet scoreLike =new ScoreLike_Paramet("",userId,"5");
+//    public void loadLikeUp(String sourUserId){
+//        scoreLike.setSourceId(sourUserId);
+//        LoggerUtil.toJson(collect);
+//        addSubscription(apiStores.collectSave(collect), new ApiCallback<HomeFocusResult>() {
+//            @Override
+//            public void onSuccess(HomeFocusResult model) {
+//                mvpView.getFocusMeStatus(model,isFocus);
+//            }
+//
+//            @Override
+//            public void onFailure(int code, String msg) {
+//                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//        });
+//    }
+    //查看话题详情
+    private CollectSave_Paramet collect =new CollectSave_Paramet(userId,"","0","5");
+    public void loadLikeUp(String targetId){
+        collect.setTargetId(targetId);
+        LoggerUtil.toJson(collect);
+        addSubscription(apiStores.collectSave(collect), new ApiCallback<HomeFocusResult>() {
+            @Override
+            public void onSuccess(HomeFocusResult model) {
+                mvpView.getFocusMeStatus(model,false);
             }
 
             @Override

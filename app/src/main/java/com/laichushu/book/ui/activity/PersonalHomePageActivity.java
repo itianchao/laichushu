@@ -11,7 +11,6 @@ import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomeInfo_paramet;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
-import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.mvp.homepage.HomePagePresener;
 import com.laichushu.book.mvp.homepage.HomePageView;
@@ -56,7 +55,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     protected View createSuccessView() {
         View inflate = UIUtil.inflate(R.layout.activity_personal_home_page);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
-        ivEdit = ((ImageView) inflate.findViewById(R.id.iv_title_other));
+        ivEdit = ((ImageView) inflate.findViewById(R.id.iv_title_another));
         ivGreadDetails = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetails));
         iv_headImg = ((ImageView) inflate.findViewById(R.id.iv_PerHeadImg));
         ivAnother = (ImageView) inflate.findViewById(R.id.iv_title_another);
@@ -84,14 +83,15 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
         tvTitle.setText("个人主页");
         tvTitle.setVisibility(View.VISIBLE);
-        GlideUitl.loadImg(mActivity, null, ivAnother);
+        ivAnother.setBackgroundResource(R.drawable.bookdetail_write);
+        ivAnother.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
         ivGreadDetails.setOnClickListener(this);
         ivAnother.setOnClickListener(this);
         rgHomeList.setOnCheckedChangeListener(this);
         initHeadInfo();
-        //初始化mRecyclerView 关注
+        //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
         mDyRecyclerView.setFooterViewText("加载中");
         dyAdapter = new HomePageDynamicAdapter(this, dyData);

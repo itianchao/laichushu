@@ -272,10 +272,9 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             }
         }, 300);
         if (result.isSuccess()) {
-            ToastUtil.showToast("HomeUseDyrResult");
             worksData = result.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!dyData.isEmpty()) {
+            if (!worksData.isEmpty()) {
                 worksAdapter.refreshAdapter(worksData);
                 PAGE_NO++;
             } else {

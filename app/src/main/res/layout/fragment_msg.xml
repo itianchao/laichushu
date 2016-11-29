@@ -9,7 +9,7 @@
         layout="@layout/page_title" />
 
     <RadioGroup
-        android:id="@+id/rg_homeList"
+        android:id="@+id/rg_msgList"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/mine_top"
@@ -36,13 +36,10 @@
     </RadioGroup>
 
     <LinearLayout
-        android:id="@+id/ll_content"
+        android:id="@+id/ll_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/rg_homeList"
+        android:layout_below="@+id/rg_msgList"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -296,10 +293,106 @@
                 android:background="@drawable/home_right" />
         </RelativeLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sysMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rg_msgList"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/rl_activity"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_activity"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/icon_msg_1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_activity"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="活动通知"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/home_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_otherMsg"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_otherMsg"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/icon_msg_1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_otherMsg"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="4dp"
+                android:text="其他消息"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/home_right" />
+        </RelativeLayout>
+    </LinearLayout>
+    >
+
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/ryv_subMission"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/rg_msgList"
         android:layout_marginTop="12dp"
         android:visibility="gone" />
 </RelativeLayout>

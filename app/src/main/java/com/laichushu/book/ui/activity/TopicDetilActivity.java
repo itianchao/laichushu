@@ -7,12 +7,12 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.mvp.topicdetail.TopicDetailPresenter;
 import com.laichushu.book.mvp.topicdetail.TopicDetailView;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
-import com.laichushu.book.ui.adapter.CommentDetaileAdapter;
 import com.laichushu.book.ui.adapter.TopicCommentDetaileAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -45,6 +45,8 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     private String topicId;
     private EditText sendmsgEv;
     private ImageView sendmsgIv;
+    private String type;
+    private HomeUseDyrResult.DataBean homeBean;
 
     @Override
     protected TopicDetailPresenter createPresenter() {
@@ -61,13 +63,13 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         topicContentTv = (TextView) mSuccessView.findViewById(R.id.tv_topic_content);
         topicTiemTv = (TextView) mSuccessView.findViewById(R.id.tv_topic_time);
         topicNameTv = (TextView) mSuccessView.findViewById(R.id.tv_topic_name);
-        commentRyv = (PullLoadMoreRecyclerView)mSuccessView.findViewById(R.id.ryv_comment);
-        sendmsgEv = (EditText)mSuccessView.findViewById(R.id.et_sendmsg);
-        sendmsgIv = (ImageView)mSuccessView.findViewById(R.id.iv_sendmsg);
+        commentRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_comment);
+        sendmsgEv = (EditText) mSuccessView.findViewById(R.id.et_sendmsg);
+        sendmsgIv = (ImageView) mSuccessView.findViewById(R.id.iv_sendmsg);
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
-        mAdapter = new TopicCommentDetaileAdapter(this,mData);
+        mAdapter = new TopicCommentDetaileAdapter(this, mData);
         commentRyv.setAdapter(mAdapter);
         finishIv.setOnClickListener(this);
         sendmsgIv.setOnClickListener(this);
@@ -77,9 +79,25 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     @Override
     protected void initData() {
         titleTv.setText("话题详情");
-        bean = getIntent().getParcelableExtra("bean");
-        topicId = bean.getId();
-        mvpPresenter.loadCommentData(topicId);
+        type = getIntent().getStringExtra("type");
+        if (type.equals("homepage")) {
+            homeBean = (HomeUseDyrResult.DataBean) getIntent().getSerializableExtra("topBean");
+            topicId = homeBean.getId();
+            //init
+            topicNameTv.setText(homeBean.getTitle());
+            topicAuthorTv.setText(homeBean.getCreatUserName());
+            topicContentTv.setText(homeBean.getContent());
+            topicTiemTv.setText(homeBean.getCreateDate());
+            GlideUitl.loadRandImg(mActivity, homeBean.getCreaterPhoto(), topicUserheadIv);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        } else {
+            bean = getIntent().getParcelableExtra("bean");
+            topicId = bean.getId();
+        }
+//        if(!type.equals("homepage")){
+//            mvpPresenter.loadCommentData(topicId);
+//        }
+//        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -93,11 +111,16 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 mAdapter.setmData(mData);
                 mAdapter.notifyDataSetChanged();
                 pageNo++;
-                topicNameTv.setText(bean.getTitle());
-                topicAuthorTv.setText(bean.getCreatUserName());
-                topicContentTv.setText(bean.getContent());
-                topicTiemTv.setText(bean.getCreateDate());
-                GlideUitl.loadRandImg(mActivity,bean.getCreaterPhoto(),topicUserheadIv);
+                if (type.equals("homepage")) {
+
+                } else {
+                    topicNameTv.setText(bean.getTitle());
+                    topicAuthorTv.setText(bean.getCreatUserName());
+                    topicContentTv.setText(bean.getContent());
+                    topicTiemTv.setText(bean.getCreateDate());
+                    GlideUitl.loadRandImg(mActivity, bean.getCreaterPhoto(), topicUserheadIv);
+                }
+
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -116,7 +139,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             ToastUtil.showToast("发送成功");
             sendmsgEv.setText("");
             onRefresh();
-        }else {
+        } else {
             ToastUtil.showToast("发送失败");
         }
     }
@@ -145,7 +168,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.iv_title_finish:
                 finish();
                 break;
@@ -162,7 +185,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     public void onRefresh() {
         pageNo = 1;
         mData.clear();
-        mvpPresenter.getParamet().setPageNo(pageNo+"");
+        mvpPresenter.getParamet().setPageNo(pageNo + "");
         mvpPresenter.loadCommentData(topicId);
     }
 
@@ -171,10 +194,11 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
      */
     @Override
     public void onLoadMore() {
-        mvpPresenter.getParamet().setPageNo(pageNo+"");
+        mvpPresenter.getParamet().setPageNo(pageNo + "");
         mvpPresenter.loadCommentData(topicId);
     }
-    public void reLoadDate(){
+
+    public void reLoadDate() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {

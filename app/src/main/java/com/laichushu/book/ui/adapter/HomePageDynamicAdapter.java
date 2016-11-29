@@ -1,14 +1,17 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
+import com.laichushu.book.ui.activity.TopicDetilActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -32,23 +35,29 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
         View itemView = UIUtil.inflate(R.layout.item_homepage_dynemic);
         return new HomePageDynamicAdapter.ViewHolder(itemView);
     }
-
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, null, holder.ivImg);
         holder.tvShopName.setText(dataBeen.get(position).getTitle());
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
-//        holder.llItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-                //跳转图书详情页
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("bean", dataBeen.get(position));
-//                UIUtil.openActivity(context, BookDetailActivity.class, bundle);
-//            }
-//        });
+        holder.llCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点赞
+            }
+        });
+        holder.llScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //查看话题详情
+                Bundle topic =new Bundle();
+                topic.putString("type","homepage");
+                topic.putSerializable("topBean",dataBeen.get(position));
+                UIUtil.openActivity(context, TopicDetilActivity.class,topic);
+            }
+        });
     }
 
 
@@ -71,9 +80,10 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView tvShopName,tvTime,tvTitle,tvTitleContent,tvMsg,tvFocus,tvScan;
+        public final TextView tvShopName, tvTime, tvTitle, tvTitleContent, tvMsg;
         public final ImageView ivImg;
         public final View root;
+        public final LinearLayout llCollection, llScan;
 
         public ViewHolder(View root) {
             super(root);
@@ -82,9 +92,9 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
             tvTitle = (TextView) root.findViewById(R.id.tv_dyTitleName);
             tvTitleContent = (TextView) root.findViewById(R.id.tv_dyTitleContent);
             tvMsg = (TextView) root.findViewById(R.id.tv_msg);
-            tvFocus = (TextView) root.findViewById(R.id.tv_focus);
-            tvScan = (TextView) root.findViewById(R.id.tv_scan);
             ivImg = (ImageView) root.findViewById(R.id.iv_dyHead);
+            llCollection = (LinearLayout) root.findViewById(R.id.ll_collection);
+            llScan = (LinearLayout) root.findViewById(R.id.ll_scan);
             this.root = root;
         }
     }

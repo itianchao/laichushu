@@ -10,11 +10,11 @@
         android:id="@+id/rl_editHeadImg"
         android:layout_width="match_parent"
         android:layout_height="215dp"
-        android:background="@color/auditing">
+        android:background="@drawable/mine_bg">
 
         <include
             android:id="@+id/edit_top"
-            layout="@layout/page_title" />
+            layout="@layout/page_title_trans" />
 
         <ImageView
             android:id="@+id/iv_PerHeadImg"

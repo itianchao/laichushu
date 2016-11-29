@@ -8,7 +8,7 @@ package com.laichushu.book.bean.netbean;
 public class CollectSave_Paramet {
     private String userId;
     private String targetId;
-    private String type;
+    private String type;//0 收藏 1 取消
     private String collectType;
 
     public CollectSave_Paramet(String userId, String targetId, String type, String collectType) {
