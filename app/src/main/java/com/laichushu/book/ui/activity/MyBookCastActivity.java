@@ -84,11 +84,23 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         mCollRecyclerView.setAdapter(collAdapter);
         mCollRecyclerView.setOnPullLoadMoreListener(this);
     }
+//    /**
+//     *  刷新书架
+//     */
+//    public interface RefurshMineFragmentListener{
+//        void refrushMineFragmen();
+//    }
+//    public void setmListener(RefurshMineFragmentListener mListener) {
+//        this.mListener = mListener;
+//    }
+//
+//    private RefurshMineFragmentListener mListener;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
+//                mListener.refrushMineFragmen();
                 this.finish();
                 break;
         }

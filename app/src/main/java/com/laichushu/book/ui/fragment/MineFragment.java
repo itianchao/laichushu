@@ -92,10 +92,10 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         tvTitle.setText("个人中心");
         return mRootView;
     }
-
     @Override
     protected void initData() {
         super.initData();
+
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         cache_jsonDao = daoSession.getCache_JsonDao();
         getData();
@@ -191,5 +191,4 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
             }
         });
     }
-
 }
