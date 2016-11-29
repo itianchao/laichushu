@@ -18,9 +18,9 @@
 
 #FBReader»ìÏý start
 
--keep class org.geometerplus.android.fbreader.util.** { *; }
+-keep class org.geometerplus.android.org.geometerplus.android.fbreader.util.** { *; }
 -keep class org.geometerplus.android.util.** { *; }
--keep class org.geometerplus.fbreader.** { *; }
+-keep class org.geometerplus.org.geometerplus.android.fbreader.** { *; }
 -keep class org.geometerplus.zlibrary.core.application.** { *; }
 -keep class org.geometerplus.zlibrary.core.constants.** { *; }
 -keep class org.geometerplus.zlibrary.core.drm.** { *; }

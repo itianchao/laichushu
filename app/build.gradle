@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.laichushu.book"
         minSdkVersion 14
@@ -17,16 +17,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/aidl']
+        }
+    }
     repositories {
         flatDir {
             dirs 'libs'
         }
         jcenter()
     }
+    defaultConfig {
+        multiDexEnabled true
+    }
 }
 allprojects {
     repositories {
         maven { url "https://jitpack.io" }
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java', 'src/main/aidl']
+        resources.srcDirs = ['src/main/java', 'src/main/aidl']
     }
 }
 dependencies {
@@ -54,4 +70,9 @@ dependencies {
     compile 'jp.wasabeef:richeditor-android:1.2.1'
     compile(name: 'notify-dialog-library', ext: 'aar')
     compile project(':pickerView')
+
+    compile project(path: ':ambilWarna')
+    compile project(path: ':code')
+    compile project(path: ':superToasts')
+    compile project(path: ':dragsortlistview')
 }
