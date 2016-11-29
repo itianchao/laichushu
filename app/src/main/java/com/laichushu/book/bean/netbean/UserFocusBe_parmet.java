@@ -3,14 +3,15 @@ package com.laichushu.book.bean.netbean;
 import java.io.Serializable;
 
 /**
- * Created by PCPC on 2016/11/23.
+ * Created by PCPC on 2016/11/28.
  */
 
-public class HomeUserFocusBe_parmet implements Serializable {
-    private String loginUserId, pageNo, pageSize;
+public class UserFocusBe_parmet implements Serializable {
+    private String loginUserId, userId, pageNo, pageSize;
 
-    public HomeUserFocusBe_parmet(String loginUserId, String pageNo, String pageSize) {
+    public UserFocusBe_parmet(String loginUserId, String userId, String pageNo, String pageSize) {
         this.loginUserId = loginUserId;
+        this.userId = userId;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
     }
@@ -21,6 +22,14 @@ public class HomeUserFocusBe_parmet implements Serializable {
 
     public void setLoginUserId(String loginUserId) {
         this.loginUserId = loginUserId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getPageNo() {

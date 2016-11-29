@@ -1,5 +1,6 @@
 package com.laichushu.book.retrofit;
 
+import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
 import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.MechanismBrieBean;
@@ -40,6 +41,7 @@ import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
+import com.laichushu.book.bean.netbean.HomeInfo_paramet;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
@@ -58,6 +60,8 @@ import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
 import com.laichushu.book.bean.netbean.MechanismBrie_Paramet;
 import com.laichushu.book.bean.netbean.MechanismList_Paramet;
 import com.laichushu.book.bean.netbean.MechanismTopicList_Paramet;
+import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.bean.netbean.MessageComment_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
 import com.laichushu.book.bean.netbean.NoticesList_Paramet;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
@@ -81,6 +85,7 @@ import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
 import com.laichushu.book.bean.netbean.UserBookList_Paramet;
+import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
@@ -137,6 +142,7 @@ public interface ApiStores {
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
+//      String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//李红江
 
     //登录接口
     @POST("login/do")
@@ -344,11 +350,11 @@ public interface ApiStores {
     Observable<HomeHotModel> getArticleBookListScan(@Body MyArticBooklist_paramet paramet);
 
     //个人主页用户信息   userId
-    @POST("perHome/find")
-    Observable<HomeUserResult> getHomeUserInforDetails(@Body HomeUserInfor_paramet paramet);
+    @POST("userDetail/findUserInfo")
+    Observable<HomeUserResult> getHomeUserInforDetails(@Body HomeInfo_paramet paramet);
 
-    //个人主页用户信息   userID,target Id
-    @POST("userDetail/find")
+    //用户主页信息   userID,target Id
+    @POST("userDetail/findUserInfo")
     Observable<HomeUserResult> getUserInforDetails(@Body HomeUserInfor_paramet paramet);
 
     //个人主页动态
@@ -362,23 +368,38 @@ public interface ApiStores {
     Observable<HomeUseDyrResult> getUserHomeDyDetails(@Body HomeUserDy_parmet paramet);
 
     //个人主页关注我的
-    @POST("perFocus/findBe")
-    Observable<HomePersonFocusResult> getHomeUserFocusMeDetails(@Body HomeUserFocusMe_parmet paramet);
+    @POST("perFocus/findMyBeFocusedInfos")
+    Observable<HomePersonFocusResult> getHomeUserFocusMeDetails(@Body HomeUserFocusBe_parmet paramet);
+
+    //用户主页关注他的
+    @POST("perFocus/findHisBeFocusedInfos")
+    Observable<HomePersonFocusResult> getUserFocusMeDetails(@Body UserFocusBe_parmet paramet);
+
     //意见反馈
     @POST("feedback/save")
     Observable<RewardResult> feedBackDetails(@Body FeedBack_parmet paramet);
 
     //个人主页我关注的
-    @POST("perFocus/findMy")
+    @POST("perFocus/findMyFocusInfos")
     Observable<HomePersonFocusResult> getHomeUserFocusBeDetails(@Body HomeUserFocusBe_parmet paramet);
+
+    //用户主页他关注的
+    @POST("perFocus/findHisFocusInfos")
+    Observable<HomePersonFocusResult> getUserFocusBeDetails(@Body UserFocusBe_parmet paramet);
 
     //个人主页更新“关注我的”信息关注状态
     @POST("perFocus/updateBe")
-    Observable<HomeFocusResult> getHomeUserFocusMeStatus(@Body HomeUserFocusState_Paramet paramet);
+    Observable<HomeFocusResult> getHomeUserFocusMeStatuss(@Body HomeUserFocusState_Paramet paramet);
 
     //个人主页更新“我关注的”信息关注状态
     @POST("userDetail/updateHis")
-    Observable<HomeFocusResult> getHomeUserFocusBeStatus(@Body HomeUserFocusState_Paramet paramet);
+    Observable<HomeFocusResult> getHomeUserFocusBeStatuss(@Body HomeUserFocusState_Paramet paramet);
+    //添加关注
+    @POST("perFocus/addFocus")
+    Observable<HomeFocusResult> getAddFocus(@Body ChangeFocusState_Paramet paramet);
+//添加关注
+    @POST("perFocus/delFocus")
+    Observable<HomeFocusResult> getDelFocus(@Body ChangeFocusState_Paramet paramet);
 
     //个人主页发表动态话题
     @POST("topic/saveTopic")
@@ -443,12 +464,15 @@ public interface ApiStores {
     //获取机构
     @POST("party/list")
     Observable<MechanismListBean> getMechanismList(@Body MechanismList_Paramet paramet);
+
     //我的钱包基本信息+交易记录
     @POST("wallet/find")
     Observable<WalletBalanceReward> getBalanceRecordDetails(@Body WalletBalanceRecord_Paramet paramet);
+
     //我的钱包充值
     @POST("wallet/find")
     Observable<WalletBalanceReward> getRechargeDetails(@Body WalletBalanceRecord_Paramet paramet);//我的钱包提现
+
     @POST("wallet/find")
     Observable<WalletBalanceReward> getWithdrawalsDetails(@Body WalletBalanceRecord_Paramet paramet);
 
@@ -471,4 +495,8 @@ public interface ApiStores {
     //话题详情保存评论
     @POST("topicComment/save")
     Observable<RewardResult> topicDetailCommentSave(@Body TopicDetailCommentSave_Paramet paramet);
+
+    //消息页面--评论
+    @POST("information/list")
+    Observable<MessageCommentResult> messageCommentDetails(@Body MessageComment_Paramet paramet);
 }

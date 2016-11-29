@@ -21,6 +21,7 @@ import com.laichushu.book.utils.UIUtil;
 import java.util.List;
 
 /**
+ * 关注我的
  * Created by PCPC on 2016/11/23.
  */
 
@@ -45,24 +46,27 @@ public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMe
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
         holder.tvContent.setText(dataBeen.get(position).getNickName());
-//        if(dataBeen.get(position)position)
-        holder.checkBox.setText("关注");
+        //关注我的
+        if (dataBeen.get(position).isStatus()) {
+            holder.checkBox.setText("取消关注");
+        } else {
+            holder.checkBox.setText("关注");
+        }
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if (!holder.checkBox.isChecked()) {
-                    holder.checkBox.setText("已关注");
+                if (!dataBeen.get(position).isStatus()) {
+                    holder.checkBox.setText("取消关注");
                     holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
-                    homePagePresener.getStatus().setStatus(true);
-                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
-                    homePagePresener.loadFocusMeStatus(true);
+                    //添加关注
+                    homePagePresener.loadAddFocus(dataBeen.get(position).getSourceUserId(),true);
+                    dataBeen.get(position).setStatus(true);
                 } else {
                     holder.checkBox.setText("关注");
                     holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
-                    homePagePresener.getStatus().setStatus(false);
-                    homePagePresener.getStatus().setTargetId(dataBeen.get(position).getTargetUserId());
-                    homePagePresener.loadFocusMeStatus(false);
+                    homePagePresener.loadDelFocus(dataBeen.get(position).getSourceUserId(),false);
+                    dataBeen.get(position).setStatus(false);
                 }
 
             }
@@ -72,8 +76,8 @@ public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMe
             public void onClick(View v) {
                 //跳转用户主页
                 Bundle bundle = new Bundle();
-                bundle.putInt("type",1);
-                bundle.putSerializable("bean",dataBeen.get(position));
+                bundle.putInt("type", 1);
+                bundle.putSerializable("bean", dataBeen.get(position));
                 UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
             }
         });
@@ -94,8 +98,8 @@ public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMe
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);
-            this.notifyDataSetChanged();
         }
+        this.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

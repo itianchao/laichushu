@@ -3,16 +3,11 @@ package com.laichushu.book.bean.netbean;
 import java.io.Serializable;
 
 /**
- * Created by PCPC on 2016/11/22.
+ * Created by PCPC on 2016/11/28.
  */
 
-public class HomeUserInfor_paramet implements Serializable {
+public class HomeInfo_paramet implements Serializable{
     private String loginUserId, userId;
-
-    public HomeUserInfor_paramet(String loginUserId, String userId) {
-        this.loginUserId = loginUserId;
-        this.userId = userId;
-    }
 
     public String getLoginUserId() {
         return loginUserId;
@@ -27,6 +22,11 @@ public class HomeUserInfor_paramet implements Serializable {
     }
 
     public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public HomeInfo_paramet(String loginUserId, String userId) {
+        this.loginUserId = loginUserId;
         this.userId = userId;
     }
 }
