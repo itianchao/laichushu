@@ -1,18 +1,18 @@
 package com.laichushu.book.global;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.laichushu.book.db.DaoSession;
-import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.db.DaoMaster;
+import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.org.geometerplus.android.fbreader.FBReaderApplication;
+import com.laichushu.book.utils.SharePrefManager;
 
 /**
  * 应用程序入口
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends FBReaderApplication {
     private static Context mContext;
     private static Thread mMainThread;
     private static long mMainThreadId;
