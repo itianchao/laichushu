@@ -1,19 +1,21 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
 import com.laichushu.book.ui.adapter.MessageCommentAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
-import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -52,7 +54,7 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         //初始化mRecyclerView 评论
         mRecyclerView.setGridLayout(1);
         mRecyclerView.setFooterViewText("加载中");
-        msgAdapter = new MessageCommentAdapter(this, commData);
+        msgAdapter = new MessageCommentAdapter(this, commData,mvpPresenter);
         mRecyclerView.setAdapter(msgAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
 
@@ -70,16 +72,16 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     public void onRefresh() {
-
-            commData.clear();
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
+        PAGE_NO=1;
+        commData.clear();
+        mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+        mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
     }
 
     @Override
     public void onLoadMore() {
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
+        mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+        mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
     }
 
     @Override
@@ -101,14 +103,21 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
             }
         } else {
-            if(model.getData().size()==0){
+            if (model.getData().size() == 0) {
                 ToastUtil.showToast("没有更多信息！");
             }
         }
     }
 
     @Override
-    public void getDataFail(String msg) {
-        Logger.e(msg);
+    public void getBookDetailsDateSuccess(HomeHotModel model, int position) {
+
     }
+
+    @Override
+    public void getDataFail(String msg) {
+        LoggerUtil.e(msg);
+    }
+
+
 }

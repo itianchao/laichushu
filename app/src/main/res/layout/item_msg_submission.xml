@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="12dp"
     android:layout_marginTop="12dp"
-    android:background="@color/bgGrey"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,6 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/bgGrey" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,8 +29,7 @@
                 android:layout_width="45dp"
                 android:layout_height="65dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="12dp"
-                android:background="@color/auditing" />
+                android:layout_marginLeft="12dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,8 +90,8 @@
                         android:background="@drawable/shape_rectangle_btn_state"
                         android:clickable="false"
                         android:focusable="false"
-                        android:textColor="@color/characterGray"
-                        android:text="审核中" />
+                        android:text="审核中"
+                        android:textColor="@color/characterGray" />
                 </RelativeLayout>
             </LinearLayout>
 

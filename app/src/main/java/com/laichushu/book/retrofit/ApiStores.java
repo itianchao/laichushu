@@ -1,5 +1,7 @@
 package com.laichushu.book.retrofit;
 
+import com.laichushu.book.bean.netbean.BookDetailsResult;
+import com.laichushu.book.bean.netbean.BookDetails_Paramet;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
 import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
@@ -137,10 +139,10 @@ public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
-    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
-//    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
+    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //      String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//李红江
 
@@ -394,10 +396,12 @@ public interface ApiStores {
     //个人主页更新“我关注的”信息关注状态
     @POST("userDetail/updateHis")
     Observable<HomeFocusResult> getHomeUserFocusBeStatuss(@Body HomeUserFocusState_Paramet paramet);
+
     //添加关注
     @POST("perFocus/addFocus")
     Observable<HomeFocusResult> getAddFocus(@Body ChangeFocusState_Paramet paramet);
-//添加关注
+
+    //添加关注
     @POST("perFocus/delFocus")
     Observable<HomeFocusResult> getDelFocus(@Body ChangeFocusState_Paramet paramet);
 
@@ -499,4 +503,7 @@ public interface ApiStores {
     //消息页面--评论
     @POST("information/list")
     Observable<MessageCommentResult> messageCommentDetails(@Body MessageComment_Paramet paramet);
+    //消息页面-根据图书id查找图书详情
+    @POST("myArticle/find")
+    Observable<HomeHotModel> getBookDetailsById(@Body BookDetails_Paramet paramet);
 }

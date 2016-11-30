@@ -93,6 +93,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         } else {
             bean = getIntent().getParcelableExtra("bean");
             topicId = bean.getId();
+            mvpPresenter.loadCommentData(topicId);
         }
 //        if(!type.equals("homepage")){
 //            mvpPresenter.loadCommentData(topicId);

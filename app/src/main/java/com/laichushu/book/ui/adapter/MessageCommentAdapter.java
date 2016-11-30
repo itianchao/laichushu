@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
+import com.laichushu.book.ui.activity.PersonalHomePageActivity;
+import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
@@ -23,10 +29,11 @@ import java.util.List;
 public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAdapter.ViewHolder> {
     private MessageCommentDetailsActivity context;
     private List<MessageCommentResult.DataBean> dataBeen;
-
-    public MessageCommentAdapter(MessageCommentDetailsActivity context, List<MessageCommentResult.DataBean> dataBean) {
+    private MessageCommentPresenter messageCommentPresenter;
+    public MessageCommentAdapter(MessageCommentDetailsActivity context, List<MessageCommentResult.DataBean> dataBean,MessageCommentPresenter messageCommentPresenter) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.messageCommentPresenter=messageCommentPresenter;
     }
 
     @Override
@@ -37,16 +44,29 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
 
     @Override
     public void onBindViewHolder(MessageCommentAdapter.ViewHolder holder, final int position) {
-        GlideUitl.loadRandImg(context, "", holder.ivImg);
+        GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivImg);
         holder.tvName.setText(dataBeen.get(position).getSenderName());
-        holder.tvAppend.setText(dataBeen.get(position).getSenderName() + "评论了你的文章");
-        holder.tvBookName.setText("");
+        holder.tvAppend.setText(dataBeen.get(position).getSenderName() + " 评论了你的文章");
+        holder.tvBookName.setText(dataBeen.get(position).getAccepterName());
         holder.tvContent.setText(dataBeen.get(position).getContent());
         holder.tvData.setText(dataBeen.get(position).getSendTime() + "");
         holder.ivReplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ToastUtil.showToast("回复消息！");
+            }
+        });
+        holder.ivImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转用户主页
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                } else {
+                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                }
             }
         });
 

@@ -1,16 +1,23 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
-import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
+import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
+import com.laichushu.book.ui.activity.MsgLikeDetailsActivity;
+import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
+import com.laichushu.book.ui.activity.PersonalHomePageActivity;
+import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
@@ -21,34 +28,221 @@ import java.util.List;
  */
 
 public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.ViewHolder> {
-    private MessageCommentDetailsActivity context;
+    private MsgLikeDetailsActivity context;
     private List<MessageCommentResult.DataBean> dataBeen;
+    private String type;
+    private MessageCommentPresenter messageCommentPresenter;
 
-    public MessageLikeAdapter(MessageCommentDetailsActivity context, List<MessageCommentResult.DataBean> dataBean) {
+    public MessageLikeAdapter(MsgLikeDetailsActivity context, List<MessageCommentResult.DataBean> dataBean, String type, MessageCommentPresenter messageCommentPresenter) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.type = type;
+        this.messageCommentPresenter = messageCommentPresenter;
     }
 
     @Override
     public MessageLikeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = UIUtil.inflate(R.layout.iten_msg_comment);
+        View itemView = null;
+        switch (type) {
+            case "1":
+                itemView = UIUtil.inflate(R.layout.item_msg_like_datails);
+                break;
+            case "2":
+                itemView = UIUtil.inflate(R.layout.item_msg_reward);
+                break;
+            case "3":
+            case "4":
+            case "5":
+            case "6":
+            case "7":
+                itemView = UIUtil.inflate(R.layout.item_msg_focus);
+                break;
+        }
         return new MessageLikeAdapter.ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MessageLikeAdapter.ViewHolder holder, final int position) {
-        GlideUitl.loadRandImg(context, "", holder.ivImg);
-        holder.tvName.setText(dataBeen.get(position).getSenderName());
-        holder.tvAppend.setText(dataBeen.get(position).getSenderName() + "评论了你的文章");
-        holder.tvBookName.setText("");
-        holder.tvContent.setText(dataBeen.get(position).getContent());
-        holder.tvData.setText(dataBeen.get(position).getSendTime() + "");
-        holder.ivReplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showToast("回复消息！");
-            }
-        });
+        switch (type) {
+            case "1":
+                //喜欢
+                holder.tvTime.setText(dataBeen.get(position).getSendTime());
+                holder.tvReaderName.setText(dataBeen.get(position).getSenderName());
+                switch (dataBeen.get(position).getSourceType()) {
+                    case "1":
+                        //点赞
+                        holder.tvContent.setVisibility(View.VISIBLE);
+                        holder.tvType.setText("点赞了您的评论");
+                        holder.tvContent.setText(dataBeen.get(position).getContent());
+                        break;
+                    case "2":
+                        //收藏
+                        holder.tvContent.setVisibility(View.GONE);
+                        holder.tvType.setText("收藏了你的书");
+                        holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
+                        holder.tvBookName.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtil.showToast("跳转书详情！");
+                                messageCommentPresenter.LoadBookDetailsData(dataBeen.get(position).getArticleId(), position);
+                            }
+                        });
+                        break;
+                    case "3":
+                        //话题
+                        holder.tvContent.setVisibility(View.VISIBLE);
+                        holder.tvType.setText("评论了您的话题");
+                        holder.tvBookName.setText(dataBeen.get(position).getAccepterName());
+                        holder.tvContent.setText(dataBeen.get(position).getContent());
+                        break;
+                    case "4":
+                        //评论
+                        holder.tvContent.setVisibility(View.VISIBLE);
+                        holder.tvType.setText("评论了您的书");
+                        holder.tvBookName.setText(dataBeen.get(position).getSourceName());
+                        holder.tvContent.setText(dataBeen.get(position).getContent());
+                        holder.tvBookName.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtil.showToast("跳转书详情！");
+                                messageCommentPresenter.LoadBookDetailsData(dataBeen.get(position).getArticleId(), position);
+                            }
+                        });
+                        break;
+                }
+                holder.tvReaderName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                        } else {
+                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                        }
+                    }
+                });
+
+                break;
+            case "2":
+                //打赏
+                holder.tvReward.setText(dataBeen.get(position).getSenderName());
+                holder.tvRewardTime.setText(dataBeen.get(position).getSendTime());
+                holder.btnWallet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UIUtil.openActivity(context, MyWalletDetailsActivity.class);
+                    }
+                });
+                holder.tvReward.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                        } else {
+                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                        }
+                    }
+                });
+                break;
+            case "3":
+                //关注
+                GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivFocusIcon);
+                holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
+                holder.tvFocusName.setText(dataBeen.get(position).getSenderName());
+                holder.tvFocusName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                        } else {
+                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                        }
+                    }
+                });
+                holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                        } else {
+                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                        }
+                    }
+                });
+                break;
+            case "4":
+                //私信
+                GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivFocusIcon);
+                holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
+                holder.tvFocusName.setText(dataBeen.get(position).getContent());
+                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.black));
+                holder.tvFocusContent.setVisibility(View.GONE);
+                holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                        } else {
+                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                        }
+                    }
+                });
+                break;
+            case "5":
+                //订阅
+                GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivFocusIcon);
+                holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
+                holder.tvFocusName.setText(dataBeen.get(position).getContent());
+                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.black));
+                holder.tvFocusContent.setVisibility(View.GONE);
+                holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                        } else {
+                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                        }
+                    }
+                });
+                break;
+            case "6":
+                //系统通知
+                holder.ivFocusNotice.setVisibility(View.VISIBLE);
+                holder.ivFocusIcon.setVisibility(View.INVISIBLE);
+                holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
+                holder.tvFocusName.setText(dataBeen.get(position).getContent());
+                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.black));
+                holder.tvFocusContent.setVisibility(View.GONE);
+                break;
+            case "7":
+                //其他消息
+                holder.ivFocusNotice.setVisibility(View.VISIBLE);
+                holder.ivFocusIcon.setVisibility(View.INVISIBLE);
+                holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
+                holder.tvFocusName.setText(dataBeen.get(position).getContent());
+                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.black));
+                holder.tvFocusContent.setVisibility(View.GONE);
+                break;
+        }
+
 
     }
 
@@ -71,21 +265,50 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final LinearLayout llItem;
-        public final TextView tvName, tvAppend, tvBookName, tvContent, tvData;
-        public final ImageView ivImg, ivReplay;
+        //喜欢
+        public LinearLayout llItem;
+        public TextView tvTime, tvReaderName, tvType, tvBookName, tvContent;
         public final View root;
+        //打赏
+        public TextView tvReward, tvRewardBookName, tvRewardTime;
+        public Button btnWallet;
+        //关注
+        public TextView tvFocusTime, tvFocusName, tvFocusContent;
+        public ImageView ivFocusIcon, ivFocusNotice;
 
         public ViewHolder(View root) {
             super(root);
-            llItem = (LinearLayout) root.findViewById(R.id.ll_item);
-            tvName = (TextView) root.findViewById(R.id.tv_commentName);
-            tvAppend = (TextView) root.findViewById(R.id.tv_appendName);
-            tvBookName = (TextView) root.findViewById(R.id.tv_bookName);
-            tvContent = (TextView) root.findViewById(R.id.tv_commentContent);
-            tvData = (TextView) root.findViewById(R.id.tv_commentDate);
-            ivImg = (ImageView) root.findViewById(R.id.iv_commentHead);
-            ivReplay = (ImageView) root.findViewById(R.id.iv_replayMsg);
+            switch (type) {
+                case "1":
+                    //喜欢
+                    llItem = (LinearLayout) root.findViewById(R.id.ll_item);
+                    tvTime = (TextView) root.findViewById(R.id.tv_likeTime);
+                    tvReaderName = (TextView) root.findViewById(R.id.tv_readerName);
+                    tvType = (TextView) root.findViewById(R.id.tv_type);
+                    tvBookName = (TextView) root.findViewById(R.id.tv_bookName);
+                    //评论内容
+                    tvContent = (TextView) root.findViewById(R.id.tv_msgCommentContent);
+                    break;
+                case "2":
+                    //打赏
+                    tvReward = (TextView) root.findViewById(R.id.tv_rewardName);
+                    tvRewardBookName = (TextView) root.findViewById(R.id.tv_rewardBookName);
+                    tvRewardTime = (TextView) root.findViewById(R.id.tv_rewardTime);
+                    btnWallet = (Button) root.findViewById(R.id.tv_checkWallet);
+                    break;
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                    //关注
+                    ivFocusIcon = (ImageView) root.findViewById(R.id.iv_focusIcon);
+                    ivFocusNotice = (ImageView) root.findViewById(R.id.iv_focusNoticeIcon);
+                    tvFocusTime = (TextView) root.findViewById(R.id.tv_focusTime);
+                    tvFocusName = (TextView) root.findViewById(R.id.tv_focusName);
+                    tvFocusContent = (TextView) root.findViewById(R.id.tv_focusContent);
+                    break;
+            }
             this.root = root;
         }
     }

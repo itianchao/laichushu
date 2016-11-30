@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
+import com.laichushu.book.ui.activity.MsgLikeDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.adapter.HomePageDynamicAdapter;
 import com.laichushu.book.ui.adapter.SubMissionAdapter;
@@ -33,12 +35,12 @@ import java.util.List;
  */
 public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implements MessageCommentView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private TextView tvTitle;
-    private RelativeLayout rlComment,rlLike;
+    private RelativeLayout rlComment, rlLike, rlReward, rlFocus, rlLetter, rlScribe, rlActivityMsg,rlOtherMsg;
     private PullLoadMoreRecyclerView mRecyclerView;
     private SubMissionAdapter subAdapter;
     private List<MessageCommentResult.DataBean> subData = new ArrayList<>();
     private RadioGroup radioGroup;
-    private LinearLayout llContainer,llSys;
+    private LinearLayout llContainer, llSys;
     private int PAGE_NO = 1;
     private boolean dibbleSub;
 
@@ -56,7 +58,13 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
         radioGroup = (RadioGroup) mRootView.findViewById(R.id.rg_msgList);
         llContainer = (LinearLayout) mRootView.findViewById(R.id.ll_container);
         llSys = (LinearLayout) mRootView.findViewById(R.id.ll_sysMsg);
-        rlLike = (RelativeLayout) mRootView.findViewById(R.id.rl_like);
+        rlLike = (RelativeLayout) mRootView.findViewById(R.id.rl_msgLike);
+        rlReward = (RelativeLayout) mRootView.findViewById(R.id.rl_reward);
+        rlFocus = (RelativeLayout) mRootView.findViewById(R.id.rl_msgFocus);
+        rlLetter = (RelativeLayout) mRootView.findViewById(R.id.rl_priLetter);
+        rlScribe = (RelativeLayout) mRootView.findViewById(R.id.rl_subScribe);
+        rlActivityMsg = (RelativeLayout) mRootView.findViewById(R.id.rl_activityMsg);
+        rlOtherMsg = (RelativeLayout) mRootView.findViewById(R.id.rl_otherMsg);
         return mRootView;
     }
 
@@ -67,6 +75,13 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
 
         rlComment.setOnClickListener(this);
         llSys.setOnClickListener(this);
+        rlLike.setOnClickListener(this);
+        rlReward.setOnClickListener(this);
+        rlFocus.setOnClickListener(this);
+        rlLetter.setOnClickListener(this);
+        rlScribe.setOnClickListener(this);
+        rlActivityMsg.setOnClickListener(this);
+        rlOtherMsg.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
 
         //初始化mRecyclerView 投稿
@@ -83,9 +98,50 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_comment:
-                //作品管理
-                Bundle homePage = new Bundle();
-                UIUtil.openActivity(mActivity, MessageCommentDetailsActivity.class, homePage);
+                //评论
+                UIUtil.openActivity(mActivity, MessageCommentDetailsActivity.class);
+                break;
+            case R.id.rl_msgLike:
+                //喜欢
+                Bundle like = new Bundle();
+                like.putString("type", "1");
+                UIUtil.openActivity(mActivity, MsgLikeDetailsActivity.class, like);
+                break;
+            case R.id.rl_reward:
+                //打赏
+                Bundle reward = new Bundle();
+                reward.putString("type", "2");
+                UIUtil.openActivity(mActivity, MsgLikeDetailsActivity.class, reward);
+                break;
+            case R.id.rl_msgFocus:
+                //关注
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "3");
+                UIUtil.openActivity(mActivity, MsgLikeDetailsActivity.class, bundle);
+                break;
+            case R.id.rl_priLetter:
+                //私信
+                Bundle letter = new Bundle();
+                letter.putString("type", "4");
+                UIUtil.openActivity(mActivity, MsgLikeDetailsActivity.class, letter);
+                break;
+            case R.id.rl_subScribe:
+                //订阅
+                Bundle scribe = new Bundle();
+                scribe.putString("type", "5");
+                UIUtil.openActivity(mActivity, MsgLikeDetailsActivity.class, scribe);
+                break;
+            case R.id.rl_activityMsg:
+                //活动通知
+                Bundle activity = new Bundle();
+                activity.putString("type", "6");
+                UIUtil.openActivity(mActivity, MsgLikeDetailsActivity.class, activity);
+                break;
+            case R.id.rl_otherMsg:
+                //其他消息
+                Bundle other = new Bundle();
+                other.putString("type", "7");
+                UIUtil.openActivity(mActivity, MsgLikeDetailsActivity.class, other);
                 break;
         }
     }
@@ -95,33 +151,30 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
         switch (checkedId) {
             case R.id.rb_perMsg:
                 //首页
-                dibbleSub=false;
+                dibbleSub = false;
                 llSys.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.GONE);
                 llContainer.setVisibility(View.VISIBLE);
                 break;
             case R.id.rb_submissionMsg:
-               //投稿
+                //投稿
                 llContainer.setVisibility(View.GONE);
                 llSys.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
                 mvpPresenter.setMsgType("2");
-                if(!dibbleSub){
+                if (!dibbleSub) {
                     mvpPresenter.LoaCommentdData();
                 }
-                dibbleSub=true;
+                dibbleSub = true;
                 break;
             case R.id.rb_sysMsg:
                 //系统消息
-                dibbleSub=false;
+                dibbleSub = false;
                 llContainer.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.GONE);
                 llSys.setVisibility(View.VISIBLE);
                 break;
-            case R.id.rl_like:
-                //喜欢
-//UIUtil.openActivity(mActivity,);
-                break;
+
         }
     }
 
@@ -162,6 +215,11 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
 
         }
         subAdapter.refreshAdapter(subData);
+    }
+
+    @Override
+    public void getBookDetailsDateSuccess(HomeHotModel model, int position) {
+
     }
 
     @Override

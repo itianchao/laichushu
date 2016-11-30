@@ -7,12 +7,13 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
-import com.laichushu.book.ui.adapter.MessageCommentAdapter;
 import com.laichushu.book.ui.adapter.MessageLikeAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -26,8 +27,10 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     private TextView tvTitle;
     private PullLoadMoreRecyclerView mRecyclerView;
     private MessageLikeAdapter msgAdapter;
-    private List<MessageCommentResult.DataBean> commData = new ArrayList<>();
+    private List<MessageCommentResult.DataBean> likeData = new ArrayList<>();
     private int PAGE_NO = 1;
+    //1 : 喜欢  2. 打赏 3 关注 4私信 5 订阅
+    private String type;
 
     @Override
     protected MessageCommentPresenter createPresenter() {
@@ -46,17 +49,66 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     @Override
     protected void initData() {
         super.initData();
-        tvTitle.setText("评论");
+        type = getIntent().getStringExtra("type");
+        switch (type) {
+            case "1":
+                //喜欢
+                tvTitle.setText("喜欢");
+                mvpPresenter.setMsgType("3");
+                mvpPresenter.setSubType("2");
+                break;
+            case "2":
+                //打赏
+                tvTitle.setText("打赏");
+                mvpPresenter.setMsgType("3");
+                mvpPresenter.setSubType("7");
+                break;
+
+            case "3":
+                //关注
+                tvTitle.setText("关注");
+                mvpPresenter.setMsgType("3");
+                mvpPresenter.setSubType("6");
+                break;
+            case "4":
+                //私信
+                tvTitle.setText("私信");
+                mvpPresenter.setMsgType("3");
+                mvpPresenter.setSubType("8");
+                break;
+            case "5":
+                //订阅
+                tvTitle.setText("订阅");
+                mvpPresenter.setMsgType("3");
+                mvpPresenter.setSubType("1");
+                break;
+            case "6":
+                //订阅
+                tvTitle.setText("活动通知");
+                mvpPresenter.setMsgType("1");
+                mvpPresenter.setSubType("9");
+                break;
+            case "7":
+                //订阅
+                tvTitle.setText("其他消息");
+                mvpPresenter.setMsgType("1");
+                mvpPresenter.setSubType("10");
+                break;
+        }
+
+
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
 
-        //初始化mRecyclerView 评论
+        //初始化mRecyclerView
         mRecyclerView.setGridLayout(1);
         mRecyclerView.setFooterViewText("加载中");
-//        msgAdapter = new MessageCommentAdapter(this, commData);
+        msgAdapter = new MessageLikeAdapter(this, likeData, type, mvpPresenter);
         mRecyclerView.setAdapter(msgAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
 
+        //请求数据
+        likeData.clear();
         mvpPresenter.LoaCommentdData();
     }
 
@@ -71,7 +123,8 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 
     @Override
     public void getMsgCommentDateSuccess(MessageCommentResult model) {
-        commData.clear();
+        LoggerUtil.toJson(model);
+        likeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -79,23 +132,23 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
             }
         }, 300);
         if (model.isSuccess()) {
-            commData = model.getData();
+            likeData = model.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!commData.isEmpty()) {
-                msgAdapter.refreshAdapter(commData);
+            if (!likeData.isEmpty()) {
+                msgAdapter.refreshAdapter(likeData);
                 PAGE_NO++;
             } else {
 
             }
         } else {
-            if(model.getData().size()==0){
+            if (model.getData().size() == 0) {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 ToastUtil.showToast("没有更多信息！");
             }
         }
     }
 
-
-       @Override
+    @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
     }
@@ -103,8 +156,8 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 
     @Override
     public void onRefresh() {
-
-        commData.clear();
+        PAGE_NO = 1;
+        likeData.clear();
         mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
         mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
     }
@@ -113,5 +166,13 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     public void onLoadMore() {
         mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
         mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
+    }
+
+    @Override
+    public void getBookDetailsDateSuccess(HomeHotModel model, int position) {
+        //跳转图书详情页
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("bean", model.getData().get(0));
+        UIUtil.openActivity(this, BookDetailActivity.class, bundle);
     }
 }

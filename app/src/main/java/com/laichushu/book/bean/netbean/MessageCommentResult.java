@@ -9,10 +9,9 @@ import java.util.List;
 
 public class MessageCommentResult implements Serializable {
 
-
     /**
      * success : true
-     * data : [{"id":"140","type":"3","subType":"4","senderId":"130","accepterId":"112","senderName":"夏天","accepterName":"123","status":"1","content":"评分消息","sendTime":"2016-11-26 18:19"},{"id":"121","type":"3","subType":"2","senderId":"112","accepterId":"112","senderName":"123","accepterName":"123","status":"1","content":"收藏消息","sendTime":"2016-11-25 17:00"},{"id":"120","type":"3","subType":"2","senderId":"112","accepterId":"112","senderName":"123","accepterName":"123","status":"1","content":"收藏消息","sendTime":"2016-11-25 16:58"},{"id":"119","type":"3","subType":"2","senderId":"112","accepterId":"112","senderName":"123","accepterName":"123","status":"1","content":"收藏消息","sendTime":"2016-11-25 16:48"},{"id":"118","type":"3","subType":"2","senderId":"112","accepterId":"112","senderName":"123","accepterName":"123","status":"1","content":"收藏消息","sendTime":"2016-11-25 16:48"},{"id":"117","type":"3","subType":"2","senderId":"112","accepterId":"112","senderName":"123","accepterName":"123","status":"1","content":"收藏消息","sendTime":"2016-11-25 16:48"},{"id":"103","type":"3","subType":"7","senderId":"127","accepterId":"112","senderName":"一毛","accepterName":"123","status":"1","content":"打赏消息","sendTime":"2016-11-22 10:35"},{"id":"102","type":"3","subType":"7","senderId":"127","accepterId":"112","senderName":"一毛","accepterName":"123","status":"1","content":"打赏消息","sendTime":"2016-11-22 10:33"}]
+     * data : [{"id":"5646762341","type":"2","senderId":"1","accepterId":"112","senderName":"admin","accepterName":"哦的的哦","content":"投稿","sendTime":"2016-11-30 02:47","senderPhoto":"","sendLevel":"3","sendMark":"铜牌作家","sourceType":"2","sourceId":"132","sourceName":"12331313","pressId":"1","pressName":"中国书籍出版社","contributeStatus":"投稿审批中","articleId":"129","coverUrl":"http://101.254.183.67:9980/group1/M00/00/0D/wKiTPlg2XKyAPM1RAADKLyu_8nU623.jpg"}]
      */
 
     private boolean success;
@@ -36,28 +35,46 @@ public class MessageCommentResult implements Serializable {
 
     public static class DataBean {
         /**
-         * id : 140
-         * type : 3
-         * subType : 4
-         * senderId : 130
+         * id : 5646762341
+         * type : 2
+         * senderId : 1
          * accepterId : 112
-         * senderName : 夏天
-         * accepterName : 123
-         * status : 1
-         * content : 评分消息
-         * sendTime : 2016-11-26 18:19
+         * senderName : admin
+         * accepterName : 哦的的哦
+         * content : 投稿
+         * sendTime : 2016-11-30 02:47
+         * senderPhoto :
+         * sendLevel : 3
+         * sendMark : 铜牌作家
+         * sourceType : 2
+         * sourceId : 132
+         * sourceName : 12331313
+         * pressId : 1
+         * pressName : 中国书籍出版社
+         * contributeStatus : 投稿审批中
+         * articleId : 129
+         * coverUrl : http://101.254.183.67:9980/group1/M00/00/0D/wKiTPlg2XKyAPM1RAADKLyu_8nU623.jpg
          */
 
         private String id;
         private String type;
-        private String subType;
         private String senderId;
         private String accepterId;
         private String senderName;
         private String accepterName;
-        private String status;
         private String content;
         private String sendTime;
+        private String senderPhoto;
+        private String sendLevel;
+        private String sendMark;
+        private String sourceType;
+        private String sourceId;
+        private String sourceName;
+        private String pressId;
+        private String pressName;
+        private String contributeStatus;
+        private String articleId;
+        private String coverUrl;
 
         public String getId() {
             return id;
@@ -73,14 +90,6 @@ public class MessageCommentResult implements Serializable {
 
         public void setType(String type) {
             this.type = type;
-        }
-
-        public String getSubType() {
-            return subType;
-        }
-
-        public void setSubType(String subType) {
-            this.subType = subType;
         }
 
         public String getSenderId() {
@@ -115,14 +124,6 @@ public class MessageCommentResult implements Serializable {
             this.accepterName = accepterName;
         }
 
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
         public String getContent() {
             return content;
         }
@@ -137,6 +138,94 @@ public class MessageCommentResult implements Serializable {
 
         public void setSendTime(String sendTime) {
             this.sendTime = sendTime;
+        }
+
+        public String getSenderPhoto() {
+            return senderPhoto;
+        }
+
+        public void setSenderPhoto(String senderPhoto) {
+            this.senderPhoto = senderPhoto;
+        }
+
+        public String getSendLevel() {
+            return sendLevel;
+        }
+
+        public void setSendLevel(String sendLevel) {
+            this.sendLevel = sendLevel;
+        }
+
+        public String getSendMark() {
+            return sendMark;
+        }
+
+        public void setSendMark(String sendMark) {
+            this.sendMark = sendMark;
+        }
+
+        public String getSourceType() {
+            return sourceType;
+        }
+
+        public void setSourceType(String sourceType) {
+            this.sourceType = sourceType;
+        }
+
+        public String getSourceId() {
+            return sourceId;
+        }
+
+        public void setSourceId(String sourceId) {
+            this.sourceId = sourceId;
+        }
+
+        public String getSourceName() {
+            return sourceName;
+        }
+
+        public void setSourceName(String sourceName) {
+            this.sourceName = sourceName;
+        }
+
+        public String getPressId() {
+            return pressId;
+        }
+
+        public void setPressId(String pressId) {
+            this.pressId = pressId;
+        }
+
+        public String getPressName() {
+            return pressName;
+        }
+
+        public void setPressName(String pressName) {
+            this.pressName = pressName;
+        }
+
+        public String getContributeStatus() {
+            return contributeStatus;
+        }
+
+        public void setContributeStatus(String contributeStatus) {
+            this.contributeStatus = contributeStatus;
+        }
+
+        public String getArticleId() {
+            return articleId;
+        }
+
+        public void setArticleId(String articleId) {
+            this.articleId = articleId;
+        }
+
+        public String getCoverUrl() {
+            return coverUrl;
+        }
+
+        public void setCoverUrl(String coverUrl) {
+            this.coverUrl = coverUrl;
         }
     }
 }

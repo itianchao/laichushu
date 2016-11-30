@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -133,14 +134,16 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         // 初始化头像+动态
         dataBean = (HomePersonFocusResult.DataBean) getIntent().getSerializableExtra("bean");
         flg = getIntent().getIntExtra("type", 0);
+        String UserID = getIntent().getStringExtra("userId");
         if (flg == 1) {
-            mvpPresenter.getUserHeadDate(dataBean.getSourceUserId());
-            mvpPresenter.getUserDynmicDate(dataBean.getSourceUserId());
+            this.userId = dataBean.getSourceUserId();
         } else if (flg == 2) {
-            mvpPresenter.getUserHeadDate(dataBean.getTargetUserId());
-            mvpPresenter.getUserDynmicDate(dataBean.getTargetUserId());
+            this.userId = dataBean.getTargetUserId();
+        } else if (!TextUtils.isEmpty(UserID)) {
+            this.userId = UserID;
         }
-
+        mvpPresenter.getUserHeadDate(userId);
+        mvpPresenter.getUserDynmicDate(userId);
 
     }
 
@@ -174,7 +177,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 type = 1;
                 if (!dibbleDy) {
                     dyData.clear();
-                    mvpPresenter.getUserDynmicDate(dataBean.getSourceUserId());
+                    mvpPresenter.getUserDynmicDate(userId);
                 }
                 dibbleDy = true;
                 break;
@@ -227,7 +230,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
             nickName.setText(result.getNickName());
             tvRealName.setText(result.getNickName());
-            userId = result.getUserId();
             if (result.isBeFocused()) {
                 btnFocus.setText("已关注");
             } else {
@@ -393,19 +395,19 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         if (type == 1) {
             dyData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserDynmicDate(dataBean.getSourceUserId());//动态
+            mvpPresenter.getUserDynmicDate(userId);//动态
         } else if (type == 2) {
             worksData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserBookListDate(dataBean.getSourceUserId());//作品
+            mvpPresenter.getUserBookListDate(userId);//作品
         } else if (type == 3) {
             focusBeData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserHeFocusDate(dataBean.getSourceUserId());//他关注的
+            mvpPresenter.getUserHeFocusDate(userId);//他关注的
         } else if (type == 4) {
             focusMeData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserHeFocusDate(dataBean.getSourceUserId());//关注他的
+            mvpPresenter.getUserHeFocusDate(userId);//关注他的
         }
     }
 
@@ -413,16 +415,16 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     public void onLoadMore() {
         if (type == 1) {
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserDynmicDate(dataBean.getSourceUserId());//请求网络获取搜索列表
+            mvpPresenter.getUserDynmicDate(userId);//请求网络获取搜索列表
         } else if (type == 2) {
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserBookListDate(dataBean.getSourceUserId());//请求网络获取搜索列表
+            mvpPresenter.getUserBookListDate(userId);//请求网络获取搜索列表
         } else if (type == 3) {
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserHeFocusDate(dataBean.getSourceUserId());//请求网络获取搜索列表
+            mvpPresenter.getUserHeFocusDate(userId);//请求网络获取搜索列表
         } else if (type == 4) {
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserHeFocusDate(dataBean.getSourceUserId());//请求网络获取搜索列表
+            mvpPresenter.getUserHeFocusDate(userId);//请求网络获取搜索列表
         }
     }
 
