@@ -1,9 +1,5 @@
 [
     {
-        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\supertoast.xml",
-        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\supertoast.xml"
-    },
-    {
         "merged": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\supercardtoast_button.xml",
         "source": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\supercardtoast_button.xml"
     },
@@ -20,28 +16,8 @@
         "source": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\supercardtoast_progresscircle.xml"
     },
     {
-        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\superactivitytoast_progresscircle.xml",
-        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\superactivitytoast_progresscircle.xml"
-    },
-    {
         "merged": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\superactivitytoast_progresshorizontal.xml",
         "source": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\superactivitytoast_progresshorizontal.xml"
-    },
-    {
-        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\superactivitytoast_button.xml",
-        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\superactivitytoast_button.xml"
-    },
-    {
-        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\supercardtoast_progresshorizontal.xml",
-        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\supercardtoast_progresshorizontal.xml"
-    },
-    {
-        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\supercardtoast.xml",
-        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\supercardtoast.xml"
-    },
-    {
-        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\supercardtoast_button.xml",
-        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\supercardtoast_button.xml"
     },
     {
         "merged": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\supercardtoast.xml",
@@ -52,20 +28,8 @@
         "source": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\superactivitytoast_button.xml"
     },
     {
-        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\dummy_layout.xml",
-        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\dummy_layout.xml"
-    },
-    {
-        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\superactivitytoast_progresshorizontal.xml",
-        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\superactivitytoast_progresshorizontal.xml"
-    },
-    {
         "merged": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\dummy_layout.xml",
         "source": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\dummy_layout.xml"
-    },
-    {
-        "merged": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\supercardtoast_progresscircle.xml",
-        "source": "S:\\github\\FBReaderJ-Android-Studio-master\\superToasts\\build\\intermediates\\bundles\\debug\\res\\layout\\supercardtoast_progresscircle.xml"
     },
     {
         "merged": "D:\\Android\\androidWorkSpace\\laichushu\\superToasts\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\supertoast.xml",

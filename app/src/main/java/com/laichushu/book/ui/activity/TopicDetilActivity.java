@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.mvp.topicdetail.TopicDetailPresenter;
@@ -19,6 +20,7 @@ import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
+import com.laichushu.book.utils.Validator;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -83,22 +85,11 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         if (type.equals("homepage")) {
             homeBean = (HomeUseDyrResult.DataBean) getIntent().getSerializableExtra("topBean");
             topicId = homeBean.getId();
-            //init
-            topicNameTv.setText(homeBean.getTitle());
-            topicAuthorTv.setText(homeBean.getCreatUserName());
-            topicContentTv.setText(homeBean.getContent());
-            topicTiemTv.setText(homeBean.getCreateDate());
-            GlideUitl.loadRandImg(mActivity, homeBean.getCreaterPhoto(), topicUserheadIv);
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             bean = getIntent().getParcelableExtra("bean");
             topicId = bean.getId();
-            mvpPresenter.loadCommentData(topicId);
         }
-//        if(!type.equals("homepage")){
-//            mvpPresenter.loadCommentData(topicId);
-//        }
-//        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        mvpPresenter.loadCommentData(topicId, ConstantValue.COMMENTTOPIC_TYPE);
     }
 
     @Override
@@ -113,7 +104,12 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 mAdapter.notifyDataSetChanged();
                 pageNo++;
                 if (type.equals("homepage")) {
-
+                    topicNameTv.setText(homeBean.getTitle());
+                    topicAuthorTv.setText(homeBean.getCreatUserName());
+                    topicContentTv.setText(homeBean.getContent());
+                    topicTiemTv.setText(homeBean.getCreateDate());
+                    GlideUitl.loadRandImg(mActivity, homeBean.getCreaterPhoto(), topicUserheadIv);
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 } else {
                     topicNameTv.setText(bean.getTitle());
                     topicAuthorTv.setText(bean.getCreatUserName());
@@ -174,7 +170,12 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 finish();
                 break;
             case R.id.iv_sendmsg:
-                mvpPresenter.topicDetailCommentSave(sendmsgEv, topicId);
+                if (type.equals("homepage")) {
+                    mvpPresenter.topicDetailCommentSave(sendmsgEv, homeBean.getId(), ConstantValue.COMMENTTOPIC_TYPE);
+                } else {
+                    mvpPresenter.topicDetailCommentSave(sendmsgEv, bean.getId(), ConstantValue.COMMENTTOPIC_TYPE);
+                }
+
                 break;
         }
     }
@@ -187,7 +188,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         pageNo = 1;
         mData.clear();
         mvpPresenter.getParamet().setPageNo(pageNo + "");
-        mvpPresenter.loadCommentData(topicId);
+        mvpPresenter.loadCommentData(topicId, ConstantValue.COMMENTTOPIC_TYPE);
     }
 
     /**
@@ -196,7 +197,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     @Override
     public void onLoadMore() {
         mvpPresenter.getParamet().setPageNo(pageNo + "");
-        mvpPresenter.loadCommentData(topicId);
+        mvpPresenter.loadCommentData(topicId, ConstantValue.COMMENTTOPIC_TYPE);
     }
 
     public void reLoadDate() {
@@ -204,7 +205,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             @Override
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
-                mvpPresenter.loadCommentData(topicId);
+                mvpPresenter.loadCommentData(topicId, ConstantValue.COMMENTTOPIC_TYPE);
             }
         });
     }

@@ -42,12 +42,8 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
-        holder.llCollection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //点赞
-            }
-        });
+//        holder.tvCollect.setText(dataBeen.get(position).getCollectNum());
+//        holder.tvScan.setText(dataBeen.get(position).getBrowseNum());
         holder.llScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +76,7 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView tvShopName, tvTime, tvTitle, tvTitleContent, tvMsg;
+        public final TextView tvShopName, tvTime, tvTitle, tvTitleContent, tvMsg,tvCollect,tvScan;
         public final ImageView ivImg;
         public final View root;
         public final LinearLayout llCollection, llScan;
@@ -92,6 +88,8 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
             tvTitle = (TextView) root.findViewById(R.id.tv_dyTitleName);
             tvTitleContent = (TextView) root.findViewById(R.id.tv_dyTitleContent);
             tvMsg = (TextView) root.findViewById(R.id.tv_msg);
+            tvCollect = (TextView) root.findViewById(R.id.tv_dyCollection);
+            tvScan = (TextView) root.findViewById(R.id.tv_scan);
             ivImg = (ImageView) root.findViewById(R.id.iv_dyHead);
             llCollection = (LinearLayout) root.findViewById(R.id.ll_collection);
             llScan = (LinearLayout) root.findViewById(R.id.ll_scan);

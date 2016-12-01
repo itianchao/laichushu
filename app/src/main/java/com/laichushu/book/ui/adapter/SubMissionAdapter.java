@@ -1,9 +1,10 @@
 package com.laichushu.book.ui.adapter;
 
-import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.ActivityList_Paramet;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
@@ -27,10 +29,10 @@ import java.util.List;
  */
 
 public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.ViewHolder> {
-    private Context context;
+    private Activity context;
     private List<MessageCommentResult.DataBean> dataBeen;
 
-    public SubMissionAdapter(Context context, List<MessageCommentResult.DataBean> dataBean) {
+    public SubMissionAdapter(Activity context, List<MessageCommentResult.DataBean> dataBean) {
         this.context = context;
         this.dataBeen = dataBean;
     }
@@ -44,15 +46,16 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
     @Override
     public void onBindViewHolder(SubMissionAdapter.ViewHolder holder, final int position) {
         GlideUitl.loadImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivHead);
-        holder.tvBookName.setText(dataBeen.get(position).getSenderName());
+        holder.tvBookName.setText(dataBeen.get(position).getSourceName());
         holder.tvPubName.setText(dataBeen.get(position).getPressName());
-        holder.status.setText((dataBeen.get(position).getContributeStatus()));
-        holder.ivReplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showToast("回复消息！");
-            }
-        });
+        if (dataBeen.get(position).getPressName().equals("1")) {
+            //审批中
+            holder.status.setTextColor(context.getResources().getColor(R.color.red2));
+        }
+        if(!TextUtils.isEmpty(dataBeen.get(position).getContributeStatusName())){
+            holder.status.setText(dataBeen.get(position).getContributeStatusName());
+        }
+
         holder.ivHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,9 +63,9 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
                 if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
-                    UIUtil.openActivity((PersonalHomePageActivity)context, PersonalHomePageActivity.class, bundle);
+                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
                 } else {
-                    UIUtil.openActivity((PersonalHomePageActivity)context, UserHomePageActivity.class, bundle);
+                    UIUtil.openActivity( context, UserHomePageActivity.class, bundle);
                 }
             }
         });

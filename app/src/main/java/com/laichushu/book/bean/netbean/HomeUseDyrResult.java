@@ -7,11 +7,11 @@ import java.util.List;
  * Created by PCPC on 2016/11/22.
  */
 
-public class HomeUseDyrResult implements Serializable{
+public class HomeUseDyrResult implements Serializable {
 
     /**
      * success : true
-     * data : [{"id":"23","teamId":"112","teamName":"","title":"旅途通知我","content":"图我想问一下","browseNum":63,"createDate":"29天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":2,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"24","teamId":"112","teamName":"","title":"啦啦啦啦","content":"额得得得得得得","browseNum":88,"createDate":"58天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":2,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"25","teamId":"112","teamName":"","title":"兔兔在在在在在在","content":"龙门默默魔王","createDate":"4天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"26","teamId":"112","teamName":"","title":"可以找我呜呜呜呜呜呜呜呜","content":"唐知我者谓我心忧","createDate":"4天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"27","teamId":"112","teamName":"","title":"看了一下休息休息","content":"啦啦啦啦龙","createDate":"4天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"}]
+     * data : [{"id":"28","teamId":"112","teamName":"","title":"逗你玩","content":"逗你玩逗你玩","replyNum":3,"createDate":"2天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"29","teamId":"112","teamName":"","title":"i旅游哦突兀压神州婆婆","content":"侯loss6艘我是无所谓，，你，你","createDate":"2天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"23","teamId":"112","teamName":"","title":"旅途通知我","content":"图我想问一下","browseNum":63,"createDate":"31天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":2,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"24","teamId":"112","teamName":"","title":"啦啦啦啦","content":"额得得得得得得","browseNum":88,"createDate":"60天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":2,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"25","teamId":"112","teamName":"","title":"兔兔在在在在在在","content":"龙门默默魔王","createDate":"6天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"26","teamId":"112","teamName":"","title":"可以找我呜呜呜呜呜呜呜呜","content":"唐知我者谓我心忧","createDate":"6天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"},{"id":"27","teamId":"112","teamName":"","title":"看了一下休息休息","content":"啦啦啦啦龙","createDate":"6天前","topFlag":"0","starterId":"112","creatUserName":"哦的的哦","creatUserId":"112","type":1,"createrPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg"}]
      */
 
     private boolean success;
@@ -33,21 +33,22 @@ public class HomeUseDyrResult implements Serializable{
         this.data = data;
     }
 
-    public static class DataBean implements Serializable{
+    public static class DataBean implements Serializable {
         /**
-         * id : 23
+         * id : 28
          * teamId : 112
          * teamName :
-         * title : 旅途通知我
-         * content : 图我想问一下
-         * browseNum : 63
-         * createDate : 29天前
+         * title : 逗你玩
+         * content : 逗你玩逗你玩
+         * replyNum : 3
+         * createDate : 2天前
          * topFlag : 0
          * starterId : 112
          * creatUserName : 哦的的哦
          * creatUserId : 112
-         * type : 2
+         * type : 1
          * createrPhoto : http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg
+         * browseNum : 63
          */
 
         private String id;
@@ -55,7 +56,6 @@ public class HomeUseDyrResult implements Serializable{
         private String teamName;
         private String title;
         private String content;
-        private int browseNum;
         private String createDate;
         private String topFlag;
         private String starterId;
@@ -63,6 +63,28 @@ public class HomeUseDyrResult implements Serializable{
         private String creatUserId;
         private int type;
         private String createrPhoto;
+
+        public boolean isBeCollect() {
+            return beCollect;
+        }
+
+        public void setBeCollect(boolean beCollect) {
+            this.beCollect = beCollect;
+        }
+
+        private boolean beCollect;
+        /*
+     *  已回复数
+     */
+        private int replyNum;
+        /*
+         *  已收藏数
+         */
+        private int collectNum;
+        /*
+         *  已浏览数
+         */
+        private int browseNum;
 
         public String getId() {
             return id;
@@ -102,6 +124,22 @@ public class HomeUseDyrResult implements Serializable{
 
         public void setContent(String content) {
             this.content = content;
+        }
+
+        public int getReplyNum() {
+            return replyNum;
+        }
+
+        public void setReplyNum(int replyNum) {
+            this.replyNum = replyNum;
+        }
+
+        public int getCollectNum() {
+            return collectNum;
+        }
+
+        public void setCollectNum(int collectNum) {
+            this.collectNum = collectNum;
         }
 
         public int getBrowseNum() {

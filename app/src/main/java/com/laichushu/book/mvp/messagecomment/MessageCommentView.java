@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.messagecomment;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.BookDetailsResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
@@ -12,5 +13,6 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 public interface MessageCommentView {
     void getMsgCommentDateSuccess(MessageCommentResult model);
     void getBookDetailsDateSuccess(HomeHotModel model, int position);
+    void sendMsgDetailsDateSuccess(RewardResult model);
     void getDataFail(String msg);
 }

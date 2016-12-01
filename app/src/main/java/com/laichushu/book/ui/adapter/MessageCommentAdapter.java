@@ -2,6 +2,7 @@ package com.laichushu.book.ui.adapter;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
@@ -47,15 +49,12 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
         GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivImg);
         holder.tvName.setText(dataBeen.get(position).getSenderName());
         holder.tvAppend.setText(dataBeen.get(position).getSenderName() + " 评论了你的文章");
-        holder.tvBookName.setText(dataBeen.get(position).getAccepterName());
+        if(!TextUtils.isEmpty(dataBeen.get(position).getSourceName())){
+            holder.tvBookName.setText("《"+dataBeen.get(position).getSourceName()+"》");
+        }
+
         holder.tvContent.setText(dataBeen.get(position).getContent());
         holder.tvData.setText(dataBeen.get(position).getSendTime() + "");
-        holder.ivReplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showToast("回复消息！");
-            }
-        });
         holder.ivImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +68,13 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
                 }
             }
         });
-
+        holder.tvBookName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转书详情
+                messageCommentPresenter.LoadBookDetailsData(dataBeen.get(position).getArticleId(), position);
+            }
+        });
     }
 
     @Override

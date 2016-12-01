@@ -7,14 +7,24 @@ package com.laichushu.book.bean.netbean;
 
 public class TopicDetailCommentSave_Paramet {
 
+    private String sourceId;
     private String userId;
     private String content;
-    private String topicId;   //话题id
+    private String sourceType;   //话题id
 
-    public TopicDetailCommentSave_Paramet(String userId, String content, String topicId) {
+    public TopicDetailCommentSave_Paramet(String sourceId, String userId, String content, String sourceType) {
+        this.sourceId = sourceId;
         this.userId = userId;
         this.content = content;
-        this.topicId = topicId;
+        this.sourceType = sourceType;
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 
     public String getUserId() {
@@ -33,11 +43,11 @@ public class TopicDetailCommentSave_Paramet {
         this.content = content;
     }
 
-    public String getTopicId() {
-        return topicId;
+    public String getSourceType() {
+        return sourceType;
     }
 
-    public void setTopicId(String topicId) {
-        this.topicId = topicId;
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
     }
 }

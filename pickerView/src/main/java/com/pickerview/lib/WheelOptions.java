@@ -122,7 +122,7 @@ public class WheelOptions {
 
 	/**
 	 * 设置选项的单位
-	 * 
+	 *
 	 * @param label1
 	 * @param label2
 	 * @param label3
@@ -138,7 +138,7 @@ public class WheelOptions {
 
 	/**
 	 * 设置是否循环滚动
-	 * 
+	 *
 	 * @param cyclic
 	 */
 	public void setCyclic(boolean cyclic) {
@@ -149,7 +149,7 @@ public class WheelOptions {
 
 	/**
 	 * 返回当前选中的结果对应的位置数组 因为支持三级联动效果，分三个级别索引，0，1，2
-	 * 
+	 *
 	 * @return
 	 */
 	public int[] getCurrentItems() {

@@ -11,7 +11,7 @@ public class MessageCommentResult implements Serializable {
 
     /**
      * success : true
-     * data : [{"id":"5646762341","type":"2","senderId":"1","accepterId":"112","senderName":"admin","accepterName":"哦的的哦","content":"投稿","sendTime":"2016-11-30 02:47","senderPhoto":"","sendLevel":"3","sendMark":"铜牌作家","sourceType":"2","sourceId":"132","sourceName":"12331313","pressId":"1","pressName":"中国书籍出版社","contributeStatus":"投稿审批中","articleId":"129","coverUrl":"http://101.254.183.67:9980/group1/M00/00/0D/wKiTPlg2XKyAPM1RAADKLyu_8nU623.jpg"}]
+     * data : [{"id":"175","type":"3","subType":"8","senderId":"130","accepterId":"112","senderName":"追风筝的人1","accepterName":"哦的的哦","status":"1","content":"夏天评论了你发表的逗你玩","sendTime":"2016-11-30 18:58","senderPhoto":"http://101.254.183.67:9980/http://101.254.183.67:9980/group1/M00/00/13/wKiTPlg-SBuACrKtAAC_5dIvu_E510.jpg","sendLevel":"3","sendMark":"铜牌作家","sourceType":"","sourceId":"","sourceName":"","pressId":"","pressName":"","contributeStatusName":"","contributeStatus":"","articleId":"","coverUrl":""},{"id":"174","type":"3","subType":"8","senderId":"130","accepterId":"112","senderName":"追风筝的人1","accepterName":"哦的的哦","status":"1","content":"夏天评论了你发表的逗你玩","sendTime":"2016-11-30 18:56","senderPhoto":"http://101.254.183.67:9980/http://101.254.183.67:9980/group1/M00/00/13/wKiTPlg-SBuACrKtAAC_5dIvu_E510.jpg","sendLevel":"3","sendMark":"铜牌作家","sourceType":"","sourceId":"","sourceName":"","pressId":"","pressName":"","contributeStatusName":"","contributeStatus":"","articleId":"","coverUrl":""},{"id":"172","type":"3","subType":"8","senderId":"130","accepterId":"112","senderName":"追风筝的人1","accepterName":"哦的的哦","status":"1","content":"话题评论消息","sendTime":"2016-11-30 15:55","senderPhoto":"http://101.254.183.67:9980/http://101.254.183.67:9980/group1/M00/00/13/wKiTPlg-SBuACrKtAAC_5dIvu_E510.jpg","sendLevel":"3","sendMark":"铜牌作家","sourceType":"","sourceId":"","sourceName":"","pressId":"","pressName":"","contributeStatusName":"","contributeStatus":"","articleId":"","coverUrl":""},{"id":"5646762341","type":"2","senderId":"1","accepterId":"112","senderName":"admin","accepterName":"哦的的哦","content":"投稿","sendTime":"2016-11-30 02:47","senderPhoto":"","sendLevel":"3","sendMark":"铜牌作家","sourceType":"2","sourceId":"132","sourceName":"王晓明逛窑记","pressId":"","pressName":"","contributeStatusName":"","contributeStatus":"","articleId":"132","coverUrl":""},{"id":"164","type":"3","subType":"6","senderId":"112","accepterId":"112","senderName":"哦的的哦","accepterName":"哦的的哦","content":"112关注了你。","sendTime":"2016-11-29 14:23","senderPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg","sourceType":"","sourceId":"","sourceName":"","pressId":"","pressName":"","contributeStatusName":"","contributeStatus":"","articleId":"","coverUrl":""},{"id":"163","type":"3","subType":"6","senderId":"112","accepterId":"112","senderName":"哦的的哦","accepterName":"哦的的哦","content":"112关注了你。","sendTime":"2016-11-29 14:20","senderPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg","sourceType":"","sourceId":"","sourceName":"","pressId":"","pressName":"","contributeStatusName":"","contributeStatus":"","articleId":"","coverUrl":""},{"id":"140","type":"3","subType":"4","senderId":"130","accepterId":"112","senderName":"追风筝的人1","accepterName":"哦的的哦","status":"1","content":"评分消息","sendTime":"2016-11-26 18:19","senderPhoto":"http://101.254.183.67:9980/http://101.254.183.67:9980/group1/M00/00/13/wKiTPlg-SBuACrKtAAC_5dIvu_E510.jpg","sendLevel":"3","sendMark":"铜牌作家","sourceType":"","sourceId":"","sourceName":"","pressId":"","pressName":"","contributeStatusName":"","contributeStatus":"","articleId":"","coverUrl":""},{"id":"121","type":"3","subType":"2","senderId":"112","accepterId":"112","senderName":"哦的的哦","accepterName":"哦的的哦","status":"1","content":"收藏消息","sendTime":"2016-11-25 17:00","senderPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg","sourceType":"","sourceId":"","sourceName":"","pressId":"","pressName":"","contributeStatusName":"","contributeStatus":"","articleId":"","coverUrl":""},{"id":"119","type":"3","subType":"2","senderId":"112","accepterId":"112","senderName":"哦的的哦","accepterName":"哦的的哦","status":"1","content":"收藏消息","sendTime":"2016-11-25 16:48","senderPhoto":"http://101.254.183.67:9980/group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg","sourceType":"","sourceId":"","sourceName":"","pressId":"","pressName":"","contributeStatusName":"","contributeStatus":"","articleId":"","coverUrl":""}]
      */
 
     private boolean success;
@@ -35,33 +35,38 @@ public class MessageCommentResult implements Serializable {
 
     public static class DataBean {
         /**
-         * id : 5646762341
-         * type : 2
-         * senderId : 1
+         * id : 175
+         * type : 3
+         * subType : 8
+         * senderId : 130
          * accepterId : 112
-         * senderName : admin
+         * senderName : 追风筝的人1
          * accepterName : 哦的的哦
-         * content : 投稿
-         * sendTime : 2016-11-30 02:47
-         * senderPhoto :
+         * status : 1
+         * content : 夏天评论了你发表的逗你玩
+         * sendTime : 2016-11-30 18:58
+         * senderPhoto : http://101.254.183.67:9980/http://101.254.183.67:9980/group1/M00/00/13/wKiTPlg-SBuACrKtAAC_5dIvu_E510.jpg
          * sendLevel : 3
          * sendMark : 铜牌作家
-         * sourceType : 2
-         * sourceId : 132
-         * sourceName : 12331313
-         * pressId : 1
-         * pressName : 中国书籍出版社
-         * contributeStatus : 投稿审批中
-         * articleId : 129
-         * coverUrl : http://101.254.183.67:9980/group1/M00/00/0D/wKiTPlg2XKyAPM1RAADKLyu_8nU623.jpg
+         * sourceType :
+         * sourceId :
+         * sourceName :
+         * pressId :
+         * pressName :
+         * contributeStatusName :
+         * contributeStatus :
+         * articleId :
+         * coverUrl :
          */
 
         private String id;
         private String type;
+        private String subType;
         private String senderId;
         private String accepterId;
         private String senderName;
         private String accepterName;
+        private String status;
         private String content;
         private String sendTime;
         private String senderPhoto;
@@ -72,6 +77,7 @@ public class MessageCommentResult implements Serializable {
         private String sourceName;
         private String pressId;
         private String pressName;
+        private String contributeStatusName;
         private String contributeStatus;
         private String articleId;
         private String coverUrl;
@@ -90,6 +96,14 @@ public class MessageCommentResult implements Serializable {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public String getSubType() {
+            return subType;
+        }
+
+        public void setSubType(String subType) {
+            this.subType = subType;
         }
 
         public String getSenderId() {
@@ -122,6 +136,14 @@ public class MessageCommentResult implements Serializable {
 
         public void setAccepterName(String accepterName) {
             this.accepterName = accepterName;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
 
         public String getContent() {
@@ -202,6 +224,14 @@ public class MessageCommentResult implements Serializable {
 
         public void setPressName(String pressName) {
             this.pressName = pressName;
+        }
+
+        public String getContributeStatusName() {
+            return contributeStatusName;
+        }
+
+        public void setContributeStatusName(String contributeStatusName) {
+            this.contributeStatusName = contributeStatusName;
         }
 
         public String getContributeStatus() {

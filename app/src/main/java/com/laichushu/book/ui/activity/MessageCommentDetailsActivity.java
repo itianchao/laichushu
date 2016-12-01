@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
@@ -111,6 +112,14 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     public void getBookDetailsDateSuccess(HomeHotModel model, int position) {
+        //跳转图书详情页
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("bean", model.getData().get(0));
+        UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+    }
+
+    @Override
+    public void sendMsgDetailsDateSuccess(RewardResult model) {
 
     }
 

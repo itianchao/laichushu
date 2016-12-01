@@ -9,10 +9,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
+import com.laichushu.book.ui.activity.MainActivity;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.activity.MsgLikeDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
@@ -87,7 +89,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
         //初始化mRecyclerView 投稿
         mRecyclerView.setGridLayout(1);
         mRecyclerView.setFooterViewText("加载中");
-        subAdapter = new SubMissionAdapter(mActivity, subData);
+        subAdapter = new SubMissionAdapter( (MainActivity) getActivity(), subData);
         mRecyclerView.setAdapter(subAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
 
@@ -219,6 +221,11 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
 
     @Override
     public void getBookDetailsDateSuccess(HomeHotModel model, int position) {
+
+    }
+
+    @Override
+    public void sendMsgDetailsDateSuccess(RewardResult model) {
 
     }
 

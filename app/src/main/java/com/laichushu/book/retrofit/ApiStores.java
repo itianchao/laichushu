@@ -80,12 +80,14 @@ import com.laichushu.book.bean.netbean.Regist_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.netbean.SaveComment_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
+import com.laichushu.book.bean.netbean.SendMsgDetails_Paramet;
 import com.laichushu.book.bean.netbean.SendMsgToParty_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
+import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.bean.netbean.UserBookList_Paramet;
 import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
@@ -140,6 +142,7 @@ public interface ApiStores {
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.1.105:8082/book-app/";//张峰2
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
     String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
@@ -273,6 +276,10 @@ public interface ApiStores {
     //点赞
     @POST("scoreLike/save")
     Observable<RewardResult> saveScoreLike(@Body ScoreLike_Paramet paramet);
+
+    //话题动态点赞
+    @POST("like/save")
+    Observable<RewardResult> saveTopicDyLike(@Body TopicDyLike_Paramet paramet);
 
     //取消赞
     @POST("scoreLike/delete")
@@ -493,16 +500,21 @@ public interface ApiStores {
     Observable<RewardResult> sendMsgToParty(@Body SendMsgToParty_Paramet paramet);
 
     //话题详情评论列表
-    @POST("topicComment/list")
+    @POST("comment/list")
     Observable<TopicdetailModel> topicDetailCommentList(@Body TopicDetailCommentList_Paramet paramet);
 
     //话题详情保存评论
-    @POST("topicComment/save")
+    @POST("comment/save")
     Observable<RewardResult> topicDetailCommentSave(@Body TopicDetailCommentSave_Paramet paramet);
+
+    //消息界面 回复消息
+    @POST("information/sendMsg")
+    Observable<RewardResult> msgSendMsgDetails(@Body SendMsgDetails_Paramet paramet);
 
     //消息页面--评论
     @POST("information/list")
     Observable<MessageCommentResult> messageCommentDetails(@Body MessageComment_Paramet paramet);
+
     //消息页面-根据图书id查找图书详情
     @POST("myArticle/find")
     Observable<HomeHotModel> getBookDetailsById(@Body BookDetails_Paramet paramet);

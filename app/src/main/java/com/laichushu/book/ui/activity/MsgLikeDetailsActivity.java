@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
@@ -174,5 +175,10 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
         Bundle bundle = new Bundle();
         bundle.putParcelable("bean", model.getData().get(0));
         UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+    }
+
+    @Override
+    public void sendMsgDetailsDateSuccess(RewardResult model) {
+
     }
 }

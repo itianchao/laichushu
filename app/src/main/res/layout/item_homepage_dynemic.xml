@@ -63,21 +63,6 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/ll_msg"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/tv_msg"
-                style="@style/new_books"
-                android:drawableLeft="@drawable/icon_comment"
-                android:text="666"
-                android:visibility="invisible" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/ll_collection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -85,10 +70,10 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_collection"
-                style="@style/new_books"
+                android:id="@+id/tv_dyCollection"
+                style="@style/new_up"
                 android:drawableLeft="@drawable/icon_like_red"
-                android:text="666" />
+                android:text="0" />
         </LinearLayout>
 
 
@@ -102,9 +87,24 @@
             <TextView
                 android:id="@+id/tv_scan"
                 style="@style/new_books"
-                android:drawableLeft="@drawable/navigation_find_normal"
-                android:text="666" />
+                android:drawableLeft="@drawable/navigation_find_normal" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_msg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_msg"
+                style="@style/new_books"
+                android:drawableLeft="@drawable/icon_comment"
+                android:text="0"
+                android:visibility="invisible" />
+        </LinearLayout>
+
 
     </LinearLayout>
 </LinearLayout>

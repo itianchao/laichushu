@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.userhomepage;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
@@ -11,6 +12,8 @@ import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
+import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
+import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
@@ -263,5 +266,26 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
         });
     }
 
+// 动态话题点赞
 
+    public void loadLikeUpDate(String sourceId, String sourceType, final String type) {
+        TopicDyLike_Paramet scoreLike = new TopicDyLike_Paramet(sourceId, sourceType, type, userId);
+        LoggerUtil.toJson(scoreLike);
+        addSubscription(apiStores.saveTopicDyLike(scoreLike), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getLikeUpSuccess(model,type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
 }

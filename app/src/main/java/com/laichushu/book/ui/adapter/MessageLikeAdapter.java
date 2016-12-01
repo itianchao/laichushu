@@ -24,6 +24,7 @@ import com.laichushu.book.utils.UIUtil;
 import java.util.List;
 
 /**
+ * 消息喜欢界面
  * Created by PCPC on 2016/11/29.
  */
 
@@ -104,7 +105,6 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         holder.tvBookName.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtil.showToast("跳转书详情！");
                                 messageCommentPresenter.LoadBookDetailsData(dataBeen.get(position).getArticleId(), position);
                             }
                         });
@@ -224,7 +224,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 });
                 break;
             case "6":
-                //系统通知
+                //活动通知
                 holder.ivFocusNotice.setVisibility(View.VISIBLE);
                 holder.ivFocusIcon.setVisibility(View.INVISIBLE);
                 holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());

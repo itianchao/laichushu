@@ -4,28 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.RadioButton;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.google.gson.Gson;
 import com.laichushu.book.R;
-import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.PersonInfoResultReward;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
-import com.laichushu.book.bean.netbean.ProvinceCityBean;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
 import com.laichushu.book.db.City_Id;
@@ -34,6 +28,7 @@ import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
+import com.laichushu.book.ui.adapter.ProvinceAdapter;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -44,6 +39,10 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.pickerview.OptionsPopupWindow;
 import com.pickerview.TimePopupWindow;
+import com.pickerview.lib.ArrayWheelAdapter;
+import com.pickerview.lib.City;
+import com.pickerview.lib.Province;
+import com.pickerview.lib.WheelView;
 import com.yanzhenjie.album.Album;
 
 import java.io.File;
@@ -309,10 +308,10 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         city_idList = city_idDao.queryBuilder().build().list();
         ArrayList<String> allProince = getAllProince();
         ArrayList<String> city = getCity("01");
-        ArrayList<ArrayList<String>> allCity=new ArrayList<ArrayList<String>>();
+        ArrayList<ArrayList<String>> allCity = new ArrayList<ArrayList<String>>();
         allCity.add(city);
         areaPopWindow = new OptionsPopupWindow(this);
-        areaPopWindow.setPicker(allProince,allCity,true);
+        areaPopWindow.setPicker(allProince, allCity, true);
         areaPopWindow.setCyclic(true);
         areaPopWindow.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
     }
@@ -427,4 +426,14 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
     }
 
+    public void initDialog(List<Province> proDate, List<City> cityDate) {
+        AlertDialog mAlertDialog = new AlertDialog.Builder(mActivity).create();
+        mAlertDialog.show();
+        View view = UIUtil.inflate(R.layout.item_pop_myview);
+        mAlertDialog.getWindow().setContentView(view);
+        mAlertDialog.setTitle("选择城市");
+        ListView proCity = (ListView) view.findViewById(R.id.lv_province);
+        ListView lvCity = ((ListView) view.findViewById(R.id.lv_city));
+        ProvinceAdapter proAdapter=new ProvinceAdapter(this,proDate);
+    }
 }

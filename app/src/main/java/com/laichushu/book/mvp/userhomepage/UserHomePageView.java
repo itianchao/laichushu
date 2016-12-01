@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.userhomepage;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
@@ -18,5 +19,6 @@ public interface UserHomePageView {
     void getUserHomeHeFocusSuccess(HomePersonFocusResult result);
     void getFocusBeStatus(HomeFocusResult model,boolean flg);
     void getFocusMeStatus(HomeFocusResult model,boolean flg);
+    void getLikeUpSuccess(RewardResult model,String type);
     void getDataFail(String errorMsg);
 }

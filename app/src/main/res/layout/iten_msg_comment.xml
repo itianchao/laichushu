@@ -42,6 +42,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
+                android:visibility="invisible"
                 android:background="@drawable/icon_comment" />
         </RelativeLayout>
 
@@ -66,7 +67,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
                 android:layout_toRightOf="@+id/tv_appendName"
-                android:text="《神雕侠侣》"
                 android:textColor="@color/auditing"
                 android:textSize="@dimen/edit2"
                 android:textStyle="bold" />

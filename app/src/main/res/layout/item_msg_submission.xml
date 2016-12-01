@@ -26,7 +26,7 @@
 
             <ImageView
                 android:id="@+id/iv_subHead"
-                android:layout_width="45dp"
+                android:layout_width="50dp"
                 android:layout_height="65dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp" />
@@ -60,6 +60,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="24dp"
+                        android:visibility="invisible"
                         android:background="@drawable/icon_comment"
                         android:gravity="center_vertical|right" />
                 </RelativeLayout>
@@ -84,13 +85,13 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_marginRight="24dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/shape_rectangle_btn_state"
                         android:clickable="false"
                         android:focusable="false"
-                        android:text="审核中"
+                        android:text="已关闭"
                         android:textColor="@color/characterGray" />
                 </RelativeLayout>
             </LinearLayout>

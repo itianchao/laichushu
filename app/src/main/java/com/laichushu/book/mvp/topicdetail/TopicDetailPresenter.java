@@ -25,15 +25,16 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
-    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet( userId, pageNo, pageSize);
+    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet( "","", pageNo, pageSize);
 
     //初始化构造
     public TopicDetailPresenter(TopicDetailView view) {
         attachView(view);
         mActivity = (TopicDetilActivity) view;
     }
-    public void loadCommentData(String topicId) {
-        getParamet().setTopicId(topicId);
+    public void loadCommentData(String topicId,String sourceType) {
+        getParamet().setSourceId(topicId);
+        getParamet().setSourceType(sourceType);
         Logger.e("获取全部评论");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.topicDetailCommentList(paramet), new ApiCallback<TopicdetailModel>() {
@@ -93,9 +94,9 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
     /**
      * 发送评论
      * @param sendmsgEv
-     * @param topicId
+     * @param
      */
-    public void topicDetailCommentSave(EditText sendmsgEv, String topicId) {
+    public void topicDetailCommentSave(EditText sendmsgEv, String sourceId,String sourceType) {
         String msg = sendmsgEv.getText().toString().trim();
         if (TextUtils.isEmpty(msg)) {
             sendmsgEv.startAnimation(ShakeAnim.shakeAnimation(3));
@@ -103,7 +104,7 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
         }
         LoggerUtil.e("发送评论");
         mvpView.showLoading();
-        TopicDetailCommentSave_Paramet paramet = new TopicDetailCommentSave_Paramet(userId,msg,topicId);
+        TopicDetailCommentSave_Paramet paramet = new TopicDetailCommentSave_Paramet(sourceId,userId,msg,sourceType);
         addSubscription(apiStores.topicDetailCommentSave(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {

@@ -1,23 +1,16 @@
 package com.laichushu.book.mvp.messagecomment;
 
-import com.laichushu.book.bean.netbean.BookDetailsResult;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.BookDetails_Paramet;
-import com.laichushu.book.bean.netbean.HomeUseDyrResult;
-import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
-import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.MessageComment_Paramet;
+import com.laichushu.book.bean.netbean.SendMsgDetails_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.mvp.userinfo.UserInfoView;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.base.BasePresenter;
-import com.laichushu.book.utils.IDCardValidate;
 import com.laichushu.book.utils.LoggerUtil;
-import com.laichushu.book.utils.SharePrefManager;
-
-import okhttp3.internal.framed.Variant;
 
 /**
  * Created by PCPC on 2016/11/28.
@@ -84,6 +77,14 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
         this.paramet = paramet;
     }
 
+    public MessageCommentDetailsActivity getmActivity() {
+        return mActivity;
+    }
+
+    public void setmActivity(MessageCommentDetailsActivity mActivity) {
+        this.mActivity = mActivity;
+    }
+
     private MessageComment_Paramet paramet = new MessageComment_Paramet(pageSize, pageNo, "", userId, msgType, subType);
 
     //获取评论
@@ -106,8 +107,18 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
             }
         });
     }
+
+
+    public BookDetails_Paramet getBookParamet() {
+        return bookParamet;
+    }
+
+    public void setBookParamet(BookDetails_Paramet bookParamet) {
+        this.bookParamet = bookParamet;
+    }
+
     //获取图书详情
-   private BookDetails_Paramet bookParamet= new BookDetails_Paramet(userId,"");
+private BookDetails_Paramet bookParamet= new BookDetails_Paramet(userId,"");
     public void LoadBookDetailsData(String id, final int position) {
         bookParamet.setId(id);
         LoggerUtil.toJson(bookParamet);
@@ -128,6 +139,37 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
             }
         });
     }
+    public SendMsgDetails_Paramet getMsgParamet() {
+        return msgParamet;
+    }
 
+    public void setMsgParamet(SendMsgDetails_Paramet msgParamet) {
+        this.msgParamet = msgParamet;
+    }
 
+    //回复消息
+    private SendMsgDetails_Paramet msgParamet= new SendMsgDetails_Paramet(userId,"","","","");
+    public void LoadSendMsgDetailsData(String receiveId,String content,String msgType,String subType) {
+        msgParamet.setReceiveId(receiveId);
+        msgParamet.setContent(content);
+        msgParamet.setMsgType(msgType);
+        msgParamet.setSubType(subType);
+        LoggerUtil.toJson(msgParamet);
+        addSubscription(apiStores.msgSendMsgDetails(msgParamet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.sendMsgDetailsDateSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
 }

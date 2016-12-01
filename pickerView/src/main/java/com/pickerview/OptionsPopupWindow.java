@@ -41,7 +41,7 @@ public class OptionsPopupWindow extends PopupWindow implements OnClickListener {
 
 		LayoutInflater mLayoutInflater = LayoutInflater.from(context);
 		rootView = mLayoutInflater.inflate(R.layout.pw_options, null);
-		
+
 		rl_head = (RelativeLayout) rootView.findViewById(R.id.rl_head);
 		// -----确定和取消按钮
 		btnSubmit = rootView.findViewById(R.id.btnSubmit);
@@ -61,7 +61,7 @@ public class OptionsPopupWindow extends PopupWindow implements OnClickListener {
 
 		setContentView(rootView);
 	}
-	
+
 
 	public WheelOptions getWheelOptions() {
 		return wheelOptions;
@@ -156,7 +156,7 @@ public class OptionsPopupWindow extends PopupWindow implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) 
+	public void onClick(View v)
 	{
 		String tag=(String) v.getTag();
 		if(tag.equals(TAG_CANCEL))

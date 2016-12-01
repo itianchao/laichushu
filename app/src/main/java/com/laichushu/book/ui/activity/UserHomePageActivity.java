@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
@@ -37,7 +38,7 @@ import java.util.List;
  * 用户主页详情
  * 2016年11月25日17:04:06
  */
-public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
+public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, UserDynamicAdapter.CallBackState {
     private ImageView ivBack, ivHead, ivGrade, ivGradeDetails;
     private TextView tvTitle, nickName, tvRealName, tvAuthorGrade;
     private HomePersonFocusResult.DataBean dataBean;
@@ -55,7 +56,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private int PAGE_NO = 1, type = 1;
     private boolean dibbleDy = false, dibbleWorks = false, dibbleheFo = false, dibbleFoHe = false;
     private List<View> pulls = new ArrayList<>();
-    private String userId;
+    private String userId,stateType;
 
     /**
      * 1 关注我的 2 我关注的
@@ -106,10 +107,10 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         btnFocus.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
 
-        //初始化mRecyclerView 关注
+        //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
         mDyRecyclerView.setFooterViewText("加载中");
-        dyAdapter = new UserDynamicAdapter(this, dyData);
+        dyAdapter = new UserDynamicAdapter(this, dyData, mvpPresenter, this);
         mDyRecyclerView.setAdapter(dyAdapter);
         mDyRecyclerView.setOnPullLoadMoreListener(this);
         //初始化作品
@@ -359,6 +360,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         if (model.isSuccess()) {
             if (flg) {
                 ToastUtil.showToast("关注成功！");
+//                mvpPresenter.getUserDynmicDate(userId);
             } else {
                 ToastUtil.showToast("取消关注成功！");
             }
@@ -379,6 +381,31 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
 
         } else {
             ToastUtil.showToast("关注失败！");
+            LoggerUtil.toJson(model);
+        }
+    }
+
+    @Override
+    public void getState(String sourceId, String subType, String stateType) {
+        mvpPresenter.loadLikeUpDate(sourceId, subType, stateType);
+    }
+
+    /**
+     * 点赞
+     *
+     * @param model
+     */
+    @Override
+    public void getLikeUpSuccess(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (stateType.equals("0")) {
+                ToastUtil.showToast("点赞成功！");
+            } else {
+                ToastUtil.showToast("取消点赞成功！");
+            }
+
+        } else {
+            ToastUtil.showToast("操作失败！");
             LoggerUtil.toJson(model);
         }
     }
@@ -443,4 +470,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
 
         }
     }
+
+
 }
