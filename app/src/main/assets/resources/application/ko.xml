@@ -286,7 +286,7 @@
 		<node name="textInBuffer" value="클립보드로 복사됨:&#10;%s"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="&lt;a href=&quot;https://org.geometerplus.android.fbreader.org/&quot;&gt;FBReader&lt;/a&gt; 로부터 공유됨"/>
+		<node name="sharedFrom" value="&lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; 로부터 공유됨"/>
 	</node>
 	<node name="menu">
 		<node name="installPremium" value="Upgrade to Premium" toBeTranslated="true"/>
@@ -346,7 +346,7 @@
 		<node name="sync" value="동기화">
 			<node name="summary" value="책 네트워크 설정"/>
 			<node name="site" value="동기화에 대해 더 알아보기">
-				<node name="url" value="https://books.org.geometerplus.android.fbreader.org/help.html"/>
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="동기화 사용">
 				<node name="summaryOn" value="내 라이브러리를 FBReader 책 네트워크 서버와 동기화하기"/>
@@ -886,10 +886,10 @@
 			<node name="summary" value="버전 정보, 연락처"/>
 			<node name="version" value="버전"/>
 			<node name="site" value="웹사이트 방문">
-				<node name="url" value="https://org.geometerplus.android.fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="이메일 보내기">
-				<node name="url" value="mailto:contact@org.geometerplus.android.fbreader.org"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="googleplus" value="FBReader Google+ 커뮤니티 참여">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
@@ -1167,7 +1167,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="https://org.geometerplus.android.fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="플러그인 설치">
 		<node name="noMorePlugins" value="지금은 새로운 플러그인이 없습니다"/>

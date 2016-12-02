@@ -10,16 +10,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.otherbean.BaseBookEntity;
 import com.laichushu.book.event.RefurshCommentListEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
 import com.laichushu.book.mvp.bookdetail.BookDetailPresenter;
 import com.laichushu.book.mvp.bookdetail.BookDetailView;
 import com.laichushu.book.mvp.bookdetail.SubscribeArticleModle;
 import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.org.geometerplus.android.fbreader.FBReader;
-import com.laichushu.book.org.geometerplus.fbreader.book.Book;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.ToastUtil;
@@ -267,8 +267,9 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 }
                 break;
             case R.id.tv_probation://免费试读
-                Book book = new Book(12,"\\data\\data\\com.laichushu.book\\清史稿.epub","清史稿","utf-8","zh");
-                FBReader.openBookActivity(this, book,null);
+                BaseBookEntity baseBookEntity = new BaseBookEntity();
+                baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH+"/test.epub");
+                UIUtil.startBookFBReaderActivity(this,baseBookEntity);
                 break;
             case R.id.tv_pay://购买
                 //弹出对话框确认

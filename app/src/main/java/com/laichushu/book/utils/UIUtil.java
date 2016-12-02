@@ -29,8 +29,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.otherbean.BaseBookEntity;
+import com.laichushu.book.global.BaseApplication;
+import com.laichushu.book.global.ConstantValue;
+
+import org.geometerplus.android.fbreader.FBReader;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -426,4 +430,20 @@ public class UIUtil
 	public static View inflate(int resId, ViewGroup parent){
 		return LayoutInflater.from(getContext()).inflate(resId, parent);
 	}
+
+	/**
+	 * 跳转阅读页
+	 * @param baseBookEntity
+	 * @param baseBookEntity
+	 * @param
+	 */
+	public static void startBookFBReaderActivity(Activity activity,BaseBookEntity baseBookEntity){
+		if (baseBookEntity == null||activity == null)
+			return;
+		Intent intent = new Intent(activity, FBReader.class);
+		intent.putExtra(ConstantValue.BASEBOOK, baseBookEntity);
+		intent.setAction(ConstantValue.FB_READER.ACTION_OPEN_FROM_SHELF);
+		activity.startActivity(intent);
+	}
+
 }

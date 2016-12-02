@@ -286,7 +286,7 @@
 		<node name="textInBuffer" value="Скапіявана ў кішэню:&#10;%s"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Абагулена праз &lt;a href=&quot;https://org.geometerplus.android.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Абагулена праз &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="installPremium" value="Upgrade to Premium" toBeTranslated="true"/>
@@ -346,7 +346,7 @@
 		<node name="sync" value="Сынхранізацыя">
 			<node name="summary" value="Налады кніжнай сеткі"/>
 			<node name="site" value="Больш пра сынхранізацыю">
-				<node name="url" value="https://books.org.geometerplus.android.fbreader.org/help.html"/>
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="Уключыць сынхранізацыю">
 				<node name="summaryOn" value="Сынхранізаваць маю бібліятэку з сэрвэрам кніжнай сеткі FBReader"/>
@@ -886,10 +886,10 @@
 			<node name="summary" value="Вэрсія й кантакты"/>
 			<node name="version" value="Вэрсія"/>
 			<node name="site" value="Наведаць наш сайт">
-				<node name="url" value="https://org.geometerplus.android.fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="Даслаць нам ліст">
-				<node name="url" value="mailto:contact@org.geometerplus.android.fbreader.org"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="googleplus" value="Далучыцца да суполкі FBReader у Google+">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
@@ -1167,7 +1167,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="https://org.geometerplus.android.fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Усталяваць убудовы">
 		<node name="noMorePlugins" value="Зараз няма новых убудоваў, прабачце"/>
