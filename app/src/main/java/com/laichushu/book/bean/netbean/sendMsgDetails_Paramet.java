@@ -1,12 +1,10 @@
 package com.laichushu.book.bean.netbean;
 
-import java.io.Serializable;
-
 /**
  * Created by PCPC on 2016/12/1.
  */
 
-public class SendMsgDetails_Paramet implements Serializable {
+public class SendMsgDetails_Paramet {
     private String sendId, receiveId, content, msgType, subType;
 
     public SendMsgDetails_Paramet(String sendId, String receiveId, String content, String msgType, String subType) {

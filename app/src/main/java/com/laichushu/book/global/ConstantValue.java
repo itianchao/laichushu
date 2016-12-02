@@ -1,5 +1,7 @@
 package com.laichushu.book.global;
 
+import android.os.Environment;
+
 import com.laichushu.book.utils.SharePrefManager;
 
 /**
@@ -33,4 +35,37 @@ public class ConstantValue {
     //图书话题类型
     public static String  COMMENTBOOK_TYPE="1";//图书
     public static String  COMMENTTOPIC_TYPE="2";//话题
+
+
+    //baseBook
+    public static final String BASEBOOK = "basebook";
+
+    public static class FB_READER {
+
+        // 打开非本地书籍
+        public static final String ACTION_OPEN_FROM_SHELF = "action.fromShelf";
+
+        // 从书城打开书籍
+        public static final String ACTION_OPEN_FROM_BOOK_STORE = "action.fromBookStore";
+    }
+
+
+    //文件路径
+    public static class LOCAL_PATH {
+
+        // 文件保存在SD卡路径
+        public static final  String SD_PATH = Environment.getExternalStorageDirectory().getPath();
+        // 项目名称
+        public static final String PROJECT_NAME = "/laichushu";
+        // 文件路径
+        public static final String FILE = "/file/";
+        // 图片路径
+        public static final String IMAGE = "/image/";
+        // apk路径
+        public static final String APK = "/apk/";
+
+
+    }
+
+
 }

@@ -276,7 +276,7 @@
 		<node name="textInBuffer" value="Vágólapra másolva:&#10;%s"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Megosztva az &lt;a href=&quot;https://org.geometerplus.android.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;ből"/>
+		<node name="sharedFrom" value="Megosztva az &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;ből"/>
 	</node>
 	<node name="menu">
 		<node name="installPremium" value="Upgrade to Premium" toBeTranslated="true"/>
@@ -336,7 +336,7 @@
 		<node name="sync" value="Synchronisation" toBeTranslated="true">
 			<node name="summary" value="Book network settings" toBeTranslated="true"/>
 			<node name="site" value="Read more about synchronisation" toBeTranslated="true">
-				<node name="url" value="https://books.org.geometerplus.android.fbreader.org/help.html" toBeTranslated="true"/>
+				<node name="url" value="https://books.fbreader.org/help.html" toBeTranslated="true"/>
 			</node>
 			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
@@ -876,10 +876,10 @@
 			<node name="summary" value="Verziószám, kapcsolat"/>
 			<node name="version" value="Verzió"/>
 			<node name="site" value="Ugrás a weboldalunkra">
-				<node name="url" value="https://org.geometerplus.android.fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="E-mail küldése">
-				<node name="url" value="mailto:contact@org.geometerplus.android.fbreader.org"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
@@ -1157,7 +1157,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="https://org.geometerplus.android.fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Bővítmények telepítése">
 		<node name="noMorePlugins" value="Jelenleg nincs új bővítmény"/>

@@ -295,7 +295,7 @@
 		<node name="textInBuffer" value="Zkopírováno do schránky:&#10;%s"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;https://org.geometerplus.android.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="installPremium" value="Upgradovat na Premium"/>
@@ -355,7 +355,7 @@
 		<node name="sync" value="Synchronizace">
 			<node name="summary" value="Nastavení síťové knihovny"/>
 			<node name="site" value="Přečtěte si více o synchronizaci">
-				<node name="url" value="https://books.org.geometerplus.android.fbreader.org/help.html"/>
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="Povolit synchronizaci">
 				<node name="summaryOn" value="Synchronizovat mou knihovnu se serverem síťové knihovny FBReaderu"/>
@@ -895,10 +895,10 @@
 			<node name="summary" value="Informace o verzi, kontakty"/>
 			<node name="version" value="Verze"/>
 			<node name="site" value="Navštivte naši webovou stránku">
-				<node name="url" value="https://org.geometerplus.android.fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="Pošlete nám e-mail">
-				<node name="url" value="mailto:contact@org.geometerplus.android.fbreader.org"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="googleplus" value="Připojte se ke komunitě FBReader na Google+">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
@@ -1176,7 +1176,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="https://org.geometerplus.android.fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Instalovat doplňky">
 		<node name="noMorePlugins" value="Bohužel, právě nemáme žádné nové doplňky"/>

@@ -8,8 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.otherbean.BaseBookEntity;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.login.LoginModel;
 import com.laichushu.book.mvp.login.LoginPresenter;
 import com.laichushu.book.mvp.login.LoginView;
@@ -18,6 +19,7 @@ import com.laichushu.book.utils.AMUtils;
 import com.laichushu.book.utils.DialogUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
+import com.orhanobut.logger.Logger;
 
 /**
  * 登录页面

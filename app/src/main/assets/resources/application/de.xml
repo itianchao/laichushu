@@ -291,7 +291,7 @@
 		<node name="textInBuffer" value="In die Zwischenablage kopiert:&#10;%s"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Bereitgestellt von &lt;a href=&quot;https://org.geometerplus.android.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Bereitgestellt von &lt;a href=&quot;https://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="installPremium" value="Upgrade auf Premium"/>
@@ -351,7 +351,7 @@
 		<node name="sync" value="Synchronisation">
 			<node name="summary" value="Bücher Netzwerk Einstellungen"/>
 			<node name="site" value="Mehr über die Synchronisation erfahren">
-				<node name="url" value="https://books.org.geometerplus.android.fbreader.org/help.html"/>
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="Synchronisation aktivieren">
 				<node name="summaryOn" value="Synchronisiere meine Bibliothek mit dem FBReader Bücher Netzwerkserver"/>
@@ -891,10 +891,10 @@
 			<node name="summary" value="Versionsinformation, Kontakt"/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Homepage">
-				<node name="url" value="https://org.geometerplus.android.fbreader.org/"/>
+				<node name="url" value="https://fbreader.org/"/>
 			</node>
 			<node name="email" value="E-Mail">
-				<node name="url" value="mailto:contact@org.geometerplus.android.fbreader.org"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="googleplus" value="FBReader Google+ Gruppe beitreten">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
@@ -1172,7 +1172,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="https://org.geometerplus.android.fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Plugins installieren">
 		<node name="noMorePlugins" value="Aktuell sind keine neuen Plugins verfügbar."/>

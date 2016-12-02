@@ -291,7 +291,7 @@
 		<node name="textInBuffer" value="Текст в буфере обмена:&#10;%s"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;https://ru.org.geometerplus.android.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;https://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="installPremium" value="Установить FBReader Premium"/>
@@ -351,7 +351,7 @@
 		<node name="sync" value="Синхронизация">
 			<node name="summary" value="Настройки книжной сети"/>
 			<node name="site" value="Как работает синхронизация FBReader">
-				<node name="url" value="https://books.org.geometerplus.android.fbreader.org/help.html"/>
+				<node name="url" value="https://books.fbreader.org/help.html"/>
 			</node>
 			<node name="enable" value="Включить синхронизацию">
 				<node name="summaryOn" value="Синхронизировать мою библиотеку с сервером книжной сети"/>
@@ -891,10 +891,10 @@
 			<node name="summary" value="Версия, контакты"/>
 			<node name="version" value="Версия"/>
 			<node name="site" value="Наш веб-сайт">
-				<node name="url" value="https://ru.org.geometerplus.android.fbreader.org/"/>
+				<node name="url" value="https://ru.fbreader.org/"/>
 			</node>
 			<node name="email" value="Отправьте нам письмо">
-				<node name="url" value="mailto:contact@org.geometerplus.android.fbreader.org"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="googleplus" value="Присоединяйтесь к сообществу FBReader на Google+">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
@@ -1176,7 +1176,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="https://ru.org.geometerplus.android.fbreader.org/faq-page"/>
+		<node name="faqPage" value="https://ru.fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Дополнительные модули">
 		<node name="noMorePlugins" value="Извините, но прямо сейчас у нас нет новых модулей"/>

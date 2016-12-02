@@ -1,13 +1,17 @@
 package com.laichushu.book.global;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 
 import com.laichushu.book.db.DaoMaster;
 import com.laichushu.book.db.DaoSession;
-import com.laichushu.book.org.geometerplus.android.fbreader.FBReaderApplication;
 import com.laichushu.book.utils.SharePrefManager;
+
+import org.geometerplus.android.fbreader.FBReaderApplication;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 
 /**
  * 应用程序入口
@@ -25,6 +29,11 @@ public class BaseApplication extends FBReaderApplication {
     public void onCreate() {
         super.onCreate();
         mContext = this;
+        String proName = getCurProcessName(getApplicationContext());
+        if (TextUtils.isEmpty(proName) || !FBReaderIntents.DEFAULT_PACKAGE.equals(proName)) {
+            return;
+        }
+
         // 主线程和子线程
         mMainThread = Thread.currentThread();
         // 主线程id
@@ -89,6 +98,30 @@ public class BaseApplication extends FBReaderApplication {
         }
         return daoSession;
     }
+
+
+    /**
+     * 获取进程名称
+     *
+     * @param context
+     * @return
+     * @Description
+     * @author ahq
+     */
+    public static String getCurProcessName(Context context) {
+        if (context == null)
+            return "";
+        int pid = android.os.Process.myPid();
+        ActivityManager mActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager.getRunningAppProcesses()) {
+            // LogHelper.i("procressname="+appProcess.processName);
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
+
 //    /**
 //     *  通过 DaoMaster 的内部类 DevOpenHelper创建数据库
 //     *  注意：默认的 DaoMaster.DevOpenHelper 会在数据库升级时，删除所有的表。
