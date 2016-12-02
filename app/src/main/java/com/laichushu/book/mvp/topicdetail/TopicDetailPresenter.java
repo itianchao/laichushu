@@ -25,16 +25,16 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
-    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet( "","", pageNo, pageSize);
+    private String sourceType = ConstantValue.COMMENTTOPIC_TYPE;
+    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet( "",sourceType, pageNo, pageSize,userId);
 
     //初始化构造
     public TopicDetailPresenter(TopicDetailView view) {
         attachView(view);
         mActivity = (TopicDetilActivity) view;
     }
-    public void loadCommentData(String topicId,String sourceType) {
+    public void loadCommentData(String topicId) {
         getParamet().setSourceId(topicId);
-        getParamet().setSourceType(sourceType);
         Logger.e("获取全部评论");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.topicDetailCommentList(paramet), new ApiCallback<TopicdetailModel>() {

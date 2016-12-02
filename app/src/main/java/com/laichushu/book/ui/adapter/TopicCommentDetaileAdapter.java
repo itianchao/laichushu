@@ -49,14 +49,13 @@ public class TopicCommentDetaileAdapter extends RecyclerView.Adapter<TopicCommen
 //        holder.numberTv.setText(dataBean.getReplyNum() + "");//回复人数
         holder.numberTv.setVisibility(View.INVISIBLE);
         holder.commentIv.setVisibility(View.INVISIBLE);
-        holder.likeTv.setVisibility(View.INVISIBLE);
-        holder.likeIv.setVisibility(View.INVISIBLE);
+
         holder.inIv.setVisibility(View.INVISIBLE);
-//        if (dataBean.isIsLike()) {
-//            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
-//        } else {
-//            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
-//        }
+        if (dataBean.isIsLike()) {
+            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
+        } else {
+            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
+        }
 //        holder.likeIv.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

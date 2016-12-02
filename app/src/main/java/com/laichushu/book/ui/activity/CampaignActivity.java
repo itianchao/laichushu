@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.laichushu.book.R;
+import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.campaign.CampaignJoinModel;
 import com.laichushu.book.mvp.campaign.CampaignModel;
@@ -21,6 +22,8 @@ import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -42,6 +45,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     private HomeHotModel.DataBean bean;
     private ArrayList<CampaignModel.DataBean> mData = new ArrayList<>();
     private ArrayList<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
+    private int position;
 
     @Override
     protected void initView() {
@@ -93,6 +97,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     @Override
     protected void initData() {
         bean = getIntent().getParcelableExtra("bean");
+        position = getIntent().getIntExtra("position",0);
         mvpPresenter.loadActivityResultData(bean.getActivityId());
         mvpPresenter.loadAuthorWorksData();
         joinTv.setOnClickListener(this);
@@ -138,6 +143,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
+                EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean.isParticipate(),bean.getApplyAmount(),position));
                 finish();
                 break;
             case R.id.iv_title_other://分享

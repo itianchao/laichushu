@@ -4,15 +4,25 @@ package com.laichushu.book.bean.netbean;
  * 保存回复评论
  * Created by wangtong on 2016/11/4.
  */
-public class ReSavaComment_Paramet  {
+public class ReSavaComment_Paramet {
     private String scoreId;
     private String userId;
     private String content;
+    private String sourceType;
 
-    public ReSavaComment_Paramet(String scoreId, String userId, String content) {
+    public ReSavaComment_Paramet(String scoreId, String userId, String content, String sourceType) {
         this.scoreId = scoreId;
         this.userId = userId;
         this.content = content;
+        this.sourceType = sourceType;
+    }
+
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
     }
 
     public String getScoreId() {

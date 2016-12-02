@@ -1,11 +1,6 @@
 package com.laichushu.book.retrofit;
 
-import com.laichushu.book.bean.netbean.BookDetailsResult;
-import com.laichushu.book.bean.netbean.BookDetails_Paramet;
-import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
-import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
-import com.laichushu.book.bean.JsonBean.MechanismBrieBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
@@ -17,7 +12,9 @@ import com.laichushu.book.bean.netbean.AuthorDetail_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
 import com.laichushu.book.bean.netbean.Balance_Paramet;
 import com.laichushu.book.bean.netbean.BestLike_Paramet;
+import com.laichushu.book.bean.netbean.BookDetails_Paramet;
 import com.laichushu.book.bean.netbean.BookList_Paramet;
+import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
 import com.laichushu.book.bean.netbean.ChapterRename_Paramet;
 import com.laichushu.book.bean.netbean.CollectList_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
@@ -36,6 +33,7 @@ import com.laichushu.book.bean.netbean.DeleteNewBook_Paramet;
 import com.laichushu.book.bean.netbean.DraftList_Paramet;
 import com.laichushu.book.bean.netbean.EditDraft_Paramet;
 import com.laichushu.book.bean.netbean.EditMaterialBook_Paramet;
+import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.netbean.ForgetPwd_Paramet;
 import com.laichushu.book.bean.netbean.GradeDetails_Paramet;
 import com.laichushu.book.bean.netbean.GradeRemarksResult;
@@ -49,7 +47,6 @@ import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
@@ -59,7 +56,6 @@ import com.laichushu.book.bean.netbean.Login_Paramet;
 import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
 import com.laichushu.book.bean.netbean.MaterialList_Paramet;
 import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
-import com.laichushu.book.bean.netbean.MechanismBrie_Paramet;
 import com.laichushu.book.bean.netbean.MechanismList_Paramet;
 import com.laichushu.book.bean.netbean.MechanismTopicList_Paramet;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
@@ -88,7 +84,6 @@ import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
-import com.laichushu.book.bean.netbean.UserBookList_Paramet;
 import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
@@ -142,7 +137,8 @@ public interface ApiStores {
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
-    String API_SERVER_URL = "http://192.168.1.105:8082/book-app/";//张峰2
+//    String API_SERVER_URL = "http://192.168.1.105:8082/book-app/";//张峰2
+    String API_SERVER_URL = "http://192.168.0.143:8082/book-app/";//张峰3
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
@@ -206,8 +202,8 @@ public interface ApiStores {
     Observable<ArticleCommentModle> articleComment(@Body Comment_Paramet paramet);
 
     //图书全部评论查询接口
-    @POST("articleScore/list")
-    Observable<ArticleCommentModle> articleComment(@Body Comment2_Paramet paramet);
+    @POST("comment/list")
+    Observable<TopicdetailModel> articleComment(@Body TopicDetailCommentList_Paramet paramet);
 
     //图书评论保存接口
     @POST("articleScore/save")
@@ -218,7 +214,7 @@ public interface ApiStores {
     Observable<CommentDetailModle> CommentList(@Body ReCommentList_Paramet paramet);
 
     //保存回复评论接口
-    @POST("articleComment/save")
+    @POST("comment/save")
     Observable<CommentDetailModle> saveComment(@Body ReSavaComment_Paramet paramet);
 
     //活动列表接口
