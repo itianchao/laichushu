@@ -38,7 +38,7 @@ import java.util.List;
  * 用户主页详情
  * 2016年11月25日17:04:06
  */
-public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, UserDynamicAdapter.CallBackState {
+public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack, ivHead, ivGrade, ivGradeDetails;
     private TextView tvTitle, nickName, tvRealName, tvAuthorGrade;
     private HomePersonFocusResult.DataBean dataBean;
@@ -56,7 +56,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private int PAGE_NO = 1, type = 1;
     private boolean dibbleDy = false, dibbleWorks = false, dibbleheFo = false, dibbleFoHe = false;
     private List<View> pulls = new ArrayList<>();
-    private String userId,stateType;
+    private String userId;
 
     /**
      * 1 关注我的 2 我关注的
@@ -110,7 +110,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
         mDyRecyclerView.setFooterViewText("加载中");
-        dyAdapter = new UserDynamicAdapter(this, dyData, mvpPresenter, this);
+        dyAdapter = new UserDynamicAdapter(this, dyData, mvpPresenter);
         mDyRecyclerView.setAdapter(dyAdapter);
         mDyRecyclerView.setOnPullLoadMoreListener(this);
         //初始化作品
@@ -385,11 +385,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }
     }
 
-    @Override
-    public void getState(String sourceId, String subType, String stateType) {
-        mvpPresenter.loadLikeUpDate(sourceId, subType, stateType);
-    }
-
     /**
      * 点赞
      *
@@ -398,7 +393,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     public void getLikeUpSuccess(RewardResult model, String type) {
         if (model.isSuccess()) {
-            if (stateType.equals("0")) {
+            if (type.equals("0")) {
                 ToastUtil.showToast("点赞成功！");
             } else {
                 ToastUtil.showToast("取消点赞成功！");
