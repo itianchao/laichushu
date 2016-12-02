@@ -45,7 +45,7 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
 
     @Override
     public void onBindViewHolder(SubMissionAdapter.ViewHolder holder, final int position) {
-        GlideUitl.loadImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivHead);
+        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivHead);
         holder.tvBookName.setText(dataBeen.get(position).getSourceName());
         holder.tvPubName.setText(dataBeen.get(position).getPressName());
         if (dataBeen.get(position).getPressName().equals("1")) {

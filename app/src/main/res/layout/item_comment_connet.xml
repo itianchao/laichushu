@@ -88,7 +88,7 @@
         android:layout_toLeftOf="@+id/tv_comment_like"
         android:layout_below="@+id/tv_comment_content"
         android:layout_marginTop="10dp"
-        android:src="@drawable/icon_like_normal" />
+        android:src="@drawable/icon_up_small_red" />
     <View
         android:layout_marginTop="5dp"
         android:layout_below="@id/tv_comment_time"

@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
@@ -49,6 +51,45 @@ public class TopicCommentDetaileAdapter extends RecyclerView.Adapter<TopicCommen
 //        holder.numberTv.setText(dataBean.getReplyNum() + "");//回复人数
         holder.numberTv.setVisibility(View.INVISIBLE);
         holder.commentIv.setVisibility(View.INVISIBLE);
+        //点赞
+//        holder.tvCollection.setText(dataBeen.get(position).getCollectNum() + "");
+//        currentNum = dataBeen.get(position).getCollectNum();
+//        if (dataBeen.get(position).isBeCollect()) {
+//            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
+//            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//            holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
+//            type = "1";
+//        } else {
+//            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_red);
+//            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//            holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
+//            type = "0";
+//        }
+//        holder.llCollection.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (type.equals("0")) {
+//                    //添加点赞
+//                    currentNum++;
+//                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
+//                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//                    holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
+//                    userHomePagePresener.loadLikeUpDate(dataBeen.get(position).getId(), ConstantValue.COMMENTTOPIC_TYPE, type);
+//                    type = "1";
+//                } else {
+//                    //取消点赞
+//                    currentNum--;
+//                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_red);
+//                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//                    holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
+//                    userHomePagePresener.loadLikeUpDate(dataBeen.get(position).getId(), ConstantValue.COMMENTTOPIC_TYPE, type);
+//                    type = "0";
+//                }
+//                holder.tvCollection.setText(currentNum + "");
+//            }
+//        });
+
+
         holder.likeTv.setVisibility(View.INVISIBLE);
         holder.likeIv.setVisibility(View.INVISIBLE);
         holder.inIv.setVisibility(View.INVISIBLE);

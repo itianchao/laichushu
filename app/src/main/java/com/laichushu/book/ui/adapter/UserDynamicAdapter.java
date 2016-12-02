@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,12 +29,12 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
     private List<HomeUseDyrResult.DataBean> dataBeen;
     private UserHomePagePresener userHomePagePresener;
     private String type;
-    private CallBackState callBackState;
-    public UserDynamicAdapter(UserHomePageActivity context, List<HomeUseDyrResult.DataBean> dataBean, UserHomePagePresener userHomePagePresener,CallBackState callBackState) {
+    private int currentNum = 0;
+
+    public UserDynamicAdapter(UserHomePageActivity context, List<HomeUseDyrResult.DataBean> dataBean, UserHomePagePresener userHomePagePresener) {
         this.context = context;
         this.dataBeen = dataBean;
         this.userHomePagePresener = userHomePagePresener;
-        this.callBackState=callBackState;
     }
 
     @Override
@@ -49,27 +50,40 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
         holder.tvShopName.setText(dataBeen.get(position).getTitle());
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
-        holder.tvCollection.setText(dataBeen.get(position).getCollectNum()+"");
+        holder.tvCollection.setText(dataBeen.get(position).getCollectNum() + "");
+        currentNum = dataBeen.get(position).getCollectNum();
         if (dataBeen.get(position).isBeCollect()) {
-            holder.tvCollection.setBackgroundResource(R.drawable.icon_like_normal);
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
             type = "1";
         } else {
-            holder.tvCollection.setBackgroundResource(R.drawable.icon_like_red);
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_red);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
             type = "0";
         }
         holder.llCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (type.equals("0")) {
-                    holder.tvCollection.setText((dataBeen.get(position).getCollectNum() + 1)+"");
-                    holder.tvCollection.setBackgroundResource(R.drawable.icon_like_normal);
-                    type="1";
+                    //添加点赞
+                    currentNum++;
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
+                    userHomePagePresener.loadLikeUpDate(dataBeen.get(position).getId(), ConstantValue.COMMENTTOPIC_TYPE, type);
+                    type = "1";
                 } else {
-                    holder.tvCollection.setText((dataBeen.get(position).getCollectNum() - 1)+"");
-                    holder.tvCollection.setBackgroundResource(R.drawable.icon_like_red);
-                    type="0";
+                    //取消点赞
+                    currentNum--;
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_red);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
+                    userHomePagePresener.loadLikeUpDate(dataBeen.get(position).getId(), ConstantValue.COMMENTTOPIC_TYPE, type);
+                    type = "0";
                 }
-                callBackState.getState(dataBeen.get(position).getId(),ConstantValue.COMMENTTOPIC_TYPE,type);
+                holder.tvCollection.setText(currentNum + "");
             }
         });
         holder.llScan.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +138,5 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
             this.root = root;
         }
     }
-    public interface CallBackState{
-        void getState(String sourceId,String subType,String stateType);
-    }
+
 }

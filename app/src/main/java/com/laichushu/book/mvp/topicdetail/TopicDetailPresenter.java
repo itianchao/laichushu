@@ -32,8 +32,9 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
         attachView(view);
         mActivity = (TopicDetilActivity) view;
     }
-    public void loadCommentData(String topicId,String sourceType) {
-        getParamet().setSourceId(topicId);
+    //获取全部评论
+    public void loadCommentData(String sourceId,String sourceType) {
+        getParamet().setSourceId(sourceId);
         getParamet().setSourceType(sourceType);
         Logger.e("获取全部评论");
         Logger.json(new Gson().toJson(paramet));
