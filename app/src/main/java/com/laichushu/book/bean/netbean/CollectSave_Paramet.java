@@ -7,13 +7,13 @@ package com.laichushu.book.bean.netbean;
 
 public class CollectSave_Paramet {
     private String userId;
-    private String targetId;
+    private String sourceId;
     private String type;//0 收藏 1 取消
     private String collectType;
 
-    public CollectSave_Paramet(String userId, String targetId, String type, String collectType) {
+    public CollectSave_Paramet(String userId, String sourceId, String collectType, String type) {
         this.userId = userId;
-        this.targetId = targetId;
+        this.sourceId = sourceId;
         this.type = type;
         this.collectType = collectType;
     }
@@ -26,12 +26,12 @@ public class CollectSave_Paramet {
         this.userId = userId;
     }
 
-    public String getTargetId() {
-        return targetId;
+    public String getSourceId() {
+        return sourceId;
     }
 
-    public void setTargetId(String targetId) {
-        this.targetId = targetId;
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 
     public String getType() {

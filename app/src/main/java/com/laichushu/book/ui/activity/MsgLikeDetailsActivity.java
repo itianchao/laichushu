@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
@@ -55,45 +56,45 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
             case "1":
                 //喜欢
                 tvTitle.setText("喜欢");
-                mvpPresenter.setMsgType("3");
-                mvpPresenter.setSubType("2");
+                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
+                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_2);
                 break;
             case "2":
                 //打赏
                 tvTitle.setText("打赏");
-                mvpPresenter.setMsgType("3");
-                mvpPresenter.setSubType("7");
+                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
+                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_6);
                 break;
 
             case "3":
                 //关注
                 tvTitle.setText("关注");
-                mvpPresenter.setMsgType("3");
-                mvpPresenter.setSubType("6");
+                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
+                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_5);
                 break;
             case "4":
                 //私信
                 tvTitle.setText("私信");
-                mvpPresenter.setMsgType("3");
-                mvpPresenter.setSubType("8");
+                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
+                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_7);
                 break;
             case "5":
                 //订阅
                 tvTitle.setText("订阅");
-                mvpPresenter.setMsgType("3");
-                mvpPresenter.setSubType("1");
+                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
+                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_1);
                 break;
             case "6":
                 //订阅
                 tvTitle.setText("活动通知");
-                mvpPresenter.setMsgType("1");
-                mvpPresenter.setSubType("9");
+                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_1);
+                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_8);
                 break;
             case "7":
                 //订阅
                 tvTitle.setText("其他消息");
-                mvpPresenter.setMsgType("1");
-                mvpPresenter.setSubType("10");
+                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_1);
+                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_9);
                 break;
         }
 
