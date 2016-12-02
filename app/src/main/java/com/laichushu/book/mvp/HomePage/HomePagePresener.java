@@ -213,7 +213,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
     //查看话题详情
     private CollectSave_Paramet collect =new CollectSave_Paramet(userId,"","0","5");
     public void loadLikeUp(String targetId){
-        collect.setTargetId(targetId);
+        collect.setSourceId(targetId);
         LoggerUtil.toJson(collect);
         addSubscription(apiStores.collectSave(collect), new ApiCallback<HomeFocusResult>() {
             @Override

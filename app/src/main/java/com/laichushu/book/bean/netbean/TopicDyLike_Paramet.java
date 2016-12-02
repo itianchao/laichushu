@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class TopicDyLike_Paramet implements Serializable {
     private String sourceId, sourceType, type, userId;
 
-    public TopicDyLike_Paramet(String sourceId, String sourceType, String type, String userId) {
+    public TopicDyLike_Paramet(String userId,String sourceId, String sourceType, String type) {
         this.sourceId = sourceId;
         this.sourceType = sourceType;
         this.type = type;

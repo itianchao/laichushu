@@ -18,6 +18,7 @@ import com.laichushu.book.ui.adapter.TopicCommentDetaileAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.laichushu.book.utils.Validator;
@@ -71,7 +72,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
-        mAdapter = new TopicCommentDetaileAdapter(this, mData);
+        mAdapter = new TopicCommentDetaileAdapter(this, mData,mvpPresenter);
         commentRyv.setAdapter(mAdapter);
         finishIv.setOnClickListener(this);
         sendmsgIv.setOnClickListener(this);
@@ -125,9 +126,24 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         }
     }
 
+    /**
+     * 点赞
+     * @param model
+     * @param type
+     */
     @Override
     public void SaveScoreLikeData(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (type.equals("0")) {
+                ToastUtil.showToast("点赞成功！");
+            } else {
+                ToastUtil.showToast("取消点赞成功！");
+            }
 
+        } else {
+            ToastUtil.showToast("操作失败！");
+            LoggerUtil.toJson(model);
+        }
     }
 
     @Override

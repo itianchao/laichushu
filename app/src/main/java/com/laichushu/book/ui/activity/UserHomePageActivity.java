@@ -360,12 +360,11 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         if (model.isSuccess()) {
             if (flg) {
                 ToastUtil.showToast("关注成功！");
-//                mvpPresenter.getUserDynmicDate(userId);
             } else {
-                ToastUtil.showToast("取消关注成功！");
+                ToastUtil.showToast("取消关注！");
             }
         } else {
-            ToastUtil.showToast("关注失败！");
+            ToastUtil.showToast("操作失败！");
             LoggerUtil.toJson(model);
         }
     }
@@ -376,7 +375,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             if (flg) {
                 ToastUtil.showToast("关注成功！");
             } else {
-                ToastUtil.showToast("取消关注成功！");
+                ToastUtil.showToast("取消关注！");
             }
 
         } else {
@@ -386,17 +385,18 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     }
 
     /**
-     * 点赞
+     * 收藏
      *
      * @param model
+     * @param type
      */
     @Override
-    public void getLikeUpSuccess(RewardResult model, String type) {
+    public void getSaveCollectSuccess(RewardResult model, String type) {
         if (model.isSuccess()) {
             if (type.equals("0")) {
-                ToastUtil.showToast("点赞成功！");
+                ToastUtil.showToast("收藏成功！");
             } else {
-                ToastUtil.showToast("取消点赞成功！");
+                ToastUtil.showToast("取消收藏！");
             }
 
         } else {
