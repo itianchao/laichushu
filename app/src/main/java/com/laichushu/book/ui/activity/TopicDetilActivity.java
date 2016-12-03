@@ -72,7 +72,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
-        mAdapter = new TopicCommentDetaileAdapter(this, mData,mvpPresenter);
+        mAdapter = new TopicCommentDetaileAdapter(this, mData);
         commentRyv.setAdapter(mAdapter);
         finishIv.setOnClickListener(this);
         sendmsgIv.setOnClickListener(this);
