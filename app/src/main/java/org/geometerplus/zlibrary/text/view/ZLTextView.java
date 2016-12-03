@@ -415,7 +415,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		setContext(context);
 		preparePaintInfo(getPage(pageIndex));
 	}
-
+	//绘制
 	@Override
 	public synchronized void paint(ZLPaintContext context, PageIndex pageIndex) {
 		setContext(context);
@@ -990,14 +990,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		return myCachedInfo;
 	}
-
+	//构建每一行的信息绑定
 	private ZLTextLineInfo processTextLine(
-		ZLTextPage page,
-		ZLTextParagraphCursor paragraphCursor,
-		final int startIndex,
-		final int startCharIndex,
-		final int endIndex,
-		ZLTextLineInfo previousInfo
+		ZLTextPage page,//页面信息记录
+		ZLTextParagraphCursor paragraphCursor,//段落位置记录
+		final int startIndex,//开始文字记录
+		final int startCharIndex,//开始字符记录
+		final int endIndex,//结束文字记录
+		ZLTextLineInfo previousInfo//上一行的文字记录
 	) {
 		final ZLTextLineInfo info = processTextLineInternal(
 			page, paragraphCursor, startIndex, startCharIndex, endIndex, previousInfo
@@ -1021,6 +1021,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final ZLPaintContext context = getContext();
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, getTextStyle());
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
+		//判断是否有缓存的风格
 		if (cachedInfo != null) {
 			cachedInfo.adjust(previousInfo);
 			applyStyleChanges(paragraphCursor, startIndex, cachedInfo.EndElementIndex);
@@ -1034,7 +1035,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (isFirstLine) {
 			ZLTextElement element = paragraphCursor.getElement(currentElementIndex);
 			while (isStyleChangeElement(element)) {
-				applyStyleChangeElement(element);
+				applyStyleChangeElement(element);//存储风格
 				++currentElementIndex;
 				currentCharIndex = 0;
 				if (currentElementIndex == endIndex) {
@@ -1043,6 +1044,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				element = paragraphCursor.getElement(currentElementIndex);
 			}
 			info.StartStyle = getTextStyle();
+			//真实能显示的元素的位置
 			info.RealStartElementIndex = currentElementIndex;
 			info.RealStartCharIndex = currentCharIndex;
 		}
@@ -1066,15 +1068,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return info;
 		}
 
-		int newWidth = info.Width;
-		int newHeight = info.Height;
-		int newDescent = info.Descent;
-		boolean wordOccurred = false;
-		boolean isVisible = false;
-		int lastSpaceWidth = 0;
-		int internalSpaceCounter = 0;
-		boolean removeLastSpace = false;
-
+		int newWidth = info.Width;//用于记录行宽
+		int newHeight = info.Height;//用于记录行高
+		int newDescent = info.Descent;//用于记录倾斜
+		boolean wordOccurred = false;//判断文字是否出现 当element == ZLTextElement.HSpace时 为false
+		boolean isVisible = false;//是否行可见
+		int lastSpaceWidth = 0;//上一个空格的宽度 空格是用ZLTextElement.HSpace
+		int internalSpaceCounter = 0;// 内部的空行出现次数 element == ZLTextElement.HSpace
+		boolean removeLastSpace = false;//是否去掉最后一个空格
+		//在循环里面开始计算行宽
 		do {
 			ZLTextElement element = paragraphCursor.getElement(currentElementIndex);
 			newWidth += getElementWidth(element, currentCharIndex);
@@ -1450,6 +1452,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					}
 
 					page.StartCursor.setCursor(page.EndCursor);
+					//建立行信息
 					buildInfos(page, page.StartCursor, page.EndCursor);
 				}
 				break;

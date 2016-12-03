@@ -45,7 +45,7 @@ import org.geometerplus.zlibrary.ui.android.view.animation.SlideOldStyleAnimatio
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+//主控件
 public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLongClickListener {
 	public final ExecutorService PrepareService = Executors.newSingleThreadExecutor();
 
@@ -320,6 +320,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 							),
 							view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 						);
+						//对下一页或者上一页要加载页的信息记录
 						view.preparePage(context, ZLView.PageIndex.next);
 					}
 				});
