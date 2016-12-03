@@ -1,6 +1,11 @@
 package com.laichushu.book.retrofit;
 
+import com.laichushu.book.bean.netbean.BookDetailsResult;
+import com.laichushu.book.bean.netbean.BookDetails_Paramet;
+import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
+import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
+import com.laichushu.book.bean.JsonBean.MechanismBrieBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
@@ -142,6 +147,7 @@ public interface ApiStores {
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
+//    String API_SERVER_URL = "http://192.168.0.123:8082/book-app/";//施大勇4
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //      String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//李红江
 
@@ -273,7 +279,7 @@ public interface ApiStores {
     @POST("scoreLike/save")
     Observable<RewardResult> saveScoreLike(@Body ScoreLike_Paramet paramet);
 
-    //话题动态点赞
+    //评论点赞
     @POST("like/save")
     Observable<RewardResult> saveTopicDyLike(@Body TopicDyLike_Paramet paramet);
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
@@ -163,7 +164,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
                 llContainer.setVisibility(View.GONE);
                 llSys.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
-                mvpPresenter.setMsgType("2");
+                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_2);
                 if (!dibbleSub) {
                     mvpPresenter.LoaCommentdData();
                 }

@@ -55,9 +55,9 @@ public class CommentDetailModle {
     }
 
     public static class DataBean {
-        private String scoreId;
         private String userId;
         private String articleId;
+        private String sourceId;
         private String content;
         private int replyNum;
         private int likeNum;
@@ -65,13 +65,12 @@ public class CommentDetailModle {
         private String photo;
         private String commentTime;
         private boolean isLike;
-
-        public String getScoreId() {
-            return scoreId;
+        public String getSourceId() {
+            return sourceId;
         }
 
-        public void setScoreId(String scoreId) {
-            this.scoreId = scoreId;
+        public void setSourceId(String sourceId) {
+            this.sourceId = sourceId;
         }
 
         public String getUserId() {

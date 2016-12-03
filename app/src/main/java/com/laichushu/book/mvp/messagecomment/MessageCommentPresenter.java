@@ -21,8 +21,8 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
-    private String msgType ;
-    private String subType ;
+    private String msgType =ConstantValue.MSG_TYPE_3;
+    private String subType =ConstantValue.SUB_TYPE_4;
 
     //初始化构造
     public MessageCommentPresenter(MessageCommentView view) {

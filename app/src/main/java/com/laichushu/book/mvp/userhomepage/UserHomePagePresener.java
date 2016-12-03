@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.userhomepage;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
+import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
@@ -274,7 +275,30 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
         addSubscription(apiStores.saveTopicDyLike(scoreLike), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.getLikeUpSuccess(model,type);
+
+//                mvpView.getLikeUpSuccess(model,type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    //话题收藏
+    public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
+        CollectSave_Paramet collectSave = new CollectSave_Paramet(userId, sourceId, sourceType, type);
+        LoggerUtil.toJson(collectSave);
+        addSubscription(apiStores.collectSave(collectSave), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getSaveCollectSuccess(model, type);
             }
 
             @Override
