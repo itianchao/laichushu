@@ -69,6 +69,7 @@ final class BitmapManagerImpl implements BitmapManager {
 				myBitmaps[iIndex] = Bitmap.createBitmap(myWidth, myHeight, Bitmap.Config.RGB_565);
 			}
 		}
+		// 在Bitmap上绘制,传入一张空白的bitmap,和当前的index
 		myWidget.drawOnBitmap(myBitmaps[iIndex], index);
 		return myBitmaps[iIndex];
 	}
@@ -97,7 +98,7 @@ final class BitmapManagerImpl implements BitmapManager {
 		}
 	}
 
-	void shift(boolean forward) {
+	public void shift(boolean forward) {
 		for (int i = 0; i < SIZE; ++i) {
 			if (myIndexes[i] == null) {
 				continue;

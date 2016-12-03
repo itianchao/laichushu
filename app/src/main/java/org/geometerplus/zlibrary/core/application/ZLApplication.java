@@ -68,6 +68,10 @@ public abstract class ZLApplication {
 		myWindow = window;
 	}
 
+	public ZLApplicationWindow getMyWindow() {
+		return myWindow;
+	}
+
 	public final void initWindow() {
 		setView(myView);
 	}

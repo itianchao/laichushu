@@ -38,6 +38,7 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.view.animation.AnimationProvider;
 import org.geometerplus.zlibrary.ui.android.view.animation.CurlAnimationProvider;
+import org.geometerplus.zlibrary.ui.android.view.animation.CurlPageProviderImpl;
 import org.geometerplus.zlibrary.ui.android.view.animation.NoneAnimationProvider;
 import org.geometerplus.zlibrary.ui.android.view.animation.ShiftAnimationProvider;
 import org.geometerplus.zlibrary.ui.android.view.animation.SlideAnimationProvider;
@@ -84,8 +85,10 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
+		// 新打开时调用
 		getAnimationProvider().terminate();
 		if (myScreenIsTouched) {
+			// 手指触摸屏幕,并旋转手机
 			final ZLView view = ZLApplication.Instance().getCurrentView();
 			myScreenIsTouched = false;
 			view.onScrollingFinished(ZLView.PageIndex.current);
@@ -107,9 +110,9 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 
 		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		if (getAnimationProvider().inProgress()) {
-			onDrawInScrolling(canvas);
+			onDrawInScrolling(canvas);// 翻页过程中调用
 		} else {
-			onDrawStatic(canvas);
+			onDrawStatic(canvas);// 首次/页面跳转时调用,防止黑屏
 			ZLApplication.Instance().onRepaintFinished();
 		}
 	}
@@ -140,30 +143,36 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 		}
 		return myAnimationProvider;
 	}
-
+	public boolean isCurlAnimation(){
+		if(getAnimationProvider() instanceof CurlPageProviderImpl){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	private void onDrawInScrolling(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 
 		final AnimationProvider animator = getAnimationProvider();
 		final AnimationProvider.Mode oldMode = animator.getMode();
 		animator.doStep();
-		if (animator.inProgress()) {
-			animator.draw(canvas);
-			if (animator.getMode().Auto) {
+		if (animator.inProgress()) { // 动画过程中执行
+			animator.draw(canvas); // 动画绘制
+			if (animator.getMode().Auto) { // 松手后完成后续绘制
 				postInvalidate();
 			}
-			drawFooter(canvas, animator);
-		} else {
+		} else {                     // 动画结束后执行, 无动画情况只会调用这个
 			switch (oldMode) {
-				case AnimatedScrollingForward:
-				{
-					final ZLView.PageIndex index = animator.getPageToScrollTo();
+				case AnimatedScrollingForward: { // 当翻到 下一页/上一页 时调用
+					final ZLView.PageIndex index = animator.getPageToScrollTo(); // 得到翻页后的KooView 向左翻->next 向右翻->previous
+					// 若为next     -> next->current,current->previous
+					// 若为previous -> current->next,previous->current
 					myBitmapManager.shift(index == ZLView.PageIndex.next);
 					view.onScrollingFinished(index);
 					ZLApplication.Instance().onRepaintFinished();
 					break;
 				}
-				case AnimatedScrollingBackward:
+				case AnimatedScrollingBackward:// 没有翻到 下一页/上一页 则还在当前页
 					view.onScrollingFinished(ZLView.PageIndex.current);
 					break;
 			}
@@ -180,14 +189,16 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 	public void repaint() {
 		postInvalidate();
 	}
-
+	// onFingerPress
+	// 是否支持拖动翻页
+	// 开始翻页
 	@Override
 	public void startManualScrolling(int x, int y, ZLView.Direction direction) {
 		final AnimationProvider animator = getAnimationProvider();
 		animator.setup(direction, getWidth(), getMainAreaHeight(), myColorLevel);
 		animator.startManualScrolling(x, y);
 	}
-
+	// onFingerMove
 	@Override
 	public void scrollManuallyTo(int x, int y) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
@@ -235,7 +246,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 			return;
 		}
 		animator.startAnimatedScrolling(x, y, speed);
-		postInvalidate();
+		postInvalidate();// 更新视图
 	}
 
 	void drawOnBitmap(Bitmap bitmap, ZLView.PageIndex index) {
@@ -260,53 +271,17 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 		view.paint(context, index);
 	}
 
-	private void drawFooter(Canvas canvas, AnimationProvider animator) {
-		final ZLView view = ZLApplication.Instance().getCurrentView();
-		final ZLView.FooterArea footer = view.getFooterArea();
-
-		if (footer == null) {
-			myFooterBitmap = null;
-			return;
-		}
-
-		if (myFooterBitmap != null &&
-			(myFooterBitmap.getWidth() != getWidth() ||
-			 myFooterBitmap.getHeight() != footer.getHeight())) {
-			myFooterBitmap = null;
-		}
-		if (myFooterBitmap == null) {
-			myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
-		}
-		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-			mySystemInfo,
-			new Canvas(myFooterBitmap),
-			new ZLAndroidPaintContext.Geometry(
-				getWidth(),
-				getHeight(),
-				getWidth(),
-				footer.getHeight(),
-				0,
-				getMainAreaHeight()
-			),
-			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
-		);
-		footer.paint(context);
-		final int voffset = getHeight() - footer.getHeight();
-		if (animator != null) {
-			animator.drawFooterBitmap(canvas, myFooterBitmap, voffset);
-		} else {
-			canvas.drawBitmap(myFooterBitmap, 0, voffset, myPaint);
-		}
-	}
-
-	private void onDrawStatic(final Canvas canvas) {
+	private void onDrawStatic(final Canvas canvas) {  // 滑动完后调用静态时调用
+		/**
+		 * 从myBitmapManager获取一张Bitmap,画到画布上
+		 * myBitmapManager.getBitmap(ZLView.PageIndex.current)是自己创建的canvas,将该view的canva和其连起来才可以显示在view上
+		 */
 		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
-		drawFooter(canvas, null);
 		post(new Runnable() {
 			public void run() {
 				PrepareService.execute(new Runnable() {
 					public void run() {
-						final ZLView view = ZLApplication.Instance().getCurrentView();
+						final ZLView view = ZLApplication.Instance().getCurrentView();// 得到当前view
 						final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
 							mySystemInfo,
 							canvas,
@@ -318,7 +293,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 								0,
 								0
 							),
-							view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+							view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0 // 准备下一页
 						);
 						//对下一页或者上一页要加载页的信息记录
 						view.preparePage(context, ZLView.PageIndex.next);
@@ -460,6 +435,11 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 						}
 					}
 					if (!myPendingPress) {
+						// 开始切换 surfaceview
+						if(isCurlAnimation()){
+							ZLApplication.Instance().getMyWindow().hideViewWidget(true);
+							return true;
+						}
 						view.onFingerMove(x, y);
 					}
 				}

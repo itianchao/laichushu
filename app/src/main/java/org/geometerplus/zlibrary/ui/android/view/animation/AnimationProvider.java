@@ -79,7 +79,9 @@ public abstract class AnimationProvider {
 			myEndY = myStartY = y;
 		}
 	}
-
+	// 1. 都没达到 一直返回PreManualScrolling
+	// 2. 达到滑动要求 返回ManualScrolling
+	// 3. 达到不滑动要求 返回NoScrolling
 	private final Mode detectManualMode() {
 		final int dX = Math.abs(myStartX - myEndX);
 		final int dY = Math.abs(myStartY - myEndY);
@@ -251,15 +253,17 @@ public abstract class AnimationProvider {
 		}
 	}
 
-	public final void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
-		setFilter();
-		drawFooterBitmapInternal(canvas, footerBitmap, voffset);
-	}
+//	public final void drawFooterBitmap(Canvas canvas, Bitmap footerBitmap, int voffset) {
+//		setFilter();
+//		drawFooterBitmapInternal(canvas, footerBitmap, voffset);
+//	}
 
 	protected abstract void setFilter();
 	protected abstract void drawInternal(Canvas canvas);
-	protected abstract void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset);
-
+//	protected abstract void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset);
+	/**
+	 * 传入endX 与startX进行对比,来判断 往前翻页 还是 往后翻页
+	 */
 	public abstract ZLViewEnums.PageIndex getPageToScrollTo(int x, int y);
 
 	public final ZLViewEnums.PageIndex getPageToScrollTo() {
@@ -272,6 +276,16 @@ public abstract class AnimationProvider {
 
 	protected Bitmap getBitmapTo() {
 		return myBitmapManager.getBitmap(getPageToScrollTo());
+	}
+
+	// added by leixun
+	public Bitmap getBitmapByPageIndex(ZLViewEnums.PageIndex index){
+		return myBitmapManager.getBitmap(index);
+	}
+
+	// true 左边翻到右边 ；false 右边翻到左边 added by leixun
+	protected void forwardShift(boolean params){
+		myBitmapManager.shift(params);
 	}
 
 	protected void drawBitmapFrom(Canvas canvas, int x, int y, Paint paint) {

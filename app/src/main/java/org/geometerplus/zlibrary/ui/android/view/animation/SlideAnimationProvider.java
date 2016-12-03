@@ -103,22 +103,22 @@ public final class SlideAnimationProvider extends SimpleAnimationProvider {
 		);
 	}
 
-	@Override
-	protected void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
-		if (myDirection.IsHorizontal) {
-			final int dX = myEndX - myStartX;
-			setDarkFilter(dX, myWidth);
-			final int h = footerBitmap.getHeight();
-			if (dX > 0) {
-				drawBitmapInternal(canvas, footerBitmap, 0, dX, h, voffset, myDarkPaint);
-				drawBitmapInternal(canvas, footerBitmap, dX, myWidth, h, voffset, myPaint);
-			} else {
-				drawBitmapInternal(canvas, footerBitmap, myWidth + dX, myWidth, h, voffset, myDarkPaint);
-				drawBitmapInternal(canvas, footerBitmap, 0, myWidth + dX, h, voffset, myPaint);
-			}
-			drawShadowVertical(canvas, voffset, voffset + h, dX);
-		} else {
-			canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
-		}
-	}
+//	@Override
+//	protected void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
+//		if (myDirection.IsHorizontal) {
+//			final int dX = myEndX - myStartX;
+//			setDarkFilter(dX, myWidth);
+//			final int h = footerBitmap.getHeight();
+//			if (dX > 0) {
+//				drawBitmapInternal(canvas, footerBitmap, 0, dX, h, voffset, myDarkPaint);
+//				drawBitmapInternal(canvas, footerBitmap, dX, myWidth, h, voffset, myPaint);
+//			} else {
+//				drawBitmapInternal(canvas, footerBitmap, myWidth + dX, myWidth, h, voffset, myDarkPaint);
+//				drawBitmapInternal(canvas, footerBitmap, 0, myWidth + dX, h, voffset, myPaint);
+//			}
+//			drawShadowVertical(canvas, voffset, voffset + h, dX);
+//		} else {
+//			canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+//		}
+//	}
 }

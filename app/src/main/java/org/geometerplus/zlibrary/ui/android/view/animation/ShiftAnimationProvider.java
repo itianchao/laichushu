@@ -56,18 +56,18 @@ public final class ShiftAnimationProvider extends SimpleAnimationProvider {
 		}
 	}
 
-	@Override
-	public void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
-		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
-		if (myDirection.IsHorizontal) {
-			final int dX = myEndX - myStartX;
-			if (dX > 0 && dX < myWidth) {
-				canvas.drawLine(dX, voffset, dX, voffset + footerBitmap.getHeight(), myPaint);
-			} else if (dX < 0 && dX > -myWidth) {
-				canvas.drawLine(dX + myWidth, voffset, dX + myWidth, voffset + footerBitmap.getHeight(), myPaint);
-			}
-		}
-	}
+//	@Override
+//	public void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
+//		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+//		if (myDirection.IsHorizontal) {
+//			final int dX = myEndX - myStartX;
+//			if (dX > 0 && dX < myWidth) {
+//				canvas.drawLine(dX, voffset, dX, voffset + footerBitmap.getHeight(), myPaint);
+//			} else if (dX < 0 && dX > -myWidth) {
+//				canvas.drawLine(dX + myWidth, voffset, dX + myWidth, voffset + footerBitmap.getHeight(), myPaint);
+//			}
+//		}
+//	}
 
 	@Override
 	protected void setFilter() {

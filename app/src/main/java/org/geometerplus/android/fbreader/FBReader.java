@@ -977,6 +977,12 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		return myMainView;
 	}
 
+	@Override
+	public void hideViewWidget(boolean flag) {
+
+	}
+
+
 	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
 
 	private final MenuItem.OnMenuItemClickListener myMenuListener =
