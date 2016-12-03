@@ -194,6 +194,7 @@ public final class HorizontalConvexHull implements Hull {
 
 			if ((mode & DrawMode.Fill) == DrawMode.Fill) {
 				context.fillPolygon(xs, ys);
+//				context.drawLine(xs, ys);
 			}
 			if ((mode & DrawMode.Outline) == DrawMode.Outline) {
 				context.drawOutline(xs, ys);
