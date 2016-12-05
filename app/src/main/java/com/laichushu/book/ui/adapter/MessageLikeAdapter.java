@@ -12,9 +12,12 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
+import com.laichushu.book.ui.activity.ActivityPageDetailsActivity;
+import com.laichushu.book.ui.activity.CampaignActivity;
 import com.laichushu.book.ui.activity.MsgLikeDetailsActivity;
 import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
+import com.laichushu.book.ui.activity.PersonalInfomationPageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
@@ -184,9 +187,9 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
             case "4":
                 //私信
                 GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivFocusIcon);
-                holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
+                holder.tvFocusTime.setText(dataBeen.get(position).getCreateDate());
                 holder.tvFocusName.setText(dataBeen.get(position).getContent());
-                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.black));
+                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
                 holder.tvFocusContent.setVisibility(View.GONE);
                 holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -201,13 +204,24 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         }
                     }
                 });
+                holder.llFocusItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转私信详情
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("perInfoDetails", dataBeen.get(position));
+                        context.finish();
+                        UIUtil.openActivity(context,PersonalInfomationPageActivity.class,bundle);
+
+                    }
+                });
                 break;
             case "5":
                 //订阅
                 GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivFocusIcon);
                 holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
                 holder.tvFocusName.setText(dataBeen.get(position).getContent());
-                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.black));
+                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
                 holder.tvFocusContent.setVisibility(View.GONE);
                 holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -229,8 +243,18 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.ivFocusIcon.setVisibility(View.INVISIBLE);
                 holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
                 holder.tvFocusName.setText(dataBeen.get(position).getContent());
-                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.black));
+                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
                 holder.tvFocusContent.setVisibility(View.GONE);
+                holder.llFocusItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //活动详情
+                        Bundle bundle = new Bundle();
+                        bundle.putString("type","activity");
+                        bundle.putSerializable("activityDetails", dataBeen.get(position));
+                            UIUtil.openActivity(context, CampaignActivity.class, bundle);
+                    }
+                });
                 break;
             case "7":
                 //其他消息
@@ -275,6 +299,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
         //关注
         public TextView tvFocusTime, tvFocusName, tvFocusContent;
         public ImageView ivFocusIcon, ivFocusNotice;
+        public LinearLayout llFocusItem;
 
         public ViewHolder(View root) {
             super(root);
@@ -307,6 +332,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                     tvFocusTime = (TextView) root.findViewById(R.id.tv_focusTime);
                     tvFocusName = (TextView) root.findViewById(R.id.tv_focusName);
                     tvFocusContent = (TextView) root.findViewById(R.id.tv_focusContent);
+                    llFocusItem = (LinearLayout) root.findViewById(R.id.ll_item);
                     break;
             }
             this.root = root;

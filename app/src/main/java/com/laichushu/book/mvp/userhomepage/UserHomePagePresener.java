@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.userhomepage;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
+import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
@@ -293,9 +294,9 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
 
     //话题收藏
     public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
-        CollectSave_Paramet collectSave = new CollectSave_Paramet(userId, sourceId, sourceType, type);
+        CollectSaveDate_Paramet collectSave = new CollectSaveDate_Paramet(userId, sourceId, sourceType, type);
         LoggerUtil.toJson(collectSave);
-        addSubscription(apiStores.collectSave(collectSave), new ApiCallback<RewardResult>() {
+        addSubscription(apiStores.collectSaveData(collectSave), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.getSaveCollectSuccess(model, type);

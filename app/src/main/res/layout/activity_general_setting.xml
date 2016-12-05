@@ -29,10 +29,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="阅读字号"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <TextView
@@ -40,11 +40,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="12dp"
                 android:layout_toLeftOf="@+id/iv_settingInto"
                 android:text="中"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
@@ -53,7 +53,7 @@
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/home_right" />
         </RelativeLayout>
 
@@ -69,20 +69,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="消息推送"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/iv_mineBookCastInto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="24dp"
+                android:background="@drawable/rb_bg_selector_switch"
+                android:button="@null" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -96,10 +97,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="关于来出书"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
@@ -108,7 +109,7 @@
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/home_right" />
         </RelativeLayout>
 
@@ -124,10 +125,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="清理缓存"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <TextView
@@ -135,11 +136,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="12dp"
                 android:layout_toLeftOf="@+id/iv_cacheInto"
                 android:text="0M"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
@@ -148,7 +149,7 @@
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/home_right" />
         </RelativeLayout>
 
@@ -164,10 +165,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="退出"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>

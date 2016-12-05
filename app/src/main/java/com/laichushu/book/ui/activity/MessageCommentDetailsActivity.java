@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.bean.netbean.PerMsgInfoReward;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
@@ -59,6 +61,8 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         mRecyclerView.setAdapter(msgAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
 
+        mvpPresenter.getParamet().setMsgType(ConstantValue.MSG_TYPE_3);
+        mvpPresenter.getParamet().setSubType(ConstantValue.SUB_TYPE_4);
         mvpPresenter.LoaCommentdData();
     }
 
@@ -105,6 +109,7 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
             }
         } else {
             if (model.getData().size() == 0) {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 ToastUtil.showToast("没有更多信息！");
             }
         }
@@ -120,6 +125,26 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     public void sendMsgDetailsDateSuccess(RewardResult model) {
+
+    }
+
+    @Override
+    public void getPerInfoListDateSuccess(MessageCommentResult model) {
+
+    }
+
+    @Override
+    public void getPerInfoDetailsDateSuccess(PerMsgInfoReward model) {
+
+    }
+
+    @Override
+    public void getSendDataSuccess(RewardResult model) {
+
+    }
+
+    @Override
+    public void getDelPerIdfoDataSuccess(RewardResult model) {
 
     }
 

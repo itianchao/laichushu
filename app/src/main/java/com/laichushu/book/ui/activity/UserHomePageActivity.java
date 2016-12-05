@@ -191,6 +191,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 type = 2;
                 if (!dibbleWorks) {
                     worksData.clear();
+                    showProgressDialog();
                     mvpPresenter.getUserBookListDate(userId);
                 }
                 dibbleWorks = true;
@@ -204,6 +205,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 type = 3;
                 if (!dibbleheFo) {
                     focusMeData.clear();
+                    showProgressDialog();
                     mvpPresenter.getUserHeFocusDate(userId);
                 }
                 dibbleheFo = true;
@@ -217,6 +219,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 type = 4;
                 if (!dibbleFoHe) {
                     focusBeData.clear();
+                    showProgressDialog();
                     mvpPresenter.getUserFocusHeDate(userId);
                 }
                 dibbleFoHe = true;
@@ -227,7 +230,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     public void getUserHeadDateSuccess(HomeUserResult result) {
         if (result.isSuccess()) {
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
             nickName.setText(result.getNickName());
             tvRealName.setText(result.getNickName());
@@ -286,6 +288,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
+        dismissProgressDialog();
     }
 
     /**
@@ -316,6 +319,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             ToastUtil.showToast(result.getErrMsg());
         }
         heAdapter.refreshAdapter(focusMeData);
+        dismissProgressDialog();
     }
 
     /**
@@ -347,6 +351,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             ToastUtil.showToast(result.getErrMsg());
         }
         beAdapter.refreshAdapter(focusBeData);
+        dismissProgressDialog();
     }
 
     /**

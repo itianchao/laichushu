@@ -1,40 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/bgGrey">
 
-    <include layout="@layout/page_title" />
-
-    <include layout="@layout/item_mechanismtopiclist" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
-        android:gravity="center_vertical"
-        android:text="全部评论"
-        android:textColor="@color/black"
-        android:textSize="@dimen/edit2" />
-
-    <include layout="@layout/line" />
+    <include
+        android:id="@+id/include_top"
+        layout="@layout/page_title" />
 
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-        android:id="@+id/ryv_comment"
+        android:id="@+id/ryv_perInfoDetails"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_sendMsg"
+        android:layout_below="@+id/include_top"
+        android:layout_marginTop="12dp" />
 
     <LinearLayout
+        android:id="@+id/ll_sendMsg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/et_sendmsg"
+            android:id="@+id/et_sendMsg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,11 +40,11 @@
             android:textSize="@dimen/edit2" />
 
         <ImageView
-            android:id="@+id/iv_sendmsg"
+            android:id="@+id/iv_sendMsg"
             android:layout_width="25dp"
             android:layout_height="36dp"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:src="@drawable/icon_send" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

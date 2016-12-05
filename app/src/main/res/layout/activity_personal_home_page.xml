@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
+    android:background="@color/bgGrey"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -82,7 +83,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/bookCast_top"
         android:layout_centerHorizontal="true"
-        android:background="@color/white"
+        android:background="@color/bgGrey"
         android:orientation="vertical">
 
 
@@ -90,6 +91,7 @@
             android:id="@+id/rg_homeList"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/white"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -111,24 +113,25 @@
                 android:text="我关注的" />
         </RadioGroup>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_dynamic"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp" />
+            android:layout_height="match_parent" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_focusMe"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
             android:visibility="gone" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_focus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
             android:visibility="gone" />
 
     </LinearLayout>

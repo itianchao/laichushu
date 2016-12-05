@@ -1,6 +1,7 @@
 package com.laichushu.book.mvp.campaign;
 
 import com.google.gson.Gson;
+import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.orhanobut.logger.Logger;
@@ -77,6 +78,28 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
             @Override
             public void onSuccess(AuthorWorksModle model) {
                 mvpView.getAuthorWorksDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+    //获取活动详情列表  活动通知=====》活动详情
+    public void loadActivityDetailsData(String activityId){
+        ActivityResult_Paramet detailsParamet = new ActivityResult_Paramet(activityId);
+        Logger.e("获取活动结果");
+        Logger.json(new Gson().toJson(detailsParamet));
+        addSubscription(apiStores.getActivityDetailsResult(detailsParamet), new ApiCallback<CampaignDetailsModel>() {
+            @Override
+            public void onSuccess(CampaignDetailsModel model) {
+                mvpView.getDetailsDataSuccess(model);
             }
 
             @Override

@@ -1,11 +1,12 @@
 package com.laichushu.book.retrofit;
 
-import com.laichushu.book.bean.netbean.BookDetailsResult;
 import com.laichushu.book.bean.netbean.BookDetails_Paramet;
+import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
+import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
+import com.laichushu.book.bean.netbean.DelPerInfo_Paramet;
 import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
-import com.laichushu.book.bean.JsonBean.MechanismBrieBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
@@ -49,7 +50,6 @@ import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
@@ -59,7 +59,6 @@ import com.laichushu.book.bean.netbean.Login_Paramet;
 import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
 import com.laichushu.book.bean.netbean.MaterialList_Paramet;
 import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
-import com.laichushu.book.bean.netbean.MechanismBrie_Paramet;
 import com.laichushu.book.bean.netbean.MechanismList_Paramet;
 import com.laichushu.book.bean.netbean.MechanismTopicList_Paramet;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
@@ -67,6 +66,9 @@ import com.laichushu.book.bean.netbean.MessageComment_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
 import com.laichushu.book.bean.netbean.NoticesList_Paramet;
 import com.laichushu.book.bean.netbean.PartList_Paramet;
+import com.laichushu.book.bean.netbean.PerInformationDetails_Paramet;
+import com.laichushu.book.bean.netbean.PerInformation_Paramet;
+import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.bean.netbean.PersonInfoResultReward;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
@@ -88,10 +90,10 @@ import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
-import com.laichushu.book.bean.netbean.UserBookList_Paramet;
 import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
+import com.laichushu.book.bean.netbean.AddPerDetails_Paramet;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
@@ -142,12 +144,12 @@ public interface ApiStores {
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
-//    String API_SERVER_URL = "http://192.168.1.105:8082/book-app/";//张峰2
-    String API_SERVER_URL = "http://192.168.0.143:8082/book-app/";//张峰2
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.0.123:8082/book-app/";//施大勇4
+    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
+//    String API_SERVER_URL = "http://192.168.1.130:8082/book-app/";//施大勇6
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //      String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//李红江
 
@@ -230,6 +232,9 @@ public interface ApiStores {
     //活动结果接口
     @POST("activity/getActivityResult")
     Observable<CampaignModel> getActivityResult(@Body ActivityResult_Paramet paramet);
+ //活动详情借口 活动通知--->活动详情
+    @POST("activity/getActivityResultFromInfo")
+    Observable<CampaignDetailsModel> getActivityDetailsResult(@Body ActivityResult_Paramet paramet);
 
     //参加活动
     @POST("activity/save")
@@ -290,6 +295,10 @@ public interface ApiStores {
     //收藏
     @POST("collect/save ")
     Observable<RewardResult> collectSave(@Body CollectSave_Paramet paramet);
+
+    //话题动态收藏
+    @POST("collect/save ")
+    Observable<RewardResult> collectSaveData(@Body CollectSaveDate_Paramet paramet);
 
     //阅读
     @POST("chapter/list")
@@ -520,4 +529,18 @@ public interface ApiStores {
     //消息页面-根据图书id查找图书详情
     @POST("myArticle/find")
     Observable<HomeHotModel> getBookDetailsById(@Body BookDetails_Paramet paramet);
+
+    //消息界面-查询私信列表
+    @POST("perInformation/findList")
+    Observable<MessageCommentResult> getPerInformation(@Body PerInformation_Paramet paramet);
+
+    //消息界面-查询私信详情
+    @POST("perInformation/findDetailList")
+    Observable<PerMsgInfoReward> getPerInformationDetails(@Body PerInformationDetails_Paramet paramet);
+    //消息界面-细心详情回复
+    @POST("perInformation/addPerDetailInfo")
+    Observable<RewardResult> getPerDetails(@Body AddPerDetails_Paramet paramet);
+    //私信界面-删除私信
+    @POST("perInformation/delPerInfo")
+    Observable<RewardResult> getDelPerInfoDetails(@Body DelPerInfo_Paramet paramet);
 }

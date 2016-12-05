@@ -29,7 +29,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="24dp" />
 
             <RelativeLayout
                 android:id="@+id/rl_headBody"
@@ -44,8 +44,8 @@
                     android:id="@+id/tv_mineNickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/edit2"
-                    android:textSize="@dimen/edit2"
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -54,7 +54,7 @@
                     android:layout_height="16dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="24dp"
                     android:background="@drawable/home_right" />
             </RelativeLayout>
         </RelativeLayout>
@@ -71,10 +71,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="作品管理"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <TextView
@@ -85,8 +85,8 @@
                 android:layout_marginRight="12dp"
                 android:layout_toLeftOf="@+id/iv_mineManageInto"
                 android:text="0部"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
@@ -111,10 +111,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="我的书架"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
@@ -138,10 +138,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="我的钱包"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
@@ -165,10 +165,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="我的服务"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
@@ -193,10 +193,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="通用设置"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
@@ -221,10 +221,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="24dp"
                 android:text="意见反馈"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView

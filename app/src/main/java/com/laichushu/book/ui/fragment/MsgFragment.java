@@ -2,7 +2,6 @@ package com.laichushu.book.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewDebug;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
@@ -18,10 +18,7 @@ import com.laichushu.book.mvp.messagecomment.MessageCommentView;
 import com.laichushu.book.ui.activity.MainActivity;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.activity.MsgLikeDetailsActivity;
-import com.laichushu.book.ui.activity.PersonalHomePageActivity;
-import com.laichushu.book.ui.adapter.HomePageDynamicAdapter;
 import com.laichushu.book.ui.adapter.SubMissionAdapter;
-import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.ToastUtil;
@@ -38,7 +35,7 @@ import java.util.List;
  */
 public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implements MessageCommentView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private TextView tvTitle;
-    private RelativeLayout rlComment, rlLike, rlReward, rlFocus, rlLetter, rlScribe, rlActivityMsg,rlOtherMsg;
+    private RelativeLayout rlComment, rlLike, rlReward, rlFocus, rlLetter, rlScribe, rlActivityMsg, rlOtherMsg;
     private PullLoadMoreRecyclerView mRecyclerView;
     private SubMissionAdapter subAdapter;
     private List<MessageCommentResult.DataBean> subData = new ArrayList<>();
@@ -90,7 +87,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
         //初始化mRecyclerView 投稿
         mRecyclerView.setGridLayout(1);
         mRecyclerView.setFooterViewText("加载中");
-        subAdapter = new SubMissionAdapter( (MainActivity) getActivity(), subData);
+        subAdapter = new SubMissionAdapter(getActivity(), subData);
         mRecyclerView.setAdapter(subAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
 
@@ -164,7 +161,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
                 llContainer.setVisibility(View.GONE);
                 llSys.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
-                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_2);
+                mvpPresenter.getParamet().setMsgType(ConstantValue.MSG_TYPE_2);
                 if (!dibbleSub) {
                     mvpPresenter.LoaCommentdData();
                 }
@@ -227,6 +224,26 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
 
     @Override
     public void sendMsgDetailsDateSuccess(RewardResult model) {
+
+    }
+
+    @Override
+    public void getPerInfoListDateSuccess(MessageCommentResult model) {
+
+    }
+
+    @Override
+    public void getPerInfoDetailsDateSuccess(PerMsgInfoReward model) {
+
+    }
+
+    @Override
+    public void getSendDataSuccess(RewardResult model) {
+
+    }
+
+    @Override
+    public void getDelPerIdfoDataSuccess(RewardResult model) {
 
     }
 

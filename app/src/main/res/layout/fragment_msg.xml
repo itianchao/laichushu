@@ -57,7 +57,6 @@
                 android:layout_marginLeft="24dp"
                 android:paddingRight="8dp"
                 android:src="@drawable/icon_msg_1"
-                android:textColor="@color/black"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
