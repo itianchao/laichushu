@@ -19,9 +19,12 @@
 
 package org.geometerplus.zlibrary.core.view;
 
-import java.util.*;
-
 import android.graphics.Rect;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 public final class HorizontalConvexHull implements Hull {
 	private final LinkedList<Rect> myRectangles = new LinkedList<Rect>();
@@ -193,8 +196,8 @@ public final class HorizontalConvexHull implements Hull {
 			}
 
 			if ((mode & DrawMode.Fill) == DrawMode.Fill) {
-				context.fillPolygon(xs, ys);
-//				context.drawLine(xs, ys);
+//				context.fillPolygon(xs, ys);
+				context.drawLine(xs, ys);
 			}
 			if ((mode & DrawMode.Outline) == DrawMode.Outline) {
 				context.drawOutline(xs, ys);

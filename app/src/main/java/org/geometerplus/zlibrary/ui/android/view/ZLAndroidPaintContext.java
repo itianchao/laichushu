@@ -19,11 +19,18 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.CornerPathEffect;
+import android.graphics.EmbossMaskFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 
 import com.laichushu.book.utils.LoggerUtil;
 
@@ -31,12 +38,15 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public static ZLBooleanOption AntiAliasOption = new ZLBooleanOption("Fonts", "AntiAlias", true);
@@ -110,7 +120,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			ourWallpaper = null;
 			try {
 				final Bitmap fileBitmap =
-					BitmapFactory.decodeStream(wallpaperFile.getInputStream());
+						BitmapFactory.decodeStream(wallpaperFile.getInputStream());
 				switch (mode) {
 					default:
 						ourWallpaper = fileBitmap;
@@ -412,7 +422,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public Size imageSize(ZLImageData imageData, Size maxSize, ScalingType scaling) {
 		final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
 		return (bitmap != null && !bitmap.isRecycled())
-			? new Size(bitmap.getWidth(), bitmap.getHeight()) : null;
+				? new Size(bitmap.getWidth(), bitmap.getHeight()) : null;
 	}
 
 	@Override
@@ -538,7 +548,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			if(i != 0 && drawY.get(i) -  myTextPaint.getTextSize() > drawY.get(i - 1) || i == 0) { // 排除双重线
 				myCanvas.drawLine(templeft.get(i), drawY.get(i) + drawOffect, tempRight.get(i), drawY.get(i) + drawOffect, myOutlinePaint);
 				LoggerUtil.e("xs"+templeft.get(i)+"\nys"+drawY.get(i) + drawOffect+
-							"\nxe"+tempRight.get(i)+"\nye"+ drawY.get(i) + drawOffect);
+						"\nxe"+tempRight.get(i)+"\nye"+ drawY.get(i) + drawOffect);
 			}
 		}
 		myOutlinePaint.setColor(tmp);
