@@ -458,6 +458,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	int offsetY;
 	public void drawLine(int[] xs, int[] ys) {
 		offsetY = (int) myTextPaint.getTextSize();
+//		offsetY = 1;
+		LoggerUtil.e(offsetY+"");
 		LinkedList<Integer> tmpXs = new LinkedList<>();
 		LinkedList<Integer> tmpYs = new LinkedList<>();
 		int nextX, nextY;
@@ -518,6 +520,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		List<Integer> tempRight = new ArrayList<>();
 		for (int i = 0; i <= last - 1; ++i) {
 			if (ys[i] < ys[i + 1] + offsetY && ys[i] > ys[i + 1] - offsetY) {
+//			if (ys[i] < ys[i + 1]   && ys[i] > ys[i + 1] ) {
 				if (drawY.contains(ys[i] - 1)) { // 已经存在
 					int index = drawY.indexOf(ys[i] - 1);
 					removeAtPosItem(xs[i], templeft, tempRight, index);
@@ -542,7 +545,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		}
 		int tmp = myOutlinePaint.getColor();
 		float tmpSize = myOutlinePaint.getStrokeWidth();
-		myOutlinePaint.setColor(myFillPaint.getColor());
+		myOutlinePaint.setColor(Color.BLUE);
 		myOutlinePaint.setStrokeWidth(5);
 		for (int i = 0; i < drawY.size(); i++) {
 			if(i != 0 && drawY.get(i) -  myTextPaint.getTextSize() > drawY.get(i - 1) || i == 0) { // 排除双重线
@@ -556,7 +559,16 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	private void removeAtPosItem(int x, List<Integer> templeft, List<Integer> tempRight, int index) {
-
+		if (x < templeft.get(index)) {
+			templeft.remove(index);
+			templeft.add(x);
+			return;
+		}
+		if (x > tempRight.get(index)) {
+			tempRight.remove(index);
+			tempRight.add(x);
+			return;
+		}
 	}
 
 	@Override
