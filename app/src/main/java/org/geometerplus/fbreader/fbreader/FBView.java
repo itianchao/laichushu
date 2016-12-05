@@ -49,14 +49,14 @@ public final class FBView extends ZLTextView {
 		super(reader);
 		myReader = reader;
 		myViewOptions = reader.ViewOptions;
-		myBookElementManager = new BookElementManager(this);
+		myBookElementManager = new BookElementManager(this);// get扩展管理器
 	}
 
 	public void setModel(ZLTextModel model) {
 		super.setModel(model);
-		if (myFooter != null) {
-			myFooter.resetTOCMarks();
-		}
+//		if (myFooter != null) {
+//			myFooter.resetTOCMarks();
+//		}
 	}
 
 	private int myStartY;
@@ -69,27 +69,32 @@ public final class FBView extends ZLTextView {
 		final PageTurningOptions prefs = myReader.PageTurningOptions;
 		String id = prefs.TapZoneMap.getValue();
 		if ("".equals(id)) {
-			id = prefs.Horizontal.getValue() ? "right_to_left" : "up";
+			id = prefs.Horizontal.getValue() ? "right_to_left" : "up";// 这里设置了只有两种
 		}
 		if (myZoneMap == null || !id.equals(myZoneMap.Name)) {
 			myZoneMap = TapZoneMap.zoneMap(id);
 		}
 		return myZoneMap;
 	}
-
+	/**
+	 * 单击后根据设置的Zonemap来判断action
+	 * navigate nextpage previousPage
+	 * 执行action
+	 */
 	private void onFingerSingleTapLastResort(int x, int y) {
-		myReader.runAction(getZoneMap().getActionByCoordinates(
+		myReader.runAction(getZoneMap().getActionByCoordinates(//y 运行功能   根据x,y,w,h,tap判断
 			x, y, getContextWidth(), getContextHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
-		), x, y);
+		), x, y); //y 传入actionId,x,y的值 进行功能显示
 	}
 
 	@Override
 	public void onFingerSingleTap(int x, int y) {
+		Application.hideActivePopup(); // 隐藏popup
 		final ZLTextRegion hyperlinkRegion = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.HyperlinkFilter);
-		if (hyperlinkRegion != null) {
-			outlineRegion(hyperlinkRegion);
-			myReader.getViewWidget().reset();
+		if (hyperlinkRegion != null) { //y 超链接点击
+			outlineRegion(hyperlinkRegion); //y 画框
+			myReader.getViewWidget().reset(); // 画框后应用
 			myReader.getViewWidget().repaint();
 			myReader.runAction(ActionCode.PROCESS_HYPERLINK);
 			return;
@@ -123,7 +128,18 @@ public final class FBView extends ZLTextView {
 			myReader.runAction(ActionCode.HIDE_TOAST);
 			return;
 		}
-
+		//看大图功能
+//		ZLTextRegion region = findRegion(x, y, maxSelectionDistance(), ZLTextRegion.AnyRegionFilter);
+//		if (region != null) {
+//			final ZLTextRegion.Soul soul = region.getSoul();
+//			if (soul instanceof ZLTextImageRegionSoul) { //y 如果选的是图片的
+//				String url = ((ZLTextImageRegionSoul) soul).ImageElement.URL;
+//				if (!OpenPhotoAction.isOpen) { // 防止多次点击
+//					OpenPhotoAction.openImage(url, region.getLeft(), region.getTop(), region.getRight(), region.getBottom());
+//					return;
+//				}
+//			}
+//		}
 		onFingerSingleTapLastResort(x, y);
 	}
 
@@ -143,6 +159,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public void onFingerPress(int x, int y) {
+		Application.hideActivePopup(); //隐藏进度选择
 		myReader.runAction(ActionCode.HIDE_TOAST);
 
 		final float maxDist = ZLibrary.Instance().getDisplayDPI() / 4;
@@ -172,7 +189,7 @@ public final class FBView extends ZLTextView {
 	}
 
 	private void startManualScrolling(int x, int y) {
-		if (!isFlickScrollingEnabled()) {
+		if (!isFlickScrollingEnabled()) { // 是否支持拖动翻页
 			return;
 		}
 
@@ -244,7 +261,7 @@ public final class FBView extends ZLTextView {
 						doSelectRegion = true;
 						break;
 				}
-			} else if (soul instanceof ZLTextImageRegionSoul) {
+			} else if (soul instanceof ZLTextImageRegionSoul) { //y 长按选择图片
 				doSelectRegion =
 					myReader.ImageOptions.TapAction.getValue() !=
 					ImageOptions.TapActionEnum.doNothing;
@@ -768,7 +785,7 @@ public final class FBView extends ZLTextView {
 	public Animation getAnimationType() {
 		return myReader.PageTurningOptions.Animation.getValue();
 	}
-
+	//y 颜色变换时，图片背景色的变化
 	@Override
 	protected ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages() {
 		if (myReader.ImageOptions.MatchBackground.getValue()) {
@@ -785,7 +802,7 @@ public final class FBView extends ZLTextView {
 	@Override
 	public synchronized void onScrollingFinished(PageIndex pageIndex) {
 		super.onScrollingFinished(pageIndex);
-		myReader.storePosition();
+		myReader.storePosition();// 进度保存
 	}
 
 	@Override

@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -1811,4 +1812,41 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected abstract ExtensionElementManager getExtensionManager();
+
+	public final synchronized void gotoPageByPec(int pec) {
+		if (myModel == null || myModel.getParagraphsNumber() == 0) {
+			return;
+		}
+
+		gotoPositionByEnd(pec, 0, 0);
+	}
+	public final synchronized String pagePositionPec() {
+		int current = getCurrentCharNumber(PageIndex.current, false);
+		int total = sizeOfFullText();
+
+		if (getCurrentCharNumber(ZLViewEnums.PageIndex.current, true) == 0) {
+			return "0.00%";
+		}
+//        LogUtil.i24("size1:" + getCurrentCharNumber(PageIndex.current, false) + "/" + sizeOfFullText());
+//        LogUtil.i24("size2:" + myCurrentPage.EndCursor.getParagraphIndex() + "/" + myModel.getParagraphsNumber());
+		if (computeTextPageNumber(total) <= 3) {
+			current = myCurrentPage.EndCursor.getParagraphIndex();
+			total = myModel.getParagraphsNumber() - 1;
+		}
+
+		final StringBuilder info = new StringBuilder();
+		float size = (float) current * 100 / total;
+		DecimalFormat df = new DecimalFormat("0.00");
+		info.append(df.format(size));
+		info.append("%");
+		return info.toString();
+	}
+
+	public final synchronized int pagePosition1() {
+		return myCurrentPage == null ? 0 : myCurrentPage.EndCursor.getParagraphIndex();
+	}
+
+	public final synchronized int pagePosition2() {
+		return myModel == null ? 0 : myModel.getParagraphsNumber() - 1;
+	}
 }

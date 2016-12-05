@@ -20,8 +20,10 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -29,8 +31,11 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.android.util.OrientationUtil;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -45,6 +50,9 @@ final class NavigationPopup extends ZLApplication.PopupPanel {
 	private ZLTextWordCursor myStartPosition;
 	private final FBReaderApp myFBReader;
 	private volatile boolean myIsInProgress;
+	private ZLTextView.PagePosition pagePosition;
+	private TextView light;
+	private TextView dark;
 
 	NavigationPopup(FBReaderApp fbReader) {
 		super(fbReader);
@@ -59,15 +67,16 @@ final class NavigationPopup extends ZLApplication.PopupPanel {
 	public void runNavigation() {
 		if (myWindow == null || myWindow.getVisibility() == View.GONE) {
 			myIsInProgress = false;
-			if (myStartPosition == null) {
-				myStartPosition = new ZLTextWordCursor(myFBReader.getTextView().getStartCursor());
-			}
+//			if (myStartPosition == null) {
+//				myStartPosition = new ZLTextWordCursor(myFBReader.getTextView().getStartCursor());
+//			}
 			Application.showPopup(ID);
 		}
 	}
 
 	@Override
 	protected void show_() {
+		setStatusBarVisibility(true);
 		if (myActivity != null) {
 			createPanel(myActivity, myRoot);
 		}
@@ -95,6 +104,17 @@ final class NavigationPopup extends ZLApplication.PopupPanel {
 			setupNavigation();
 		}
 	}
+	private void gotoPage(int page) {
+		final ZLTextView view = myFBReader.getTextView();
+		if (page == 1) {
+			view.gotoHome();
+		} else {
+			view.gotoPage(page);
+		}
+//        myKooReader.clearTextCaches();
+		myFBReader.getViewWidget().reset();
+		myFBReader.getViewWidget().repaint();
+	}
 
 	private void createPanel(FBReader activity, RelativeLayout root) {
 		if (myWindow != null && activity == myWindow.getContext()) {
@@ -102,10 +122,74 @@ final class NavigationPopup extends ZLApplication.PopupPanel {
 		}
 
 		activity.getLayoutInflater().inflate(R.layout.navigation_panel, root);
-		myWindow = (NavigationWindow)root.findViewById(R.id.navigation_panel);
+		myWindow = (NavigationWindow) root.findViewById(R.id.navigation_panel);
 
-		final SeekBar slider = (SeekBar)myWindow.findViewById(R.id.navigation_slider);
-		final TextView text = (TextView)myWindow.findViewById(R.id.navigation_text);
+		final SeekBar slider = (SeekBar) myWindow.findViewById(R.id.navigation_slider);
+		final TextView text = (TextView) myWindow.findViewById(R.id.navigation_text);
+		final TextView toc = (TextView) myWindow.findViewById(R.id.navigation_toc);
+		final TextView fonts = (TextView) myWindow.findViewById(R.id.navigation_fonts);
+		light = (TextView) myWindow.findViewById(R.id.navigation_light);
+		dark = (TextView) myWindow.findViewById(R.id.navigation_dark);
+		final TextView pre_character = (TextView) myWindow.findViewById(R.id.pre_character);
+		final TextView next_character = (TextView) myWindow.findViewById(R.id.next_character);
+
+		toc.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Application.hideActivePopup();
+				final Intent intent =
+						new Intent(myActivity.getApplicationContext(), TOCActivity.class);
+				FBReaderIntents.putBookExtra(intent, myFBReader.getCurrentBook());
+				FBReaderIntents.putBookmarkExtra(intent, myFBReader.createBookmark(80, true));
+				OrientationUtil.startActivity(myActivity, intent);
+			}
+		});
+
+		fonts.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Application.hideActivePopup();
+				((SettingPopup) myFBReader.getPopupById(SettingPopup.ID)).runNavigation();
+			}
+		});
+
+		dark.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				myFBReader.ViewOptions.ColorProfileName.setValue(ColorProfile.NIGHT);
+				myFBReader.getViewWidget().reset();
+				myFBReader.getViewWidget().repaint();
+				light.setVisibility(View.VISIBLE);
+				dark.setVisibility(View.INVISIBLE);
+			}
+		});
+
+		light.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dark.setVisibility(View.VISIBLE);
+				light.setVisibility(View.INVISIBLE);
+				myFBReader.ViewOptions.ColorProfileName.setValue(ColorProfile.DAY);
+				myFBReader.getViewWidget().reset();
+				myFBReader.getViewWidget().repaint();
+			}
+		});
+
+		pre_character.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				gotoPage(pagePosition.Current - 30);
+			}
+		});
+
+		next_character.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+//                textView.getModel().getParagraphsNumber();
+				gotoPage(pagePosition.Current + 30);
+			}
+		});
+
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
@@ -115,8 +199,15 @@ final class NavigationPopup extends ZLApplication.PopupPanel {
 				} else {
 					view.gotoPage(page);
 				}
-				myFBReader.getViewWidget().reset();
-				myFBReader.getViewWidget().repaint();
+			}
+
+			private void gotoPagePer(int page) {
+				final ZLTextView view = myFBReader.getTextView();
+//                if (page == 0) {
+//                    view.gotoHome();
+//                } else {
+				view.gotoPageByPec(page);
+//                }
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar) {
@@ -124,45 +215,33 @@ final class NavigationPopup extends ZLApplication.PopupPanel {
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
+				myFBReader.getViewWidget().reset();
+				myFBReader.getViewWidget().repaint();
 				myIsInProgress = false;
+				//y 松手直接进行跳转
+//                final ZLTextWordCursor position = myStartPosition; // 返回到起始位置
+				if (myStartPosition != null &&
+						!myStartPosition.equals(myFBReader.getTextView().getStartCursor())) {
+					myFBReader.addInvisibleBookmark(myStartPosition);
+					myFBReader.storePosition();
+				}
+				myStartPosition = null;
+//                myKooReader.clearTextCaches();
+//                myKooReader.getViewWidget().reset();
+//                myKooReader.getViewWidget().repaint();
 			}
 
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (fromUser) {
-					final int page = progress + 1;
-					final int pagesNumber = seekBar.getMax() + 1;
-					gotoPage(page);
-					text.setText(makeProgressText(page, pagesNumber));
+//                    final int page = progress + 1;
+//                    final int pagesNumber = seekBar.getMax() + 1;
+//                    gotoPage(page);
+					gotoPagePer(progress);
+					text.setText(makeProgressTextPer(myFBReader.getTextView().pagePositionPec()));
+//                    text.setText(makeProgressText(page, pagesNumber));
 				}
 			}
 		});
-
-		final Button btnOk = (Button)myWindow.findViewById(R.id.navigation_ok);
-		final Button btnCancel = (Button)myWindow.findViewById(R.id.navigation_cancel);
-		View.OnClickListener listener = new View.OnClickListener() {
-			public void onClick(View v) {
-				final ZLTextWordCursor position = myStartPosition;
-				if (v == btnCancel && position != null) {
-					myFBReader.getTextView().gotoPosition(position);
-				} else if (v == btnOk) {
-					if (myStartPosition != null &&
-						!myStartPosition.equals(myFBReader.getTextView().getStartCursor())) {
-						myFBReader.addInvisibleBookmark(myStartPosition);
-						myFBReader.storePosition();
-					}
-				}
-				myStartPosition = null;
-				Application.hideActivePopup();
-				myFBReader.getViewWidget().reset();
-				myFBReader.getViewWidget().repaint();
-			}
-		};
-		btnOk.setOnClickListener(listener);
-		btnCancel.setOnClickListener(listener);
-
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		btnOk.setText(buttonResource.getResource("ok").getValue());
-		btnCancel.setText(buttonResource.getResource("cancel").getValue());
 	}
 
 	private void setupNavigation() {
@@ -170,13 +249,17 @@ final class NavigationPopup extends ZLApplication.PopupPanel {
 		final TextView text = (TextView)myWindow.findViewById(R.id.navigation_text);
 
 		final ZLTextView textView = myFBReader.getTextView();
-		final ZLTextView.PagePosition pagePosition = textView.pagePosition();
-
-		if (slider.getMax() != pagePosition.Total - 1 || slider.getProgress() != pagePosition.Current - 1) {
-			slider.setMax(pagePosition.Total - 1);
-			slider.setProgress(pagePosition.Current - 1);
-			text.setText(makeProgressText(pagePosition.Current, pagePosition.Total));
-		}
+//		final ZLTextView.PagePosition pagePosition = textView.pagePosition();
+		pagePosition = textView.pagePosition();
+		String progress = textView.pagePositionPec();
+//		if (slider.getMax() != pagePosition.Total - 1 || slider.getProgress() != pagePosition.Current - 1) {
+//			slider.setMax(pagePosition.Total - 1);
+//			slider.setProgress(pagePosition.Current - 1);
+//			text.setText(makeProgressTextPer(progress));
+//		}
+		slider.setMax(textView.pagePosition2());
+		slider.setProgress(textView.pagePosition1());
+		text.setText(makeProgressTextPer(progress));
 	}
 
 	private String makeProgressText(int page, int pagesNumber) {
@@ -199,5 +282,30 @@ final class NavigationPopup extends ZLApplication.PopupPanel {
 			root.removeView(myWindow);
 			myWindow = null;
 		}
+	}
+
+	private void setStatusBarVisibility(boolean visible) {
+		if (visible) {
+			myActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN); // 设置状态栏
+		} else {
+			myActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		}
+	}
+	private String makeProgressTextPer(String progress) {
+		final StringBuilder builder = new StringBuilder();
+		builder.append(progress);
+		final TOCTree tocElement = myFBReader.getCurrentTOCElement();
+		if (tocElement != null) {
+			builder.append("  ");
+			builder.append(tocElement.getText());
+		}
+
+		if (myFBReader.ViewOptions.ColorProfileName.getValue().equals(ColorProfile.DAY)) {
+			dark.setVisibility(View.VISIBLE);
+		} else {
+			light.setVisibility(View.VISIBLE);
+		}
+
+		return builder.toString();
 	}
 }

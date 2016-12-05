@@ -75,6 +75,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
@@ -265,7 +266,8 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
 		myFBReaderApp.setWindow(this);
 		myFBReaderApp.initWindow();
-
+		//仿真翻页
+		myFBReaderApp.PageTurningOptions.Animation.setValue(ZLView.Animation.curl);
 		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
 
 		getWindow().setFlags(
@@ -279,10 +281,12 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		if (myFBReaderApp.getPopupById(NavigationPopup.ID) == null) {
 			new NavigationPopup(myFBReaderApp);
 		}
+		if (myFBReaderApp.getPopupById(SettingPopup.ID) == null) {
+			new SettingPopup(myFBReaderApp);
+		}
 		if (myFBReaderApp.getPopupById(SelectionPopup.ID) == null) {
 			new SelectionPopup(myFBReaderApp);
 		}
-
 		myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoAction(this, myFBReaderApp));
@@ -344,101 +348,101 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		}
 	}
 
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		setStatusBarVisibility(true);
-		setupMenu(menu);
+//	@Override
+//	public boolean onPrepareOptionsMenu(Menu menu) {
+//		setStatusBarVisibility(true);
+//		setupMenu(menu);
+//
+//		return super.onPrepareOptionsMenu(menu);
+//	}
+//
+//	@Override
+//	public void onOptionsMenuClosed(Menu menu) {
+//		super.onOptionsMenuClosed(menu);
+//		setStatusBarVisibility(false);
+//	}
 
-		return super.onPrepareOptionsMenu(menu);
-	}
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		setStatusBarVisibility(false);
+//		return super.onOptionsItemSelected(item);
+//	}
 
-	@Override
-	public void onOptionsMenuClosed(Menu menu) {
-		super.onOptionsMenuClosed(menu);
-		setStatusBarVisibility(false);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		setStatusBarVisibility(false);
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void onNewIntent(final Intent intent) {
-		final String action = intent.getAction();
-		final Uri data = intent.getData();
-
-		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
-			super.onNewIntent(intent);
-		} else if (Intent.ACTION_VIEW.equals(action)
-				&& data != null && "fbreader-action".equals(data.getScheme())) {
-			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
-		} else if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
-			myOpenBookIntent = intent;
-			if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
-				final BookCollectionShadow collection = getCollection();
-				final Book b = FBReaderIntents.getBookExtra(intent, collection);
-				if (!collection.sameBook(b, myFBReaderApp.ExternalBook)) {
-					try {
-						final ExternalFormatPlugin plugin =
-								(ExternalFormatPlugin)BookUtil.getPlugin(
-										PluginCollection.Instance(Paths.systemInfo(this)),
-										myFBReaderApp.ExternalBook
-								);
-						startActivity(PluginUtil.createIntent(plugin, FBReaderIntents.Action.PLUGIN_KILL));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		} else if (FBReaderIntents.Action.PLUGIN.equals(action)) {
-			new RunPluginAction(this, myFBReaderApp, data).run();
-		} else if (Intent.ACTION_SEARCH.equals(action)) {
-			final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			final Runnable runnable = new Runnable() {
-				public void run() {
-					final TextSearchPopup popup = (TextSearchPopup)myFBReaderApp.getPopupById(TextSearchPopup.ID);
-					popup.initPosition();
-					myFBReaderApp.MiscOptions.TextSearchPattern.setValue(pattern);
-					if (myFBReaderApp.getTextView().search(pattern, true, false, false, false) != 0) {
-						runOnUiThread(new Runnable() {
-							public void run() {
-								myFBReaderApp.showPopup(popup.getId());
-							}
-						});
-					} else {
-						runOnUiThread(new Runnable() {
-							public void run() {
-								UIMessageUtil.showErrorMessage(FBReader.this, "textNotFound");
-								popup.StartPosition = null;
-							}
-						});
-					}
-				}
-			};
-			UIUtil.wait("search", runnable, this);
-		} else if (FBReaderIntents.Action.CLOSE.equals(intent.getAction())) {
-			myCancelIntent = intent;
-			myOpenBookIntent = null;
-		} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(intent.getAction())) {
-			final Book book = FBReaderIntents.getBookExtra(intent, myFBReaderApp.Collection);
-			myFBReaderApp.ExternalBook = null;
-			myOpenBookIntent = null;
-			getCollection().bindToService(this, new Runnable() {
-				public void run() {
-					final BookCollectionShadow collection = getCollection();
-					Book b = collection.getRecentBook(0);
-					if (collection.sameBook(b, book)) {
-						b = collection.getRecentBook(1);
-					}
-					myFBReaderApp.openBook(b, null, null, myNotifier);
-				}
-			});
-		} else {
-			super.onNewIntent(intent);
-		}
-	}
+//	@Override
+//	protected void onNewIntent(final Intent intent) {
+//		final String action = intent.getAction();
+//		final Uri data = intent.getData();
+//
+//		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
+//			super.onNewIntent(intent);
+//		} else if (Intent.ACTION_VIEW.equals(action)
+//				&& data != null && "fbreader-action".equals(data.getScheme())) {
+//			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
+//		} else if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
+//			myOpenBookIntent = intent;
+//			if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
+//				final BookCollectionShadow collection = getCollection();
+//				final Book b = FBReaderIntents.getBookExtra(intent, collection);
+//				if (!collection.sameBook(b, myFBReaderApp.ExternalBook)) {
+//					try {
+//						final ExternalFormatPlugin plugin =
+//								(ExternalFormatPlugin)BookUtil.getPlugin(
+//										PluginCollection.Instance(Paths.systemInfo(this)),
+//										myFBReaderApp.ExternalBook
+//								);
+//						startActivity(PluginUtil.createIntent(plugin, FBReaderIntents.Action.PLUGIN_KILL));
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		} else if (FBReaderIntents.Action.PLUGIN.equals(action)) {
+//			new RunPluginAction(this, myFBReaderApp, data).run();
+//		} else if (Intent.ACTION_SEARCH.equals(action)) {
+//			final String pattern = intent.getStringExtra(SearchManager.QUERY);
+//			final Runnable runnable = new Runnable() {
+//				public void run() {
+//					final TextSearchPopup popup = (TextSearchPopup)myFBReaderApp.getPopupById(TextSearchPopup.ID);
+//					popup.initPosition();
+//					myFBReaderApp.MiscOptions.TextSearchPattern.setValue(pattern);
+//					if (myFBReaderApp.getTextView().search(pattern, true, false, false, false) != 0) {
+//						runOnUiThread(new Runnable() {
+//							public void run() {
+//								myFBReaderApp.showPopup(popup.getId());
+//							}
+//						});
+//					} else {
+//						runOnUiThread(new Runnable() {
+//							public void run() {
+//								UIMessageUtil.showErrorMessage(FBReader.this, "textNotFound");
+//								popup.StartPosition = null;
+//							}
+//						});
+//					}
+//				}
+//			};
+//			UIUtil.wait("search", runnable, this);
+//		} else if (FBReaderIntents.Action.CLOSE.equals(intent.getAction())) {
+//			myCancelIntent = intent;
+//			myOpenBookIntent = null;
+//		} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(intent.getAction())) {
+//			final Book book = FBReaderIntents.getBookExtra(intent, myFBReaderApp.Collection);
+//			myFBReaderApp.ExternalBook = null;
+//			myOpenBookIntent = null;
+//			getCollection().bindToService(this, new Runnable() {
+//				public void run() {
+//					final BookCollectionShadow collection = getCollection();
+//					Book b = collection.getRecentBook(0);
+//					if (collection.sameBook(b, book)) {
+//						b = collection.getRecentBook(1);
+//					}
+//					myFBReaderApp.openBook(b, null, null, myNotifier);
+//				}
+//			});
+//		} else {
+//			super.onNewIntent(intent);
+//		}
+//	}
 
 	@Override
 	protected void onStart() {
@@ -476,6 +480,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		((PopupPanel)myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
 		((NavigationPopup)myFBReaderApp.getPopupById(NavigationPopup.ID)).setPanelInfo(this, myRootView);
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
+		((SettingPopup) myFBReaderApp.getPopupById(SettingPopup.ID)).setPanelInfo(this, myRootView);
 	}
 
 	@Override
@@ -756,88 +761,84 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		}
 		myFBReaderApp.runCancelAction(type, bookmark);
 	}
-
-	public void navigate() {
-		((NavigationPopup)myFBReaderApp.getPopupById(NavigationPopup.ID)).runNavigation();
-	}
-
-	private Menu addSubmenu(Menu menu, String id) {
-		return menu.addSubMenu(ZLResource.resource("menu").getResource(id).getValue());
-	}
-
-	private void addMenuItem(Menu menu, String actionId, Integer iconId, String name) {
-		if (name == null) {
-			name = ZLResource.resource("menu").getResource(actionId).getValue();
-		}
-		final MenuItem menuItem = menu.add(name);
-		if (iconId != null) {
-			menuItem.setIcon(iconId);
-		}
-		menuItem.setOnMenuItemClickListener(myMenuListener);
-		myMenuItemMap.put(menuItem, actionId);
-	}
-
-	private void addMenuItem(Menu menu, String actionId, String name) {
-		addMenuItem(menu, actionId, null, name);
-	}
-
-	private void addMenuItem(Menu menu, String actionId, int iconId) {
-		addMenuItem(menu, actionId, iconId, null);
-	}
-
-	private void addMenuItem(Menu menu, String actionId) {
-		addMenuItem(menu, actionId, null, null);
-	}
-
-	private void fillMenu(Menu menu, List<MenuNode> nodes) {
-		for (MenuNode n : nodes) {
-			if (n instanceof MenuNode.Item) {
-				final Integer iconId = ((MenuNode.Item)n).IconId;
-				if (iconId != null) {
-					addMenuItem(menu, n.Code, iconId);
-				} else {
-					addMenuItem(menu, n.Code);
-				}
-			} else /* if (n instanceof MenuNode.Submenu) */ {
-				final Menu submenu = addSubmenu(menu, n.Code);
-				fillMenu(submenu, ((MenuNode.Submenu)n).Children);
-			}
-		}
-	}
-
-	private void setupMenu(Menu menu) {
-		final String menuLanguage = ZLResource.getLanguageOption().getValue();
-		if (menuLanguage.equals(myMenuLanguage)) {
-			return;
-		}
-		myMenuLanguage = menuLanguage;
-
-		menu.clear();
-		fillMenu(menu, MenuData.topLevelNodes());
-		synchronized (myPluginActions) {
-			int index = 0;
-			for (PluginApi.ActionInfo info : myPluginActions) {
-				if (info instanceof PluginApi.MenuActionInfo) {
-					addMenuItem(
-							menu,
-							PLUGIN_ACTION_PREFIX + index++,
-							((PluginApi.MenuActionInfo)info).MenuItemName
-					);
-				}
-			}
-		}
-
-		refresh();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-
-		setupMenu(menu);
-
-		return true;
-	}
+//菜单
+//	private Menu addSubmenu(Menu menu, String id) {
+//		return menu.addSubMenu(ZLResource.resource("menu").getResource(id).getValue());
+//	}
+//
+//	private void addMenuItem(Menu menu, String actionId, Integer iconId, String name) {
+//		if (name == null) {
+//			name = ZLResource.resource("menu").getResource(actionId).getValue();
+//		}
+//		final MenuItem menuItem = menu.add(name);
+//		if (iconId != null) {
+//			menuItem.setIcon(iconId);
+//		}
+//		menuItem.setOnMenuItemClickListener(myMenuListener);
+//		myMenuItemMap.put(menuItem, actionId);
+//	}
+//
+//	private void addMenuItem(Menu menu, String actionId, String name) {
+//		addMenuItem(menu, actionId, null, name);
+//	}
+//
+//	private void addMenuItem(Menu menu, String actionId, int iconId) {
+//		addMenuItem(menu, actionId, iconId, null);
+//	}
+//
+//	private void addMenuItem(Menu menu, String actionId) {
+//		addMenuItem(menu, actionId, null, null);
+//	}
+//
+//	private void fillMenu(Menu menu, List<MenuNode> nodes) {
+//		for (MenuNode n : nodes) {
+//			if (n instanceof MenuNode.Item) {
+//				final Integer iconId = ((MenuNode.Item)n).IconId;
+//				if (iconId != null) {
+//					addMenuItem(menu, n.Code, iconId);
+//				} else {
+//					addMenuItem(menu, n.Code);
+//				}
+//			} else /* if (n instanceof MenuNode.Submenu) */ {
+//				final Menu submenu = addSubmenu(menu, n.Code);
+//				fillMenu(submenu, ((MenuNode.Submenu)n).Children);
+//			}
+//		}
+//	}
+//
+//	private void setupMenu(Menu menu) {
+//		final String menuLanguage = ZLResource.getLanguageOption().getValue();
+//		if (menuLanguage.equals(myMenuLanguage)) {
+//			return;
+//		}
+//		myMenuLanguage = menuLanguage;
+//
+//		menu.clear();
+//		fillMenu(menu, MenuData.topLevelNodes());
+//		synchronized (myPluginActions) {
+//			int index = 0;
+//			for (PluginApi.ActionInfo info : myPluginActions) {
+//				if (info instanceof PluginApi.MenuActionInfo) {
+//					addMenuItem(
+//							menu,
+//							PLUGIN_ACTION_PREFIX + index++,
+//							((PluginApi.MenuActionInfo)info).MenuItemName
+//					);
+//				}
+//			}
+//		}
+//
+//		refresh();
+//	}
+//
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		super.onCreateOptionsMenu(menu);
+//
+//		setupMenu(menu);
+//
+//		return true;
+//	}
 
 	protected void onPluginNotFound(final Book book) {
 		final BookCollectionShadow collection = getCollection();
@@ -862,6 +863,13 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 				getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 			}
 		}
+	}
+	public void navigate() {
+		((NavigationPopup) myFBReaderApp.getPopupById(NavigationPopup.ID)).runNavigation();
+	}
+
+	public void setting() {
+		((SettingPopup) myFBReaderApp.getPopupById(SettingPopup.ID)).runNavigation();
 	}
 
 	@Override
