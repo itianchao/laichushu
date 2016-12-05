@@ -32,7 +32,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,10 +44,8 @@ import com.laichushu.book.global.ConstantValue;
 import org.geometerplus.android.fbreader.api.ApiListener;
 import org.geometerplus.android.fbreader.api.ApiServerImplementation;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
-import org.geometerplus.android.fbreader.api.MenuNode;
 import org.geometerplus.android.fbreader.api.PluginApi;
 import org.geometerplus.android.fbreader.dict.DictionaryUtil;
-import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
@@ -67,14 +64,11 @@ import org.geometerplus.fbreader.fbreader.DictionaryHighlighting;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
-import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
@@ -287,6 +281,15 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		if (myFBReaderApp.getPopupById(SelectionPopup.ID) == null) {
 			new SelectionPopup(myFBReaderApp);
 		}
+		if (myFBReaderApp.getPopupById(SettingFontPopup.ID) == null) {
+			new SettingFontPopup(myFBReaderApp);
+		}
+		if (myFBReaderApp.getPopupById(SettingProgressPopup.ID) == null) {
+			new SettingProgressPopup(myFBReaderApp);
+		}
+		if (myFBReaderApp.getPopupById(SettingModlePopup.ID) == null) {
+			new SettingModlePopup(myFBReaderApp);
+		}
 		myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoAction(this, myFBReaderApp));
@@ -481,6 +484,9 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		((NavigationPopup)myFBReaderApp.getPopupById(NavigationPopup.ID)).setPanelInfo(this, myRootView);
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
 		((SettingPopup) myFBReaderApp.getPopupById(SettingPopup.ID)).setPanelInfo(this, myRootView);
+		((SettingFontPopup) myFBReaderApp.getPopupById(SettingFontPopup.ID)).setPanelInfo(this, myRootView);
+		((SettingProgressPopup) myFBReaderApp.getPopupById(SettingProgressPopup.ID)).setPanelInfo(this, myRootView);
+		((SettingModlePopup) myFBReaderApp.getPopupById(SettingModlePopup.ID)).setPanelInfo(this, myRootView);
 	}
 
 	@Override

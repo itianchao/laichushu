@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.ui.android.view;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.Matrix;

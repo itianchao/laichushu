@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 
-import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.SettingWindow;
 import org.geometerplus.android.fbreader.preferences.PreferenceActivity;
 import org.geometerplus.android.util.OrientationUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -20,16 +19,18 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
-
+/**
+ * 设置字体
+ */
 final class SettingFontPopup extends ZLApplication.PopupPanel implements View.OnClickListener {
-    final static String ID = "SettingPopup";
+    final static String ID = "SettingFontPopup";
 
     private volatile SettingWindow myWindow;
     private volatile FBReader myActivity;
     private volatile RelativeLayout myRoot;
     private boolean myIsBrightnessAdjustmentInProgress;
     private final FBReaderApp myKooReader;
-    private TextView tvFontMinus, tvFontSize, tvFontAdd;
+    private TextView tvFontSize;
     private TextView tvLightMinus, tvLightAdd;
     private TextView tvLineSpaceAdd, tvLineSpaceSize, tvLineSpaceMinus;
     private ZLIntegerRangeOption integerRangeOption;
@@ -39,6 +40,7 @@ final class SettingFontPopup extends ZLApplication.PopupPanel implements View.On
     private TextView bgWhite, bgGrey, bgVineGrey, bgVineWhite, bgGreen, bgNight;
     private TextView tvAlignLeft, tvAlignRight, tvAlignCenter, tvAlign;
     private boolean pageMode;
+    private ImageView tvFontMinus,tvFontAdd;
 
     SettingFontPopup(FBReaderApp kooReader) {
         super(kooReader);
@@ -64,7 +66,7 @@ final class SettingFontPopup extends ZLApplication.PopupPanel implements View.On
         }
         if (myWindow != null) {
             myWindow.show();
-            setupLight();
+//            setupLight();
         }
     }
 
@@ -91,87 +93,87 @@ final class SettingFontPopup extends ZLApplication.PopupPanel implements View.On
         if (myWindow != null && activity == myWindow.getContext()) {
             return;
         }
-        activity.getLayoutInflater().inflate(R.layout.setting_panel, root);
+        activity.getLayoutInflater().inflate(R.layout.txttextmenu_layout, root);
         myWindow = (SettingWindow) root.findViewById(R.id.setting_panel);
         integerRangeOption = myKooReader.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption; // 字体
-        pageMode = myKooReader.PageTurningOptions.Horizontal.getValue(); // 当前翻页方式
-        tvFontSize = (TextView) myWindow.findViewById(R.id.tv_font_size);
-        tvLineSpaceSize = (TextView) myWindow.findViewById(R.id.tv_lineSpace_size);
-        tvPageMode = (TextView) myWindow.findViewById(R.id.tv_page_mode);
-        if (pageMode) {
-            tvPageMode.setText("上下");
-        } else {
-            tvPageMode.setText("左右");
-        }
+//        pageMode = myKooReader.PageTurningOptions.Horizontal.getValue(); // 当前翻页方式
+        tvFontSize = (TextView) myWindow.findViewById(R.id.txttextmenu_textsize_text);//字大小
+//        tvLineSpaceSize = (TextView) myWindow.findViewById(R.id.tv_lineSpace_size);
+//        tvPageMode = (TextView) myWindow.findViewById(R.id.tv_page_mode);
+//        if (pageMode) {
+//            tvPageMode.setText("上下");
+//        } else {
+//            tvPageMode.setText("左右");
+//        }
         updateFontSize(); // 设置当前字号
-        updateLineSpaceSize(); // 当前行间距
-        slider = (SeekBar) myWindow.findViewById(R.id.light_slider);
-        tvLightMinus = (TextView) myWindow.findViewById(R.id.tv_light_minus);
-        tvLightAdd = (TextView) myWindow.findViewById(R.id.tv_light_add);
-        tvFontMinus = (TextView) myWindow.findViewById(R.id.tv_font_minus);
-        tvFontAdd = (TextView) myWindow.findViewById(R.id.tv_font_add);
-        tvLineSpaceAdd = (TextView) myWindow.findViewById(R.id.tv_lineSpace_add);
-        tvLineSpaceMinus = (TextView) myWindow.findViewById(R.id.tv_lineSpace_minus);
-        tvSetting = (TextView) myWindow.findViewById(R.id.tv_setting);
-        tvPageSimulation = (TextView) myWindow.findViewById(R.id.tv_page_simulation);
-        tvPageCover = (TextView) myWindow.findViewById(R.id.tv_page_cover);
-        tvPageSlide = (TextView) myWindow.findViewById(R.id.tv_page_slide);
-        tvPageNone = (TextView) myWindow.findViewById(R.id.tv_page_none);
-        bgWhite = (TextView) myWindow.findViewById(R.id.bg_white);
-        bgGrey = (TextView) myWindow.findViewById(R.id.bg_grey);
-        bgVineGrey = (TextView) myWindow.findViewById(R.id.bg_vine_grey);
-        bgVineWhite = (TextView) myWindow.findViewById(R.id.bg_vine_white);
-        bgGreen = (TextView) myWindow.findViewById(R.id.bg_green);
-        bgNight = (TextView) myWindow.findViewById(R.id.bg_night);
-        tvAlignLeft = (TextView) myWindow.findViewById(R.id.tv_align_left);
-        tvAlignRight = (TextView) myWindow.findViewById(R.id.tv_align_right);
-        tvAlignCenter = (TextView) myWindow.findViewById(R.id.tv_align_center);
-        tvAlign = (TextView) myWindow.findViewById(R.id.tv_align);
-        tvAlignLeft.setOnClickListener(this);
-        tvAlignRight.setOnClickListener(this);
-        tvAlignCenter.setOnClickListener(this);
-        tvAlign.setOnClickListener(this);
-        bgWhite.setOnClickListener(this);
-        bgGrey.setOnClickListener(this);
-        bgVineGrey.setOnClickListener(this);
-        bgVineWhite.setOnClickListener(this);
-        bgGreen.setOnClickListener(this);
-        bgNight.setOnClickListener(this);
-        tvLightMinus.setOnClickListener(this);
-        tvLightAdd.setOnClickListener(this);
+//        updateLineSpaceSize(); // 当前行间距
+//        slider = (SeekBar) myWindow.findViewById(R.id.light_slider);
+//        tvLightMinus = (TextView) myWindow.findViewById(R.id.tv_light_minus);
+//        tvLightAdd = (TextView) myWindow.findViewById(R.id.tv_light_add);
+        tvFontMinus = (ImageView) myWindow.findViewById(R.id.txttextmenu_textsize_decrease);
+        tvFontAdd = (ImageView) myWindow.findViewById(R.id.txttextmenu_textsize_add);
+//        tvLineSpaceAdd = (TextView) myWindow.findViewById(R.id.tv_lineSpace_add);
+//        tvLineSpaceMinus = (TextView) myWindow.findViewById(R.id.tv_lineSpace_minus);
+//        tvSetting = (TextView) myWindow.findViewById(R.id.tv_setting);
+//        tvPageSimulation = (TextView) myWindow.findViewById(R.id.tv_page_simulation);
+//        tvPageCover = (TextView) myWindow.findViewById(R.id.tv_page_cover);
+//        tvPageSlide = (TextView) myWindow.findViewById(R.id.tv_page_slide);
+//        tvPageNone = (TextView) myWindow.findViewById(R.id.tv_page_none);
+//        bgWhite = (TextView) myWindow.findViewById(R.id.bg_white);
+//        bgGrey = (TextView) myWindow.findViewById(R.id.bg_grey);
+//        bgVineGrey = (TextView) myWindow.findViewById(R.id.bg_vine_grey);
+//        bgVineWhite = (TextView) myWindow.findViewById(R.id.bg_vine_white);
+//        bgGreen = (TextView) myWindow.findViewById(R.id.bg_green);
+//        bgNight = (TextView) myWindow.findViewById(R.id.bg_night);
+//        tvAlignLeft = (TextView) myWindow.findViewById(R.id.tv_align_left);
+//        tvAlignRight = (TextView) myWindow.findViewById(R.id.tv_align_right);
+//        tvAlignCenter = (TextView) myWindow.findViewById(R.id.tv_align_center);
+//        tvAlign = (TextView) myWindow.findViewById(R.id.tv_align);
+//        tvAlignLeft.setOnClickListener(this);
+//        tvAlignRight.setOnClickListener(this);
+//        tvAlignCenter.setOnClickListener(this);
+//        tvAlign.setOnClickListener(this);
+//        bgWhite.setOnClickListener(this);
+//        bgGrey.setOnClickListener(this);
+//        bgVineGrey.setOnClickListener(this);
+//        bgVineWhite.setOnClickListener(this);
+//        bgGreen.setOnClickListener(this);
+//        bgNight.setOnClickListener(this);
+//        tvLightMinus.setOnClickListener(this);
+//        tvLightAdd.setOnClickListener(this);
         tvFontMinus.setOnClickListener(this);
         tvFontAdd.setOnClickListener(this);
-        tvLineSpaceMinus.setOnClickListener(this);
-        tvLineSpaceAdd.setOnClickListener(this);
-        tvPageMode.setOnClickListener(this);
-        tvSetting.setOnClickListener(this);
-        tvPageSimulation.setOnClickListener(this);
-        tvPageCover.setOnClickListener(this);
-        tvPageSlide.setOnClickListener(this);
-        tvPageNone.setOnClickListener(this);
-        selectePurItem(); //y 当前翻页方式
-        updateAlignment(); //y 当前对齐方式
+//        tvLineSpaceMinus.setOnClickListener(this);
+//        tvLineSpaceAdd.setOnClickListener(this);
+//        tvPageMode.setOnClickListener(this);
+//        tvSetting.setOnClickListener(this);
+//        tvPageSimulation.setOnClickListener(this);
+//        tvPageCover.setOnClickListener(this);
+//        tvPageSlide.setOnClickListener(this);
+//        tvPageNone.setOnClickListener(this);
+//        selectePurItem(); //y 当前翻页方式
+//        updateAlignment(); //y 当前对齐方式
 
-        slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                myIsBrightnessAdjustmentInProgress = true;
-            }
-
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                if (myIsBrightnessAdjustmentInProgress) {
-                    myIsBrightnessAdjustmentInProgress = false;
-                }
-            }
-
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
-                    if (myIsBrightnessAdjustmentInProgress) {
-                        myKooReader.getViewWidget().setScreenBrightness(progress);
-                        return;
-                    }
-                }
-            }
-        });
+//        slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//                myIsBrightnessAdjustmentInProgress = true;
+//            }
+//
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//                if (myIsBrightnessAdjustmentInProgress) {
+//                    myIsBrightnessAdjustmentInProgress = false;
+//                }
+//            }
+//
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                if (fromUser) {
+//                    if (myIsBrightnessAdjustmentInProgress) {
+//                        myKooReader.getViewWidget().setScreenBrightness(progress);
+//                        return;
+//                    }
+//                }
+//            }
+//        });
     }
 
     public void updateFontSize() {
@@ -347,9 +349,9 @@ final class SettingFontPopup extends ZLApplication.PopupPanel implements View.On
     }
 
     private void setupLight() {
-        final SeekBar slider = (SeekBar) myWindow.findViewById(R.id.light_slider); //y 屏幕亮度 1~100
-        slider.setMax(100);
-        slider.setProgress(myKooReader.getViewWidget().getScreenBrightness());
+//        final SeekBar slider = (SeekBar) myWindow.findViewById(R.id.light_slider); //y 屏幕亮度 1~100
+//        slider.setMax(100);
+//        slider.setProgress(myKooReader.getViewWidget().getScreenBrightness());
     }
 
     final void removeWindow(Activity activity) {

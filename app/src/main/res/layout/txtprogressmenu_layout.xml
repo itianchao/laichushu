@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.geometerplus.android.fbreader.SettingWindow
+    android:id="@+id/setting_panel"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/memubg_color" >
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:background="@color/memubg_color"
+    android:focusable="false"
+    android:orientation="vertical"
+    android:visibility="visible">
 
     <LinearLayout
         android:id="@+id/txtprogress_layout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,50 +29,19 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="初始化数据中..."
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
     </LinearLayout>
+
     <LinearLayout
-        android:layout_centerInParent="true"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/iv_pre"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/read_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <SeekBar
-            android:id="@+id/txtprogress_seekbar"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:maxHeight="3dip"
-            android:minHeight="3dip"
-            android:thumbOffset="0dip"
-            android:progress="1"
-            android:progressDrawable="@drawable/txtview_po_seekbar"
-            android:thumb="@drawable/txtview_seekbar_thumb" />
-        <ImageView
-            android:id="@+id/iv_next"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/read_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:visibility="gone"
         android:id="@+id/txtprogress_layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:orientation="horizontal"
-        android:weightSum="4" >
+        android:visibility="gone"
+        android:weightSum="4">
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/txtprogress_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -73,10 +50,10 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="1/4"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone"/>
 
         <EditText
-            android:visibility="gone"
             android:id="@+id/pregress_edittext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,21 +63,21 @@
             android:background="@drawable/txtprogress_edittext_selector"
             android:hint="输入页码"
             android:inputType="number"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <RelativeLayout
-            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:visibility="gone">
 
             <Button
-                android:visibility="gone"
                 android:id="@+id/txtprogress_concern"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,8 +87,45 @@
                 android:background="@drawable/menu_bg_selector"
                 android:padding="5dp"
                 android:text="确定"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
         </RelativeLayout>
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_toEndOf="@+id/txtprogress_layout2"
+        android:layout_toRightOf="@+id/txtprogress_layout2"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_pre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/read_left"/>
+
+        <SeekBar
+            android:id="@+id/txtprogress_seekbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:maxHeight="3dip"
+            android:minHeight="3dip"
+            android:progress="1"
+            android:progressDrawable="@drawable/txtview_po_seekbar"
+            android:thumb="@drawable/txtview_seekbar_thumb"
+            android:thumbOffset="0dip"/>
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/read_right"/>
+    </LinearLayout>
+
+</org.geometerplus.android.fbreader.SettingWindow>

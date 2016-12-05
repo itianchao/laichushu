@@ -1,7 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<org.geometerplus.android.fbreader.NavigationWindow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navigation_panel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:background="@color/white"
+    android:focusable="false"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:visibility="visible">
+    <LinearLayout
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="50dp">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/iv_div"
+            android:src="@drawable/icon_read_div"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/iv_font"
+            android:src="@drawable/icon_read_font"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/iv_proess"
+            android:src="@drawable/icon_read_proess"
+            android:layout_width="30dp"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/iv_modle"
+            android:src="@drawable/icon_read_modle"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+</org.geometerplus.android.fbreader.NavigationWindow>

@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.geometerplus.android.fbreader.SettingWindow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/setting_panel"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/memubg_color" >
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:background="@color/memubg_color"
+    android:focusable="false"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:visibility="visible">
     <RadioGroup
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -76,4 +82,4 @@
         android:padding="5dp"
         android:text="确定" />
 
-</LinearLayout>
+</org.geometerplus.android.fbreader.SettingWindow>
