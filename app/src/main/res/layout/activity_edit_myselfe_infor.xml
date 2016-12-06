@@ -29,10 +29,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
                 android:text="头像"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:paddingLeft="24dp"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <ImageView
@@ -40,7 +40,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="12dp"
                 android:layout_toLeftOf="@+id/iv_editHeadInto" />
 
 
@@ -50,7 +50,7 @@
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/home_right" />
         </RelativeLayout>
 
@@ -66,11 +66,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
                 android:text="昵称"
                 android:background="@null"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:paddingLeft="24dp"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <EditText
@@ -81,7 +81,7 @@
                 android:layout_centerVertical="true"
                 android:gravity="right"
                 android:background="@null"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="24dp"
                 android:textColor="@color/edit2"
                 android:textSize="@dimen/edit2"
                 android:textStyle="bold" />
@@ -99,10 +99,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
                 android:text="性别"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:paddingLeft="24dp"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <TextView
@@ -112,7 +112,7 @@
                 android:layout_alignParentRight="true"
                 android:gravity="right"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="24dp"
                 android:background="@null"
                 android:singleLine="true"
                 android:textColor="@color/edit2"
@@ -131,10 +131,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
                 android:text="生日"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:paddingLeft="24dp"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <TextView
@@ -145,7 +145,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="24dp"
                 android:background="@null"
                 android:gravity="right"
                 android:text="1900-01-01"
@@ -165,10 +165,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
                 android:text="地区"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:paddingLeft="24dp"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <EditText
@@ -179,7 +179,7 @@
                 android:singleLine="true"
                 android:gravity="right"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="24dp"
                 android:textColor="@color/edit2"
                 android:background="@null"
                 android:textSize="@dimen/edit2"
@@ -198,10 +198,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
                 android:text="身份证"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:paddingLeft="24dp"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <TextView
@@ -223,7 +223,7 @@
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                 android:layout_marginRight="24dp"
                 android:background="@drawable/home_right" />
         </RelativeLayout>
 
@@ -238,10 +238,10 @@
                 android:id="@+id/tv_signature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:text="个性签名"
-                android:textColor="@color/edit2"
-                android:textSize="@dimen/edit2"
+                android:paddingLeft="24dp"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
             <EditText
@@ -255,8 +255,9 @@
                 android:layout_marginRight="5dp"
                 android:textSize="@dimen/edit2"
                 android:textColor="@color/edit2"
+                android:gravity="top"
                 android:background="@null"
-                android:paddingLeft="10dp"
+                android:paddingLeft="24dp"
                 android:paddingRight="10dp" />
         </RelativeLayout>
 

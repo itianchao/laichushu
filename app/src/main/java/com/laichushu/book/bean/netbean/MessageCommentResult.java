@@ -33,7 +33,7 @@ public class MessageCommentResult implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * id : 175
          * type : 3
@@ -81,6 +81,27 @@ public class MessageCommentResult implements Serializable {
         private String contributeStatus;
         private String articleId;
         private String coverUrl;
+
+        public String getMsgId() {
+            return msgId;
+        }
+
+        public void setMsgId(String msgId) {
+            this.msgId = msgId;
+        }
+
+        private String msgId;
+
+        public String getCreateDate() {
+            return createDate;
+        }
+
+        public void setCreateDate(String createDate) {
+            this.createDate = createDate;
+        }
+
+        private String createDate;
+
 
         public String getId() {
             return id;

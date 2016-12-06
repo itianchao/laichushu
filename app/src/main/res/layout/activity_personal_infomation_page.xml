@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgGrey">
+
+    <include
+        android:id="@+id/include_top"
+        layout="@layout/page_title" />
+
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/ryv_perInfoDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_sendMsg"
+        android:layout_below="@+id/include_top"
+        android:layout_marginTop="12dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_sendMsg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_sendMsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rectangle_btn_state"
+            android:hint="发表下自己的意见吧"
+            android:lines="1"
+            android:paddingBottom="12dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="12dp"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/hint"
+            android:textSize="@dimen/edit2" />
+
+        <ImageView
+            android:id="@+id/iv_sendMsg"
+            android:layout_width="25dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/icon_send" />
+    </LinearLayout>
+</RelativeLayout>

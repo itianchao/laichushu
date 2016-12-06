@@ -32,6 +32,7 @@ import com.laichushu.book.ui.adapter.ProvinceAdapter;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.ui.widget.WheelView;
 import com.laichushu.book.utils.DateUtil;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
@@ -39,10 +40,8 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.pickerview.OptionsPopupWindow;
 import com.pickerview.TimePopupWindow;
-import com.pickerview.lib.ArrayWheelAdapter;
 import com.pickerview.lib.City;
 import com.pickerview.lib.Province;
-import com.pickerview.lib.WheelView;
 import com.yanzhenjie.album.Album;
 
 import java.io.File;
@@ -124,6 +123,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         city_idDao = daoSession.getCity_IdDao();
+        city_idList = city_idDao.queryBuilder().build().list();
     }
 
 
@@ -186,7 +186,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 setTimePopupwindow();
                 break;
             case R.id.rl_area:
-                setAreaPopWindows();
+               initAreaSelector();
                 break;
             case R.id.rl_idCard:
                 Bundle bundle = new Bundle();
@@ -301,47 +301,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         sexPopupWindow.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
     }
 
-    /**
-     * 地区选择器
-     */
-    private void setAreaPopWindows() {
-        city_idList = city_idDao.queryBuilder().build().list();
-        ArrayList<String> allProince = getAllProince();
-        ArrayList<String> city = getCity("01");
-        ArrayList<ArrayList<String>> allCity = new ArrayList<ArrayList<String>>();
-        allCity.add(city);
-        areaPopWindow = new OptionsPopupWindow(this);
-        areaPopWindow.setPicker(allProince, allCity, true);
-        areaPopWindow.setCyclic(true);
-        areaPopWindow.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
-    }
-
-    public ArrayList<String> getAllProince() {
-        ArrayList<String> proDate = new ArrayList<>();
-        proDate.clear();
-        for (int i = 0; i < city_idList.size(); i++) {
-            if (!proDate.contains(city_idList.get(i).getProvince())) {
-                proDate.add(city_idList.get(i).getProvince());
-            }
-        }
-        return proDate;
-    }
-
-    /**
-     * @param proCode
-     * @return 根据proCode查询城市
-     */
-    private ArrayList<String> getCity(String proCode) {
-        ArrayList<String> cityDate = new ArrayList<>();
-        cityDate.clear();
-        for (int i = 0; i < city_idList.size(); i++) {
-            if (proCode.equals(city_idList.get(i).getProCode())) {
-                cityDate.add(city_idList.get(i).getCity());
-            }
-        }
-        return cityDate;
-    }
-
     //选择日期
     private void setTimePopupwindow() {
         timePopupWindow = new TimePopupWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
@@ -425,15 +384,71 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         }
 
     }
+    //-----------省市选择器---------------
 
-    public void initDialog(List<Province> proDate, List<City> cityDate) {
+    /**
+     * 获取所有的省份
+     *
+     * @return
+     */
+    private ArrayList<String> getProvonce() {
+        ArrayList<String> proDate = new ArrayList<>();
+        proDate.clear();
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (!proDate.contains(city_idList.get(i).getProvince())) {
+                proDate.add(city_idList.get(i).getProvince());
+            }
+        }
+        return proDate;
+    }
+
+    /**
+     * 通过省份名字获取省份代号
+     *
+     * @param province
+     * @return
+     */
+    private String getProCodeByProvince(String province) {
+        String result = null;
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (province.equals(city_idList.get(i).getProvince())) {
+                result = city_idList.get(i).getProCode();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @param proCode
+     * @return 根据proCode查询城市
+     */
+    private ArrayList<String> getCity(String proCode) {
+        ArrayList<String> cityDate = new ArrayList<>();
+        cityDate.clear();
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (proCode.equals(city_idList.get(i).getProCode())) {
+                cityDate.add(city_idList.get(i).getCity());
+            }
+        }
+        return cityDate;
+    }
+
+    public void initAreaSelector() {
         AlertDialog mAlertDialog = new AlertDialog.Builder(mActivity).create();
         mAlertDialog.show();
         View view = UIUtil.inflate(R.layout.item_pop_myview);
         mAlertDialog.getWindow().setContentView(view);
         mAlertDialog.setTitle("选择城市");
-        ListView proCity = (ListView) view.findViewById(R.id.lv_province);
-        ListView lvCity = ((ListView) view.findViewById(R.id.lv_city));
-        ProvinceAdapter proAdapter=new ProvinceAdapter(this,proDate);
+        WheelView wvPro = (WheelView) view.findViewById(R.id.wv_province);
+        final WheelView wvCity = ((WheelView) view.findViewById(R.id.lv_city));
+        wvPro.setOffset(5);
+        wvCity.setOffset(5);
+        wvPro.setItems(getProvonce());
+        wvPro.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+            @Override
+            public void onSelected(int position, String item) {
+                wvCity.setItems(getCity(getProCodeByProvince(getProvonce().get(position))));
+            }
+        });
     }
 }

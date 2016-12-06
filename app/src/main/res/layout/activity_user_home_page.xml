@@ -134,13 +134,17 @@
             android:id="@+id/ryv_userDynamic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:background="@color/backGray"
             android:layout_marginTop="12dp" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_userWorks"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
             android:layout_marginTop="12dp"
+            android:background="@color/backGray"
             android:visibility="gone" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
@@ -148,6 +152,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
+            android:background="@color/backGray"
+            android:layout_marginBottom="12dp"
             android:visibility="gone" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
@@ -155,6 +161,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
+            android:background="@color/backGray"
+            android:layout_marginBottom="12dp"
             android:visibility="gone" />
 
     </LinearLayout>

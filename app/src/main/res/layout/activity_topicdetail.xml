@@ -1,51 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/page_title"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/item_mechanismtopiclist"/>
+    <include layout="@layout/page_title" />
+
+    <include layout="@layout/item_mechanismtopiclist" />
 
     <TextView
-        android:layout_marginLeft="15dp"
+        android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
         android:gravity="center_vertical"
         android:text="全部评论"
         android:textColor="@color/black"
-        android:textSize="@dimen/edit2"
-        android:id="@+id/textView6" />
+        android:textSize="@dimen/edit2" />
 
-    <include layout="@layout/line"/>
+    <include layout="@layout/line" />
+
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-        android:layout_marginTop="5dp"
         android:id="@+id/ryv_comment"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1" />
+
     <LinearLayout
-        android:layout_margin="10dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
         <EditText
-            android:background="@drawable/shape_rectangle_read_normal"
+            android:id="@+id/et_sendmsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rectangle_btn_state"
             android:hint="发表下自己的意见吧"
+            android:lines="1"
+            android:paddingBottom="12dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="12dp"
             android:textColor="@color/black"
             android:textColorHighlight="@color/hint"
-            android:id="@+id/et_sendmsg"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:lines="1"
-            android:textSize="@dimen/edit2"
-            android:layout_height="wrap_content"/>
+            android:textSize="@dimen/edit2" />
 
         <ImageView
-            android:layout_marginLeft="5dp"
-            android:layout_gravity="center"
             android:id="@+id/iv_sendmsg"
-            android:src="@drawable/icon_send"
             android:layout_width="25dp"
-            android:layout_height="36dp"/>
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/icon_send" />
     </LinearLayout>
 </LinearLayout>

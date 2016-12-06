@@ -38,12 +38,11 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, null, holder.ivImg);
-        holder.tvShopName.setText(dataBeen.get(position).getTitle());
+        holder.tvShopName.setText(dataBeen.get(position).getCreatUserName());
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
-//        holder.tvCollect.setText(dataBeen.get(position).getCollectNum());
-//        holder.tvScan.setText(dataBeen.get(position).getBrowseNum());
+        holder.tvCollect.setText(dataBeen.get(position).getCollectNum()+"");
         holder.llScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -48,9 +48,11 @@ public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMe
         holder.tvContent.setText(dataBeen.get(position).getNickName());
         //关注我的
         if (dataBeen.get(position).isStatus()) {
+            holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
             holder.checkBox.setText("取消关注");
         } else {
             holder.checkBox.setText("关注");
+            holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
         }
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -58,13 +60,14 @@ public class HomePageFocusMeAdapter extends RecyclerView.Adapter<HomePageFocusMe
 
                 if (!dataBeen.get(position).isStatus()) {
                     holder.checkBox.setText("取消关注");
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
                     holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
                     //添加关注
                     homePagePresener.loadAddFocus(dataBeen.get(position).getSourceUserId(),true);
                     dataBeen.get(position).setStatus(true);
                 } else {
                     holder.checkBox.setText("关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
                     homePagePresener.loadDelFocus(dataBeen.get(position).getSourceUserId(),false);
                     dataBeen.get(position).setStatus(false);
                 }

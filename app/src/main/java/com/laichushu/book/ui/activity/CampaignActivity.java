@@ -10,6 +10,8 @@ import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.laichushu.book.R;
 import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
+import com.laichushu.book.bean.netbean.CampaignDetailsModel;
+import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.campaign.CampaignJoinModel;
 import com.laichushu.book.mvp.campaign.CampaignModel;
@@ -44,8 +46,12 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     private ImageView stateIv;
     private HomeHotModel.DataBean bean;
     private ArrayList<CampaignModel.DataBean> mData = new ArrayList<>();
+    private ArrayList<CampaignDetailsModel.DataBean> mDetailsData = new ArrayList<>();
     private ArrayList<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
     private int position;
+
+    private String type;
+    private MessageCommentResult.DataBean dataBeen;
 
     @Override
     protected void initView() {
@@ -96,42 +102,87 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
 
     @Override
     protected void initData() {
-        bean = getIntent().getParcelableExtra("bean");
-        position = getIntent().getIntExtra("position",0);
-        mvpPresenter.loadActivityResultData(bean.getActivityId());
-        mvpPresenter.loadAuthorWorksData();
-        joinTv.setOnClickListener(this);
-        GlideUitl.loadImg(this, bean.getImgUrl(), activityImgIv);
-        if (bean.isParticipate()) {
-            joinTv.setText("已参加");
+        type = getIntent().getStringExtra("type");
+        dataBeen = (MessageCommentResult.DataBean) getIntent().getSerializableExtra("activityDetails");
+
+        if (type.equals("activity")) {
+            mvpPresenter.loadActivityDetailsData(dataBeen.getSourceId());
         } else {
-            joinTv.setText("参加活动");
+            bean = getIntent().getParcelableExtra("bean");
+            position = getIntent().getIntExtra("position",0);
+            mvpPresenter.loadAuthorWorksData();
+            mvpPresenter.loadActivityResultData(bean.getActivityId());
+            GlideUitl.loadImg(this, bean.getImgUrl(), activityImgIv);
+            joinTv.setOnClickListener(this);
+            if (bean.isParticipate()) {
+                joinTv.setText("已参加");
+            } else {
+                joinTv.setText("参加活动");
+            }
+            switch (bean.getStatus()) {
+                case "1":
+                    GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                    joinTv.setVisibility(View.INVISIBLE);
+                    break;
+                case "2":
+                    GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                    joinTv.setVisibility(View.VISIBLE);
+                    parentLay.setVisibility(View.INVISIBLE);
+                    break;
+                case "3":
+                    GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                    joinTv.setVisibility(View.VISIBLE);
+                    parentLay.setVisibility(View.INVISIBLE);
+                    break;
+                case "4":
+                    GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
+                    joinTv.setVisibility(View.INVISIBLE);
+                    break;
+            }
+            activityNameTv.setText(bean.getActivityName());
+            startTimeTv.setText("开始时间：" + bean.getBeginTime());
+            endTimeTv.setText("结束时间：" + bean.getEndTime());
+            numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
+            detailsTv.setText(bean.getDetail());
         }
-        switch (bean.getStatus()) {
-            case "1":
-                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                joinTv.setVisibility(View.INVISIBLE);
-                break;
-            case "2":
-                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                joinTv.setVisibility(View.VISIBLE);
-                parentLay.setVisibility(View.INVISIBLE);
-                break;
-            case "3":
-                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                joinTv.setVisibility(View.VISIBLE);
-                parentLay.setVisibility(View.INVISIBLE);
-                break;
-            case "4":
-                GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
-                joinTv.setVisibility(View.INVISIBLE);
-                break;
+    }
+
+    /**
+     * 活动详情列表   活动通知------》详情
+     *
+     * @param model
+     */
+    @Override
+    public void getDetailsDataSuccess(CampaignDetailsModel model) {
+        if (model.isSuccess()) {
+            mDetailsData.addAll(model.getData());
+            //初始化头部信息
+             GlideUitl.loadImg(this, model.getImgUrl(), activityImgIv);
+                joinTv.setText("已结束");
+            GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
+            joinTv.setVisibility(View.INVISIBLE);
+            activityNameTv.setText(model.getName());
+            startTimeTv.setText("开始时间：" + model.getStartTime());
+            endTimeTv.setText("结束时间：" + model.getEndTime());
+            numTv.setText("报名人数：" + model.getApplyAmount() + "人");
+            detailsTv.setText(model.getDetail());
+            //初始化尾部信息
+            for (int i = 1; i <= mDetailsData.size(); i++) {
+                View itemView = UIUtil.inflate(R.layout.item_home_activity_details);
+                TextView bonusTv = (TextView) itemView.findViewById(R.id.tv_bonus);
+                ImageView headIv = (ImageView) itemView.findViewById(R.id.iv_head);
+                TextView usernameIv = (TextView) itemView.findViewById(R.id.iv_username);
+                TextView booknameIv = (TextView) itemView.findViewById(R.id.iv_bookname);
+                bonusTv.setText(i + "");
+                CampaignDetailsModel.DataBean bean = mDetailsData.get(i - 1);
+                GlideUitl.loadRandImg(this, bean.getPhoto(), headIv);
+                usernameIv.setText(bean.getNickName());
+                booknameIv.setText(bean.getArticleName());
+                parentLay.addView(itemView);
+            }
+        } else {
+            ToastUtil.showToast("加载数据失败！");
         }
-        activityNameTv.setText(bean.getActivityName());
-        startTimeTv.setText("开始时间：" + bean.getBeginTime());
-        endTimeTv.setText("结束时间：" + bean.getEndTime());
-        numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
-        detailsTv.setText(bean.getDetail());
     }
 
     /**
@@ -154,7 +205,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 if (mArticleData.size() == 0) {
                     ToastUtil.showToast("您还没有作品");
                 } else {
-                    if (joinTv.getText().equals("参加活动")) {
+                    if (joinTv.getText().equals("参加活动")|joinTv.getText().equals("已结束")) {
                         openAlertDialog();
                     } else {
                         mvpPresenter.loadJoinActivityData(bean.getActivityId(), "", "1");
@@ -235,6 +286,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
             ToastUtil.showToast(model.getErrMsg());
         }
     }
+
 
     /**
      * 参加活动

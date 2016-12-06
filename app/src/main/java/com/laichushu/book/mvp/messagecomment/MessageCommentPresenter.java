@@ -1,16 +1,27 @@
 package com.laichushu.book.mvp.messagecomment;
 
+import android.text.TextUtils;
+import android.widget.EditText;
+
+import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.AddPerDetails_Paramet;
 import com.laichushu.book.bean.netbean.BookDetails_Paramet;
+import com.laichushu.book.bean.netbean.DelPerInfo_Paramet;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.MessageComment_Paramet;
+import com.laichushu.book.bean.netbean.PerInformationDetails_Paramet;
+import com.laichushu.book.bean.netbean.PerInformation_Paramet;
+import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.bean.netbean.SendMsgDetails_Paramet;
+import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
+import com.pickerview.lib.Province;
 
 /**
  * Created by PCPC on 2016/11/28.
@@ -21,8 +32,8 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
-    private String msgType =ConstantValue.MSG_TYPE_3;
-    private String subType =ConstantValue.SUB_TYPE_4;
+    private String msgType;
+    private String subType;
 
     //初始化构造
     public MessageCommentPresenter(MessageCommentView view) {
@@ -118,14 +129,15 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
     }
 
     //获取图书详情
-private BookDetails_Paramet bookParamet= new BookDetails_Paramet(userId,"");
+    private BookDetails_Paramet bookParamet = new BookDetails_Paramet(userId, "");
+
     public void LoadBookDetailsData(String id, final int position) {
         bookParamet.setId(id);
         LoggerUtil.toJson(bookParamet);
         addSubscription(apiStores.getBookDetailsById(bookParamet), new ApiCallback<HomeHotModel>() {
             @Override
             public void onSuccess(HomeHotModel model) {
-                mvpView.getBookDetailsDateSuccess(model,position);
+                mvpView.getBookDetailsDateSuccess(model, position);
             }
 
             @Override
@@ -139,6 +151,7 @@ private BookDetails_Paramet bookParamet= new BookDetails_Paramet(userId,"");
             }
         });
     }
+
     public SendMsgDetails_Paramet getMsgParamet() {
         return msgParamet;
     }
@@ -148,8 +161,9 @@ private BookDetails_Paramet bookParamet= new BookDetails_Paramet(userId,"");
     }
 
     //回复消息
-    private SendMsgDetails_Paramet msgParamet= new SendMsgDetails_Paramet(userId,"","","","");
-    public void LoadSendMsgDetailsData(String receiveId,String content,String msgType,String subType) {
+    private SendMsgDetails_Paramet msgParamet = new SendMsgDetails_Paramet(userId, "", "", "", "");
+
+    public void LoadSendMsgDetailsData(String receiveId, String content, String msgType, String subType) {
         msgParamet.setReceiveId(receiveId);
         msgParamet.setContent(content);
         msgParamet.setMsgType(msgType);
@@ -172,4 +186,123 @@ private BookDetails_Paramet bookParamet= new BookDetails_Paramet(userId,"");
             }
         });
     }
+
+    public PerInformation_Paramet getInfoParamet() {
+        return infoParamet;
+    }
+
+    public void setInfoParamet(PerInformation_Paramet infoParamet) {
+        this.infoParamet = infoParamet;
+    }
+
+    //私信列表
+    private PerInformation_Paramet infoParamet = new PerInformation_Paramet(userId, pageNo, pageSize);
+
+    public void LoadPerInfoDetailsData() {
+
+        LoggerUtil.toJson(infoParamet);
+        addSubscription(apiStores.getPerInformation(infoParamet), new ApiCallback<MessageCommentResult>() {
+            @Override
+            public void onSuccess(MessageCommentResult model) {
+                mvpView.getPerInfoListDateSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    public PerInformationDetails_Paramet getInfoDetailsParamet() {
+        return infoDetailsParamet;
+    }
+
+    public void setInfoDetailsParamet(PerInformationDetails_Paramet infoDetailsParamet) {
+        this.infoDetailsParamet = infoDetailsParamet;
+    }
+
+    //私信详情
+    private PerInformationDetails_Paramet infoDetailsParamet = new PerInformationDetails_Paramet(userId, "", "", pageNo, pageSize);
+
+    public void LoadPerDetailsData(String senderId, String msgId) {
+        infoDetailsParamet.setSenderId(senderId);
+        infoDetailsParamet.setMsgId(msgId);
+        LoggerUtil.toJson(infoDetailsParamet);
+        addSubscription(apiStores.getPerInformationDetails(infoDetailsParamet), new ApiCallback<PerMsgInfoReward>() {
+            @Override
+            public void onSuccess(PerMsgInfoReward model) {
+                mvpView.getPerInfoDetailsDateSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    /**
+     * 发送评论
+     *
+     * @param sendmsgEv
+     * @param
+     */
+    public void topicDetailCommentSave(EditText sendmsgEv, String msgId) {
+        String msg = sendmsgEv.getText().toString().trim();
+        if (TextUtils.isEmpty(msg)) {
+            sendmsgEv.startAnimation(ShakeAnim.shakeAnimation(3));
+            return;
+        }
+        LoggerUtil.e("发送评论");
+        AddPerDetails_Paramet paramet = new AddPerDetails_Paramet(userId, msgId, msg);
+        addSubscription(apiStores.getPerDetails(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getSendDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code" + code + "msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        });
+    }
+
+
+    public void loadDelPerInfoDetails(String senderId, String msgId) {
+        DelPerInfo_Paramet delParamet = new DelPerInfo_Paramet(senderId, msgId, userId);
+        LoggerUtil.e("发送评论");
+        AddPerDetails_Paramet paramet = new AddPerDetails_Paramet(userId, msgId, msgId);
+        addSubscription(apiStores.getDelPerInfoDetails(delParamet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getDelPerIdfoDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code" + code + "msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        });
+    }
+
 }

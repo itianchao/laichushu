@@ -47,22 +47,24 @@ public class UserFocusHeAdapter extends RecyclerView.Adapter<UserFocusHeAdapter.
         GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
         holder.tvContent.setText(dataBeen.get(position).getNickName());
         if (dataBeen.get(position).isStatus()) {
+            holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
             holder.checkBox.setText("取消关注");
         } else {
             holder.checkBox.setText("关注");
+            holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
         }
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!dataBeen.get(position).isStatus()) {
                     holder.checkBox.setText("取消关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
                     homePagePresener.loadAddFocus(dataBeen.get(position).getSourceUserId(), true);
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
                     dataBeen.get(position).setStatus(true);
                 } else {
                     holder.checkBox.setText("关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
                     homePagePresener.loadDelFocus(dataBeen.get(position).getSourceUserId(), false);
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
                     dataBeen.get(position).setStatus(false);
                 }
 

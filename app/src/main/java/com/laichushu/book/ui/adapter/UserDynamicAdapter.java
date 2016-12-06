@@ -47,18 +47,19 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, null, holder.ivImg);
-        holder.tvShopName.setText(dataBeen.get(position).getTitle());
+        holder.tvShopName.setText(dataBeen.get(position).getCreatUserName());
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
+        holder.tvTitleContent.setText(dataBeen.get(position).getContent());
         holder.tvCollection.setText(dataBeen.get(position).getCollectNum() + "");
         currentNum = dataBeen.get(position).getCollectNum();
         if (dataBeen.get(position).isBeCollect()) {
-            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_up_small_normal);
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
             type = "1";
         } else {
-            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_up_small_red);
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_red);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
             type = "0";
@@ -69,18 +70,18 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
                 if (type.equals("0")) {
                     //添加点赞
                     currentNum++;
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_up_small_normal);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
-                    userHomePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COMMENTTOPIC_TYPE, type);
+                    userHomePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
                     type = "1";
                 } else {
                     //取消点赞
                     currentNum--;
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_up_small_red);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_red);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
-                    userHomePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COMMENTTOPIC_TYPE, type);
+                    userHomePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
                     type = "0";
                 }
                 holder.tvCollection.setText(currentNum + "");

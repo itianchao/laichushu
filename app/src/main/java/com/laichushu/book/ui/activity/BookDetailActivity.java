@@ -319,6 +319,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             ToastUtil.showToast(model.getErrMsg());
             Logger.e(model.getErrMsg());
         }
+
     }
 
     @Override

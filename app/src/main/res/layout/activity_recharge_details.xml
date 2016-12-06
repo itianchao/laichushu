@@ -104,7 +104,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="24dp"
                 android:paddingRight="8dp"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/alipay_icon"
                 android:textColor="@color/black"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
@@ -152,7 +152,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="24dp"
                 android:paddingRight="8dp"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/wechatpay_icon"
                 android:textColor="@color/black"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />

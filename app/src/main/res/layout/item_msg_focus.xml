@@ -24,13 +24,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_focusNoticeIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="12dp"
                 android:src="@drawable/icon_msg_1"
                 android:visibility="gone" />
 
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="24dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="12dp"
                     android:textColor="@color/characterGray"
                     android:textSize="@dimen/edit2"
                     android:textStyle="bold" />
@@ -61,8 +61,9 @@
                     android:id="@+id/tv_focusName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="5dp"
+                    android:layout_below="@+id/tv_focusTime"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="24dp"
                     android:textColor="@color/auditing"
                     android:textSize="@dimen/edit2"
@@ -72,9 +73,11 @@
                     android:id="@+id/tv_focusContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="5dp"
+                    android:layout_below="@+id/tv_focusTime"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginRight="24dp"
                     android:layout_toRightOf="@+id/tv_focusName"
                     android:text="关注了你"
                     android:textColor="@color/albumPrimaryBlack"

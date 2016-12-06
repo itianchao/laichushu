@@ -4,13 +4,13 @@
     android:layout_height="240dp"
     android:orientation="horizontal">
 
-    <ListView
-        android:id="@+id/lv_province"
+    <com.laichushu.book.ui.widget.WheelView
+        android:id="@+id/wv_province"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <ListView
+    <com.laichushu.book.ui.widget.WheelView
         android:id="@+id/lv_city"
         android:layout_width="0dp"
         android:layout_height="match_parent"

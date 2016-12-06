@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
@@ -56,52 +57,48 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
             case "1":
                 //喜欢
                 tvTitle.setText("喜欢");
-                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
-                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_2);
+                mvpPresenter.getParamet().setMsgType(ConstantValue.MSG_TYPE_3);
+                mvpPresenter.getParamet().setSubType(ConstantValue.SUB_TYPE_2);
                 break;
             case "2":
                 //打赏
                 tvTitle.setText("打赏");
-                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
-                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_6);
+                mvpPresenter.getParamet().setMsgType(ConstantValue.MSG_TYPE_3);
+                mvpPresenter.getParamet().setSubType(ConstantValue.SUB_TYPE_6);
                 break;
 
             case "3":
                 //关注
                 tvTitle.setText("关注");
-                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
-                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_5);
+                mvpPresenter.getParamet().setMsgType(ConstantValue.MSG_TYPE_3);
+                mvpPresenter.getParamet().setSubType(ConstantValue.SUB_TYPE_5);
                 break;
             case "4":
                 //私信
                 tvTitle.setText("私信");
-                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
-                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_7);
+                mvpPresenter.LoadPerInfoDetailsData();
                 break;
             case "5":
                 //订阅
                 tvTitle.setText("订阅");
-                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_3);
-                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_1);
+                mvpPresenter.getParamet().setMsgType(ConstantValue.MSG_TYPE_3);
+                mvpPresenter.getParamet().setSubType(ConstantValue.SUB_TYPE_1);
                 break;
             case "6":
-                //订阅
+                //活动通知
                 tvTitle.setText("活动通知");
-                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_1);
-                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_8);
+                mvpPresenter.getParamet().setMsgType(ConstantValue.MSG_TYPE_1);
+                mvpPresenter.getParamet().setSubType(ConstantValue.SUB_TYPE_7);
                 break;
             case "7":
-                //订阅
+                //其他消息
                 tvTitle.setText("其他消息");
-                mvpPresenter.setMsgType(ConstantValue.MSG_TYPE_1);
-                mvpPresenter.setSubType(ConstantValue.SUB_TYPE_9);
+                mvpPresenter.getParamet().setMsgType(ConstantValue.MSG_TYPE_1);
+                mvpPresenter.getParamet().setSubType(ConstantValue.SUB_TYPE_8);
                 break;
         }
-
-
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
-
         //初始化mRecyclerView
         mRecyclerView.setGridLayout(1);
         mRecyclerView.setFooterViewText("加载中");
@@ -111,7 +108,10 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 
         //请求数据
         likeData.clear();
-        mvpPresenter.LoaCommentdData();
+        if (!type.equals("4")) {
+            mvpPresenter.LoaCommentdData();
+        }
+
     }
 
     @Override
@@ -161,13 +161,21 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
         PAGE_NO = 1;
         likeData.clear();
         mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-        mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
+        if (type.equals("4")) {
+            mvpPresenter.LoadPerInfoDetailsData();//请求网络获取搜索列表
+        } else {
+            mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
+        }
     }
 
     @Override
     public void onLoadMore() {
         mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-        mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
+        if (type.equals("4")) {
+            mvpPresenter.LoadPerInfoDetailsData();//请求网络获取搜索列表
+        } else {
+            mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
+        }
     }
 
     @Override
@@ -180,6 +188,61 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 
     @Override
     public void sendMsgDetailsDateSuccess(RewardResult model) {
+
+    }
+
+    /**
+     * 获取消息列表
+     *
+     * @param model
+     */
+    @Override
+    public void getPerInfoListDateSuccess(MessageCommentResult model) {
+        LoggerUtil.toJson(model);
+        likeData.clear();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        if (model.isSuccess()) {
+            likeData = model.getData();
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            if (!likeData.isEmpty()) {
+                msgAdapter.refreshAdapter(likeData);
+                PAGE_NO++;
+            } else {
+
+            }
+        } else {
+            if (model.getData().size() == 0) {
+                ToastUtil.showToast("没有更多信息！");
+            }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        }
+    }
+
+    /**
+     * 获取图书详情
+     *
+     * @param model
+     */
+    @Override
+    public void getPerInfoDetailsDateSuccess(PerMsgInfoReward model) {
+
+    }
+
+    /**
+     * 发送评论详情
+     * @param model
+     */
+    @Override
+    public void getSendDataSuccess(RewardResult model) {
+    }
+
+    @Override
+    public void getDelPerIdfoDataSuccess(RewardResult model) {
 
     }
 }

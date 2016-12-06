@@ -25,15 +25,6 @@
             android:drawableLeft="@drawable/light_small"
             android:textColor="@android:color/darker_gray" />
 
-        <SeekBar
-            android:id="@+id/light_slider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="55dp"
-            android:layout_marginRight="55dp"
-            android:scrollbarSize="100sp" />
-
         <TextView
             android:id="@+id/tv_light_add"
             android:layout_width="wrap_content"
@@ -43,6 +34,14 @@
             android:layout_marginRight="20dp"
             android:drawableLeft="@drawable/lights"
             android:textColor="@android:color/darker_gray" />
+
+        <SeekBar
+            android:id="@+id/light_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarSize="100sp"
+            android:layout_alignTop="@+id/tv_light_add"
+            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
 

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
-import com.laichushu.book.mvp.homepage.HomePagePresener;
 import com.laichushu.book.mvp.userhomepage.UserHomePagePresener;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
@@ -49,8 +48,10 @@ public class UserHeFoucsAdapter extends RecyclerView.Adapter<UserHeFoucsAdapter.
         holder.tvContent.setText(dataBeen.get(position).getNickName());
         if (dataBeen.get(position).isStatus()) {
             holder.checkBox.setText("取消关注");
+            holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
         } else {
             holder.checkBox.setText("关注");
+            holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
         }
         //关注他的
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -58,14 +59,14 @@ public class UserHeFoucsAdapter extends RecyclerView.Adapter<UserHeFoucsAdapter.
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!dataBeen.get(position).isStatus()) {
                     holder.checkBox.setText("取消关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
                     homePagePresener.loadAddFocus(dataBeen.get(position).getSourceUserId(), true);
                     dataBeen.get(position).setStatus(true);
                 } else {
                     holder.checkBox.setText("关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.Grey));
                     homePagePresener.getAddFocus().setUserId(dataBeen.get(position).getTargetUserId());
                     homePagePresener.loadDelFocus(dataBeen.get(position).getSourceUserId(), false);
+                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
                     dataBeen.get(position).setStatus(false);
                 }
 

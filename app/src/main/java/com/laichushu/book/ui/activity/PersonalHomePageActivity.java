@@ -123,7 +123,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             @Override
             public void onSuccess(HomeUserResult result) {
                 if (result.isSuccess()) {
-                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                     ToastUtil.showToast("success");
                     //初始化个人信息
                     GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg);
@@ -220,6 +219,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             ToastUtil.showToast(model.getErrMsg());
         }
         fmAdapter.refreshAdapter(focusMeData);
+        dismissProgressDialog();
     }
 
     /**
@@ -247,6 +247,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             ToastUtil.showToast(model.getErrMsg());
         }
         fbAdapter.refreshAdapter(focusBeData);
+        dismissProgressDialog();
     }
 
     /**
@@ -316,6 +317,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 type = 2;
                 if (!dibbleFoMe) {
                     focusMeData.clear();
+                    showProgressDialog();
                     mvpPresenter.LoadFocusMeData();
                 }
                 dibbleFoMe = true;
@@ -328,6 +330,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 type = 3;
                 if (!dibbleFo) {
                     focusBeData.clear();
+                    showProgressDialog();
                     mvpPresenter.LoadFocusBeData();
                 }
                 dibbleFo = true;
