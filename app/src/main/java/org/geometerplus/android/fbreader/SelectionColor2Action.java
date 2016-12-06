@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Parcelable;
 import android.view.View;
 
@@ -27,23 +28,21 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 
-import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import org.geometerplus.fbreader.book.Bookmark;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.bookmark.EditBookmarkActivity;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.OrientationUtil;
+import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public class SelectionBookmarkAction extends FBAndroidAction {
+public class SelectionColor2Action extends FBAndroidAction {
 
-	private Bookmark bookmark;
 	private FBReader baseApplication;
+	private Bookmark bookmark;
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
-	SelectionBookmarkAction(FBReader baseApplication, FBReaderApp fbreader) {
+	SelectionColor2Action(FBReader baseApplication, FBReaderApp fbreader) {
 		super(baseApplication, fbreader);
 		this.baseApplication = baseApplication;
 	}
@@ -58,11 +57,9 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 		if (bookmark == null) {
 			return;
 		}
-		int mSelectColor = (int)params[1];
-		int styleId = (int)params[2];
-		if (mSelectColor != 0 && styleId !=0){
-			changeColor(mSelectColor,styleId);
-		}
+
+		changeColor(Color.parseColor("#61BC16"),2);
+
 		final SuperActivityToast toast =
 			new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
 		toast.setText(bookmark.getText());
@@ -82,7 +79,6 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 		}));
 		BaseActivity.showToast(toast);
 	}
-
 	private void changeColor(int mSelectColor, final int styleId) {
 		Intent data = new Intent();
 		data.putExtra("selectColor", mSelectColor);

@@ -19,17 +19,26 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.laichushu.book.R;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 class SelectionPopup extends PopupPanel implements View.OnClickListener {
 	final static String ID = "SelectionPopup";
-
+	private Bookmark myBookmark;
+	private FBReader activity;
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	SelectionPopup(FBReaderApp fbReader) {
 		super(fbReader);
 	}
@@ -41,19 +50,36 @@ class SelectionPopup extends PopupPanel implements View.OnClickListener {
 
 	@Override
 	public void createControlPanel(FBReader activity, RelativeLayout root) {
+		this.activity = activity;
 		if (myWindow != null && activity == myWindow.getContext()) {
 			return;
 		}
 
 		activity.getLayoutInflater().inflate(R.layout.selection_panel, root);
 		myWindow = (SimplePopupWindow)root.findViewById(R.id.selection_panel);
-
-		final ZLResource resource = ZLResource.resource("selectionPopup");
-		setupButton(R.id.selection_panel_copy, resource.getResource("copyToClipboard").getValue());
-		setupButton(R.id.selection_panel_share, resource.getResource("share").getValue());
-		setupButton(R.id.selection_panel_translate, resource.getResource("translate").getValue());
-		setupButton(R.id.selection_panel_bookmark, resource.getResource("bookmark").getValue());
-		setupButton(R.id.selection_panel_close, resource.getResource("close").getValue());
+		myBookmark = FBReaderIntents.getBookmarkExtra(activity.getIntent());
+		TextView copyTv = (TextView)myWindow.findViewById(R.id.selection_panel_copy);
+		TextView shareTv = (TextView)myWindow.findViewById(R.id.selection_panel_share);
+		TextView bookmarkTv = (TextView)myWindow.findViewById(R.id.selection_panel_bookmark);
+		TextView closeTv = (TextView)myWindow.findViewById(R.id.selection_panel_close);
+		ImageView iv_5BA8F6 = (ImageView)myWindow.findViewById(R.id.iv_5BA8F6);
+		ImageView iv_61BC16 = (ImageView)myWindow.findViewById(R.id.iv_61BC16);
+		ImageView iv_F57200 = (ImageView)myWindow.findViewById(R.id.iv_F57200);
+		ImageView iv_A35DE4 = (ImageView)myWindow.findViewById(R.id.iv_A35DE4);
+		copyTv.setOnClickListener(this);
+		shareTv.setOnClickListener(this);
+		bookmarkTv.setOnClickListener(this);
+		closeTv.setOnClickListener(this);
+		iv_5BA8F6.setOnClickListener(this);
+		iv_61BC16.setOnClickListener(this);
+		iv_F57200.setOnClickListener(this);
+		iv_A35DE4.setOnClickListener(this);
+//		final ZLResource resource = ZLResource.resource("selectionPopup");
+//		setupButton(R.id.selection_panel_copy, resource.getResource("copyToClipboard").getValue());
+//		setupButton(R.id.selection_panel_share, resource.getResource("share").getValue());
+//		setupButton(R.id.selection_panel_translate, resource.getResource("translate").getValue());
+//		setupButton(R.id.selection_panel_bookmark, resource.getResource("bookmark").getValue());
+//		setupButton(R.id.selection_panel_close, resource.getResource("close").getValue());
 	}
 
 	private void setupButton(int buttonId, String description) {
@@ -101,14 +127,23 @@ class SelectionPopup extends PopupPanel implements View.OnClickListener {
 			case R.id.selection_panel_share:
 				Application.runAction(ActionCode.SELECTION_SHARE);
 				break;
-			case R.id.selection_panel_translate:
-				Application.runAction(ActionCode.SELECTION_TRANSLATE);
-				break;
-			case R.id.selection_panel_bookmark:
-				Application.runAction(ActionCode.SELECTION_BOOKMARK);
-				break;
 			case R.id.selection_panel_close:
 				Application.runAction(ActionCode.SELECTION_CLEAR);
+				break;
+			case R.id.selection_panel_bookmark:
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#5BA8F6"),1);
+				break;
+			case R.id.iv_5BA8F6:
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#5BA8F6"),1);
+				break;
+			case R.id.iv_61BC16:
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#61BC16"),2);
+				break;
+			case R.id.iv_F57200:
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#F57200"),3);
+				break;
+			case R.id.iv_A35DE4:
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#A35DE4"),4);
 				break;
 		}
 		Application.hideActivePopup();
