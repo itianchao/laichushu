@@ -105,49 +105,14 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
         type = getIntent().getStringExtra("type");
         dataBeen = (MessageCommentResult.DataBean) getIntent().getSerializableExtra("activityDetails");
 
-        bean = getIntent().getParcelableExtra("bean");
-        position = getIntent().getIntExtra("position",0);
-        mvpPresenter.loadActivityResultData(bean.getActivityId());
-        mvpPresenter.loadAuthorWorksData();
-        joinTv.setOnClickListener(this);
-        GlideUitl.loadImg(this, bean.getImgUrl(), activityImgIv);
-        if (bean.isParticipate()) {
-            joinTv.setText("已参加");
-        } else {
-            joinTv.setText("参加活动");
-        }
-        switch (bean.getStatus()) {
-            case "1":
-                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                joinTv.setVisibility(View.INVISIBLE);
-                break;
-            case "2":
-                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                joinTv.setVisibility(View.VISIBLE);
-                parentLay.setVisibility(View.INVISIBLE);
-                break;
-            case "3":
-                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                joinTv.setVisibility(View.VISIBLE);
-                parentLay.setVisibility(View.INVISIBLE);
-                break;
-            case "4":
-                GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
-                joinTv.setVisibility(View.INVISIBLE);
-                break;
-        }
-        activityNameTv.setText(bean.getActivityName());
-        startTimeTv.setText("开始时间：" + bean.getBeginTime());
-        endTimeTv.setText("结束时间：" + bean.getEndTime());
-        numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
-        detailsTv.setText(bean.getDetail());
-
         if (type.equals("activity")) {
             mvpPresenter.loadActivityDetailsData(dataBeen.getSourceId());
-            mvpPresenter.loadAuthorWorksData();
         } else {
-            GlideUitl.loadImg(this, bean.getImgUrl(), activityImgIv);
+            bean = getIntent().getParcelableExtra("bean");
+            position = getIntent().getIntExtra("position",0);
+            mvpPresenter.loadAuthorWorksData();
             mvpPresenter.loadActivityResultData(bean.getActivityId());
+            GlideUitl.loadImg(this, bean.getImgUrl(), activityImgIv);
             joinTv.setOnClickListener(this);
             if (bean.isParticipate()) {
                 joinTv.setText("已参加");
