@@ -17,7 +17,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 final class SettingModlePopup extends ZLApplication.PopupPanel {
     final static String ID = "SettingModlePopup";
 
-    private volatile SettingWindow myWindow;
+    private volatile SettingModleWindow myWindow;
     private volatile FBReader myActivity;
     private volatile RelativeLayout myRoot;
     private final FBReaderApp myFBReader;
@@ -74,7 +74,7 @@ final class SettingModlePopup extends ZLApplication.PopupPanel {
             return;
         }
         activity.getLayoutInflater().inflate(R.layout.txtlightmenu, root);
-        myWindow = (SettingWindow) root.findViewById(R.id.setting_panel);
+        myWindow = (SettingModleWindow) root.findViewById(R.id.setting_panel);
         RadioButton sunRbn = (RadioButton)myWindow.findViewById(R.id.rbn_sun) ;
         RadioButton moonRbn = (RadioButton)myWindow.findViewById(R.id.rbn_moon);
         moonRbn.setOnClickListener(new View.OnClickListener() {

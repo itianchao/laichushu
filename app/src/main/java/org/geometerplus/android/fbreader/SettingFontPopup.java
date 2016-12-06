@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 final class SettingFontPopup extends ZLApplication.PopupPanel implements View.OnClickListener {
     final static String ID = "SettingFontPopup";
 
-    private volatile SettingWindow myWindow;
+    private volatile SettingFontWindow myWindow;
     private volatile FBReader myActivity;
     private volatile RelativeLayout myRoot;
     private boolean myIsBrightnessAdjustmentInProgress;
@@ -94,7 +94,7 @@ final class SettingFontPopup extends ZLApplication.PopupPanel implements View.On
             return;
         }
         activity.getLayoutInflater().inflate(R.layout.txttextmenu_layout, root);
-        myWindow = (SettingWindow) root.findViewById(R.id.setting_panel);
+        myWindow = (SettingFontWindow) root.findViewById(R.id.setting_panel);
         integerRangeOption = myKooReader.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption; // 字体
 //        pageMode = myKooReader.PageTurningOptions.Horizontal.getValue(); // 当前翻页方式
         tvFontSize = (TextView) myWindow.findViewById(R.id.txttextmenu_textsize_text);//字大小

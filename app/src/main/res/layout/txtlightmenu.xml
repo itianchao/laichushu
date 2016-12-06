@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.geometerplus.android.fbreader.SettingWindow
+<org.geometerplus.android.fbreader.SettingModleWindow
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/setting_panel"
     android:layout_width="match_parent"
@@ -82,4 +82,4 @@
         android:padding="5dp"
         android:text="确定" />
 
-</org.geometerplus.android.fbreader.SettingWindow>
+</org.geometerplus.android.fbreader.SettingModleWindow>

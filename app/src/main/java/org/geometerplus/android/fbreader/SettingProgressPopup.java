@@ -20,7 +20,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 final class SettingProgressPopup extends ZLApplication.PopupPanel {
     final static String ID = "SettingProgressPopup";
 
-    private volatile SettingWindow myWindow;
+    private volatile SettingProgressWindow myWindow;
     private volatile FBReader myActivity;
     private volatile RelativeLayout myRoot;
     private ZLTextWordCursor myStartPosition;
@@ -79,7 +79,7 @@ final class SettingProgressPopup extends ZLApplication.PopupPanel {
             return;
         }
         activity.getLayoutInflater().inflate(R.layout.txtprogressmenu_layout, root);
-        myWindow = (SettingWindow) root.findViewById(R.id.setting_panel);
+        myWindow = (SettingProgressWindow) root.findViewById(R.id.setting_panel);
         final SeekBar slider = (SeekBar) myWindow.findViewById(R.id.txtprogress_seekbar);//进度条
 //		final TextView text = (TextView) myWindow.findViewById(R.id.navigation_text);//进度显示文字
         final ImageView pre_character = (ImageView) myWindow.findViewById(R.id.iv_pre);//前一章

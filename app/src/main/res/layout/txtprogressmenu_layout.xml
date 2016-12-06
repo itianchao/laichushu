@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.geometerplus.android.fbreader.SettingWindow
+<org.geometerplus.android.fbreader.SettingProgressWindow
     android:id="@+id/setting_panel"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -128,4 +128,4 @@
             android:src="@drawable/read_right"/>
     </LinearLayout>
 
-</org.geometerplus.android.fbreader.SettingWindow>
+</org.geometerplus.android.fbreader.SettingProgressWindow>
