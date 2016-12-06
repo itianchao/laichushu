@@ -50,16 +50,16 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		if (params.length != 0) {
-			bookmark = (Bookmark)params[0];
-		} else {
+//		if (params.length != 0) {
+//			bookmark = (Bookmark)params[0];
+//		} else {
 			bookmark = Reader.addSelectionBookmark();
-		}
+//		}
 		if (bookmark == null) {
 			return;
 		}
-		int mSelectColor = (int)params[1];
-		int styleId = (int)params[2];
+		int mSelectColor = (int)params[0];
+		int styleId = (int)params[1];
 		if (mSelectColor != 0 && styleId !=0){
 			changeColor(mSelectColor,styleId);
 		}
