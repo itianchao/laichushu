@@ -1,6 +1,7 @@
 package com.laichushu.book.mvp.allcomment;
 
 import com.google.gson.Gson;
+import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.SharePrefManager;
@@ -22,13 +23,14 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
-    private Comment2_Paramet paramet = new Comment2_Paramet("",pageSize,pageNo,userId);
+    private String sourceType = ConstantValue.COMMENTBOOK_TYPE;
+    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet("",sourceType,pageSize,pageNo,userId);
 
-    public Comment2_Paramet getParamet() {
+    public TopicDetailCommentList_Paramet getParamet() {
         return paramet;
     }
 
-    public void setParamet(Comment2_Paramet paramet) {
+    public void setParamet(TopicDetailCommentList_Paramet paramet) {
         this.paramet = paramet;
     }
 
@@ -37,8 +39,8 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
         attachView(view);
         mActivity = (AllCommentActivity) view;
     }
-    public void loadAllCommentData(String articleId){
-        getParamet().setArticleId(articleId);
+    public void loadAllCommentData(String sourceId){
+        getParamet().setSourceId(sourceId);
         Logger.e("全部评论");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.articleComment(paramet), new ApiCallback<ArticleCommentModle>() {

@@ -111,7 +111,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder,final int position) {
         final ArrayList<HomeHotImgBean> homeHotImgBeans = new ArrayList<>();
         //处理数据
         HomeHotImgBean homeHotImgBean = null;
@@ -205,8 +205,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             ((ViewHolder2) holder).activityRbn.setOnClickListener(this);
             ((ViewHolder2) holder).cityRbn.setOnClickListener(this);
             ((ViewHolder2) holder).rankingRbn.setOnClickListener(this);
-            this.position = SharePrefManager.getPosition();
-            switch (this.position) {
+            this.index = SharePrefManager.getPosition();
+            switch (this.index) {
                 case 0:
                     ((ViewHolder2) holder).allRbn.setChecked(true);
                     break;
@@ -260,6 +260,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                             //跳转活动详情页
                             Bundle bundle = new Bundle();
                             bundle.putParcelable("bean", bean);
+                            bundle.putInt("position", position-2);
                             UIUtil.openActivity(mActivity, CampaignActivity.class, bundle);
                         }
                     });
@@ -402,12 +403,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
      * 全部、活动、同城、排行 点击事件
      */
     ArrayList<String> rankingList = new ArrayList<>();
-    int position = SharePrefManager.getPosition();
+    int index = SharePrefManager.getPosition();
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rbn_all:
-                if (position == 1) {
+                if (index == 1) {
                     return;
                 }
                 mData.clear();
@@ -416,32 +417,32 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 //请求网络
                 mvpPresenter.getParamet().setPageNo("1");
                 mvpPresenter.loadHomeAllData(STATE + "");
-                position = 1;
+                index = 1;
                 break;
             case R.id.rbn_activity:
-                if (position == 2) {
+                if (index == 2) {
                     return;
                 }
                 mvpPresenter.setState(STATE2);
                 STATE = STATE2;
                 //请求网络
-                position = 2;
+                index = 2;
                 mData.clear();
                 mvpPresenter.getActivityListParamet().setPageNo("1");
                 mvpPresenter.loadActivityData();
                 break;
             case R.id.rbn_citywide:
-                if (position == 3) {
+                if (index == 3) {
                     return;
                 }
                 STATE = STATE3;
                 mData.clear();
                 //请求网络
-                position = 3;
+                index = 3;
                 break;
             case R.id.rbn_ranking:
                 //请求网络
-                position = 4;
+                index = 4;
                 TypePopWindow popWindow = new TypePopWindow(mActivity, rankingList);
                 popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
                     @Override
@@ -462,7 +463,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 popWindow.showAsDropDown(v);
                 break;
         }
-        SharePrefManager.setPosition(position);
+        SharePrefManager.setPosition(index);
         notifyDataSetChanged();
     }
 

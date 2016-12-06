@@ -9,7 +9,6 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
-import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.TopicDetilActivity;
@@ -26,18 +25,16 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
-    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet("", "", pageNo, pageSize);
+    private String sourceType = ConstantValue.COMMENTTOPIC_TYPE;
+    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet( "",sourceType, pageNo, pageSize,userId);
 
     //初始化构造
     public TopicDetailPresenter(TopicDetailView view) {
         attachView(view);
         mActivity = (TopicDetilActivity) view;
     }
-
-    //获取全部评论
-    public void loadCommentData(String sourceId, String sourceType) {
-        getParamet().setSourceId(sourceId);
-        getParamet().setSourceType(sourceType);
+    public void loadCommentData(String topicId) {
+        getParamet().setSourceId(topicId);
         Logger.e("获取全部评论");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.topicDetailCommentList(paramet), new ApiCallback<TopicdetailModel>() {
@@ -66,30 +63,20 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
         this.paramet = paramet;
     }
 
-    public TopicDetilActivity getmActivity() {
-        return mActivity;
-    }
-
-    public void setmActivity(TopicDetilActivity mActivity) {
-        this.mActivity = mActivity;
-    }
-
     /**
-     * 2016年12月2日14:12:12
-     * 话题点赞 取消赞
-     *
+     * 点赞 取消赞
      * @param sourceId
      * @param type
      */
-    public void loadLikeSaveData(String sourceId, String sourceType, final String type) {
+    public void saveScoreLikeData(String sourceId, final String type){
         mvpView.showLoading();
-        TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId,sourceId,sourceType, type);
+        ScoreLike_Paramet paramet = new ScoreLike_Paramet(sourceId,userId,type);
         Logger.e("点赞");
         Logger.json(new Gson().toJson(paramet));
-        addSubscription(apiStores.saveTopicDyLike(paramet), new ApiCallback<RewardResult>() {
+        addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.SaveScoreLikeData(model, type);
+                mvpView.SaveScoreLikeData(model,type);
             }
 
             @Override
@@ -106,11 +93,10 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
 
     /**
      * 发送评论
-     *
      * @param sendmsgEv
      * @param
      */
-    public void topicDetailCommentSave(EditText sendmsgEv, String sourceId, String sourceType) {
+    public void topicDetailCommentSave(EditText sendmsgEv, String sourceId,String sourceType) {
         String msg = sendmsgEv.getText().toString().trim();
         if (TextUtils.isEmpty(msg)) {
             sendmsgEv.startAnimation(ShakeAnim.shakeAnimation(3));
@@ -118,7 +104,7 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
         }
         LoggerUtil.e("发送评论");
         mvpView.showLoading();
-        TopicDetailCommentSave_Paramet paramet = new TopicDetailCommentSave_Paramet(sourceId, userId, msg, sourceType);
+        TopicDetailCommentSave_Paramet paramet = new TopicDetailCommentSave_Paramet(sourceId,userId,msg,sourceType);
         addSubscription(apiStores.topicDetailCommentSave(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
@@ -127,7 +113,7 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail2("code" + code + "msg:" + msg);
+                mvpView.getDataFail2("code"+code+"msg:"+msg);
             }
 
             @Override

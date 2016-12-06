@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.laichushu.book.R;
+import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
@@ -23,6 +24,8 @@ import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -45,6 +48,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     private ArrayList<CampaignModel.DataBean> mData = new ArrayList<>();
     private ArrayList<CampaignDetailsModel.DataBean> mDetailsData = new ArrayList<>();
     private ArrayList<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
+    private int position;
 
     private String type;
     private MessageCommentResult.DataBean dataBeen;
@@ -102,6 +106,41 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
         dataBeen = (MessageCommentResult.DataBean) getIntent().getSerializableExtra("activityDetails");
 
         bean = getIntent().getParcelableExtra("bean");
+        position = getIntent().getIntExtra("position",0);
+        mvpPresenter.loadActivityResultData(bean.getActivityId());
+        mvpPresenter.loadAuthorWorksData();
+        joinTv.setOnClickListener(this);
+        GlideUitl.loadImg(this, bean.getImgUrl(), activityImgIv);
+        if (bean.isParticipate()) {
+            joinTv.setText("已参加");
+        } else {
+            joinTv.setText("参加活动");
+        }
+        switch (bean.getStatus()) {
+            case "1":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                joinTv.setVisibility(View.INVISIBLE);
+                break;
+            case "2":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                joinTv.setVisibility(View.VISIBLE);
+                parentLay.setVisibility(View.INVISIBLE);
+                break;
+            case "3":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                joinTv.setVisibility(View.VISIBLE);
+                parentLay.setVisibility(View.INVISIBLE);
+                break;
+            case "4":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
+                joinTv.setVisibility(View.INVISIBLE);
+                break;
+        }
+        activityNameTv.setText(bean.getActivityName());
+        startTimeTv.setText("开始时间：" + bean.getBeginTime());
+        endTimeTv.setText("结束时间：" + bean.getEndTime());
+        numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
+        detailsTv.setText(bean.getDetail());
 
         if (type.equals("activity")) {
             mvpPresenter.loadActivityDetailsData(dataBeen.getSourceId());
@@ -190,6 +229,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
+                EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean.isParticipate(),bean.getApplyAmount(),position));
                 finish();
                 break;
             case R.id.iv_title_other://分享

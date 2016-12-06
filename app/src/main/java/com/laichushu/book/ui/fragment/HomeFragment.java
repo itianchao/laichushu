@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.laichushu.book.R;
+import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
@@ -343,5 +344,17 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         if (event.isRefursh) {
             onRefresh();
         }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefurshBookDetaileCommentEvent event){
+        EventBus.getDefault().removeStickyEvent(event);
+        int applyAmount = event.getApplyAmount();
+        boolean participate = event.isParticipate();
+        int position = event.getPosition();
+        HomeHotModel.DataBean dataBean = mData.get(position);
+        dataBean.setApplyAmount(applyAmount);
+        dataBean.setIsParticipate(participate);
+        mAdapter.setmData(mData);
+        mAdapter.notifyDataSetChanged();
     }
 }

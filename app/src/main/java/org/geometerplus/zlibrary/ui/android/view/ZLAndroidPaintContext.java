@@ -19,20 +19,35 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.List;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.CornerPathEffect;
+import android.graphics.EmbossMaskFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 
-import android.graphics.*;
+import com.laichushu.book.utils.LoggerUtil;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public static ZLBooleanOption AntiAliasOption = new ZLBooleanOption("Fonts", "AntiAlias", true);
@@ -41,10 +56,11 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public static ZLBooleanOption SubpixelOption = new ZLBooleanOption("Fonts", "Subpixel", false);
 
 	private final Canvas myCanvas;
-	private final Paint myTextPaint = new Paint();
+	private final Paint myTextPaint = new Paint();// 文字画笔
 	private final Paint myLinePaint = new Paint();
 	private final Paint myFillPaint = new Paint();
 	private final Paint myOutlinePaint = new Paint();
+	private Integer drawOffect = 10;
 
 	public static final class Geometry {
 		final Size ScreenSize;
@@ -105,7 +121,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			ourWallpaper = null;
 			try {
 				final Bitmap fileBitmap =
-					BitmapFactory.decodeStream(wallpaperFile.getInputStream());
+						BitmapFactory.decodeStream(wallpaperFile.getInputStream());
 				switch (mode) {
 					default:
 						ourWallpaper = fileBitmap;
@@ -407,7 +423,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public Size imageSize(ZLImageData imageData, Size maxSize, ScalingType scaling) {
 		final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
 		return (bitmap != null && !bitmap.isRecycled())
-			? new Size(bitmap.getWidth(), bitmap.getHeight()) : null;
+				? new Size(bitmap.getWidth(), bitmap.getHeight()) : null;
 	}
 
 	@Override
@@ -438,6 +454,122 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		canvas.drawPoint(x0, y0, paint);
 		canvas.drawPoint(x1, y1, paint);
 		paint.setAntiAlias(true);
+	}
+
+	int offsetY;
+	public void drawLine(int[] xs, int[] ys) {
+		offsetY = (int) myTextPaint.getTextSize();
+//		offsetY = 1;
+		LoggerUtil.e(offsetY+"");
+		LinkedList<Integer> tmpXs = new LinkedList<>();
+		LinkedList<Integer> tmpYs = new LinkedList<>();
+		int nextX, nextY;
+
+		for (int i = 0; i < xs.length - 1; i++) {
+			nextX = xs[i + 1];
+			nextY = ys[i + 1];
+			if (xs[i] < nextX + 2 && xs[i] > nextX - 2 && ys[i] > nextY + 2) {
+				tmpXs.add(xs[i]);
+				tmpYs.add(ys[i]);
+				i++;
+			} else if (xs[i] < nextX + 2 && xs[i] > nextX - 2 && ys[i] < nextY - 2) {
+				i++;
+				tmpXs.add(xs[i]);
+				tmpYs.add(ys[i]);
+			} else {
+				tmpXs.add(xs[i]);
+				tmpYs.add(ys[i]);
+			}
+		}
+
+		tmpXs.add(xs[xs.length - 1]);
+		tmpYs.add(ys[ys.length - 1]);
+
+		xs = new int[tmpXs.size()];
+		ys = new int[tmpXs.size()];
+		int count = 0;
+		for (int xx : tmpXs) {
+			xs[count++] = xx;
+		}
+		count = 0;
+		for (int yy : tmpYs) {
+			ys[count++] = yy;
+		}
+
+//        for(int i=0; i<xs.length ; i++){
+//            myCanvas.drawCircle(xs[i], ys[i],3 ,myOutlinePaint);
+//        }
+
+
+		final int last = xs.length - 1;
+		for (int i = 0; i < ys.length - 1; i++) {
+			for (int j = 0; j < ys.length - i - 1; j++) {
+				if (ys[j] > ys[j + 1]) {
+					int tmp = ys[j];
+					ys[j] = ys[j + 1];
+					ys[j + 1] = tmp;
+
+					int tmp2 = xs[j];
+					xs[j] = xs[j + 1];
+					xs[j + 1] = tmp2;
+				}
+			}
+		}
+
+		List<Integer> drawY = new ArrayList<>();
+		List<Integer> templeft = new ArrayList<>();
+		List<Integer> tempRight = new ArrayList<>();
+		for (int i = 0; i <= last - 1; ++i) {
+			if (ys[i] < ys[i + 1] + offsetY && ys[i] > ys[i + 1] - offsetY) {
+//			if (ys[i] < ys[i + 1]   && ys[i] > ys[i + 1] ) {
+				if (drawY.contains(ys[i] - 1)) { // 已经存在
+					int index = drawY.indexOf(ys[i] - 1);
+					removeAtPosItem(xs[i], templeft, tempRight, index);
+					continue;
+				} else if (drawY.contains(ys[i] + 1)) {
+					int index = drawY.indexOf(ys[i] + 1);
+					removeAtPosItem(xs[i], templeft, tempRight, index);
+				} else if (drawY.contains(ys[i])) {
+					int index = drawY.indexOf(ys[i]);
+					removeAtPosItem(xs[i], templeft, tempRight, index);
+				} else {
+					drawY.add(ys[i]);
+					if (xs[i] < xs[i + 1]) {
+						templeft.add(xs[i]);
+						tempRight.add(xs[i + 1]);
+					} else {
+						templeft.add(xs[i + 1]);
+						tempRight.add(xs[i]);
+					}
+				}
+			}
+		}
+		int tmp = myOutlinePaint.getColor();
+		float tmpSize = myOutlinePaint.getStrokeWidth();
+		myOutlinePaint.setColor(Color.BLUE);
+		myOutlinePaint.setStrokeWidth(5);
+		for (int i = 0; i < drawY.size(); i++) {
+			if(i != 0 && drawY.get(i) -  myTextPaint.getTextSize() > drawY.get(i - 1) || i == 0) { // 排除双重线
+				myCanvas.drawLine(templeft.get(i), drawY.get(i) + drawOffect, tempRight.get(i), drawY.get(i) + drawOffect, myOutlinePaint);
+				LoggerUtil.e("xs"+templeft.get(i)+"\nys"+drawY.get(i) + drawOffect+
+						"\nxe"+tempRight.get(i)+"\nye"+ drawY.get(i) + drawOffect);
+			}
+		}
+		myOutlinePaint.setColor(tmp);
+		myOutlinePaint.setStrokeWidth(tmpSize);
+	}
+
+	private void removeAtPosItem(int x, List<Integer> templeft, List<Integer> tempRight, int index) {
+		if (x < templeft.get(index)) {
+			templeft.remove(index);
+			templeft.add(x);
+			return;
+		}
+		if (x > tempRight.get(index)) {
+			tempRight.remove(index);
+			tempRight.add(x);
+			return;
+		}
 	}
 
 	@Override

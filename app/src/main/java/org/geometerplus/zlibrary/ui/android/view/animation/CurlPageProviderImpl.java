@@ -1,6 +1,5 @@
 package org.geometerplus.zlibrary.ui.android.view.animation;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
@@ -24,11 +23,6 @@ public class CurlPageProviderImpl extends AnimationProvider implements PageProvi
 
     @Override
     protected void drawInternal(Canvas canvas) {
-
-    }
-
-    @Override
-    protected void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
 
     }
 
@@ -130,17 +124,10 @@ public class CurlPageProviderImpl extends AnimationProvider implements PageProvi
 
     }
 
-    private void forwardShift(boolean b) {
-    }
-
     @Override
     public void updatePage(CurlPage page, int paramInt1, int paramInt2, ZLView.PageIndex paramPageIndex) {
         page.setTexture(getBitmapByPageIndex(paramPageIndex), CurlPage.SIDE_BOTH);
 //        myColorLevel
         page.setColor(Color.argb(127, 255, 255, 255), CurlPage.SIDE_BACK);
-    }
-
-    private Bitmap getBitmapByPageIndex(ZLViewEnums.PageIndex paramPageIndex) {
-        return null;
     }
 }

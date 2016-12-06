@@ -1,13 +1,13 @@
 package com.laichushu.book.ui.activity;
 
 
-import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
+import com.laichushu.book.bean.otherbean.BaseBookEntity;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BaseActivity;
-import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 import com.nineoldandroids.animation.ObjectAnimator;
 
@@ -48,29 +48,28 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void loadActivity() {
-//        如果保存了帐号和密码，跳转主页面
-        if (!TextUtils.isEmpty(SharePrefManager.getLoginInfo())) {
-            loadActivity = InitActivity.class;
-        } else {
-            //如果第一次登录则跳转引导页
-            if (SharePrefManager.getFristLogin()) {
-                loadActivity = GuideActivity.class;
-                //如果不是第一次登录则跳转登录页
-            } else {
-                loadActivity = LoginActivity.class;
-            }
-        }
-        UIUtil.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                UIUtil.openActivity(mActivity, loadActivity);
-                finish();
-            }
-        }, 2000);
-//        String articleId = "74";
-//        Bundle bundle = new Bundle();
-//        bundle.putString("articleId",articleId);
-//        UIUtil.openActivity(this,CreatNewDraftActivity.class);
+////        如果保存了帐号和密码，跳转主页面
+//        if (!TextUtils.isEmpty(SharePrefManager.getLoginInfo())) {
+//            loadActivity = InitActivity.class;
+//        } else {
+//            //如果第一次登录则跳转引导页
+//            if (SharePrefManager.getFristLogin()) {
+//                loadActivity = GuideActivity.class;
+//                //如果不是第一次登录则跳转登录页
+//            } else {
+//                loadActivity = LoginActivity.class;
+//            }
+//        }
+//        UIUtil.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                UIUtil.openActivity(mActivity, loadActivity);
+//                finish();
+//            }
+//        }, 2000);
+        BaseBookEntity baseBookEntity = new BaseBookEntity();
+        baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH+"/test.epub");
+        UIUtil.startBookFBReaderActivity(this,baseBookEntity);
     }
 
 

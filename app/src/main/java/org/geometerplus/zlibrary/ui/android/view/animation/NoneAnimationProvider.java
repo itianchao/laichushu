@@ -79,11 +79,11 @@ public final class NoneAnimationProvider extends AnimationProvider {
 		}
 		return ZLViewEnums.PageIndex.current;
 	}
-
-	@Override
-	public void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
-		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
-	}
+//
+//	@Override
+//	public void drawFooterBitmapInternal(Canvas canvas, Bitmap footerBitmap, int voffset) {
+//		canvas.drawBitmap(footerBitmap, 0, voffset, myPaint);
+//	}
 
 	@Override
 	protected void setFilter() {

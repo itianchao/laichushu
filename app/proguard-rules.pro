@@ -43,3 +43,5 @@
 -keep class org.geometerplus.zlibrary.text.model.** { *; }
 
 #FBReader»ìÏý end
+-keepattributes InnerClasses
+-dontoptimize

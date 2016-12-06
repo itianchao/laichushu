@@ -6,8 +6,37 @@ package com.laichushu.book.event;
  */
 
 public class RefurshBookDetaileCommentEvent {
-    public boolean isRefursh;
-    public RefurshBookDetaileCommentEvent(boolean isRefursh) {
-        this.isRefursh = isRefursh;
+    public boolean participate;
+    public int applyAmount;
+    public int position;
+
+    public RefurshBookDetaileCommentEvent(boolean participate, int applyAmount, int position) {
+        this.participate = participate;
+        this.applyAmount = applyAmount;
+        this.position = position;
+    }
+
+    public boolean isParticipate() {
+        return participate;
+    }
+
+    public void setParticipate(boolean participate) {
+        this.participate = participate;
+    }
+
+    public int getApplyAmount() {
+        return applyAmount;
+    }
+
+    public void setApplyAmount(int applyAmount) {
+        this.applyAmount = applyAmount;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

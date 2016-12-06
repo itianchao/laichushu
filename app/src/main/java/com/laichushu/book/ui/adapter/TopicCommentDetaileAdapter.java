@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.adapter;
 
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
-import com.laichushu.book.mvp.topicdetail.TopicDetailPresenter;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -24,14 +21,10 @@ import java.util.ArrayList;
 public class TopicCommentDetaileAdapter extends RecyclerView.Adapter<TopicCommentDetaileAdapter.CommentViewHolder> {
     private BaseActivity mActivity;
     private ArrayList<CommentDetailModle.DataBean> mData;
-    private TopicDetailPresenter topicDetailPresenter;
-    private int currentNum = 0;
-    private String type=null;
 
-    public TopicCommentDetaileAdapter(BaseActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData,TopicDetailPresenter topicDetailPresenter) {
+    public TopicCommentDetaileAdapter(BaseActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData) {
         this.mActivity = mActivity;
         this.mData = mData;
-        this.topicDetailPresenter=topicDetailPresenter;
     }
 
     @Override
@@ -56,42 +49,13 @@ public class TopicCommentDetaileAdapter extends RecyclerView.Adapter<TopicCommen
 //        holder.numberTv.setText(dataBean.getReplyNum() + "");//回复人数
         holder.numberTv.setVisibility(View.INVISIBLE);
         holder.commentIv.setVisibility(View.INVISIBLE);
-        //点赞
-        holder.likeTv.setText(dataBean.getLikeNum() + "");
-        currentNum = dataBean.getLikeNum();
-        if (dataBean.isIsLike()) {
-            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
-            type = "1";
-        } else {
-            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
-            type = "0";
-        }
-        holder.likeIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (type.equals("0")) {
-//                    //添加点赞
-                    currentNum++;
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
-                    topicDetailPresenter.loadLikeSaveData(dataBean.getSourceId(), ConstantValue.COMMENTTOPIC_TYPE, type);
-                    type = "1";
-                } else {
-//                    //取消点赞
-                    currentNum--;
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
-                    topicDetailPresenter.loadLikeSaveData(dataBean.getSourceId(), ConstantValue.COMMENTTOPIC_TYPE, type);
-                    type = "0";
-                }
-                holder.likeTv.setText(currentNum + "");
-            }
-        });
 
         holder.inIv.setVisibility(View.INVISIBLE);
-//        if (dataBean.isIsLike()) {
-//            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
-//        } else {
-//            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
-//        }
+        if (dataBean.isIsLike()) {
+            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
+        } else {
+            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
+        }
 //        holder.likeIv.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

@@ -205,6 +205,7 @@ abstract public class ZLPaintContext {
 	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode);
 
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
+	abstract public void drawLine(int[] xs, int[] ys);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
 
 	abstract public void drawPolygonalLine(int[] xs, int[] ys);

@@ -72,7 +72,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
-        mAdapter = new TopicCommentDetaileAdapter(this, mData,mvpPresenter);
+        mAdapter = new TopicCommentDetaileAdapter(this, mData);
         commentRyv.setAdapter(mAdapter);
         finishIv.setOnClickListener(this);
         sendmsgIv.setOnClickListener(this);
@@ -90,7 +90,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             bean = getIntent().getParcelableExtra("bean");
             topicId = bean.getId();
         }
-        mvpPresenter.loadCommentData(topicId, ConstantValue.COMMENTTOPIC_TYPE);
+        mvpPresenter.loadCommentData(topicId);
     }
 
     @Override
@@ -204,7 +204,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         pageNo = 1;
         mData.clear();
         mvpPresenter.getParamet().setPageNo(pageNo + "");
-        mvpPresenter.loadCommentData(topicId, ConstantValue.COMMENTTOPIC_TYPE);
+        mvpPresenter.loadCommentData(topicId);
     }
 
     /**
@@ -213,7 +213,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     @Override
     public void onLoadMore() {
         mvpPresenter.getParamet().setPageNo(pageNo + "");
-        mvpPresenter.loadCommentData(topicId, ConstantValue.COMMENTTOPIC_TYPE);
+        mvpPresenter.loadCommentData(topicId);
     }
 
     public void reLoadDate() {
@@ -221,7 +221,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             @Override
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
-                mvpPresenter.loadCommentData(topicId, ConstantValue.COMMENTTOPIC_TYPE);
+                mvpPresenter.loadCommentData(topicId);
             }
         });
     }

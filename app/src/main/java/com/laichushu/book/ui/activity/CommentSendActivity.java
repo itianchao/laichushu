@@ -30,6 +30,7 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
     private EditText commentEt;
     private String userId = ConstantValue.USERID;
     private String commentId;
+    private String sourceType = ConstantValue.COMMENTBOOK_TYPE;
 
     @Override
     protected void initView() {
@@ -71,7 +72,7 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
         if (actionId == EditorInfo.IME_ACTION_SEND) {
             String conent = commentEt.getText().toString();
             if (!TextUtils.isEmpty(conent)){
-                ReSavaComment_Paramet paramet = new ReSavaComment_Paramet(commentId,userId,conent);
+                ReSavaComment_Paramet paramet = new ReSavaComment_Paramet(commentId,userId,conent,sourceType);
                 showProgressDialog();
                 addSubscription(apiStores.saveComment(paramet), new ApiCallback<CommentDetailModle>() {
                     @Override
