@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_bookmark_tabhost"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/edit_bookmark_content_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_marginTop="3dp"
+            android:background="#000000" />
+
+        <EditText
+            android:id="@+id/edit_bookmark_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_line"
+            android:layout_marginTop="3dp"
+            android:gravity="left|top"
+            android:maxLines="5"
+            android:singleLine="false" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_bookmark_text"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp">
+
+            <Button
+                android:id="@+id/edit_bookmark_save_text_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="修改想法"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/edit_bookmark_delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/edit_bookmark_save_text_button"
+                android:text="删除想法" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -137,4 +137,6 @@
     <style name="FBReader.Transparent" parent="android:Theme.Translucent.NoTitleBar">
         <item name="android:windowBackground">@color/transparent</item>
     </style>
+    <!--修改想法-->
+    <style name="KooReader.Dialog" parent="Theme.AppCompat.Light.Dialog"></style>
 </resources>
