@@ -14,7 +14,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 /**
  * 设置模式
  */
-final class SettingModlePopup extends ZLApplication.PopupPanel {
+final class SettingModlePopup extends ZLApplication.PopupPanel implements View.OnClickListener {
     final static String ID = "SettingModlePopup";
 
     private volatile SettingModleWindow myWindow;
@@ -69,31 +69,40 @@ final class SettingModlePopup extends ZLApplication.PopupPanel {
         }
     }
 
+    int position = 0;
+
     private void createPanel(FBReader activity, RelativeLayout root) {
         if (myWindow != null && activity == myWindow.getContext()) {
             return;
         }
         activity.getLayoutInflater().inflate(R.layout.txtlightmenu, root);
-        myWindow = (SettingModleWindow) root.findViewById(R.id.setting_panel);
-        RadioButton sunRbn = (RadioButton)myWindow.findViewById(R.id.rbn_sun) ;
-        RadioButton moonRbn = (RadioButton)myWindow.findViewById(R.id.rbn_moon);
-        moonRbn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myFBReader.ViewOptions.ColorProfileName.setValue(ColorProfile.NIGHT);
-                myFBReader.getViewWidget().reset();
-                myFBReader.getViewWidget().repaint();
-            }
-        });
-
-        sunRbn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myFBReader.ViewOptions.ColorProfileName.setValue(ColorProfile.DAY);
-                myFBReader.getViewWidget().reset();
-                myFBReader.getViewWidget().repaint();
-            }
-        });
+        myWindow = (SettingModleWindow) root.findViewById(R.id.setting_modle);
+        RadioButton sunRbn = (RadioButton) myWindow.findViewById(R.id.rbn_sun);
+        RadioButton moonRbn = (RadioButton) myWindow.findViewById(R.id.rbn_moon);
+        moonRbn.setOnClickListener(this);
+        sunRbn.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rbn_moon:
+                if (position!=1){
+                    position = 1;
+                    myFBReader.ViewOptions.ColorProfileName.setValue(ColorProfile.NIGHT);
+                    myFBReader.getViewWidget().reset();
+                    myFBReader.getViewWidget().repaint();
+                }
+                break;
+            case R.id.rbn_sun:
+                if (position!=2) {
+                    position = 2;
+                    myFBReader.ViewOptions.ColorProfileName.setValue(ColorProfile.DAY);
+                    myFBReader.getViewWidget().reset();
+                    myFBReader.getViewWidget().repaint();
+                }
+                break;
+
+        }
+    }
 }

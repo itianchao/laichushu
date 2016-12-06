@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <org.geometerplus.android.fbreader.SettingModleWindow
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/setting_panel"
+    android:id="@+id/setting_modle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
@@ -9,7 +9,6 @@
     android:background="@color/memubg_color"
     android:focusable="false"
     android:orientation="horizontal"
-    android:paddingTop="10dp"
     android:visibility="visible">
     <RadioGroup
         android:orientation="horizontal"
@@ -26,7 +25,7 @@
             android:button="@null"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="40dp" />
+            android:layout_height="30dp" />
         <RadioButton
             android:layout_margin="10dp"
             android:gravity="center"
@@ -37,7 +36,7 @@
             android:button="@null"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="40dp" />
+            android:layout_height="30dp" />
     </RadioGroup>
     <LinearLayout
         android:visibility="gone"

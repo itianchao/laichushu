@@ -27,6 +27,9 @@ final class SettingProgressPopup extends ZLApplication.PopupPanel {
     private final FBReaderApp myFBReader;
     private volatile boolean myIsInProgress;
     private ZLTextView.PagePosition pagePosition;
+    private SeekBar slider;
+    private ZLTextView view;
+
     SettingProgressPopup(FBReaderApp myFBReader) {
         super(myFBReader);
         this.myFBReader = myFBReader;
@@ -78,8 +81,9 @@ final class SettingProgressPopup extends ZLApplication.PopupPanel {
         if (myWindow != null && activity == myWindow.getContext()) {
             return;
         }
+        myWindow = null;
         activity.getLayoutInflater().inflate(R.layout.txtprogressmenu_layout, root);
-        myWindow = (SettingProgressWindow) root.findViewById(R.id.setting_panel);
+        myWindow = (SettingProgressWindow) root.findViewById(R.id.setting_progress);
         final SeekBar slider = (SeekBar) myWindow.findViewById(R.id.txtprogress_seekbar);//进度条
 //		final TextView text = (TextView) myWindow.findViewById(R.id.navigation_text);//进度显示文字
         final ImageView pre_character = (ImageView) myWindow.findViewById(R.id.iv_pre);//前一章
@@ -87,7 +91,7 @@ final class SettingProgressPopup extends ZLApplication.PopupPanel {
         pre_character.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoPage(pagePosition.Current - 30);
+                gotoPage(pagePosition.Current - 15);
             }
         });
 
@@ -95,7 +99,7 @@ final class SettingProgressPopup extends ZLApplication.PopupPanel {
             @Override
             public void onClick(View v) {
 //                textView.getModel().getParagraphsNumber();
-                gotoPage(pagePosition.Current + 30);
+                gotoPage(pagePosition.Current + 15);
             }
         });
         slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -114,6 +118,7 @@ final class SettingProgressPopup extends ZLApplication.PopupPanel {
 //                    view.gotoHome();
 //                } else {
                 view.gotoPageByPec(page);
+                pagePosition = view.pagePosition();
 //                }
             }
 
@@ -158,11 +163,10 @@ final class SettingProgressPopup extends ZLApplication.PopupPanel {
             builder.append("  ");
             builder.append(tocElement.getText());
         }
-
         return builder.toString();
     }
     private void gotoPage(int page) {
-        final ZLTextView view = myFBReader.getTextView();
+        view = myFBReader.getTextView();
         if (page == 1) {
             view.gotoHome();
         } else {
@@ -170,11 +174,13 @@ final class SettingProgressPopup extends ZLApplication.PopupPanel {
         }
 //        myKooReader.clearTextCaches();
         ToastUtil.showToast(makeProgressTextPer(myFBReader.getTextView().pagePositionPec()));
+        pagePosition = view.pagePosition();
+        slider.setProgress(view.pagePosition1());
         myFBReader.getViewWidget().reset();
         myFBReader.getViewWidget().repaint();
     }
     private void setupNavigation() {
-        final SeekBar slider = (SeekBar) myWindow.findViewById(R.id.txtprogress_seekbar);
+        slider = (SeekBar) myWindow.findViewById(R.id.txtprogress_seekbar);
 //        final TextView text = (TextView) myWindow.findViewById(R.id.navigation_text);
 
         final ZLTextView textView = myFBReader.getTextView();
