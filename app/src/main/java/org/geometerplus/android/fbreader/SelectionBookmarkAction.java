@@ -50,18 +50,21 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-//		if (params.length != 0) {
-//			bookmark = (Bookmark)params[0];
-//		} else {
+		/**
+		 * 传入动作数组判断
+		 */
+		if (params.length != 2) {
+			bookmark = (Bookmark)params[0];
+		} else {
 			bookmark = Reader.addSelectionBookmark();
-//		}
+			int mSelectColor = (int)params[0];
+			int styleId = (int)params[1];
+			if (mSelectColor != 0 && styleId !=0){
+				changeColor(mSelectColor,styleId);
+			}
+		}
 		if (bookmark == null) {
 			return;
-		}
-		int mSelectColor = (int)params[0];
-		int styleId = (int)params[1];
-		if (mSelectColor != 0 && styleId !=0){
-			changeColor(mSelectColor,styleId);
 		}
 		final SuperActivityToast toast =
 			new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
@@ -86,6 +89,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 	private void changeColor(int mSelectColor, final int styleId) {
 		Intent data = new Intent();
 		data.putExtra("selectColor", mSelectColor);
+		baseApplication.setResult(7, data);
 		myCollection.bindToService(baseApplication, new Runnable() {
 			public void run() {
 				bookmark.setStyleId(styleId);

@@ -129,19 +129,19 @@ class SelectionPopup extends PopupPanel implements View.OnClickListener {
 				Application.runAction(ActionCode.SELECTION_CLEAR);
 				break;
 			case R.id.selection_panel_bookmark:
-				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#5BA8F6"),1);
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,10706404,1);
 				break;
 			case R.id.iv_5BA8F6:
-				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#5BA8F6"),1);
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,10706404,1);
 				break;
 			case R.id.iv_61BC16:
-				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#61BC16"),2);
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,16085504,2);
 				break;
 			case R.id.iv_F57200:
-				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#F57200"),3);
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,6405142,3);
 				break;
 			case R.id.iv_A35DE4:
-				Application.runAction(ActionCode.SELECTION_BOOKMARK,Color.parseColor("#A35DE4"),4);
+				Application.runAction(ActionCode.SELECTION_BOOKMARK,6007030,4);
 				break;
 		}
 		Application.hideActivePopup();
