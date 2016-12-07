@@ -408,6 +408,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 		myCollection.saveBookmark(bookmark);
 		final Book book = myCollection.getBookById(bookmark.BookId);
 		if (book != null) {
+			AppManager.getInstance().killActivity(FBReader.class);
 			FBReader.openBookActivity(this, book, bookmark);
 		} else {
 			UIMessageUtil.showErrorMessage(this, "cannotOpenBook");
