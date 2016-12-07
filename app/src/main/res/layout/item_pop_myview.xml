@@ -1,18 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="240dp"
-    android:orientation="horizontal">
+    android:layout_height="300dp"
+    android:orientation="vertical">
 
-    <com.laichushu.book.ui.widget.WheelView
-        android:id="@+id/wv_province"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/auditing">
 
-    <com.laichushu.book.ui.widget.WheelView
-        android:id="@+id/lv_city"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="24dp"
+            android:gravity="center_vertical"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="选择城市"
+            android:gravity="center_vertical"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit2"/>
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="24dp"
+            android:gravity="center_vertical"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit2" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.laichushu.book.ui.widget.WheelView
+                android:id="@+id/wv_province"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.laichushu.book.ui.widget.WheelView
+                android:id="@+id/wv_city"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

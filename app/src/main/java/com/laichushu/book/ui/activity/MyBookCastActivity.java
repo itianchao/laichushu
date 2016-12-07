@@ -68,7 +68,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     protected void initData() {
         rbScan.setChecked(true);
         mvpPresenter.LoadData();
-        tvTitle.setText("作品管理");
+        tvTitle.setText("我的书架");
         ivBack.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         //初始化mRecyclerView Scan
@@ -200,7 +200,6 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         }, 300);
         if (model.isSuccess()) {
             collData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!collData.isEmpty()) {
                 collAdapter.refreshAdapter(collData);
                 PAGE_NO++;
@@ -208,8 +207,10 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
 
             }
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            collAdapter.refreshAdapter(collData);
+            ToastUtil.showToast("没有更多内容！");
         }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override

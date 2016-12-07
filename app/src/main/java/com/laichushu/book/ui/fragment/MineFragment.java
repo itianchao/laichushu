@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,8 +20,12 @@ import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
 import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.event.RefrushMineEvent;
+import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
+import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.EditMyselfeInforActivity;
 import com.laichushu.book.ui.activity.FeedbackActivity;
@@ -36,6 +42,10 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import de.greenrobot.dao.query.Query;
@@ -50,18 +60,18 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     private ImageView ivMineHead, ivMineHeadInto;
     private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice, rlBody;
     private PersonalCentreResult res = new PersonalCentreResult();
-    private UpdateReceiver mUpdateReceiver;
     private Cache_JsonDao cache_jsonDao;
+    private EventBus eventBus;
 
     @Override
     protected BasePresenter createPresenter() {
-
         return null;
     }
 
     @Override
     public View createSuccessView() {
         View mRootView = UIUtil.inflate(R.layout.fragment_mine);
+        EventBus.getDefault().register(this);
         mRootView.findViewById(R.id.iv_title_finish).setVisibility(View.GONE);
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title);
         ivMineHead = (ImageView) mRootView.findViewById(R.id.iv_minaHead);
@@ -92,17 +102,24 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         tvTitle.setText("个人中心");
         return mRootView;
     }
+
     @Override
     protected void initData() {
         super.initData();
-
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         cache_jsonDao = daoSession.getCache_JsonDao();
         getData();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefrushMineEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            initData();
+        }
+    }
+
     public void getData() {
-//        registerPlayerReceiver();
         QueryBuilder<Cache_Json> userQueryBuilder = cache_jsonDao.queryBuilder();
         QueryBuilder<Cache_Json> builder = userQueryBuilder.where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails"));
         Query<Cache_Json> build = builder.build();
@@ -110,9 +127,19 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         PersonalCentreResult result = new Gson().fromJson(cache_jsons.get(0).getJson(), PersonalCentreResult.class);
         GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivMineHead);
         tvMineName.setText("  " + result.getNickName());
-        tvMinebookNum.setText(result.getArticleCount() + "部  ");
+        if (TextUtils.isEmpty(result.getArticleCount())) {
+            tvMinebookNum.setText(0 + "部  ");
+        } else {
+            tvMinebookNum.setText(result.getArticleCount() + "部  ");
+        }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         res = result;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -168,18 +195,6 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
                 initData();
                 ToastUtil.showToast("update date!");
             }
-        }
-    }
-
-    private void registerPlayerReceiver() {
-        if (mUpdateReceiver == null) {
-            mUpdateReceiver = new UpdateReceiver();
-
-            IntentFilter filter = new IntentFilter();
-            filter.addCategory(getActivity().getPackageName());
-
-            filter.addAction(ConstantValue.ACTION_UPDATE_DATA);
-            mActivity.registerReceiver(mUpdateReceiver, filter);
         }
     }
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
@@ -200,6 +201,8 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
             case R.id.iv_title_other://分享
                 break;
             case R.id.iv_title_another://评论
+                //打开参加活动的图书
+                mvpPresenter.loadAuthorWorksData();
                 break;
             case R.id.tv_join://参加活动
                 if (mArticleData.size() == 0) {
@@ -319,8 +322,14 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
      */
     @Override
     public void getAuthorWorksDataSuccess(AuthorWorksModle model) {
+        hideLoading();
         if (model.isSuccess()) {
             mArticleData.addAll(model.getData());
+            if (!model.getData().isEmpty()) {
+                openSelectBookDialog(mArticleData, dataBeen.getArticleId());
+            } else {
+                ToastUtil.showToast("您还没有作品");
+            }
         } else {
             ToastUtil.showToast("获取作品失败");
         }
@@ -329,6 +338,25 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
+    }
+
+    @Override
+    public void getDataFail3(String msg) {
+
+    }
+
+    @Override
+    public void articleVote(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("投稿成功，15日内通知审核结果");
+        } else {
+            if (model.getErrMsg().contains("已经投稿")){
+                ToastUtil.showToast("投稿失败，此出版社已经投稿了");
+            }else {
+                ToastUtil.showToast("投稿失败");
+            }
+        }
+
     }
 
     @Override
@@ -344,5 +372,52 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     @Override
     protected CampaignPresenter createPresenter() {
         return new CampaignPresenter(this);
+    }
+    /**
+     * 投稿对话框
+     *
+     * @param mArticleData
+     * @param pressId
+     */
+    public void openSelectBookDialog(final ArrayList<AuthorWorksModle.DataBean> mArticleData, final String pressId) {
+        for (int i = 0; i < mArticleData.size(); i++) {
+            AuthorWorksModle.DataBean bean = mArticleData.get(i);
+            if (i == 0) {
+                bean.setIscheck(true);
+            } else {
+                bean.setIscheck(false);
+            }
+        }
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_join);
+        ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
+        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0);
+        joinLv.setAdapter(joinAdapter);
+
+        //取消
+        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2016/11/25 投稿
+                mvpPresenter.voteBook(mArticleData.get(joinAdapter.getPosition()).getArticleId(), pressId);
+                dialogBuilder.dismiss();
+            }
+        });
+        dialogBuilder
+                .withTitle(null)                                  // 为null时不显示title
+                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, mActivity)                // 添加自定义View
+                .show();
+
     }
 }

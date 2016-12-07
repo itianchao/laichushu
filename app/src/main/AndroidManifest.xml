@@ -887,7 +887,8 @@
         <!-- FBReader end -->
 
         <activity android:name=".ui.activity.PersonalInfomationPageActivity" />
-        <activity android:name=".ui.activity.ActivityPageDetailsActivity"></activity>
+        <activity android:name=".ui.activity.ActivityPageDetailsActivity" />
+        <activity android:name=".ui.activity.AgreementDetailsActivity"></activity>
     </application>
 
 </manifest>

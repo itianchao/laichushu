@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
+import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.ui.activity.MechanismListActivity;
 import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
@@ -53,15 +54,15 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
     public void onBindViewHolder(final WriteBookViewHolder holder, final int position) {
         final HomeHotModel.DataBean dataBean = mData.get(position);
         GlideUitl.loadImg(mActivity, dataBean.getCoverUrl(), holder.bookIv);
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //跳转图书详情页
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("bean", dataBean);
-//                UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转图书详情页
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bean", dataBean);
+                UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
+            }
+        });
         holder.titleTv.setText(dataBean.getArticleName());
         holder.typeTv.setText(dataBean.getTopCategoryName());
         holder.authorTv.setText(dataBean.getAuthorName());

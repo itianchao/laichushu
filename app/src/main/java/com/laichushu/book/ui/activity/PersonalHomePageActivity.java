@@ -200,6 +200,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
      */
     @Override
     public void getFocusMeDataSuccess(HomePersonFocusResult model) {
+        dismissProgressDialog();
         dyData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -219,7 +220,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             ToastUtil.showToast(model.getErrMsg());
         }
         fmAdapter.refreshAdapter(focusMeData);
-        dismissProgressDialog();
     }
 
     /**
@@ -229,6 +229,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
      */
     @Override
     public void getFocusBeDataSuccess(HomePersonFocusResult model) {
+        dismissProgressDialog();
         focusBeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -247,7 +248,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             ToastUtil.showToast(model.getErrMsg());
         }
         fbAdapter.refreshAdapter(focusBeData);
-        dismissProgressDialog();
     }
 
     /**

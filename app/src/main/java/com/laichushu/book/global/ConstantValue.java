@@ -12,6 +12,8 @@ public class ConstantValue {
 
     public static String GlidCacheUrl="files/file";
     public static String ACTION_UPDATE_DATA = "ACTION_UPDATE_DATA";
+    public static String ACTION_UPDATE_DATA_PERINFO = "ACTION_UPDATE_DATA_PERINFO";
+    public static String ACTION_UPDATE_DATA_MINEINFO = "ACTION_UPDATE_DATA_MINEINFO";
     public static String USERID = SharePrefManager.getUserId();//userId
     public static String PAGESIZE = "2000";//pageSize
     public static String PAGESIZE1 = "10";//pageSize

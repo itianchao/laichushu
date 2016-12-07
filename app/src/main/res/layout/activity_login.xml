@@ -6,6 +6,17 @@
 
     <include layout="@layout/page_title" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/app_logo_1" />
+    </RelativeLayout>
+
     <LinearLayout style="@style/edit_ll_style">
 
         <ImageView
@@ -25,16 +36,15 @@
             android:src="@drawable/login_passworld" />
 
         <EditText
-            android:password="true"
             android:id="@+id/et_password"
             style="@style/edit_item_style"
-            android:hint="@string/passworldHint" />
+            android:hint="@string/passworldHint"
+            android:password="true" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp">
-
     </LinearLayout>
 
     <Button
@@ -50,13 +60,16 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
+
         <TextView
-            android:id="@+id/tv_register"
+            android:id="@+id/tv_forget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/login_phone"
-            android:text="@string/register"
-            android:textColor="@color/hint" />
+            android:drawablePadding="5dp"
+            android:text="@string/forget"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/edit2"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
@@ -64,13 +77,14 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/tv_forget"
+            android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/login_forget"
-            android:drawablePadding="5dp"
-            android:text="@string/forget"
-            android:textColor="@color/hint" />
+            android:text="@string/register"
+            android:textStyle="bold"
+            android:textColor="@color/auditing"
+            android:textSize="@dimen/edit2" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -83,13 +97,15 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/trilateral"
         android:textColor="@color/global"
-        android:textSize="@dimen/edit" />
+        android:textSize="@dimen/edit"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_login_qq"

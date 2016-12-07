@@ -20,5 +20,6 @@ public interface UserHomePageView {
     void getFocusBeStatus(HomeFocusResult model,boolean flg);
     void getFocusMeStatus(HomeFocusResult model,boolean flg);
     void getSaveCollectSuccess(RewardResult model,String type);
+    void getAddPerInfoSuccess(RewardResult model);
     void getDataFail(String errorMsg);
 }

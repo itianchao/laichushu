@@ -4,20 +4,27 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
+import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.userhomepage.UserHomePagePresener;
 import com.laichushu.book.mvp.userhomepage.UserHomePageView;
 import com.laichushu.book.ui.adapter.HomePageFocusMeAdapter;
+import com.laichushu.book.ui.adapter.JoinActivityAdapter;
 import com.laichushu.book.ui.adapter.UserDynamicAdapter;
 import com.laichushu.book.ui.adapter.UserFocusHeAdapter;
 import com.laichushu.book.ui.adapter.UserHeFoucsAdapter;
@@ -39,15 +46,15 @@ import java.util.List;
  * 2016年11月25日17:04:06
  */
 public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivHead, ivGrade, ivGradeDetails;
+    private ImageView ivBack, ivAnthor, ivHead, ivGrade, ivGradeDetails;
     private TextView tvTitle, nickName, tvRealName, tvAuthorGrade;
     private HomePersonFocusResult.DataBean dataBean;
     private Button btnFocus;
     private PullLoadMoreRecyclerView mDyRecyclerView, mWorksRecyclerView, mHeFocusRecyclerView, mFocusHeRecyclerView;
     private UserDynamicAdapter dyAdapter;
     private UserWorksListAdapter worksAdapter;
-    private UserHeFoucsAdapter beAdapter;//关注他的
-    private UserFocusHeAdapter heAdapter;//他关注的
+    private UserHeFoucsAdapter beAdapter;//他关注的
+    private UserFocusHeAdapter heAdapter;//关注他的
     private RadioGroup radioGroup;
     private List<HomeUseDyrResult.DataBean> dyData = new ArrayList<>();
     private List<HomeHotModel.DataBean> worksData = new ArrayList<>();
@@ -57,7 +64,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private boolean dibbleDy = false, dibbleWorks = false, dibbleheFo = false, dibbleFoHe = false;
     private List<View> pulls = new ArrayList<>();
     private String userId;
-
+    private HomeUserResult userBean;
     /**
      * 1 关注我的 2 我关注的
      */
@@ -73,6 +80,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         View inflate = UIUtil.inflate(R.layout.activity_user_home_page);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
+        ivAnthor = ((ImageView) inflate.findViewById(R.id.iv_title_another));
         nickName = ((TextView) inflate.findViewById(R.id.tv_userNickName));
         tvRealName = ((TextView) inflate.findViewById(R.id.tv_userRealName));
         tvAuthorGrade = ((TextView) inflate.findViewById(R.id.tv_userAuthorGrade));
@@ -101,11 +109,14 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
 
         tvTitle.setText("用户主页");
         tvTitle.setVisibility(View.VISIBLE);
+        ivAnthor.setVisibility(View.VISIBLE);
+        GlideUitl.loadImg(mActivity,R.drawable.activity_comment,ivAnthor);
 
         ivBack.setOnClickListener(this);
         ivGradeDetails.setOnClickListener(this);
         btnFocus.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
+        ivAnthor.setOnClickListener(this);
 
         //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
@@ -160,7 +171,17 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 break;
             case R.id.btn_userFocus:
                 //关注
-
+                if(!userBean.isBeFocused()){
+                    mvpPresenter.loadDelFocus(userId, true);
+                    btnFocus.setText("已关注");
+                }else{
+                    mvpPresenter.loadDelFocus(userId, false);
+                    btnFocus.setText("关注");
+                }
+                break;
+            case R.id.iv_title_another:
+                //打开私信弹框
+                openSendPerMsgDialog();
                 break;
         }
     }
@@ -230,6 +251,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     public void getUserHeadDateSuccess(HomeUserResult result) {
         if (result.isSuccess()) {
+            userBean = result;
             GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
             nickName.setText(result.getNickName());
             tvRealName.setText(result.getNickName());
@@ -269,6 +291,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
 
     @Override
     public void getUserHomeBookListSuccess(HomeHotModel result) {
+        dismissProgressDialog();
         worksData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -288,7 +311,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
-        dismissProgressDialog();
     }
 
     /**
@@ -298,6 +320,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
      */
     @Override
     public void getUserHomeFocusHeSuccess(HomePersonFocusResult result) {
+        dismissProgressDialog();
         focusMeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -319,7 +342,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             ToastUtil.showToast(result.getErrMsg());
         }
         heAdapter.refreshAdapter(focusMeData);
-        dismissProgressDialog();
     }
 
     /**
@@ -329,6 +351,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
      */
     @Override
     public void getUserHomeHeFocusSuccess(HomePersonFocusResult result) {
+        dismissProgressDialog();
         focusBeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -351,7 +374,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             ToastUtil.showToast(result.getErrMsg());
         }
         beAdapter.refreshAdapter(focusBeData);
-        dismissProgressDialog();
     }
 
     /**
@@ -406,6 +428,21 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
 
         } else {
             ToastUtil.showToast("操作失败！");
+            LoggerUtil.toJson(model);
+        }
+    }
+
+    /**
+     * 发送私信结果
+     *
+     * @param model
+     */
+    @Override
+    public void getAddPerInfoSuccess(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("发送成功！");
+        } else {
+            ToastUtil.showToast("发送失败！");
             LoggerUtil.toJson(model);
         }
     }
@@ -471,5 +508,39 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }
     }
 
+    /**
+     * 发送私信对话框
+     */
+    public void openSendPerMsgDialog() {
 
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_send_per_msg);
+        final EditText edMsg = (EditText) customerView.findViewById(R.id.et_dialogMsg);
+
+        //取消
+        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2016/11/25 投稿
+                mvpPresenter.loadAddPerInfoDate(userId, edMsg);
+                dialogBuilder.dismiss();
+            }
+        });
+        dialogBuilder
+                .withTitle("发送私信")                                  // 为null时不显示title
+                .withDialogColor("#94C3B7")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, mActivity)                // 添加自定义View
+                .show();
+
+    }
 }
