@@ -69,6 +69,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
@@ -90,7 +91,8 @@ import java.util.Map;
 public final class FBReader extends FBReaderMainActivity implements ZLApplicationWindow {
 	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
-
+	public static final int REQUEST_EDITBOOKMARK = 6;
+	public static final int RESULT_SELECTCOLOR = 7;
 	public static Intent defaultIntent(Context context) {
 		return new Intent(context, FBReader.class)
 				.setAction(FBReaderIntents.Action.VIEW)
@@ -745,6 +747,13 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 			case REQUEST_CANCEL_MENU:
 				runCancelAction(data);
 				break;
+			case REQUEST_EDITBOOKMARK:
+				if (resultCode == RESULT_SELECTCOLOR) {
+					int selectColor = data.getIntExtra("selectColor", 10706404);
+					myFBReaderApp.ViewOptions.getColorProfile().SelectionBackgroundOption.setValue(new ZLColor(selectColor));
+				}
+				break;
+
 		}
 	}
 

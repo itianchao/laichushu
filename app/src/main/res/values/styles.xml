@@ -156,4 +156,6 @@
         <item name="android:backgroundDimEnabled">true</item>
 
     </style>
+    <!--修改想法-->
+    <style name="KooReader.Dialog" parent="Theme.AppCompat.Light.Dialog"></style>
 </resources>

@@ -35,6 +35,8 @@ import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.fbreader.book.Bookmark;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -443,6 +445,21 @@ public class UIUtil
 		Intent intent = new Intent(activity, FBReader.class);
 		intent.putExtra(ConstantValue.BASEBOOK, baseBookEntity);
 		intent.setAction(ConstantValue.FB_READER.ACTION_OPEN_FROM_SHELF);
+		activity.startActivity(intent);
+	}
+	/**
+	 * 跳转阅读页
+	 * @param baseBookEntity
+	 * @param baseBookEntity
+	 * @param
+	 */
+	public static void startBookFBReaderActivity(Activity activity,BaseBookEntity baseBookEntity,Bookmark bookmark){
+		if (baseBookEntity == null||activity == null)
+			return;
+		Intent intent = new Intent(activity, FBReader.class);
+		intent.putExtra(ConstantValue.BASEBOOK, baseBookEntity);
+		intent.setAction(ConstantValue.FB_READER.ACTION_OPEN_FROM_SHELF);
+		FBReaderIntents.putBookmarkExtra(intent, bookmark);
 		activity.startActivity(intent);
 	}
 

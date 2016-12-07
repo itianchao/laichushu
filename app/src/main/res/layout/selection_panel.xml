@@ -1,70 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.geometerplus.android.fbreader.SimplePopupWindow
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/selection_panel"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:layout_alignParentBottom="true"
-	android:layout_centerHorizontal="true"
-	android:visibility="gone"
-	android:focusable="false"
->
-	<FrameLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="25dp"
-		android:layout_marginBottom="25dp"
-		android:paddingLeft="15dp"
-		android:paddingRight="15dp"
-		android:background="@drawable/panel"
-	>
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:paddingTop="12dp"
-			android:paddingBottom="12dp"
-		>
-			<ImageView
-				android:id="@+id/selection_panel_bookmark"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:src="@drawable/popup_bookmark"
-				android:layout_marginLeft="8dp"
-				android:layout_marginRight="8dp"
-			/>
-			<ImageView
-				android:id="@+id/selection_panel_translate"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:src="@drawable/popup_translate"
-				android:layout_marginLeft="8dp"
-				android:layout_marginRight="8dp"
-			/>
-			<ImageView
-				android:id="@+id/selection_panel_share"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:src="@drawable/popup_share"
-				android:layout_marginLeft="8dp"
-				android:layout_marginRight="8dp"
-			/>
-			<ImageView
-				android:id="@+id/selection_panel_copy"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:src="@drawable/popup_copy"
-				android:layout_marginLeft="8dp"
-				android:layout_marginRight="8dp"
-			/>
-			<ImageView
-				android:id="@+id/selection_panel_close"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:src="@drawable/popup_close"
-				android:layout_marginLeft="8dp"
-				android:layout_marginRight="8dp"
-			/>
-		</LinearLayout>
-	</FrameLayout>
+<org.geometerplus.android.fbreader.SimplePopupWindow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/selection_panel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:focusable="false"
+    android:visibility="gone">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="25dp"
+        android:background="@color/memubg_color"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_5BA8F6"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="#5BA8F6" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_rectangle_while"
+                    android:id="@+id/selection_panel_copy"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="复制"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_61BC16"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="#61BC16" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_rectangle_while"
+                    android:id="@+id/selection_panel_bookmark"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="想法"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_F57200"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="#F57200" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_rectangle_while"
+                    android:id="@+id/selection_panel_share"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="分享"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_A35DE4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="#A35DE4" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_rectangle_while"
+                    android:id="@+id/selection_panel_close"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="删除"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </org.geometerplus.android.fbreader.SimplePopupWindow>

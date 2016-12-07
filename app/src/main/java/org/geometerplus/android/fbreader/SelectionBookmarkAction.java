@@ -27,6 +27,7 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.Bookmark;
@@ -37,22 +38,34 @@ import org.geometerplus.android.fbreader.bookmark.EditBookmarkActivity;
 import org.geometerplus.android.util.OrientationUtil;
 
 public class SelectionBookmarkAction extends FBAndroidAction {
+
+	private Bookmark bookmark;
+	private FBReader baseApplication;
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+
 	SelectionBookmarkAction(FBReader baseApplication, FBReaderApp fbreader) {
 		super(baseApplication, fbreader);
+		this.baseApplication = baseApplication;
 	}
 
 	@Override
 	protected void run(Object ... params) {
-		final Bookmark bookmark;
-		if (params.length != 0) {
+		/**
+		 * 传入动作数组判断
+		 */
+		if (params.length != 2) {
 			bookmark = (Bookmark)params[0];
 		} else {
 			bookmark = Reader.addSelectionBookmark();
+			int mSelectColor = (int)params[0];
+			int styleId = (int)params[1];
+			if (mSelectColor != 0 && styleId !=0){
+				changeColor(mSelectColor,styleId);
+			}
 		}
 		if (bookmark == null) {
 			return;
 		}
-
 		final SuperActivityToast toast =
 			new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
 		toast.setText(bookmark.getText());
@@ -71,5 +84,18 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 			}
 		}));
 		BaseActivity.showToast(toast);
+	}
+
+	private void changeColor(int mSelectColor, final int styleId) {
+		Intent data = new Intent();
+		data.putExtra("selectColor", mSelectColor);
+		baseApplication.setResult(7, data);
+		myCollection.bindToService(baseApplication, new Runnable() {
+			public void run() {
+				bookmark.setStyleId(styleId);
+				myCollection.setDefaultHighlightingStyleId(styleId);
+				myCollection.saveBookmark(bookmark);
+			}
+		});
 	}
 }
