@@ -1,7 +1,9 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
@@ -10,8 +12,10 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -67,10 +71,10 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     private TextView tvTitle, tvRight, tvIdCard, tvSex, edBirthday, tvCity;
     private EditText edNickName, edSign;
     private PersonalCentreResult resultData = new PersonalCentreResult();
-    private RelativeLayout rlIdCard, rlHead, rlArea;
+    private RelativeLayout rlIdCard, rlHead, rlArea,rlNickName;
     private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
     private File photoFile;
-    private String curProCode = null,photoUrl=null;
+    private String curNickName = null, curProCode = null, photoUrl = null;
     //时间选择器
     private TimePopupWindow timePopupWindow;
     private OptionsPopupWindow sexPopupWindow;
@@ -100,6 +104,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         rlIdCard = ((RelativeLayout) inflate.findViewById(R.id.rl_idCard));
         rlHead = ((RelativeLayout) inflate.findViewById(R.id.rl_editHeadImg));
         rlArea = ((RelativeLayout) inflate.findViewById(R.id.rl_area));
+        rlNickName = ((RelativeLayout) inflate.findViewById(R.id.rl_nickName));
         mf = new MineFragment();
         //initListener;
         ivBack.setOnClickListener(this);
@@ -123,9 +128,23 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setText("完成");
         edBirthday.setInputType(InputType.TYPE_NULL);
+        edNickName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    edNickName.setCursorVisible(true);
+                    edNickName.setSelection(curNickName.length());
+                    edNickName.setBackgroundResource(R.drawable.shape_rectangle_fill_hint);
+                    edNickName.setGravity(Gravity.CENTER);
+
+                } else {
+                    disFocus();
+                }
+            }
+        });
+
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -134,6 +153,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 this.finish();
                 break;
             case R.id.tv_title_right:
+                disFocus();
                 if (!judgeAttrbute()) {
                     return;
                 }
@@ -147,7 +167,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 RequestBody requestBody7 = null;
                 if (photoFile != null) {
                     requestBody7 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(photoFile));
-                    photoUrl=null;
+                    photoUrl = null;
                 }
                 params.put("userId", requestBody1);
                 params.put("nickName", requestBody2);
@@ -155,7 +175,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 params.put("city", requestBody4);
                 params.put("sign", requestBody5);
                 params.put("birthday", requestBody6);
-//                params.put("photoFile", requestBody7);
                 addSubscription(apiStores.getUpdateDetails(params, requestBody7), new ApiCallback<PersonInfoResultReward>() {
                     @Override
                     public void onSuccess(PersonInfoResultReward result) {
@@ -182,20 +201,25 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
                 break;
             case R.id.ed_sexContent:
+                disFocus();
                 setSexPopWindow();
                 break;
             case R.id.ed_birthdayContent:
+                disFocus();
                 setTimePopupwindow();
                 break;
             case R.id.rl_area:
+                disFocus();
                 initAreaSelector();
                 break;
             case R.id.rl_idCard:
+                disFocus();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("idcard", resultData);
                 UIUtil.openActivity(this, IndentityAuthenActivity.class, bundle);
                 break;
             case R.id.rl_editHeadImg:
+                disFocus();
                 openAlertDialog();
                 break;
         }
@@ -210,8 +234,9 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         resultData = (PersonalCentreResult) getIntent().getSerializableExtra("result");
         if (resultData != null) {
             GlideUitl.loadRandImg(mActivity, resultData.getPhoto(), ivHead);
-            photoUrl=resultData.getPhoto();
+            photoUrl = resultData.getPhoto();
             edNickName.setText(resultData.getNickName());
+            curNickName = resultData.getNickName();
             if (TextUtils.isEmpty(resultData.getSex())) {
                 tvSex.setText("男");
             } else {
@@ -333,9 +358,9 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         json.setBirthday(result.getData().getBirthday() + "");
         json.setCity(result.getData().getCity());
         json.setSign(result.getData().getSign());
-        if(photoUrl==null){
+        if (photoUrl == null) {
             json.setPhoto(result.getData().getPhoto());
-        }else {
+        } else {
             json.setPhoto(photoUrl);
         }
 
@@ -493,6 +518,17 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
     }
-
+public void disFocus(){
+    if (TextUtils.isEmpty(edNickName.getText().toString())) {
+        edNickName.setText(curNickName);
+    }
+    rlNickName.requestFocus();
+    edNickName.clearFocus();
+    InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+    edNickName.setCursorVisible(false);
+    imm.hideSoftInputFromWindow(edNickName.getWindowToken(), 0);
+    edNickName.setBackgroundResource(R.drawable.shape_kitkat_undobarfocused);
+    edNickName.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
+}
 
 }

@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.wallet;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
 
 /**
@@ -8,6 +9,6 @@ import com.laichushu.book.bean.netbean.WalletBalanceReward;
 
 public interface WalletView {
     void getWalletRecordDateSuccess(WalletBalanceReward modle);
-
+    void getWithdrawalsApplayDateSuccess(RewardResult model);
     void getDataFail(String msg);
 }

@@ -102,6 +102,7 @@ import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
 import com.laichushu.book.bean.netbean.AddPerDetails_Paramet;
+import com.laichushu.book.bean.netbean.WithdrawalsApplay_Paramet;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
@@ -501,10 +502,10 @@ public interface ApiStores {
 
     //我的钱包充值
     @POST("wallet/find")
-    Observable<WalletBalanceReward> getRechargeDetails(@Body WalletBalanceRecord_Paramet paramet);//我的钱包提现
-
-    @POST("wallet/find")
-    Observable<WalletBalanceReward> getWithdrawalsDetails(@Body WalletBalanceRecord_Paramet paramet);
+    Observable<WalletBalanceReward> getRechargeDetails(@Body WalletBalanceRecord_Paramet paramet);
+    //我的钱包提现
+    @POST("withdraw/apply")
+    Observable<RewardResult> getWithdrawalsApplayDetails(@Body WithdrawalsApplay_Paramet paramet);
 
     //获取机构公告列表
     @POST("press/notices")

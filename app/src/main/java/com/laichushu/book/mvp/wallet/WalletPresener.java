@@ -1,13 +1,16 @@
 package com.laichushu.book.mvp.wallet;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
+import com.laichushu.book.bean.netbean.WithdrawalsApplay_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.homepage.HomePageView;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
+import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
 
@@ -16,7 +19,7 @@ import com.laichushu.book.utils.LoggerUtil;
  */
 
 public class WalletPresener extends BasePresenter<WalletView> {
-    private MyWalletDetailsActivity mActivity;
+    private BaseActivity mActivity;
     private String pageSize = ConstantValue.PAGESIZE4;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
@@ -24,14 +27,14 @@ public class WalletPresener extends BasePresenter<WalletView> {
     //初始化构造
     public WalletPresener(WalletView view) {
         attachView(view);
-        mActivity = (MyWalletDetailsActivity) view;
+        mActivity = (BaseActivity) view;
     }
 
-    public MyWalletDetailsActivity getmActivity() {
+    public BaseActivity getmActivity() {
         return mActivity;
     }
 
-    public void setmActivity(MyWalletDetailsActivity mActivity) {
+    public void setmActivity(BaseActivity mActivity) {
         this.mActivity = mActivity;
     }
 
@@ -89,5 +92,26 @@ public class WalletPresener extends BasePresenter<WalletView> {
             }
         });
     }
-    //
+
+    //钱包充值
+    public void loadWithdrawalsData(String accountName, String applyMoney) {
+        WithdrawalsApplay_Paramet withdrawalsApplay_paramet = new WithdrawalsApplay_Paramet(userId, accountName, applyMoney);
+        LoggerUtil.toJson(paramet);
+        addSubscription(apiStores.getWithdrawalsApplayDetails(withdrawalsApplay_paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getWithdrawalsApplayDateSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
 }
