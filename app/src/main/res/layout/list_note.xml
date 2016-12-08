@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
@@ -27,4 +28,11 @@
             android:textSize="15sp"
             android:text="暂无书签" />
     </RelativeLayout>
+    <ListView
+        android:visibility="invisible"
+        android:id="@+id/lv_mark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
 </RelativeLayout>

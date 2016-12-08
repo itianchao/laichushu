@@ -106,6 +106,8 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 	private volatile BookmarksAdapter myThisBookAdapter;//想法adapter
 	private ListView thisBookListView;
 	private String bgValue;
+	private RelativeLayout emptyRl;
+	private ListView markLv;
 
 	@Override
 	protected void onCreate(Bundle bundle) {
@@ -150,6 +152,8 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 
 		view3 = mInflater.inflate(R.layout.list_note, null);
 		rlNote = (RelativeLayout) view3.findViewById(R.id.rl_note);
+		emptyRl = (RelativeLayout) view3.findViewById(R.id.rl_null);//空
+		markLv = (ListView) view3.findViewById(R.id.lv_mark);
 
 		/**
 		 * 设置背景与阅读背景一致
@@ -517,14 +521,14 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 
 			final Bookmark bookmark = getItem(position);
 			if (bookmark == null) {
-				imageView.setVisibility(View.VISIBLE);
-				imageView.setImageResource(R.drawable.ic_list_plus);
+//				imageView.setVisibility(View.VISIBLE);
+//				imageView.setImageResource(R.drawable.ic_list_plus);
 				colorContainer.setVisibility(View.GONE);
-				textView.setText("添加想法");
+//				textView.setText("添加想法");
 				bookTitleView.setVisibility(View.GONE);
 			} else {
 				imageView.setVisibility(View.GONE);
-				colorContainer.setVisibility(View.VISIBLE);
+//				colorContainer.setVisibility(View.VISIBLE);
 				setupColorView(colorView, myStyles.get(bookmark.getStyleId()));
 				textView.setText(bookmark.getText());
 				if (myShowAddBookmarkItem) {
@@ -550,20 +554,20 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 		@Override
 		public final long getItemId(int position) {
 			final Bookmark item = getItem(position);
-			return item != null ? item.getId() : -1;
+			return item != null ? item.getId() : 0;
 		}
 
 		@Override
 		public final Bookmark getItem(int position) {
 			if (myShowAddBookmarkItem) {
-				--position;
+//				--position;
 			}
 			return position >= 0 ? myBookmarksList.get(position) : null;
 		}
 
 		@Override
 		public final int getCount() {
-			return myShowAddBookmarkItem ? myBookmarksList.size() + 1 : myBookmarksList.size();
+			return myShowAddBookmarkItem ? myBookmarksList.size() : myBookmarksList.size();
 		}
 
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {

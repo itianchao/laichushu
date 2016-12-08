@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ArticleSave_Paramet;
+import com.laichushu.book.bean.netbean.HomeCategory_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.homecategory.CategoryModle;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -54,7 +55,8 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
      */
     public void loadCategoryData() {
         Logger.e("获取分类信息");
-        addSubscription(apiStores.getCategoryList(), new ApiCallback<CategoryModle>() {
+        HomeCategory_Paramet paramet = new HomeCategory_Paramet(userId);
+        addSubscription(apiStores.getCategoryList(paramet), new ApiCallback<CategoryModle>() {
             @Override
             public void onSuccess(CategoryModle model) {
                 mvpView.getCategoryDataSuccess(model);

@@ -1,5 +1,7 @@
 package com.laichushu.book.mvp.homecategory;
 
+import com.laichushu.book.bean.netbean.HomeCategory_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -12,6 +14,7 @@ import com.laichushu.book.ui.activity.CategoryActivity;
 
 public class CategoryPresenter extends BasePresenter<CategoryView> {
     private CategoryActivity mActivity;
+    private String userId = ConstantValue.USERID;
 
     public CategoryPresenter(CategoryView view) {
         attachView(view);
@@ -20,7 +23,8 @@ public class CategoryPresenter extends BasePresenter<CategoryView> {
 
     public void loadCategoryData(){
         Logger.e("分类请求");
-        addSubscription(apiStores.getCategoryList(), new ApiCallback<CategoryModle>() {
+        HomeCategory_Paramet paramet = new HomeCategory_Paramet(userId);
+        addSubscription(apiStores.getCategoryList(paramet), new ApiCallback<CategoryModle>() {
             @Override
             public void onSuccess(CategoryModle model) {
                 mvpView.getDataSuccess(model);
