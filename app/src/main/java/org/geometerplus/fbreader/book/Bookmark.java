@@ -256,4 +256,51 @@ public final class Bookmark extends ZLTextFixedPosition {
 		}
 		throw new RuntimeException("INVALID UUID: " + uid);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+
+		Bookmark bookmark = (Bookmark) o;
+
+		if (myId != bookmark.myId) return false;
+		if (BookId != bookmark.BookId) return false;
+		if (CreationTimestamp != bookmark.CreationTimestamp) return false;
+		if (myLength != bookmark.myLength) return false;
+		if (myStyleId != bookmark.myStyleId) return false;
+		if (IsVisible != bookmark.IsVisible) return false;
+		if (!Uid.equals(bookmark.Uid)) return false;
+		if (!myVersionUid.equals(bookmark.myVersionUid)) return false;
+		if (!BookTitle.equals(bookmark.BookTitle)) return false;
+		if (!myText.equals(bookmark.myText)) return false;
+		if (!myOriginalText.equals(bookmark.myOriginalText)) return false;
+		if (!myModificationTimestamp.equals(bookmark.myModificationTimestamp)) return false;
+		if (!myAccessTimestamp.equals(bookmark.myAccessTimestamp)) return false;
+		if (!myEnd.equals(bookmark.myEnd)) return false;
+		return ModelId.equals(bookmark.ModelId);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + (int) (myId ^ (myId >>> 32));
+		result = 31 * result + Uid.hashCode();
+		result = 31 * result + myVersionUid.hashCode();
+		result = 31 * result + (int) (BookId ^ (BookId >>> 32));
+		result = 31 * result + BookTitle.hashCode();
+		result = 31 * result + myText.hashCode();
+		result = 31 * result + myOriginalText.hashCode();
+		result = 31 * result + (int) (CreationTimestamp ^ (CreationTimestamp >>> 32));
+		result = 31 * result + myModificationTimestamp.hashCode();
+		result = 31 * result + myAccessTimestamp.hashCode();
+		result = 31 * result + myEnd.hashCode();
+		result = 31 * result + myLength;
+		result = 31 * result + myStyleId;
+		result = 31 * result + ModelId.hashCode();
+		result = 31 * result + (IsVisible ? 1 : 0);
+		return result;
+	}
 }

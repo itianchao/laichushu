@@ -33,13 +33,20 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
+import com.laichushu.book.bean.otherbean.BookSelectOptionBean;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.ui.widget.TypeBookSelectWindow;
+import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.ToastUtil;
 
 import org.geometerplus.android.fbreader.api.ApiListener;
 import org.geometerplus.android.fbreader.api.ApiServerImplementation;
@@ -83,6 +90,7 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -93,6 +101,11 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
 	public static final int REQUEST_EDITBOOKMARK = 6;
 	public static final int RESULT_SELECTCOLOR = 7;
+	private TextView titleTv;
+	private ImageView finishIv;
+	private ImageView selectIv;
+	ArrayList<BookSelectOptionBean> list = new ArrayList();
+
 	public static Intent defaultIntent(Context context) {
 		return new Intent(context, FBReader.class)
 				.setAction(FBReaderIntents.Action.VIEW)
@@ -251,9 +264,31 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		setContentView(R.layout.main);
 		myRootView = (RelativeLayout)findViewById(R.id.root_view);
 		myMainView = (ZLAndroidWidget)findViewById(R.id.main_view);
+		titleTv = (TextView)findViewById(R.id.tv_title);
+		finishIv = (ImageView)findViewById(R.id.iv_title_finish);
+		selectIv = (ImageView)findViewById(R.id.iv_title_other);
+		GlideUitl.loadImg(this,"",selectIv);
+
+		//弹窗
+		list.clear();
+		list.add(new BookSelectOptionBean("举报",R.drawable.img_default));
+		list.add(new BookSelectOptionBean("书签",R.drawable.icon_share));
+		selectIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				openPopwindow(v,list);
+			}
+		});
+		//关闭
+		finishIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-		myFBReaderApp = (FBReaderApp)FBReaderApp.Instance();
+
 		if (myFBReaderApp == null) {
 			myFBReaderApp = new FBReaderApp(Paths.systemInfo(this), new BookCollectionShadow());
 		}
@@ -265,6 +300,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 		//仿真翻页
 		myFBReaderApp.PageTurningOptions.Animation.setValue(ZLView.Animation.curl);
 		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
+		myFBReaderApp = (FBReaderApp)FBReaderApp.Instance();
 
 		getWindow().setFlags(
 				WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -351,6 +387,36 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 				});
 			}
 		}
+
+	}
+
+	private void openPopwindow(View v,List<BookSelectOptionBean> datas) {
+		final TypeBookSelectWindow popWindow = new TypeBookSelectWindow(this, datas);
+		popWindow.setListItemClickListener(new TypeBookSelectWindow.IListItemClickListener() {
+			@Override
+			public void clickItem(int position) {
+//				if ((position == 0 )) {// TODO: 2016/12/8  举报
+//
+//				}else {//书签
+//					BookCollectionShadow myCollection = getCollection();
+//					Bookmark bookmark = FBReaderIntents.getBookmarkExtra(getIntent());
+//					bookmark.setStyleId(5);
+//					List<Bookmark> myBookmarksList =
+//							Collections.synchronizedList(new LinkedList<Bookmark>());
+//					for (Bookmark mbook : myBookmarksList) {
+//						if ((mbook.getStyleId() == 5&&mbook.equals(bookmark))) {
+//							ToastUtil.showToast("书签已存在");
+//							return;
+//						}
+//					}
+//					myCollection.saveBookmark(bookmark);
+//					ToastUtil.showToast("加入书签");
+//				}
+			}
+		});
+		popWindow.setWidth(com.laichushu.book.utils.UIUtil.dip2px(90));
+		popWindow.setHeight(com.laichushu.book.utils.UIUtil.dip2px(100));
+		popWindow.showAsDropDown(v,0,com.laichushu.book.utils.UIUtil.dip2px(10));
 	}
 
 //	@Override
@@ -1008,13 +1074,13 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
 	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
 
-	private final MenuItem.OnMenuItemClickListener myMenuListener =
-			new MenuItem.OnMenuItemClickListener() {
-				public boolean onMenuItemClick(MenuItem item) {
-					myFBReaderApp.runAction(myMenuItemMap.get(item));
-					return true;
-				}
-			};
+//	private final MenuItem.OnMenuItemClickListener myMenuListener =
+//			new MenuItem.OnMenuItemClickListener() {
+//				public boolean onMenuItemClick(MenuItem item) {
+//					myFBReaderApp.runAction(myMenuItemMap.get(item));
+//					return true;
+//				}
+//			};
 
 	@Override
 	public void refresh() {
