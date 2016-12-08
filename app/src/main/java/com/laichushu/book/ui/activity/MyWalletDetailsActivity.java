@@ -1,12 +1,14 @@
 package com.laichushu.book.ui.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
 import com.laichushu.book.mvp.wallet.WalletPresener;
 import com.laichushu.book.mvp.wallet.WalletView;
@@ -76,13 +78,13 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
             case R.id.btn_Recharge:
                 //充值
                 Bundle recharge = new Bundle();
-//                bundle.putSerializable("bean", bean);
+                recharge.putSerializable("bean", bean);
                 UIUtil.openActivity(this, RechargeDetailsActivity.class, recharge);
                 break;
             case R.id.btn_withdrawals:
                 //提现
                 Bundle bundle = new Bundle();
-//                bundle.putSerializable("bean", bean);
+                bundle.putSerializable("bean", bean);
                 UIUtil.openActivity(this, WithdrawalsDetails.class, bundle);
                 break;
         }
@@ -101,17 +103,24 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
             bean = model;
             ToastUtil.showToast("HomeUseDyrResult");
             recordData = model.getData();
+            tvBalanceShow.setText(model.getBalance() + "");
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!recordData.isEmpty()) {
-                tvBalanceShow.setText(model.getBalance() + "");
                 recordAdapter.refreshAdapter(recordData);
                 PAGE_NO++;
             } else {
 
             }
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            if (model.getData() != null | model.getData().size() == 0) {
+                ToastUtil.showToast("没有更多内容!");
+            }
         }
+    }
+
+    @Override
+    public void getWithdrawalsApplayDateSuccess(RewardResult model) {
+
     }
 
     @Override

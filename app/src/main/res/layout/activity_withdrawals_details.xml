@@ -29,7 +29,7 @@
                 android:gravity="center_vertical|right"
                 android:paddingRight="8dp"
                 android:text="当前账户余额"
-                android:textColor="@color/black"
+                android:textColor="@color/albumPrimaryBlack"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
@@ -40,12 +40,14 @@
                 android:layout_weight="5"
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
-                android:text="66元"
                 android:textColor="@color/auditing"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
         </LinearLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/bgGrey" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -59,7 +61,7 @@
                 android:gravity="center_vertical|right"
                 android:paddingRight="8dp"
                 android:text="提取金额"
-                android:textColor="@color/black"
+                android:textColor="@color/albumPrimaryBlack"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
@@ -70,15 +72,17 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="8dp"
+                android:numeric="decimal"
                 android:layout_weight="5"
                 android:background="@color/bgGrey"
                 android:gravity="center_vertical"
                 android:hint="请输入金额"
+                android:textColorHint="@color/characterLightGray2"
                 android:inputType="number"
                 android:paddingBottom="4dp"
                 android:paddingLeft="12dp"
                 android:paddingTop="4dp"
-                android:textColor="@color/auditing"
+                android:textColor="@color/albumPrimaryBlack"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -101,7 +105,7 @@
                 android:gravity="center_vertical|right"
                 android:paddingRight="8dp"
                 android:text="提取账户"
-                android:textColor="@color/black"
+                android:textColor="@color/albumPrimaryBlack"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
 
@@ -116,24 +120,26 @@
                 android:background="@color/bgGrey"
                 android:gravity="center_vertical"
                 android:hint="输入支付宝账号"
+                android:inputType="textEmailAddress"
                 android:paddingLeft="12dp"
-                android:textColor="@color/auditing"
+                android:textColorHint="@color/characterLightGray2"
+                android:textColor="@color/albumPrimaryBlack"
                 android:textSize="@dimen/edit"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_Recharge"
+        android:id="@+id/btn_withdrawals"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/ll_item"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="40dp"
-        android:background="@color/white"
+        android:background="@drawable/select_background_button"
         android:text="申请提现"
-        android:textColor="@color/auditing"
+        android:textColor="@drawable/btn_bg_white2global_selector"
         android:textSize="@dimen/edit" />
 
 

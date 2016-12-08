@@ -37,7 +37,6 @@
             android:layout_marginLeft="12dp"
             android:paddingLeft="12dp"
             android:paddingTop="12dp"
-            android:text="45.26"
             android:textColor="@color/characterLightGray"
             android:textSize="@dimen/editBig"
             android:textStyle="bold" />
@@ -64,9 +63,9 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="15dp"
-        android:background="@color/white"
+        android:background="@drawable/select_background_button"
         android:text="提 现"
-        android:textColor="@color/auditing"
+        android:textColor="@drawable/btn_bg_white2global_selector"
         android:textSize="@dimen/edit" />
 
     <TextView
@@ -78,7 +77,7 @@
         android:layout_marginLeft="12dp"
         android:paddingLeft="12dp"
         android:paddingTop="24dp"
-        android:text="提现记录"
+        android:text="交易记录"
         android:textColor="@color/characterGray"
         android:textSize="@dimen/edit"
         android:textStyle="bold" />
@@ -86,8 +85,8 @@
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/ryv_transRecord"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tv_transRecord"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:background="@color/white" />
 </RelativeLayout>
