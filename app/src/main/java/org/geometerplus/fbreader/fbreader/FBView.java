@@ -62,7 +62,7 @@ public final class FBView extends ZLTextView {
 	private final ViewOptions myViewOptions;
 	private final BookElementManager myBookElementManager;
 
-	FBView(FBReaderApp reader) {
+	public FBView(FBReaderApp reader) {
 		super(reader);
 		myReader = reader;
 		myViewOptions = reader.ViewOptions;

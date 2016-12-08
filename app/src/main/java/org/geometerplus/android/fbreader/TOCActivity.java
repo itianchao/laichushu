@@ -39,6 +39,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.utils.AppManager;
+import com.laichushu.book.utils.UIUtil;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.bookmark.BookmarksEditActivity;
@@ -54,9 +55,12 @@ import org.geometerplus.fbreader.book.HighlightingStyle;
 import org.geometerplus.fbreader.book.IBookCollection;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBView;
+import org.geometerplus.fbreader.formats.IFormatPluginCollection;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
@@ -108,6 +112,8 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
     private String bgValue;
     private RelativeLayout emptyRl;
     private ListView markLv;
+    private BookmarkAdapter bookmarkAdapter;
+    private FBReaderApp kooreader;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -123,7 +129,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 
         view1 = mInflater.inflate(R.layout.item_listview, null);
         ListView listView = (ListView) view1.findViewById(R.id.listview);
-        final FBReaderApp kooreader = (FBReaderApp) ZLApplication.Instance();
+        kooreader = (FBReaderApp) ZLApplication.Instance();
         final TOCTree root = kooreader.Model.TOCTree;
         tvBook.setText(kooreader.getCurrentBook().getTitle());
 
@@ -139,21 +145,23 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
         myBook = FBReaderIntents.getBookExtra(getIntent(), myCollection);
         myBookmark = FBReaderIntents.getBookmarkExtra(getIntent());
 
+        view3 = mInflater.inflate(R.layout.list_note, null);
+        rlNote = (RelativeLayout) view3.findViewById(R.id.rl_note);
+        emptyRl = (RelativeLayout) view3.findViewById(R.id.rl_null);//空
+        markLv = (ListView) view3.findViewById(R.id.lv_mark);
+
         myCollection.bindToService(this, new Runnable() {
             public void run() {
                 myThisBookAdapter =
                         new BookmarksAdapter(thisBookListView, myBookmark != null);
+
+                bookmarkAdapter = new BookmarkAdapter(markLv);
                 myCollection.addListener(TOCActivity.this);
                 updateStyles();
                 loadBookmarks();
             }
         });
 
-
-        view3 = mInflater.inflate(R.layout.list_note, null);
-        rlNote = (RelativeLayout) view3.findViewById(R.id.rl_note);
-        emptyRl = (RelativeLayout) view3.findViewById(R.id.rl_null);//空
-        markLv = (ListView) view3.findViewById(R.id.lv_mark);
 
         /**
          * 设置背景与阅读背景一致
@@ -330,6 +338,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                             break;
                         }
                         myThisBookAdapter.addAll(thisBookBookmarks);
+                        bookmarkAdapter.addAll(thisBookBookmarks);
 //                        myAllBooksAdapter.addAll(thisBookBookmarks);
                     }
 //                    for (BookmarkQuery query = new BookmarkQuery(50); ; query = query.next()) {
@@ -383,13 +392,18 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
         myCollection.unbind();
         super.onDestroy();
     }
-
+    private boolean isBookMark;
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         final int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
-        final BookmarksAdapter adapter = myThisBookAdapter;
+        BaseAdapter adapter = null;
+        if (isBookMark){//判断点开的是那个页面
+            adapter = bookmarkAdapter;
+        }else {
+            adapter = myThisBookAdapter;
+        }
 
-        final Bookmark bookmark = adapter.getItem(position);
+        final Bookmark bookmark = (Bookmark) adapter.getItem(position);
         switch (item.getItemId()) {
             case OPEN_ITEM_ID://打开想法
                 gotoBookmark(bookmark);
@@ -412,8 +426,15 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
         myCollection.saveBookmark(bookmark);
         final Book book = myCollection.getBookById(bookmark.BookId);
         if (book != null) {
-            AppManager.getInstance().killActivity(FBReader.class);
-            FBReader.openBookActivity(this, book, bookmark);
+//            int paragraphIndex = bookmark.getParagraphIndex();
+//            int paragraphIndex1 = kooreader.getCurrentTOCElement().getReference().ParagraphIndex;
+//            int abs = paragraphIndex1 - paragraphIndex;
+//            kooreader.getTextView().gotoPosition(paragraphIndex1+abs,0,0);
+//            FBReader.openBookActivity(this, book, bookmark);
+            kooreader.getTextView().gotoPosition(bookmark);
+            kooreader.getViewWidget().reset();
+            kooreader.getViewWidget().repaint();
+            finish();
         } else {
             UIMessageUtil.showErrorMessage(this, "cannotOpenBook");
         }
@@ -443,6 +464,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                             final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
                             if (position < 0 && b.getStyleId() != 5) {
                                 myBookmarksList.add(-position - 1, b);
+
                             }
                         }
                     }
@@ -502,6 +524,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
         public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
             final int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
             if (getItem(position) != null) {
+                isBookMark = false;
                 menu.add(0, OPEN_ITEM_ID, 0, "打开想法");
                 menu.add(0, EDIT_ITEM_ID, 0, "编辑想法");
                 menu.add(0, DELETE_ITEM_ID, 0, "删除想法");
@@ -622,34 +645,96 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 
     private final class BookmarkAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 
+        private ListView mListView;
+        private final List<Bookmark> myBookmarksList =
+                Collections.synchronizedList(new LinkedList<Bookmark>());
+
+        public BookmarkAdapter(ListView markLv) {
+            mListView = markLv;
+            mListView.setAdapter(this);
+            mListView.setOnItemClickListener(this);
+        }
+
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
+            final int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
+            if (getItem(position) != null) {
+                isBookMark = true;
+                menu.add(0, OPEN_ITEM_ID, 0, "打开书签");
+                menu.add(0, DELETE_ITEM_ID, 0, "删除书签");
+            }
         }
 
         @Override
         public int getCount() {
-            return 0;
+            return myBookmarksList.size();
         }
 
         @Override
-        public Object getItem(int position) {
-            return null;
+        public final Bookmark getItem(int position) {
+            return myBookmarksList.get(position) ;
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+            Viewholder holder = null;
+            if (convertView != null) {
+                holder = (Viewholder) convertView.getTag();
+            }else {
+                convertView = UIUtil.inflate(R.layout.item_bookmark);
+                holder = new Viewholder(convertView);
+                convertView.setTag(holder);
+            }
+
+            if (myBookmarksList.size()>0){//隐藏空界面
+                markLv.setVisibility(View.VISIBLE);
+                emptyRl.setVisibility(View.INVISIBLE);
+            }else {//显示空界面
+                emptyRl.setVisibility(View.VISIBLE);
+                markLv.setVisibility(View.INVISIBLE);
+            }
+
+            TOCTree currentTOCElement = kooreader.getCurrentTOCElement(getItem(position).getParagraphIndex());
+            int paragraphIndex = currentTOCElement.getReference().ParagraphIndex;
+            String text = currentTOCElement.getText().toString();
+            holder.tv.setText("章节："+text+"     "+"第"+paragraphIndex+"段");
+
+            return convertView;
         }
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final Bookmark bookmark = getItem(position);
+            if (bookmark != null) {
+                gotoBookmark(bookmark);
+            }
+        }
+        public void addAll(final List<Bookmark> bookmarks) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    synchronized (myBookmarksList) {
+                        for (Bookmark b : bookmarks) {
+                            final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
+                            if (position < 0 && b.getStyleId() == 5) {
+                                myBookmarksList.add(-position - 1, b);
 
+                            }
+                        }
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+        }
+        class Viewholder{
+            TextView tv;
+            public Viewholder(View itemView) {
+                tv = (TextView) itemView.findViewById(R.id.tv_item);
+            }
         }
     }
 }

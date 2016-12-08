@@ -261,6 +261,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                             Bundle bundle = new Bundle();
                             bundle.putParcelable("bean", bean);
                             bundle.putInt("position", position-2);
+                            bundle.putString("type", "");
                             UIUtil.openActivity(mActivity, CampaignActivity.class, bundle);
                         }
                     });
