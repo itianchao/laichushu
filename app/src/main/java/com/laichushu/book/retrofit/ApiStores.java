@@ -45,6 +45,7 @@ import com.laichushu.book.bean.netbean.ForgetPwd_Paramet;
 import com.laichushu.book.bean.netbean.GradeDetails_Paramet;
 import com.laichushu.book.bean.netbean.GradeRemarksResult;
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
+import com.laichushu.book.bean.netbean.HomeCategory_Paramet;
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
@@ -194,7 +195,7 @@ public interface ApiStores {
 
     //首页分类接口
     @POST("category/findCategoryList")
-    Observable<CategoryModle> getCategoryList();
+    Observable<CategoryModle> getCategoryList(@Body HomeCategory_Paramet paramet);
 
     //首页搜索接口
     @POST("searchArticle/searchByName")

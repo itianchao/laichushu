@@ -106,6 +106,8 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 	private volatile BookmarksAdapter myThisBookAdapter;//想法adapter
 	private ListView thisBookListView;
 	private String bgValue;
+	private RelativeLayout emptyRl;
+	private ListView markLv;
 
 	@Override
 	protected void onCreate(Bundle bundle) {
@@ -150,6 +152,8 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 
 		view3 = mInflater.inflate(R.layout.list_note, null);
 		rlNote = (RelativeLayout) view3.findViewById(R.id.rl_note);
+		emptyRl = (RelativeLayout) view3.findViewById(R.id.rl_null);//空
+		markLv = (ListView) view3.findViewById(R.id.lv_mark);
 
 		/**
 		 * 设置背景与阅读背景一致
