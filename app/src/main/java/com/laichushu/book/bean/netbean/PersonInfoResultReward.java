@@ -49,7 +49,17 @@ public class PersonInfoResultReward implements Serializable {
         private String sign;
         private String city;
         private String sex;
-        private long birthday;
+        private String birthday;
+        private String identityAuthStatus;
+
+        public String getIdentityAuthStatus() {
+            return identityAuthStatus;
+        }
+
+        public void setIdentityAuthStatus(String identityAuthStatus) {
+            this.identityAuthStatus = identityAuthStatus;
+        }
+
 
         public String getId() {
             return id;
@@ -99,11 +109,11 @@ public class PersonInfoResultReward implements Serializable {
             this.sex = sex;
         }
 
-        public long getBirthday() {
+        public String getBirthday() {
             return birthday;
         }
 
-        public void setBirthday(long birthday) {
+        public void setBirthday(String birthday) {
             this.birthday = birthday;
         }
     }

@@ -1,9 +1,12 @@
 package com.laichushu.book.mvp.campaign;
 
 import com.google.gson.Gson;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.LoggerUtil;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.bean.netbean.ActivityResult_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
@@ -113,4 +116,32 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
             }
         });
     }
+    /**
+     * 投稿
+     *
+     * @param articleId
+     * @param pressId
+     */
+    public void voteBook(String articleId, String pressId) {
+        mvpView.showLoading();
+        LoggerUtil.e("投稿");
+        ArticleVote_Paramet paramet = new ArticleVote_Paramet(articleId, ConstantValue.USERID, pressId);
+        addSubscription(apiStores.articleVote(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.articleVote(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail3("code:" + code + "\nmsg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
 }

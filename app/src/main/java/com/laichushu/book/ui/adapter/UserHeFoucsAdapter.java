@@ -77,6 +77,7 @@ public class UserHeFoucsAdapter extends RecyclerView.Adapter<UserHeFoucsAdapter.
             public void onClick(View v) {
                 //跳转用户主页
                 Bundle bundle = new Bundle();
+                bundle.putInt("type", 2);
                 bundle.putSerializable("bean", dataBeen.get(position));
                 if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSourceUserId())) {
                     UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);

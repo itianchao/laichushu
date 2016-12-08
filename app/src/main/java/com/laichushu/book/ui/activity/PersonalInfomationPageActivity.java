@@ -1,6 +1,6 @@
 package com.laichushu.book.ui.activity;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +11,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
@@ -84,9 +85,6 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
         switch (v.getId()) {
             case R.id.iv_title_finish:
                 this.finish();
-                Bundle letter = new Bundle();
-                letter.putString("type", "4");
-                UIUtil.openActivity(mActivity, MsgLikeDetailsActivity.class, letter);
                 break;
             case R.id.iv_sendMsg:
                 mvpPresenter.topicDetailCommentSave(edInput, dataBean.getMsgId());
@@ -172,10 +170,10 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功！");
             mActivity.finish();
-            Bundle letter = new Bundle();
-            letter.putString("type", "4");
-            UIUtil.openActivity(mActivity, MsgLikeDetailsActivity.class, letter);
-
+            //发广播
+            Intent intent = new Intent(ConstantValue.ACTION_UPDATE_DATA_PERINFO);
+            intent.addCategory(mActivity.getPackageName());
+            mActivity.sendBroadcast(intent);
         } else {
             ToastUtil.showToast("删除失败");
             LoggerUtil.e(model.getErrMsg());

@@ -1,5 +1,9 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +19,7 @@ import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
 import com.laichushu.book.ui.adapter.MessageLikeAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.fragment.MineFragment;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
@@ -34,7 +39,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     private int PAGE_NO = 1;
     //1 : 喜欢  2. 打赏 3 关注 4私信 5 订阅
     private String type;
-
+    private MsgLikeDetailsActivity.UpdateReceiver mUpdateReceiver;
     @Override
     protected MessageCommentPresenter createPresenter() {
         return new MessageCommentPresenter(this);
@@ -52,6 +57,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     @Override
     protected void initData() {
         super.initData();
+        registerPlayerReceiver();
         type = getIntent().getStringExtra("type");
         switch (type) {
             case "1":
@@ -244,5 +250,29 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     @Override
     public void getDelPerIdfoDataSuccess(RewardResult model) {
 
+    }
+    public class UpdateReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (ConstantValue.ACTION_UPDATE_DATA_PERINFO.equals(action)) {
+                //更新信息
+                 type="4";
+                initData();
+                ToastUtil.showToast("update date!");
+            }
+        }
+    }
+    private void registerPlayerReceiver() {
+        if (mUpdateReceiver == null) {
+            mUpdateReceiver = new MsgLikeDetailsActivity.UpdateReceiver();
+
+            IntentFilter filter = new IntentFilter();
+            filter.addCategory(mActivity.getPackageName());
+
+            filter.addAction(ConstantValue.ACTION_UPDATE_DATA_PERINFO);
+            mActivity.registerReceiver(mUpdateReceiver, filter);
+        }
     }
 }

@@ -1,5 +1,9 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +19,7 @@ import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.global.BaseApplication;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.init.InitPresenter;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -63,6 +68,7 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     };
     private Cache_JsonDao cache_jsonDao;
 
+    private InitActivity.UpdateReceiver mUpdateReceiver;
     @Override
     protected void initView() {
         setContentView(R.layout.activity_init);
@@ -74,6 +80,7 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
 
     @Override
     protected void initData() {
+        registerPlayerReceiver();
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         cache_jsonDao = daoSession.getCache_JsonDao();
         List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder()
@@ -194,5 +201,31 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     @Override
     public void finish() {
         super.finish();
+    }
+    public class UpdateReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (ConstantValue.ACTION_UPDATE_DATA_MINEINFO.equals(action)) {
+                //更新信息
+                mvpPresenter.loadMineData();
+            }
+        }
+    }
+    private void registerPlayerReceiver() {
+        if (mUpdateReceiver == null) {
+            mUpdateReceiver = new InitActivity.UpdateReceiver();
+            IntentFilter filter = new IntentFilter();
+            filter.addCategory(mActivity.getPackageName());
+            filter.addAction(ConstantValue.ACTION_UPDATE_DATA_MINEINFO);
+            mActivity.registerReceiver(mUpdateReceiver, filter);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mUpdateReceiver);
     }
 }

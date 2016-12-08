@@ -1,5 +1,6 @@
 package com.laichushu.book.retrofit;
 
+import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.BookDetails_Paramet;
 import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
@@ -549,4 +550,7 @@ public interface ApiStores {
     //私信界面-删除私信
     @POST("perInformation/delPerInfo")
     Observable<RewardResult> getDelPerInfoDetails(@Body DelPerInfo_Paramet paramet);
+    //发送私信
+    @POST("perInformation/addPerMsgInfo")
+    Observable<RewardResult> getAddPerMsgInfDetails(@Body AddPerMsgInfo_Paramet paramet);
 }

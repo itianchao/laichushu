@@ -22,9 +22,9 @@ public class GlideUitl {
      */
     public static void loadImg(Context mContext, String path, ImageView mImageView) {
         if (!TextUtils.isEmpty(path)){
-            Glide.with(mContext).load(path).centerCrop().into(mImageView);
+            Glide.with(mContext).load(path).asBitmap().fitCenter() .into(mImageView);
         }else {
-            Glide.with(mContext).load(R.drawable.img_default).centerCrop().into(mImageView);
+            Glide.with(mContext).load(R.drawable.img_default).asBitmap().fitCenter().into(mImageView);
         }
     }
     public static void loadImg(Context mContext, int path, ImageView mImageView) {
@@ -34,6 +34,7 @@ public class GlideUitl {
             Glide.with(mContext).load(R.drawable.img_default).centerCrop().into(mImageView);
         }
     }
+
     /**
      * 指定大小加载图片
      *
@@ -45,6 +46,8 @@ public class GlideUitl {
      */
     public static void loadImg(Context mContext, String path, int width, int height, ImageView mImageView) {
         if (!TextUtils.isEmpty(path)){
+
+
             Glide.with(mContext).load(path).override(width, height).centerCrop().into(mImageView);
 
         }else {
@@ -60,7 +63,7 @@ public class GlideUitl {
      */
     public static void loadRandImg(Context mContext, String path, ImageView mImageView) {
         if (!TextUtils.isEmpty(path)){
-            Glide.with(mContext).load(path).centerCrop().transform(new GlideCircleTransform(mContext)).into(mImageView);
+            Glide.with(mContext).load(path).asBitmap().fitCenter().transform(new GlideCircleTransform(mContext)).into(mImageView);
         }else {
             Glide.with(mContext).load(R.drawable.img_default).centerCrop().transform(new GlideCircleTransform(mContext)).into(mImageView);
         }

@@ -7,11 +7,13 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,12 +27,12 @@ import com.laichushu.book.db.Cache_JsonDao;
 import com.laichushu.book.db.City_Id;
 import com.laichushu.book.db.City_IdDao;
 import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.global.BaseApplication;
-import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.adapter.ProvinceAdapter;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.fragment.MineFragment;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.WheelView;
 import com.laichushu.book.utils.DateUtil;
@@ -40,9 +42,9 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.pickerview.OptionsPopupWindow;
 import com.pickerview.TimePopupWindow;
-import com.pickerview.lib.City;
-import com.pickerview.lib.Province;
 import com.yanzhenjie.album.Album;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,20 +64,20 @@ import okhttp3.RequestBody;
  */
 public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private ImageView ivBack, ivHead;
-    private TextView tvTitle, tvRight, tvIdCard, tvSex, edBirthday;
-    private EditText edNickName, edCity, edSign;
+    private TextView tvTitle, tvRight, tvIdCard, tvSex, edBirthday, tvCity;
+    private EditText edNickName, edSign;
     private PersonalCentreResult resultData = new PersonalCentreResult();
-    //    private Pop_Syllabus_Date pop_PlayPartner_Date;
     private RelativeLayout rlIdCard, rlHead, rlArea;
     private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
     private File photoFile;
+    private String curProCode = null,photoUrl=null;
     //时间选择器
     private TimePopupWindow timePopupWindow;
-    private OptionsPopupWindow sexPopupWindow, areaPopWindow;
-    private String sexMsg;
+    private OptionsPopupWindow sexPopupWindow;
     private Cache_JsonDao cache_jsonDao;
     private City_IdDao city_idDao;
     private List<City_Id> city_idList;
+    private MineFragment mf;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -84,7 +86,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
     @Override
     public View createSuccessView() {
-
         View inflate = UIUtil.inflate(R.layout.activity_edit_myselfe_infor);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         ivHead = ((ImageView) inflate.findViewById(R.id.iv_editHead));
@@ -93,13 +94,13 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         tvIdCard = ((TextView) inflate.findViewById(R.id.tv_idCardContent));
         edNickName = ((EditText) inflate.findViewById(R.id.ed_nickNameContent));
         tvSex = ((TextView) inflate.findViewById(R.id.ed_sexContent));
-        edCity = ((EditText) inflate.findViewById(R.id.ed_areaContent));
+        tvCity = ((TextView) inflate.findViewById(R.id.tv_areaContent));
         edSign = ((EditText) inflate.findViewById(R.id.ed_signatureContent));
         edBirthday = ((TextView) inflate.findViewById(R.id.ed_birthdayContent));
         rlIdCard = ((RelativeLayout) inflate.findViewById(R.id.rl_idCard));
         rlHead = ((RelativeLayout) inflate.findViewById(R.id.rl_editHeadImg));
         rlArea = ((RelativeLayout) inflate.findViewById(R.id.rl_area));
-
+        mf = new MineFragment();
         //initListener;
         ivBack.setOnClickListener(this);
         rlHead.setOnClickListener(this);
@@ -114,16 +115,15 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     @Override
     protected void initData() {
         super.initData();
+        DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
+        city_idDao = daoSession.getCity_IdDao();
+        city_idList = city_idDao.queryBuilder().build().list();
         initPersonInfor();
         tvTitle.setText("编辑个人信息");
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setText("完成");
         edBirthday.setInputType(InputType.TYPE_NULL);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-
-        DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
-        city_idDao = daoSession.getCity_IdDao();
-        city_idList = city_idDao.queryBuilder().build().list();
     }
 
 
@@ -134,8 +134,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 this.finish();
                 break;
             case R.id.tv_title_right:
-                //测试
-                edCity.setText("01");
                 if (!judgeAttrbute()) {
                     return;
                 }
@@ -143,10 +141,14 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), SharePrefManager.getUserId().toString());
                 RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), edNickName.getText().toString());
                 RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), tvSex.getText().toString());
-                RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), edCity.getText().toString());
+                RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), curProCode);
                 RequestBody requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), edSign.getText().toString());
                 RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"), edBirthday.getText().toString());
-                RequestBody requestBody7 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(photoFile));
+                RequestBody requestBody7 = null;
+                if (photoFile != null) {
+                    requestBody7 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(photoFile));
+                    photoUrl=null;
+                }
                 params.put("userId", requestBody1);
                 params.put("nickName", requestBody2);
                 params.put("sex", requestBody3);
@@ -186,7 +188,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 setTimePopupwindow();
                 break;
             case R.id.rl_area:
-               initAreaSelector();
+                initAreaSelector();
                 break;
             case R.id.rl_idCard:
                 Bundle bundle = new Bundle();
@@ -208,6 +210,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         resultData = (PersonalCentreResult) getIntent().getSerializableExtra("result");
         if (resultData != null) {
             GlideUitl.loadRandImg(mActivity, resultData.getPhoto(), ivHead);
+            photoUrl=resultData.getPhoto();
             edNickName.setText(resultData.getNickName());
             if (TextUtils.isEmpty(resultData.getSex())) {
                 tvSex.setText("男");
@@ -218,7 +221,8 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 edBirthday.setText(resultData.getBirthday().toString());
             }
             if (!TextUtils.isEmpty(resultData.getCity())) {
-                edCity.setText(resultData.getCity());
+                curProCode = resultData.getCity();
+                tvCity.setText(getProvinceByProcode(resultData.getCity()));
             }
             if (!TextUtils.isEmpty(resultData.getAtteStatus())) {
                 switch (Integer.parseInt(resultData.getAtteStatus())) {
@@ -256,10 +260,10 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             return false;
         }
         if (TextUtils.isEmpty(tvSex.getText())) {
-            ToastUtil.showToast("强选择输入性别!");
+            ToastUtil.showToast("请选择输入性别!");
             return false;
         }
-        if (TextUtils.isEmpty(edCity.getText())) {
+        if (TextUtils.isEmpty(curProCode)) {
             ToastUtil.showToast("请输入您所在城市!");
             return false;
         }
@@ -271,10 +275,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             ToastUtil.showToast("请输入个性签名!");
             return false;
         }
-        if (photoFile == null) {
-            ToastUtil.showToast("请选择头像!");
-            return false;
-        }
+
         return true;
     }
 
@@ -332,14 +333,15 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         json.setBirthday(result.getData().getBirthday() + "");
         json.setCity(result.getData().getCity());
         json.setSign(result.getData().getSign());
-        json.setPhoto(result.getData().getPhoto());
-//        json.setPhoto();
-        //
+        if(photoUrl==null){
+            json.setPhoto(result.getData().getPhoto());
+        }else {
+            json.setPhoto(photoUrl);
+        }
+
         cache_json.setJson(new Gson().toJson(json));
         cache_jsonDao.update(cache_json);
-        Intent intent = new Intent(ConstantValue.ACTION_UPDATE_DATA);
-        intent.addCategory(mActivity.getPackageName());
-        mActivity.sendBroadcast(intent);
+        EventBus.getDefault().postSticky(new RefrushMineEvent(true));
     }
 
 
@@ -372,18 +374,6 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         }
     }
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R.id.sex_man:
-                sexMsg = "男";
-                break;
-            case R.id.sex_femal:
-                sexMsg = "女";
-                break;
-        }
-
-    }
     //-----------省市选择器---------------
 
     /**
@@ -419,6 +409,22 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     }
 
     /**
+     * 通过省份code获取省份名字
+     *
+     * @param proCode
+     * @return
+     */
+    private String getProvinceByProcode(String proCode) {
+        String result = null;
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (proCode.equals(city_idList.get(i).getProCode())) {
+                result = city_idList.get(i).getProvince();
+            }
+        }
+        return result;
+    }
+
+    /**
      * @param proCode
      * @return 根据proCode查询城市
      */
@@ -434,21 +440,59 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     }
 
     public void initAreaSelector() {
-        AlertDialog mAlertDialog = new AlertDialog.Builder(mActivity).create();
-        mAlertDialog.show();
-        View view = UIUtil.inflate(R.layout.item_pop_myview);
-        mAlertDialog.getWindow().setContentView(view);
-        mAlertDialog.setTitle("选择城市");
-        WheelView wvPro = (WheelView) view.findViewById(R.id.wv_province);
-        final WheelView wvCity = ((WheelView) view.findViewById(R.id.lv_city));
-        wvPro.setOffset(5);
-        wvCity.setOffset(5);
-        wvPro.setItems(getProvonce());
-        wvPro.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
+        final AlertDialog alertDialog = dialogBuilder.create();
+        LayoutInflater inflater = LayoutInflater.from(mActivity);
+        View customerView = inflater.inflate(R.layout.item_pop_myview, null);
+        WheelView wvProvince = ((WheelView) customerView.findViewById(R.id.wv_province));
+        final WheelView wvCity = ((WheelView) customerView.findViewById(R.id.wv_city));
+        TextView tvCancel = ((TextView) customerView.findViewById(R.id.tv_cancel));
+        TextView tvSubmit = ((TextView) customerView.findViewById(R.id.tv_submit));
+
+        wvProvince.setOffset(2);
+        wvProvince.setSeletion(0);
+        wvCity.setOffset(2);
+        wvCity.setSeletion(0);
+        wvProvince.setItems(getProvonce());
+        wvCity.setItems(getCity("01"));
+        final String[] curProvince = {null};
+        wvProvince.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(int position, String item) {
-                wvCity.setItems(getCity(getProCodeByProvince(getProvonce().get(position))));
+                curProvince[0] = item;
+                wvCity.setItems(getCity(getProCodeByProvince(item)));
             }
         });
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //提交数据
+                tvCity.setText(curProvince[0]);
+                curProCode = getProCodeByProvince(curProvince[0]);
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.setView(customerView);
+        alertDialog.show();
+        WindowManager m = getWindowManager();
+        Display display = m.getDefaultDisplay();  //为获取屏幕宽、高
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setLayout(display.getWidth(), display.getHeight() / 2);
+        alertDialog.getWindow().setWindowAnimations(R.style.timepopwindow_anim_style);
+        alertDialog.show();
+
     }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+    }
+
+
 }

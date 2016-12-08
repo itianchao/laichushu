@@ -210,7 +210,6 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         //跳转私信详情
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("perInfoDetails", dataBeen.get(position));
-                        context.finish();
                         UIUtil.openActivity(context,PersonalInfomationPageActivity.class,bundle);
 
                     }

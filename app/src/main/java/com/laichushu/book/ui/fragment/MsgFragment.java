@@ -2,6 +2,7 @@ package com.laichushu.book.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -34,6 +35,7 @@ import java.util.List;
  * Created by wangtong on 2016/10/17.
  */
 public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implements MessageCommentView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
+    private ImageView ivFinish;
     private TextView tvTitle;
     private RelativeLayout rlComment, rlLike, rlReward, rlFocus, rlLetter, rlScribe, rlActivityMsg, rlOtherMsg;
     private PullLoadMoreRecyclerView mRecyclerView;
@@ -52,6 +54,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
     @Override
     public View createSuccessView() {
         View mRootView = UIUtil.inflate(R.layout.fragment_msg);
+        ivFinish = (ImageView) mRootView.findViewById(R.id.iv_title_finish);
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title);
         rlComment = (RelativeLayout) mRootView.findViewById(R.id.rl_comment);
         mRecyclerView = (PullLoadMoreRecyclerView) mRootView.findViewById(R.id.ryv_subMission);
@@ -72,6 +75,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
     protected void initData() {
         super.initData();
         tvTitle.setText("消息");
+        ivFinish.setVisibility(View.INVISIBLE);
 
         rlComment.setOnClickListener(this);
         llSys.setOnClickListener(this);

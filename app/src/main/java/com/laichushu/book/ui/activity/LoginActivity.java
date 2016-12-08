@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.graphics.Paint;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -50,6 +51,8 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     @Override
     protected void initData() {
         titleTv.setText(UIUtil.getString(R.string.login));
+        forgetTv.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+        forgetTv.getPaint().setFakeBoldText(true);
         backIv.setVisibility(View.INVISIBLE);
         loginBtn.setOnClickListener(this);
         registerTv.setOnClickListener(this);

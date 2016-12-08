@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/shape_rectangle_nocolor"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_dialogMsg"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_rectangle_nocolor"
+        android:gravity="top"
+        android:hint="点击输入私信内容"
+        android:padding="8dp"
+        android:textColor="@color/characterLightGray2"
+        android:textColorHint="@color/hint"
+        android:textSize="@dimen/edit" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_rectangle_nocolor"
+            android:gravity="center"
+            android:text="取 消"
+            android:textColor="@color/global"
+            android:textSize="@dimen/edit" />
+
+        <View
+            android:layout_width="24dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/albumTransparent"
+            android:gravity="center_horizontal"
+            android:textColor="@color/characterLightGray2" />
+
+        <TextView
+            android:id="@+id/btn_ok"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_rectangle_nocolor"
+            android:gravity="center"
+            android:text="确 认"
+            android:textColor="@color/global"
+            android:textSize="@dimen/edit" />
+    </LinearLayout>
+</LinearLayout>

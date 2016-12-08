@@ -45,7 +45,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/iv_IdentityNickInto"
                     android:background="@null"
-                    android:text="王小二"
+                    android:hint="请输入姓名"
                     android:textColor="@color/edit2"
                     android:textSize="@dimen/edit2"
                     android:textStyle="bold" />
@@ -88,8 +88,8 @@
                     android:layout_toLeftOf="@+id/iv_idNumInto"
                     android:background="@null"
                     android:inputType="number"
-                    android:text="12312114212223"
                     android:textColor="@color/edit2"
+                    android:hint="请输入身份证号"
                     android:textSize="@dimen/edit2"
                     android:textStyle="bold" />
 
