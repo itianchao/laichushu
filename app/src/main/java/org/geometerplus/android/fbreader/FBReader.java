@@ -400,9 +400,9 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
                 } else {//书签
                     BookCollectionShadow myCollection = getCollection();
-                    Bookmark bookmark = myFBReaderApp.createBookmark(10, true);
+                    Bookmark bookmark = myFBReaderApp.createBookmark(30, true);
                     bookmark.setStyleId(5);
-                    bookmark.setText("");
+//                    bookmark.setText("");
 
                     for (BookmarkQuery query = new BookmarkQuery(myBook, 10000); ; query = query.next()) {
                         final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);

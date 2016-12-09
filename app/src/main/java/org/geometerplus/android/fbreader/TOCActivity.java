@@ -653,6 +653,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
             mListView = markLv;
             mListView.setAdapter(this);
             mListView.setOnItemClickListener(this);
+            mListView.setOnCreateContextMenuListener(this);
         }
 
         @Override
@@ -702,7 +703,12 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
             TOCTree currentTOCElement = kooreader.getCurrentTOCElement(getItem(position).getParagraphIndex());
             int paragraphIndex = currentTOCElement.getReference().ParagraphIndex;
             String text = currentTOCElement.getText().toString();
-            holder.tv.setText("章节："+text+"     "+"第"+paragraphIndex+"段");
+            String content = getItem(position).getText().toString();
+//            holder.tv.setText("章节："+text+"     "+"第"+paragraphIndex+"段");
+            if (content.length()>5){
+                content = content.substring(0,4);
+            }
+            holder.tv.setText("章节："+text+"     "+content+"......");
 
             return convertView;
         }

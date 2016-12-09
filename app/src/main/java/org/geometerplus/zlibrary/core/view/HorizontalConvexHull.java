@@ -21,6 +21,8 @@ package org.geometerplus.zlibrary.core.view;
 
 import android.graphics.Rect;
 
+import org.geometerplus.fbreader.book.Label;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -92,14 +94,14 @@ public final class HorizontalConvexHull implements Hull {
 //					continue;
 				}
 				if ((previous.bottom != current.top) &&
-					(current.left <= previous.right) &&
-					(previous.left <= current.right)) {
+						(current.left <= previous.right) &&
+						(previous.left <= current.right)) {
 					iter.previous();
 					iter.add(new Rect(
-						Math.max(previous.left, current.left),
-						previous.bottom,
-						Math.min(previous.right, current.right),
-						current.top
+							Math.max(previous.left, current.left),
+							previous.bottom,
+							Math.min(previous.right, current.right),
+							current.top
 					));
 					iter.next();
 				}
@@ -129,20 +131,23 @@ public final class HorizontalConvexHull implements Hull {
 		}
 		return false;
 	}
+
 	int offsets = 0;
+
 	public void draw(ZLPaintContext context, int mode) {
 		if (mode == DrawMode.None) {
 			return;
 		}
 
 		final LinkedList<Rect> rectangles = new LinkedList<Rect>(myRectangles);
+
 		while (!rectangles.isEmpty()) {
 			final LinkedList<Rect> connected = new LinkedList<Rect>();
 			Rect previous = null;
 			for (final Iterator<Rect> iter = rectangles.iterator(); iter.hasNext(); ) {
 				final Rect current = iter.next();
 				if ((previous != null) &&
-					((previous.left > current.right) || (current.left > previous.right))) {
+						((previous.left > current.right) || (current.left > previous.right))) {
 					break;
 				}
 				iter.remove();
@@ -153,11 +158,14 @@ public final class HorizontalConvexHull implements Hull {
 			final LinkedList<Integer> xList = new LinkedList<Integer>();
 			final LinkedList<Integer> yList = new LinkedList<Integer>();
 			int x = 0, xPrev = 0;
+
 			int yPrev = 0;
+
 			final ListIterator<Rect> iter = connected.listIterator();
 			Rect r = iter.next();
 			x = r.right + offsets;
-			xList.add(x); yList.add(r.top);
+			xList.add(x);
+			yList.add(r.top);
 			while (iter.hasNext()) {
 				xPrev = x;
 				r = iter.next();
@@ -170,22 +178,27 @@ public final class HorizontalConvexHull implements Hull {
 				yList.add(y);
 //				}
 			}
-			xList.add(x); yList.add(r.bottom + offsets);
+			xList.add(x);
+			yList.add(r.bottom + offsets);
 
 			r = iter.previous();
 			x = r.left - offsets;
-			xList.add(x); yList.add(r.bottom + offsets);
+			xList.add(x);
+			yList.add(r.bottom + offsets);
 			while (iter.hasPrevious()) {
 				xPrev = x;
 				r = iter.previous();
 				x = r.left - offsets;
-				if (x != xPrev) {
-					final int y = (x > xPrev) ? r.bottom : r.bottom + offsets;
-					xList.add(xPrev); yList.add(y);
-					xList.add(x); yList.add(y);
-				}
+//				if (x != xPrev) {
+				final int y = (x > xPrev) ? r.bottom : r.bottom + offsets;
+				xList.add(xPrev);
+				yList.add(y);
+				xList.add(x);
+				yList.add(y);
+//				}
 			}
-			xList.add(x); yList.add(r.top);
+			xList.add(x);
+			yList.add(r.top);
 
 			final int xs[] = new int[xList.size()];
 			final int ys[] = new int[yList.size()];
@@ -198,14 +211,21 @@ public final class HorizontalConvexHull implements Hull {
 				ys[count++] = yy;
 			}
 
-			if ((mode & DrawMode.Fill) == DrawMode.Fill) {
+			/**
+			 * »­±³¾°ÑÕÉ«ÊéÇ©
+			 */
+			if ((mode & DrawMode.Line) == DrawMode.Line) {
+				context.drawLine(xs, ys);
+			} else if ((mode & DrawMode.Fill) == DrawMode.Fill) {
 				context.fillPolygon(xs, ys);
-//				context.drawPolygonalLine(xs, ys);
-//				context.drawLine(xs, ys);
-			}
-			if ((mode & DrawMode.Outline) == DrawMode.Outline) {
-				context.drawOutline(xs, ys);
-			}
+			} else
+
+			/**
+			 * »­Í¸Ã÷±³¾°ÑÕÉ«ÊéÇ©
+			 */
+				if ((mode & DrawMode.Outline) == DrawMode.Outline) {
+					context.drawOutline(xs, ys);
+				}
 		}
 	}
 }

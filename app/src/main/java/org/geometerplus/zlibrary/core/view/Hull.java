@@ -24,6 +24,7 @@ public interface Hull {
 		int None = 0;
 		int Outline = 1;
 		int Fill = 2;
+		int Line = 3;
 	};
 
 	void draw(ZLPaintContext context, int mode);
