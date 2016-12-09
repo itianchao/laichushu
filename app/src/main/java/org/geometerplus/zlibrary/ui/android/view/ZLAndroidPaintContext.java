@@ -544,7 +544,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         myOutlinePaint.setStrokeWidth(5);
 
         for (int i = 0; i < drawY.size(); i++) {
-            LoggerUtil.e(templeft.get(i)+","+tempRight.get(i)+","+drawY.get(i)+"\n");
+//            LoggerUtil.e(templeft.get(i)+","+tempRight.get(i)+","+drawY.get(i)+"\n");
             if (i != 0 && drawY.get(i) - myTextPaint.getTextSize() > drawY.get(i - 1) || i == 0) { // ÅÅ³ýË«ÖØÏß
                     myCanvas.drawLine(templeft.get(i), drawY.get(i) + drawOffect, tempRight.get(i), drawY.get(i) + drawOffect, myOutlinePaint);
 //                if (i == 0) {

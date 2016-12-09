@@ -32,6 +32,10 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+/**
+ * 选择颜色 想法 弹窗
+ */
 class SelectionPopup extends PopupPanel implements View.OnClickListener {
 	final static String ID = "SelectionPopup";
 	private Bookmark myBookmark;
