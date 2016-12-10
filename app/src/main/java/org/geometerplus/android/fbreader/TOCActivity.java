@@ -38,7 +38,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.utils.AppManager;
 import com.laichushu.book.utils.UIUtil;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -55,12 +54,9 @@ import org.geometerplus.fbreader.book.HighlightingStyle;
 import org.geometerplus.fbreader.book.IBookCollection;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.FBView;
-import org.geometerplus.fbreader.formats.IFormatPluginCollection;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.util.ZLColor;
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
@@ -360,9 +356,13 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                     final boolean flagThisBookTab = book.getId() == myBook.getId();
 
                     final Map<String, Bookmark> oldBookmarks = new HashMap<String, Bookmark>();
+                    final Map<String, Bookmark> oldBookmarks2 = new HashMap<String, Bookmark>();
                     if (flagThisBookTab) {
                         for (Bookmark b : myThisBookAdapter.bookmarks()) {
                             oldBookmarks.put(b.Uid, b);
+                        }
+                        for (Bookmark b : bookmarkAdapter.bookmarks()) {
+                            oldBookmarks2.put(b.Uid, b);
                         }
                     }
 
@@ -378,9 +378,16 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                                 myThisBookAdapter.replace(old, b);
                             }
                         }
+                        for (Bookmark b : loaded) {
+                            final Bookmark old = oldBookmarks2.remove(b.Uid);
+                            if (flagThisBookTab) {
+                                bookmarkAdapter.replace(old, b);
+                            }
+                        }
                     }
                     if (flagThisBookTab) {
                         myThisBookAdapter.removeAll(oldBookmarks.values());
+                        bookmarkAdapter.removeAll(oldBookmarks.values());
                     }
                 }
             }
@@ -416,6 +423,14 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                 return true;
             case DELETE_ITEM_ID://删除想法
                 myCollection.deleteBookmark(bookmark);
+                if (isBookMark){
+                    bookmarkAdapter.myBookmarksList.remove(bookmark);
+                    bookmarkAdapter.notifyDataSetChanged();
+                    if (bookmarkAdapter.myBookmarksList.size() == 0){
+                        emptyRl.setVisibility(View.VISIBLE);
+                        markLv.setVisibility(View.INVISIBLE);
+                    }
+                }
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -482,6 +497,9 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 
         public void replace(final Bookmark old, final Bookmark b) {
             if (old != null && areEqualsForView(old, b)) {
+                return;
+            }
+            if (b.getStyleId()==5){
                 return;
             }
             runOnUiThread(new Runnable() {
@@ -736,11 +754,55 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                 }
             });
         }
+
+        public void replace(final Bookmark old, final Bookmark b) {
+            if (old != null && areEqualsForView(old, b)) {
+                return;
+            }
+            if (b.getStyleId()!=5){
+                return;
+            }
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    synchronized (myBookmarksList) {
+                        if (old != null) {
+                            myBookmarksList.remove(old);
+                        }
+                        final int position = Collections.binarySearch(myBookmarksList, b, myComparator);
+                        if (position < 0) {
+                            myBookmarksList.add(-position - 1, b);
+                        }
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+        }
+        private boolean areEqualsForView(Bookmark b0, Bookmark b1) {
+            return
+                    b0.getStyleId() == b1.getStyleId() &&
+                            b0.getText().equals(b1.getText()) &&
+                            b0.getTimestamp(Bookmark.DateType.Latest).equals(b1.getTimestamp(Bookmark.DateType.Latest));
+        }
+
         class Viewholder{
             TextView tv;
             public Viewholder(View itemView) {
                 tv = (TextView) itemView.findViewById(R.id.tv_item);
             }
+        }
+        public void removeAll(final Collection<Bookmark> bookmarks) {
+            if (bookmarks.isEmpty()) {
+                return;
+            }
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    myBookmarksList.removeAll(bookmarks);
+                    notifyDataSetChanged();
+                }
+            });
+        }
+        public List<Bookmark> bookmarks() {
+            return Collections.unmodifiableList(myBookmarksList);
         }
     }
 }
