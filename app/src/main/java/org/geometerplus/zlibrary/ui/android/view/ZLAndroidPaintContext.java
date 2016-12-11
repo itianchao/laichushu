@@ -22,7 +22,6 @@ package org.geometerplus.zlibrary.ui.android.view;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.Matrix;
@@ -32,8 +31,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-
-import com.laichushu.book.utils.LoggerUtil;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
@@ -46,7 +43,6 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -553,6 +549,14 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 //                    myCanvas.drawLine(37, drawY.get(i) + drawOffect, 1008, drawY.get(i) + drawOffect, myOutlinePaint);
 //                } else {
 //                }
+            }
+            if (i == drawY.size()-1){
+                myOutlinePaint.setStrokeWidth(2);
+                myOutlinePaint.setTextSize(20);
+                myCanvas.drawText("1",tempRight.get(i)+12, drawY.get(i)+15,myOutlinePaint);
+                myOutlinePaint.setStyle(Paint.Style.STROKE);
+                myCanvas.drawCircle(tempRight.get(i)+15, drawY.get(i)+12, 18, myOutlinePaint);// 小圆
+                myOutlinePaint.setStrokeWidth(5);
             }
         }
         myOutlinePaint.setColor(tmp);

@@ -516,7 +516,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 //				mode |= Hull.DrawMode.Fill;
 				mode |= Hull.DrawMode.Line;
 			}
-			final ZLTextPosition startPosition = h.getStartPosition();
+
 
 			final ZLColor outlineColor = h.getOutlineColor();
 			if (outlineColor != null) {
