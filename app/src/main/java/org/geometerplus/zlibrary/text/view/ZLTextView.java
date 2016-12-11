@@ -510,7 +510,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		for (ZLTextHighlighting h : hilites) {
 			int mode = Hull.DrawMode.None;
-
 			final ZLColor bgColor = h.getBackgroundColor();
 			if (bgColor != null) {
 				context.setFillColor(bgColor, 128);

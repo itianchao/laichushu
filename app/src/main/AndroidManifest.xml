@@ -903,6 +903,26 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="org.geometerplus.android.fbreader.bookmark.IdeaActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:process=":bookmarks"
+            android:theme="@style/KooReader.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.fbreader.action.BOOKMARKS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <!-- FBReader end -->
 
         <activity android:name=".ui.activity.PersonalInfomationPageActivity" />

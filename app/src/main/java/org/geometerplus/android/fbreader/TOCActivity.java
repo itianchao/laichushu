@@ -418,6 +418,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
             case EDIT_ITEM_ID://编辑想法
                 final Intent intent = new Intent(this, BookmarksEditActivity.class);
                 intent.putExtra("bgColor", bgValue);
+                intent.putExtra("type",true);
                 FBReaderIntents.putBookmarkExtra(intent, bookmark);
                 OrientationUtil.startActivity(this, intent);
                 return true;
