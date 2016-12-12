@@ -35,6 +35,15 @@ public class CustomDAOGenerater {
         city.addStringProperty("city");
         city.addStringProperty("proCode");
         city.addStringProperty("cityCode");
+        //想法表
+        Entity idea = schema.addEntity("Idea_Table");
+        idea.addIdProperty();// 该字段为id
+        idea.addIntProperty("bookId");
+        idea.addStringProperty("Uid");
+        idea.addStringProperty("styleId");
+        idea.addIntProperty("x");
+        idea.addIntProperty("y");
+        idea.addStringProperty("content");
 
         //第二个参数指定生成文件的本次存储路径,AndroidStudio工程指定到当前工程的java路径
         new DaoGenerator().generateAll(schema, "D:\\laichushu\\app\\src\\main\\java");

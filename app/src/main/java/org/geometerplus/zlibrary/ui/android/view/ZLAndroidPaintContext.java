@@ -31,7 +31,13 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.widget.Button;
 
+import com.laichushu.book.db.Idea_Table;
+import com.laichushu.book.db.Idea_TableDao;
+import com.laichushu.book.global.BaseApplication;
+
+import org.geometerplus.android.fbreader.bookmark.IdeaActivity;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
@@ -539,7 +545,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         float tmpSize = myOutlinePaint.getStrokeWidth();
         myOutlinePaint.setColor(myFillPaint.getColor());
         myOutlinePaint.setStrokeWidth(5);
-
         for (int i = 0; i < drawY.size(); i++) {
 //            LoggerUtil.e(templeft.get(i)+","+tempRight.get(i)+","+drawY.get(i)+"\n");
             if (i != 0 && drawY.get(i) - myTextPaint.getTextSize() > drawY.get(i - 1) || i == 0) { // ÅÅ³ýË«ÖØÏß
@@ -553,16 +558,36 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
             }
             //画标记
             if (i == drawY.size()-1){
-                myOutlinePaint.setTextSize(20);
-                myOutlinePaint.setStrokeWidth(2);
-                myCanvas.drawText("1",tempRight.get(i)+10, drawY.get(i)+18,myOutlinePaint);
-                myOutlinePaint.setStrokeWidth(5);
-                myOutlinePaint.setStyle(Paint.Style.STROKE);
-                myCanvas.drawCircle(tempRight.get(i)+15, drawY.get(i)+12, 18, myOutlinePaint);// 小圆
+                if (mbookmark!=null){
+                    String number = dispose(mbookmark,tempRight.get(i)+10, drawY.get(i)+18);
+                    myOutlinePaint.setTextSize(20);
+                    myOutlinePaint.setStrokeWidth(2);
+                    myCanvas.drawText(number,tempRight.get(i)+10, drawY.get(i)+18,myOutlinePaint);
+                    myOutlinePaint.setStrokeWidth(5);
+                    myOutlinePaint.setStyle(Paint.Style.STROKE);
+                    myCanvas.drawCircle(tempRight.get(i)+15, drawY.get(i)+12, 18, myOutlinePaint);// 小圆
+                }
             }
         }
         myOutlinePaint.setColor(tmp);
         myOutlinePaint.setStrokeWidth(tmpSize);
+    }
+
+    private String dispose(Bookmark mbookmark, int x, int y) {
+        Idea_TableDao dao = BaseApplication.getDaoSession(BaseApplication.getContext()).getIdea_TableDao();
+        List<Idea_Table> list = dao.queryBuilder().where(Idea_TableDao.Properties.BookId.eq(mbookmark.getBookId())
+                , Idea_TableDao.Properties.Content.eq(mbookmark.getText())
+                ,Idea_TableDao.Properties.Uid.eq(mbookmark.getUid())).build().list();
+        if (list==null||list.isEmpty()){
+            Idea_Table entity = new Idea_Table(null, (int) mbookmark.getBookId(), mbookmark.getUid(), mbookmark.getStyleId() + "", x, y, mbookmark.getText());
+            dao.insert(entity);
+        }else {
+            Idea_Table idea_table = list.get(0);
+            idea_table.setX(x);
+            idea_table.setY(y);
+            dao.update(idea_table);
+        }
+        return "1";
     }
 
     @Override

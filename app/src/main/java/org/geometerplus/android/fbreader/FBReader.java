@@ -73,6 +73,7 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.fbreader.tips.TipsManager;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -387,7 +388,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                 });
             }
         }
-
     }
 
     private void openPopwindow(View v, List<BookSelectOptionBean> datas) {
@@ -524,7 +524,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 //			super.onNewIntent(intent);
 //		}
 //	}
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -545,7 +544,9 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
         final ZLAndroidLibrary zlibrary = getZLibrary();
 
+
         Config.Instance().runOnConnect(new Runnable() {
+
             public void run() {
                 final boolean showStatusBar = zlibrary.ShowStatusBarOption.getValue();
                 if (showStatusBar != myShowStatusBarFlag) {

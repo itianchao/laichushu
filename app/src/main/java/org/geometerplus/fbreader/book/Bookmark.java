@@ -277,4 +277,12 @@ public final class Bookmark extends ZLTextFixedPosition {
 		return ModelId.equals(bookmark.ModelId);
 
 	}
+
+	public long getBookId() {
+		return BookId;
+	}
+
+	public String getUid() {
+		return Uid;
+	}
 }

@@ -1889,7 +1889,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
     private List<Bookmark> allBookmarks() {
         List<Bookmark> result = null;
-        for (BookmarkQuery query = new BookmarkQuery(myCollection.getRecentBook(0), true, 20); ; query = query.next()) {
+        for (BookmarkQuery query = new BookmarkQuery(myCollection.getRecentBook(0),true, 20); ; query = query.next()) {
 
             final List<Bookmark> portion = myCollection.bookmarks(query);
             if (portion.isEmpty()) {
