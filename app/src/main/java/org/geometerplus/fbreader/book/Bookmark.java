@@ -76,15 +76,14 @@ public final class Bookmark extends ZLTextFixedPosition {
 	// create java object for existing bookmark
 	// uid parameter can be null when comes from old format plugin!
 	public Bookmark(
-		long id, String uid, String versionUid,
-		long bookId, String bookTitle, String text, String originalText,
-		long creationTimestamp, Long modificationTimestamp, Long accessTimestamp,
-		String modelId,
-		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
-		int end_paragraphIndex, int end_elementIndex, int end_charIndex,
-		boolean isVisible,
-		int styleId
-	) {
+			long id, String uid, String versionUid,
+			long bookId, String bookTitle, String text, String originalText,
+			long creationTimestamp, Long modificationTimestamp, Long accessTimestamp,
+			String modelId,
+			int start_paragraphIndex, int start_elementIndex, int start_charIndex,
+			int end_paragraphIndex, int end_elementIndex, int end_charIndex,
+			boolean isVisible,
+			int styleId) {
 		super(start_paragraphIndex, start_elementIndex, start_charIndex);
 
 		myId = id;
@@ -100,7 +99,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myAccessTimestamp = accessTimestamp;
 		ModelId = modelId;
 		IsVisible = isVisible;
-
 		if (end_charIndex >= 0) {
 			myEnd = new ZLTextFixedPosition(end_paragraphIndex, end_elementIndex, end_charIndex);
 		} else {

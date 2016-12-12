@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.view;
 
 import android.graphics.Rect;
 
-import org.geometerplus.fbreader.book.Label;
+import org.geometerplus.fbreader.book.Bookmark;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -132,9 +132,14 @@ public final class HorizontalConvexHull implements Hull {
 		return false;
 	}
 
+	@Override
+	public void draw(ZLPaintContext context, int mode) {
+
+	}
+
 	int offsets = 0;
 
-	public void draw(ZLPaintContext context, int mode) {
+	public void draw(ZLPaintContext context, int mode, Bookmark bookmark) {
 		if (mode == DrawMode.None) {
 			return;
 		}
@@ -215,7 +220,7 @@ public final class HorizontalConvexHull implements Hull {
 			 * »­±³¾°ÑÕÉ«ÊéÇ©
 			 */
 			if ((mode & DrawMode.Line) == DrawMode.Line) {
-				context.drawLine(xs, ys);
+				context.drawLine(xs, ys,bookmark);
 			} else if ((mode & DrawMode.Fill) == DrawMode.Fill) {
 				context.fillPolygon(xs, ys);
 			} else

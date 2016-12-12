@@ -352,7 +352,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         myFBReaderApp.addAction(ActionCode.OPEN_VIDEO, new OpenVideoAction(this, myFBReaderApp));
         myFBReaderApp.addAction(ActionCode.HIDE_TOAST, new HideToastAction(this, myFBReaderApp));
 
-        myFBReaderApp.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, myFBReaderApp));
+//        myFBReaderApp.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, myFBReaderApp));//这是exit的menu
         myFBReaderApp.addAction(ActionCode.OPEN_START_SCREEN, new StartScreenAction(this, myFBReaderApp));
 
         myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_SYSTEM, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_SYSTEM));
@@ -821,7 +821,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                 }
                 break;
             case REQUEST_CANCEL_MENU:
-                runCancelAction(data);
+//                runCancelAction(data);
                 break;
             case REQUEST_EDITBOOKMARK:
                 if (resultCode == RESULT_SELECTCOLOR) {
@@ -850,7 +850,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                 return;
             }
         }
-        myFBReaderApp.runCancelAction(type, bookmark);
+//        myFBReaderApp.runCancelAction(type, bookmark);
     }
 //菜单
 //	private Menu addSubmenu(Menu menu, String id) {

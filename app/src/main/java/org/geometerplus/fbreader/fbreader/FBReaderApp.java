@@ -304,8 +304,7 @@ public final class FBReaderApp extends ZLApplication {
 			Model.Book,
 			fbView.getModel().getId(),
 			snippet,
-			true
-		);
+			true);
 		Collection.saveBookmark(bookmark);
 		fbView.clearSelection();
 
@@ -674,8 +673,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		updateInvisibleBookmarksList(new Bookmark(
-			Collection, book, textModel.getId(), snippet, false
-		));
+			Collection, book, textModel.getId(), snippet, false));
 	}
 
 	public void addInvisibleBookmark() {
@@ -697,8 +695,7 @@ public final class FBReaderApp extends ZLApplication {
 			Model.Book,
 			view.getModel().getId(),
 			new AutoTextSnippet(cursor, maxChars),
-			visible
-		);
+			visible);
 	}
 
 	public TOCTree getCurrentTOCElement() {

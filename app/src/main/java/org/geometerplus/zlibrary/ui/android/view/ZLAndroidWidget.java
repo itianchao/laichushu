@@ -256,17 +256,17 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 		}
 
 		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-			mySystemInfo,
-			new Canvas(bitmap),
-			new ZLAndroidPaintContext.Geometry(
-				getWidth(),
-				getHeight(),
-				getWidth(),
-				getMainAreaHeight(),
-				0,
-				0
-			),
-			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+				mySystemInfo,
+				new Canvas(bitmap),
+				new ZLAndroidPaintContext.Geometry(
+						getWidth(),
+						getHeight(),
+						getWidth(),
+						getMainAreaHeight(),
+						0,
+						0
+				),
+				view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
 		view.paint(context, index);
 	}
@@ -398,6 +398,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 				myScreenIsTouched = false;
 				break;
 			case MotionEvent.ACTION_DOWN:
+
 				if (myPendingShortClickRunnable != null) {
 					removeCallbacks(myPendingShortClickRunnable);
 					myPendingShortClickRunnable = null;

@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.view;
 
+import org.geometerplus.fbreader.book.Bookmark;
+
 import java.util.*;
 
 public class UnionHull implements Hull {
@@ -32,6 +34,11 @@ public class UnionHull implements Hull {
 		for (Hull h : myComponents) {
 			h.draw(context, mode);
 		}
+	}
+
+	@Override
+	public void draw(ZLPaintContext context, int mode, Bookmark number) {
+
 	}
 
 	public int distanceTo(int x, int y) {

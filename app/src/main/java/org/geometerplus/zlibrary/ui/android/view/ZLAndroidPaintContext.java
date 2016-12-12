@@ -32,6 +32,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 
+import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
@@ -450,7 +451,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
     int offsetY;
 
-    public void drawLine(int[] xs, int[] ys) {
+    public void drawLine(int[] xs, int[] ys,Bookmark mbookmark) {
         offsetY = (int) myTextPaint.getTextSize();
         LinkedList<Integer> tmpXs = new LinkedList<>();
         LinkedList<Integer> tmpYs = new LinkedList<>();
@@ -550,6 +551,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 //                } else {
 //                }
             }
+            //画标记
             if (i == drawY.size()-1){
                 myOutlinePaint.setTextSize(20);
                 myOutlinePaint.setStrokeWidth(2);
@@ -561,6 +563,11 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         }
         myOutlinePaint.setColor(tmp);
         myOutlinePaint.setStrokeWidth(tmpSize);
+    }
+
+    @Override
+    public void drawLine(int[] xs, int[] ys) {
+
     }
 
     private void removeAtPosItem(int x, List<Integer> templeft, List<Integer> tempRight, int index) {
