@@ -90,20 +90,22 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 //		}));
 //		BaseActivity.showToast(toast);
         } else {
-            bookmark = (Bookmark) params[0];
-            if(bookmark==null){
-                bookmark = Reader.addSelectionBookmark();
-                int mSelectColor = (int) params[1];
-                int styleId = (int) params[2];
-                changeColor(mSelectColor,styleId);
+            if (bookmark == null) {
+                bookmark = (Bookmark) params[0];
+                if (bookmark == null) {
+                    Bookmark bookmark = Reader.addSelectionBookmark();
+                    this.bookmark = bookmark;
+                    int mSelectColor = (int) params[1];
+                    int styleId = (int) params[2];
+                    if (bookmark != null) {
+                        bookmark.setText("");
+                        changeColor(mSelectColor, styleId);
+//                        startActivity();
+                    }
+                }
+            } else {
+                startActivity();
             }
-
-            final Intent intent =
-                    new Intent(BaseActivity.getApplicationContext(), BookmarksEditActivity.class);
-            FBReaderIntents.putBookmarkExtra(intent, bookmark);
-            intent.putExtra("type",false);
-            intent.putExtra("content",bookmark.getText());
-            OrientationUtil.startActivity(BaseActivity, intent);
 //            TransmitBookMarkEvent3 event = new TransmitBookMarkEvent3();
 //            event.setMyBookmark(bookmark);
 //            EventBus.getDefault().postSticky(event);
@@ -123,7 +125,15 @@ public class SelectionBookmarkAction extends FBAndroidAction {
             }
         });
     }
-
+    public void startActivity(){
+        final Intent intent =
+                new Intent(BaseActivity.getApplicationContext(), BookmarksEditActivity.class);
+        FBReaderIntents.putBookmarkExtra(intent, bookmark);
+        intent.putExtra("type", false);
+        intent.putExtra("content", bookmark.getText());
+        OrientationUtil.startActivity(BaseActivity, intent);
+        bookmark = null;
+    }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(TransmitBookMarkEvent3 event) {
         EventBus.getDefault().removeStickyEvent(event);

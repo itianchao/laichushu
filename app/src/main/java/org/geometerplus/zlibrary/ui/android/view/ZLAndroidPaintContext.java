@@ -551,12 +551,12 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 //                }
             }
             if (i == drawY.size()-1){
-                myOutlinePaint.setStrokeWidth(2);
                 myOutlinePaint.setTextSize(20);
-                myCanvas.drawText("1",tempRight.get(i)+12, drawY.get(i)+15,myOutlinePaint);
+                myOutlinePaint.setStrokeWidth(2);
+                myCanvas.drawText("1",tempRight.get(i)+10, drawY.get(i)+18,myOutlinePaint);
+                myOutlinePaint.setStrokeWidth(5);
                 myOutlinePaint.setStyle(Paint.Style.STROKE);
                 myCanvas.drawCircle(tempRight.get(i)+15, drawY.get(i)+12, 18, myOutlinePaint);// 小圆
-                myOutlinePaint.setStrokeWidth(5);
             }
         }
         myOutlinePaint.setColor(tmp);
