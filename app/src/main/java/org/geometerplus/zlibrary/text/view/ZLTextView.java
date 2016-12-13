@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.text.view;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookCollection;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.book.BookmarkQuery;
@@ -1889,18 +1890,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
     private List<Bookmark> allBookmarks() {
         List<Bookmark> result = null;
-        for (BookmarkQuery query = new BookmarkQuery(myCollection.getRecentBook(0),true, 20); ; query = query.next()) {
 
-            final List<Bookmark> portion = myCollection.bookmarks(query);
-            if (portion.isEmpty()) {
-                break;
-            }
-            if (result == null) {
-                result = new ArrayList<Bookmark>(portion);
-            } else {
-                result.addAll(portion);
-            }
-        }
+
         return result != null ? result : Collections.<Bookmark>emptyList();
     }
 }
