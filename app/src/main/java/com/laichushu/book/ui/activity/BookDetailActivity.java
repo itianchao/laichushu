@@ -22,6 +22,7 @@ import com.laichushu.book.mvp.bookdetail.SubscribeArticleModle;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -131,7 +132,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         if (bean.isCollect()) {//已收藏
             comentIv.setImageResource(R.drawable.activity_keep2);
             collectType = "1";
-        }else {
+        } else {
             comentIv.setImageResource(R.drawable.activity_keep);
             collectType = "0";
 
@@ -199,6 +200,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         String msg = "收到的打赏：" + bean.getAwardMoney() + "元(" + bean.getAwardNum() + "人)";
         msgTv.setText(msg);
         rewardTv.setOnClickListener(this);
+        authorHeadIv.setOnClickListener(this);
     }
 
     /**
@@ -236,13 +238,13 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             case R.id.iv_title_other://分享
                 break;
             case R.id.iv_title_another://收藏
-                String booktype =  "1";
-                mvpPresenter.collectSave(articleId, collectType,booktype);
+                String booktype = "1";
+                mvpPresenter.collectSave(articleId, collectType, booktype);
                 break;
             case R.id.tv_lookup://查看更多评论
                 Bundle bundle1 = new Bundle();
-                bundle1.putString("articleId",articleId);
-                UIUtil.openActivity(this, AllCommentActivity.class,bundle1);
+                bundle1.putString("articleId", articleId);
+                UIUtil.openActivity(this, AllCommentActivity.class, bundle1);
                 break;
             case R.id.lay_read://阅读
 //                Bundle bundle = new Bundle();
@@ -268,8 +270,8 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 break;
             case R.id.tv_probation://免费试读
                 BaseBookEntity baseBookEntity = new BaseBookEntity();
-                baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH+"/test.epub");
-                UIUtil.startBookFBReaderActivity(this,baseBookEntity);
+                baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH + "/test.epub");
+                UIUtil.startBookFBReaderActivity(this, baseBookEntity);
                 break;
             case R.id.tv_pay://购买
                 //弹出对话框确认
@@ -280,29 +282,40 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 mvpPresenter.getBalace2();
                 break;
             case R.id.rbn_dresser://大咖评论
-                if (position!=1){
+                if (position != 1) {
                     commentLay.removeAllViews();
                     type = "2";
-                    mvpPresenter.loadCommentData(articleId,type);
+                    mvpPresenter.loadCommentData(articleId, type);
                     position = 1;
                 }
                 break;
             case R.id.rbn_reader://普通评论
-                if (position!=0){
+                if (position != 0) {
                     commentLay.removeAllViews();
                     type = "1";
-                    mvpPresenter.loadCommentData(articleId,type);
+                    mvpPresenter.loadCommentData(articleId, type);
                     position = 0;
                 }
                 break;
             case R.id.tv_detail_reward:
                 mvpPresenter.getBalace2();
                 break;
+            case R.id.iv_author_head:
+                //跳转用户主页
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userId", bean.getAuthorId());
+                if (SharePrefManager.getUserId().equals(bean.getAuthorId())) {
+                    UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
+                } else {
+                    UIUtil.openActivity(mActivity, UserHomePageActivity.class, bundle);
+                }
+                break;
         }
     }
 
     /**
      * 作者信息
+     *
      * @param model
      */
     @Override
@@ -329,6 +342,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
 
     /**
      * 购买结果
+     *
      * @param model
      */
     @Override
@@ -337,7 +351,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             ToastUtil.showToast("购买成功");
             payTv.setText("已购买");
             bean.setIsPurchase(true);
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -354,9 +368,10 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
 
     /**
      * 猜你喜欢的书
-      * @param model
+     *
+     * @param model
      */
-   @Override
+    @Override
     public void getBestLikeSuggestlData(HomeHotModel model) {
         if (model.isSuccess()) {
             mdata.clear();
@@ -404,6 +419,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
 
     /**
      * 订阅
+     *
      * @param model
      * @param typestate
      */
@@ -411,12 +427,12 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     public void getSubscribeArticleData(SubscribeArticleModle model, String typestate) {
         subscriptionTv.setEnabled(true);
         if (model.isSuccess()) {
-            if (typestate.equals("1")){
+            if (typestate.equals("1")) {
                 subscriptionTv.setText(" 订阅更新 ");
                 int num = Integer.parseInt(numberTv.getText().toString()) - 1;
                 bean.setSubscribeNum(num);
                 numberTv.setText(bean.getSubscribeNum() + "");
-            }else {
+            } else {
                 subscriptionTv.setText(" 取消订阅 ");
                 int num = Integer.parseInt(numberTv.getText().toString()) + 1;
                 bean.setSubscribeNum(num);
@@ -426,8 +442,10 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             ToastUtil.showToast(model.getErrorMsg());
         }
     }
+
     /**
      * 全部评论
+     *
      * @param model
      */
     @Override
@@ -466,16 +484,16 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                     @Override
                     public void onClick(View v) {
                         if (dataBean.isIsLike()) {
-                            mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"1");
+                            mvpPresenter.saveScoreLikeData(dataBean.getScoreId(), "1");
 //                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
                             dataBean.setIsLike(false);
-                            dataBean.setLikeNum(dataBean.getLikeNum()-1);
+                            dataBean.setLikeNum(dataBean.getLikeNum() - 1);
                             likeTv.setText(dataBean.getLikeNum() + "");
                         } else {
-                            mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"0");
+                            mvpPresenter.saveScoreLikeData(dataBean.getScoreId(), "0");
 //                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
                             dataBean.setIsLike(true);
-                            dataBean.setLikeNum(dataBean.getLikeNum()+1);
+                            dataBean.setLikeNum(dataBean.getLikeNum() + 1);
                             likeTv.setText(dataBean.getLikeNum() + "");
                         }
                     }
@@ -485,9 +503,9 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                     public void onClick(View v) {
                         // TODO: 2016/11/4  去评论详情
                         Bundle bundle = new Bundle();
-                        bundle.putParcelable("bean",dataBean);
-                        bundle.putString("type",type);
-                        UIUtil.openActivity(mActivity,CommentDetailActivity.class,bundle);
+                        bundle.putParcelable("bean", dataBean);
+                        bundle.putString("type", type);
+                        UIUtil.openActivity(mActivity, CommentDetailActivity.class, bundle);
                     }
                 });
                 commentLay.addView(commentItemView);
@@ -496,7 +514,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
                         bundle.putString("commentId", dataBean.getScoreId());
-                        UIUtil.openActivity(BookDetailActivity.this,CommentSendActivity.class,bundle);
+                        UIUtil.openActivity(BookDetailActivity.this, CommentSendActivity.class, bundle);
                     }
                 });
             }
@@ -507,51 +525,56 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
 
     /**
      * 余额查询
+     *
      * @param model
      */
     @Override
     public void getBalanceData(BalanceBean model) {
-        if (model.isSuccess()){
+        if (model.isSuccess()) {
             double balance = model.getData();
-            if (!payTv.getText().toString().equals("已购买")){
+            if (!payTv.getText().toString().equals("已购买")) {
                 double payMoney = bean.getPrice();
                 double price = bean.getPrice();
                 String articleName = bean.getArticleName();
                 String authorName = bean.getAuthorName();
-                mvpPresenter.showdialog(articleId, payMoney+"",balance,price,articleName,authorName);
+                mvpPresenter.showdialog(articleId, payMoney + "", balance, price, articleName, authorName);
             }
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
+
     /**
-     *     查询余额后打赏
+     * 查询余额后打赏
      */
     @Override
     public void getBalance2Data(BalanceBean model) {
-        if (model.isSuccess()){
+        if (model.isSuccess()) {
             double balance = model.getData();
             String accepterId = bean.getAuthorId();
-            mvpPresenter.openReward(balance+"", accepterId, articleId);
-        }else {
+            mvpPresenter.openReward(balance + "", accepterId, articleId);
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
 
     /**
      * 打赏回调
+     *
      * @param model
      */
     @Override
     public void getRewardMoneyData(RewardResult model) {
-        if (model.isSuccess()){
+        if (model.isSuccess()) {
             ToastUtil.showToast("打赏成功，感谢支持");
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
+
     /**
      * 点赞
+     *
      * @param model
      * @param typeState
      */
@@ -559,35 +582,36 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     public void SaveScoreLikeData(RewardResult model, String typeState) {
         if (model.isSuccess()) {
             getArticleCommentData(this.model);
-            if (typeState.equals("0")){//点赞
+            if (typeState.equals("0")) {//点赞
                 Logger.e("点赞");
-            }else {//取消赞
+            } else {//取消赞
                 Logger.e("取消赞");
             }
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
 
     /**
      * 收藏
+     *
      * @param model
      */
     @Override
     public void collectSaveData(RewardResult model) {
         if (model.isSuccess()) {
-            if (collectType.equals("0")){
+            if (collectType.equals("0")) {
                 collectType = "1";
                 comentIv.setImageResource(R.drawable.activity_keep2);
                 ToastUtil.showToast("收藏成功");
                 bean.setCollect(true);
-            }else {
+            } else {
                 comentIv.setImageResource(R.drawable.activity_keep);
                 collectType = "0";
                 ToastUtil.showToast("取消成功");
                 bean.setCollect(false);
             }
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -598,7 +622,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             Bundle bundle = new Bundle();
             bundle.putString("articleId", articleId);
             UIUtil.openActivity(this, DirectoriesActivity.class, bundle);
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -609,12 +633,12 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshCommentListEvent event){
+    public void onEvent(RefurshCommentListEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             position = 1;
             onClick(readerRbn);
-            mvpPresenter.loadCommentData(articleId,"1");
+            mvpPresenter.loadCommentData(articleId, "1");
         }
     }
 

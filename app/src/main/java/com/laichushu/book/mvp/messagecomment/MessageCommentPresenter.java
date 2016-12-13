@@ -6,6 +6,8 @@ import android.widget.EditText;
 import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AddPerDetails_Paramet;
+import com.laichushu.book.bean.netbean.AuthorWorksByBookId_Paramet;
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.BookDetails_Paramet;
 import com.laichushu.book.bean.netbean.DelPerInfo_Paramet;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
@@ -128,7 +130,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
         this.bookParamet = bookParamet;
     }
 
-    //获取图书详情
+    //获取图书详情----已弃用
     private BookDetails_Paramet bookParamet = new BookDetails_Paramet(userId, "");
 
     public void LoadBookDetailsData(String id, final int position) {
@@ -292,6 +294,31 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.getDelPerIdfoDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code" + code + "msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        });
+    }
+
+
+    /**
+     * 获取图书详情
+     * @param articleId
+     */
+    public void loadBookDetailsByid(String articleId) {
+        AuthorWorksByBookId_Paramet  bookParamet = new AuthorWorksByBookId_Paramet(userId, articleId);
+        LoggerUtil.e("发送评论");
+        addSubscription(apiStores.getAuthorWorksByBookId(bookParamet), new ApiCallback<BookDetailsModle>() {
+            @Override
+            public void onSuccess(BookDetailsModle model) {
+                mvpView.getBookDetailsByIdDataSuccess(model);
             }
 
             @Override

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.MyTabStrip;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
@@ -34,6 +35,9 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     private PullLoadMoreRecyclerView mRecyclerView;
     private WriteBookAdapter writeBookAdapter;
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
+    private ArrayList<MyTabStrip> mStrip = new ArrayList<>();
+    private int img[] = {R.drawable.icon_draft, R.drawable.icon_material, R.drawable.icon_submission, R.drawable.icon_publishl, R.drawable.icon_delete, R.drawable.msg_sign2x};
+    private String title[] = {"编辑目录", "编辑素材", "删除", "发表", "投稿", "签约状态"};
     private boolean isLoad = true;
 
     @Override
@@ -54,12 +58,18 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     @Override
     protected void initData() {
+        //初始化strip列表
+        mStrip.clear();
+        for (int i = 0; i < 6; i++) {
+            mStrip.add(new MyTabStrip(title[i], img[i]));
+        }
+
         if (isLoad) {//只执行一次
             mvpPresenter.getArticleBookList();
         } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
-        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter);
+        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter, mStrip);
         mRecyclerView.setAdapter(writeBookAdapter);
     }
 
@@ -101,6 +111,11 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         } else {
             ToastUtil.showToast("投稿失败");
         }
+    }
+
+    @Override
+    public void updateBookPermission(RewardResult model) {
+
     }
 
     @Override
@@ -180,7 +195,8 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             mvpPresenter.getArticleBookList();
         }
     }
-    public void refurshData(){
+
+    public void refurshData() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {

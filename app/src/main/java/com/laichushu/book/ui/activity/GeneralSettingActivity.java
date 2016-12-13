@@ -9,6 +9,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.db.Cache_Json;
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -24,6 +28,8 @@ public class GeneralSettingActivity extends MvpActivity2 implements View.OnClick
     private TextView tvTitle, tvAnother, tvCacheSize;
     private RelativeLayout rlAbout, rlSignOut, rlCleanCache;
     private String cacheSize =null;
+    private Cache_JsonDao cache_jsonDao;
+    private   Cache_Json personalDetails;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -66,6 +72,10 @@ public class GeneralSettingActivity extends MvpActivity2 implements View.OnClick
         super.initData();
         tvTitle.setText("通用设置");
         tvAnother.setText("保存");
+        DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
+        cache_jsonDao = daoSession.getCache_JsonDao();
+        personalDetails= cache_jsonDao.queryBuilder()
+                .where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).list().get(0);
         tvAnother.setVisibility(View.VISIBLE);
         tvTitle.setVisibility(View.VISIBLE);
         try {
@@ -105,6 +115,9 @@ public class GeneralSettingActivity extends MvpActivity2 implements View.OnClick
             case R.id.rl_signOut:
                 //退出
                 SharePrefManager.setLoginInfo("");
+                SharePrefManager.setUserId(null);
+                cache_jsonDao.delete(personalDetails);
+                cache_jsonDao.deleteAll();
                 UIUtil.openActivity(mActivity, LoginActivity.class);
                 AppManager.getInstance().killAllActivity();
                 break;

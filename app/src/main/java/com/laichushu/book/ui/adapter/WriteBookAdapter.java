@@ -2,20 +2,27 @@ package com.laichushu.book.ui.adapter;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.MyTabStrip;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.ui.activity.MechanismListActivity;
 import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
+import com.laichushu.book.ui.widget.SmoothTabTitle;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -31,11 +38,14 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
     private ArrayList<HomeHotModel.DataBean> mData;
     private Activity mActivity;
     private WritePresenter mvpPresenter;
+    private ArrayList<MyTabStrip> mStrip;
+    private MyTabStripAdapter adapter;
 
-    public WriteBookAdapter(ArrayList<HomeHotModel.DataBean> mData, Activity mActivity, WritePresenter mvpPresenter) {
+    public WriteBookAdapter(ArrayList<HomeHotModel.DataBean> mData, Activity mActivity, WritePresenter mvpPresenter, ArrayList<MyTabStrip> mStrip) {
         this.mData = mData;
         this.mActivity = mActivity;
         this.mvpPresenter = mvpPresenter;
+        this.mStrip = mStrip;
     }
 
     @Override
@@ -53,6 +63,124 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
     @Override
     public void onBindViewHolder(final WriteBookViewHolder holder, final int position) {
         final HomeHotModel.DataBean dataBean = mData.get(position);
+        View itemView = null;
+        ImageView imageView = null;
+        TextView textView;
+        int j;
+        for (int i = 0; i < mStrip.size(); i++) {
+            itemView = UIUtil.inflate(R.layout.item_tabstrip, null);
+            imageView = (ImageView) itemView.findViewById(R.id.iv_stripIcon);
+            textView = (TextView) itemView.findViewById(R.id.tv_stripContent);
+            imageView.setImageResource(mStrip.get(i).getDrawble());
+            textView.setText(mStrip.get(i).getTitle());
+            holder.llTab.addView(itemView);
+            j = i;
+            final int finalJ = j;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (finalJ) {
+                        case 0:
+                        case 5:
+                            //目录
+                            //签约
+                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getStatus().equals("4") | dataBean.getFreezeStatus().equals("2")) {
+                                ToastUtil.showToast("不可编辑");
+                            } else {
+                                if (dataBean.isMake()) {
+                                    ToastUtil.showToast("发表状态不能修改");
+                                } else {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("articleId", dataBean.getArticleId());
+                                    UIUtil.openActivity(mActivity, DraftModleActivity.class, bundle);
+                                }
+                            }
+
+                            break;
+                        case 1:
+                            //素材
+                            /**
+                             * 素材
+                             */
+
+                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getStatus().equals("4") | dataBean.getFreezeStatus().equals("2")) {
+                                ToastUtil.showToast("不可编辑");
+                            } else {
+                                if (dataBean.isMake()) {
+                                    ToastUtil.showToast("发表状态不能修改");
+                                } else {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("articleId", dataBean.getArticleId());
+                                    UIUtil.openActivity(mActivity, SourceMaterialDirActivity.class, bundle);
+                                }
+                            }
+
+
+                            break;
+                        case 2:
+                            //删除
+                            /**
+                             * 删除
+                             */
+                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getStatus().equals("4") | dataBean.getFreezeStatus().equals("2")) {
+                                ToastUtil.showToast("不可删除");
+                            } else {
+                                String articleId = dataBean.getArticleId();
+                                mvpPresenter.deleteBook(articleId, position);
+                            }
+
+
+                            break;
+                        case 3:
+                            //电子书
+                            /**
+                             * 发表
+                             */
+                            String articleId = dataBean.getArticleId();
+                            String type;
+                            String publishl = holder.publishlTv.getText().toString();
+                            if (publishl.equals("已发表")) {
+                                type = "1";
+                            } else {
+                                type = "0";
+                            }
+                            //发表状态为 制作中  电子书 则不可发表
+                            if (!((dataBean.getExpressStatus().equals("2") | (dataBean.getExpressStatus().equals("3"))))) {
+                                mvpPresenter.publishNewBook(articleId, type, position);
+                            } else {
+                                ToastUtil.showToast("不可发表");
+                            }
+
+                            break;
+                        case 4:
+                            //投稿
+                            UIUtil.openActivity(mActivity, MechanismListActivity.class);
+//                String articleId = dataBean.getArticleId();
+//                String pressId = "";
+//                mvpPresenter.voteBook(articleId, pressId);
+
+                            break;
+                    }
+                }
+            });
+
+        }
+        holder.ivRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.hsView.arrowScroll(View.FOCUS_RIGHT);
+                holder.ivRight.setVisibility(View.GONE);
+                holder.ivLeft.setVisibility(View.VISIBLE);
+            }
+        });
+        holder.ivLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.hsView.arrowScroll(View.FOCUS_LEFT);
+                holder.ivRight.setVisibility(View.VISIBLE);
+                holder.ivLeft.setVisibility(View.GONE);
+            }
+        });
         GlideUitl.loadImg(mActivity, dataBean.getCoverUrl(), holder.bookIv);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,79 +199,26 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.wordTv.setText("约" + dataBean.getWordNum());
         holder.moneyTv.setText(dataBean.getAwardMoney() + "元");
         holder.rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
+
         holder.markTv.setText(dataBean.getScore() + "分");
         if (dataBean.isMake()) {
             holder.publishlTv.setText("已发表");
         } else {
             holder.publishlTv.setText("发表");
         }
-        /**
-         * 草稿
-         */
-        holder.draftTv.setOnClickListener(new View.OnClickListener() {
+
+
+        //权限
+        holder.jurTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dataBean.isMake()){
-                    ToastUtil.showToast("发表状态不能修改");
-                }else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("articleId", dataBean.getArticleId());
-                    UIUtil.openActivity(mActivity, DraftModleActivity.class, bundle);
-                }
-            }
-        });
-        /**
-         * 素材
-         */
-        holder.materialTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(dataBean.isMake()){
-                    ToastUtil.showToast("发表状态不能修改");
-                }else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("articleId", dataBean.getArticleId());
-                    UIUtil.openActivity(mActivity, SourceMaterialDirActivity.class, bundle);
-                }
-            }
-        });
-        /**
-         * 投稿
-         */
-        holder.submissionTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UIUtil.openActivity(mActivity, MechanismListActivity.class);
-//                String articleId = dataBean.getArticleId();
-//                String pressId = "";
-//                mvpPresenter.voteBook(articleId, pressId);
-            }
-        });
-        /**
-         * 发表
-         */
-        holder.publishlTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String articleId = dataBean.getArticleId();
-                String type;
-                String publishl = holder.publishlTv.getText().toString();
-                if (publishl.equals("已发表")) {
-                    type = "1";
+                //添加权限
+                if (!dataBean.isEdit()) {
+                    ToastUtil.showToast("不可改编权限");
                 } else {
-                    type = "0";
+                    mvpPresenter.openPermissionAlertDialog(mActivity, dataBean);
                 }
-                mvpPresenter.publishNewBook(articleId, type, position);
-            }
-        });
-        /**
-         * 删除
-         */
-        holder.deleteTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String articleId = dataBean.getArticleId();
-                mvpPresenter.deleteBook(articleId, position);
+
             }
         });
     }
@@ -155,6 +230,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         private TextView submissionTv;//投稿
         private TextView publishlTv;//发布
         private TextView deleteTv;//删除
+        private TextView jurTv;//权限
         private ImageView bookIv;
         private TextView titleTv;
         private TextView typeTv;
@@ -165,6 +241,9 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         private TextView wordTv;
         private TextView moneyTv;
         private TextView rewardTv;
+        private LinearLayout llTab;
+        private ImageView ivLeft, ivRight;
+        private HorizontalScrollView hsView;
         private View itemView;
 
         public WriteBookViewHolder(View itemView) {
@@ -175,6 +254,10 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             submissionTv = (TextView) itemView.findViewById(R.id.tv_submission);
             publishlTv = (TextView) itemView.findViewById(R.id.tv_publishl);
             deleteTv = (TextView) itemView.findViewById(R.id.tv_delete);
+            jurTv = (TextView) itemView.findViewById(R.id.tv_jurisdiction);
+            rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
+            llTab = (LinearLayout) itemView.findViewById(R.id.ll_tab);
+            hsView = (HorizontalScrollView) itemView.findViewById(R.id.hs_view);
 
             bookIv = (ImageView) itemView.findViewById(R.id.iv_book);
             titleTv = (TextView) itemView.findViewById(R.id.tv_title);
@@ -185,7 +268,8 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             authorTv = (TextView) itemView.findViewById(R.id.tv_author);
             wordTv = (TextView) itemView.findViewById(R.id.tv_word);
             moneyTv = (TextView) itemView.findViewById(R.id.tv_money);
-            rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
+            ivLeft = (ImageView) itemView.findViewById(R.id.iv_left);
+            ivRight = (ImageView) itemView.findViewById(R.id.iv_right);
         }
     }
 
@@ -196,4 +280,5 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
     public void setmData(ArrayList<HomeHotModel.DataBean> mData) {
         this.mData = mData;
     }
+
 }

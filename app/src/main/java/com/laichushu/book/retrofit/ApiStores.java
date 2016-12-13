@@ -1,108 +1,13 @@
 package com.laichushu.book.retrofit;
 
-import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
-import com.laichushu.book.bean.netbean.BookDetails_Paramet;
-import com.laichushu.book.bean.netbean.CampaignDetailsModel;
-import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
-import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
-import com.laichushu.book.bean.netbean.DelPerInfo_Paramet;
-import com.laichushu.book.bean.netbean.FeedBack_parmet;
+import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.ActivityList_Paramet;
-import com.laichushu.book.bean.netbean.ActivityResult_Paramet;
-import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
-import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
-import com.laichushu.book.bean.netbean.AuthorDetail_Paramet;
-import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
-import com.laichushu.book.bean.netbean.Balance_Paramet;
-import com.laichushu.book.bean.netbean.BestLike_Paramet;
 import com.laichushu.book.bean.netbean.BookDetails_Paramet;
-import com.laichushu.book.bean.netbean.BookList_Paramet;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
-import com.laichushu.book.bean.netbean.ChapterRename_Paramet;
-import com.laichushu.book.bean.netbean.CollectList_Paramet;
-import com.laichushu.book.bean.netbean.CollectSave_Paramet;
-import com.laichushu.book.bean.netbean.Comment2_Paramet;
-import com.laichushu.book.bean.netbean.Comment_Paramet;
-import com.laichushu.book.bean.netbean.Complaint_Paramet;
-import com.laichushu.book.bean.netbean.CoverDir_Paramet;
-import com.laichushu.book.bean.netbean.CoverMake_Paramet;
-import com.laichushu.book.bean.netbean.CoverModleList_Paramet;
-import com.laichushu.book.bean.netbean.CreateNewDraft_Paramet;
-import com.laichushu.book.bean.netbean.CreateSourceMaterialDir_Paramet;
-import com.laichushu.book.bean.netbean.CreateSourceMaterial_Paramet;
-import com.laichushu.book.bean.netbean.DeleteDraft_Paramet;
-import com.laichushu.book.bean.netbean.DeleteMaterial_Paramet;
-import com.laichushu.book.bean.netbean.DeleteNewBook_Paramet;
-import com.laichushu.book.bean.netbean.DraftList_Paramet;
-import com.laichushu.book.bean.netbean.EditDraft_Paramet;
-import com.laichushu.book.bean.netbean.EditMaterialBook_Paramet;
 import com.laichushu.book.bean.netbean.FeedBack_parmet;
-import com.laichushu.book.bean.netbean.ForgetPwd_Paramet;
-import com.laichushu.book.bean.netbean.GradeDetails_Paramet;
-import com.laichushu.book.bean.netbean.GradeRemarksResult;
-import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
-import com.laichushu.book.bean.netbean.HomeCategory_Paramet;
-import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
-import com.laichushu.book.bean.netbean.HomeFocusResult;
-import com.laichushu.book.bean.netbean.HomeHot_Paramet;
-import com.laichushu.book.bean.netbean.HomeInfo_paramet;
-import com.laichushu.book.bean.netbean.HomePersonFocusResult;
-import com.laichushu.book.bean.netbean.HomeSearch_Paramet;
-import com.laichushu.book.bean.netbean.HomeUseDyrResult;
-import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
-import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
-import com.laichushu.book.bean.netbean.HomeUserResult;
-import com.laichushu.book.bean.netbean.JoinActivity_Paramet;
-import com.laichushu.book.bean.netbean.Jurisdiction_Paramet;
-import com.laichushu.book.bean.netbean.Login_Paramet;
-import com.laichushu.book.bean.netbean.MaterialContent_Paramet;
-import com.laichushu.book.bean.netbean.MaterialList_Paramet;
-import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
-import com.laichushu.book.bean.netbean.MechanismBrie_Paramet;
-import com.laichushu.book.bean.netbean.MechanismList_Paramet;
-import com.laichushu.book.bean.netbean.MechanismTopicList_Paramet;
-import com.laichushu.book.bean.netbean.MessageCommentResult;
-import com.laichushu.book.bean.netbean.MessageComment_Paramet;
-import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
-import com.laichushu.book.bean.netbean.NoticesList_Paramet;
-import com.laichushu.book.bean.netbean.PartList_Paramet;
-import com.laichushu.book.bean.netbean.PerInformationDetails_Paramet;
-import com.laichushu.book.bean.netbean.PerInformation_Paramet;
-import com.laichushu.book.bean.netbean.PerMsgInfoReward;
-import com.laichushu.book.bean.netbean.PersonInfoResultReward;
-import com.laichushu.book.bean.netbean.PersonalCentreResult;
-import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
-import com.laichushu.book.bean.netbean.PublishNewBook_Paramet;
-import com.laichushu.book.bean.netbean.PublishTopic_Paramet;
-import com.laichushu.book.bean.netbean.Purchase_Paramet;
-import com.laichushu.book.bean.netbean.ReCommentList_Paramet;
-import com.laichushu.book.bean.netbean.ReSavaComment_Paramet;
-import com.laichushu.book.bean.netbean.RegistValid_Paramet;
-import com.laichushu.book.bean.netbean.Regist_Paramet;
-import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
-import com.laichushu.book.bean.netbean.SaveComment_Paramet;
-import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
-import com.laichushu.book.bean.netbean.SendMsgDetails_Paramet;
-import com.laichushu.book.bean.netbean.SendMsgToParty_Paramet;
-import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
-import com.laichushu.book.bean.netbean.SourceMaterialList_Paramet;
-import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
-import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
-import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
-import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
-import com.laichushu.book.bean.netbean.UserBookList_Paramet;
-import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
-import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
-import com.laichushu.book.bean.netbean.WalletBalanceReward;
-import com.laichushu.book.bean.netbean.AddPerDetails_Paramet;
-import com.laichushu.book.bean.netbean.WithdrawalsApplay_Paramet;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
@@ -241,7 +146,8 @@ public interface ApiStores {
     //活动结果接口
     @POST("activity/getActivityResult")
     Observable<CampaignModel> getActivityResult(@Body ActivityResult_Paramet paramet);
- //活动详情借口 活动通知--->活动详情
+
+    //活动详情借口 活动通知--->活动详情
     @POST("activity/getActivityResultFromInfo")
     Observable<CampaignDetailsModel> getActivityDetailsResult(@Body ActivityResult_Paramet paramet);
 
@@ -252,6 +158,10 @@ public interface ApiStores {
     //获取作者作品
     @POST("searchArticle/findExpressArticleByAuthorId")
     Observable<AuthorWorksModle> getAuthorWorks(@Body AuthorWorks_Paramet paramet);
+
+    //获取作者作品 通过图书id查询图书详情
+    @POST("searchArticle/findArticleByBookId")
+    Observable<BookDetailsModle> getAuthorWorksByBookId(@Body AuthorWorksByBookId_Paramet paramet);
 
     //获取素材列表接口
     @POST("material/list")
@@ -378,6 +288,10 @@ public interface ApiStores {
     @POST("searchArticle/findArticleByAuthorId")
     Observable<HomeHotModel> getArticleBookListScan(@Body MyArticBooklist_paramet paramet);
 
+    //新浏览
+    @POST("browse/list")
+    Observable<HomeHotModel> getMyBrowseBookListScan(@Body MyBrowseList_paramet paramet);
+
     //个人主页用户信息   userId
     @POST("userDetail/findUserInfo")
     Observable<HomeUserResult> getHomeUserInforDetails(@Body HomeInfo_paramet paramet);
@@ -503,6 +417,7 @@ public interface ApiStores {
     //我的钱包充值
     @POST("wallet/find")
     Observable<WalletBalanceReward> getRechargeDetails(@Body WalletBalanceRecord_Paramet paramet);
+
     //我的钱包提现
     @POST("withdraw/apply")
     Observable<RewardResult> getWithdrawalsApplayDetails(@Body WithdrawalsApplay_Paramet paramet);
@@ -546,13 +461,24 @@ public interface ApiStores {
     //消息界面-查询私信详情
     @POST("perInformation/findDetailList")
     Observable<PerMsgInfoReward> getPerInformationDetails(@Body PerInformationDetails_Paramet paramet);
+
     //消息界面-细心详情回复
     @POST("perInformation/addPerDetailInfo")
     Observable<RewardResult> getPerDetails(@Body AddPerDetails_Paramet paramet);
+
     //私信界面-删除私信
     @POST("perInformation/delPerInfo")
     Observable<RewardResult> getDelPerInfoDetails(@Body DelPerInfo_Paramet paramet);
+
     //发送私信
     @POST("perInformation/addPerMsgInfo")
     Observable<RewardResult> getAddPerMsgInfDetails(@Body AddPerMsgInfo_Paramet paramet);
+
+    //修改图书权限
+    @POST("article/set")
+    Observable<RewardResult> getUpdateBookPermissionDetails(@Body UpdateBookPermission_Paramet paramet);
+
+    //修改素材权限
+    @POST("article/updateMaterialPermission")
+    Observable<RewardResult> getUpdateMaterialPermissionDetails(@Body UpdateMaterialPermission_Paramet paramet);
 }

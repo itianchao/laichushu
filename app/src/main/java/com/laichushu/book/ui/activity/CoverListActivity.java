@@ -37,7 +37,7 @@ public class CoverListActivity extends MvpActivity2<CoverDirPresenter> implement
     private CoverListAdapter mAdapter;
     private ImageView finishIv;
     private TextView titleTv;
-    private String title;
+    private String title,bookType;
 
     @Override
     protected CoverDirPresenter createPresenter() {
@@ -65,6 +65,7 @@ public class CoverListActivity extends MvpActivity2<CoverDirPresenter> implement
         type = getIntent().getStringExtra("type");
         title = getIntent().getStringExtra("title");
         bookname = getIntent().getStringExtra("bookname");
+        bookType = getIntent().getStringExtra("bookType");
         titleTv.setText(title);
         mvpPresenter.loadCoverListData(type);
     }
@@ -102,6 +103,7 @@ public class CoverListActivity extends MvpActivity2<CoverDirPresenter> implement
                 Bundle bundle = new Bundle();
                 bundle.putString("path",url);
                 bundle.putString("title",title);
+                bundle.putString("bookType",bookType);
                 UIUtil.openActivity(mActivity,PreviewCoverActivity.class,bundle);
                 dismissProgressDialog();
             }

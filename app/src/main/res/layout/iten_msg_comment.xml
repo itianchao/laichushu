@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgGrey"
-    android:layout_marginTop="12dp"
     android:layout_marginBottom="12dp"
+    android:layout_marginTop="12dp"
+    android:background="@color/bgGrey"
     android:orientation="vertical">
 
     <LinearLayout
@@ -42,13 +42,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
-                android:visibility="invisible"
-                android:background="@drawable/icon_comment" />
+                android:background="@drawable/icon_comment"
+                android:visibility="invisible" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp">
+            android:layout_height="40dp">
 
             <TextView
                 android:id="@+id/tv_appendName"
@@ -76,15 +76,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:layout_marginRight="24dp"
             android:paddingTop="12dp">
 
             <TextView
                 android:id="@+id/tv_commentContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
                 android:textColor="@color/characterGray"
                 android:textSize="@dimen/edit2"
                 android:textStyle="bold" />
@@ -97,7 +97,7 @@
                 android:layout_marginLeft="12dp"
                 android:gravity="right"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit2"
+                android:textSize="@dimen/edit3"
                 android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>

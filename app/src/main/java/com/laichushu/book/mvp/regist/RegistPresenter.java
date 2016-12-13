@@ -25,7 +25,7 @@ public class RegistPresenter extends BasePresenter<RegistView> {
         mActivity = (RegistActivity) view;
     }
     public void loadCode(String phone){
-        mvpView.showLoading();
+//        mvpView.showLoading();
 
 //        Logger.e("校验code参数");
 //        Logger.json(new Gson().toJson(paramet));
@@ -115,22 +115,22 @@ public class RegistPresenter extends BasePresenter<RegistView> {
             ToastUtil.showToast("帐号不能为空!");
             return isCheck = false;
         }
-        if(TextUtils.isEmpty(code)){
-            ToastUtil.showToast("验证码不能为空!");
-            return isCheck = false;
-        }
-        if (code.length()<4){
-            ToastUtil.showToast("验证码位数不正确，请重新输入！");
-            return isCheck = false;
-        }
-        if (code.length()>8){
-            ToastUtil.showToast("验证码位数不正确，请重新输入！");
-            return isCheck = false;
-        }
-        if (!Validator.isUsername(code)){
-            ToastUtil.showToast("您输入的验证码含有汉字或特殊字符，请重新输入！");
-            return isCheck = false;
-        }
+//        if(TextUtils.isEmpty(code)){
+//            ToastUtil.showToast("验证码不能为空!");
+//            return isCheck = false;
+//        }
+//        if (code.length()<4){
+//            ToastUtil.showToast("验证码位数不正确，请重新输入！");
+//            return isCheck = false;
+//        }
+//        if (code.length()>8){
+//            ToastUtil.showToast("验证码位数不正确，请重新输入！");
+//            return isCheck = false;
+//        }
+//        if (!Validator.isUsername(code)){
+//            ToastUtil.showToast("您输入的验证码含有汉字或特殊字符，请重新输入！");
+//            return isCheck = false;
+//        }
         if (b){
             ToastUtil.showToast("请同意来出书的用户协议!");
             return isCheck = false;

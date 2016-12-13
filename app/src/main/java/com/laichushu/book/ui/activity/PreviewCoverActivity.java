@@ -14,7 +14,9 @@ import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.AppManager;
+import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,12 +28,13 @@ import org.greenrobot.eventbus.EventBus;
 
 public class PreviewCoverActivity extends MvpActivity2 implements View.OnClickListener {
 
-    private TextView titleTv;
-    private ImageView finishIv;
+    private TextView titleTv,preDetails;
+    private ImageView finishIv,coverIv;
     private Button createBtn;
     private WebView mWebView;
     private String url;
     private String title;
+    private String bookType;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -42,9 +45,10 @@ public class PreviewCoverActivity extends MvpActivity2 implements View.OnClickLi
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_previewcover);
         titleTv = (TextView)mSuccessView.findViewById(R.id.tv_title);
+        preDetails = (TextView)mSuccessView.findViewById(R.id.tv_perDetails);
         finishIv = (ImageView)mSuccessView.findViewById(R.id.iv_title_finish);
         createBtn = (Button)mSuccessView.findViewById(R.id.btn_create);
-        mWebView = (WebView) mSuccessView.findViewById(R.id.webadd);
+        coverIv = (ImageView) mSuccessView.findViewById(R.id.webadd);
         finishIv.setOnClickListener(this);
         createBtn.setOnClickListener(this);
         return mSuccessView;
@@ -54,23 +58,27 @@ public class PreviewCoverActivity extends MvpActivity2 implements View.OnClickLi
     protected void initData() {
         url = getIntent().getStringExtra("path");
         title = getIntent().getStringExtra("title");
+        bookType = getIntent().getStringExtra("bookType");
         titleTv.setText(title);
+        preDetails.setText(bookType+"\n"+ SharePrefManager.getNickName());
+        GlideUitl.loadImg(mActivity,url,270,350,coverIv);
         // 设置可以访问文件
-        mWebView.getSettings().setAllowFileAccess(true);
-        //如果访问的页面中有Javascript，则webview必须设置支持Javascript
-        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWebView.getSettings().setAllowFileAccess(true);
-        mWebView.getSettings().setAppCacheEnabled(true); // 0722
-        mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.getSettings().setDatabaseEnabled(true);
-        mWebView.loadUrl(url);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        mWebView.requestFocus();
-        mWebView.setWebViewClient(wvc);
-//        mWebView.setWebChromeClient(wcc);LayoutAlgorithm.SINGLE_COLUMN
-
-        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        mWebView.getSettings().setAllowFileAccess(true);
+//        //如果访问的页面中有Javascript，则webview必须设置支持Javascript
+//        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        mWebView.getSettings().setAllowFileAccess(true);
+//        mWebView.getSettings().setAppCacheEnabled(true); // 0722
+//        mWebView.getSettings().setDomStorageEnabled(true);
+//        mWebView.getSettings().setDatabaseEnabled(true);
+//        mWebView.loadUrl(url);
+//        mWebView.getSettings().setJavaScriptEnabled(true);
+//        mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+//        mWebView.requestFocus();
+//        mWebView.setWebViewClient(wvc);
+////        mWebView.setWebChromeClient(wcc);LayoutAlgorithm.SINGLE_COLUMN
+//
+//        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override

@@ -70,7 +70,7 @@
             android:id="@+id/iv_category"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/home_right" />
+            android:src="@drawable/home_right2x" />
     </LinearLayout>
 
     <include layout="@layout/item_distance2" />
@@ -142,7 +142,7 @@
             android:id="@+id/iv_permission"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/home_right" />
+            android:src="@drawable/home_right2x" />
     </LinearLayout>
 
     <include layout="@layout/item_distance2" />

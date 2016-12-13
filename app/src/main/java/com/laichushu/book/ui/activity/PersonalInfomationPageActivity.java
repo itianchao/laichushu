@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.global.ConstantValue;
@@ -178,6 +179,11 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
             ToastUtil.showToast("删除失败");
             LoggerUtil.e(model.getErrMsg());
         }
+    }
+
+    @Override
+    public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
+
     }
 
     //--------------------------------------

@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.bookcast;
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
 import com.laichushu.book.bean.netbean.CollectList_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
+import com.laichushu.book.bean.netbean.MyBrowseList_paramet;
 import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
@@ -46,10 +47,31 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
         attachView(view);
         mActivity = (MyBookCastActivity) view;
     }
-
+//旧的浏览接口
     public void LoadData() {
         LoggerUtil.toJson(paramet);
         addSubscription(apiStores.getArticleBookListScan(paramet), new ApiCallback<HomeHotModel>() {
+            @Override
+            public void onSuccess(HomeHotModel model) {
+                mvpView.getDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+    //新的浏览
+    public void loadBrowserListData(String type) {
+        MyBrowseList_paramet browseList_paramet =new MyBrowseList_paramet(userId,type);
+        LoggerUtil.toJson(browseList_paramet);
+        addSubscription(apiStores.getMyBrowseBookListScan(browseList_paramet), new ApiCallback<HomeHotModel>() {
             @Override
             public void onSuccess(HomeHotModel model) {
                 mvpView.getDataSuccess(model);

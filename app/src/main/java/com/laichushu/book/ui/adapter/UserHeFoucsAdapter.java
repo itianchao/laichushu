@@ -60,12 +60,12 @@ public class UserHeFoucsAdapter extends RecyclerView.Adapter<UserHeFoucsAdapter.
                 if (!dataBeen.get(position).isStatus()) {
                     holder.checkBox.setText("取消关注");
                     holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
-                    homePagePresener.loadAddFocus(dataBeen.get(position).getSourceUserId(), true);
+                    homePagePresener.loadAddFocus(dataBeen.get(position).getTargetUserId(), true);
                     dataBeen.get(position).setStatus(true);
                 } else {
                     holder.checkBox.setText("关注");
-                    homePagePresener.getAddFocus().setUserId(dataBeen.get(position).getTargetUserId());
-                    homePagePresener.loadDelFocus(dataBeen.get(position).getSourceUserId(), false);
+//                    homePagePresener.getAddFocus().setUserId(dataBeen.get(position).getTargetUserId());
+                    homePagePresener.loadDelFocus(dataBeen.get(position).getTargetUserId(), false);
                     holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
                     dataBeen.get(position).setStatus(false);
                 }

@@ -48,11 +48,26 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
         GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivHead);
         holder.tvBookName.setText(dataBeen.get(position).getSourceName());
         holder.tvPubName.setText(dataBeen.get(position).getPressName());
-        if (dataBeen.get(position).getPressName().equals("1")) {
-            //审批中
-            holder.status.setTextColor(context.getResources().getColor(R.color.red2));
+        switch (dataBeen.get(position).getContributeStatus()) {
+            case "0":
+                holder.status.setText("未投稿");
+                break;
+            case "1":
+                holder.status.setText("审批中");
+                holder.status.setTextColor(context.getResources().getColor(R.color.red2));
+                break;
+
+            case "2":
+                holder.status.setText("审批通过");
+                break;
+            case "3":
+                holder.status.setText("审批被拒接");
+                break;
         }
-        if(!TextUtils.isEmpty(dataBeen.get(position).getContributeStatusName())){
+        //审批中
+        holder.status.setTextColor(context.getResources().getColor(R.color.red2));
+
+        if (!TextUtils.isEmpty(dataBeen.get(position).getContributeStatusName())) {
             holder.status.setText(dataBeen.get(position).getContributeStatusName());
         }
 
@@ -65,7 +80,7 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
                 if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
                     UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
                 } else {
-                    UIUtil.openActivity( context, UserHomePageActivity.class, bundle);
+                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
                 }
             }
         });

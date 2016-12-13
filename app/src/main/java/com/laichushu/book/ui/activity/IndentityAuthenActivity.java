@@ -144,8 +144,12 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
         }
         //验证身份证
         try {
-            String idCardValidate = IDCardValidate.IDCardValidate(edIdCardNum.getText().toString());
-            ToastUtil.showToast(idCardValidate);
+            String idCardValidate = IDCardValidate.IDCardValidate(edIdCardNum.getText().toString().trim());
+            if(!TextUtils.isEmpty(idCardValidate))
+            {
+                ToastUtil.showToast(idCardValidate);
+                return false;
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -189,11 +193,11 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
                 //压缩图片
                 switch (type) {
                     case 1:
-                        GlideUitl.loadImg(mActivity, path, ivFront);
+                        GlideUitl.loadImg(mActivity, path,240,100, ivFront);
                         frontFile = new File(path);
                         break;
                     case 2:
-                        GlideUitl.loadImg(mActivity, path, ivOpposite);
+                        GlideUitl.loadImg(mActivity, path,240,100, ivOpposite);
                         oppsiteFile = new File(path);
                         break;
                 }

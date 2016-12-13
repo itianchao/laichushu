@@ -1,8 +1,10 @@
 package com.laichushu.book.ui.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -12,6 +14,8 @@ import com.laichushu.book.bean.netbean.HomeInfo_paramet;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
+import com.laichushu.book.event.RefreshHomePageEvent;
+import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.mvp.homepage.HomePagePresener;
 import com.laichushu.book.mvp.homepage.HomePageView;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -28,14 +32,19 @@ import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivEdit, iv_headImg, ivGreadDetails, ivAnother;
+    private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade,ivGreadDetails, ivAnother;
     private TextView tvTitle, tvNickName, tvRealName, tvAuthorAgree;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
+    private RadioButton rbDy;
     private List<HomeUseDyrResult.DataBean> dyData = new ArrayList<>();
     private List<HomePersonFocusResult.DataBean> focusMeData = new ArrayList<>();
     private List<HomePersonFocusResult.DataBean> focusBeData = new ArrayList<>();
@@ -54,8 +63,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     @Override
     protected View createSuccessView() {
         View inflate = UIUtil.inflate(R.layout.activity_personal_home_page);
+        EventBus.getDefault().register(this);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         ivEdit = ((ImageView) inflate.findViewById(R.id.iv_title_another));
+        ivPerGrade = ((ImageView) inflate.findViewById(R.id.iv_perGrade));
         ivGreadDetails = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetails));
         iv_headImg = ((ImageView) inflate.findViewById(R.id.iv_PerHeadImg));
         ivAnother = (ImageView) inflate.findViewById(R.id.iv_title_another);
@@ -63,6 +74,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         tvNickName = ((TextView) inflate.findViewById(R.id.tv_PerNickName));
         tvRealName = ((TextView) inflate.findViewById(R.id.tv_perRealName));
         tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perAuthorAgree));
+        rbDy = ((RadioButton) inflate.findViewById(R.id.rb_dynamic));
 
         rgHomeList = ((RadioGroup) inflate.findViewById(R.id.rg_homeList));
         mDyRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_dynamic);
@@ -125,10 +137,26 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 if (result.isSuccess()) {
                     ToastUtil.showToast("success");
                     //初始化个人信息
-                    GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg);
+                    GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg,R.drawable.icon_percentre_defhead2x);
                     tvNickName.setText(result.getNickName());
-                    tvRealName.setText(result.getNickName());
-                    tvAuthorAgree.setText(result.getGrade());
+                    tvRealName.setText("");
+                    if(!TextUtils.isEmpty(result.getLevelType())){
+                        switch (result.getLevelType()){
+                            case "1":
+                                tvAuthorAgree.setText("金牌作家");
+                                GlideUitl.loadImg(mActivity,R.drawable.icon_gold_medal2x,ivPerGrade);
+                                break;
+                            case "2":
+                                tvAuthorAgree.setText("银牌作家");
+                                GlideUitl.loadImg(mActivity,R.drawable.icon_silver_medal2x,ivPerGrade);
+                                break;
+                            case "3":
+                                tvAuthorAgree.setText("铜牌作家");
+                                GlideUitl.loadImg(mActivity,R.drawable.icon_copper_medal2x,ivPerGrade);
+                                break;
+                        }
+                    }
+
 
                 } else {
                     refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -386,8 +414,22 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
 
         }
+        if(position==0){
+            rbDy.setChecked(true);
+        }
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshHomePageEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            initData();
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
     public void reLoadDatas() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override

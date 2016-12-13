@@ -2,6 +2,7 @@ package com.laichushu.book.ui.activity;
 
 import android.graphics.Paint;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -51,13 +52,15 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     @Override
     protected void initData() {
         titleTv.setText(UIUtil.getString(R.string.login));
-        forgetTv.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+        forgetTv.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         forgetTv.getPaint().setFakeBoldText(true);
         backIv.setVisibility(View.INVISIBLE);
         loginBtn.setOnClickListener(this);
         registerTv.setOnClickListener(this);
         forgetTv.setOnClickListener(this);
         mvpPresenter.preLogin();
+        usernameEt.setInputType(InputType.TYPE_CLASS_PHONE);
+        usernameEt.setInputType(InputType.TYPE_CLASS_NUMBER);
         addEditListen();
     }
 
@@ -72,7 +75,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         switch (v.getId()) {
             case R.id.bt_login:
                 //登录
-                mvpPresenter.login(usernameEt,passwordEt,loginBtn);
+                mvpPresenter.login(usernameEt, passwordEt, loginBtn);
                 break;
             case R.id.tv_register:
                 //注册
@@ -96,20 +99,23 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             String userId = model.getUserId();
             String token = model.getToken();
             String type = "1";
-            mvpPresenter.lastLogin(username, password,userId,token, type);
+            mvpPresenter.lastLogin(username, password, userId, token, type);
         } else {
             String errMsg = model.getErrMsg();
             if (errMsg.contains(UIUtil.getString(R.string.errMsg2))) {
                 DialogUtil.showDialog();
             } else if (errMsg.contains(UIUtil.getString(R.string.errMsg3))) {
                 ToastUtil.showToast(UIUtil.getString(R.string.errMsg3));
-            }else if (errMsg.contains(UIUtil.getString(R.string.errMsg4))) {
+            } else if (errMsg.contains(UIUtil.getString(R.string.errMsg4))) {
                 ToastUtil.showToast(UIUtil.getString(R.string.errMsg4));
+            } else if (errMsg.contains(UIUtil.getString(R.string.errMsg5))) {
+                ToastUtil.showToast(UIUtil.getString(R.string.errMsg5));
             } else {
                 ToastUtil.showToast(UIUtil.getString(R.string.errMsg1));
             }
         }
     }
+
     @Override
     public void getDataFail(String msg) {
         loginBtn.setEnabled(true);

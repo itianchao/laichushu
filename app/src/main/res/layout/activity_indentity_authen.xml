@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/bgGrey">
 
     <include
         android:id="@+id/identity_top"
         layout="@layout/page_title" />
 
+    <Button
+        android:id="@+id/btn_idCardAuditing"
+        android:layout_width="320dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@color/auditing"
+        android:text="提交审核" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/identity_top"
+        android:layout_above="@+id/btn_idCardAuditing"
         android:fillViewport="true">
 
         <LinearLayout
@@ -33,9 +44,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:text="真实姓名"
-                    android:textColor="@color/edit2"
-                    android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit2" />
 
                 <EditText
                     android:id="@+id/ed_identityNameContent"
@@ -46,9 +56,9 @@
                     android:layout_toLeftOf="@+id/iv_IdentityNickInto"
                     android:background="@null"
                     android:hint="请输入姓名"
-                    android:textColor="@color/edit2"
-                    android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    android:textColor="@color/characterGray"
+                    android:textColorHint="@color/Grey"
+                    android:textSize="@dimen/edit2" />
 
 
                 <ImageView
@@ -58,7 +68,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/home_right" />
+                    android:background="@drawable/home_right2x"
+                    android:visibility="invisible" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -75,9 +86,9 @@
                     android:layout_marginLeft="8dp"
                     android:background="@null"
                     android:text="身份证号"
-                    android:textColor="@color/edit2"
-                    android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    android:textColor="@color/characterGray"
+                    android:textColorHint="@color/Grey"
+                    android:textSize="@dimen/edit2" />
 
                 <EditText
                     android:id="@+id/ed_idNumContent"
@@ -87,11 +98,11 @@
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/iv_idNumInto"
                     android:background="@null"
-                    android:inputType="number"
-                    android:textColor="@color/edit2"
                     android:hint="请输入身份证号"
-                    android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    android:inputType="number"
+                    android:textColor="@color/characterGray"
+                    android:textColorHint="@color/Grey"
+                    android:textSize="@dimen/edit2" />
 
 
                 <ImageView
@@ -101,83 +112,92 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/home_right" />
+                    android:background="@drawable/home_right2x"
+                    android:visibility="invisible" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_uploadIdCardFront"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="170dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white">
 
+
                 <ImageView
-                    android:id="@+id/iv_idCardFront"
+                    android:id="@+id/iv_idCardFronts"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="24dp"
                     android:background="@drawable/default_shape"
                     android:paddingTop="8dp" />
+
+                <ImageView
+                    android:id="@+id/iv_idCardFront"
+                    android:layout_width="240dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/icon_idcard_back3x" />
 
                 <TextView
                     android:id="@+id/tv_idCardTips"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_idCardFront"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="12dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginTop="12dp"
                     android:text="上传身份证正面照片"
-                    android:textColor="@color/edit2"
-                    android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit2" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_uploadIdCardOpposite"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="170dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:src="@drawable/icon_idcard_back2x">
+
+
+                <ImageView
+                    android:id="@+id/iv_idCardOpposites"
+                    android:layout_width="240dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/default_shape"
+                    android:paddingTop="8dp" />
 
                 <ImageView
                     android:id="@+id/iv_idCardOpposite"
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:background="@drawable/default_shape"
-                    android:paddingTop="8dp" />
+                    android:layout_width="240dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/icon_idcard_back3x" />
 
                 <TextView
                     android:id="@+id/tv_idCardTip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_idCardOpposite"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="12dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginTop="12dp"
                     android:text="上传身份证反面照片"
-                    android:textColor="@color/edit2"
-                    android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit2" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="100dp"/>
+                android:layout_height="100dp" />
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btn_idCardAuditing"
-        android:layout_width="320dp"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp"
-        android:background="@color/auditing"
-        android:text="提交审核" />
 </RelativeLayout>

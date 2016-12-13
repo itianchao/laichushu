@@ -1,7 +1,12 @@
 package com.laichushu.book.mvp.campaign;
 
+import android.text.TextUtils;
+import android.widget.EditText;
+
 import com.google.gson.Gson;
+import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.global.ConstantValue;
@@ -143,5 +148,30 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
             }
         });
     }
+    //发送私信
+    public void loadAddPerInfoDate(String accepterId, final EditText sendmsgEv) {
+        String msg = sendmsgEv.getText().toString().trim();
+        if (TextUtils.isEmpty(msg)) {
+            sendmsgEv.startAnimation(ShakeAnim.shakeAnimation(3));
+            return;
+        }
+        AddPerMsgInfo_Paramet addPerInfoMsg = new AddPerMsgInfo_Paramet(msg, accepterId, userId);
+        LoggerUtil.toJson(addPerInfoMsg);
+        addSubscription(apiStores.getAddPerMsgInfDetails(addPerInfoMsg), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getAddPerInfoSuccess(model);
+            }
 
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
 }

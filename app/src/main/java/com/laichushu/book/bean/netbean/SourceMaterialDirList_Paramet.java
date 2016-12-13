@@ -6,10 +6,20 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class SourceMaterialDirList_Paramet {
-    private String  articleId;
+    private String userId;
+    private String articleId;
 
-    public SourceMaterialDirList_Paramet(String articleId) {
+    public SourceMaterialDirList_Paramet(String userId, String articleId) {
+        this.userId = userId;
         this.articleId = articleId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getArticleId() {

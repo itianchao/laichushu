@@ -21,7 +21,7 @@ public interface CampaignView {
     void getDataFail3(String msg);
 
     void articleVote(RewardResult model);
-
+    void getAddPerInfoSuccess(RewardResult model);
     void showLoading();
 
     void hideLoading();

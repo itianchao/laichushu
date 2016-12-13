@@ -31,7 +31,7 @@
             android:id="@+id/tv_gradeFlg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_like_red"
+            android:drawableLeft="@drawable/icon_copper_medal2x"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/edit2" />
 
@@ -50,7 +50,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/icon_like_red"
+            android:drawableRight="@drawable/icon_copper_medal2x"
             android:text="0-60分为"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/edit2" />
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/icon_like_red"
+            android:drawableRight="@drawable/icon_silver_medal2x"
             android:text="铜级  61-80 "
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/edit2" />
@@ -73,7 +73,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_like_red"
+            android:drawableLeft="@drawable/icon_gold_medal2x"
             android:text="金级"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/edit2" />

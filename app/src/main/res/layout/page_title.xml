@@ -12,16 +12,17 @@
         android:layout_centerInParent="true"
         android:textColor="@color/white"
         android:textSize="@dimen/title" />
+
     <TextView
         android:id="@+id/tv_middleLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/iv_title_finish"
         android:textColor="@color/white"
         android:textSize="@dimen/title"
-        android:layout_toRightOf="@+id/iv_title_finish"
-        android:layout_marginLeft="16dp"
-        android:layout_centerVertical="true"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/iv_title_finish"
@@ -49,6 +50,18 @@
         android:layout_toLeftOf="@+id/iv_title_other"
         android:layout_toStartOf="@+id/iv_title_other"
         tools:src="@drawable/img_default" />
+
+    <TextView
+        android:id="@+id/tv_title_right2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="12dp"
+        android:layout_toLeftOf="@+id/tv_title_right"
+        android:layout_toStartOf="@+id/iv_title_other"
+        android:textColor="@color/white"
+        android:textSize="@dimen/editTop"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_title_right"

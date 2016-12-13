@@ -62,7 +62,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
-        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter);
+        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter,null);
         mRecyclerView.setAdapter(writeBookAdapter);
     }
 
@@ -110,6 +110,15 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
             ToastUtil.showToast("投稿成功");
         } else {
             ToastUtil.showToast("投稿失败");
+        }
+    }
+
+    @Override
+    public void updateBookPermission(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("修改权限成功");
+        } else {
+            ToastUtil.showToast("修改权限失败");
         }
     }
 

@@ -125,15 +125,15 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private void titleViewPager() {
         adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity);
         homeVp.setAdapter(adapter);
-        int remainder = Integer.MAX_VALUE / 2 % mTitleData.size();
+        int remainder = Integer.MAX_VALUE / 2 %(mTitleData.size()==0?1:mTitleData.size());
         item = Integer.MAX_VALUE / 2 - remainder;
         homeVp.setCurrentItem(item);
         homeVp.setOnPageChangeListener(this);
         pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
+//                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
             }
         });
         for (int i = 0; i < mTitleData.size(); i++) {
@@ -247,7 +247,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        int move = (int) ((position % mTitleData.size() + positionOffset) * range);
+        int move = (int) ((position % (mTitleData.size()==0?1:mTitleData.size()) + positionOffset) * range);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.leftMargin = move;

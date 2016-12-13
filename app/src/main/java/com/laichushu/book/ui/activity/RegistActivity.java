@@ -1,6 +1,9 @@
 package com.laichushu.book.ui.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import com.laichushu.book.mvp.regist.RegistPresenter;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.ui.widget.ServiceTermsDialog;
+import com.laichushu.book.utils.AMUtils;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
@@ -54,6 +58,9 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
         finishTv.setOnClickListener(this);
         codeTv.setOnClickListener(this);
         agreementTv.setOnClickListener(this);
+        phoneEt.setInputType(InputType.TYPE_CLASS_NUMBER);
+        phoneEt.setInputType(InputType.TYPE_CLASS_PHONE);
+        addEditListen();
     }
 
     @Override
@@ -121,5 +128,24 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
                 break;
         }
     }
+    private void addEditListen() {
+        phoneEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 11) {
+                    AMUtils.onInactive(mActivity, phoneEt);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
 }
