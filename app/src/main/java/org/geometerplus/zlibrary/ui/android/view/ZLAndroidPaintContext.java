@@ -33,21 +33,16 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 
 import com.laichushu.book.db.Idea_Table;
 import com.laichushu.book.db.Idea_TableDao;
-import com.laichushu.book.event.FBReaderZLAndroidWidgetEvent;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.utils.ToastUtil;
 
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.bookmark.IdeaActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.fbreader.book.BookCollection;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.book.BookmarkQuery;
-import org.geometerplus.fbreader.book.DbBook;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
@@ -57,12 +52,8 @@ import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.text.view.ZLTextHighlighting;
-import org.geometerplus.zlibrary.ui.android.curl.CurlView;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -593,7 +584,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         myOutlinePaint.setStrokeWidth(tmpSize);
     }
     //处理
-    private String dispose(ZLTextHighlighting h, final int x, final int y) {
+    private String dispose(ZLTextHighlighting h, int x, int y) {
         FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
         BookCollectionShadow collection = (BookCollectionShadow) fbReaderApp.Collection;
         List<Bookmark> allmark = new ArrayList<>();
@@ -635,6 +626,20 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
                 length = 1;
             }
         }
+        final int[] x1 = {x};
+        final int[] y1 = {y};
+        FBReader.myMainView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    if ((event.getX() >= x1[0] - 20 && event.getX() <= x1[0] + 20) && ((event.getY() >= y1[0] - 20 && event.getY() <= y1[0] + 20))){
+                        ToastUtil.showToast("点击了");
+                        return false;
+                    }
+                }
+                return FBReader.myMainView.onTouchEvent(event);
+            }
+        });
         return length + "";
     }
     @Override
