@@ -19,14 +19,18 @@
 
 package org.geometerplus.zlibrary.core.view;
 
+import org.geometerplus.fbreader.book.Bookmark;
+
 public interface Hull {
 	interface DrawMode {
 		int None = 0;
 		int Outline = 1;
 		int Fill = 2;
+		int Line = 3;
 	};
 
-	void draw(ZLPaintContext context, int mode);
+	void draw(ZLPaintContext context, int mode, Bookmark number);
 	int distanceTo(int x, int y);
 	boolean isBefore(int x, int y);
+	void draw(ZLPaintContext context, int mode);
 }

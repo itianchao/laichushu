@@ -208,7 +208,7 @@ public final class CurlAnimationProvider extends AnimationProvider {
 			 * 设置贝赛尔曲线的操作点以及终止点
 			 * path.quadTo(controlX, controlY, endX, endY);
 			 */
-			LoggerUtil.e("cornerY:" + cornerY);
+
 			myQuadPath.moveTo(x1 - sX, cornerY); // 起点B1
 			myQuadPath.quadTo(x1, cornerY, (x + x1) / 2, (y + cornerY) / 2); // 控制点B2 终点B3
 			canvas.drawPath(myQuadPath, myEdgePaint);

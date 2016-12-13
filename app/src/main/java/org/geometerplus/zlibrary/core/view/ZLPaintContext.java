@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.view;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
@@ -205,6 +206,7 @@ abstract public class ZLPaintContext {
 	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode);
 
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
+	abstract public void drawLine(int[] xs, int[] ys,Bookmark bookmark);
 	abstract public void drawLine(int[] xs, int[] ys);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
 

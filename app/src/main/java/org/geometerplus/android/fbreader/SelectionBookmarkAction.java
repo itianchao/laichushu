@@ -20,82 +20,123 @@
 package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
-import android.os.Parcelable;
-import android.view.View;
 
-import com.github.johnpersano.supertoasts.SuperActivityToast;
-import com.github.johnpersano.supertoasts.SuperToast;
-import com.github.johnpersano.supertoasts.util.OnClickWrapper;
-
-import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import org.geometerplus.fbreader.book.Bookmark;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import com.laichushu.book.event.TransmitBookMarkEvent3;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
-import org.geometerplus.android.fbreader.bookmark.EditBookmarkActivity;
+import org.geometerplus.android.fbreader.bookmark.BookmarksEditActivity;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.OrientationUtil;
+import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
+/**
+ * 书签
+ */
 public class SelectionBookmarkAction extends FBAndroidAction {
 
-	private Bookmark bookmark;
-	private FBReader baseApplication;
-	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+    private Bookmark bookmark;
+    private FBReader baseApplication;
+    private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
-	SelectionBookmarkAction(FBReader baseApplication, FBReaderApp fbreader) {
-		super(baseApplication, fbreader);
-		this.baseApplication = baseApplication;
-	}
+    SelectionBookmarkAction(FBReader baseApplication, FBReaderApp fbreader) {
+        super(baseApplication, fbreader);
+        EventBus.getDefault().register(this);
+        this.baseApplication = baseApplication;
+    }
 
-	@Override
-	protected void run(Object ... params) {
-		/**
-		 * 传入动作数组判断
-		 */
-		if (params.length != 2) {
-			bookmark = (Bookmark)params[0];
-		} else {
-			bookmark = Reader.addSelectionBookmark();
-			int mSelectColor = (int)params[0];
-			int styleId = (int)params[1];
-			if (mSelectColor != 0 && styleId !=0){
-				changeColor(mSelectColor,styleId);
-			}
-		}
-		if (bookmark == null) {
-			return;
-		}
-		final SuperActivityToast toast =
-			new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
-		toast.setText(bookmark.getText());
-		toast.setDuration(SuperToast.Duration.EXTRA_LONG);
-		toast.setButtonIcon(
-			android.R.drawable.ic_menu_edit,
-			ZLResource.resource("dialog").getResource("button").getResource("edit").getValue()
-		);
-		toast.setOnClickWrapper(new OnClickWrapper("bkmk", new SuperToast.OnClickListener() {
-			@Override
-			public void onClick(View view, Parcelable token) {
-				final Intent intent =
-					new Intent(BaseActivity.getApplicationContext(), EditBookmarkActivity.class);
-				FBReaderIntents.putBookmarkExtra(intent, bookmark);
-				OrientationUtil.startActivity(BaseActivity, intent);
-			}
-		}));
-		BaseActivity.showToast(toast);
-	}
+    @Override
+    protected void run(Object... params) {
+        /**
+         * 传入动作数组判断
+         */
+        if (params.length == 1) {//选择
+            bookmark = (Bookmark) params[0];
+            baseApplication.showSelectionPanel();
+        } else if (params.length == 2) {
+            //改变样式
+            Bookmark bookmark = Reader.addSelectionBookmark();
+            if (bookmark != null) {
+                this.bookmark = bookmark;
+            }
+            int mSelectColor = (int) params[0];
+            int styleId = (int) params[1];
+            if (mSelectColor != 0 && styleId != 0) {
+                changeColor(mSelectColor, styleId);
+            }
+            if (bookmark == null) {
+                return;
+            }
 
-	private void changeColor(int mSelectColor, final int styleId) {
-		Intent data = new Intent();
-		data.putExtra("selectColor", mSelectColor);
-		baseApplication.setResult(7, data);
-		myCollection.bindToService(baseApplication, new Runnable() {
-			public void run() {
-				bookmark.setStyleId(styleId);
-				myCollection.setDefaultHighlightingStyleId(styleId);
-				myCollection.saveBookmark(bookmark);
-			}
-		});
-	}
+//		final SuperActivityToast toast =
+//			new SuperActivityToast(BaseActivity, SuperToast.Type.BUTTON);
+//		toast.setText(bookmark.getText());
+//		toast.setDuration(SuperToast.Duration.EXTRA_LONG);
+//		toast.setButtonIcon(
+//			android.R.drawable.ic_menu_edit,
+//			ZLResource.resource("dialog").getResource("button").getResource("edit").getValue()
+//		);
+//		toast.setOnClickWrapper(new OnClickWrapper("bkmk", new SuperToast.OnClickListener() {
+//			@Override
+//			public void onClick(View view, Parcelable token) {
+//				final Intent intent =
+//					new Intent(BaseActivity.getApplicationContext(), EditBookmarkActivity.class);
+//				FBReaderIntents.putBookmarkExtra(intent, bookmark);
+//				OrientationUtil.startActivity(BaseActivity, intent);
+//			}
+//		}));
+//		BaseActivity.showToast(toast);
+        } else {
+            if (bookmark == null) {
+                bookmark = (Bookmark) params[0];
+                if (bookmark == null) {
+                    Bookmark bookmark = Reader.addSelectionBookmark();
+                    this.bookmark = bookmark;
+                    int mSelectColor = (int) params[1];
+                    int styleId = (int) params[2];
+                    if (bookmark != null) {
+                        bookmark.setText("");
+                        changeColor(mSelectColor, styleId);
+//                        startActivity();
+                    }
+                }
+            } else {
+                startActivity();
+            }
+//            TransmitBookMarkEvent3 event = new TransmitBookMarkEvent3();
+//            event.setMyBookmark(bookmark);
+//            EventBus.getDefault().postSticky(event);
+        }
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void changeColor(int mSelectColor, final int styleId) {
+        Intent data = new Intent();
+        data.putExtra("selectColor", mSelectColor);
+        baseApplication.setResult(7, data);
+        myCollection.bindToService(baseApplication, new Runnable() {
+            public void run() {
+                bookmark.setStyleId(styleId);
+                myCollection.setDefaultHighlightingStyleId(styleId);
+                myCollection.saveBookmark(bookmark);
+            }
+        });
+    }
+    public void startActivity(){
+        final Intent intent =
+                new Intent(BaseActivity.getApplicationContext(), BookmarksEditActivity.class);
+        FBReaderIntents.putBookmarkExtra(intent, bookmark);
+        intent.putExtra("type", false);
+        intent.putExtra("content", bookmark.getText());
+        OrientationUtil.startActivity(BaseActivity, intent);
+        bookmark = null;
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(TransmitBookMarkEvent3 event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        bookmark = event.getMyBookmark();
+    }
 }

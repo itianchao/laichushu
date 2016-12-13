@@ -76,15 +76,14 @@ public final class Bookmark extends ZLTextFixedPosition {
 	// create java object for existing bookmark
 	// uid parameter can be null when comes from old format plugin!
 	public Bookmark(
-		long id, String uid, String versionUid,
-		long bookId, String bookTitle, String text, String originalText,
-		long creationTimestamp, Long modificationTimestamp, Long accessTimestamp,
-		String modelId,
-		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
-		int end_paragraphIndex, int end_elementIndex, int end_charIndex,
-		boolean isVisible,
-		int styleId
-	) {
+			long id, String uid, String versionUid,
+			long bookId, String bookTitle, String text, String originalText,
+			long creationTimestamp, Long modificationTimestamp, Long accessTimestamp,
+			String modelId,
+			int start_paragraphIndex, int start_elementIndex, int start_charIndex,
+			int end_paragraphIndex, int end_elementIndex, int end_charIndex,
+			boolean isVisible,
+			int styleId) {
 		super(start_paragraphIndex, start_elementIndex, start_charIndex);
 
 		myId = id;
@@ -100,7 +99,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myAccessTimestamp = accessTimestamp;
 		ModelId = modelId;
 		IsVisible = isVisible;
-
 		if (end_charIndex >= 0) {
 			myEnd = new ZLTextFixedPosition(end_paragraphIndex, end_elementIndex, end_charIndex);
 		} else {
@@ -255,5 +253,36 @@ public final class Bookmark extends ZLTextFixedPosition {
 			return uid;
 		}
 		throw new RuntimeException("INVALID UUID: " + uid);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+
+		Bookmark bookmark = (Bookmark) o;
+
+		if (myId != bookmark.myId) return false;
+		if (BookId != bookmark.BookId) return false;
+		if (CreationTimestamp != bookmark.CreationTimestamp) return false;
+		if (myLength != bookmark.myLength) return false;
+		if (myStyleId != bookmark.myStyleId) return false;
+		if (IsVisible != bookmark.IsVisible) return false;
+
+		if (!BookTitle.equals(bookmark.BookTitle)) return false;
+		if (!myText.equals(bookmark.myText)) return false;
+		if (!myOriginalText.equals(bookmark.myOriginalText)) return false;
+		if (!myEnd.equals(bookmark.myEnd)) return false;
+		return ModelId.equals(bookmark.ModelId);
+
+	}
+
+	public long getBookId() {
+		return BookId;
+	}
+
+	public String getUid() {
+		return Uid;
 	}
 }

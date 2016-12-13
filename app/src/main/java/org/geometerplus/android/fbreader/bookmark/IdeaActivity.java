@@ -25,36 +25,35 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.laichushu.book.R;
-import com.laichushu.book.utils.ToastUtil;
+import com.laichushu.book.event.TransmitBookMarkEvent3;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.fbreader.book.Bookmark;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
-public class BookmarksEditActivity extends Activity {
+public class IdeaActivity extends Activity {
     private final BookCollectionShadow myCollection = new BookCollectionShadow();
     private Bookmark myBookmark;
     private LinearLayout li;
 
     private EditText editor;
     private Button saveTextButton;
-    private Button deleteButton;
-    private boolean type;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.edit_bookmark2);
-
+        setContentView(R.layout.edit_bookmark3);
+        EventBus.getDefault().register(this);
         myBookmark = FBReaderIntents.getBookmarkExtra(getIntent());
         if (myBookmark == null) {
             finish();
@@ -62,54 +61,13 @@ public class BookmarksEditActivity extends Activity {
         }
 
         li = (LinearLayout) findViewById(R.id.edit_bookmark_tabhost);
-//        initBgColor();
 
         editor = (EditText) findViewById(R.id.edit_bookmark_text);
         editor.setText(myBookmark.getText());
         final int len = editor.getText().length();
         editor.setSelection(len, len);
         saveTextButton = (Button) findViewById(R.id.edit_bookmark_save_text_button);
-        saveTextButton.setEnabled(false);
-        deleteButton = (Button) findViewById(R.id.edit_bookmark_delete_button);
         initListener();
-        type = getIntent().getBooleanExtra("type", true);
-        if (type) {
-            deleteButton.setVisibility(View.VISIBLE);
-        } else {
-            String content = getIntent().getStringExtra("content");
-            editor.setText(content);
-            deleteButton.setVisibility(View.GONE);
-            saveTextButton.setText("完成");
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            saveTextButton.setLayoutParams(params);
-        }
-    }
-
-    private void initBgColor() {
-        String bgValue = getIntent().getStringExtra("bgColor");
-        if (bgValue != null) {
-            switch(bgValue) {
-                case "wallpapers/bg_green.png":
-                    li.setBackgroundResource(R.drawable.bg_green);
-                    break;
-                case "wallpapers/bg_grey.png":
-                    li.setBackgroundResource(R.drawable.bg_grey);
-                    break;
-                case "wallpapers/bg_night.png":
-                    li.setBackgroundResource(R.drawable.bg_white);
-                    break;
-                case "wallpapers/bg_vine_grey.png":
-                    li.setBackgroundResource(R.drawable.bg_vine_grey);
-                    break;
-                case "wallpapers/bg_vine_white.png":
-                    li.setBackgroundResource(R.drawable.bg_vine_white);
-                    break;
-                case "wallpapers/bg_white.png":
-                    li.setBackgroundResource(R.drawable.bg_white);
-                    break;
-            }
-        }
     }
 
     private void initListener() {
@@ -117,14 +75,11 @@ public class BookmarksEditActivity extends Activity {
         saveTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myCollection.bindToService(BookmarksEditActivity.this, new Runnable() {
+                myCollection.bindToService(IdeaActivity.this, new Runnable() {
                     public void run() {
                         myBookmark.setText(editor.getText().toString());
                         myCollection.saveBookmark(myBookmark);
-                        saveTextButton.setEnabled(false);
-                        if (!type){
-                            finish();
-                        }
+                        finish();
                     }
                 });
             }
@@ -144,24 +99,13 @@ public class BookmarksEditActivity extends Activity {
             public void afterTextChanged(Editable s) {
             }
         });
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myCollection.bindToService(BookmarksEditActivity.this, new Runnable() {
-                    public void run() {
-                        myCollection.deleteBookmark(myBookmark);
-                        finish();
-                    }
-                });
-            }
-        });
     }
 
     private void changeColor(int mSelectColor, final int styleId) {
         Intent data = new Intent();
         data.putExtra("selectColor", mSelectColor);
         setResult(7, data);
-        myCollection.bindToService(BookmarksEditActivity.this, new Runnable() {
+        myCollection.bindToService(IdeaActivity.this, new Runnable() {
             public void run() {
                 myBookmark.setStyleId(styleId);
                 myCollection.setDefaultHighlightingStyleId(styleId);
@@ -174,6 +118,14 @@ public class BookmarksEditActivity extends Activity {
     @Override
     protected void onDestroy() {
         myCollection.unbind();
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(TransmitBookMarkEvent3 event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        myBookmark = event.getMyBookmark();
+        editor.setText(myBookmark.getText());
     }
 }

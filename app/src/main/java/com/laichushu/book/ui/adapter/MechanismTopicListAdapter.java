@@ -51,6 +51,7 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean",dataBean);
+                bundle.putString("type","");
                 UIUtil.openActivity(mActivity,TopicDetilActivity.class,bundle);
             }
         });
