@@ -97,10 +97,10 @@
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/tv_activity_name"
+                    android:layout_below="@+id/tv_activity_end"
                     android:layout_marginTop="10dp"
-                    android:background="@color/red"
                     android:gravity="center"
+                    android:background="@color/red"
                     android:text="@string/join_activity"
                     android:textSize="@dimen/edit3" />
             </RelativeLayout>

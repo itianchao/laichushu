@@ -35,6 +35,7 @@ import java.util.ArrayList;
 public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPresenter> implements SourceMaterialDirView, View.OnClickListener {
 
     private TextView addTv;
+    private TextView addJur;
     private ImageView finishIv;
     private TextView titleTv;
     private PullLoadMoreRecyclerView mateialRyv;
@@ -56,6 +57,7 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
         View mSuccessView = UIUtil.inflate(R.layout.activity_sourcemateialdir);
         articleId = getIntent().getStringExtra("articleId");
         addTv = (TextView) mSuccessView.findViewById(R.id.tv_add);
+        addJur = (TextView) mSuccessView.findViewById(R.id.tv_title_right2);
         titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
         titleRightTv = (TextView) mSuccessView.findViewById(R.id.tv_title_right);
         finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
@@ -69,9 +71,13 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
         titleRightTv.setTextColor(Color.WHITE);
         titleTv.setText("素材模式");
         addTv.setText("添加素材");
+        addJur.setText("权限");
+        addJur.setVisibility(View.VISIBLE);
+
         finishIv.setOnClickListener(this);
         newDraftLay.setOnClickListener(this);
         titleRightTv.setOnClickListener(this);
+        addJur.setOnClickListener(this);
 //        mateialRyv.setOnPullLoadMoreListener(this);
         mateialRyv.setPullRefreshEnable(false);//不需要下拉刷新
         mateialRyv.setPushRefreshEnable(false);//不需要上拉刷新
@@ -109,14 +115,14 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
     }
 
     @Override
-    public void getDeleteMateialDataSuccess(RewardResult model,int index) {
+    public void getDeleteMateialDataSuccess(RewardResult model, int index) {
         hideLoading();
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功");
             mData.remove(index);
             mAdapter.setmData(mData);
             mAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -130,7 +136,7 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
             dataBean.setName(rename);
             mAdapter.setmData(mData);
             mAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -140,6 +146,20 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
         refursh();
         refreshPage(LoadingPager.PageState.STATE_ERROR);
         ToastUtil.showToast(msg);
+    }
+
+    /**
+     * 修改素材权限结果
+     *
+     * @param model
+     */
+    @Override
+    public void getUpdateMerPermission(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("修改权限成功");
+        } else {
+            ToastUtil.showToast("修改权限失败");
+        }
     }
 
     @Override
@@ -188,6 +208,10 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
                     mAdapter.setGone(false);
                 }
                 mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.tv_title_right2:
+                //权限
+                mvpPresenter.openPermissionAlertDialog(mActivity,articleId);
                 break;
         }
     }

@@ -47,42 +47,42 @@
 
         <RadioButton
             android:id="@+id/rbn_public"
-            android:text="默认公开"
+            style="@style/permission_select"
             android:checked="true"
             android:drawableLeft="@drawable/select_permission_radiobutton"
-            style="@style/permission_select" />
+            android:text="默认公开" />
 
         <include layout="@layout/line" />
 
         <RadioButton
             android:id="@+id/rbn_private"
+            style="@style/permission_select"
             android:drawableLeft="@drawable/select_permission_radiobutton"
-            android:text="仅个人"
-            style="@style/permission_select" />
+            android:text="仅个人" />
 
         <include layout="@layout/line" />
 
         <RadioButton
             android:id="@+id/rbn_master"
+            style="@style/permission_select"
             android:drawableLeft="@drawable/select_permission_radiobutton"
-            android:text="大咖"
-            style="@style/permission_select" />
+            android:text="编辑" />
 
         <include layout="@layout/line" />
 
         <RadioButton
             android:id="@+id/rbn_press"
-            android:text="出版社"
+            style="@style/permission_select"
             android:drawableLeft="@drawable/select_permission_radiobutton"
-            style="@style/permission_select" />
+            android:text="出版社" />
 
         <include layout="@layout/line" />
 
         <RadioButton
             android:id="@+id/rbn_fans"
+            style="@style/permission_select"
             android:drawableLeft="@drawable/select_permission_radiobutton"
-            android:text="粉丝"
-            style="@style/permission_select" />
+            android:text="粉丝" />
 
         <include layout="@layout/line" />
     </RadioGroup>

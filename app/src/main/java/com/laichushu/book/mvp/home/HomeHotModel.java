@@ -64,30 +64,69 @@ public class HomeHotModel implements Parcelable {
     }
 
     public static class DataBean implements Parcelable {
+
+        private String coverUrl;
+        private String coverName;
+
+        private String topCategoryId;
+        private String topCategoryName;
+        private String introduce;
+
+        private boolean isParticipate;
+
+        private boolean isMake;// 是否制作电子书
         private String articleId;
         private String articleName;
         private String authorId;
         private String authorName;
-        private String coverUrl;
-        private String coverName;
         private String status;
-        private String topCategoryId;
-        private String topCategoryName;
-        private String introduce;
+        private Boolean isEdit;
+
+        public String getExpressStatus() {
+            return expressStatus;
+        }
+
+        public void setExpressStatus(String expressStatus) {
+            this.expressStatus = expressStatus;
+        }
+
+        private String expressStatus;
+
+        public Boolean getEdit() {
+            return isEdit;
+        }
+
+        public void setEdit(Boolean edit) {
+            isEdit = edit;
+        }
+
+        public String getFreezeStatus() {
+            return freezeStatus;
+        }
+
+        public void setFreezeStatus(String freezeStatus) {
+            this.freezeStatus = freezeStatus;
+        }
+
+        private String freezeStatus;
         private int wordNum;
         private int subscribeNum;
         private int browseNum;
         private int commentNum;
         private int awardNum;
+
         private double awardMoney;
+
         private boolean isPurchase;
         private boolean isSubscribe;
-        private boolean isParticipate;
         private boolean isCollect;
-        private boolean isMake;
 
         public boolean isMake() {
             return isMake;
+        }
+
+        public boolean isEdit() {
+            return isEdit;
         }
 
         public void setMake(boolean make) {

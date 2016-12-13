@@ -98,7 +98,7 @@
                 android:layout_marginTop="4dp"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
-                android:background="@drawable/shape_rectangle_btn_state"
+                android:background="@drawable/shape_rectangle_fill_hint"
                 android:text="查看钱包"
                 android:textColor="@color/characterGray"
                 android:textSize="@dimen/edit2"

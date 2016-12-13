@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.global.ConstantValue;
@@ -145,6 +146,11 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     public void getDelPerIdfoDataSuccess(RewardResult model) {
+
+    }
+
+    @Override
+    public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
 
     }
 

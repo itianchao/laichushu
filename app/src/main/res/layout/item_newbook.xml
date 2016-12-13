@@ -49,6 +49,7 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp"
                     tools:text="文学" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -96,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="小说作者："
+                    android:text="作        者："
                     android:textColor="@color/main_text_color"
                     android:textSize="12sp" />
 
@@ -171,6 +172,12 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_jurisdiction"
+            style="@style/new_books"
+            android:layout_gravity="right"
+            android:drawableLeft="@drawable/manage_jur2x" />
     </LinearLayout>
 
     <View
@@ -180,11 +187,52 @@
         android:layout_marginRight="8dp"
         android:background="@color/hint" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_centerInParent="true">
+
+        <HorizontalScrollView
+            android:id="@+id/hs_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/ll_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" />
+
+        </HorizontalScrollView>
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:background="@drawable/icon_hot2x"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="24dp"
+            android:background="@drawable/icon_hot2x" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -252,5 +300,6 @@
         </LinearLayout>
 
     </LinearLayout>
-    <include layout="@layout/item_distance"/>
+
+    <include layout="@layout/item_distance" />
 </LinearLayout>

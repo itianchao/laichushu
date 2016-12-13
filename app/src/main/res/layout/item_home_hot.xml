@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:drawableRight="@drawable/home_right"
+            android:drawableRight="@drawable/home_right2x"
             tools:text="9本"
             android:textColor="@color/title_bg_color1" />
     </LinearLayout>

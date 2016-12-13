@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:textColor="@color/black"
+                        android:textColor="@color/characterLightGray1"
                         android:textSize="@dimen/edit2"
                         android:textStyle="bold" />
 
@@ -75,20 +75,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:textColor="@color/black"
+                        android:textColor="@color/characterLightGray2"
                         android:textSize="@dimen/edit2"
                         android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/btn_status"
-                        android:layout_width="60dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginBottom="8dp"
                         android:layout_marginRight="24dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/shape_rectangle_btn_state"
+                        android:background="@drawable/shape_rectangle_fill_hint"
                         android:clickable="false"
                         android:focusable="false"
                         android:text="已关闭"

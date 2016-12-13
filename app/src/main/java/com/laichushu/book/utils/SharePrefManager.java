@@ -72,6 +72,18 @@ public class SharePrefManager {
     }
 
     /**
+     * 保存nickName
+     */
+    public static void setNickName(String username) {
+        CacheUtil.setString(UIUtil.getContext(), "nickName", username);
+    }
+
+    /**
+     * 获取nickNAme
+     */
+    public static String getNickName() {
+        return CacheUtil.getString(UIUtil.getContext(), "nickName", "");
+    } /**
      * 保存username
      */
     public static void setUserName(String username) {

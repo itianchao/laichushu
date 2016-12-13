@@ -1,12 +1,11 @@
 package com.laichushu.book.ui.activity;
 
-import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -18,13 +17,10 @@ import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
-import com.laichushu.book.bean.netbean.MessageCommentResult;
-import com.laichushu.book.mvp.campaign.AuthorWorksModle;
+import com.laichushu.book.event.RefreshHomePageEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.userhomepage.UserHomePagePresener;
 import com.laichushu.book.mvp.userhomepage.UserHomePageView;
-import com.laichushu.book.ui.adapter.HomePageFocusMeAdapter;
-import com.laichushu.book.ui.adapter.JoinActivityAdapter;
 import com.laichushu.book.ui.adapter.UserDynamicAdapter;
 import com.laichushu.book.ui.adapter.UserFocusHeAdapter;
 import com.laichushu.book.ui.adapter.UserHeFoucsAdapter;
@@ -37,6 +33,8 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +51,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private PullLoadMoreRecyclerView mDyRecyclerView, mWorksRecyclerView, mHeFocusRecyclerView, mFocusHeRecyclerView;
     private UserDynamicAdapter dyAdapter;
     private UserWorksListAdapter worksAdapter;
-    private UserHeFoucsAdapter beAdapter;//他关注的
-    private UserFocusHeAdapter heAdapter;//关注他的
+    private UserHeFoucsAdapter beAdapter;//关注他的
+    private UserFocusHeAdapter heAdapter;//他关注的
     private RadioGroup radioGroup;
     private List<HomeUseDyrResult.DataBean> dyData = new ArrayList<>();
     private List<HomeHotModel.DataBean> worksData = new ArrayList<>();
@@ -110,7 +108,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         tvTitle.setText("用户主页");
         tvTitle.setVisibility(View.VISIBLE);
         ivAnthor.setVisibility(View.VISIBLE);
-        GlideUitl.loadImg(mActivity,R.drawable.activity_comment,ivAnthor);
+        GlideUitl.loadImg(mActivity, R.drawable.activity_comment, ivAnthor);
 
         ivBack.setOnClickListener(this);
         ivGradeDetails.setOnClickListener(this);
@@ -171,10 +169,10 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 break;
             case R.id.btn_userFocus:
                 //关注
-                if(!userBean.isBeFocused()){
-                    mvpPresenter.loadDelFocus(userId, true);
+                if (!userBean.isBeFocused()) {
+                    mvpPresenter.loadAddFocus(userId, true);
                     btnFocus.setText("已关注");
-                }else{
+                } else {
                     mvpPresenter.loadDelFocus(userId, false);
                     btnFocus.setText("关注");
                 }
@@ -254,7 +252,21 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             userBean = result;
             GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
             nickName.setText(result.getNickName());
-            tvRealName.setText(result.getNickName());
+            switch (result.getLevelType()) {
+                case "1":
+                    tvAuthorGrade.setText("金牌作家");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivGrade);
+                    break;
+                case "2":
+                    tvAuthorGrade.setText("银牌作家");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, ivGrade);
+                    break;
+                case "3":
+                    tvAuthorGrade.setText("铜牌作家");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, ivGrade);
+                    break;
+
+            }
             if (result.isBeFocused()) {
                 btnFocus.setText("已关注");
             } else {
@@ -542,5 +554,11 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 .setCustomView(customerView, mActivity)                // 添加自定义View
                 .show();
 
+    }
+
+    @Override
+    public void finish() {
+        EventBus.getDefault().postSticky(new RefreshHomePageEvent(true));
+        super.finish();
     }
 }

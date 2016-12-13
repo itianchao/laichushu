@@ -143,13 +143,15 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     @Override
     public void loadMineDataSuccess(PersonalCentreResult model) {
         if (model.getSuccess()) {
-            //本地存储
+            //本地存储--->已存在更新
             cache_jsonDao.insert(new Cache_Json(null, "PersonalDetails", new Gson().toJson(model)));
             four = true;
             Message msg = new Message();
             msg.obj = four;
             msg.what = 4;
             mhandler.sendMessage(msg);
+            //sharePerfance存储
+            SharePrefManager.setNickName(model.getNickName());
         } else {
             ToastUtil.showToast(model.getErrMsg());
             getDataFail(model.getErrMsg());

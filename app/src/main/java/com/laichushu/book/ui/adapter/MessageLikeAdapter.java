@@ -74,13 +74,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvReaderName.setText(dataBeen.get(position).getSenderName());
                 switch (dataBeen.get(position).getSourceType()) {
                     case "1":
-                        //点赞
-                        holder.tvContent.setVisibility(View.VISIBLE);
-                        holder.tvType.setText("点赞了您的评论");
-                        holder.tvContent.setText(dataBeen.get(position).getContent());
-                        break;
-                    case "2":
-                        //收藏
+                        //
                         holder.tvContent.setVisibility(View.GONE);
                         holder.tvType.setText("收藏了你的书");
                         holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
@@ -88,29 +82,15 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                             @Override
                             public void onClick(View v) {
                                 ToastUtil.showToast("跳转书详情！");
-                                messageCommentPresenter.LoadBookDetailsData(dataBeen.get(position).getArticleId(), position);
+                               messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
                             }
                         });
                         break;
                     case "3":
-                        //话题
+                        //点赞
                         holder.tvContent.setVisibility(View.VISIBLE);
-                        holder.tvType.setText("评论了您的话题");
-                        holder.tvBookName.setText(dataBeen.get(position).getAccepterName());
+                        holder.tvType.setText("点赞了您的评论");
                         holder.tvContent.setText(dataBeen.get(position).getContent());
-                        break;
-                    case "4":
-                        //评论
-                        holder.tvContent.setVisibility(View.VISIBLE);
-                        holder.tvType.setText("评论了您的书");
-                        holder.tvBookName.setText(dataBeen.get(position).getSourceName());
-                        holder.tvContent.setText(dataBeen.get(position).getContent());
-                        holder.tvBookName.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                messageCommentPresenter.LoadBookDetailsData(dataBeen.get(position).getArticleId(), position);
-                            }
-                        });
                         break;
                 }
                 holder.tvReaderName.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +190,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         //跳转私信详情
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("perInfoDetails", dataBeen.get(position));
-                        UIUtil.openActivity(context,PersonalInfomationPageActivity.class,bundle);
+                        UIUtil.openActivity(context, PersonalInfomationPageActivity.class, bundle);
 
                     }
                 });
@@ -244,16 +224,16 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvFocusName.setText(dataBeen.get(position).getContent());
                 holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
                 holder.tvFocusContent.setVisibility(View.GONE);
-                holder.llFocusItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //活动详情
-                        Bundle bundle = new Bundle();
-                        bundle.putString("type","activity");
-                        bundle.putSerializable("activityDetails", dataBeen.get(position));
-                            UIUtil.openActivity(context, CampaignActivity.class, bundle);
-                    }
-                });
+//                holder.llFocusItem.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //活动详情
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("type","activity");
+//                        bundle.putSerializable("activityDetails", dataBeen.get(position));
+//                            UIUtil.openActivity(context, CampaignActivity.class, bundle);
+//                    }
+//                });
                 break;
             case "7":
                 //其他消息
@@ -291,6 +271,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
         //喜欢
         public LinearLayout llItem;
         public TextView tvTime, tvReaderName, tvType, tvBookName, tvContent;
+        public ImageView ivLikeIcon;
         public final View root;
         //打赏
         public TextView tvReward, tvRewardBookName, tvRewardTime;
@@ -305,6 +286,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
             switch (type) {
                 case "1":
                     //喜欢
+                    ivLikeIcon = (ImageView) root.findViewById(R.id.iv_likeIcons);
                     llItem = (LinearLayout) root.findViewById(R.id.ll_item);
                     tvTime = (TextView) root.findViewById(R.id.tv_likeTime);
                     tvReaderName = (TextView) root.findViewById(R.id.tv_readerName);

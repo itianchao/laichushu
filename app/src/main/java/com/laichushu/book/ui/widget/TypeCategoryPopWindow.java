@@ -110,11 +110,13 @@ public class TypeCategoryPopWindow extends PopupWindow implements OnItemClickLis
         switch(parent.getId()){
             case R.id.lv_popwin:
                 mChildData.clear();
-                mChildData.addAll(mDatas.get(position).getChild());
-                mAdapter.notifyDataSetChanged();
-                mAdapter2.notifyDataSetChanged();
-                count[0] = position;
-                checkItem(position);
+                if(null!=mDatas.get(position).getChild()){
+                    mChildData.addAll(mDatas.get(position).getChild());
+                    mAdapter.notifyDataSetChanged();
+                    mAdapter2.notifyDataSetChanged();
+                    count[0] = position;
+                    checkItem(position);
+                }
                 break;
         }
     }

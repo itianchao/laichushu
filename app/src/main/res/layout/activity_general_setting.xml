@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_mineManage"
@@ -32,8 +33,7 @@
                 android:paddingLeft="24dp"
                 android:text="阅读字号"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit" />
 
             <TextView
                 android:id="@+id/tv_characterNum"
@@ -44,8 +44,7 @@
                 android:layout_toLeftOf="@+id/iv_settingInto"
                 android:text="中"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit" />
 
             <ImageView
                 android:id="@+id/iv_settingInto"
@@ -54,7 +53,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/home_right" />
+                android:background="@drawable/home_right2x" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -72,8 +71,7 @@
                 android:paddingLeft="24dp"
                 android:text="消息推送"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit" />
 
             <CheckBox
                 android:id="@+id/iv_mineBookCastInto"
@@ -100,8 +98,7 @@
                 android:paddingLeft="24dp"
                 android:text="关于来出书"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit" />
 
             <ImageView
                 android:id="@+id/iv_aboutApp"
@@ -110,7 +107,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/home_right" />
+                android:background="@drawable/home_right2x" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -128,8 +125,7 @@
                 android:paddingLeft="24dp"
                 android:text="清理缓存"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit" />
 
             <TextView
                 android:id="@+id/tv_cacheSize"
@@ -140,8 +136,7 @@
                 android:layout_toLeftOf="@+id/iv_cacheInto"
                 android:text="0M"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit" />
 
             <ImageView
                 android:id="@+id/iv_cacheInto"
@@ -150,7 +145,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/home_right" />
+                android:background="@drawable/home_right2x" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -168,8 +163,7 @@
                 android:paddingLeft="24dp"
                 android:text="退出"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

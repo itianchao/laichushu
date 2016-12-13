@@ -50,6 +50,7 @@ public class CoverDirAdapter extends RecyclerView.Adapter<CoverDirAdapter.CoverD
                 Bundle bundle = new Bundle();
                 bundle.putString("type",bean.getId());
                 bundle.putString("title",name);
+                bundle.putString("bookType",bean.getTypeName());
                 bundle.putString("bookname",mActivity.getBookname());
                 UIUtil.openActivity(mActivity,CoverListActivity.class,bundle);
             }

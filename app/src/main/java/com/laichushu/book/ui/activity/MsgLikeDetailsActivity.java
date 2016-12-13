@@ -1,16 +1,16 @@
 package com.laichushu.book.ui.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.global.ConstantValue;
@@ -19,9 +19,9 @@ import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
 import com.laichushu.book.ui.adapter.MessageLikeAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
-import com.laichushu.book.ui.fragment.MineFragment;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ModelUtils;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -39,7 +39,9 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     private int PAGE_NO = 1;
     //1 : 喜欢  2. 打赏 3 关注 4私信 5 订阅
     private String type;
-    private MsgLikeDetailsActivity.UpdateReceiver mUpdateReceiver;
+    private Gson gson;
+    private GsonBuilder builder;
+
     @Override
     protected MessageCommentPresenter createPresenter() {
         return new MessageCommentPresenter(this);
@@ -57,7 +59,8 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     @Override
     protected void initData() {
         super.initData();
-        registerPlayerReceiver();
+        builder = new GsonBuilder();
+        gson = builder.create();
         type = getIntent().getStringExtra("type");
         switch (type) {
             case "1":
@@ -186,10 +189,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 
     @Override
     public void getBookDetailsDateSuccess(HomeHotModel model, int position) {
-        //跳转图书详情页
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("bean", model.getData().get(0));
-        UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+
     }
 
     @Override
@@ -241,6 +241,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 
     /**
      * 发送评论详情
+     *
      * @param model
      */
     @Override
@@ -251,28 +252,22 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     public void getDelPerIdfoDataSuccess(RewardResult model) {
 
     }
-    public class UpdateReceiver extends BroadcastReceiver {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (ConstantValue.ACTION_UPDATE_DATA_PERINFO.equals(action)) {
-                //更新信息
-                 type="4";
-                initData();
-                ToastUtil.showToast("update date!");
-            }
-        }
+    /**
+     * 跳转图书详情
+     *
+     * @param model
+     */
+    @Override
+    public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
+        //跳转图书详情页
+        Bundle bundle = new Bundle();
+//        String bd = gson.toJson(model, BookDetailsModle.class);
+//        HomeHotModel.DataBean homeHotModel = gson.fromJson(bd, new TypeToken<HomeHotModel.DataBean>() {}.getType());
+        HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
+        bundle.putParcelable("bean", dataBean);
+        UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+
     }
-    private void registerPlayerReceiver() {
-        if (mUpdateReceiver == null) {
-            mUpdateReceiver = new MsgLikeDetailsActivity.UpdateReceiver();
 
-            IntentFilter filter = new IntentFilter();
-            filter.addCategory(mActivity.getPackageName());
-
-            filter.addAction(ConstantValue.ACTION_UPDATE_DATA_PERINFO);
-            mActivity.registerReceiver(mUpdateReceiver, filter);
-        }
-    }
 }

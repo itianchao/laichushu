@@ -3,7 +3,6 @@ package com.laichushu.book.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
@@ -12,7 +11,6 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -52,6 +50,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -330,6 +329,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     //选择日期
     private void setTimePopupwindow() {
         timePopupWindow = new TimePopupWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
+        timePopupWindow.setRange(1900, Calendar.getInstance().get(Calendar.YEAR));
         timePopupWindow.setOnTimeSelectListener(new TimePopupWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
@@ -366,6 +366,9 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
         cache_json.setJson(new Gson().toJson(json));
         cache_jsonDao.update(cache_json);
+        //sharePerfance存储
+        SharePrefManager.setNickName(result.getData().getNickName());
+
         EventBus.getDefault().postSticky(new RefrushMineEvent(true));
     }
 

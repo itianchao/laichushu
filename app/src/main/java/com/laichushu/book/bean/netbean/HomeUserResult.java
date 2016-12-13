@@ -21,8 +21,9 @@ public class HomeUserResult implements Serializable {
     private boolean status;
     private boolean success;
     private boolean beFocused;
+    private String levelType;
 
-    public HomeUserResult(String photo, String nickName, String userId, String grade, boolean status, boolean success, boolean beFocused) {
+    public HomeUserResult(String photo, String nickName, String userId, String grade, boolean status, boolean success, boolean beFocused, String levelType) {
         this.photo = photo;
         this.nickName = nickName;
         this.userId = userId;
@@ -30,6 +31,7 @@ public class HomeUserResult implements Serializable {
         this.status = status;
         this.success = success;
         this.beFocused = beFocused;
+        this.levelType = levelType;
     }
 
     public String getPhoto() {
@@ -86,5 +88,13 @@ public class HomeUserResult implements Serializable {
 
     public void setBeFocused(boolean beFocused) {
         this.beFocused = beFocused;
+    }
+
+    public String getLevelType() {
+        return levelType;
+    }
+
+    public void setLevelType(String levelType) {
+        this.levelType = levelType;
     }
 }

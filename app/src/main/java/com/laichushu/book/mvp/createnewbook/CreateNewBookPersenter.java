@@ -75,7 +75,8 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
 
     /**
      * 提交服务器创建新书
-     *  @param file
+     *
+     * @param file
      * @param name
      * @param topCategoryId
      * @param subCategoryId
@@ -106,10 +107,10 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
         params.put("introduce", requestBody7);
         params.put("coverUrl", requestBody8);
         Observable<RewardResult> newBook;
-        if (null!=file){
+        if (null != file) {
             RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(file));
             newBook = apiStores.createNewBook(requestBody1, params);
-        }else {
+        } else {
             newBook = apiStores.createNewBook(params);
         }
         addSubscription(newBook, new ApiCallback<RewardResult>() {
@@ -132,6 +133,7 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
 
     /**
      * 选择模版 对话框
+     *
      * @param bookname
      */
     public void openAlertDialog(final String bookname) {
@@ -144,8 +146,8 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
             public void onClick(View v) {
                 dialogBuilder.dismiss();
                 Bundle bundle = new Bundle();
-                bundle.putString("bookname",bookname);
-                UIUtil.openActivity(mActivity,CoverDirActivity.class,bundle);
+                bundle.putString("bookname", bookname);
+                UIUtil.openActivity(mActivity, CoverDirActivity.class, bundle);
             }
         });
         //从相册中选择
@@ -211,7 +213,7 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
             @Override
             public void onClick(View v) {
                 mActivity.setPermission("3");
-                permissionTv.setText("大咖");
+                permissionTv.setText("编辑");
                 dialogBuilder.dismiss();
             }
         });
@@ -242,19 +244,19 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
     }
 
     public boolean isCheck(String name, String introduce, String category, String path) {
-        if (TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             ToastUtil.showToast("请输入书名");
             return false;
         }
-        if (TextUtils.isEmpty(introduce)){
+        if (TextUtils.isEmpty(introduce)) {
             ToastUtil.showToast("请输入简介");
             return false;
         }
-        if (TextUtils.isEmpty(category)){
+        if (TextUtils.isEmpty(category)) {
             ToastUtil.showToast("请选择分类");
             return false;
         }
-        if (TextUtils.isEmpty(path)){
+        if (TextUtils.isEmpty(path)) {
             ToastUtil.showToast("请选择图片");
             return false;
         }

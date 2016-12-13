@@ -43,7 +43,7 @@
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="12dp"
             android:layout_toRightOf="@+id/tv_PerNickName"
-            android:background="@color/red2" />
+            />
 
         <ImageView
             android:id="@+id/iv_perGradeDetails"
@@ -52,7 +52,7 @@
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="12dp"
             android:layout_toRightOf="@+id/iv_perGrade"
-            android:background="@color/red" />
+            android:background="@drawable/icon_geade_details2x" />
 
         <TextView
             android:id="@+id/tv_perRealName"

@@ -1,6 +1,9 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,6 +25,8 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.adapter.JoinActivityAdapter;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -45,13 +50,14 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     private TextView detailsTv;
     private LinearLayout parentLay;
     private ImageView stateIv;
+    ImageView comentIv;
     private HomeHotModel.DataBean bean;
     private ArrayList<CampaignModel.DataBean> mData = new ArrayList<>();
     private ArrayList<CampaignDetailsModel.DataBean> mDetailsData = new ArrayList<>();
     private ArrayList<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
     private int position;
-
-    private String type;
+    private String articId;
+    //    private String type;
     private MessageCommentResult.DataBean dataBeen;
 
     @Override
@@ -70,7 +76,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
         TextView titleTv = (TextView) findViewById(R.id.tv_title);
         ImageView finishIv = (ImageView) findViewById(R.id.iv_title_finish);
         ImageView shareIv = (ImageView) findViewById(R.id.iv_title_other);
-        ImageView comentIv = (ImageView) findViewById(R.id.iv_title_another);
+        comentIv = (ImageView) findViewById(R.id.iv_title_another);
         titleTv.setText(title);
         shareIv.setImageResource(R.drawable.activity_share);
         comentIv.setImageResource(R.drawable.activity_comment);
@@ -103,53 +109,56 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
 
     @Override
     protected void initData() {
-        type = getIntent().getStringExtra("type");
-        dataBeen = (MessageCommentResult.DataBean) getIntent().getSerializableExtra("activityDetails");
+//        type = getIntent().getStringExtra("type");
+//        dataBeen = (MessageCommentResult.DataBean) getIntent().getSerializableExtra("activityDetails");
 
-        if (type.equals("activity")) {
-            mvpPresenter.loadActivityDetailsData(dataBeen.getSourceId());
+//        if (("activity").equals(type)) {
+//            mvpPresenter.loadActivityDetailsData(dataBeen.getSourceId());
+//        } else {
+        bean = getIntent().getParcelableExtra("bean");
+        position = getIntent().getIntExtra("position", 0);
+        mvpPresenter.loadAuthorWorksData();
+        mvpPresenter.loadActivityResultData(bean.getActivityId());
+        GlideUitl.loadImg(this, bean.getImgUrl(), activityImgIv);
+        joinTv.setOnClickListener(this);
+        if (bean.isParticipate()) {
+            joinTv.setText("已参加");
         } else {
-            bean = getIntent().getParcelableExtra("bean");
-            position = getIntent().getIntExtra("position",0);
-            mvpPresenter.loadAuthorWorksData();
-            mvpPresenter.loadActivityResultData(bean.getActivityId());
-            GlideUitl.loadImg(this, bean.getImgUrl(), activityImgIv);
-            joinTv.setOnClickListener(this);
-            if (bean.isParticipate()) {
-                joinTv.setText("已参加");
-            } else {
-                joinTv.setText("参加活动");
-            }
-            switch (bean.getStatus()) {
-                case "1":
-                    GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                    joinTv.setVisibility(View.INVISIBLE);
-                    break;
-                case "2":
-                    GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                    joinTv.setVisibility(View.VISIBLE);
-                    parentLay.setVisibility(View.INVISIBLE);
-                    break;
-                case "3":
-                    GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                    joinTv.setVisibility(View.VISIBLE);
-                    parentLay.setVisibility(View.INVISIBLE);
-                    break;
-                case "4":
-                    GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
-                    joinTv.setVisibility(View.INVISIBLE);
-                    break;
-            }
-            activityNameTv.setText(bean.getActivityName());
-            startTimeTv.setText("开始时间：" + bean.getBeginTime());
-            endTimeTv.setText("结束时间：" + bean.getEndTime());
-            numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
-            detailsTv.setText(bean.getDetail());
+            joinTv.setText("参加活动");
         }
+        switch (bean.getStatus()) {
+            case "1":
+//                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+//                joinTv.setVisibility(View.INVISIBLE);
+                break;
+            case "2":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                joinTv.setVisibility(View.VISIBLE);
+                parentLay.setVisibility(View.INVISIBLE);
+                comentIv.setVisibility(View.VISIBLE);
+                break;
+            case "3":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+                joinTv.setVisibility(View.VISIBLE);
+                parentLay.setVisibility(View.INVISIBLE);
+                comentIv.setVisibility(View.VISIBLE);
+                break;
+            case "4":
+                GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
+                joinTv.setVisibility(View.INVISIBLE);
+                comentIv.setVisibility(View.INVISIBLE);
+                break;
+        }
+        activityNameTv.setText(bean.getActivityName());
+        startTimeTv.setText("开始时间：" + bean.getBeginTime());
+        endTimeTv.setText("结束时间：" + bean.getEndTime());
+        numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
+        detailsTv.setText(bean.getDetail());
     }
+//    }
 
     /**
-     * 活动详情列表   活动通知------》详情
+     * 活动详情列表   活动通知------》详情    已经弃用
      *
      * @param model
      */
@@ -158,8 +167,8 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
         if (model.isSuccess()) {
             mDetailsData.addAll(model.getData());
             //初始化头部信息
-             GlideUitl.loadImg(this, model.getImgUrl(), activityImgIv);
-                joinTv.setText("已结束");
+            GlideUitl.loadImg(this, model.getImgUrl(), activityImgIv);
+            joinTv.setText("已结束");
             GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
             joinTv.setVisibility(View.INVISIBLE);
             activityNameTv.setText(model.getName());
@@ -179,6 +188,24 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 GlideUitl.loadRandImg(this, bean.getPhoto(), headIv);
                 usernameIv.setText(bean.getNickName());
                 booknameIv.setText(bean.getArticleName());
+                articId = mDetailsData.get(i).getArticleId();
+                headIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        if (!TextUtils.isEmpty(articId)) {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("userId", articId);
+                            if (SharePrefManager.getUserId().equals(articId)) {
+                                UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
+                            } else {
+                                UIUtil.openActivity(mActivity, UserHomePageActivity.class, bundle);
+                            }
+                        }
+
+                    }
+                });
+
                 parentLay.addView(itemView);
             }
         } else {
@@ -195,20 +222,21 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
-                EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean.isParticipate(),bean.getApplyAmount(),position));
+                EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean.isParticipate(), bean.getApplyAmount(), position));
                 finish();
                 break;
             case R.id.iv_title_other://分享
                 break;
             case R.id.iv_title_another://评论
                 //打开参加活动的图书
-                mvpPresenter.loadAuthorWorksData();
+//                mvpPresenter.loadAuthorWorksData();
+                openSendPerMsgDialog();
                 break;
             case R.id.tv_join://参加活动
                 if (mArticleData.size() == 0) {
                     ToastUtil.showToast("您还没有作品");
                 } else {
-                    if (joinTv.getText().equals("参加活动")|joinTv.getText().equals("已结束")) {
+                    if (joinTv.getText().equals("参加活动") | joinTv.getText().equals("已结束")) {
                         openAlertDialog();
                     } else {
                         mvpPresenter.loadJoinActivityData(bean.getActivityId(), "", "1");
@@ -350,13 +378,23 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
         if (model.isSuccess()) {
             ToastUtil.showToast("投稿成功，15日内通知审核结果");
         } else {
-            if (model.getErrMsg().contains("已经投稿")){
+            if (model.getErrMsg().contains("已经投稿")) {
                 ToastUtil.showToast("投稿失败，此出版社已经投稿了");
-            }else {
+            } else {
                 ToastUtil.showToast("投稿失败");
             }
         }
 
+    }
+
+    @Override
+    public void getAddPerInfoSuccess(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("发送成功！");
+        } else {
+            ToastUtil.showToast("发送失败！");
+            LoggerUtil.toJson(model);
+        }
     }
 
     @Override
@@ -373,6 +411,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     protected CampaignPresenter createPresenter() {
         return new CampaignPresenter(this);
     }
+
     /**
      * 投稿对话框
      *
@@ -413,6 +452,42 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
         dialogBuilder
                 .withTitle(null)                                  // 为null时不显示title
                 .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, mActivity)                // 添加自定义View
+                .show();
+
+    }
+
+    /**
+     * 发送私信对话框
+     */
+    public void openSendPerMsgDialog() {
+
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_send_per_msg);
+        final EditText edMsg = (EditText) customerView.findViewById(R.id.et_dialogMsg);
+
+        //取消
+        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2016/11/25 投稿
+                mvpPresenter.loadAddPerInfoDate(bean.getActivityId(), edMsg);
+                dialogBuilder.dismiss();
+            }
+        });
+        dialogBuilder
+                .withTitle("发送私信")                                  // 为null时不显示title
+                .withDialogColor("#94C3B7")                       // 设置对话框背景色                               //def
                 .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
                 .withDuration(500)                                // 对话框动画时间
                 .withEffect(Effectstype.Slidetop)                 // 动画形式

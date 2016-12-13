@@ -53,7 +53,7 @@
         android:layout_below="@+id/tv_comment_content"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/home_right" />
+        android:src="@drawable/home_right2x" />
 
     <TextView
         android:id="@+id/tv_comment_number"

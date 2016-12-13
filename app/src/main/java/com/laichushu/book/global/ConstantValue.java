@@ -31,9 +31,9 @@ public class ConstantValue {
     public static String SUB_TYPE_1 = "1";//订阅
     public static String SUB_TYPE_2 = "2";//喜欢
     public static String SUB_TYPE_3 = "3";//点赞
-    public static String SUB_TYPE_4 = "4";//评论
-    public static String SUB_TYPE_5 = "5";//关注
-    public static String SUB_TYPE_6 = "6";//打赏
+    public static String SUB_TYPE_4 = "3";//评论
+    public static String SUB_TYPE_5 = "4";//关注
+    public static String SUB_TYPE_6 = "5";//打赏
     public static String SUB_TYPE_7 = "7";//活动通知
     public static String SUB_TYPE_8 = "8";//其他消息
     //图书话题类型

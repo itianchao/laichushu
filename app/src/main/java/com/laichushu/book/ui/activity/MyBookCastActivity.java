@@ -67,7 +67,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     @Override
     protected void initData() {
         rbScan.setChecked(true);
-        mvpPresenter.LoadData();
+        mvpPresenter.loadBrowserListData("1");
         tvTitle.setText("我的书架");
         ivBack.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
@@ -118,7 +118,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 type = 1;
                 if (!scanDibble) {
                     scanData.clear();
-                    mvpPresenter.LoadData();
+                    mvpPresenter.loadBrowserListData("1");
                 }
                 scanDibble = true;
                 break;
@@ -144,7 +144,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         if (type == 1) {
             scanData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.LoadData();//请求网络获取搜索列表
+            mvpPresenter.loadBrowserListData("1");//请求网络获取搜索列表
         } else if (type == 2) {
             collData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
@@ -158,7 +158,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     public void onLoadMore() {
         if(type==1){
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.LoadData();//请求网络获取搜索列表
+            mvpPresenter.loadBrowserListData("1");//请求网络获取搜索列表
              }else if(type==2){
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadCollectionData();;//请求网络获取搜索列表

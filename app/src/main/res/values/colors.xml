@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="title_tab_highlight_text">#fffafafa</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -13,7 +14,7 @@
     <color name="bgGrey">#F1F1F1</color>
     <color name="Grey">#aaa</color>
     <color name="backGray">#F5F5F5</color>
-    <color name="characterGray">#9B9B9B</color>
+    <color name="characterGray">#1F1D1E</color>
     <color name="characterLightGray">#C1DAD4</color>
     <color name="characterLightGray1">#383838</color>
     <color name="characterLightGray2">#969696</color>

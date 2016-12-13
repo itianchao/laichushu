@@ -14,7 +14,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/app_logo_1" />
+            android:background="@drawable/logo" />
     </RelativeLayout>
 
     <LinearLayout style="@style/edit_ll_style">
@@ -26,6 +26,7 @@
         <EditText
             android:id="@+id/et_username"
             style="@style/edit_item_style"
+            android:maxLength="11"
             android:hint="@string/usernameHint" />
     </LinearLayout>
 
