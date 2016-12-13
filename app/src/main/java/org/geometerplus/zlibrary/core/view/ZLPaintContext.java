@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.text.view.ZLTextHighlighting;
 
 abstract public class ZLPaintContext {
 	private final SystemInfo mySystemInfo;
@@ -206,7 +207,7 @@ abstract public class ZLPaintContext {
 	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode);
 
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
-	abstract public void drawLine(int[] xs, int[] ys,Bookmark bookmark);
+	abstract public void drawLine(int[] xs, int[] ys, ZLTextHighlighting h);
 	abstract public void drawLine(int[] xs, int[] ys);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
 

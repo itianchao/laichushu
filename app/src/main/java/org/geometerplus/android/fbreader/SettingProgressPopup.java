@@ -118,7 +118,7 @@ final class SettingProgressPopup extends ZLApplication.PopupPanel {
 //                    view.gotoHome();
 //                } else {
                 view.gotoPageByPec(page);
-                pagePosition = view.pagePosition();
+                pagePosition = view.pagePosition();//获取当前页码
 //                }
             }
 

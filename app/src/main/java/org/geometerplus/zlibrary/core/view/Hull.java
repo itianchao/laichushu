@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.core.view;
 
 import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.zlibrary.text.view.ZLTextHighlighting;
 
 public interface Hull {
 	interface DrawMode {
@@ -29,7 +30,7 @@ public interface Hull {
 		int Line = 3;
 	};
 
-	void draw(ZLPaintContext context, int mode, Bookmark number);
+	void draw(ZLPaintContext context, int mode, ZLTextHighlighting number);
 	int distanceTo(int x, int y);
 	boolean isBefore(int x, int y);
 	void draw(ZLPaintContext context, int mode);

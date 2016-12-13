@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.core.view;
 
-import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.zlibrary.text.view.ZLTextHighlighting;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class UnionHull implements Hull {
 	}
 
 	@Override
-	public void draw(ZLPaintContext context, int mode, Bookmark number) {
+	public void draw(ZLPaintContext context, int mode, ZLTextHighlighting number) {
 
 	}
 

@@ -31,14 +31,24 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 
 import com.laichushu.book.db.Idea_Table;
 import com.laichushu.book.db.Idea_TableDao;
+import com.laichushu.book.event.FBReaderZLAndroidWidgetEvent;
 import com.laichushu.book.global.BaseApplication;
+import com.laichushu.book.utils.ToastUtil;
 
+import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.bookmark.IdeaActivity;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.fbreader.book.BookCollection;
 import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.book.BookmarkQuery;
+import org.geometerplus.fbreader.book.DbBook;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
@@ -46,8 +56,13 @@ import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.text.view.ZLTextHighlighting;
+import org.geometerplus.zlibrary.ui.android.curl.CurlView;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -87,11 +102,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
     public ZLAndroidPaintContext(SystemInfo systemInfo, Canvas canvas, Geometry geometry, int scrollbarWidth) {
         super(systemInfo);
-
         myCanvas = canvas;
         myGeometry = geometry;
         myScrollbarWidth = scrollbarWidth;
-
         myTextPaint.setLinearText(false);
         myTextPaint.setAntiAlias(AntiAliasOption.getValue());
         if (DeviceKerningOption.getValue()) {
@@ -457,7 +470,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
     int offsetY;
 
-    public void drawLine(int[] xs, int[] ys,Bookmark mbookmark) {
+    public void drawLine(int[] xs, int[] ys, ZLTextHighlighting mbookmark) {
         offsetY = (int) myTextPaint.getTextSize();
         LinkedList<Integer> tmpXs = new LinkedList<>();
         LinkedList<Integer> tmpYs = new LinkedList<>();
@@ -548,7 +561,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         for (int i = 0; i < drawY.size(); i++) {
 //            LoggerUtil.e(templeft.get(i)+","+tempRight.get(i)+","+drawY.get(i)+"\n");
             if (i != 0 && drawY.get(i) - myTextPaint.getTextSize() > drawY.get(i - 1) || i == 0) { // ÅÅ³ýË«ÖØÏß
-                    myCanvas.drawLine(templeft.get(i), drawY.get(i) + drawOffect, tempRight.get(i), drawY.get(i) + drawOffect, myOutlinePaint);
+                myCanvas.drawLine(templeft.get(i), drawY.get(i) + drawOffect, tempRight.get(i), drawY.get(i) + drawOffect, myOutlinePaint);
 //                if (i == 0) {
 //                    myCanvas.drawLine(templeft.get(i), drawY.get(i) + drawOffect, tempRight.get(i), drawY.get(i) + drawOffect, myOutlinePaint);
 //                } else if (i != drawY.size() - 1) {
@@ -557,55 +570,89 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 //                }
             }
             //画标记
-            if (i == drawY.size()-1){
-                if (mbookmark!=null){
-                    String number = dispose(mbookmark,tempRight.get(i)+10, drawY.get(i)+18);
+            if (i == drawY.size() - 1) {
+                if (mbookmark != null) {
+                    String number = dispose(mbookmark, tempRight.get(i) + 10, drawY.get(i) + 18);
+                    if (number == null) {
+                        return;
+                    }
                     myOutlinePaint.setTextSize(20);
                     myOutlinePaint.setStrokeWidth(2);
-                    myCanvas.drawText(number,tempRight.get(i)+10, drawY.get(i)+18,myOutlinePaint);
+                    if (number.length() > 1) {
+                        myCanvas.drawText(number, tempRight.get(i) + 7, drawY.get(i) + 18, myOutlinePaint);
+                    } else {
+                        myCanvas.drawText(number, tempRight.get(i) + 10, drawY.get(i) + 18, myOutlinePaint);
+                    }
                     myOutlinePaint.setStrokeWidth(5);
                     myOutlinePaint.setStyle(Paint.Style.STROKE);
-                    myCanvas.drawCircle(tempRight.get(i)+15, drawY.get(i)+12, 18, myOutlinePaint);// 小圆
+                    myCanvas.drawCircle(tempRight.get(i) + 15, drawY.get(i) + 12, 18, myOutlinePaint);// 小圆
                 }
             }
         }
         myOutlinePaint.setColor(tmp);
         myOutlinePaint.setStrokeWidth(tmpSize);
     }
+    //处理
+    private String dispose(ZLTextHighlighting h, final int x, final int y) {
+        FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
+        BookCollectionShadow collection = (BookCollectionShadow) fbReaderApp.Collection;
+        List<Bookmark> allmark = new ArrayList<>();
+        BookmarkQuery query = new BookmarkQuery(fbReaderApp.getCurrentBook(), 10000);
+        List<Bookmark> bookmarks = collection.bookmarks(query);
+        allmark.addAll(bookmarks);
 
-    private String dispose(Bookmark mbookmark, int x, int y) {
+        Bookmark mbookmark = null;
+        for (Bookmark bookmark : allmark) {
+            if (bookmark.getParagraphIndex() == h.getStartPosition().getParagraphIndex()
+                    && bookmark.getCharIndex() == h.getStartPosition().getCharIndex()
+                    && bookmark.getEnd().getParagraphIndex() == h.getEndPosition().getParagraphIndex()
+                    && bookmark.getEnd().getCharIndex() == h.getEndPosition().getCharIndex()) {
+                mbookmark = bookmark;
+                break;
+            }
+        }
+        if (mbookmark == null) {
+            return null;
+        }
+        //=======================================================
         Idea_TableDao dao = BaseApplication.getDaoSession(BaseApplication.getContext()).getIdea_TableDao();
         List<Idea_Table> list = dao.queryBuilder().where(Idea_TableDao.Properties.BookId.eq(mbookmark.getBookId())
                 , Idea_TableDao.Properties.Content.eq(mbookmark.getText())
-                ,Idea_TableDao.Properties.Uid.eq(mbookmark.getUid())).build().list();
-        if (list==null||list.isEmpty()){
+                , Idea_TableDao.Properties.Uid.eq(mbookmark.getUid())).build().list();
+        if (list == null || list.isEmpty()) {
             Idea_Table entity = new Idea_Table(null, (int) mbookmark.getBookId(), mbookmark.getUid(), mbookmark.getStyleId() + "", x, y, mbookmark.getText());
             dao.insert(entity);
-        }else {
+        } else {
             Idea_Table idea_table = list.get(0);
             idea_table.setX(x);
             idea_table.setY(y);
             dao.update(idea_table);
         }
-        return "1";
+        int length = 1;
+        if (!list.isEmpty()) {
+            length = list.get(0).getContent().length();
+            if (length == 0){
+                length = 1;
+            }
+        }
+        return length + "";
     }
-
     @Override
     public void drawLine(int[] xs, int[] ys) {
 
     }
 
     private void removeAtPosItem(int x, List<Integer> templeft, List<Integer> tempRight, int index) {
-		if (x < templeft.get(index)) {
-			templeft.remove(index);
-			templeft.add(x);
-			return;
-		}
-		if (x > tempRight.get(index)) {
-			tempRight.remove(index);
-			tempRight.add(x);
-			return;
-		}
+        if (x < templeft.get(index)) {
+            templeft.remove(index);
+            templeft.add(x);
+            return;
+        }
+        if (x > tempRight.get(index)) {
+            tempRight.remove(index);
+            tempRight.add(x);
+            return;
+        }
     }
 
     @Override
@@ -627,4 +674,5 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
     public void fillCircle(int x, int y, int radius) {
         myCanvas.drawCircle(x, y, radius, myFillPaint);
     }
+//                if ((event.getX() > x - 20 && event.getX() < x + 20) && ((event.getY() > y - 10 && event.getY() < y + 10))) {
 }
