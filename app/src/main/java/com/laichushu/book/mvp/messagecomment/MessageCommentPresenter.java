@@ -314,7 +314,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
      */
     public void loadBookDetailsByid(String articleId) {
         AuthorWorksByBookId_Paramet  bookParamet = new AuthorWorksByBookId_Paramet(userId, articleId);
-        LoggerUtil.e("发送评论");
+        LoggerUtil.e("获取图书详情");
         addSubscription(apiStores.getAuthorWorksByBookId(bookParamet), new ApiCallback<BookDetailsModle>() {
             @Override
             public void onSuccess(BookDetailsModle model) {

@@ -135,7 +135,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             @Override
             public void onSuccess(HomeUserResult result) {
                 if (result.isSuccess()) {
-                    ToastUtil.showToast("success");
                     //初始化个人信息
                     GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg,R.drawable.icon_percentre_defhead2x);
                     tvNickName.setText(result.getNickName());
@@ -208,7 +207,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
         }, 300);
         if (model.isSuccess()) {
-            ToastUtil.showToast("HomeUseDyrResult");
             dyData = model.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!dyData.isEmpty()) {
@@ -237,7 +235,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
         }, 300);
         if (model.isSuccess()) {
-            ToastUtil.showToast("HomeUseFocusMerResult");
             focusMeData = model.getData();
             if (!focusMeData.isEmpty()) {
                 PAGE_NO++;

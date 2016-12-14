@@ -53,7 +53,7 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
         holder.tvCollection.setText(dataBeen.get(position).getCollectNum() + "");
         currentNum = dataBeen.get(position).getCollectNum();
-        if (dataBeen.get(position).isBeCollect()) {
+        if (dataBeen.get(position).isCollect()) {
             Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollection.setCompoundDrawables(drawable, null, null, null);

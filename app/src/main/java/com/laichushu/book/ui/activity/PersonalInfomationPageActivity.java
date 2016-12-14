@@ -12,6 +12,8 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
+import com.laichushu.book.event.RefrushMineEvent;
+import com.laichushu.book.event.RefrushPerInfoEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
@@ -24,6 +26,8 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +36,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
     private TextView tvTitle, tvRight;
     private LinearLayout llMsg;
     private EditText edInput;
-    private ImageView ivSendMsg;
+    private TextView ivSendMsg;
     private PullLoadMoreRecyclerView mRecyclerView;
     private PersonalInfomationAdapter perAdapter;
     private List<PerMsgInfoReward.DataBean> msgData = new ArrayList<>();
@@ -52,7 +56,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvRight = ((TextView) inflate.findViewById(R.id.tv_title_right));
         edInput = (EditText) inflate.findViewById(R.id.et_sendMsg);
-        ivSendMsg = (ImageView) inflate.findViewById(R.id.iv_sendMsg);
+        ivSendMsg = (TextView) inflate.findViewById(R.id.iv_sendMsg);
         llMsg = ((LinearLayout) inflate.findViewById(R.id.ll_sendMsg));
         mRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_perInfoDetails);
         return inflate;
@@ -143,6 +147,12 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
                 ToastUtil.showToast("没有更多信息！");
             }
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBus.getDefault().postSticky(new RefrushPerInfoEvent(true));
     }
 
     /**

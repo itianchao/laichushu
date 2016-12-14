@@ -73,8 +73,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@+id/tv_type"
+                android:singleLine="true"
                 android:textColor="@color/auditing"
-                android:textSize="@dimen/edit2" />
+                android:textSize="@dimen/edit3" />
         </RelativeLayout>
 
         <TextView

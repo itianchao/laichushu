@@ -13,6 +13,8 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
+import com.laichushu.book.event.RefrushMineEvent;
+import com.laichushu.book.event.RefrushPerInfoEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
@@ -26,6 +28,10 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +56,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     @Override
     protected View createSuccessView() {
         View inflate = UIUtil.inflate(R.layout.activity_msg_like_details);
+        EventBus.getDefault().register(this);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         mRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_likeMsg);
@@ -268,6 +275,14 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
         bundle.putParcelable("bean", dataBean);
         UIUtil.openActivity(this, BookDetailActivity.class, bundle);
 
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefrushPerInfoEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            type="3";
+            initData();
+        }
     }
 
 }

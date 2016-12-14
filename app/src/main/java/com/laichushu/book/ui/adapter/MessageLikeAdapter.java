@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
-import com.laichushu.book.ui.activity.ActivityPageDetailsActivity;
-import com.laichushu.book.ui.activity.CampaignActivity;
 import com.laichushu.book.ui.activity.MsgLikeDetailsActivity;
 import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
@@ -21,7 +19,6 @@ import com.laichushu.book.ui.activity.PersonalInfomationPageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;
