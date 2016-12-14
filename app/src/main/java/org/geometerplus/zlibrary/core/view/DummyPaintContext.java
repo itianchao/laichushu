@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.text.view.ZLTextHighlighting;
 
 final class DummyPaintContext extends ZLPaintContext {
 	DummyPaintContext() {
@@ -126,7 +127,7 @@ final class DummyPaintContext extends ZLPaintContext {
 
 	}
 	@Override
-	public void drawLine(int[] xs, int[] ys,Bookmark number) {
+	public void drawLine(int[] xs, int[] ys,ZLTextHighlighting number) {
 
 	}
 

@@ -26,6 +26,7 @@ import org.geometerplus.fbreader.book.BookCollection;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.book.BookmarkQuery;
 import org.geometerplus.fbreader.book.DbBook;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
@@ -519,18 +520,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
         }
 
         for (ZLTextHighlighting h : hilites) {
-            int paragraphIndex = h.getStartPosition().getParagraphIndex();
-            int charIndex = h.getStartPosition().getCharIndex();
-            List<Bookmark> bookmarks = allBookmarks();
-            Bookmark bookmark = null;
-            for (Bookmark b : bookmarks) {
-                int paragraphIndex1 = b.getParagraphIndex();
-                int charIndex1 = b.getCharIndex();
-                if (charIndex == charIndex1 && paragraphIndex == paragraphIndex1) {
-                    bookmark = b;
-                    break;
-                }
-            }
+
             int mode = Hull.DrawMode.None;
             final ZLColor bgColor = h.getBackgroundColor();
             if (bgColor != null) {
@@ -547,7 +537,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
             }
 
             if (mode != Hull.DrawMode.None) {
-                h.hull(page).draw(getContext(), mode, bookmark);
+                h.hull(page).draw(getContext(), mode, h);
             }
         }
 
@@ -1886,11 +1876,19 @@ public abstract class ZLTextView extends ZLTextViewBase {
     }
 
     //查找书签
-    private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
     private List<Bookmark> allBookmarks() {
         List<Bookmark> result = null;
-
+        FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
+        Book currentBook = fbReaderApp.getCurrentBook();
+        BookCollectionShadow collection = new BookCollectionShadow();
+        for (BookmarkQuery query = new BookmarkQuery(currentBook,true,100); ; query = query.next()) {
+            List<Bookmark> allBookmarks = collection.bookmarks(query);
+            if (allBookmarks.isEmpty()) {
+                break;
+            }
+            result.addAll(allBookmarks);
+        }
 
         return result != null ? result : Collections.<Bookmark>emptyList();
     }

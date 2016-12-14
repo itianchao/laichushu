@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.view;
 
 import android.graphics.Rect;
 
-import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.zlibrary.text.view.ZLTextHighlighting;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -139,7 +139,7 @@ public final class HorizontalConvexHull implements Hull {
 
 	int offsets = 0;
 
-	public void draw(ZLPaintContext context, int mode, Bookmark bookmark) {
+	public void draw(ZLPaintContext context, int mode, ZLTextHighlighting bookmark) {
 		if (mode == DrawMode.None) {
 			return;
 		}

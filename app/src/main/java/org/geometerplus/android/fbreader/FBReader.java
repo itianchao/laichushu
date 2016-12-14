@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -43,6 +44,9 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
 import com.laichushu.book.bean.otherbean.BookSelectOptionBean;
+import com.laichushu.book.db.Idea_Table;
+import com.laichushu.book.db.Idea_TableDao;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.widget.TypeBookSelectWindow;
 import com.laichushu.book.utils.GlideUitl;
@@ -73,7 +77,6 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.fbreader.tips.TipsManager;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -124,7 +127,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     private volatile Book myBook;
 
     private RelativeLayout myRootView;
-    private ZLAndroidWidget myMainView;
+    public static ZLAndroidWidget myMainView;
 
     private volatile boolean myShowStatusBarFlag;
     private String myMenuLanguage;
@@ -236,6 +239,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         };
     }
 
+    public ZLAndroidWidget getMyMainView() {
+        return myMainView;
+    }
+
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -265,6 +272,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         setContentView(R.layout.main);
         myRootView = (RelativeLayout) findViewById(R.id.root_view);
         myMainView = (ZLAndroidWidget) findViewById(R.id.main_view);
+
         titleTv = (TextView) findViewById(R.id.tv_title);
         finishIv = (ImageView) findViewById(R.id.iv_title_finish);
         selectIv = (ImageView) findViewById(R.id.iv_title_other);
@@ -1182,4 +1190,48 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         myFBReaderApp.getViewWidget().reset();
         myFBReaderApp.getViewWidget().repaint();
     }
+    List<Idea_Table> otherBookmarks = new ArrayList<>();
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//
+//        if (event.getAction() == MotionEvent.ACTION_DOWN){
+//            //获取本章开始段落
+//            int paragraphIndex = myFBReaderApp.getCurrentTOCElement().getReference().ParagraphIndex;
+//            //拿到当前段落
+//
+//            Bookmark bookmark = myFBReaderApp.createBookmark(500, true);
+//            int duanluokaishi = bookmark.getParagraphIndex();
+//            int duanluojieshu = bookmark.getEnd().getParagraphIndex();
+//            BookCollectionShadow collection = getCollection();
+//            //拿到删除书签
+//            collection.deleteBookmark(bookmark);
+//            //
+//            BookmarkQuery query = new BookmarkQuery(myFBReaderApp.getCurrentBook(), 10000);
+//            List<Bookmark> bookmarks = collection.bookmarks(query);
+//
+//            //拿到当前页的书签
+//            Idea_TableDao dao = BaseApplication.getDaoSession(BaseApplication.getContext()).getIdea_TableDao();
+//            for (Bookmark b : bookmarks) {
+//                //查找xy坐标
+//                if (b.getParagraphIndex()>duanluokaishi&&b.getEnd().getParagraphIndex()<duanluojieshu){
+//                    Idea_Table c = dao.queryBuilder().where(Idea_TableDao.Properties.BookId.eq(b.getBookId())
+//                            , Idea_TableDao.Properties.Content.eq(b.getText())
+//                            , Idea_TableDao.Properties.Uid.eq(b.getUid())).build().list().get(0);
+//                    otherBookmarks.add(c);
+//                }
+//            }
+//            for (Idea_Table otherBookmark : otherBookmarks) {
+//                Integer x = otherBookmark.getX();
+//                Integer y = otherBookmark.getY();
+//                if ((event.getX() > x - 20 && event.getX() < x + 20) && ((event.getY() > y - 10 && event.getY() < y + 10))){
+//                    ToastUtil.showToast("点击了");
+//                    return false;
+//                }
+//            }
+//        }
+//        //判断坐标
+//        myMainView.onTouchEvent(event);
+//        return true;
+//    }
 }
