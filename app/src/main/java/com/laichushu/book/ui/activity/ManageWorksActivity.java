@@ -9,6 +9,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MyTabStrip;
 import com.laichushu.book.bean.netbean.SignStateResult;
+import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
@@ -220,5 +221,11 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
             mData.clear();
             mvpPresenter.getArticleBookList();
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBus.getDefault().postSticky(new RefrushMineEvent(true));
     }
 }

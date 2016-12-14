@@ -64,7 +64,7 @@
             android:id="@+id/iv_category"
             android:layout_marginLeft="5dp"
             android:layout_gravity="center"
-            android:src="@drawable/home_other"
+            android:src="@drawable/icon_sort2x"
             android:layout_width="30dp"
             android:layout_height="30dp" />
     </LinearLayout>
