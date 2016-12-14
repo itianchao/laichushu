@@ -31,26 +31,41 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.google.gson.Gson;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.BalanceBean;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.Balance_Paramet;
+import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
 import com.laichushu.book.bean.otherbean.BookSelectOptionBean;
 import com.laichushu.book.db.Idea_Table;
 import com.laichushu.book.db.Idea_TableDao;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.retrofit.ApiCallback;
+import com.laichushu.book.retrofit.ApiStores;
+import com.laichushu.book.ui.activity.ReportActivity;
+import com.laichushu.book.ui.widget.LoadDialog;
 import com.laichushu.book.ui.widget.TypeBookSelectWindow;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
+import com.orhanobut.logger.Logger;
 
 import org.geometerplus.android.fbreader.api.ApiListener;
 import org.geometerplus.android.fbreader.api.ApiServerImplementation;
@@ -99,6 +114,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public final class FBReader extends FBReaderMainActivity implements ZLApplicationWindow {
     public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
@@ -109,6 +132,8 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     private ImageView finishIv;
     private ImageView selectIv;
     ArrayList<BookSelectOptionBean> list = new ArrayList();
+    private Timer timer;
+    private ImageView rewardMoneyIv;
 
     public static Intent defaultIntent(Context context) {
         return new Intent(context, FBReader.class)
@@ -275,17 +300,26 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
         titleTv = (TextView) findViewById(R.id.tv_title);
         finishIv = (ImageView) findViewById(R.id.iv_title_finish);
-        selectIv = (ImageView) findViewById(R.id.iv_title_other);
-        GlideUitl.loadImg(this, "", selectIv);
+        selectIv = (ImageView) findViewById(R.id.iv_title_other);//选择弹窗 举报or书签
+        rewardMoneyIv = (ImageView) findViewById(R.id.iv_title_another);//打赏
+        GlideUitl.loadImg(this, R.drawable.icon_more, selectIv);
+        GlideUitl.loadImg(this, R.drawable.reward, rewardMoneyIv);
 
         //弹窗
         list.clear();
-        list.add(new BookSelectOptionBean("举报", R.drawable.img_default));
+        list.add(new BookSelectOptionBean("举报", R.drawable.icon_report));
         list.add(new BookSelectOptionBean("书签", R.drawable.icon_share));
         selectIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openPopwindow(v, list);
+            }
+        });
+        //打赏
+        rewardMoneyIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBalace();
             }
         });
         //关闭
@@ -296,7 +330,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             }
         });
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-
 
         if (myFBReaderApp == null) {
             myFBReaderApp = new FBReaderApp(Paths.systemInfo(this), new BookCollectionShadow());
@@ -398,13 +431,24 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         }
     }
 
+    //获取标题
+    class RemindTask extends TimerTask {
+        public void run() {
+            titleTv.setText(myFBReaderApp.getCurrentBook().getTitle());
+            timer.cancel();
+        }
+    }
+
+    //标题按钮
     private void openPopwindow(View v, List<BookSelectOptionBean> datas) {
         final TypeBookSelectWindow popWindow = new TypeBookSelectWindow(this, datas);
         popWindow.setListItemClickListener(new TypeBookSelectWindow.IListItemClickListener() {
             @Override
             public void clickItem(int position) {
                 if ((position == 0)) {// TODO: 2016/12/8  举报
-
+                    Bundle bundle = new Bundle();
+                    bundle.putString("articleId",getIntent().getStringExtra("articleId"));
+                    com.laichushu.book.utils.UIUtil.openActivity(FBReader.this, ReportActivity.class,bundle);
                 } else {//书签
                     BookCollectionShadow myCollection = getCollection();
                     Bookmark bookmark = myFBReaderApp.createBookmark(30, true);
@@ -417,9 +461,9 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                             myCollection.saveBookmark(bookmark);
                             ToastUtil.showToast("加入书签");
                             break;
-                        }else {
+                        } else {
                             for (Bookmark mbook : thisBookBookmarks) {
-                                if ((mbook.getStyleId() == 5 && mbook.getParagraphIndex()==(bookmark.getParagraphIndex()))) {
+                                if ((mbook.getStyleId() == 5 && mbook.getParagraphIndex() == (bookmark.getParagraphIndex()))) {
                                     ToastUtil.showToast("书签已存在");
                                     return;
                                 }
@@ -437,6 +481,133 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         popWindow.showAsDropDown(v, 0, com.laichushu.book.utils.UIUtil.dip2px(10));
     }
 
+//打赏 先查询余额 =========================================================================
+
+    /**
+     * 查询余额
+     */
+    public void getBalace() {
+        showProgressDialog("加载中请稍候");
+        Balance_Paramet paramet = new Balance_Paramet(ConstantValue.USERID);
+        Logger.e("余额参数");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.getBalance(paramet), new ApiCallback<BalanceBean>() {
+            @Override
+            public void onSuccess(BalanceBean model) {
+                dismissProgressDialog();
+                if (model.isSuccess()) {
+                    double balance = model.getData();
+                    String accepterId = getIntent().getStringExtra("authorId");
+                    String articleId = getIntent().getStringExtra("articleId");
+                    openReward(balance + "", accepterId, articleId);
+                } else {
+                    ToastUtil.showToast(model.getErrMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                dismissProgressDialog();
+                LoggerUtil.e("code+" + code + "/msg:" + msg);
+                ToastUtil.showToast("打赏失败");
+            }
+
+            @Override
+            public void onFinish() {
+                dismissProgressDialog();
+            }
+        });
+    }
+
+    /**
+     * 打赏对话框
+     * @param balance   余额
+     * @param accepterId  被打赏者
+     * @param articleId  书id
+     */
+    private void openReward(String balance, final String accepterId, final String articleId){
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
+        final View customerView = com.laichushu.book.utils.UIUtil.inflate(R.layout.dialog_reward);
+        final EditText payEt = (EditText) customerView.findViewById(R.id.et_pay);
+        TextView balanceTv = (TextView) customerView.findViewById(R.id.tv_balance);
+        balanceTv.setText(balance);
+        //取消
+        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+                String pay = payEt.getText().toString();
+
+                if (TextUtils.isEmpty(pay)) {
+                    ToastUtil.showToast("请输入打赏金额");
+                } else {
+                    if (Integer.parseInt(pay) > 0 || Integer.parseInt(pay) < 100) {
+                        // TODO: 2016/11/8 请求打赏
+                        rewardMoney(ConstantValue.USERID, accepterId, articleId, pay);
+                    } else {
+                        ToastUtil.showToast("只能打赏1-100金额");
+                    }
+                }
+            }
+        });
+        dialogBuilder
+                .withTitle(null)                                  // 为null时不显示title
+                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, this)                // 添加自定义View
+                .show();
+    }
+
+    /**
+     * 打赏请求
+     */
+    /**
+     * 打赏请求
+     *
+     * @param money
+     * @param articleId
+     * @param accepterId
+     * @param awarderId
+     */
+    public void rewardMoney(String awarderId, String accepterId, String articleId, String money) {
+        showProgressDialog("加载中");
+        RewardMoney_Paramet paramet = new RewardMoney_Paramet(awarderId, accepterId, articleId, money);
+        Logger.e("打赏参数");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.rewardMoney(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                dismissProgressDialog();
+                if (model.isSuccess()) {
+                    ToastUtil.showToast("打赏成功，感谢支持");
+                } else {
+                    ToastUtil.showToast(model.getErrMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                dismissProgressDialog();
+                LoggerUtil.e("code+" + code + "/msg:" + msg);
+                ToastUtil.showToast("打赏失败");
+            }
+
+            @Override
+            public void onFinish() {
+                dismissProgressDialog();
+            }
+        });
+    }
+//==================================================================================================================================================
 //	@Override
 //	public boolean onPrepareOptionsMenu(Menu menu) {
 //		setStatusBarVisibility(true);
@@ -457,7 +628,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 //		return super.onOptionsItemSelected(item);
 //	}
 
-//	@Override
+    //	@Override
 //	protected void onNewIntent(final Intent intent) {
 //		final String action = intent.getAction();
 //		final Uri data = intent.getData();
@@ -632,10 +803,17 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         }
     }
 
+    private boolean isShowTitle = true;
+
     @Override
     protected void onResume() {
         super.onResume();
-
+        int seconds = 3;
+        if (isShowTitle) {
+            timer = new Timer();
+            timer.schedule(new RemindTask(), seconds * 1000);
+            isShowTitle = false;
+        }
         myStartTimer = true;
         Config.Instance().runOnConnect(new Runnable() {
             public void run() {
@@ -1144,7 +1322,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         exception.printStackTrace(new PrintWriter(stackTrace));
         intent.putExtra(ErrorKeys.STACKTRACE, stackTrace.toString());
         /*
-		if (exception instanceof BookReadingException) {
+        if (exception instanceof BookReadingException) {
 			final ZLFile file = ((BookReadingException)exception).File;
 			if (file != null) {
 				intent.putExtra("file", file.getPath());
@@ -1190,6 +1368,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         myFBReaderApp.getViewWidget().reset();
         myFBReaderApp.getViewWidget().repaint();
     }
+
     List<Idea_Table> otherBookmarks = new ArrayList<>();
 
 //    @Override
@@ -1234,4 +1413,46 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 //        myMainView.onTouchEvent(event);
 //        return true;
 //    }
+
+    //进度条对话框
+    private LoadDialog progressDialog;
+    public LoadDialog showProgressDialog(CharSequence message) {
+        if (progressDialog == null) {
+            progressDialog = new LoadDialog(this);
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setTitle(message);
+        }
+        progressDialog.show();
+        return progressDialog;
+    }
+
+    public void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            com.laichushu.book.utils.UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                }
+            }, 1600);
+        }
+    }
+    protected ApiStores apiStores;
+    private CompositeSubscription mCompositeSubscription;
+    //RXjava
+    public void addSubscription(Observable observable, Subscriber subscriber) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.add(observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber));
+    }
+    //RXjava取消注册，以避免内存泄露
+    public void onUnsubscribe() {
+        if (mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
+            mCompositeSubscription.unsubscribe();
+        }
+    }
 }

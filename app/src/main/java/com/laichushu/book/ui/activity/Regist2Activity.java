@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.mvp.regist2.RegistModel2;
 import com.laichushu.book.ui.base.MvpActivity;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
@@ -72,12 +73,13 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
             }, 1700);
         }else {
             ToastUtil.showToast(model.getErrMsg());
+            LoggerUtil.e(model.getErrMsg());
         }
     }
 
     @Override
     public void getDataFail(String msg) {
-        toastShow(msg);
+        toastShow("请检查网络");
         Logger.e("网络失败原因：", msg);
     }
 

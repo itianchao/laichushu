@@ -95,7 +95,7 @@
             android:layout_marginRight="5dp"
             android:gravity="right"
             android:hint="@string/fillin"
-            android:inputType="numberPassword|textPassword"
+            android:inputType="textPassword"
             android:maxLength="14"
             android:password="true"
             android:singleLine="true" />

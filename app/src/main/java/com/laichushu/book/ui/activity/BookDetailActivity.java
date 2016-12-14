@@ -271,7 +271,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             case R.id.tv_probation://免费试读
                 BaseBookEntity baseBookEntity = new BaseBookEntity();
                 baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH + "/test.epub");
-                UIUtil.startBookFBReaderActivity(this, baseBookEntity);
+                UIUtil.startBookFBReaderActivity(this, baseBookEntity,articleId,bean.getAuthorId());
                 break;
             case R.id.tv_pay://购买
                 //弹出对话框确认
