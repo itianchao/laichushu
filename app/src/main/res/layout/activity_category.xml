@@ -26,7 +26,7 @@
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
-        android:layout_height="51dp"
+        android:layout_height="49dp"
         android:gravity="center"
         android:textColor="@color/global"
         android:textSize="@dimen/edit"

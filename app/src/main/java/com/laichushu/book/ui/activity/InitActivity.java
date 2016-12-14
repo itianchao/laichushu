@@ -24,6 +24,7 @@ import com.laichushu.book.mvp.init.InitPresenter;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.R;
@@ -145,6 +146,7 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
         if (model.getSuccess()) {
             //本地存储--->已存在更新
             cache_jsonDao.insert(new Cache_Json(null, "PersonalDetails", new Gson().toJson(model)));
+            LoggerUtil.e("1."+new Gson().toJson(model));
             four = true;
             Message msg = new Message();
             msg.obj = four;

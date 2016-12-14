@@ -32,7 +32,7 @@
         <EditText
             android:id="@+id/et_code"
             style="@style/edit_item_style"
-            android:inputType="numberDecimal"
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
             android:maxLength="6"
             android:hint="@string/writecodeHint" />
 

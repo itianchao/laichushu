@@ -133,7 +133,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             @Override
             public void onGlobalLayout() {
 //                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
+                range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
             }
         });
         for (int i = 0; i < mTitleData.size(); i++) {
