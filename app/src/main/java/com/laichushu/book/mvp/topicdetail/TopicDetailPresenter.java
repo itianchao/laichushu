@@ -6,9 +6,12 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.AddActPerMsgInfo_Paramet;
+import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
+import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.TopicDetilActivity;
@@ -26,13 +29,14 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
     private String sourceType = ConstantValue.COMMENTTOPIC_TYPE;
-    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet( "",sourceType, pageNo, pageSize,userId);
+    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet("", sourceType, pageNo, pageSize, userId);
 
     //初始化构造
     public TopicDetailPresenter(TopicDetailView view) {
         attachView(view);
         mActivity = (TopicDetilActivity) view;
     }
+
     public void loadCommentData(String topicId) {
         getParamet().setSourceId(topicId);
         Logger.e("获取全部评论");
@@ -65,18 +69,19 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
 
     /**
      * 点赞 取消赞
+     *
      * @param sourceId
      * @param type
      */
-    public void saveScoreLikeData(String sourceId, final String type){
+    public void saveScoreLikeData(String sourceId, String sourceType, final String type) {
         mvpView.showLoading();
-        ScoreLike_Paramet paramet = new ScoreLike_Paramet(sourceId,userId,type);
-        Logger.e("点赞");
+        TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId, sourceId, sourceType, type);
+        Logger.e("");
         Logger.json(new Gson().toJson(paramet));
-        addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
+        addSubscription(apiStores.saveTopicDyLike(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.SaveScoreLikeData(model,type);
+                mvpView.SaveScoreLikeData(model, type);
             }
 
             @Override
@@ -91,21 +96,23 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
         });
     }
 
+
     /**
-     * 发送评论
+     * 活动页面发送私信
+     *
      * @param sendmsgEv
-     * @param
+     * @param accepterId
      */
-    public void topicDetailCommentSave(EditText sendmsgEv, String sourceId,String sourceType) {
+    public void topicDetailCommentSave(EditText sendmsgEv, String accepterId) {
+        LoggerUtil.e("活动页面发送私信");
         String msg = sendmsgEv.getText().toString().trim();
         if (TextUtils.isEmpty(msg)) {
             sendmsgEv.startAnimation(ShakeAnim.shakeAnimation(3));
             return;
         }
-        LoggerUtil.e("发送评论");
         mvpView.showLoading();
-        TopicDetailCommentSave_Paramet paramet = new TopicDetailCommentSave_Paramet(sourceId,userId,msg,sourceType);
-        addSubscription(apiStores.topicDetailCommentSave(paramet), new ApiCallback<RewardResult>() {
+        AddActPerMsgInfo_Paramet paramet = new AddActPerMsgInfo_Paramet(userId, accepterId, msg);
+        addSubscription(apiStores.appActPerMsgInfoDetails(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.getSendDataSuccess(model);
@@ -113,12 +120,34 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail2("code"+code+"msg:"+msg);
+                mvpView.getDataFail2("code" + code + "msg:" + msg);
             }
 
             @Override
             public void onFinish() {
                 mvpView.hideLoading();
+            }
+        });
+    }
+
+    //话题收藏
+    public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
+        CollectSaveDate_Paramet collectSave = new CollectSaveDate_Paramet(userId, sourceId, sourceType, type);
+        LoggerUtil.toJson(collectSave);
+        addSubscription(apiStores.collectSaveData(collectSave), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getSaveCollectSuccess(model, type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
             }
         });
     }

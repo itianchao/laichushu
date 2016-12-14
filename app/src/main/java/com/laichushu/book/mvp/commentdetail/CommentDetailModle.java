@@ -55,6 +55,7 @@ public class CommentDetailModle {
     }
 
     public static class DataBean {
+        private String id;
         private String userId;
         private String articleId;
         private String sourceId;
@@ -65,6 +66,15 @@ public class CommentDetailModle {
         private String photo;
         private String commentTime;
         private boolean isLike;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
         public String getSourceId() {
             return sourceId;
         }

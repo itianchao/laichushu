@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.topicdetail.TopicDetailPresenter;
+import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -21,10 +23,12 @@ import java.util.ArrayList;
 public class TopicCommentDetaileAdapter extends RecyclerView.Adapter<TopicCommentDetaileAdapter.CommentViewHolder> {
     private BaseActivity mActivity;
     private ArrayList<CommentDetailModle.DataBean> mData;
+    private TopicDetailPresenter topicDetailPresenter;
 
-    public TopicCommentDetaileAdapter(BaseActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData) {
+    public TopicCommentDetaileAdapter(BaseActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData, TopicDetailPresenter topicDetailPresenter) {
         this.mActivity = mActivity;
         this.mData = mData;
+        this.topicDetailPresenter = topicDetailPresenter;
     }
 
     @Override
@@ -52,26 +56,28 @@ public class TopicCommentDetaileAdapter extends RecyclerView.Adapter<TopicCommen
 
         holder.inIv.setVisibility(View.INVISIBLE);
         if (dataBean.isIsLike()) {
-            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
+            GlideUitl.loadImg(mActivity, R.drawable.icon_up_small_red, holder.likeIv);
         } else {
-            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
+            GlideUitl.loadImg(mActivity, R.drawable.icon_up_small_normal, holder.likeIv);
         }
-//        holder.likeIv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (dataBean.isIsLike()) {
-//                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
-//                    dataBean.setIsLike(false);
-//                    dataBean.setLikeNum(dataBean.getLikeNum()-1);
-//                    holder.likeTv.setText(dataBean.getLikeNum() + "");
-//                } else {
-//                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
-//                    dataBean.setIsLike(true);
-//                    dataBean.setLikeNum(dataBean.getLikeNum()+1);
-//                    holder.likeTv.setText(dataBean.getLikeNum() + "");
-//                }
-//            }
-//        });
+        holder.likeIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dataBean.isIsLike()) {
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_up_small_normal, holder.likeIv);
+                    dataBean.setIsLike(false);
+                    dataBean.setLikeNum(dataBean.getLikeNum() - 1);
+                    holder.likeTv.setText(dataBean.getLikeNum() + "");
+                    topicDetailPresenter.saveScoreLikeData(dataBean.getId(), "2", "1");
+                } else {
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_up_small_red, holder.likeIv);
+                    dataBean.setIsLike(true);
+                    dataBean.setLikeNum(dataBean.getLikeNum() + 1);
+                    holder.likeTv.setText(dataBean.getLikeNum() + "");
+                    topicDetailPresenter.saveScoreLikeData(dataBean.getId(), "2", "0");
+                }
+            }
+        });
 //        holder.commentItemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

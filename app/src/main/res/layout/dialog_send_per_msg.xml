@@ -9,7 +9,7 @@
     <EditText
         android:id="@+id/et_dialogMsg"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="12dp"
@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/btn_cancel"
-            android:layout_width="100dp"
+            android:layout_width="70dp"
             android:layout_height="50dp"
             android:background="@drawable/shape_rectangle_nocolor"
             android:gravity="center"
@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/btn_ok"
-            android:layout_width="100dp"
+            android:layout_width="70dp"
             android:layout_height="50dp"
             android:background="@drawable/shape_rectangle_nocolor"
             android:gravity="center"

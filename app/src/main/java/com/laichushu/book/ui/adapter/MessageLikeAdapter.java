@@ -81,7 +81,6 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         holder.tvBookName.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtil.showToast("跳转书详情！");
                                messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
                             }
                         });
@@ -129,6 +128,12 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         } else {
                             UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
                         }
+                    }
+                });
+                holder.tvRewardBookName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
                     }
                 });
                 break;

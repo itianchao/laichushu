@@ -1,12 +1,23 @@
 package com.laichushu.book.ui.fragment;
 
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MyTabStrip;
+import com.laichushu.book.bean.netbean.SignStateResult;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
@@ -14,7 +25,9 @@ import com.laichushu.book.mvp.write.WriteView;
 import com.laichushu.book.ui.activity.CreateNewBookActivity;
 import com.laichushu.book.ui.adapter.WriteBookAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
+import com.laichushu.book.ui.widget.AbstractSpinerAdapter;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.ui.widget.SpinerPopWindow;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -25,6 +38,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 写书
@@ -39,6 +53,13 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     private int img[] = {R.drawable.icon_draft, R.drawable.icon_material, R.drawable.icon_submission, R.drawable.icon_publishl, R.drawable.icon_delete, R.drawable.msg_sign2x};
     private String title[] = {"编辑目录", "编辑素材", "删除", "发表", "投稿", "签约状态"};
     private boolean isLoad = true;
+    //-----
+    private SpinerPopWindow mSpinerPopWindow, mSpinerPopWindow2;
+    private SignStateResult model = new SignStateResult();
+    final List<String> list = new ArrayList<>();//出版社
+    final List<String> editList = new ArrayList<>();//编辑
+    private String pressId, editId;
+    private int currentPos;
 
     @Override
     public View createSuccessView() {
@@ -93,6 +114,15 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     }
 
     @Override
+    public void getSignEditorDataSuccess(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("修改成功");
+        } else {
+            ToastUtil.showToast("修改失败");
+        }
+    }
+
+    @Override
     public void deleteNewBook(RewardResult model, int position) {
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功");
@@ -111,6 +141,94 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         } else {
             ToastUtil.showToast("投稿失败");
         }
+    }
+
+    @Override
+    public void getSignStateDeteSuccess(final SignStateResult model, final String articleId) {
+        if (model.isSuccess()) {
+            this.model = model;
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
+            final AlertDialog alertDialog = dialogBuilder.create();
+            View customerView = UIUtil.inflate(R.layout.dialog_signstate);
+            final Spinner spPress = (Spinner) customerView.findViewById(R.id.sp_press);
+            final Spinner spEdit = (Spinner) customerView.findViewById(R.id.sp_edit);
+            final TextView tvCancle = (TextView) customerView.findViewById(R.id.tv_cancel);
+            final TextView tvSubmit = (TextView) customerView.findViewById(R.id.tv_submit);
+
+            list.clear();
+            for (int i = 0; i < model.getData().size(); i++) {
+                list.add(model.getData().get(i).getName());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(mActivity, R.layout.spiner_item_layout, list);
+            adapter.setDropDownViewResource(R.layout.spiner_item_layout);
+            final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(mActivity, R.layout.spiner_item_layout, editList);
+            adapter2.setDropDownViewResource(R.layout.spiner_item_layout);
+            spPress.setAdapter(adapter);
+            spEdit.setAdapter(adapter2);
+            spPress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    editList.clear();
+                    for (int i = 0; i < model.getData().get(position).getEditors().size(); i++) {
+                        editList.add(model.getData().get(position).getEditors().get(i).getNickName());
+                    }
+                    pressId = model.getData().get(position).getId();
+
+                    if (null != model.getData().get(position).getEditors()&&model.getData().get(position).getEditors().size()>0) {
+                        editId = model.getData().get(position).getEditors().get(0).getId();
+                    } else {
+                        editId = null;
+                    }
+
+                    currentPos = position;
+                    adapter2.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            spEdit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    editId = model.getData().get(currentPos).getEditors().get(position).getId();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            tvCancle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+            tvSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!TextUtils.isEmpty(pressId) && !TextUtils.isEmpty(editId)) {
+                        mvpPresenter.getSignEditorDeta(pressId, articleId, editId);
+                    } else {
+                        ToastUtil.showToast("修改失败");
+                    }
+                    alertDialog.dismiss();
+                }
+            });
+            alertDialog.setView(customerView);
+            alertDialog.show();
+            WindowManager m = mActivity.getWindowManager();
+            Display display = m.getDefaultDisplay();  //为获取屏幕宽、高
+            alertDialog.getWindow().setGravity(Gravity.CENTER);
+            alertDialog.getWindow().setLayout(display.getWidth()-40, display.getHeight() / 2);
+            alertDialog.getWindow().setWindowAnimations(R.style.periodpopwindow_anim_style);
+            alertDialog.show();
+        } else {
+            ToastUtil.showToast("获取数据失败");
+        }
+
     }
 
     @Override
@@ -205,5 +323,9 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
                 mvpPresenter.getArticleBookList();
             }
         });
+    }
+
+    private void showSpinWindow(TextView tv) {
+
     }
 }

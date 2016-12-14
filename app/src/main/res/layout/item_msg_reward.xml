@@ -30,7 +30,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/activity_keep" />
+                android:background="@drawable/msg_rewardme2x" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,8 +45,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:textColor="@color/auditing"
+                    android:paddingLeft="12dp"
                     android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_type"
@@ -56,9 +57,9 @@
                     android:layout_marginLeft="12dp"
                     android:layout_toRightOf="@+id/tv_readerName"
                     android:text="打赏了你的书"
-                    android:textColor="@color/albumPrimaryBlack"
+                    android:textColor="@color/characterGray"
                     android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                     />
 
                 <TextView
                     android:id="@+id/tv_rewardBookName"
@@ -69,7 +70,7 @@
                     android:layout_toRightOf="@+id/tv_type"
                     android:textColor="@color/auditing"
                     android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                     />
             </LinearLayout>
 
         </RelativeLayout>
@@ -86,7 +87,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/characterGray"
                 android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
+                />
 
             <Button
                 android:id="@+id/tv_checkWallet"
@@ -102,7 +103,7 @@
                 android:text="查看钱包"
                 android:textColor="@color/characterGray"
                 android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
+                />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

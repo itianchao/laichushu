@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -236,6 +237,17 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 finish();
                 break;
             case R.id.iv_title_other://分享
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "来写书测试" + "\n" + "来写书测试" + "\n" + "imgUrl");
+                sendIntent.setType("text/plain");
+                sendIntent.setClassName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");//微信朋友
+                //          sendIntent.setClassName("com.tencent.mobileqq", "cooperation.qqfav.widget.QfavJumpActivity");//保存到QQ收藏
+                //          sendIntent.setClassName("com.tencent.mobileqq", "cooperation.qlink.QlinkShareJumpActivity");//QQ面对面快传
+                //          sendIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.qfileJumpActivity");//传给我的电脑
+                sendIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");//QQ好友或QQ群
+                sendIntent.setClassName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");//微信朋友圈，仅支持分享图片
+                startActivityForResult(sendIntent, 1);
                 break;
             case R.id.iv_title_another://收藏
                 String booktype = "1";

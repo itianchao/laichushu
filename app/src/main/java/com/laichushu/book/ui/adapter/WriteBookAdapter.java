@@ -81,9 +81,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                 public void onClick(View v) {
                     switch (finalJ) {
                         case 0:
-                        case 5:
                             //目录
-                            //签约
                             if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getStatus().equals("4") | dataBean.getFreezeStatus().equals("2")) {
                                 ToastUtil.showToast("不可编辑");
                             } else {
@@ -99,10 +97,6 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             break;
                         case 1:
                             //素材
-                            /**
-                             * 素材
-                             */
-
                             if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getStatus().equals("4") | dataBean.getFreezeStatus().equals("2")) {
                                 ToastUtil.showToast("不可编辑");
                             } else {
@@ -114,8 +108,6 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                                     UIUtil.openActivity(mActivity, SourceMaterialDirActivity.class, bundle);
                                 }
                             }
-
-
                             break;
                         case 2:
                             //删除
@@ -126,10 +118,8 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                                 ToastUtil.showToast("不可删除");
                             } else {
                                 String articleId = dataBean.getArticleId();
-                                mvpPresenter.deleteBook(articleId, position);
+                                mvpPresenter.loadDelete(mActivity,articleId, position);
                             }
-
-
                             break;
                         case 3:
                             //电子书
@@ -150,7 +140,6 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             } else {
                                 ToastUtil.showToast("不可发表");
                             }
-
                             break;
                         case 4:
                             //投稿
@@ -159,6 +148,10 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
 //                String pressId = "";
 //                mvpPresenter.voteBook(articleId, pressId);
 
+                            break;
+                        case 5:
+                            //签约状态
+                            mvpPresenter.getSignStateDeta(dataBean.getArticleId());
                             break;
                     }
                 }

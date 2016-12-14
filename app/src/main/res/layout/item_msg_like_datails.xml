@@ -40,8 +40,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_toRightOf="@+id/iv_likeIcons"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit2" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -55,8 +54,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="42dp"
                 android:textColor="@color/auditing"
-                android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit2" />
 
             <TextView
                 android:id="@+id/tv_type"
@@ -66,8 +64,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_toRightOf="@+id/tv_readerName"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit2"/>
 
             <TextView
                 android:id="@+id/tv_bookName"
@@ -77,8 +74,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@+id/tv_type"
                 android:textColor="@color/auditing"
-                android:textSize="@dimen/edit2"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit2" />
         </RelativeLayout>
 
         <TextView
@@ -90,8 +86,7 @@
             android:paddingLeft="24dp"
             android:layout_marginBottom="12dp"
             android:textColor="@color/characterGray"
-            android:textSize="@dimen/edit2"
-            android:textStyle="bold" />
+            android:textSize="@dimen/edit2" />
     </LinearLayout>
 
 </RelativeLayout>

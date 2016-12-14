@@ -21,7 +21,6 @@ import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
-import com.laichushu.book.utils.Validator;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -34,6 +33,7 @@ import java.util.ArrayList;
 public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> implements TopicDetailView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private MechanismTopicListModel.DataBean bean;
+    private ImageView ivLike, ivShare;
     private ImageView topicUserheadIv;
     private TextView topicAuthorTv;
     private TextView topicContentTv;
@@ -60,6 +60,8 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_topicdetail);
         titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
+        ivLike = (ImageView) mSuccessView.findViewById(R.id.iv_title_another);
+        ivShare = (ImageView) mSuccessView.findViewById(R.id.iv_title_other);
         finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
         topicUserheadIv = (ImageView) mSuccessView.findViewById(R.id.iv_topic_userhead);
         topicAuthorTv = (TextView) mSuccessView.findViewById(R.id.tv_topic_author);
@@ -72,23 +74,44 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
-        mAdapter = new TopicCommentDetaileAdapter(this, mData);
+        mAdapter = new TopicCommentDetaileAdapter(this, mData, mvpPresenter);
         commentRyv.setAdapter(mAdapter);
         finishIv.setOnClickListener(this);
         sendmsgIv.setOnClickListener(this);
+        ivLike.setOnClickListener(this);
+        ivShare.setOnClickListener(this);
         return mSuccessView;
     }
 
     @Override
     protected void initData() {
         titleTv.setText("话题详情");
+        ivLike.setVisibility(View.VISIBLE);
+        ivShare.setVisibility(View.VISIBLE);
+        GlideUitl.loadImg(mActivity, R.drawable.icon_share2x, ivShare);
         type = getIntent().getStringExtra("type");
-        if (type.equals("homepage")) {
+        if (("homepage").equals(type)) {
             homeBean = (HomeUseDyrResult.DataBean) getIntent().getSerializableExtra("topBean");
             topicId = homeBean.getId();
+            topicNameTv.setText(homeBean.getTitle());
+            topicAuthorTv.setText(homeBean.getCreatUserName());
+            topicContentTv.setText(homeBean.getContent());
+            topicTiemTv.setText(homeBean.getCreateDate());
+            GlideUitl.loadRandImg(mActivity, homeBean.getCreaterPhoto(), topicUserheadIv);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            if (homeBean.isBeCollect()) {
+                GlideUitl.loadImg(mActivity, R.drawable.icon_likewhite2x, ivLike);
+            } else {
+                GlideUitl.loadImg(mActivity, R.drawable.icon_likedwhite2x, ivLike);
+            }
         } else {
             bean = getIntent().getParcelableExtra("bean");
             topicId = bean.getId();
+            topicNameTv.setText(bean.getTitle());
+            topicAuthorTv.setText(bean.getCreatUserName());
+            topicContentTv.setText(bean.getContent());
+            topicTiemTv.setText(bean.getCreateDate());
+            GlideUitl.loadRandImg(mActivity, bean.getCreaterPhoto(), topicUserheadIv);
         }
         mvpPresenter.loadCommentData(topicId);
     }
@@ -104,21 +127,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 mAdapter.setmData(mData);
                 mAdapter.notifyDataSetChanged();
                 pageNo++;
-                if (type.equals("homepage")) {
-                    topicNameTv.setText(homeBean.getTitle());
-                    topicAuthorTv.setText(homeBean.getCreatUserName());
-                    topicContentTv.setText(homeBean.getContent());
-                    topicTiemTv.setText(homeBean.getCreateDate());
-                    GlideUitl.loadRandImg(mActivity, homeBean.getCreaterPhoto(), topicUserheadIv);
-                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                } else {
-                    topicNameTv.setText(bean.getTitle());
-                    topicAuthorTv.setText(bean.getCreatUserName());
-                    topicContentTv.setText(bean.getContent());
-                    topicTiemTv.setText(bean.getCreateDate());
-                    GlideUitl.loadRandImg(mActivity, bean.getCreaterPhoto(), topicUserheadIv);
-                }
-
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -128,6 +137,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
 
     /**
      * 点赞
+     *
      * @param model
      * @param type
      */
@@ -154,6 +164,21 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             onRefresh();
         } else {
             ToastUtil.showToast("发送失败");
+        }
+    }
+
+    @Override
+    public void getSaveCollectSuccess(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏成功！");
+            } else {
+                ToastUtil.showToast("取消收藏！");
+            }
+
+        } else {
+            ToastUtil.showToast("操作失败！");
+            LoggerUtil.toJson(model);
         }
     }
 
@@ -185,13 +210,29 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             case R.id.iv_title_finish:
                 finish();
                 break;
+            case R.id.iv_title_other:
+                //分享
+                break;
+            case R.id.iv_title_another:
+                //收藏
+                if (null == homeBean) {
+                    ToastUtil.showToast("参数错误！");
+                    return;
+                }
+                if (homeBean.isBeCollect()) {
+                    mvpPresenter.loadCollectSaveDate(topicId, "2", "1");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_likewhite2x, ivLike);
+                } else {
+                    mvpPresenter.loadCollectSaveDate(topicId, "2", "0");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_likedwhite2x, ivLike);
+                }
+                break;
             case R.id.iv_sendmsg:
                 if (type.equals("homepage")) {
-                    mvpPresenter.topicDetailCommentSave(sendmsgEv, homeBean.getId(), ConstantValue.COMMENTTOPIC_TYPE);
+                    mvpPresenter.topicDetailCommentSave(sendmsgEv, homeBean.getId());
                 } else {
-                    mvpPresenter.topicDetailCommentSave(sendmsgEv, bean.getId(), ConstantValue.COMMENTTOPIC_TYPE);
+                    mvpPresenter.topicDetailCommentSave(sendmsgEv, bean.getId());
                 }
-
                 break;
         }
     }

@@ -68,7 +68,7 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
             @Override
             public void onClick(View v) {
                 if (type.equals("0")) {
-                    //添加点赞
+                    //添加收藏
                     currentNum++;
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
@@ -76,7 +76,7 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
                     userHomePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
                     type = "1";
                 } else {
-                    //取消点赞
+                    //取消收藏
                     currentNum--;
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_red);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());

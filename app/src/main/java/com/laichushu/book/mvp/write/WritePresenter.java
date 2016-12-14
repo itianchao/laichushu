@@ -2,10 +2,20 @@ package com.laichushu.book.mvp.write;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
@@ -14,16 +24,26 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
 import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.DeleteNewBook_Paramet;
+import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
+import com.laichushu.book.bean.netbean.MySignEditor_paramet;
 import com.laichushu.book.bean.netbean.PublishNewBook_Paramet;
+import com.laichushu.book.bean.netbean.SignStateResult;
 import com.laichushu.book.bean.netbean.UpdateBookPermission_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.CreateNewBookActivity;
+import com.laichushu.book.ui.activity.MainActivity;
 import com.laichushu.book.ui.activity.ManageWorksActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.widget.SpinerPopWindow;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.UIUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.id.list;
 
 /**
  * 写书 presenter
@@ -129,7 +149,8 @@ public class WritePresenter extends BasePresenter<WriteView> {
     /**
      * 选择权限 对话框
      *
-     * @param permissionTv
+     * @param mActivity
+     * @param dataBean
      */
     public void openPermissionAlertDialog(Activity mActivity, final HomeHotModel.DataBean dataBean) {
 
@@ -223,5 +244,71 @@ public class WritePresenter extends BasePresenter<WriteView> {
                 mvpView.hideLoading();
             }
         });
+    }
+//
+
+    /**
+     * 修改签约状态
+     */
+    public void getSignStateDeta(final String articleId) {
+        mvpView.showLoading();
+        LoggerUtil.e("修改签约状态");
+        addSubscription(apiStores.getSignStateDetails(new MyArticBooklist_paramet("", "", "", "")), new ApiCallback<SignStateResult>() {
+            @Override
+            public void onSuccess(SignStateResult model) {
+                mvpView.getSignStateDeteSuccess(model, articleId);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail4("code:" + code + "\nmsg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 修改签约状态
+     */
+    public void getSignEditorDeta(String pressId, String articleId, String editorId) {
+        mvpView.showLoading();
+        LoggerUtil.e("修改签约状态");
+        MySignEditor_paramet editParamet = new MySignEditor_paramet(pressId, articleId, editorId, userId);
+        addSubscription(apiStores.getSignEditorDetails(editParamet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getSignEditorDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail4("code:" + code + "\nmsg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    //删除确认
+    public void loadDelete(Activity mActivity, final String articleId, final int position) {
+        final String[] sex = new String[1];
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mActivity);
+        final int[] posion = new int[1];
+        builder.setTitle("")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteBook(articleId, position);
+                    }
+                })
+                .show();
     }
 }

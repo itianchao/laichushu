@@ -101,7 +101,6 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
         }, 300);
         if (model.isSuccess()) {
             bean = model;
-            ToastUtil.showToast("HomeUseDyrResult");
             recordData = model.getData();
             tvBalanceShow.setText(model.getBalance() + "");
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);

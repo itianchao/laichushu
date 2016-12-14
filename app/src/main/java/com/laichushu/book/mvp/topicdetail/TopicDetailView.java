@@ -10,6 +10,7 @@ public interface TopicDetailView {
     void getDataSuccess(TopicdetailModel model);
     void SaveScoreLikeData(RewardResult model, String type);
     void getSendDataSuccess(RewardResult model);
+    void getSaveCollectSuccess(RewardResult model,String type);
     void getDataFail(String msg);
     void getDataFail2(String msg);
     void showLoading();

@@ -1,6 +1,7 @@
 package com.laichushu.book.mvp.write;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.SignStateResult;
 import com.laichushu.book.mvp.home.HomeHotModel;
 
 /**
@@ -10,8 +11,10 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 
 public interface WriteView {
     void getDataSuccess(HomeHotModel model);
+    void getSignEditorDataSuccess(RewardResult model);
     void deleteNewBook(RewardResult model, int position);
     void articleVote(RewardResult model);
+    void getSignStateDeteSuccess(SignStateResult model,String articleId);
     void updateBookPermission(RewardResult model);
     void publishNewBook(RewardResult model,int index,String type);
     void getDataFail(String msg);

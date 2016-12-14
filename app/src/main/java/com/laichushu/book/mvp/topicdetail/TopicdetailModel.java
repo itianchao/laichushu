@@ -57,6 +57,7 @@ public class TopicdetailModel {
     }
 
     public static class DataBean {
+        private String id;
         private String scoreId;
         private String userId;
         private String articleId;
@@ -67,6 +68,22 @@ public class TopicdetailModel {
         private String photo;
         private String createDate;
         private boolean isLike;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public boolean isLike() {
+            return isLike;
+        }
+
+        public void setLike(boolean like) {
+            isLike = like;
+        }
 
         public String getScoreId() {
             return scoreId;
