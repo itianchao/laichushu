@@ -1,10 +1,12 @@
 package com.laichushu.book.ui.adapter;
 
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -13,6 +15,8 @@ import com.laichushu.book.mvp.draftmodle.DraftModlePresenter;
 import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.ui.activity.NopublishBookActivity;
 import com.laichushu.book.utils.UIUtil;
+
+import org.geometerplus.android.fbreader.api.MenuNode;
 
 import java.util.ArrayList;
 
@@ -41,15 +45,16 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
 
     @Override
     public void onBindViewHolder(DraftListViewHolder holder, final int position) {
-
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        holder.itemView.setLayoutParams(params);
         if (isGone) {
             holder.deleteIv.setVisibility(View.VISIBLE);
             holder.renameTv.setVisibility(View.INVISIBLE);
-            holder.reviseTv.setVisibility(View.INVISIBLE);
+            holder.reviseTv.setVisibility(View.GONE);
         } else {
             holder.deleteIv.setVisibility(View.GONE);
             holder.renameTv.setVisibility(View.VISIBLE);
-            holder.reviseTv.setVisibility(View.VISIBLE);
+            holder.reviseTv.setVisibility(View.GONE);
         }
         final DraftModle.DataBean dataBean = mData.get(position);
         holder.nameTv.setText(dataBean.getName());

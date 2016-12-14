@@ -1,6 +1,5 @@
 package com.laichushu.book.mvp.creatnewdraft;
 
-import android.graphics.Color;
 import android.support.v4.util.ArrayMap;
 import android.view.View;
 
@@ -11,7 +10,6 @@ import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.CreatNewDraftActivity;
 import com.laichushu.book.ui.base.BasePresenter;
-import com.laichushu.book.utils.SharePrefManager;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
@@ -30,7 +28,8 @@ public class CreateNewDraftPersenter extends BasePresenter<CreateNewDraftView> {
 
     private CreatNewDraftActivity mActivity;
 
-    private String userId = ConstantValue.USERID;;
+    private String userId = ConstantValue.USERID;
+    ;
 
     public CreateNewDraftPersenter(CreateNewDraftView view) {
         attachView(view);
@@ -39,151 +38,168 @@ public class CreateNewDraftPersenter extends BasePresenter<CreateNewDraftView> {
 
     public void setfunction(View mSuccessView, final RichEditor mEditor) {
         mSuccessView.findViewById(R.id.action_undo).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.undo();
             }
         });
 
         mSuccessView.findViewById(R.id.action_redo).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.redo();
             }
         });
 
         mSuccessView.findViewById(R.id.action_bold).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setBold();
             }
         });
 
         mSuccessView.findViewById(R.id.action_italic).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setItalic();
             }
         });
 
         mSuccessView.findViewById(R.id.action_subscript).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setSubscript();
             }
         });
 
         mSuccessView.findViewById(R.id.action_superscript).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setSuperscript();
             }
         });
 
         mSuccessView.findViewById(R.id.action_strikethrough).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setStrikeThrough();
             }
         });
 
         mSuccessView.findViewById(R.id.action_underline).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setUnderline();
             }
         });
 
         mSuccessView.findViewById(R.id.action_heading1).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setHeading(1);
             }
         });
 
         mSuccessView.findViewById(R.id.action_heading2).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setHeading(2);
             }
         });
 
         mSuccessView.findViewById(R.id.action_heading3).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setHeading(3);
             }
         });
 
         mSuccessView.findViewById(R.id.action_heading4).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setHeading(4);
             }
         });
 
         mSuccessView.findViewById(R.id.action_heading5).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setHeading(5);
             }
         });
 
         mSuccessView.findViewById(R.id.action_heading6).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setHeading(6);
             }
         });
 
-        mSuccessView.findViewById(R.id.action_txt_color).setOnClickListener(new View.OnClickListener() {
-            private boolean isChanged;
+//        mSuccessView.findViewById(R.id.action_txt_color).setOnClickListener(new View.OnClickListener() {
+//            private boolean isChanged;
+//
+//            @Override public void onClick(View v) {
+//                mEditor.setTextColor(isChanged ? Color.BLACK : Color.RED);
+//                isChanged = !isChanged;
+//            }
+//        });
 
-            @Override public void onClick(View v) {
-                mEditor.setTextColor(isChanged ? Color.BLACK : Color.RED);
-                isChanged = !isChanged;
-            }
-        });
+//        mSuccessView.findViewById(R.id.action_bg_color).setOnClickListener(new View.OnClickListener() {
+//            private boolean isChanged;
+//
+//            @Override public void onClick(View v) {
+//                mEditor.setTextBackgroundColor(isChanged ? Color.TRANSPARENT : Color.YELLOW);
+//                isChanged = !isChanged;
+//            }
+//        });
 
-        mSuccessView.findViewById(R.id.action_bg_color).setOnClickListener(new View.OnClickListener() {
-            private boolean isChanged;
+//        mSuccessView.findViewById(R.id.action_indent).setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                mEditor.setIndent();
+//            }
+//        });
 
-            @Override public void onClick(View v) {
-                mEditor.setTextBackgroundColor(isChanged ? Color.TRANSPARENT : Color.YELLOW);
-                isChanged = !isChanged;
-            }
-        });
+//        mSuccessView.findViewById(R.id.action_outdent).setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                mEditor.setOutdent();
+//            }
+//        });
 
-        mSuccessView.findViewById(R.id.action_indent).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setIndent();
-            }
-        });
+//        mSuccessView.findViewById(R.id.action_align_left).setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                mEditor.setAlignLeft();
+//            }
+//        });
 
-        mSuccessView.findViewById(R.id.action_outdent).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setOutdent();
-            }
-        });
+//        mSuccessView.findViewById(R.id.action_align_center).setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                mEditor.setAlignCenter();
+//            }
+//        });
 
-        mSuccessView.findViewById(R.id.action_align_left).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setAlignLeft();
-            }
-        });
-
-        mSuccessView.findViewById(R.id.action_align_center).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setAlignCenter();
-            }
-        });
-
-        mSuccessView.findViewById(R.id.action_align_right).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setAlignRight();
-            }
-        });
+//        mSuccessView.findViewById(R.id.action_align_right).setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                mEditor.setAlignRight();
+//            }
+//        });
 
         mSuccessView.findViewById(R.id.action_blockquote).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setBlockquote();
             }
         });
 
         mSuccessView.findViewById(R.id.action_insert_bullets).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setBullets();
             }
         });
 
         mSuccessView.findViewById(R.id.action_insert_numbers).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mEditor.setNumbers();
             }
         });
@@ -193,15 +209,16 @@ public class CreateNewDraftPersenter extends BasePresenter<CreateNewDraftView> {
 //                mEditor.insertLink("https://github.com/wasabeef", "wasabeef");
 //            }
 //        });
-        mSuccessView.findViewById(R.id.action_insert_checkbox).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.insertTodo();
-            }
-        });
+//        mSuccessView.findViewById(R.id.action_insert_checkbox).setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                mEditor.insertTodo();
+//            }
+//        });
     }
 
     /**
      * 转换网络图片
+     *
      * @param file 上传文件
      */
     public void commitPhoto(File file) {
@@ -230,16 +247,18 @@ public class CreateNewDraftPersenter extends BasePresenter<CreateNewDraftView> {
             }
         });
     }
+
     /**
      * 新建草稿
+     *
      * @param articleId 书Id
-     * @param name 草稿标题
-     * @param content 内容
+     * @param name      草稿标题
+     * @param content   内容
      */
     public void createNewDraft(String articleId, String name, String content) {
         mvpView.showLoading();
         Logger.e("新建草稿");
-        CreateNewDraft_Paramet params = new CreateNewDraft_Paramet(articleId,name,content,userId);
+        CreateNewDraft_Paramet params = new CreateNewDraft_Paramet(articleId, name, content, userId);
         addSubscription(apiStores.createNewDraft(params), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {

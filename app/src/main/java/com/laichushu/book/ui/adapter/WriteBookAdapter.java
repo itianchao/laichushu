@@ -85,7 +85,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getStatus().equals("4") | dataBean.getFreezeStatus().equals("2")) {
                                 ToastUtil.showToast("不可编辑");
                             } else {
-                                if (dataBean.isMake()) {
+                                if (!dataBean.isMake()) {
                                     ToastUtil.showToast("发表状态不能修改");
                                 } else {
                                     Bundle bundle = new Bundle();
@@ -100,7 +100,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getStatus().equals("4") | dataBean.getFreezeStatus().equals("2")) {
                                 ToastUtil.showToast("不可编辑");
                             } else {
-                                if (dataBean.isMake()) {
+                                if (!dataBean.isMake()) {
                                     ToastUtil.showToast("发表状态不能修改");
                                 } else {
                                     Bundle bundle = new Bundle();
@@ -143,7 +143,9 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             break;
                         case 4:
                             //投稿
-                            UIUtil.openActivity(mActivity, MechanismListActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("articleId",dataBean.getArticleId());
+                            UIUtil.openActivity(mActivity, MechanismListActivity.class,bundle);
 //                String articleId = dataBean.getArticleId();
 //                String pressId = "";
 //                mvpPresenter.voteBook(articleId, pressId);
@@ -195,11 +197,10 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
 
         holder.markTv.setText(dataBean.getScore() + "分");
         if (dataBean.isMake()) {
-            holder.publishlTv.setText("已发表");
-        } else {
             holder.publishlTv.setText("发表");
+        } else {
+            holder.publishlTv.setText("已发表");
         }
-
 
         //权限
         holder.jurTv.setOnClickListener(new View.OnClickListener() {

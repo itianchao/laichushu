@@ -302,8 +302,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         finishIv = (ImageView) findViewById(R.id.iv_title_finish);
         selectIv = (ImageView) findViewById(R.id.iv_title_other);//选择弹窗 举报or书签
         rewardMoneyIv = (ImageView) findViewById(R.id.iv_title_another);//打赏
-        GlideUitl.loadImg(this, R.drawable.icon_more, selectIv);
-        GlideUitl.loadImg(this, R.drawable.reward, rewardMoneyIv);
+        selectIv.setScaleType(ImageView.ScaleType.CENTER);
+        rewardMoneyIv.setScaleType(ImageView.ScaleType.CENTER);
+        GlideUitl.loadImg2(this, R.drawable.icon_more, selectIv);
+        GlideUitl.loadImg2(this, R.drawable.reward, rewardMoneyIv);
 
         //弹窗
         list.clear();
@@ -803,16 +805,13 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         }
     }
 
-    private boolean isShowTitle = true;
-
     @Override
     protected void onResume() {
         super.onResume();
         int seconds = 3;
-        if (isShowTitle) {
+        if (TextUtils.isEmpty(titleTv.getText())) {
             timer = new Timer();
             timer.schedule(new RemindTask(), seconds * 1000);
-            isShowTitle = false;
         }
         myStartTimer = true;
         Config.Instance().runOnConnect(new Runnable() {

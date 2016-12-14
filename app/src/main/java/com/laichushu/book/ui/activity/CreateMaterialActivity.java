@@ -110,13 +110,15 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
         type = getIntent().getStringExtra("type");
 
 
-        materialEt.setHint(title);
+//        ;
         //1、新建 2、编辑
         if (type.equals("1")) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             titleTv.setText("添加素材");
+            materialTv.setText(title);
         } else {
             String dir = getIntent().getStringExtra("dir");
+            materialEt.setHint(title);
             materialTv.setText(dir);
             createBtn.setText("修改");
             titleTv.setText("编辑素材");
@@ -226,13 +228,16 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
         switch (v.getId()) {
             case R.id.btn_create:
                 String name = materialEt.getText().toString();
-                String content = builder.toString();
+                String content = "";
+                if (builder != null) {
+                    content = builder.toString();
+                }
                 if (TextUtils.isEmpty(name)) {
-                    ToastUtil.showToast("请输入章节名称");
+                    ToastUtil.showToast("请输入素材名称");
                     return;
                 }
                 if (TextUtils.isEmpty(content)) {
-                    ToastUtil.showToast("请输入章节内容");
+                    ToastUtil.showToast("请输入素材内容");
                     return;
                 }
                 if (type.equals("1")) {

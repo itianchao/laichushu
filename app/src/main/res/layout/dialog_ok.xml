@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_msg_title"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit"
+        android:gravity="center"
+        tools:text="确认投稿"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/edit"
+            android:textSize="@dimen/edit2" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="@color/global"
+            android:textSize="@dimen/edit2" />
+
+    </LinearLayout>
+</LinearLayout>

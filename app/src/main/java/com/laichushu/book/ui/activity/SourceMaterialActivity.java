@@ -49,7 +49,7 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     private String parentId;
     private String title;
     private String articleId;
-
+    private String dir;
     @Override
     protected SourceMaterialPresenter createPresenter() {
         return new SourceMaterialPresenter(this);
@@ -87,6 +87,7 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     protected void initData() {
         parentId = getIntent().getStringExtra("parentId");
         articleId = getIntent().getStringExtra("articleId");
+        dir = getIntent().getStringExtra("dir");
         EventBus.getDefault().register(this);
         if (isLoad) {//只执行一次
             mvpPresenter.getSourceMaterialList(parentId);
@@ -211,6 +212,7 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
                 bundle.putString("parentId", parentId);
                 bundle.putString("title", title);
                 bundle.putString("type", "1");//1、新建2、编辑
+                bundle.putString("dir", dir);
                 UIUtil.openActivity(this, CreateMaterialActivity.class, bundle);
                 break;
             case R.id.tv_title_right:

@@ -239,13 +239,14 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     @Override
     public void publishNewBook(RewardResult model, int index, String type) {
         if (model.isSuccess()) {
-            if (type.equals("1")) {
+            if (type.equals("1")) {//已发表
                 mData.get(index).setMake(false);
             } else {
                 mData.get(index).setMake(true);
             }
             writeBookAdapter.setmData(mData);
             writeBookAdapter.notifyDataSetChanged();
+            ToastUtil.showToast("发表成功");
         } else {
             ToastUtil.showToast("发表失败");
         }

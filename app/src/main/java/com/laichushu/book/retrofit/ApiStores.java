@@ -1,5 +1,6 @@
 package com.laichushu.book.retrofit;
 
+import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
@@ -490,4 +491,14 @@ public interface ApiStores {
     //修改素材权限
     @POST("article/updateMaterialPermission")
     Observable<RewardResult> getUpdateMaterialPermissionDetails(@Body UpdateMaterialPermission_Paramet paramet);
+
+    //热门搜索历史
+    @POST("searchArticle/findHotArticle")
+    Observable<RewardResult> getHotSearch();
+
+    //获取url下载接口
+    @POST("chapter/download")
+    Observable<UrlResult> downloadEpubFile(@Body DownloadEpubFilePermission_Paramet paramet);
+
+    //
 }

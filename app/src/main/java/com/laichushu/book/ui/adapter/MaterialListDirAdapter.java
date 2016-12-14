@@ -72,6 +72,7 @@ public class MaterialListDirAdapter extends RecyclerView.Adapter<MaterialListDir
                 bundle.putString("title", dataBean.getName());
                 bundle.putString("parentId", dataBean.getId());
                 bundle.putString("articleId", dataBean.getArticleId());
+                bundle.putString("dir", dataBean.getName());
                 UIUtil.openActivity(mActivity, SourceMaterialActivity.class, bundle);
             }
         });

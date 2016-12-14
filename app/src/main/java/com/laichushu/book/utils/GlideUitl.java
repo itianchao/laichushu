@@ -42,7 +42,19 @@ public class GlideUitl {
             Glide.with(mContext).load(R.drawable.img_default).centerCrop().into(mImageView);
         }
     }
-
+    /**
+     * 加载本地图片
+     * @param mContext
+     * @param path
+     * @param mImageView
+     */
+    public static void loadImg2(Context mContext, int path, ImageView mImageView) {
+        if (path != 0) {
+            Glide.with(mContext).load(path).error(R.drawable.img_default).into(mImageView);
+        } else {
+            Glide.with(mContext).load(R.drawable.img_default).into(mImageView);
+        }
+    }
     /**
      * 指定大小加载图片
      *

@@ -131,10 +131,10 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 comentIv.setVisibility(View.VISIBLE);
                 break;
             case "3":
-                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
-                joinTv.setVisibility(View.VISIBLE);
-                parentLay.setVisibility(View.INVISIBLE);
-                comentIv.setVisibility(View.VISIBLE);
+//                GlideUitl.loadImg(mActivity, R.drawable.activity_start, stateIv);
+//                joinTv.setVisibility(View.VISIBLE);
+//                parentLay.setVisibility(View.INVISIBLE);
+//                comentIv.setVisibility(View.VISIBLE);
                 break;
             case "4":
                 GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
