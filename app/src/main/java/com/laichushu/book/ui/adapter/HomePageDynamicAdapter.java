@@ -44,7 +44,6 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
         holder.tvCollect.setText(dataBeen.get(position).getCollectNum() + "");
-        holder.llCollection.setVisibility(View.GONE);
         holder.llScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -64,18 +64,20 @@ public class HomeUseDyrResult implements Serializable {
         private int type;
         private String createrPhoto;
 
-        public boolean isBeCollect() {
-            return beCollect;
+        public boolean isCollect() {
+            return isCollect;
         }
 
-        public void setBeCollect(boolean beCollect) {
-            this.beCollect = beCollect;
+        public void setCollect(boolean collect) {
+            isCollect = collect;
         }
 
-        private boolean beCollect;
+        private boolean isCollect;
+
+
         /*
-     *  已回复数
-     */
+             *  已回复数
+             */
         private int replyNum;
         /*
          *  已收藏数

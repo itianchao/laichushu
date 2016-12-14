@@ -65,27 +65,25 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
      */
     public void loadDataForNet() {
         showProgressDialog();
-        addSubscription(apiStores.gethomeCategroyData(paramet), subscriber);
+        addSubscription(apiStores.gethomeCategroyData(paramet), new ApiCallback<HomeHotModel>() {
+
+            @Override
+            public void onSuccess(HomeHotModel model) {
+                loadResult(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                dismissProgressDialog();
+                Logger.e("code: " + code + "\nmsg " + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                dismissProgressDialog();
+            }
+        });
     }
-
-    private ApiCallback subscriber = new ApiCallback<HomeHotModel>() {
-
-        @Override
-        public void onSuccess(HomeHotModel model) {
-            loadResult(model);
-        }
-
-        @Override
-        public void onFailure(int code, String msg) {
-            dismissProgressDialog();
-            Logger.e("code: " + code + "\nmsg " + msg);
-        }
-
-        @Override
-        public void onFinish() {
-            dismissProgressDialog();
-        }
-    };
 
     /**
      * 处理结果

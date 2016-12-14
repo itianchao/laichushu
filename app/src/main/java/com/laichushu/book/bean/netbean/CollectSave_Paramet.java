@@ -9,13 +9,13 @@ public class CollectSave_Paramet {
     private String userId;
     private String sourceId;
     private String type;//0 收藏 1 取消
-    private String collectType;
+    private String sourceType;
 
-    public CollectSave_Paramet(String userId, String sourceId, String collectType, String type) {
+    public CollectSave_Paramet(String userId, String sourceId, String sourceType, String type) {
         this.userId = userId;
         this.sourceId = sourceId;
         this.type = type;
-        this.collectType = collectType;
+        this.sourceType = sourceType;
     }
 
     public String getUserId() {
@@ -43,10 +43,10 @@ public class CollectSave_Paramet {
     }
 
     public String getCollectType() {
-        return collectType;
+        return sourceType;
     }
 
     public void setCollectType(String collectType) {
-        this.collectType = collectType;
+        this.sourceType = collectType;
     }
 }

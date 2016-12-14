@@ -47,7 +47,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     private ArrayList<CommentDetailModle.DataBean> mData = new ArrayList<>();
     private String topicId;
     private EditText sendmsgEv;
-    private ImageView sendmsgIv;
+    private TextView sendmsgIv;
     private String type;
     private HomeUseDyrResult.DataBean homeBean;
 
@@ -70,7 +70,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         topicNameTv = (TextView) mSuccessView.findViewById(R.id.tv_topic_name);
         commentRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_comment);
         sendmsgEv = (EditText) mSuccessView.findViewById(R.id.et_sendmsg);
-        sendmsgIv = (ImageView) mSuccessView.findViewById(R.id.iv_sendmsg);
+        sendmsgIv = (TextView) mSuccessView.findViewById(R.id.iv_sendmsg);
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
@@ -88,7 +88,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         titleTv.setText("话题详情");
         ivLike.setVisibility(View.VISIBLE);
         ivShare.setVisibility(View.VISIBLE);
-        GlideUitl.loadImg(mActivity, R.drawable.icon_share2x, ivShare);
+        ivShare.setImageResource(R.drawable.icon_share2x);
         type = getIntent().getStringExtra("type");
         if (("homepage").equals(type)) {
             homeBean = (HomeUseDyrResult.DataBean) getIntent().getSerializableExtra("topBean");
@@ -99,10 +99,10 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             topicTiemTv.setText(homeBean.getCreateDate());
             GlideUitl.loadRandImg(mActivity, homeBean.getCreaterPhoto(), topicUserheadIv);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (homeBean.isBeCollect()) {
-                GlideUitl.loadImg(mActivity, R.drawable.icon_likewhite2x, ivLike);
+            if (homeBean.isCollect()) {
+                ivLike.setImageResource(R.drawable.icon_likewhite2x);
             } else {
-                GlideUitl.loadImg(mActivity, R.drawable.icon_likedwhite2x, ivLike);
+                ivLike.setImageResource(R.drawable.icon_likedwhite2x);
             }
         } else {
             bean = getIntent().getParcelableExtra("bean");
@@ -113,7 +113,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             topicTiemTv.setText(bean.getCreateDate());
             GlideUitl.loadRandImg(mActivity, bean.getCreaterPhoto(), topicUserheadIv);
         }
-        mvpPresenter.loadCommentData(topicId);
+        mvpPresenter.loadCommentData(topicId, ConstantValue.TOPICCOMMENT_TYPE);
     }
 
     @Override
@@ -219,19 +219,21 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                     ToastUtil.showToast("参数错误！");
                     return;
                 }
-                if (homeBean.isBeCollect()) {
-                    mvpPresenter.loadCollectSaveDate(topicId, "2", "1");
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_likewhite2x, ivLike);
+                if (homeBean.isCollect()) {
+                    mvpPresenter.loadCollectSaveDate(topicId, ConstantValue.COLLECTTOPIC_TYPE, "1");
+                    homeBean.setCollect(false);
+                    ivLike.setImageResource(R.drawable.icon_likewhite2x);
                 } else {
-                    mvpPresenter.loadCollectSaveDate(topicId, "2", "0");
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_likedwhite2x, ivLike);
+                    mvpPresenter.loadCollectSaveDate(topicId, ConstantValue.COLLECTTOPIC_TYPE, "0");
+                    homeBean.setCollect(true);
+                    ivLike.setImageResource(R.drawable.icon_likedwhite2x);
                 }
                 break;
             case R.id.iv_sendmsg:
                 if (type.equals("homepage")) {
-                    mvpPresenter.topicDetailCommentSave(sendmsgEv, homeBean.getId());
+                    mvpPresenter.topicDetailCommentSave(sendmsgEv, homeBean.getId(),ConstantValue.TOPICCOMMENT_TYPE);
                 } else {
-                    mvpPresenter.topicDetailCommentSave(sendmsgEv, bean.getId());
+                    mvpPresenter.topicDetailCommentSave(sendmsgEv, bean.getId(),ConstantValue.TOPICCOMMENT_TYPE);
                 }
                 break;
         }
@@ -245,7 +247,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         pageNo = 1;
         mData.clear();
         mvpPresenter.getParamet().setPageNo(pageNo + "");
-        mvpPresenter.loadCommentData(topicId);
+        mvpPresenter.loadCommentData(topicId, ConstantValue.TOPICCOMMENT_TYPE);
     }
 
     /**
@@ -254,7 +256,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     @Override
     public void onLoadMore() {
         mvpPresenter.getParamet().setPageNo(pageNo + "");
-        mvpPresenter.loadCommentData(topicId);
+        mvpPresenter.loadCommentData(topicId, ConstantValue.TOPICCOMMENT_TYPE);
     }
 
     public void reLoadDate() {
@@ -262,7 +264,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             @Override
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
-                mvpPresenter.loadCommentData(topicId);
+                mvpPresenter.loadCommentData(topicId, ConstantValue.TOPICCOMMENT_TYPE);
             }
         });
     }

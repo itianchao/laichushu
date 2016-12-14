@@ -36,12 +36,12 @@ public class ConstantValue {
     public static String SUB_TYPE_6 = "5";//打赏
     public static String SUB_TYPE_7 = "7";//活动通知
     public static String SUB_TYPE_8 = "8";//其他消息
-    //图书话题类型
-    public static String COMMENTBOOK_TYPE = "1";//图书
-    public static String COMMENTTOPIC_TYPE = "2";//话题
+    //评论
+    public static String BOOKCOMMENTTYPE = "1";//图书
+    public static String TOPICCOMMENT_TYPE = "2";//话题
     //收藏类型
-    public static String COLLECTBOOK_TYPE = "1";//图书
-    public static String MECHANISM_TYPE = "1";//机构
+    public static String COMMENTBOOK_TYPE = "1";//图书
+    public static String MECHANISM_TYPE = "2";//机构
     public static String COLLECTTOPIC_TYPE = "3";//话题
 
     //baseBook

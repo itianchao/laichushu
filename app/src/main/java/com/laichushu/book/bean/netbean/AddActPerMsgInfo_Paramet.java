@@ -7,11 +7,12 @@ import java.io.Serializable;
  */
 
 public class AddActPerMsgInfo_Paramet implements Serializable {
-    private String senderId, accepterId, content;
+    private String senderId, accepterId,sourceType, content;
 
-    public AddActPerMsgInfo_Paramet(String senderId, String accepterId, String content) {
+    public AddActPerMsgInfo_Paramet(String senderId, String accepterId, String sourceType, String content) {
         this.senderId = senderId;
         this.accepterId = accepterId;
+        this.sourceType = sourceType;
         this.content = content;
     }
 
@@ -29,6 +30,14 @@ public class AddActPerMsgInfo_Paramet implements Serializable {
 
     public void setAccepterId(String accepterId) {
         this.accepterId = accepterId;
+    }
+
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
     }
 
     public String getContent() {

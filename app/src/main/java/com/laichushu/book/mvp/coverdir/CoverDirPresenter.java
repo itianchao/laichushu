@@ -1,7 +1,5 @@
 package com.laichushu.book.mvp.coverdir;
 
-import android.os.Bundle;
-import android.os.ConditionVariable;
 
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.netbean.CoverDir_Paramet;
@@ -9,10 +7,8 @@ import com.laichushu.book.bean.netbean.CoverMake_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.CoverListActivity;
-import com.laichushu.book.ui.activity.PreviewCoverActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
-import com.laichushu.book.utils.UIUtil;
 
 /**
  * 模版列表

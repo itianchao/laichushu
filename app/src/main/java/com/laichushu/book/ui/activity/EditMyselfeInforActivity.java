@@ -70,7 +70,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     private TextView tvTitle, tvRight, tvIdCard, tvSex, edBirthday, tvCity;
     private EditText edNickName, edSign;
     private PersonalCentreResult resultData = new PersonalCentreResult();
-    private RelativeLayout rlIdCard, rlHead, rlArea,rlNickName;
+    private RelativeLayout rlIdCard, rlHead, rlArea, rlNickName;
     private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
     private File photoFile;
     private String curNickName = null, curProCode = null, photoUrl = null;
@@ -159,7 +159,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                 ArrayMap<String, RequestBody> params = new ArrayMap<>();
                 RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), SharePrefManager.getUserId().toString());
                 RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), edNickName.getText().toString());
-                RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), tvSex.getText().toString());
+                RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), (tvSex.getText().toString().trim()).equals("男") ? "1" : "2");
                 RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), curProCode);
                 RequestBody requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), edSign.getText().toString());
                 RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"), edBirthday.getText().toString());
@@ -179,7 +179,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                     public void onSuccess(PersonInfoResultReward result) {
                         if (result.isSuccess()) {
                             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                            ToastUtil.showToast("success");
+                            ToastUtil.showToast("修改成功！");
                             mActivity.finish();
                             updateDate(result);
                         } else {
@@ -237,9 +237,14 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             edNickName.setText(resultData.getNickName());
             curNickName = resultData.getNickName();
             if (TextUtils.isEmpty(resultData.getSex())) {
-                tvSex.setText("男");
+                tvSex.setText(null);
             } else {
-                tvSex.setText(resultData.getSex());
+                if (resultData.getSex().equals("1")) {
+                    tvSex.setText("男");
+                } else {
+                    tvSex.setText("女");
+                }
+
             }
             if (!TextUtils.isEmpty(resultData.getBirthday())) {
                 edBirthday.setText(resultData.getBirthday().toString());
@@ -521,17 +526,18 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
     }
-public void disFocus(){
-    if (TextUtils.isEmpty(edNickName.getText().toString())) {
-        edNickName.setText(curNickName);
+
+    public void disFocus() {
+        if (TextUtils.isEmpty(edNickName.getText().toString())) {
+            edNickName.setText(curNickName);
+        }
+        rlNickName.requestFocus();
+        edNickName.clearFocus();
+        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        edNickName.setCursorVisible(false);
+        imm.hideSoftInputFromWindow(edNickName.getWindowToken(), 0);
+        edNickName.setBackgroundResource(R.drawable.shape_kitkat_undobarfocused);
+        edNickName.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
     }
-    rlNickName.requestFocus();
-    edNickName.clearFocus();
-    InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-    edNickName.setCursorVisible(false);
-    imm.hideSoftInputFromWindow(edNickName.getWindowToken(), 0);
-    edNickName.setBackgroundResource(R.drawable.shape_kitkat_undobarfocused);
-    edNickName.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
-}
 
 }

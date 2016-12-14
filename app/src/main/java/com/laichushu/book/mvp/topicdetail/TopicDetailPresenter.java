@@ -28,8 +28,7 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
-    private String sourceType = ConstantValue.COMMENTTOPIC_TYPE;
-    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet("", sourceType, pageNo, pageSize, userId);
+    private String sourceType = ConstantValue.TOPICCOMMENT_TYPE;
 
     //初始化构造
     public TopicDetailPresenter(TopicDetailView view) {
@@ -37,8 +36,18 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
         mActivity = (TopicDetilActivity) view;
     }
 
-    public void loadCommentData(String topicId) {
+    public TopicDetailCommentList_Paramet getParamet() {
+        return paramet;
+    }
+
+    public void setParamet(TopicDetailCommentList_Paramet paramet) {
+        this.paramet = paramet;
+    }
+
+    TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet("", "", pageNo, pageSize, userId);
+    public void loadCommentData(String topicId,String sourceType) {
         getParamet().setSourceId(topicId);
+        getParamet().setSourceType(sourceType);
         Logger.e("获取全部评论");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.topicDetailCommentList(paramet), new ApiCallback<TopicdetailModel>() {
@@ -59,13 +68,6 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
         });
     }
 
-    public TopicDetailCommentList_Paramet getParamet() {
-        return paramet;
-    }
-
-    public void setParamet(TopicDetailCommentList_Paramet paramet) {
-        this.paramet = paramet;
-    }
 
     /**
      * 点赞 取消赞
@@ -76,7 +78,7 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
     public void saveScoreLikeData(String sourceId, String sourceType, final String type) {
         mvpView.showLoading();
         TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId, sourceId, sourceType, type);
-        Logger.e("");
+        Logger.e("点赞 取消赞");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.saveTopicDyLike(paramet), new ApiCallback<RewardResult>() {
             @Override
@@ -103,7 +105,7 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
      * @param sendmsgEv
      * @param accepterId
      */
-    public void topicDetailCommentSave(EditText sendmsgEv, String accepterId) {
+    public void topicDetailCommentSave(EditText sendmsgEv, String accepterId,String sourceType) {
         LoggerUtil.e("活动页面发送私信");
         String msg = sendmsgEv.getText().toString().trim();
         if (TextUtils.isEmpty(msg)) {
@@ -111,8 +113,8 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
             return;
         }
         mvpView.showLoading();
-        AddActPerMsgInfo_Paramet paramet = new AddActPerMsgInfo_Paramet(userId, accepterId, msg);
-        addSubscription(apiStores.appActPerMsgInfoDetails(paramet), new ApiCallback<RewardResult>() {
+        TopicDetailCommentSave_Paramet paramet = new TopicDetailCommentSave_Paramet(accepterId, userId,msg,sourceType);
+        addSubscription(apiStores.topicDetailCommentSave(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.getSendDataSuccess(model);

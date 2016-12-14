@@ -54,9 +54,7 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
     }
 
     public void getRemarks() {
-//        GradeDetails_Paramet paramet = new GradeDetails_Paramet(SharePrefManager.getUserId());
-        GradeDetails_Paramet paramet = new GradeDetails_Paramet("105");
-
+        GradeDetails_Paramet paramet = new GradeDetails_Paramet(SharePrefManager.getUserId());
         addSubscription(apiStores.gradeDetails(paramet), new ApiCallback<GradeRemarksResult>() {
             @Override
             public void onSuccess(GradeRemarksResult result) {
