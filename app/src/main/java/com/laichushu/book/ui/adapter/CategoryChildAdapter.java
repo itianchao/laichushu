@@ -47,7 +47,8 @@ public class CategoryChildAdapter extends BaseAdapter{
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         }
-        holder.parentTv.setText(mParentData.get(position).getName());
+        String content = mParentData.get(position).getName()+"("+mParentData.get(position).getArticleNum()+")";
+        holder.parentTv.setText(content);
         if ((position%2 == 0)) {
             holder.line.setVisibility(View.VISIBLE);
         }else {

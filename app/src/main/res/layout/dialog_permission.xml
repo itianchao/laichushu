@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:background="@color/global"
                 android:gravity="center"
-                android:text="@string/reward_dialog"
+                android:text="@string/permission_dialog"
                 android:textColor="@color/white"
                 android:textSize="@dimen/edit"
                 android:textStyle="normal" />

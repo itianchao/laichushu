@@ -1,9 +1,11 @@
 package com.laichushu.book.mvp.login;
 
+import android.provider.Telephony;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.activity.InitActivity;
 import com.laichushu.book.ui.activity.LoginActivity;
 import com.laichushu.book.ui.base.BasePresenter;
@@ -111,6 +113,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         SharePrefManager.setLoginInfo(username + "," + password);
         //保存userId
         SharePrefManager.setUserId(userId);
+        ConstantValue.USERID = userId;
         //保存token
         SharePrefManager.setToken(token);
         //保存身份

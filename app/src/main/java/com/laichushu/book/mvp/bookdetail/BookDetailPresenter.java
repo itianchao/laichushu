@@ -229,7 +229,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     public void getBalace() {
         mvpView.showLoading();
         Balance_Paramet paramet = new Balance_Paramet(userId);
-        Logger.e("评论参数");
+        Logger.e("余额参数");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.getBalance(paramet), new ApiCallback<BalanceBean>() {
             @Override
@@ -252,7 +252,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     public void getBalace2() {
         mvpView.showLoading();
         Balance_Paramet paramet = new Balance_Paramet(userId);
-        Logger.e("评论参数");
+        Logger.e("余额参数");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.getBalance(paramet), new ApiCallback<BalanceBean>() {
             @Override

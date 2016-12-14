@@ -435,16 +435,19 @@ public class UIUtil
 
 	/**
 	 * 跳转阅读页
-	 * @param baseBookEntity
-	 * @param baseBookEntity
 	 * @param
+	 * @param baseBookEntity
+	 * @param articleId
+	 * @param authorId
 	 */
-	public static void startBookFBReaderActivity(Activity activity,BaseBookEntity baseBookEntity){
+	public static void startBookFBReaderActivity(Activity activity, BaseBookEntity baseBookEntity, String articleId, String authorId){
 		if (baseBookEntity == null||activity == null)
 			return;
 		Intent intent = new Intent(activity, FBReader.class);
 		intent.putExtra(ConstantValue.BASEBOOK, baseBookEntity);
 		intent.setAction(ConstantValue.FB_READER.ACTION_OPEN_FROM_SHELF);
+		intent.putExtra("articleId",articleId);
+		intent.putExtra("authorId",authorId);
 		activity.startActivity(intent);
 	}
 	/**

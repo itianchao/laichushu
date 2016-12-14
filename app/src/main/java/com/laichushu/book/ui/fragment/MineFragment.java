@@ -38,6 +38,7 @@ import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
@@ -124,6 +125,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         Query<Cache_Json> build = builder.build();
         List<Cache_Json> cache_jsons = build.list();
         PersonalCentreResult result = new Gson().fromJson(cache_jsons.get(0).getJson(), PersonalCentreResult.class);
+        LoggerUtil.e("2."+cache_jsons.get(0).getJson());
         GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivMineHead);
         tvMineName.setText("  " + result.getNickName());
         if (TextUtils.isEmpty(result.getArticleCount())) {

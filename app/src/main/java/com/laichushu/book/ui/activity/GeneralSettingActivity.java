@@ -118,8 +118,8 @@ public class GeneralSettingActivity extends MvpActivity2 implements View.OnClick
                 SharePrefManager.setUserId(null);
                 cache_jsonDao.delete(personalDetails);
                 cache_jsonDao.deleteAll();
-                UIUtil.openActivity(mActivity, LoginActivity.class);
                 AppManager.getInstance().killAllActivity();
+                UIUtil.openActivity(mActivity, LoginActivity.class);
                 break;
             case R.id.tv_title_right:
                 //保存
