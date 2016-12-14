@@ -35,22 +35,24 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
         View itemView = UIUtil.inflate(R.layout.item_homepage_dynemic);
         return new HomePageDynamicAdapter.ViewHolder(itemView);
     }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        GlideUitl.loadRandImg(context, null, holder.ivImg);
+        GlideUitl.loadRandImg(context, dataBeen.get(position).getCreaterPhoto(), holder.ivImg);
         holder.tvShopName.setText(dataBeen.get(position).getCreatUserName());
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
-        holder.tvCollect.setText(dataBeen.get(position).getCollectNum()+"");
+        holder.tvCollect.setText(dataBeen.get(position).getCollectNum() + "");
+        holder.llCollection.setVisibility(View.GONE);
         holder.llScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //查看话题详情
-                Bundle topic =new Bundle();
-                topic.putString("type","homepage");
-                topic.putSerializable("topBean",dataBeen.get(position));
-                UIUtil.openActivity(context, TopicDetilActivity.class,topic);
+                Bundle topic = new Bundle();
+                topic.putString("type", "homepage");
+                topic.putSerializable("topBean", dataBeen.get(position));
+                UIUtil.openActivity(context, TopicDetilActivity.class, topic);
             }
         });
     }
@@ -75,7 +77,7 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView tvShopName, tvTime, tvTitle, tvTitleContent, tvMsg,tvCollect,tvScan;
+        public final TextView tvShopName, tvTime, tvTitle, tvTitleContent, tvMsg, tvCollect, tvScan;
         public final ImageView ivImg;
         public final View root;
         public final LinearLayout llCollection, llScan;

@@ -44,7 +44,7 @@ import java.util.List;
  * 2016年11月25日17:04:06
  */
 public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivAnthor, ivHead, ivGrade, ivGradeDetails;
+    private ImageView ivBack, ivAnthor,ivOther, ivHead, ivGrade, ivGradeDetails;
     private TextView tvTitle, nickName, tvRealName, tvAuthorGrade;
     private HomePersonFocusResult.DataBean dataBean;
     private Button btnFocus;
@@ -79,6 +79,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         ivAnthor = ((ImageView) inflate.findViewById(R.id.iv_title_another));
+        ivOther = ((ImageView) inflate.findViewById(R.id.iv_title_other));
         nickName = ((TextView) inflate.findViewById(R.id.tv_userNickName));
         tvRealName = ((TextView) inflate.findViewById(R.id.tv_userRealName));
         tvAuthorGrade = ((TextView) inflate.findViewById(R.id.tv_userAuthorGrade));
@@ -108,7 +109,9 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         tvTitle.setText("用户主页");
         tvTitle.setVisibility(View.VISIBLE);
         ivAnthor.setVisibility(View.VISIBLE);
-        GlideUitl.loadImg(mActivity, R.drawable.activity_comment, ivAnthor);
+        ivOther.setVisibility(View.VISIBLE);
+        GlideUitl.loadImg(mActivity, R.drawable.find_msg2x_94, ivAnthor);
+        GlideUitl.loadImg(mActivity, R.drawable.icon_share2x, ivOther);
 
         ivBack.setOnClickListener(this);
         ivGradeDetails.setOnClickListener(this);

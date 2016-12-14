@@ -57,7 +57,6 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     private ArrayList<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
     private int position;
     private String articId;
-    //    private String type;
     private MessageCommentResult.DataBean dataBeen;
 
     @Override
@@ -109,12 +108,6 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
 
     @Override
     protected void initData() {
-//        type = getIntent().getStringExtra("type");
-//        dataBeen = (MessageCommentResult.DataBean) getIntent().getSerializableExtra("activityDetails");
-
-//        if (("activity").equals(type)) {
-//            mvpPresenter.loadActivityDetailsData(dataBeen.getSourceId());
-//        } else {
         bean = getIntent().getParcelableExtra("bean");
         position = getIntent().getIntExtra("position", 0);
         mvpPresenter.loadAuthorWorksData();

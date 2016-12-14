@@ -283,6 +283,12 @@ public interface ApiStores {
     //收藏列表
     @POST("collect/list")
     Observable<HomeHotModel> getCollectList(@Body MyArticBooklist_paramet paramet);
+    //修改签约状态
+    @POST("party/findPartyEditor")
+    Observable<SignStateResult> getSignStateDetails(@Body MyArticBooklist_paramet paramet);
+    //修改签约编辑
+    @POST("article/signEditor")
+    Observable<RewardResult> getSignEditorDetails(@Body MySignEditor_paramet paramet);
 
     //浏览
     @POST("searchArticle/findArticleByAuthorId")
@@ -441,6 +447,9 @@ public interface ApiStores {
     //话题详情保存评论
     @POST("comment/save")
     Observable<RewardResult> topicDetailCommentSave(@Body TopicDetailCommentSave_Paramet paramet);
+    //活动详情发送私信
+    @POST("perInformation/addPerMsgInfo")
+    Observable<RewardResult> appActPerMsgInfoDetails(@Body AddActPerMsgInfo_Paramet paramet);
 
     //消息界面 回复消息
     @POST("information/sendMsg")

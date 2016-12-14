@@ -83,6 +83,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
                 android:background="@null"
+                android:maxLength="10"
+                android:hint="张三"
+                android:textColorHint="@color/LightGrey"
                 android:gravity="center_vertical|right"
                 android:textColor="@color/edit2"
                 android:textSize="@dimen/edit2" />
@@ -125,6 +128,7 @@
             android:id="@+id/rl_Birthday"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:layout_marginTop="2dp"
             android:background="@color/white"
             android:focusable="true"
             android:focusableInTouchMode="true">
@@ -159,6 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/white"
+            android:layout_marginTop="2dp"
             android:focusable="true"
             android:focusableInTouchMode="true">
 

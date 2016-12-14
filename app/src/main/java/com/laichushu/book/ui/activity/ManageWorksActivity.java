@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.MyTabStrip;
+import com.laichushu.book.bean.netbean.SignStateResult;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
@@ -32,6 +34,10 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     private PullLoadMoreRecyclerView mRecyclerView;
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private boolean isLoad = true;
+    private ArrayList<MyTabStrip> mStrip = new ArrayList<>();
+    private int img[] = {R.drawable.icon_draft, R.drawable.icon_material, R.drawable.icon_submission, R.drawable.icon_publishl, R.drawable.icon_delete, R.drawable.msg_sign2x};
+    private String title[] = {"编辑目录", "编辑素材", "删除", "发表", "投稿", "签约状态"};
+
     @Override
     protected WritePresenter createPresenter() {
         return new WritePresenter(this);
@@ -55,6 +61,12 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     @Override
     protected void initData() {
         super.initData();
+        //初始化strip列表
+        mStrip.clear();
+        for (int i = 0; i < 6; i++) {
+            mStrip.add(new MyTabStrip(title[i], img[i]));
+        }
+
         tvTitle.setText("作品管理");
         ivBack.setOnClickListener(this);
         if (isLoad) {//只执行一次
@@ -62,7 +74,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
-        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter,null);
+        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter,mStrip);
         mRecyclerView.setAdapter(writeBookAdapter);
     }
 
@@ -93,6 +105,11 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     }
 
     @Override
+    public void getSignEditorDataSuccess(RewardResult model) {
+
+    }
+
+    @Override
     public void deleteNewBook(RewardResult model, int position) {
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功");
@@ -111,6 +128,11 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         } else {
             ToastUtil.showToast("投稿失败");
         }
+    }
+
+    @Override
+    public void getSignStateDeteSuccess(SignStateResult model,String articleId) {
+
     }
 
     @Override

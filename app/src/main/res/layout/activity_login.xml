@@ -40,6 +40,7 @@
             android:id="@+id/et_password"
             style="@style/edit_item_style"
             android:hint="@string/passworldHint"
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
             android:password="true" />
     </LinearLayout>
 

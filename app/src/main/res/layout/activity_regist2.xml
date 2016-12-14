@@ -95,7 +95,7 @@
             android:layout_marginRight="5dp"
             android:gravity="right"
             android:hint="@string/fillin"
-            android:inputType="textPassword"
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
             android:maxLength="14"
             android:password="true"
             android:singleLine="true" />
@@ -118,7 +118,7 @@
             android:layout_marginRight="5dp"
             android:gravity="right"
             android:hint="@string/fillin"
-            android:inputType="numberPassword|textPassword"
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
             android:maxLength="14"
             android:password="true"
             android:singleLine="true" />

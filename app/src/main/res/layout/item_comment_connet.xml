@@ -51,7 +51,7 @@
         android:layout_height="15dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tv_comment_content"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/home_right2x" />
 
@@ -61,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_comment_content"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toLeftOf="@+id/iv_comment_in"
         tools:text="212" />
@@ -78,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_comment_content"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toLeftOf="@+id/iv_comment"
         tools:text="115" />

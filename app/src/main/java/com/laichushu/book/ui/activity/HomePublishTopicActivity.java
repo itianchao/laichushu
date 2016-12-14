@@ -63,7 +63,6 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                 if (judgeContent()) {
                     PublishTopic_Paramet paramet = new PublishTopic_Paramet(SharePrefManager.getUserId(), edAddTitle.getText().toString(), edAddContent.getText().toString());
                     addSubscription(apiStores.publishTopic(paramet), new ApiCallback<RewardResult>() {
-
                         @Override
                         public void onSuccess(RewardResult result) {
                             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
@@ -74,7 +73,6 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                                 ToastUtil.showToast("发表话题失败！");
                                 LoggerUtil.e(result.getErrMsg());
                             }
-
                         }
 
                         @Override

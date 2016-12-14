@@ -53,8 +53,7 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="12dp"
                     android:textColor="@color/characterGray"
-                    android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/edit2" />
 
                 <TextView
                     android:id="@+id/tv_focusName"
@@ -65,8 +64,7 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="12dp"
                     android:textColor="@color/auditing"
-                    android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/edit2" />
 
                 <TextView
                     android:id="@+id/tv_focusContent"
@@ -80,8 +78,7 @@
                     android:layout_toRightOf="@+id/tv_focusName"
                     android:text="关注了你"
                     android:textColor="@color/characterLightGray1"
-                    android:textSize="@dimen/edit2"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/edit2" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

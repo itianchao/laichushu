@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@color/white"
-        android:textSize="@dimen/title" />
+        android:textSize="@dimen/editTop" />
 
     <TextView
         android:id="@+id/tv_middleLeft"
@@ -21,7 +21,7 @@
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@+id/iv_title_finish"
         android:textColor="@color/white"
-        android:textSize="@dimen/title"
+        android:textSize="@dimen/editTop"
         android:visibility="gone" />
 
     <ImageView
@@ -34,16 +34,16 @@
 
     <ImageView
         android:id="@+id/iv_title_other"
-        android:layout_width="30dp"
+        android:layout_width="36dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="12dp"
         tools:src="@drawable/img_default" />
 
     <ImageView
         android:id="@+id/iv_title_another"
-        android:layout_width="30dp"
+        android:layout_width="36dp"
         android:layout_height="30dp"
         android:layout_alignTop="@+id/iv_title_other"
         android:layout_marginRight="5dp"
@@ -71,6 +71,6 @@
         android:layout_centerInParent="true"
         android:layout_marginRight="5dp"
         android:textColor="@color/white"
-        android:textSize="@dimen/edit"
+        android:textSize="@dimen/editTop"
         android:visibility="gone" />
 </RelativeLayout>

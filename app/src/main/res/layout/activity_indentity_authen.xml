@@ -21,8 +21,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/identity_top"
         android:layout_above="@+id/btn_idCardAuditing"
+        android:layout_below="@+id/identity_top"
         android:fillViewport="true">
 
         <LinearLayout
@@ -56,6 +56,7 @@
                     android:layout_toLeftOf="@+id/iv_IdentityNickInto"
                     android:background="@null"
                     android:hint="请输入姓名"
+                    android:maxLength="10"
                     android:textColor="@color/characterGray"
                     android:textColorHint="@color/Grey"
                     android:textSize="@dimen/edit2" />
@@ -100,6 +101,7 @@
                     android:background="@null"
                     android:hint="请输入身份证号"
                     android:inputType="number"
+                    android:maxLength="19"
                     android:textColor="@color/characterGray"
                     android:textColorHint="@color/Grey"
                     android:textSize="@dimen/edit2" />

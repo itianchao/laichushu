@@ -95,7 +95,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
         tvTitle.setText("个人主页");
         tvTitle.setVisibility(View.VISIBLE);
-        ivAnother.setBackgroundResource(R.drawable.bookdetail_write);
+        GlideUitl.loadImg(mActivity,R.drawable.my_reset2x,ivAnother);
         ivAnother.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         ivEdit.setOnClickListener(this);

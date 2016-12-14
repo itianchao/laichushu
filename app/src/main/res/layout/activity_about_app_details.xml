@@ -3,7 +3,7 @@
     android:id="@+id/activity_home_page_grade_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backGray"
+    android:background="@color/LightGrey"
     android:orientation="vertical">
 
     <include layout="@layout/page_title" />
@@ -15,36 +15,35 @@
 
         <ImageView
             android:id="@+id/iv_appIcon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/shape_rectangle_btn"
-            android:textSize="@dimen/edit2" />
+            android:layout_marginTop="50dp" />
 
         <TextView
             android:id="@+id/tv_appName"
-            android:layout_below="@+id/iv_appIcon"
-            android:layout_marginTop="25dp"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textStyle="bold"
+            android:layout_below="@+id/iv_appIcon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
             android:text="来出书"
-            android:textSize="@dimen/edit" />
+            android:textColor="@color/characterGray"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tv_appIntroduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tv_appName"
             android:layout_marginTop="25dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:text="@string/app_introduce"
             android:textColor="@color/Grey"
-            android:textStyle="bold"
-            android:text="来出书简介"
-            android:textSize="@dimen/edit2"/>
+            android:textSize="@dimen/edit2"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

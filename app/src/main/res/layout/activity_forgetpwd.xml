@@ -47,6 +47,10 @@
             android:id="@+id/et_new_pwd"
             android:imeOptions="actionNext"
             android:hint="@string/newpwdHint"
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
+            android:maxLength="14"
+            android:password="true"
+            android:singleLine="true"
             style="@style/edit_item_style" />
     </LinearLayout>
     <LinearLayout
@@ -55,6 +59,10 @@
             android:id="@+id/et_re_pwd"
             android:hint="@string/repwdHint"
             android:imeOptions="actionGo"
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
+            android:maxLength="14"
+            android:password="true"
+            android:singleLine="true"
             style="@style/edit_item_style" />
     </LinearLayout>
     <Button
