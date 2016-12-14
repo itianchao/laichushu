@@ -34,10 +34,12 @@ import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.laichushu.book.bean.otherbean.XYBookMarkListBean;
 import com.laichushu.book.db.Idea_Table;
 import com.laichushu.book.db.Idea_TableDao;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.utils.ToastUtil;
+import com.laichushu.book.utils.UIUtil;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -459,9 +461,15 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         paint.setAntiAlias(true);
     }
 
-    int offsetY;
-
+    private int offsetY;
+    private int position = 0;
+    private ArrayList<XYBookMarkListBean> xlist = new ArrayList<>();
+    private FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
     public void drawLine(int[] xs, int[] ys, ZLTextHighlighting mbookmark) {
+        if (fbReaderApp.getTextView().pagePosition().Current != position){
+            position = fbReaderApp.getTextView().pagePosition().Current;
+            xlist.clear();
+        }
         offsetY = (int) myTextPaint.getTextSize();
         LinkedList<Integer> tmpXs = new LinkedList<>();
         LinkedList<Integer> tmpYs = new LinkedList<>();
@@ -621,23 +629,28 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         }
         int length = 1;
         if (!list.isEmpty()) {
+            xlist.add(new XYBookMarkListBean(x,y,list.get(0)));
             length = list.get(0).getContent().length();
             if (length == 0){
                 length = 1;
             }
         }
-        final int[] x1 = {x};
-        final int[] y1 = {y};
         FBReader.myMainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                FBReader.myMainView.setShowIdea(false);
                 if (event.getAction() == MotionEvent.ACTION_DOWN){
-                    if ((event.getX() >= x1[0] - 20 && event.getX() <= x1[0] + 20) && ((event.getY() >= y1[0] - 20 && event.getY() <= y1[0] + 20))){
-                        ToastUtil.showToast("点击了");
-                        return false;
+                    for (XYBookMarkListBean bean : xlist) {
+                        int dip = UIUtil.dip2px(20);
+                        if ((event.getX() >= bean.getX() - dip && event.getX() <= bean.getX()  + dip) && ((event.getY() >= bean.getY()  - dip && event.getY() <= bean.getY() + dip))){
+                            FBReader.myMainView.setShowIdea(true);
+                            ToastUtil.showToast(bean.getI().getContent());
+                            return false;
+                        }
+
                     }
                 }
-                return FBReader.myMainView.onTouchEvent(event);
+                return  FBReader.myMainView.onTouchEvent(event);
             }
         });
         return length + "";

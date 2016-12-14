@@ -348,6 +348,17 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 	private volatile boolean myPendingDoubleTap;
 	private int myPressedX, myPressedY;
 	private boolean myScreenIsTouched;
+	//判断
+	private boolean isShowIdea = false;
+
+	public boolean isShowIdea() {
+		return isShowIdea;
+	}
+
+	public void setShowIdea(boolean showIdea) {
+		isShowIdea = showIdea;
+	}
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int x = (int)event.getX();
@@ -398,18 +409,19 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 				myScreenIsTouched = false;
 				break;
 			case MotionEvent.ACTION_DOWN:
-
-				if (myPendingShortClickRunnable != null) {
-					removeCallbacks(myPendingShortClickRunnable);
-					myPendingShortClickRunnable = null;
-					myPendingDoubleTap = true;
-				} else {
-					postLongClickRunnable();
-					myPendingPress = true;
+				if (!isShowIdea){
+					if (myPendingShortClickRunnable != null) {
+						removeCallbacks(myPendingShortClickRunnable);
+						myPendingShortClickRunnable = null;
+						myPendingDoubleTap = true;
+					} else {
+						postLongClickRunnable();
+						myPendingPress = true;
+					}
+					myScreenIsTouched = true;
+					myPressedX = x;
+					myPressedY = y;
 				}
-				myScreenIsTouched = true;
-				myPressedX = x;
-				myPressedY = y;
 				break;
 			case MotionEvent.ACTION_MOVE:
 			{
