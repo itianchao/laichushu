@@ -81,6 +81,24 @@ public class HomeHotModel implements Parcelable {
         private String authorName;
         private String status;
         private Boolean isEdit;
+        private String sourceId;
+        private String type;
+
+        public String getSourceId() {
+            return sourceId;
+        }
+
+        public void setSourceId(String sourceId) {
+            this.sourceId = sourceId;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
 
         public String getExpressStatus() {
             return expressStatus;
@@ -455,16 +473,21 @@ public class HomeHotModel implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.coverUrl);
+            dest.writeString(this.coverName);
+            dest.writeString(this.topCategoryId);
+            dest.writeString(this.topCategoryName);
+            dest.writeString(this.introduce);
+            dest.writeByte(this.isParticipate ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.isMake ? (byte) 1 : (byte) 0);
             dest.writeString(this.articleId);
             dest.writeString(this.articleName);
             dest.writeString(this.authorId);
             dest.writeString(this.authorName);
-            dest.writeString(this.coverUrl);
-            dest.writeString(this.coverName);
             dest.writeString(this.status);
-            dest.writeString(this.topCategoryId);
-            dest.writeString(this.topCategoryName);
-            dest.writeString(this.introduce);
+            dest.writeValue(this.isEdit);
+            dest.writeString(this.expressStatus);
+            dest.writeString(this.freezeStatus);
             dest.writeInt(this.wordNum);
             dest.writeInt(this.subscribeNum);
             dest.writeInt(this.browseNum);
@@ -473,9 +496,7 @@ public class HomeHotModel implements Parcelable {
             dest.writeDouble(this.awardMoney);
             dest.writeByte(this.isPurchase ? (byte) 1 : (byte) 0);
             dest.writeByte(this.isSubscribe ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.isParticipate ? (byte) 1 : (byte) 0);
             dest.writeByte(this.isCollect ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.isMake ? (byte) 1 : (byte) 0);
             dest.writeInt(this.level);
             dest.writeDouble(this.score);
             dest.writeDouble(this.price);
@@ -492,16 +513,21 @@ public class HomeHotModel implements Parcelable {
         }
 
         protected DataBean(Parcel in) {
+            this.coverUrl = in.readString();
+            this.coverName = in.readString();
+            this.topCategoryId = in.readString();
+            this.topCategoryName = in.readString();
+            this.introduce = in.readString();
+            this.isParticipate = in.readByte() != 0;
+            this.isMake = in.readByte() != 0;
             this.articleId = in.readString();
             this.articleName = in.readString();
             this.authorId = in.readString();
             this.authorName = in.readString();
-            this.coverUrl = in.readString();
-            this.coverName = in.readString();
             this.status = in.readString();
-            this.topCategoryId = in.readString();
-            this.topCategoryName = in.readString();
-            this.introduce = in.readString();
+            this.isEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+            this.expressStatus = in.readString();
+            this.freezeStatus = in.readString();
             this.wordNum = in.readInt();
             this.subscribeNum = in.readInt();
             this.browseNum = in.readInt();
@@ -510,9 +536,7 @@ public class HomeHotModel implements Parcelable {
             this.awardMoney = in.readDouble();
             this.isPurchase = in.readByte() != 0;
             this.isSubscribe = in.readByte() != 0;
-            this.isParticipate = in.readByte() != 0;
             this.isCollect = in.readByte() != 0;
-            this.isMake = in.readByte() != 0;
             this.level = in.readInt();
             this.score = in.readDouble();
             this.price = in.readDouble();

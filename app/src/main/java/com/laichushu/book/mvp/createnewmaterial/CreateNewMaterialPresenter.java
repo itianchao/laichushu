@@ -104,68 +104,68 @@ public class CreateNewMaterialPresenter extends BasePresenter<CreateNewMaterialV
             }
         });
 
-        mSuccessView.findViewById(R.id.action_superscript).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setSuperscript();
-            }
-        });
+//        mSuccessView.findViewById(R.id.action_superscript).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setSuperscript();
+//            }
+//        });
+//
+//        mSuccessView.findViewById(R.id.action_strikethrough).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setStrikeThrough();
+//            }
+//        });
+//
+//        mSuccessView.findViewById(R.id.action_underline).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setUnderline();
+//            }
+//        });
 
-        mSuccessView.findViewById(R.id.action_strikethrough).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setStrikeThrough();
-            }
-        });
-
-        mSuccessView.findViewById(R.id.action_underline).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setUnderline();
-            }
-        });
-
-        mSuccessView.findViewById(R.id.action_heading1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(1);
-            }
-        });
-
-        mSuccessView.findViewById(R.id.action_heading2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(2);
-            }
-        });
-
-        mSuccessView.findViewById(R.id.action_heading3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(3);
-            }
-        });
-
-        mSuccessView.findViewById(R.id.action_heading4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(4);
-            }
-        });
-
-        mSuccessView.findViewById(R.id.action_heading5).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(5);
-            }
-        });
-
-        mSuccessView.findViewById(R.id.action_heading6).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(6);
-            }
-        });
+//        mSuccessView.findViewById(R.id.action_heading1).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setHeading(1);
+//            }
+//        });
+//
+//        mSuccessView.findViewById(R.id.action_heading2).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setHeading(2);
+//            }
+//        });
+//
+//        mSuccessView.findViewById(R.id.action_heading3).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setHeading(3);
+//            }
+//        });
+//
+//        mSuccessView.findViewById(R.id.action_heading4).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setHeading(4);
+//            }
+//        });
+//
+//        mSuccessView.findViewById(R.id.action_heading5).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setHeading(5);
+//            }
+//        });
+//
+//        mSuccessView.findViewById(R.id.action_heading6).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setHeading(6);
+//            }
+//        });
 
 //        mSuccessView.findViewById(R.id.action_txt_color).setOnClickListener(new View.OnClickListener() {
 //            private boolean isChanged;

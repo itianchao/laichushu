@@ -56,20 +56,21 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
                 holder.status.setText("审批中");
                 holder.status.setTextColor(context.getResources().getColor(R.color.red2));
                 break;
-
             case "2":
                 holder.status.setText("审批通过");
+                holder.status.setTextColor(context.getResources().getColor(R.color.red2));
                 break;
             case "3":
-                holder.status.setText("审批被拒接");
+                holder.status.setText("审批被拒");
+                holder.status.setTextColor(context.getResources().getColor(R.color.red2));
                 break;
         }
         //审批中
-        holder.status.setTextColor(context.getResources().getColor(R.color.red2));
+//        holder.status.setTextColor(context.getResources().getColor(R.color.red2));
 
-        if (!TextUtils.isEmpty(dataBeen.get(position).getContributeStatusName())) {
-            holder.status.setText(dataBeen.get(position).getContributeStatusName());
-        }
+//        if (!TextUtils.isEmpty(dataBeen.get(position).getContributeStatusName())) {
+//            holder.status.setText(dataBeen.get(position).getContributeStatusName());
+//        }
 
         holder.ivHead.setOnClickListener(new View.OnClickListener() {
             @Override

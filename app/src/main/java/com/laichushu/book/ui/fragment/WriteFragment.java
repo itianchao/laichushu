@@ -50,7 +50,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     private WriteBookAdapter writeBookAdapter;
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private ArrayList<MyTabStrip> mStrip = new ArrayList<>();
-    private int img[] = {R.drawable.icon_draft, R.drawable.icon_material, R.drawable.icon_submission, R.drawable.icon_publishl, R.drawable.icon_delete, R.drawable.msg_sign2x};
+    private int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x,R.drawable.icon_delete2x,R.drawable.icon_publishl2x, R.drawable.icon_submission2x, R.drawable.icon_sign2x};
     private String title[] = {"编辑目录", "编辑素材", "删除", "发表", "投稿", "签约状态"};
     private boolean isLoad = true;
     //-----
@@ -74,6 +74,8 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         mRecyclerView.setLinearLayout();
         mRecyclerView.setPushRefreshEnable(false);
         mRecyclerView.setPullRefreshEnable(false);
+        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter, mStrip);
+        mRecyclerView.setAdapter(writeBookAdapter);
         return mSuccessView;
     }
 
@@ -90,8 +92,6 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
-        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter, mStrip);
-        mRecyclerView.setAdapter(writeBookAdapter);
     }
 
     @Override
@@ -105,7 +105,6 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             mData.addAll(model.getData());
             writeBookAdapter.setmData(mData);
-            writeBookAdapter.notifyDataSetChanged();
             isLoad = false;
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -128,7 +127,6 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             ToastUtil.showToast("删除成功");
             mData.remove(position);
             writeBookAdapter.setmData(mData);
-            writeBookAdapter.notifyDataSetChanged();
         } else {
             ToastUtil.showToast("删除失败");
         }
@@ -149,6 +147,9 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             this.model = model;
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
             final AlertDialog alertDialog = dialogBuilder.create();
+            if (alertDialog.isShowing()) {
+                return;
+            }
             View customerView = UIUtil.inflate(R.layout.dialog_signstate);
             final Spinner spPress = (Spinner) customerView.findViewById(R.id.sp_press);
             final Spinner spEdit = (Spinner) customerView.findViewById(R.id.sp_edit);
@@ -174,7 +175,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
                     }
                     pressId = model.getData().get(position).getId();
 
-                    if (null != model.getData().get(position).getEditors()&&model.getData().get(position).getEditors().size()>0) {
+                    if (null != model.getData().get(position).getEditors() && model.getData().get(position).getEditors().size() > 0) {
                         editId = model.getData().get(position).getEditors().get(0).getId();
                     } else {
                         editId = null;
@@ -222,9 +223,12 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             WindowManager m = mActivity.getWindowManager();
             Display display = m.getDefaultDisplay();  //为获取屏幕宽、高
             alertDialog.getWindow().setGravity(Gravity.CENTER);
-            alertDialog.getWindow().setLayout(display.getWidth()-40, display.getHeight() / 2);
+            alertDialog.getWindow().setLayout(display.getWidth() - UIUtil.dip2px(60), display.getHeight() / 2 - UIUtil.dip2px(100));
             alertDialog.getWindow().setWindowAnimations(R.style.periodpopwindow_anim_style);
-            alertDialog.show();
+            if (!alertDialog.isShowing()) {
+                alertDialog.show();
+            }
+
         } else {
             ToastUtil.showToast("获取数据失败");
         }
@@ -239,16 +243,14 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     @Override
     public void publishNewBook(RewardResult model, int index, String type) {
         if (model.isSuccess()) {
-            if (type.equals("1")) {//已发表
-                mData.get(index).setMake(false);
+            if (type.equals("1")) {
+                mData.get(index).setExpressStatus("0");
             } else {
-                mData.get(index).setMake(true);
+                mData.get(index).setExpressStatus("1");
             }
             writeBookAdapter.setmData(mData);
-            writeBookAdapter.notifyDataSetChanged();
-            ToastUtil.showToast("发表成功");
         } else {
-            ToastUtil.showToast("发表失败");
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 

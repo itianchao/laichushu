@@ -304,6 +304,21 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 GlideUitl.loadRandImg(this, bean.getPhoto(), headIv);
                 usernameIv.setText(bean.getNickName());
                 booknameIv.setText(bean.getArticleName());
+                headIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        if (!TextUtils.isEmpty(articId)) {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("userId", articId);
+                            if (SharePrefManager.getUserId().equals(articId)) {
+                                UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
+                            } else {
+                                UIUtil.openActivity(mActivity, UserHomePageActivity.class, bundle);
+                            }
+                        }
+                    }
+                });
                 parentLay.addView(itemView);
             }
         } else {

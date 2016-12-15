@@ -33,6 +33,7 @@ public class PartActivity extends MvpActivity<PartPresenter> implements PartView
     private PartListAdapter partListAdapter;
     private TextView titleTv;
     private String type;
+    private String articleId;
 
     @Override
     protected void initView() {
@@ -47,6 +48,7 @@ public class PartActivity extends MvpActivity<PartPresenter> implements PartView
         finishIv.setOnClickListener(this);
         parentId = getIntent().getStringExtra("parentId");
         String title = getIntent().getStringExtra("title");
+        articleId = getIntent().getStringExtra("articleId");
         titleTv.setText(title);
         partListAdapter = new PartListAdapter(this, mPartdata);
         bookLv.setAdapter(partListAdapter);
@@ -100,6 +102,7 @@ public class PartActivity extends MvpActivity<PartPresenter> implements PartView
         String name = mPartdata.get(position).getName();
         bundle.putString("path",path);
         bundle.putString("title",name);
+        bundle.putString("articleId",articleId);
         if (!TextUtils.isEmpty(path)){
             UIUtil.openActivity(this,NopublishBookActivity.class,bundle);
         }

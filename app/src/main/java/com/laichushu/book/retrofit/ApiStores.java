@@ -1,14 +1,11 @@
 package com.laichushu.book.retrofit;
 
-import com.laichushu.book.bean.JsonBean.UrlResult;
-import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.BookDetails_Paramet;
-import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
-import com.laichushu.book.bean.netbean.FeedBack_parmet;
+import com.laichushu.book.bean.JsonBean.UrlResult;
+import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
@@ -29,6 +26,7 @@ import com.laichushu.book.mvp.forgetpwd.ForgetPwdModel;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.homecategory.CategoryModle;
+import com.laichushu.book.mvp.homesearch.HomeSearchModel;
 import com.laichushu.book.mvp.login.LoginModel;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.mvp.notice.NoticeModle;
@@ -58,12 +56,12 @@ public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
-//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.0.123:8082/book-app/";//施大勇4
-    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
+//    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
 //    String API_SERVER_URL = "http://192.168.1.130:8082/book-app/";//施大勇6
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //      String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//李红江
@@ -494,11 +492,13 @@ public interface ApiStores {
 
     //热门搜索历史
     @POST("searchArticle/findHotArticle")
-    Observable<RewardResult> getHotSearch();
+    Observable<HomeSearchModel> getHotSearch();
 
     //获取url下载接口
     @POST("chapter/download")
     Observable<UrlResult> downloadEpubFile(@Body DownloadEpubFilePermission_Paramet paramet);
 
-    //
+    //发送验证码的接口为：
+    @POST("msg/send")
+    Observable<RewardResult> sendMsg(@Body SendMsg_Paramet paramet);
 }

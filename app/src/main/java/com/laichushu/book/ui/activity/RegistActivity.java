@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.mvp.regist.RegistPresenter;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.ui.widget.ServiceTermsDialog;
@@ -82,8 +83,13 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
     }
 
     @Override
-    public void getDataSuccess(RegistCodeModel model) {
+    public void getDataSuccess(RewardResult model) {
         //获取验证码
+        if (model.isSuccess()){
+            ToastUtil.showToast("获取验证码成功");
+        }else {
+            ToastUtil.showToast("获取验证码失败");
+        }
     }
 
     @Override

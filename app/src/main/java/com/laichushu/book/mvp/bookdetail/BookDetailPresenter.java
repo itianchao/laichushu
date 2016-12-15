@@ -292,7 +292,6 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogBuilder.dismiss();
                 String pay = payEt.getText().toString();
 
                 if (TextUtils.isEmpty(pay)) {
@@ -301,6 +300,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                     if (Integer.parseInt(pay) > 0 || Integer.parseInt(pay) < 100) {
                         // TODO: 2016/11/8 请求打赏
                         rewardMoney(userId, accepterId, articleId, pay);
+                        dialogBuilder.dismiss();
                     } else {
                         ToastUtil.showToast("只能打赏1-100金额");
                     }
@@ -386,7 +386,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      */
     public void collectSave(String targetId, String type, String collectType) {
         mvpView.showLoading();
-        CollectSave_Paramet paramet = new CollectSave_Paramet(userId, targetId, type, collectType);
+        CollectSave_Paramet paramet = new CollectSave_Paramet(userId, targetId, collectType,type);
         Logger.e("收藏");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.collectSave(paramet), new ApiCallback<RewardResult>() {

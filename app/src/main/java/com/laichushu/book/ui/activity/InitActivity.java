@@ -86,7 +86,7 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
         cache_jsonDao = daoSession.getCache_JsonDao();
         List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder()
                 .where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).list();
-        if (null != cache_jsons) {
+        if (cache_jsons.isEmpty()) {
             mvpPresenter.loadMineData();
         } else {
             four = true;

@@ -77,7 +77,7 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
         thridRbn.setOnClickListener(this);
         finishIv.setOnClickListener(this);
         searchIv.setOnClickListener(this);
-        GlideUitl.loadImg(this, R.drawable.search_icon, searchIv);
+        GlideUitl.loadImg2(this, R.drawable.search_icon, searchIv);
         titleTv.setText("机构");
         return mSuccessView;
     }

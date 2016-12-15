@@ -98,7 +98,7 @@
             <TextView
                 android:id="@+id/tv_scan"
                 style="@style/new_books"
-                android:drawableLeft="@drawable/navigation_find_normal"
+                android:drawableLeft="@drawable/my_topdetails2x"
                 android:text="话题详情"/>
         </LinearLayout>
     </LinearLayout>

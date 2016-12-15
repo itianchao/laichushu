@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/iv_stripIcon"
-            style="@style/new_books" />
+            style="@style/new_books"/>
 
         <TextView
             android:id="@+id/tv_stripContent"

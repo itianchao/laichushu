@@ -1,6 +1,8 @@
 package com.laichushu.book.mvp.bookcast;
 
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
+import com.laichushu.book.bean.netbean.AuthorWorksByBookId_Paramet;
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.CollectList_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
 import com.laichushu.book.bean.netbean.MyBrowseList_paramet;
@@ -29,7 +31,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
         this.paramet = paramet;
     }
 
-    private MyArticBooklist_paramet paramet = new MyArticBooklist_paramet(userId, pageNo, pageSize,"");
+    private MyArticBooklist_paramet paramet = new MyArticBooklist_paramet(userId, pageNo, pageSize,"",ConstantValue.BOOKCOMMENTTYPE);
 
     public MyArticBooklist_paramet getParamet2() {
         return paramet2;
@@ -39,7 +41,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
         this.paramet2 = paramet2;
     }
 
-    private MyArticBooklist_paramet paramet2 = new MyArticBooklist_paramet(userId, pageNo, pageSize,"1");
+    private MyArticBooklist_paramet paramet2 = new MyArticBooklist_paramet(userId, pageNo, pageSize,"1",ConstantValue.BOOKCOMMENTTYPE);
     private int state = 1;
     private int type=1;
     //初始化构造
@@ -108,6 +110,28 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
         });
     }
 
+    /**
+     * 获取图书详情
+     * @param articleId
+     */
+    public void loadBookDetailsByid(String articleId) {
+        AuthorWorksByBookId_Paramet bookParamet = new AuthorWorksByBookId_Paramet(userId, articleId);
+        LoggerUtil.e("获取图书详情");
+        addSubscription(apiStores.getAuthorWorksByBookId(bookParamet), new ApiCallback<BookDetailsModle>() {
+            @Override
+            public void onSuccess(BookDetailsModle model) {
+                mvpView.getBookDetailsByIdDataSuccess(model);
+            }
 
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code" + code + "msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        });
+    }
 
 }

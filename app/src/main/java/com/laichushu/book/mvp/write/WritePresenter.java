@@ -85,7 +85,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
 
             @Override
             public void onFinish() {
-
+                mvpView.hideLoading();
             }
         });
     }
@@ -251,9 +251,8 @@ public class WritePresenter extends BasePresenter<WriteView> {
      * 修改签约状态
      */
     public void getSignStateDeta(final String articleId) {
-        mvpView.showLoading();
         LoggerUtil.e("修改签约状态");
-        addSubscription(apiStores.getSignStateDetails(new MyArticBooklist_paramet("", "", "", "")), new ApiCallback<SignStateResult>() {
+        addSubscription(apiStores.getSignStateDetails(new MyArticBooklist_paramet("", "", "", "", "")), new ApiCallback<SignStateResult>() {
             @Override
             public void onSuccess(SignStateResult model) {
                 mvpView.getSignStateDeteSuccess(model, articleId);
@@ -275,7 +274,6 @@ public class WritePresenter extends BasePresenter<WriteView> {
      * 修改签约状态
      */
     public void getSignEditorDeta(String pressId, String articleId, String editorId) {
-        mvpView.showLoading();
         LoggerUtil.e("修改签约状态");
         MySignEditor_paramet editParamet = new MySignEditor_paramet(pressId, articleId, editorId, userId);
         addSubscription(apiStores.getSignEditorDetails(editParamet), new ApiCallback<RewardResult>() {

@@ -48,7 +48,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final HomeHotModel.DataBean dataBean = mAllData.get(position);
-        GlideUitl.loadImg(mActivity, "", holder.bookIv);
+        GlideUitl.loadImg(mActivity, dataBean.getCoverUrl(), holder.bookIv);
         holder.titleTv.setText(dataBean.getArticleName());
         holder.typeTv.setText(dataBean.getTopCategoryName());
         holder.markTv.setText(dataBean.getScore()+"分");

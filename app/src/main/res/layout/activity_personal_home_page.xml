@@ -42,8 +42,7 @@
             android:layout_height="18dp"
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="12dp"
-            android:layout_toRightOf="@+id/tv_PerNickName"
-            />
+            android:layout_toRightOf="@+id/tv_PerNickName" />
 
         <ImageView
             android:id="@+id/iv_perGradeDetails"
@@ -120,18 +119,21 @@
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_dynamic"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_focusMe"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
             android:visibility="gone" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_focus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
             android:visibility="gone" />
 
     </LinearLayout>

@@ -33,7 +33,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/home_search" />
+                android:src="@drawable/search_icon" />
 
             <EditText
                 android:textColor="@color/white"
@@ -89,14 +89,14 @@
                         android:textColor="@color/global"
                         android:textSize="@dimen/edit2" />
                 </LinearLayout>
-
+                <include layout="@layout/line"/>
                 <ListView
                     android:id="@+id/lv_history"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
-
+            <include layout="@layout/item_distance"/>
             <LinearLayout
                 android:id="@+id/lay_hot"
                 android:layout_width="match_parent"
@@ -112,12 +112,11 @@
                     android:text="热门搜索"
                     android:textColor="@color/black"
                     android:textSize="@dimen/edit2" />
-
-                <LinearLayout
+                <include layout="@layout/line"/>
+                <ListView
                     android:id="@+id/lay_hot_child"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView

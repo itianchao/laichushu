@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
+import com.laichushu.book.event.RefreshWriteFragmentEvent;
+import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.event.RefurshCommentListEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
+import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
@@ -60,7 +63,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     private String type = "1";
     private String articleId;
     private int position = 0;
-    private String collectType = "0";
+    private String collectType = null;
     private ImageView comentIv;
 
     @Override
@@ -163,6 +166,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             refreshtimeTv.setText(bean.getUpdateDate());
             numberTv.setText(bean.getSubscribeNum() + "");
             subscriptionTv.setOnClickListener(this);
+
         } else {//2 已发表 3 出版
             nopublishRay.setVisibility(View.INVISIBLE);
             publishLay.setVisibility(View.VISIBLE);
@@ -233,7 +237,6 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
-                EventBus.getDefault().postSticky(new RefurshHomeEvent(true));
                 finish();
                 break;
             case R.id.iv_title_other://分享
@@ -250,8 +253,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 startActivityForResult(sendIntent, 1);
                 break;
             case R.id.iv_title_another://收藏
-                String booktype = "1";
-                mvpPresenter.collectSave(articleId, collectType, booktype);
+                mvpPresenter.collectSave(articleId, collectType, ConstantValue.BOOKCOMMENTTYPE);
                 break;
             case R.id.tv_lookup://查看更多评论
                 Bundle bundle1 = new Bundle();
@@ -529,6 +531,19 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                         UIUtil.openActivity(BookDetailActivity.this, CommentSendActivity.class, bundle);
                     }
                 });
+                headIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userId",dataBean.getUserId());
+                        if (SharePrefManager.getUserId().equals(dataBean.getNickName())) {
+                            UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
+                        } else {
+                            UIUtil.openActivity(mActivity, UserHomePageActivity.class, bundle);
+                        }
+                    }
+                });
             }
         } else {
             ToastUtil.showToast(model.getErrorMsg());
@@ -657,5 +672,11 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBus.getDefault().postSticky(new RefurshHomeEvent(true));
     }
 }

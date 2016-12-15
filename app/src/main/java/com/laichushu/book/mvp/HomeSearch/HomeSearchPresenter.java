@@ -28,6 +28,11 @@ public class HomeSearchPresenter extends BasePresenter<HomeSearchView> {
         attachView(view);
         mActivity = (HomeSearchActivity) view;
     }
+
+    /**
+     * 模糊查询
+     * @param name 关键字
+     */
     public void LoadData(String name){
         getParamet().setComplexName(name);
         addSubscription(apiStores.homeSearch(paramet), new ApiCallback<HomeHotModel>() {
@@ -63,5 +68,27 @@ public class HomeSearchPresenter extends BasePresenter<HomeSearchView> {
 
     public Search_HistoryDao getSearch_historyDao() {
         return search_historyDao;
+    }
+
+    /**
+     * 热门搜索
+     */
+    public void loadHotSearchData(){
+        addSubscription(apiStores.getHotSearch(), new ApiCallback<HomeSearchModel>() {
+            @Override
+            public void onSuccess(HomeSearchModel model) {
+                mvpView.getHotSearchDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail2("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 }

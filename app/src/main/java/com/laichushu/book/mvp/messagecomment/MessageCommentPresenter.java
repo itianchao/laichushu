@@ -289,7 +289,6 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
     public void loadDelPerInfoDetails(String senderId, String msgId) {
         DelPerInfo_Paramet delParamet = new DelPerInfo_Paramet(senderId, msgId, userId);
         LoggerUtil.e("发送评论");
-        AddPerDetails_Paramet paramet = new AddPerDetails_Paramet(userId, msgId, msgId);
         addSubscription(apiStores.getDelPerInfoDetails(delParamet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {

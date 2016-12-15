@@ -87,7 +87,6 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
 
     @Override
     protected void initData() {
-        EventBus.getDefault().register(this);
         if (isLoad) {//只执行一次
             mvpPresenter.getSourceMaterialList(articleId);
         } else {
@@ -142,10 +141,30 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
     }
 
     @Override
+    public void getCreateSourceMaterialDir(RewardResult model) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("创建成功");
+            mData.clear();
+            refreshPage(LoadingPager.PageState.STATE_LOADING);
+            mvpPresenter.getSourceMaterialList(articleId);
+        } else {
+            ToastUtil.showToast("创建失败");
+            LoggerUtil.toJson(model);
+        }
+    }
+
+    @Override
     public void getDataFail(String msg) {
         refursh();
         refreshPage(LoadingPager.PageState.STATE_ERROR);
         ToastUtil.showToast(msg);
+    }
+
+    @Override
+    public void getDataFail2(String msg) {
+        hideLoading();
+        LoggerUtil.e(msg);
+        ToastUtil.showToast("创建素材文件夹失败");
     }
 
     /**
@@ -193,9 +212,10 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
                 finish();
                 break;
             case R.id.lay_add_newbook://创建素材
-                Bundle bundle = new Bundle();
-                bundle.putString("articleId", articleId);
-                UIUtil.openActivity(this, CreateMaterialDirActivity.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("articleId", articleId);
+//                UIUtil.openActivity(this, CreateMaterialDirActivity.class, bundle);
+                mvpPresenter.openNewDialog(articleId);
                 break;
             case R.id.tv_title_right:
                 if (titleRightTv.getText().toString().equals("管理")) {
@@ -230,17 +250,6 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshMaterialDirEvent event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        if (event.isRefursh) {
-            mData.clear();
-            refreshPage(LoadingPager.PageState.STATE_LOADING);
-            mvpPresenter.getSourceMaterialList(articleId);
-        }
     }
 
     public void refursh() {
