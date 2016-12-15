@@ -6,9 +6,19 @@ package com.laichushu.book.bean.netbean;
 
 public class HomeCategory_Paramet {
     private String userId;
+    private String type;
 
-    public HomeCategory_Paramet(String userId) {
+    public HomeCategory_Paramet(String userId, String type) {
         this.userId = userId;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUserId() {

@@ -1,14 +1,11 @@
 package com.laichushu.book.retrofit;
 
-import com.laichushu.book.bean.JsonBean.UrlResult;
-import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.BookDetails_Paramet;
-import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
-import com.laichushu.book.bean.netbean.FeedBack_parmet;
+import com.laichushu.book.bean.JsonBean.UrlResult;
+import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
@@ -29,6 +26,7 @@ import com.laichushu.book.mvp.forgetpwd.ForgetPwdModel;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.homecategory.CategoryModle;
+import com.laichushu.book.mvp.homesearch.HomeSearchModel;
 import com.laichushu.book.mvp.login.LoginModel;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.mvp.notice.NoticeModle;
@@ -494,7 +492,7 @@ public interface ApiStores {
 
     //热门搜索历史
     @POST("searchArticle/findHotArticle")
-    Observable<RewardResult> getHotSearch();
+    Observable<HomeSearchModel> getHotSearch();
 
     //获取url下载接口
     @POST("chapter/download")
