@@ -84,6 +84,7 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
                 Bundle bundle = new Bundle();
                 bundle.putString("title", dataBean.getName());
                 bundle.putString("path", dataBean.getContentUrlApp());
+                bundle.putString("articleId",mActivity.getArticleId());
                 UIUtil.openActivity(mActivity, NopublishBookActivity.class, bundle);
             }
         });

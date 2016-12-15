@@ -47,6 +47,10 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
     private ArrayList<DraftModle.DataBean> mData = new ArrayList<>();
     private boolean isLoad = true;
 
+    public String getArticleId() {
+        return articleId;
+    }
+
     @Override
     protected DraftModlePresenter createPresenter() {
         return new DraftModlePresenter(this);

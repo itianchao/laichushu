@@ -653,7 +653,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
                 return  FBReader.myMainView.onTouchEvent(event);
             }
         });
-        return length + "";
+        return "1";
     }
     @Override
     public void drawLine(int[] xs, int[] ys) {

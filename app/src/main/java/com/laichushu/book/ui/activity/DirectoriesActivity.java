@@ -150,6 +150,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 bundle.putString("title", name);
                 bundle.putString("parentId", parentId);
                 bundle.putString("type", "1");
+                bundle.putString("articleId", articleId);
                 if (mBookdata.get(position).isIsSection()) {
                     UIUtil.openActivity(this, PartActivity.class, bundle);
                 } else {
@@ -165,6 +166,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 bundle2.putString("path", dataBean.getContentUrlApp());
                 bundle2.putString("parentId", dataBean.getId());
                 bundle2.putString("type", "2");
+                bundle2.putString("articleId", articleId);
                 if (mData.get(position).isIsSection()) {
                     UIUtil.openActivity(this, PartActivity.class, bundle2);
                 } else {
