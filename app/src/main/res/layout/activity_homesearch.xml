@@ -33,7 +33,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/home_search" />
+                android:src="@drawable/search_icon" />
 
             <EditText
                 android:textColor="@color/white"

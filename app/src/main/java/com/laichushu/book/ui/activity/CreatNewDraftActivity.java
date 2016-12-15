@@ -177,7 +177,10 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
                 break;
             case R.id.btn_create:
                 String name = draftmEt.getText().toString();
-                String content = builder.toString();
+                String content = "";
+                if (builder != null) {
+                    content = builder.toString();
+                }
                 if (TextUtils.isEmpty(name)) {
                     ToastUtil.showToast("请输入章节名称");
                     return;

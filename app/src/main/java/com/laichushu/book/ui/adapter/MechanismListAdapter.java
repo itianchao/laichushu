@@ -58,6 +58,7 @@ public class MechanismListAdapter extends RecyclerView.Adapter<MechanismListAdap
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean",dataBean);
+                bundle.putString("articleId",mActivity.getArticleId());
                 UIUtil.openActivity(mActivity,MechanismDetailActivity.class,bundle);
             }
         });

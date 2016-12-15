@@ -42,6 +42,15 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
 
     private PullLoadMoreRecyclerView mRecyclerView;
     private MechanismListAdapter mAdapter;
+    private String articleId;
+
+    public String getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
+    }
 
     @Override
     protected BasePresenter createPresenter() {
@@ -68,7 +77,7 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
         thridRbn.setOnClickListener(this);
         finishIv.setOnClickListener(this);
         searchIv.setOnClickListener(this);
-        GlideUitl.loadImg(this, R.drawable.search_icon, searchIv);
+        GlideUitl.loadImg2(this, R.drawable.search_icon, searchIv);
         titleTv.setText("机构");
         return mSuccessView;
     }
@@ -76,6 +85,7 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
     @Override
     protected void initData() {
         loadMechanismListData("2");
+        articleId = getIntent().getStringExtra("articleId");
     }
     int position = 0;
     @Override

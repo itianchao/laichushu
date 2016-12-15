@@ -84,7 +84,7 @@ public class ReportActivity extends MvpActivity2 implements View.OnClickListener
             case R.id.tv_title_right://提交
                 String remarks = instructionEt.getText().toString();
                 String articleId = getIntent().getStringExtra("articleId");
-                publishReport(articleId, position + "", "", "", remarks);
+                publishReport(articleId, position + "", "无", "无", remarks);
                 break;
             case R.id.rbn_1://政治原因
                 position = 1;
@@ -119,6 +119,12 @@ public class ReportActivity extends MvpActivity2 implements View.OnClickListener
                 dismissProgressDialog();
                 if (model.isSuccess()) {
                     ToastUtil.showToast("举报成功");
+                    UIUtil.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    },1710);
                 } else {
                     ToastUtil.showToast("举报失败");
                 }

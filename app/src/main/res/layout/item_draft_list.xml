@@ -15,7 +15,8 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="@color/black"
@@ -49,7 +50,7 @@
                 android:id="@+id/iv_delete"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/icon_delete"
                 android:visibility="gone"/>
         </FrameLayout>

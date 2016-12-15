@@ -55,7 +55,7 @@ public class MaterialListDirAdapter extends RecyclerView.Adapter<MaterialListDir
         holder.renameTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mvpPresenter.openDeleteDialog(dataBean.getId(),position);
+                mvpPresenter.openRenameDialog(dataBean.getId(),position);
             }
         });
         holder.deleteIv.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +72,7 @@ public class MaterialListDirAdapter extends RecyclerView.Adapter<MaterialListDir
                 bundle.putString("title", dataBean.getName());
                 bundle.putString("parentId", dataBean.getId());
                 bundle.putString("articleId", dataBean.getArticleId());
+                bundle.putString("dir", dataBean.getName());
                 UIUtil.openActivity(mActivity, SourceMaterialActivity.class, bundle);
             }
         });

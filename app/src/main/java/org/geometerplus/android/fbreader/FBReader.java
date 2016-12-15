@@ -30,6 +30,8 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -59,6 +61,7 @@ import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.retrofit.ApiStores;
+import com.laichushu.book.retrofit.AppClient;
 import com.laichushu.book.ui.activity.ReportActivity;
 import com.laichushu.book.ui.widget.LoadDialog;
 import com.laichushu.book.ui.widget.TypeBookSelectWindow;
@@ -302,8 +305,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         finishIv = (ImageView) findViewById(R.id.iv_title_finish);
         selectIv = (ImageView) findViewById(R.id.iv_title_other);//选择弹窗 举报or书签
         rewardMoneyIv = (ImageView) findViewById(R.id.iv_title_another);//打赏
-        GlideUitl.loadImg(this, R.drawable.icon_more, selectIv);
-        GlideUitl.loadImg(this, R.drawable.reward, rewardMoneyIv);
+        selectIv.setScaleType(ImageView.ScaleType.CENTER);
+        rewardMoneyIv.setScaleType(ImageView.ScaleType.CENTER);
+        GlideUitl.loadImg2(this, R.drawable.icon_more, selectIv);
+        GlideUitl.loadImg2(this, R.drawable.reward, rewardMoneyIv);
 
         //弹窗
         list.clear();
@@ -434,8 +439,11 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     //获取标题
     class RemindTask extends TimerTask {
         public void run() {
+            if (!TextUtils.isEmpty(titleTv.getText())) {
+                timer.cancel();
+            }
             titleTv.setText(myFBReaderApp.getCurrentBook().getTitle());
-            timer.cancel();
+            myMainView.invalidate();
         }
     }
 
@@ -542,7 +550,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogBuilder.dismiss();
                 String pay = payEt.getText().toString();
 
                 if (TextUtils.isEmpty(pay)) {
@@ -551,6 +558,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                     if (Integer.parseInt(pay) > 0 || Integer.parseInt(pay) < 100) {
                         // TODO: 2016/11/8 请求打赏
                         rewardMoney(ConstantValue.USERID, accepterId, articleId, pay);
+                        dialogBuilder.dismiss();
                     } else {
                         ToastUtil.showToast("只能打赏1-100金额");
                     }
@@ -803,17 +811,18 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         }
     }
 
-    private boolean isShowTitle = true;
+    private void showTitle() {
+        int seconds = 1;
+        if (TextUtils.isEmpty(titleTv.getText())) {
+            timer = new Timer();
+            timer.schedule(new RemindTask(), seconds * 100);
+        }
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        int seconds = 3;
-        if (isShowTitle) {
-            timer = new Timer();
-            timer.schedule(new RemindTask(), seconds * 1000);
-            isShowTitle = false;
-        }
+        showTitle();
         myStartTimer = true;
         Config.Instance().runOnConnect(new Runnable() {
             public void run() {
@@ -1153,6 +1162,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){
+            finish();
+            return true;
+        }
         return (myMainView != null && myMainView.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);
     }
 
@@ -1437,7 +1450,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             }, 1600);
         }
     }
-    protected ApiStores apiStores;
+    public ApiStores apiStores = AppClient.retrofit().create(ApiStores.class);
     private CompositeSubscription mCompositeSubscription;
     //RXjava
     public void addSubscription(Observable observable, Subscriber subscriber) {

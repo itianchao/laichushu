@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
@@ -70,24 +71,15 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
     /**
      * 投稿对话框
      *
-     * @param mArticleData
+     * @param articleId
      * @param pressId
      */
-    public void openSelectBookDialog(final ArrayList<AuthorWorksModle.DataBean> mArticleData, final String pressId) {
-        for (int i = 0; i < mArticleData.size(); i++) {
-            AuthorWorksModle.DataBean bean = mArticleData.get(i);
-            if (i == 0) {
-                bean.setIscheck(true);
-            } else {
-                bean.setIscheck(false);
-            }
-        }
-        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
-        final View customerView = UIUtil.inflate(R.layout.dialog_join);
-        ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
-        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0);
-        joinLv.setAdapter(joinAdapter);
+    public void openSelectBookDialog(final String articleId, final String pressId) {
 
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_ok);
+        TextView msgTitleTv = (TextView) customerView.findViewById(R.id.tv_msg_title);
+        msgTitleTv.setText("是否投稿");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +92,8 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
             @Override
             public void onClick(View v) {
                 // TODO: 2016/11/25 投稿
-                voteBook(mArticleData.get(joinAdapter.getPosition()).getArticleId(), pressId);
+//                voteBook(mArticleData.get(joinAdapter.getPosition()).getArticleId(), pressId);
+                voteBook(articleId, pressId);
                 dialogBuilder.dismiss();
             }
         });

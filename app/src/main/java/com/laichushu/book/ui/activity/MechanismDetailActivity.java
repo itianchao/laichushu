@@ -53,6 +53,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     private RadioButton firstRbn;
     private RadioButton secondRbn;
     private RadioButton thridRbn;
+    private String articleId;
 
     @Override
     protected MechanismDetailPresenter createPresenter() {
@@ -93,6 +94,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     @Override
     protected void initData() {
         bean = getIntent().getParcelableExtra("bean");
+        articleId = getIntent().getStringExtra("articleId");
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         titleTv.setText("机构详情");//设置标题
         GlideUitl.loadImg(mActivity, R.drawable.mechanism_detail_bg, mechanismIv);//设置机构图片
@@ -120,7 +122,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
             if (model.getData() != null) {
                 data = model.getData();
                 if (!data.isEmpty()) {
-                    mvpPresenter.openSelectBookDialog(data, bean.getId());
+//                    mvpPresenter.openSelectBookDialog(data, bean.getId());
                 } else {
                     ToastUtil.showToast("您还没有作品");
                 }
@@ -246,7 +248,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 }
                 break;
             case R.id.tv_submission:
-                mvpPresenter.loadAuthorWorksData();
+                mvpPresenter.openSelectBookDialog(articleId, bean.getId());
                 break;
             case R.id.tv_collection:
                 if (collectionTv.getText().equals("收藏")) {

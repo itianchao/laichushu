@@ -302,7 +302,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
         final String[] sex = new String[1];
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mActivity);
         final int[] posion = new int[1];
-        builder.setTitle("")
+        builder.setTitle("确认删除")
                 .setNegativeButton("取消", null)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
