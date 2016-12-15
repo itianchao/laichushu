@@ -20,7 +20,6 @@ public class ModelUtils {
      *
      * @param modelA
      * @param bClass
-     * @param <T>
      * @return
      */
 
@@ -54,6 +53,7 @@ public class ModelUtils {
 
     public static HomeHotModel.DataBean bean2HotBean(BookDetailsModle result) {
         HomeHotModel.DataBean dataBean = new HomeHotModel.DataBean();
+        dataBean.setActivityName(result.getData().getArticleName());
         dataBean.setActivityId(result.getData().getArticleId());
         dataBean.setActivityName(result.getData().getArticleName());
         dataBean.setActivityId(result.getData().getArticleId());
@@ -73,7 +73,14 @@ public class ModelUtils {
         dataBean.setIsPurchase(result.getData().isIsPurchase());
         dataBean.setIsSubscribe(result.getData().isIsSubscribe());
         dataBean.setCollect(result.getData().isIsCollect());
-
+        dataBean.setCoverUrl(result.getData().getCoverUrl());
+        dataBean.setCoverName(result.getData().getCoverName());
+        dataBean.setTopCategoryId(result.getData().getTopCategoryId());
+        dataBean.setTopCategoryName(result.getData().getTopCategoryName());
+        dataBean.setIntroduce(result.getData().getIntroduce());
+        dataBean.setFreezeStatus(result.getData().getFreezeStatus());
+        dataBean.setScore(result.getData().getScore());
+        dataBean.setUpdateDate(result.getData().getUpdateDate());
         return dataBean;
     }
 }

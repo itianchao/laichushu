@@ -70,19 +70,16 @@ public class WritePresenter extends BasePresenter<WriteView> {
 
     public void getArticleBookList() {
         LoggerUtil.e("获取创作列表");
-        mvpView.showLoading();
         ArticleBookList_Paramet paramet = new ArticleBookList_Paramet(ConstantValue.USERID, pageNo, ConstantValue.PAGESIZE1, "");
         LoggerUtil.toJson(paramet);
         addSubscription(apiStores.getArticleBookList(paramet), new ApiCallback<HomeHotModel>() {
             @Override
             public void onSuccess(HomeHotModel model) {
-                mvpView.hideLoading();
                 mvpView.getDataSuccess(model);
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.hideLoading();
                 mvpView.getDataFail("code:" + code + "\nmsg:" + msg);
             }
 

@@ -10,7 +10,7 @@ public class BookDetailsModle implements Serializable {
 
     /**
      * success : true
-     * data : {"articleId":"110","articleName":"飞翔的翔","authorId":"1","authorName":"小小管理员","status":"2","freezeStatus":"1","wordNum":0,"subscribeNum":0,"browseNum":0,"commentNum":0,"awardNum":0,"level":0,"score":0,"awardMoney":0,"createDate":"2016-11-21 10:52","updateDate":"2016-12-07 14:10","isPurchase":false,"isSubscribe":false,"isCollect":false}
+     * data : {"articleId":"256","articleName":"第一部","authorId":"175","authorName":"大酒神","coverUrl":"http://101.254.183.67:9980/group1/M00/00/1E/wKiTPlhQ-4OAOo57AACRv_UOjho827.jpg","coverName":"cover.jpg","status":"1","topCategoryId":"64","topCategoryName":"短篇","introduce":"盗墓笔记","freezeStatus":"1","wordNum":0,"subscribeNum":0,"browseNum":1,"commentNum":0,"awardNum":0,"level":0,"score":0,"awardMoney":0,"createDate":"2016-12-14 15:57","updateDate":"2016-12-15 15:43","isPurchase":false,"isSubscribe":false,"isCollect":false,"isAward":false}
      */
 
     private boolean success;
@@ -34,32 +34,43 @@ public class BookDetailsModle implements Serializable {
 
     public static class DataBean {
         /**
-         * articleId : 110
-         * articleName : 飞翔的翔
-         * authorId : 1
-         * authorName : 小小管理员
-         * status : 2
+         * articleId : 256
+         * articleName : 第一部
+         * authorId : 175
+         * authorName : 大酒神
+         * coverUrl : http://101.254.183.67:9980/group1/M00/00/1E/wKiTPlhQ-4OAOo57AACRv_UOjho827.jpg
+         * coverName : cover.jpg
+         * status : 1
+         * topCategoryId : 64
+         * topCategoryName : 短篇
+         * introduce : 盗墓笔记
          * freezeStatus : 1
          * wordNum : 0
          * subscribeNum : 0
-         * browseNum : 0
+         * browseNum : 1
          * commentNum : 0
          * awardNum : 0
          * level : 0
-         * score : 0.0
-         * awardMoney : 0.0
-         * createDate : 2016-11-21 10:52
-         * updateDate : 2016-12-07 14:10
+         * score : 0
+         * awardMoney : 0
+         * createDate : 2016-12-14 15:57
+         * updateDate : 2016-12-15 15:43
          * isPurchase : false
          * isSubscribe : false
          * isCollect : false
+         * isAward : false
          */
 
         private String articleId;
         private String articleName;
         private String authorId;
         private String authorName;
+        private String coverUrl;
+        private String coverName;
         private String status;
+        private String topCategoryId;
+        private String topCategoryName;
+        private String introduce;
         private String freezeStatus;
         private int wordNum;
         private int subscribeNum;
@@ -67,13 +78,14 @@ public class BookDetailsModle implements Serializable {
         private int commentNum;
         private int awardNum;
         private int level;
-        private double score;
-        private double awardMoney;
+        private int score;
+        private int awardMoney;
         private String createDate;
         private String updateDate;
         private boolean isPurchase;
         private boolean isSubscribe;
         private boolean isCollect;
+        private boolean isAward;
 
         public String getArticleId() {
             return articleId;
@@ -107,12 +119,52 @@ public class BookDetailsModle implements Serializable {
             this.authorName = authorName;
         }
 
+        public String getCoverUrl() {
+            return coverUrl;
+        }
+
+        public void setCoverUrl(String coverUrl) {
+            this.coverUrl = coverUrl;
+        }
+
+        public String getCoverName() {
+            return coverName;
+        }
+
+        public void setCoverName(String coverName) {
+            this.coverName = coverName;
+        }
+
         public String getStatus() {
             return status;
         }
 
         public void setStatus(String status) {
             this.status = status;
+        }
+
+        public String getTopCategoryId() {
+            return topCategoryId;
+        }
+
+        public void setTopCategoryId(String topCategoryId) {
+            this.topCategoryId = topCategoryId;
+        }
+
+        public String getTopCategoryName() {
+            return topCategoryName;
+        }
+
+        public void setTopCategoryName(String topCategoryName) {
+            this.topCategoryName = topCategoryName;
+        }
+
+        public String getIntroduce() {
+            return introduce;
+        }
+
+        public void setIntroduce(String introduce) {
+            this.introduce = introduce;
         }
 
         public String getFreezeStatus() {
@@ -171,19 +223,19 @@ public class BookDetailsModle implements Serializable {
             this.level = level;
         }
 
-        public double getScore() {
+        public int getScore() {
             return score;
         }
 
-        public void setScore(double score) {
+        public void setScore(int score) {
             this.score = score;
         }
 
-        public double getAwardMoney() {
+        public int getAwardMoney() {
             return awardMoney;
         }
 
-        public void setAwardMoney(double awardMoney) {
+        public void setAwardMoney(int awardMoney) {
             this.awardMoney = awardMoney;
         }
 
@@ -225,6 +277,14 @@ public class BookDetailsModle implements Serializable {
 
         public void setIsCollect(boolean isCollect) {
             this.isCollect = isCollect;
+        }
+
+        public boolean isIsAward() {
+            return isAward;
+        }
+
+        public void setIsAward(boolean isAward) {
+            this.isAward = isAward;
         }
     }
 }
