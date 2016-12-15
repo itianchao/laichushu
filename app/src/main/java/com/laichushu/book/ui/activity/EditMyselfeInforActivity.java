@@ -239,10 +239,10 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             if (TextUtils.isEmpty(resultData.getSex())) {
                 tvSex.setText(null);
             } else {
-                if (resultData.getSex().equals("1")) {
+                if (TextUtils.isEmpty(resultData.getSex())) {
                     tvSex.setText("男");
                 } else {
-                    tvSex.setText("女");
+                    tvSex.setText(resultData.getSex());
                 }
 
             }
@@ -488,7 +488,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         wvCity.setSeletion(0);
         wvProvince.setItems(getProvonce());
         wvCity.setItems(getCity("01"));
-        final String[] curProvince = {null};
+        final String[] curProvince = {"北京"};
         wvProvince.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(int position, String item) {
