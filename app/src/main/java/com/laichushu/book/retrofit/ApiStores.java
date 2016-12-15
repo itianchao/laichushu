@@ -498,5 +498,7 @@ public interface ApiStores {
     @POST("chapter/download")
     Observable<UrlResult> downloadEpubFile(@Body DownloadEpubFilePermission_Paramet paramet);
 
-    //
+    //发送验证码的接口为：
+    @POST("msg/send")
+    Observable<RewardResult> sendMsg(@Body SendMsg_Paramet paramet);
 }

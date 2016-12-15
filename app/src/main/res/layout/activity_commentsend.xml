@@ -9,6 +9,7 @@
     <include layout="@layout/item_distance" />
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"

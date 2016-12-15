@@ -134,7 +134,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         detailMarkTv.setText(bean.getScore() + "分");//评分
         detailRatbarTv.setRating(bean.getLevel());//星级
         if (bean.isCollect()) {//已收藏
-            comentIv.setImageResource(R.drawable.icon_praise_yes2x);
+            comentIv.setImageResource(R.drawable.activity_keep2);
             collectType = "1";
         } else {
             comentIv.setImageResource(R.drawable.activity_keep);
@@ -166,6 +166,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             refreshtimeTv.setText(bean.getUpdateDate());
             numberTv.setText(bean.getSubscribeNum() + "");
             subscriptionTv.setOnClickListener(this);
+
         } else {//2 已发表 3 出版
             nopublishRay.setVisibility(View.INVISIBLE);
             publishLay.setVisibility(View.VISIBLE);
@@ -236,7 +237,6 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
-                EventBus.getDefault().postSticky(new RefurshHomeEvent(true));
                 finish();
                 break;
             case R.id.iv_title_other://分享
@@ -531,6 +531,19 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                         UIUtil.openActivity(BookDetailActivity.this, CommentSendActivity.class, bundle);
                     }
                 });
+                headIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转用户主页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userId",dataBean.getUserId());
+                        if (SharePrefManager.getUserId().equals(dataBean.getNickName())) {
+                            UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
+                        } else {
+                            UIUtil.openActivity(mActivity, UserHomePageActivity.class, bundle);
+                        }
+                    }
+                });
             }
         } else {
             ToastUtil.showToast(model.getErrorMsg());
@@ -664,6 +677,6 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     @Override
     public void finish() {
         super.finish();
-        EventBus.getDefault().postSticky(new RefurshWriteFragmentEvent(true));
+        EventBus.getDefault().postSticky(new RefurshHomeEvent(true));
     }
 }

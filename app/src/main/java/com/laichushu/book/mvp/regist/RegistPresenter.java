@@ -5,11 +5,15 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import com.laichushu.book.utils.ToastUtil;
+import com.google.gson.Gson;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.RegistValid_Paramet;
+import com.laichushu.book.bean.netbean.SendMsg_Paramet;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.RegistActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.Validator;
 
 /**
@@ -24,45 +28,46 @@ public class RegistPresenter extends BasePresenter<RegistView> {
         attachView(view);
         mActivity = (RegistActivity) view;
     }
-    public void loadCode(String phone){
-//        mvpView.showLoading();
 
-//        Logger.e("校验code参数");
-//        Logger.json(new Gson().toJson(paramet));
-//        addSubscription(apiStores.loginLoadData(paramet),
-//                new ApiCallback<RegistCodeModel>() {
-//                    @Override
-//                    public void onSuccess(RegistCodeModel model) {
-//                        mvpView.getDataSuccess(model);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(int code, String msg) {
-//                        mvpView.getDataFail("code+" + code + "/msg:" + msg);
-//                    }
-//
-//                    @Override
-//                    public void onFinish() {
-//                        mvpView.hideLoading();
-//                    }
-//
-//                });
+    public void loadCode(String phone) {
+        SendMsg_Paramet paramet = new SendMsg_Paramet(phone);
+
+        LoggerUtil.e("校验code参数");
+        LoggerUtil.toJson(new Gson().toJson(paramet));
+        addSubscription(apiStores.sendMsg(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+
+        });
     }
 
     //更新验证码显示
 
-    private int	TIME = 60; // 倒计时60s
-    private static final int	CODE_ING		= 1;				// 已发送，倒计时
-    private static final int	CODE_REPEAT		= 2;				// 重新发送
+    private int TIME = 60; // 倒计时60s
+    private static final int CODE_ING = 1;                // 已发送，倒计时
+    private static final int CODE_REPEAT = 2;                // 重新发送
     private String content;
     private TextView codeTv;
-    public void showCode(final TextView codeTv, String phonenum){
+
+    public void showCode(final TextView codeTv, String phonenum) {
         this.codeTv = codeTv;
-        if(TextUtils.isEmpty(phonenum)){
+        if (TextUtils.isEmpty(phonenum)) {
             ToastUtil.showToast("手机号不能为空!");
             return;
         }
-        if(!Validator.isMobile(phonenum)){
+        if (!Validator.isMobile(phonenum)) {
             ToastUtil.showToast("请输入正确的手机号!");
             return;
         }
@@ -72,13 +77,13 @@ public class RegistPresenter extends BasePresenter<RegistView> {
         TIME = 60;
         new Thread(new Runnable() {
             @Override
-            public void run(){
-                for (int i = 60; i > 0; i--){
+            public void run() {
+                for (int i = 60; i > 0; i--) {
                     mHandler.sendEmptyMessage(CODE_ING);
                     if (i <= 0) break;
-                    try{
+                    try {
                         Thread.sleep(1000);
-                    }catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
@@ -88,9 +93,9 @@ public class RegistPresenter extends BasePresenter<RegistView> {
         }).start();
     }
 
-    private Handler mHandler = new Handler(){
-        public void handleMessage(Message msg){
-            switch (msg.what){
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 case CODE_ING:// 已发送,倒计时
                     content = "重新发送(" + --TIME + "s)";
                     break;
@@ -109,9 +114,9 @@ public class RegistPresenter extends BasePresenter<RegistView> {
 
     //校验
     public boolean check(String phone, String code, boolean b) {
-        boolean isCheck ;
+        boolean isCheck;
 
-        if(TextUtils.isEmpty(phone)){
+        if (TextUtils.isEmpty(phone)) {
             ToastUtil.showToast("帐号不能为空!");
             return isCheck = false;
         }
@@ -131,11 +136,11 @@ public class RegistPresenter extends BasePresenter<RegistView> {
 //            ToastUtil.showToast("您输入的验证码含有汉字或特殊字符，请重新输入！");
 //            return isCheck = false;
 //        }
-        if (b){
+        if (b) {
             ToastUtil.showToast("请同意来出书的用户协议!");
             return isCheck = false;
         }
-        if (!Validator.isUsername(phone)){
+        if (!Validator.isUsername(phone)) {
             ToastUtil.showToast("您输入的帐号含有汉字或特殊字符，请重新输入！");
             return isCheck = false;
         }
@@ -149,11 +154,12 @@ public class RegistPresenter extends BasePresenter<RegistView> {
 
     /**
      * 校验手机号和验证码
+     *
      * @param phone
      * @param code
      */
     public void valid(String phone, String code) {
-        RegistValid_Paramet paramet = new RegistValid_Paramet(phone,code);
+        RegistValid_Paramet paramet = new RegistValid_Paramet(phone, code);
         addSubscription(apiStores.registCode(paramet), new ApiCallback<RegistModel>() {
             @Override
             public void onSuccess(RegistModel model) {
