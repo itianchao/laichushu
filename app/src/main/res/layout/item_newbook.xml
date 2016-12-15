@@ -216,7 +216,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            android:background="@drawable/icon_hot2x"
+            android:background="@drawable/icon_detail_left2x"
             android:visibility="gone" />
 
         <ImageView
@@ -226,7 +226,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:background="@drawable/icon_hot2x" />
+            android:background="@drawable/icon_detail2x" />
     </RelativeLayout>
 
     <LinearLayout

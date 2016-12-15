@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
+import com.laichushu.book.event.RefreshWriteFragmentEvent;
+import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.event.RefurshCommentListEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
+import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
@@ -60,7 +63,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     private String type = "1";
     private String articleId;
     private int position = 0;
-    private String collectType = "0";
+    private String collectType = null;
     private ImageView comentIv;
 
     @Override
@@ -131,7 +134,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         detailMarkTv.setText(bean.getScore() + "分");//评分
         detailRatbarTv.setRating(bean.getLevel());//星级
         if (bean.isCollect()) {//已收藏
-            comentIv.setImageResource(R.drawable.activity_keep2);
+            comentIv.setImageResource(R.drawable.icon_praise_yes2x);
             collectType = "1";
         } else {
             comentIv.setImageResource(R.drawable.activity_keep);
@@ -250,8 +253,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 startActivityForResult(sendIntent, 1);
                 break;
             case R.id.iv_title_another://收藏
-                String booktype = "1";
-                mvpPresenter.collectSave(articleId, collectType, booktype);
+                mvpPresenter.collectSave(articleId, collectType, ConstantValue.BOOKCOMMENTTYPE);
                 break;
             case R.id.tv_lookup://查看更多评论
                 Bundle bundle1 = new Bundle();
@@ -657,5 +659,11 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBus.getDefault().postSticky(new RefurshWriteFragmentEvent(true));
     }
 }

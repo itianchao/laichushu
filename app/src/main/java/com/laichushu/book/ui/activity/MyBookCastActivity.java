@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -7,6 +8,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.bookcast.BookcastPresener;
@@ -16,6 +18,7 @@ import com.laichushu.book.ui.adapter.BookCastCollAdapter;
 import com.laichushu.book.ui.adapter.MyBookCastAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.ModelUtils;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -74,13 +77,13 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         //初始化mRecyclerView Scan
         mRecyclerView.setGridLayout(3);
         mRecyclerView.setFooterViewText("加载中");
-        scanAdapter = new MyBookCastAdapter(this, scanData);
+        scanAdapter = new MyBookCastAdapter(this, scanData,mvpPresenter);
         mRecyclerView.setAdapter(scanAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView Coll
         mCollRecyclerView.setGridLayout(3);
         mCollRecyclerView.setFooterViewText("加载中");
-        collAdapter = new BookCastCollAdapter(this, collData);
+        collAdapter = new BookCastCollAdapter(this, collData,mvpPresenter);
         mCollRecyclerView.setAdapter(collAdapter);
         mCollRecyclerView.setOnPullLoadMoreListener(this);
     }
@@ -211,6 +214,21 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             ToastUtil.showToast("没有更多内容！");
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+    }
+
+    @Override
+    public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
+        //跳转图书详情页
+        dismissProgressDialog();
+        if(model.isSuccess()){
+            Bundle bundle = new Bundle();
+            HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
+            bundle.putParcelable("bean", dataBean);
+            UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+        }else{
+           ToastUtil.showToast("刷新页面失败！");
+        }
+
     }
 
     @Override

@@ -19,7 +19,8 @@
         android:id="@+id/tv_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="书名"
+        android:textSize="@dimen/edit"
+        android:textColor="@color/characterGray"
         android:paddingTop="3dp"
         android:layout_marginBottom="15dp"
         android:layout_gravity="center_horizontal"/>

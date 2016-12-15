@@ -125,7 +125,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         Query<Cache_Json> build = builder.build();
         List<Cache_Json> cache_jsons = build.list();
         PersonalCentreResult result = new Gson().fromJson(cache_jsons.get(0).getJson(), PersonalCentreResult.class);
-        LoggerUtil.e("2."+cache_jsons.get(0).getJson());
+        LoggerUtil.e("2." + cache_jsons.get(0).getJson());
         GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivMineHead);
         tvMineName.setText("  " + result.getNickName());
         if (TextUtils.isEmpty(result.getArticleCount())) {

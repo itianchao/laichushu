@@ -70,22 +70,25 @@ public class WritePresenter extends BasePresenter<WriteView> {
 
     public void getArticleBookList() {
         LoggerUtil.e("获取创作列表");
+        mvpView.showLoading();
         ArticleBookList_Paramet paramet = new ArticleBookList_Paramet(ConstantValue.USERID, pageNo, ConstantValue.PAGESIZE1, "");
         LoggerUtil.toJson(paramet);
         addSubscription(apiStores.getArticleBookList(paramet), new ApiCallback<HomeHotModel>() {
             @Override
             public void onSuccess(HomeHotModel model) {
+                mvpView.hideLoading();
                 mvpView.getDataSuccess(model);
             }
 
             @Override
             public void onFailure(int code, String msg) {
+                mvpView.hideLoading();
                 mvpView.getDataFail("code:" + code + "\nmsg:" + msg);
             }
 
             @Override
             public void onFinish() {
-
+                mvpView.hideLoading();
             }
         });
     }
@@ -251,9 +254,8 @@ public class WritePresenter extends BasePresenter<WriteView> {
      * 修改签约状态
      */
     public void getSignStateDeta(final String articleId) {
-        mvpView.showLoading();
         LoggerUtil.e("修改签约状态");
-        addSubscription(apiStores.getSignStateDetails(new MyArticBooklist_paramet("", "", "", "")), new ApiCallback<SignStateResult>() {
+        addSubscription(apiStores.getSignStateDetails(new MyArticBooklist_paramet("", "", "", "", "")), new ApiCallback<SignStateResult>() {
             @Override
             public void onSuccess(SignStateResult model) {
                 mvpView.getSignStateDeteSuccess(model, articleId);
@@ -275,7 +277,6 @@ public class WritePresenter extends BasePresenter<WriteView> {
      * 修改签约状态
      */
     public void getSignEditorDeta(String pressId, String articleId, String editorId) {
-        mvpView.showLoading();
         LoggerUtil.e("修改签约状态");
         MySignEditor_paramet editParamet = new MySignEditor_paramet(pressId, articleId, editorId, userId);
         addSubscription(apiStores.getSignEditorDetails(editParamet), new ApiCallback<RewardResult>() {

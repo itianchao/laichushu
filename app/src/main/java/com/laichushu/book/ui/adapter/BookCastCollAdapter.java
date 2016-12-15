@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.mvp.bookcast.BookcastPresener;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
@@ -24,9 +25,11 @@ import java.util.List;
 public class BookCastCollAdapter extends RecyclerView.Adapter<BookCastCollAdapter.ViewHolder> {
     private MyBookCastActivity context;
     private List<HomeHotModel.DataBean> dataBeen;
-    public BookCastCollAdapter(MyBookCastActivity context, List<HomeHotModel.DataBean> dataBean) {
+    private BookcastPresener bookcastPresener;
+    public BookCastCollAdapter(MyBookCastActivity context, List<HomeHotModel.DataBean> dataBean,BookcastPresener bookcastPresener) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.bookcastPresener=bookcastPresener;
     }
 
     @Override
@@ -38,16 +41,14 @@ public class BookCastCollAdapter extends RecyclerView.Adapter<BookCastCollAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivImg);
-        holder.tvItem.setText(dataBeen.get(position).getArticleName());
+        holder.tvItem.setText(dataBeen.get(position).getCoverName());
         holder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                跳转图书详情页
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("bean", dataBeen.get(position));
-                UIUtil.openActivity(context, BookDetailActivity.class, bundle);
+                bookcastPresener.loadBookDetailsByid(dataBeen.get(position).getSourceId());
             }
-        });;
+        });
     }
 
 

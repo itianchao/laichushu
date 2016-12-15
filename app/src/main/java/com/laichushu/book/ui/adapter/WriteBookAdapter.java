@@ -67,6 +67,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         ImageView imageView = null;
         TextView textView;
         int j;
+        holder.llTab.removeAllViews();
         for (int i = 0; i < mStrip.size(); i++) {
             itemView = UIUtil.inflate(R.layout.item_tabstrip, null);
             imageView = (ImageView) itemView.findViewById(R.id.iv_stripIcon);

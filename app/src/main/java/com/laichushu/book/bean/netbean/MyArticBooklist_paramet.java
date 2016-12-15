@@ -9,13 +9,14 @@ public class MyArticBooklist_paramet {
     private String pageNo;
     private String pageSize;
     private String type;
+    private String sourceType;
 
-    public MyArticBooklist_paramet(String userId, String pageNo, String pageSize, String type) {
+    public MyArticBooklist_paramet(String userId, String pageNo, String pageSize, String type, String sourceType) {
         this.userId = userId;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
         this.type = type;
-
+        this.sourceType = sourceType;
     }
 
     public String getUserId() {
@@ -48,5 +49,13 @@ public class MyArticBooklist_paramet {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
     }
 }

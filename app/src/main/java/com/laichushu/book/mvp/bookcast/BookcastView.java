@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.bookcast;
 
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.mvp.home.HomeHotModel;
 
 /**
@@ -9,5 +10,6 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 public interface BookcastView {
     void getDataSuccess(HomeHotModel model);
     void getCollectionDataSuccess(HomeHotModel model);
+    void getBookDetailsByIdDataSuccess(BookDetailsModle modle);
     void getDataFail(String msg);
 }

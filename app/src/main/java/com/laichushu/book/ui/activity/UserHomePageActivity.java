@@ -291,7 +291,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             }
         }, 300);
         if (result.isSuccess()) {
-            ToastUtil.showToast("HomeUseDyrResult");
             dyData = result.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!dyData.isEmpty()) {
@@ -344,7 +343,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             }
         }, 300);
         if (result.isSuccess()) {
-            ToastUtil.showToast("HomeUseDyrResult");
             focusMeData = result.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!focusMeData.isEmpty()) {
@@ -375,7 +373,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             }
         }, 300);
         if (result.isSuccess()) {
-            ToastUtil.showToast("HomeUseDyrResult");
             focusBeData = result.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!focusBeData.isEmpty()) {

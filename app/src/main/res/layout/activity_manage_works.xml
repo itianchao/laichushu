@@ -13,5 +13,10 @@
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/manage_book_list"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
+        android:fadingEdge="none"
+        android:cacheColorHint="@null"
+        android:overScrollFooter="@android:color/transparent"
+        android:overScrollHeader="@android:color/transparent"
         android:layout_height="match_parent" />
 </LinearLayout>

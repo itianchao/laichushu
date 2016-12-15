@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:clickable="true"
     android:gravity="center"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,13 +16,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
             android:layout_height="40dp"
             android:background="@color/global"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@color/global"
@@ -31,14 +32,6 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/edit"
                 android:textStyle="normal" />
-
-            <ImageView
-                android:id="@+id/btn_cancels"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="center"
-                android:src="@drawable/reward_elect"
-                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 
@@ -47,7 +40,8 @@
         android:layout_height="40dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_rectangle_fill_hint"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -55,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="出版社  :"
+            android:paddingLeft="12dp"
             android:textColor="@color/characterGray"
             android:textSize="@dimen/edit" />
 
@@ -62,9 +57,9 @@
             android:id="@+id/sp_press"
             android:layout_width="180dp"
             android:layout_height="match_parent"
+            android:layout_gravity="clip_horizontal"
             android:layout_marginLeft="12dp"
             android:clickable="true"
-            android:layout_gravity="clip_horizontal"
             android:drawableRight="@drawable/icon_select2_true"
             android:gravity="center_vertical|left"
             android:hint="请选择"
@@ -76,14 +71,16 @@
         android:layout_height="40dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_rectangle_fill_hint"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="    编辑  :"
+            android:text="编   辑  :"
+            android:paddingLeft="12dp"
             android:textColor="@color/characterGray"
             android:textSize="@dimen/edit" />
 
@@ -102,32 +99,36 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
-        android:gravity="right"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_rectangle_btn_state"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="确 认"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="@dimen/edit" />
 
         <TextView
             android:id="@+id/tv_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="36dp"
-            android:background="@drawable/shape_rectangle_btn_state"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/shape_rectangle_fill_hint"
             android:gravity="center"
-            android:padding="8dp"
             android:text="取 消"
             android:textColor="@color/characterGray"
-            android:textSize="@dimen/edit" />
+            android:textSize="@dimen/edit4" />
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/shape_rectangle_fill_hint"
+            android:gravity="center"
+            android:text="确 认"
+            android:layout_marginLeft="12dp"
+            android:textColor="@color/auditing"
+            android:textSize="@dimen/edit4" />
 
     </LinearLayout>
 </LinearLayout>

@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
+import com.laichushu.book.mvp.bookcast.BookcastPresener;
 import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
 import com.laichushu.book.utils.GlideUitl;
@@ -27,9 +29,11 @@ import java.util.List;
 public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.ViewHolder> {
     private MyBookCastActivity context;
     private List<HomeHotModel.DataBean> dataBeen;
-    public MyBookCastAdapter(MyBookCastActivity context, List<HomeHotModel.DataBean> dataBean) {
+    private BookcastPresener bookcastPresener;
+    public MyBookCastAdapter(MyBookCastActivity context, List<HomeHotModel.DataBean> dataBean,BookcastPresener bookcastPresener) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.bookcastPresener=bookcastPresener;
     }
 
     @Override
@@ -46,9 +50,7 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
             @Override
             public void onClick(View v) {
 //                跳转图书详情页
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("bean", dataBeen.get(position));
-                UIUtil.openActivity(context, BookDetailActivity.class, bundle);
+              bookcastPresener.loadBookDetailsByid(dataBeen.get(position).getArticleId());
             }
         });
     }
