@@ -44,6 +44,7 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
     private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
     private CreateNewBookActivity mActivity;
     private String userId = ConstantValue.USERID;
+    private String type = ConstantValue.CREADTBOOK_CATEGROY_TYPE;
 
     public CreateNewBookPersenter(CreateNewBookView view) {
         attachView(view);
@@ -55,7 +56,7 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
      */
     public void loadCategoryData() {
         Logger.e("获取分类信息");
-        HomeCategory_Paramet paramet = new HomeCategory_Paramet(userId);
+        HomeCategory_Paramet paramet = new HomeCategory_Paramet(userId,type);
         addSubscription(apiStores.getCategoryList(paramet), new ApiCallback<CategoryModle>() {
             @Override
             public void onSuccess(CategoryModle model) {

@@ -11,11 +11,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.laichushu.book.db.Search_History;
+import com.laichushu.book.mvp.homesearch.HomeSearchModel;
 import com.laichushu.book.mvp.homesearch.HomeSearchPresenter;
 import com.laichushu.book.mvp.homesearch.HomeSearchView;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.adapter.HomeSearchAdapter;
 import com.laichushu.book.ui.adapter.HomeSearchHistoryAdapter;
+import com.laichushu.book.ui.adapter.HomeSearchHotHistoryAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -43,22 +45,25 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     private TextView clearTv;
     private LinearLayout searchLay;
     private ListView searchLv;
-    private LinearLayout childLay;
+    private ListView childLay;
     private PullLoadMoreRecyclerView bookRyv;
     private String pageNo = "2";
     private String search = "";
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private ArrayList<HomeHotModel.DataBean> mAllData = new ArrayList<>();
+    private ArrayList<HomeSearchModel.DataBean> mHotData = new ArrayList<>();
     private HomeSearchAdapter mAdapter;
     private Search_HistoryDao dao;
     private HomeSearchHistoryAdapter historyAdapter;
     private List<Search_History> list = new ArrayList<>();
     private ImageView emptyIv;
-
+    private boolean one = false;
+    private boolean two = false;
+    private HomeSearchHotHistoryAdapter mHotAdapter;
 
     @Override
     protected void initData() {
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        mvpPresenter.loadHotSearchData();
         mvpPresenter.setupDatabase();
         dao = mvpPresenter.getSearch_historyDao();
         if (getHistoryList() != null) {
@@ -67,7 +72,6 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
             historyAdapter = new HomeSearchHistoryAdapter(this.list, this);
             searchLv.setAdapter(historyAdapter);
         }
-
     }
 
     @Override
@@ -83,10 +87,9 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         clearTv = (TextView) successView.findViewById(R.id.tv_clear);//清除搜索历史
         searchLay = (LinearLayout) successView.findViewById(R.id.lay_search);//整个搜索布局
         searchLv = (ListView) successView.findViewById(R.id.lv_history);//搜索历史的容器
-        childLay = (LinearLayout) successView.findViewById(R.id.lay_hot_child);//hot容器
+        childLay = (ListView) successView.findViewById(R.id.lay_hot_child);//hot容器
         bookRyv = (PullLoadMoreRecyclerView) successView.findViewById(R.id.ryv_book);//搜索结果
         emptyIv = (ImageView) successView.findViewById(R.id.iv_empty);//搜索结果
-
         finishIV.setOnClickListener(this);
         clearTv.setOnClickListener(this);
         searchEt.setOnClickListener(this);
@@ -94,8 +97,11 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         searchEt.setOnEditorActionListener(this);
         bookRyv.setOnPullLoadMoreListener(this);
         searchLv.setOnItemClickListener(this);
+        childLay.setOnItemClickListener(this);
         mAdapter = new HomeSearchAdapter(mAllData, this);
         bookRyv.setAdapter(mAdapter);
+        mHotAdapter = new HomeSearchHotHistoryAdapter(mHotData,this);
+        childLay.setAdapter(mHotAdapter);
         return successView;
     }
 
@@ -109,6 +115,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
             }
         }, 300);
         if (model.isSuccess()) {
+            one = false;
             mData = model.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!mData.isEmpty()) {
@@ -124,8 +131,31 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 bookRyv.setVisibility(View.GONE);
             }
         } else {
-            initListener();
             refreshPage(LoadingPager.PageState.STATE_ERROR);
+            one = true;
+            initListener();
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    /**
+     * 热门搜索接口成功回调
+     * @param model 回调模型
+     */
+    @Override
+    public void getHotSearchDataSuccess(HomeSearchModel model) {
+        if (model.isSuccess()) {
+            two = false;
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            mHotData.clear();
+            if (model.getData()!=null&&!model.getData().isEmpty()){
+                mHotData.addAll(model.getData());
+                mHotAdapter.setmData(mHotData);
+            }
+        }else {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            two = true;
+            initListener();
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -133,6 +163,18 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
+        one = true;
+        initListener();
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+    }
+    /**
+     * 热门搜索接口失败回调
+     * @param msg 错误信息
+     */
+    @Override
+    public void getDataFail2(String msg) {
+        Logger.e(msg);
+        two = true;
         initListener();
         refreshPage(LoadingPager.PageState.STATE_ERROR);
     }
@@ -250,15 +292,28 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        searchEt.setText(list.get(position).getHistory());
-        onEditorAction(searchEt, EditorInfo.IME_ACTION_SEARCH, null);
+        switch(parent.getId()){
+            case R.id.lv_history:
+                searchEt.setText(list.get(position).getHistory());
+                onEditorAction(searchEt, EditorInfo.IME_ACTION_SEARCH, null);
+                break;
+            case R.id.lay_hot_child:
+                searchEt.setText(mHotData.get(position).getArticleName());
+                onEditorAction(searchEt, EditorInfo.IME_ACTION_SEARCH, null);
+                break;
+        }
     }
     public void initListener(){
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
-                mvpPresenter.LoadData(search);
+                if (one){
+                    mvpPresenter.LoadData(search);
+                }
+                if (two){
+                    mvpPresenter.loadHotSearchData();
+                }
             }
         });
     }

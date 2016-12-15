@@ -15,6 +15,7 @@ import com.laichushu.book.ui.activity.CategoryActivity;
 public class CategoryPresenter extends BasePresenter<CategoryView> {
     private CategoryActivity mActivity;
     private String userId = ConstantValue.USERID;
+    private String type = ConstantValue.HOME_CATEGROY_TYPE;
 
     public CategoryPresenter(CategoryView view) {
         attachView(view);
@@ -23,7 +24,7 @@ public class CategoryPresenter extends BasePresenter<CategoryView> {
 
     public void loadCategoryData(){
         Logger.e("分类请求");
-        HomeCategory_Paramet paramet = new HomeCategory_Paramet(userId);
+        HomeCategory_Paramet paramet = new HomeCategory_Paramet(userId,type);
         addSubscription(apiStores.getCategoryList(paramet), new ApiCallback<CategoryModle>() {
             @Override
             public void onSuccess(CategoryModle model) {
