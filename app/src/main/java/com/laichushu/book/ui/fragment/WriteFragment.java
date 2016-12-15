@@ -243,9 +243,8 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
                 mData.get(index).setExpressStatus("1");
             }
             writeBookAdapter.setmData(mData);
-            ToastUtil.showToast("发表成功");
         } else {
-            ToastUtil.showToast("发表失败");
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
