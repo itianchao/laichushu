@@ -24,7 +24,7 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
     private String sourceType = ConstantValue.COMMENTBOOK_TYPE;
-    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet("",sourceType,pageSize,pageNo,userId);
+    private TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet("",sourceType,pageNo,pageSize,userId);
 
     public TopicDetailCommentList_Paramet getParamet() {
         return paramet;

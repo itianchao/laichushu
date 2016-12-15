@@ -69,11 +69,12 @@ dependencies {
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'de.greenrobot:greendao-generator:2.1.0'
     compile 'jp.wasabeef:richeditor-android:1.2.1'
+    compile 'com.alanapi.wheelview:alanapi-wheelview:0.0.9'
     compile(name: 'notify-dialog-library', ext: 'aar')
+    compile 'com.lovedise:permissiongen:0.0.6'
     compile project(':pickerView')
     compile project(path: ':ambilWarna')
     compile project(path: ':code')
     compile project(path: ':superToasts')
     compile project(path: ':dragsortlistview')
-    compile 'com.alanapi.wheelview:alanapi-wheelview:0.0.9'
 }

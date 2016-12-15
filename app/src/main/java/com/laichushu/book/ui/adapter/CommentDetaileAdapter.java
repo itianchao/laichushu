@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,8 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.ui.activity.PersonalHomePageActivity;
+import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 import com.laichushu.book.R;
 import com.laichushu.book.ui.activity.CommentDetailActivity;
@@ -52,7 +56,18 @@ public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAd
         holder.commentIv.setVisibility(View.INVISIBLE);
         holder.likeTv.setVisibility(View.INVISIBLE);
         holder.likeIv.setVisibility(View.INVISIBLE);
-
+        holder.headIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userId",dataBean.getUserId());
+                if (SharePrefManager.getUserId().equals(dataBean.getNickName())) {
+                    UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
+                } else {
+                    UIUtil.openActivity(mActivity, UserHomePageActivity.class, bundle);
+                }
+            }
+        });
 //        if (dataBean.isIsLike()) {
 //            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
 //        } else {

@@ -13,6 +13,7 @@ import com.laichushu.book.mvp.commentdetail.CommentDetailView;
 import com.laichushu.book.ui.adapter.CommentDetaileAdapter;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -66,6 +67,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         inIv = (ImageView) findViewById(R.id.iv_comment_in);
         mAdapter = new CommentDetaileAdapter(this, mData);
         commentRyv.setAdapter(mAdapter);
+        headIv.setOnClickListener(this);
     }
 
     /**
@@ -209,6 +211,16 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
                 finish();
                 RefurshCommentListEvent event = new RefurshCommentListEvent(true);
                 EventBus.getDefault().postSticky(event);
+                break;
+            case R.id.iv_comment_head:
+                //跳转用户主页
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userId",dataBean.getUserId());
+                if (SharePrefManager.getUserId().equals(dataBean.getNickName())) {
+                    UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
+                } else {
+                    UIUtil.openActivity(mActivity, UserHomePageActivity.class, bundle);
+                }
                 break;
         }
     }

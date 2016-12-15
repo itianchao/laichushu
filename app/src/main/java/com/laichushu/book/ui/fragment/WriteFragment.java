@@ -74,6 +74,8 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         mRecyclerView.setLinearLayout();
         mRecyclerView.setPushRefreshEnable(false);
         mRecyclerView.setPullRefreshEnable(false);
+        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter, mStrip);
+        mRecyclerView.setAdapter(writeBookAdapter);
         return mSuccessView;
     }
 
@@ -90,8 +92,6 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
-        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter, mStrip);
-        mRecyclerView.setAdapter(writeBookAdapter);
     }
 
     @Override

@@ -1,8 +1,11 @@
 package com.laichushu.book.ui.activity;
 
 
+import android.Manifest;
+import android.os.Build;
 import android.text.TextUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
@@ -15,6 +18,9 @@ import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
 
 /**
  * 闪屏页
@@ -37,10 +43,23 @@ public class SplashActivity extends BaseActivity {
     //动画
     @Override
     protected void initData() {
-        ObjectAnimator mAnimator = ObjectAnimator.ofFloat(splashIv, "alpha", 0, 0.25f, 0.5f, 0.75f, 1);
-        mAnimator.setDuration(1000);
-        mAnimator.start();
-        //
+        PermissionGen.with(SplashActivity.this)
+                .addRequestCode(100)
+                .permissions(
+                        Manifest.permission.WAKE_LOCK,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.CLEAR_APP_CACHE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .request();
+        //判断版本
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+
+        }else {
+            ObjectAnimator mAnimator = ObjectAnimator.ofFloat(splashIv, "alpha", 0, 0.25f, 0.5f, 0.75f, 1);
+            mAnimator.setDuration(1000);
+            mAnimator.start();
+        }
     }
 
     @Override
@@ -69,5 +88,18 @@ public class SplashActivity extends BaseActivity {
                 finish();
             }
         }, 2000);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    @PermissionSuccess(requestCode = 100)
+    public void doSomething(){
+        ObjectAnimator mAnimator = ObjectAnimator.ofFloat(splashIv, "alpha", 0, 0.25f, 0.5f, 0.75f, 1);
+        mAnimator.setDuration(1000);
+        mAnimator.start();
     }
 }
