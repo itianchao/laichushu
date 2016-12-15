@@ -105,7 +105,6 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             mData.addAll(model.getData());
             writeBookAdapter.setmData(mData);
-            writeBookAdapter.notifyDataSetChanged();
             isLoad = false;
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -128,7 +127,6 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             ToastUtil.showToast("删除成功");
             mData.remove(position);
             writeBookAdapter.setmData(mData);
-            writeBookAdapter.notifyDataSetChanged();
         } else {
             ToastUtil.showToast("删除失败");
         }
@@ -239,13 +237,12 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     @Override
     public void publishNewBook(RewardResult model, int index, String type) {
         if (model.isSuccess()) {
-            if (type.equals("1")) {//已发表
-                mData.get(index).setMake(false);
+            if (type.equals("1")) {
+                mData.get(index).setExpressStatus("0");
             } else {
-                mData.get(index).setMake(true);
+                mData.get(index).setExpressStatus("1");
             }
             writeBookAdapter.setmData(mData);
-            writeBookAdapter.notifyDataSetChanged();
             ToastUtil.showToast("发表成功");
         } else {
             ToastUtil.showToast("发表失败");

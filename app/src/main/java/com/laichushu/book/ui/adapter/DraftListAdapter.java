@@ -73,8 +73,7 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
         holder.deleteIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mvpPresenter.deleteDraftBook(dataBean.getId(),position);
+                mvpPresenter.openDeleteDialog(dataBean.getId(),position);
             }
         });
 

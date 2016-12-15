@@ -11,7 +11,9 @@ public interface SourceMaterialDirView {
     void getDataSuccess(SourceMaterialDirModle model);
     void getDeleteMateialDataSuccess(RewardResult model, int index);
     void getMaterialRenameDataSuccess(RewardResult model, int index, String rename);
+    void getCreateSourceMaterialDir(RewardResult model);
     void getDataFail(String msg);
+    void getDataFail2(String msg);
     void getUpdateMerPermission(RewardResult model);
     void getDeleteMateialDataFail(String msg);
     void getMaterialRenameDataFail(String s);

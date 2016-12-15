@@ -12,6 +12,7 @@ import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.laichushu.book.R;
 import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.CreateSourceMaterialDir_Paramet;
 import com.laichushu.book.bean.netbean.DeleteMaterial_Paramet;
 import com.laichushu.book.bean.netbean.MaterialRename_Paramet;
 import com.laichushu.book.bean.netbean.SourceMaterialDirList_Paramet;
@@ -128,7 +129,7 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
 
             @Override
             public void onFinish() {
-
+                mvpView.hideLoading();
             }
         });
     }
@@ -161,7 +162,7 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
         });
     }
 
-    public void openRameDialog(final String id, final int index) {
+    public void openRenameDialog(final String id, final int index) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
 
@@ -182,7 +183,7 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
                 if (TextUtils.isEmpty(name)) {
                     dialogEt.startAnimation(ShakeAnim.shakeAnimation(3));
                 } else {
-                    materialRename(id, name, index);//删除素材接口
+                    materialRename(id, name, index);//素材重命名接口
                     dialogBuilder.dismiss();
                 }
             }
@@ -292,6 +293,74 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
             @Override
             public void onFailure(int code, String msg) {
                 mvpView.getDataFail("code:" + code + "\nmsg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 创建素材对话框
+     */
+    public void openNewDialog(final String articleId) {
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_rename);
+
+        //取消
+        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        final EditText dialogEt = (EditText) customerView.findViewById(R.id.et_dialog);
+        dialogEt.setHint("请输入素材名称");
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = dialogEt.getText().toString().trim();
+                if(TextUtils.isEmpty(name)){
+                    dialogEt.startAnimation(ShakeAnim.shakeAnimation(3));
+                }else {
+                    createSourceMaterialDir(articleId,name);
+                    dialogBuilder.dismiss();
+                }
+            }
+        });
+
+        dialogBuilder
+                .withTitle(null)                                  // 为null时不显示title
+                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, mActivity)                // 添加自定义View
+                .show();
+    }
+    /**
+     * 创建素材文件夹
+     * @param articleId
+     * @param foldName
+     */
+    public void createSourceMaterialDir(String articleId, String foldName){
+
+        LoggerUtil.e("创建素材文件夹");
+        CreateSourceMaterialDir_Paramet paramet = new CreateSourceMaterialDir_Paramet(articleId,foldName);
+        LoggerUtil.toJson(paramet);
+        mvpView.showLoading();
+        addSubscription(apiStores.createSourceMaterialDir(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getCreateSourceMaterialDir(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail2("code："+code+"\nmsg:"+msg);
             }
 
             @Override

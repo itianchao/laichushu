@@ -1162,6 +1162,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){
+            finish();
+            return true;
+        }
         return (myMainView != null && myMainView.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);
     }
 

@@ -50,7 +50,7 @@
                 android:id="@+id/iv_delete"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/icon_delete"
                 android:visibility="gone"/>
         </FrameLayout>

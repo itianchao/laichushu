@@ -85,7 +85,6 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
 
     @Override
     protected void initData() {
-        EventBus.getDefault().register(this);
         if (isLoad) {//只执行一次
             mvpPresenter.getDraftList(articleId);
         } else {
@@ -103,10 +102,11 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
                 finish();
                 break;
             case R.id.lay_add_newbook://创建草稿
-                Bundle bundle = new Bundle();
-                bundle.putString("articleId", articleId);
-                bundle.putString("type", "1");//1创建、2修改
-                UIUtil.openActivity(this, CreatNewDraftActivity.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("articleId", articleId);
+//                bundle.putString("type", "1");//1创建、2修改
+//                UIUtil.openActivity(this, CreatNewDraftActivity.class, bundle);
+                mvpPresenter.openNewDialog(articleId);
                 break;
             case R.id.tv_title_right:
                 if (titleRightTv.getText().toString().equals("管理")) {
@@ -142,6 +142,7 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
 
     @Override
     public void getDeleteDraftBookDataSuccess(RewardResult model, int position) {
+        hideLoading();
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功");
             mData.remove(position);
@@ -154,6 +155,7 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
 
     @Override
     public void getChapterRenameDataSuccess(RewardResult model, int index, String rename) {
+        hideLoading();
         if (model.isSuccess()) {
             ToastUtil.showToast("重命名成功");
             DraftModle.DataBean dataBean = mData.get(index);
@@ -162,6 +164,25 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
             mAdapter.notifyDataSetChanged();
         } else {
             ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    /**
+     * 创建新草稿接口返回数据
+     * @param modle
+     */
+    @Override
+    public void getCreateNewDraftDataSuccess(RewardResult modle) {
+        hideLoading();
+        if (modle.isSuccess()) {
+            ToastUtil.showToast("创建成功");
+            mData.clear();
+            pageNo = 1;
+            mvpPresenter.getParamet().setPageNo(pageNo + "");
+            mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表
+        } else {
+            Logger.e(modle.getErrMsg());
+            ToastUtil.showToast("创建失败");
         }
     }
 
@@ -179,11 +200,22 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
         ToastUtil.showToast("删除失败");
     }
 
+    /**
+     * 创建新草稿接口失败信息
+     * @param msg
+     */
+    @Override
+    public void getDataFail3(String msg) {
+        hideLoading();
+        Logger.e(msg);
+        ToastUtil.showToast("创建失败");
+    }
+
     @Override
     public void getChapterRenameDataFail(String msg) {
         hideLoading();
         Logger.e(msg);
-        ToastUtil.showToast("重命名成功");
+        ToastUtil.showToast("重命名失败");
     }
 
     @Override
@@ -213,21 +245,9 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
         mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshDraftEvent event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        if (event.isRefursh) {
-            mData.clear();
-            pageNo = 1;
-            mvpPresenter.getParamet().setPageNo(pageNo + "");
-            mvpPresenter.getDraftList(articleId);//请求网络获取搜索列表
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
     public void initListener(){
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
@@ -241,4 +261,5 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
             }
         });
     }
+
 }

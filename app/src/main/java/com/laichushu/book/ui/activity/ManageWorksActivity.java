@@ -97,7 +97,6 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             mData.addAll(model.getData());
             writeBookAdapter.setmData(mData);
-            writeBookAdapter.notifyDataSetChanged();
             isLoad = false;
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -149,12 +148,11 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     public void publishNewBook(RewardResult model, int index, String type) {
         if (model.isSuccess()) {
             if (type.equals("1")) {
-                mData.get(index).setMake(false);
+                mData.get(index).setExpressStatus("0");
             } else {
-                mData.get(index).setMake(true);
+                mData.get(index).setExpressStatus("1");
             }
             writeBookAdapter.setmData(mData);
-            writeBookAdapter.notifyDataSetChanged();
         } else {
             ToastUtil.showToast("发表失败");
         }
