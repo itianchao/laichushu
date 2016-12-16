@@ -423,6 +423,10 @@ public interface ApiStores {
     @POST("party/list")
     Observable<MechanismListBean> getMechanismList(@Body MechanismList_Paramet paramet);
 
+    //搜索机构
+    @POST("party/list")
+    Observable<MechanismListBean> getSearchMechanismList(@Body MechanismSearchList_Paramet paramet);
+
     //我的钱包基本信息+交易记录
     @POST("wallet/find")
     Observable<WalletBalanceReward> getBalanceRecordDetails(@Body WalletBalanceRecord_Paramet paramet);
@@ -509,4 +513,5 @@ public interface ApiStores {
     //发送验证码的接口为：
     @POST("msg/send")
     Observable<RewardResult> sendMsg(@Body SendMsg_Paramet paramet);
+
 }
