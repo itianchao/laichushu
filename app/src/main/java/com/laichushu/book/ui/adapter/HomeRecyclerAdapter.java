@@ -187,6 +187,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
                 }
             });
+            ((ViewHolder1) holder).bookNumTv.setVisibility(View.INVISIBLE);
             if (mHotData.size() != 0) {
                 ((ViewHolder1) holder).bookNumTv.setText(mHotData.size() + "本");
             }

@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.mvp.forgetpwd.ForgetPwdCodeModel;
 import com.laichushu.book.mvp.forgetpwd.ForgetPwdModel;
 import com.laichushu.book.mvp.forgetpwd.ForgetPwdPresenter;
@@ -74,7 +75,7 @@ public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implement
     }
 
     @Override
-    public void getCodeDataSuccess(ForgetPwdCodeModel model) {
+    public void getCodeDataSuccess(RewardResult model) {
     }
 
     @Override

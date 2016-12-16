@@ -21,6 +21,7 @@ import com.laichushu.book.bean.netbean.Purchase_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
+import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -356,7 +357,8 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      */
     public void saveScoreLikeData(String sourceId, final String type) {
         mvpView.showLoading();
-        ScoreLike_Paramet paramet = new ScoreLike_Paramet(sourceId, userId, type);
+        String sourceType = "1";
+        TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId,sourceId,sourceType,type);
         Logger.e("点赞");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {

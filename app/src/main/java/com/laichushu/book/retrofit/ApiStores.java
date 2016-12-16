@@ -154,9 +154,13 @@ public interface ApiStores {
     @POST("activity/save")
     Observable<CampaignJoinModel> joinActivity(@Body JoinActivity_Paramet paramet);
 
-    //获取作者作品
+    //发表投稿时获取作者作品
     @POST("searchArticle/findExpressArticleByAuthorId")
     Observable<AuthorWorksModle> getAuthorWorks(@Body AuthorWorks_Paramet paramet);
+
+    //活动 获取作者作品
+    @POST("searchArticle/findActivityArticleByAuthorId")
+    Observable<AuthorWorksModle> getActivityAuthorWorks(@Body AuthorWorks_Paramet paramet);
 
     //获取作者作品 通过图书id查询图书详情
     @POST("searchArticle/findArticleByBookId")
@@ -198,9 +202,13 @@ public interface ApiStores {
     @POST("complaint/save")
     Observable<RewardResult> complaint(@Body Complaint_Paramet paramet);
 
-    //点赞
+    //点赞 -- 废除
     @POST("scoreLike/save")
     Observable<RewardResult> saveScoreLike(@Body ScoreLike_Paramet paramet);
+
+    //评论点赞
+    @POST("like/save")
+    Observable<RewardResult> saveScoreLike(@Body TopicDyLike_Paramet paramet);
 
     //评论点赞
     @POST("like/save")

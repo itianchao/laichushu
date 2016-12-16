@@ -12,9 +12,15 @@ public class SendMsg_Paramet {
      */
 
     private String loginName;
+    /**
+     * type : 2
+     */
 
-    public SendMsg_Paramet(String loginName) {
+    private String type;
+
+    public SendMsg_Paramet(String loginName, String type) {
         this.loginName = loginName;
+        this.type = type;
     }
 
     public String getLoginName() {
@@ -23,5 +29,13 @@ public class SendMsg_Paramet {
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
