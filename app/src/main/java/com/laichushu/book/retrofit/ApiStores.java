@@ -45,6 +45,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -514,4 +516,8 @@ public interface ApiStores {
     @POST("msg/send")
     Observable<RewardResult> sendMsg(@Body SendMsg_Paramet paramet);
 
+    //下载文件
+    @Streaming //大文件时要加不然会OOM
+    @POST
+    Observable<RewardResult> downloadFile(@Url String fileUrl);
 }

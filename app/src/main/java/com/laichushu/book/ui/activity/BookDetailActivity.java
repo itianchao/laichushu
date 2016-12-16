@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,11 +11,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
-import com.laichushu.book.event.RefreshWriteFragmentEvent;
-import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.event.RefurshCommentListEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
-import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
@@ -66,6 +62,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     private int position = 0;
     private String collectType = null;
     private ImageView comentIv;
+    private TextView stateTv;
 
     @Override
     protected void initView() {
@@ -149,6 +146,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
      * 初始化发布状态
      */
     private void initPublic() {
+        stateTv = (TextView) findViewById(R.id.tv_state);//阅读按钮
         //未出版
         nopublishRay = (RelativeLayout) findViewById(R.id.ray_nopublish);//未出版布局
         createtimeTv = (TextView) findViewById(R.id.tv_createtime);//更新时间
@@ -159,6 +157,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         publishLay = (LinearLayout) findViewById(R.id.lay_publish);//已出版布局
         priceTv = (TextView) findViewById(R.id.tv_price);//价格
         probationTv = (TextView) findViewById(R.id.tv_probation);//免费试读按钮
+        probationTv.setVisibility(View.INVISIBLE);//隐藏免费试读
         payTv = (TextView) findViewById(R.id.tv_pay);//购买按钮
         if (bean.getStatus().equals("1")) {//1 未出版
             nopublishRay.setVisibility(View.VISIBLE);
@@ -167,7 +166,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             refreshtimeTv.setText(bean.getUpdateDate());
             numberTv.setText(bean.getSubscribeNum() + "");
             subscriptionTv.setOnClickListener(this);
-
+            stateTv.setText("试读");
         } else {//2 已发表 3 出版
             nopublishRay.setVisibility(View.INVISIBLE);
             publishLay.setVisibility(View.VISIBLE);
@@ -175,6 +174,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             priceTv.setText(price);//价格
             probationTv.setOnClickListener(this);//免费试读按钮
             payTv.setOnClickListener(this);//购买按钮
+            stateTv.setText("阅读");
         }
         if (bean.isSubscribe()) {
             subscriptionTv.setText(" 取消订阅 ");
@@ -252,14 +252,17 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 UIUtil.openActivity(this, AllCommentActivity.class, bundle1);
                 break;
             case R.id.lay_read://阅读
-//                Bundle bundle = new Bundle();
-//                String bookname = "12345";
-//                String path = Environment.getExternalStorageDirectory() + File.separator
-//                        + "123.txt";
-//                bundle.putString("bookname", bookname);
-//                bundle.putString("bookpath", path);
-//                UIUtil.openActivity(this, BookPlayActivity.class, bundle);
-                mvpPresenter.loadJurisdiction(articleId);
+                if (bean.getStatus().equals("2")&&!bean.isAward()){//电子书
+                        ToastUtil.showToast("请打赏后阅读");
+                }else if (bean.getStatus().equals("4")){//已出版
+                    if (bean.isPurchase()){//购买
+                        mvpPresenter.getDownloadUrl(articleId);//获取下载url
+                    }else {//未购买
+                        ToastUtil.showToast("请购买后阅读");
+                    }
+                }else {//未出版
+                    mvpPresenter.loadJurisdiction(articleId);
+                }
                 // TODO: 2016/11/7 阅读
                 break;
             case R.id.tv_subscription://订阅
@@ -677,5 +680,13 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     public void finish() {
         super.finish();
         EventBus.getDefault().postSticky(new RefurshHomeEvent(true));
+    }
+
+    public HomeHotModel.DataBean getBean() {
+        return bean;
+    }
+
+    public void setBean(HomeHotModel.DataBean bean) {
+        this.bean = bean;
     }
 }

@@ -11,17 +11,20 @@ import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.AuthorDetail_Paramet;
 import com.laichushu.book.bean.netbean.Balance_Paramet;
 import com.laichushu.book.bean.netbean.BestLike_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
+import com.laichushu.book.bean.netbean.DownloadEpubFilePermission_Paramet;
 import com.laichushu.book.bean.netbean.Jurisdiction_Paramet;
 import com.laichushu.book.bean.netbean.Purchase_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
+import com.laichushu.book.event.TransmitBookMarkEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -220,6 +223,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             public void onClick(View v) {
                 dialogBuilder.dismiss();
                 buyBook(articleId, payMoney);
+                mActivity.getBean().setPurchase(true);
             }
         });
     }
@@ -301,6 +305,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                     if (Integer.parseInt(pay) > 0 || Integer.parseInt(pay) < 100) {
                         // TODO: 2016/11/8 请求打赏
                         rewardMoney(userId, accepterId, articleId, pay);
+                        mActivity.getBean().setAward(true);
                         dialogBuilder.dismiss();
                     } else {
                         ToastUtil.showToast("只能打赏1-100金额");
@@ -428,6 +433,60 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             @Override
             public void onFinish() {
                 mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 获取下载url接口文件
+     * @param articleId
+     */
+    public void getDownloadUrl(String articleId) {
+        mvpView.showLoading();
+        DownloadEpubFilePermission_Paramet paramet = new DownloadEpubFilePermission_Paramet(articleId);
+        addSubscription(apiStores.downloadEpubFile(paramet), new ApiCallback<UrlResult>() {
+            @Override
+            public void onSuccess(UrlResult modle) {
+                if (modle.isSuccess()){
+                    String url = modle.getData();
+                    if (!TextUtils.isEmpty(url)){
+                        downloadEpub(url);
+                    }
+                }else {
+                    ToastUtil.showToast(modle.getErrMsg());
+                    mvpView.hideLoading();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtil.showToast("请检查网络");
+                mvpView.hideLoading();
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    public void downloadEpub(String url){
+        addSubscription(apiStores.downloadFile(url), new ApiCallback() {
+            @Override
+            public void onSuccess(Object model) {
+
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
             }
         });
     }
