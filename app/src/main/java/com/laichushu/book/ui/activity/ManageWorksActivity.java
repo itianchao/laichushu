@@ -140,6 +140,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
 
     @Override
     public void getSignStateDeteSuccess(final SignStateResult model, final String articleId) {
+        writeBookAdapter.getFinalItemView().setEnabled(true);
         if (model.isSuccess()) {
             this.model = model;
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
@@ -290,6 +291,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     @Override
     public void getDataFail4(String msg) {
         ToastUtil.showToast("发表失败");
+        writeBookAdapter.getFinalItemView().setEnabled(true);
         LoggerUtil.e(msg);
         hideLoading();
     }
