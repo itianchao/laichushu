@@ -56,9 +56,9 @@ public class AppClient {
                     .cache(new Cache(UIUtil.getContext().getCacheDir(), 20 * 1024 * 1024));
             OkHttpClient okHttpClient = builder.build();
             mRetrofit = new Retrofit.Builder()
-                    .baseUrl(ApiStores.API_SERVER_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .baseUrl(ApiStores.API_SERVER_URL)
                     .client(okHttpClient)
                     .build();
         }

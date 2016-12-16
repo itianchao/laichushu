@@ -63,6 +63,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     private String collectType = null;
     private ImageView comentIv;
     private TextView stateTv;
+    private ImageView detailBookStatueIv;
 
     @Override
     protected void initView() {
@@ -111,6 +112,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
      */
     private void initDetailBook() {
         detailBookIv = (ImageView) findViewById(R.id.iv_detail_book);//封面
+        detailBookStatueIv = (ImageView) findViewById(R.id.iv_book_statue);//封面状态
         detailTitleTv = (TextView) findViewById(R.id.tv_detail_title);//书名
         detailRatbarTv = (RatingBar) findViewById(R.id.ratbar_detail_num);//星级
         detailMarkTv = (TextView) findViewById(R.id.tv_detail_mark);//评分
@@ -139,7 +141,17 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             collectType = "0";
 
         }
-
+        switch(bean.getStatus()){
+            case "1":
+                GlideUitl.loadImg(this, R.drawable.icon_book_statue2, detailBookStatueIv);
+                break;
+            case "2":
+                GlideUitl.loadImg(this, R.drawable.icon_book_statue3, detailBookStatueIv);
+                break;
+            default:
+                GlideUitl.loadImg(this, R.drawable.icon_book_statue1, detailBookStatueIv);
+                break;
+        }
     }
 
     /**
@@ -256,7 +268,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                         ToastUtil.showToast("请打赏后阅读");
                 }else if (bean.getStatus().equals("4")){//已出版
                     if (bean.isPurchase()){//购买
-                        mvpPresenter.getDownloadUrl(articleId);//获取下载url
+                        mvpPresenter.getDownloadUrl(articleId,bean.getAuthorId());//获取下载url
                     }else {//未购买
                         ToastUtil.showToast("请购买后阅读");
                     }
@@ -283,7 +295,9 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 break;
             case R.id.tv_pay://购买
                 //弹出对话框确认
-                mvpPresenter.getBalace();
+                if (!payTv.getText().toString().equals("已购买")) {
+                    mvpPresenter.getBalace();
+                }
                 break;
             case R.id.btn_reward://打赏
                 //弹出对话框确认
