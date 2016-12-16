@@ -14,7 +14,24 @@ public class BookDetailsModle implements Serializable {
      */
 
     private boolean success;
+    private String errorCode, errorMsg;
     private DataBean data;
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
 
     public boolean isSuccess() {
         return success;
@@ -86,6 +103,47 @@ public class BookDetailsModle implements Serializable {
         private boolean isSubscribe;
         private boolean isCollect;
         private boolean isAward;
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public boolean isPurchase() {
+            return isPurchase;
+        }
+
+        public void setPurchase(boolean purchase) {
+            isPurchase = purchase;
+        }
+
+        public boolean isSubscribe() {
+            return isSubscribe;
+        }
+
+        public void setSubscribe(boolean subscribe) {
+            isSubscribe = subscribe;
+        }
+
+        public boolean isCollect() {
+            return isCollect;
+        }
+
+        public void setCollect(boolean collect) {
+            isCollect = collect;
+        }
+
+        public boolean isAward() {
+            return isAward;
+        }
+
+        public void setAward(boolean award) {
+            isAward = award;
+        }
 
         public String getArticleId() {
             return articleId;

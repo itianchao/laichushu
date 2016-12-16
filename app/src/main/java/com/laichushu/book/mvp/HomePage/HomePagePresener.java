@@ -1,6 +1,8 @@
 package com.laichushu.book.mvp.homepage;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
+import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
@@ -188,28 +190,27 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
 
 
-    //点赞
-//    private ScoreLike_Paramet scoreLike =new ScoreLike_Paramet("",userId,"5");
-//    public void loadLikeUp(String sourUserId){
-//        scoreLike.setSourceId(sourUserId);
-//        LoggerUtil.toJson(collect);
-//        addSubscription(apiStores.collectSave(collect), new ApiCallback<HomeFocusResult>() {
-//            @Override
-//            public void onSuccess(HomeFocusResult model) {
-//                mvpView.getFocusMeStatus(model,isFocus);
-//            }
-//
-//            @Override
-//            public void onFailure(int code, String msg) {
-//                mvpView.getDataFail("code+" + code + "/msg:" + msg);
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//        });
-//    }
+    //话题收藏
+    public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
+        CollectSaveDate_Paramet collectSave = new CollectSaveDate_Paramet(userId, sourceId, sourceType, type);
+        LoggerUtil.toJson(collectSave);
+        addSubscription(apiStores.collectSaveData(collectSave), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getSaveCollectSuccess(model, type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
     //查看话题详情
     private CollectSave_Paramet collect =new CollectSave_Paramet(userId,"","0","5");
     public void loadLikeUp(String targetId){

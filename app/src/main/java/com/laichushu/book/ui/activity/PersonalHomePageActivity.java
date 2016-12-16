@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomeInfo_paramet;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
@@ -105,7 +106,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
         mDyRecyclerView.setFooterViewText("加载中");
-        dyAdapter = new HomePageDynamicAdapter(this, dyData);
+        dyAdapter = new HomePageDynamicAdapter(this, dyData,mvpPresenter);
         mDyRecyclerView.setAdapter(dyAdapter);
         mDyRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView 关注我的
@@ -289,6 +290,21 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         } else {
             ToastUtil.showToast("关注失败！");
             LoggerUtil.toJson(modle);
+        }
+    }
+
+    @Override
+    public void getSaveCollectSuccess(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏成功！");
+            } else {
+                ToastUtil.showToast("取消收藏！");
+            }
+
+        } else {
+            ToastUtil.showToast("操作失败！");
+            LoggerUtil.toJson(model);
         }
     }
 
