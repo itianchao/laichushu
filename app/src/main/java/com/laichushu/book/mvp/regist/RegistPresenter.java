@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.RegistValid_Paramet;
 import com.laichushu.book.bean.netbean.SendMsg_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.RegistActivity;
 import com.laichushu.book.ui.base.BasePresenter;
@@ -22,6 +23,7 @@ import com.laichushu.book.utils.Validator;
  */
 public class RegistPresenter extends BasePresenter<RegistView> {
     private RegistActivity mActivity;
+    private String type = ConstantValue.REGIST_CODE;
 
     //初始化构造
     public RegistPresenter(RegistView view) {
@@ -30,7 +32,7 @@ public class RegistPresenter extends BasePresenter<RegistView> {
     }
 
     public void loadCode(String phone) {
-        SendMsg_Paramet paramet = new SendMsg_Paramet(phone);
+        SendMsg_Paramet paramet = new SendMsg_Paramet(phone,type);
 
         LoggerUtil.e("校验code参数");
         LoggerUtil.toJson(new Gson().toJson(paramet));

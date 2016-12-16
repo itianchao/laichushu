@@ -50,7 +50,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     private TextView detailsTv;
     private LinearLayout parentLay;
     private ImageView stateIv;
-    ImageView comentIv;
+    private ImageView comentIv;
     private HomeHotModel.DataBean bean;
     private ArrayList<CampaignModel.DataBean> mData = new ArrayList<>();
     private ArrayList<CampaignDetailsModel.DataBean> mDetailsData = new ArrayList<>();
@@ -140,6 +140,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 GlideUitl.loadImg(mActivity, R.drawable.activity_end, stateIv);
                 joinTv.setVisibility(View.INVISIBLE);
                 comentIv.setVisibility(View.INVISIBLE);
+                parentLay.setVisibility(View.VISIBLE);
                 break;
         }
         activityNameTv.setText(bean.getActivityName());
@@ -232,8 +233,8 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                     if (joinTv.getText().equals("参加活动") | joinTv.getText().equals("已结束")) {
                         openAlertDialog();
                     } else {
-                        mvpPresenter.loadJoinActivityData(bean.getActivityId(), "", "1");
-                        joinTv.setEnabled(false);
+//                        mvpPresenter.loadJoinActivityData(bean.getActivityId(), "", "1");
+//                        joinTv.setEnabled(false);
                     }
                 }
                 break;

@@ -82,7 +82,7 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
         AuthorWorks_Paramet paramet = new AuthorWorks_Paramet(userId);
         Logger.e("获取作者作品结果");
         Logger.json(new Gson().toJson(paramet));
-        addSubscription(apiStores.getAuthorWorks(paramet), new ApiCallback<AuthorWorksModle>() {
+        addSubscription(apiStores.getActivityAuthorWorks(paramet), new ApiCallback<AuthorWorksModle>() {
             @Override
             public void onSuccess(AuthorWorksModle model) {
                 mvpView.getAuthorWorksDataSuccess(model);

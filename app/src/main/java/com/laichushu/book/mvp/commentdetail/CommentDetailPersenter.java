@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ReCommentList_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
+import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.CommentDetailActivity;
@@ -65,7 +66,8 @@ public class CommentDetailPersenter extends BasePresenter<CommentDetailView> {
      */
     public void saveScoreLikeData(String sourceId, final String type){
         mvpView.showLoading();
-        ScoreLike_Paramet paramet = new ScoreLike_Paramet(sourceId,userId,type);
+        String sourceType = "1";
+        TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId,sourceId,sourceType,type);
         Logger.e("点赞");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {

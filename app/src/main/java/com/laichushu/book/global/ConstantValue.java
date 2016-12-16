@@ -46,6 +46,10 @@ public class ConstantValue {
     //分类类型
     public static String HOME_CATEGROY_TYPE = "1";//首页
     public static String CREADTBOOK_CATEGROY_TYPE = "2";//创建新书
+
+    //短信验证码
+    public static String REGIST_CODE = "1";//注册
+    public static String FORGETPWD_CODE = "2";//忘记密码
     //baseBook
     public static final String BASEBOOK = "basebook";
 

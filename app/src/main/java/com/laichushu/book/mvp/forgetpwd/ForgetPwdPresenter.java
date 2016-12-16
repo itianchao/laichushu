@@ -6,7 +6,11 @@ import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.SendMsg_Paramet;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.Validator;
 import com.orhanobut.logger.Logger;
@@ -20,6 +24,7 @@ import com.laichushu.book.ui.activity.ForgetPwdActivity;
  */
 public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
     private ForgetPwdActivity mActivity;
+    private String type = ConstantValue.FORGETPWD_CODE;
 
     //初始化构造
     public ForgetPwdPresenter(ForgetPwdView view) {
@@ -28,28 +33,27 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
     }
 
     public void loadCode(String phone) {
-//        mvpView.showLoading();
-//        ForgetPwd_Paramet paramet = new ForgetPwd_Paramet(,,);
-//        Logger.e("登录请求参数");
-//        Logger.json(new Gson().toJson(paramet));
-//        addSubscription(apiStores.forgetPwdData(paramet),
-//                new ApiCallback<ForgetPwdModel>() {
-//                    @Override
-//                    public void onSuccess(ForgetPwdModel model) {
-//                        mvpView.getDataSuccess(model);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(int code, String msg) {
-//                        mvpView.getDataFail("code+" + code + "/msg:" + msg);
-//                    }
-//
-//                    @Override
-//                    public void onFinish() {
-//                        mvpView.hideLoading();
-//                    }
-//
-//                });
+        SendMsg_Paramet paramet = new SendMsg_Paramet(phone,type);
+
+        LoggerUtil.e("校验code参数");
+        LoggerUtil.toJson(new Gson().toJson(paramet));
+        addSubscription(apiStores.sendMsg(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getCodeDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+
+        });
     }
 
     //更新验证码显示
