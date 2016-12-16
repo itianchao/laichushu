@@ -56,6 +56,7 @@ public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAd
         holder.commentIv.setVisibility(View.INVISIBLE);
         holder.likeTv.setVisibility(View.INVISIBLE);
         holder.likeIv.setVisibility(View.INVISIBLE);
+        holder.inIv.setVisibility(View.INVISIBLE);
         holder.headIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

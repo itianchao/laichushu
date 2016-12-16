@@ -40,7 +40,7 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
         mActivity = (AllCommentActivity) view;
     }
     public void loadAllCommentData(String sourceId){
-        getParamet().setSourceId(sourceId);
+        getParamet().setArticleId(sourceId);
         Logger.e("全部评论");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.articleComment(paramet), new ApiCallback<ArticleCommentModle>() {

@@ -94,11 +94,11 @@ public interface ApiStores {
     @POST("searchArticle/list")
     Observable<HomeHotModel> homeAllData(@Body HomeAllBook_Paramet paramet);
 
-    //home分类
+    //home分类查询图书
     @POST("searchArticle/findArticleByCategoryId")
     Observable<HomeHotModel> gethomeCategroyData(@Body HomeCategroyListBook_Paramet paramet);
 
-    //首页分类接口
+    //首页和创建新书分类接口
     @POST("category/findCategoryList")
     Observable<CategoryModle> getCategoryList(@Body HomeCategory_Paramet paramet);
 
@@ -123,15 +123,15 @@ public interface ApiStores {
     Observable<ArticleCommentModle> articleComment(@Body Comment_Paramet paramet);
 
     //图书全部评论查询接口
-    @POST("comment/list")
-    Observable<TopicdetailModel> articleComment(@Body TopicDetailCommentList_Paramet paramet);
+    @POST("articleScore/list")
+    Observable<ArticleCommentModle> articleComment(@Body TopicDetailCommentList_Paramet paramet);
 
     //图书评论保存接口
     @POST("articleScore/save")
     Observable<SendCommentMoudle> saveComment(@Body SaveComment_Paramet paramet);
 
     //回复评论接口
-    @POST("articleComment/list")
+    @POST("comment/list")
     Observable<CommentDetailModle> CommentList(@Body ReCommentList_Paramet paramet);
 
     //保存回复评论接口

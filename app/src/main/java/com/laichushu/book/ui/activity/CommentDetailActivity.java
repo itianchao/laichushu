@@ -47,6 +47,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     private String commentId;
     private ArticleCommentModle.DataBean dataBean;
     private String type;
+    private ImageView commentIv;
 
     @Override
     protected void initView() {
@@ -65,6 +66,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         likeTv = (TextView) findViewById(R.id.tv_comment_like);
         numberTv = (TextView) findViewById(R.id.tv_comment_number);
         inIv = (ImageView) findViewById(R.id.iv_comment_in);
+        commentIv = (ImageView) findViewById(R.id.iv_comment);
         mAdapter = new CommentDetaileAdapter(this, mData);
         commentRyv.setAdapter(mAdapter);
         headIv.setOnClickListener(this);
@@ -86,7 +88,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     protected void initData() {
         dataBean = getIntent().getParcelableExtra("bean");
         type = getIntent().getStringExtra("type");
-        commentId = dataBean.getScoreId();
+        commentId = dataBean.getSourceId();
         onRefresh();
         GlideUitl.loadRandImg(this, dataBean.getPhoto(), headIv);//头像
         nameTv.setText(dataBean.getNickName());//用户名
@@ -94,7 +96,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         timeTv.setText(dataBean.getCommentTime());//创建时间
         likeTv.setText(dataBean.getLikeNum() + "");//喜欢人数
         numberTv.setText(dataBean.getReplyNum() + "");//回复人数
-        numberTv.setOnClickListener(new View.OnClickListener() {
+        commentIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -112,13 +114,13 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
             @Override
             public void onClick(View v) {
                 if (dataBean.isIsLike()) {
-                    mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"1");
+                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"1");
                     GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
                     dataBean.setIsLike(false);
                     dataBean.setLikeNum(dataBean.getLikeNum()-1);
                     likeTv.setText(dataBean.getLikeNum() + "");
                 } else {
-                    mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"0");
+                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"0");
                     GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
                     dataBean.setIsLike(true);
                     dataBean.setLikeNum(dataBean.getLikeNum()+1);

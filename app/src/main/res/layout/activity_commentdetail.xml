@@ -4,8 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include layout="@layout/page_title"/>
-    <include layout="@layout/item_comment_connet"/>
+
     <include layout="@layout/item_distance"/>
+
+    <include layout="@layout/item_comment_connet"/>
+
     <TextView
         android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
@@ -13,7 +16,9 @@
         android:gravity="center_vertical"
         android:text="全部评论"
         android:textColor="@color/black"
-        android:textSize="@dimen/edit2" />
+        android:textSize="@dimen/edit2"
+        android:id="@+id/textView7" />
+
     <include layout="@layout/line"/>
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:layout_marginTop="5dp"
