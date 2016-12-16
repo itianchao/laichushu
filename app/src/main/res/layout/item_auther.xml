@@ -43,7 +43,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="已发表"
+            tools:text="取消发表"
             android:id="@+id/textView2"
             android:layout_below="@+id/tv_author_name"
             android:layout_toRightOf="@+id/iv_author_head"

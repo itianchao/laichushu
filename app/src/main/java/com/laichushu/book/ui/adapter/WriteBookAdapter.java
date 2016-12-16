@@ -71,7 +71,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         if (dataBean.getExpressStatus().equals("0")||dataBean.getExpressStatus().equals("4")) {
             mStrip.get(3).setTitle("发表");
         } else {
-            mStrip.get(3).setTitle("已发表");
+            mStrip.get(3).setTitle("取消发表");
         }
         for (int i = 0; i < mStrip.size(); i++) {
             itemView = UIUtil.inflate(R.layout.item_tabstrip, null);
