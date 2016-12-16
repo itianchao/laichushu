@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
-import com.laichushu.book.bean.otherbean.BaseBookEntity;
-import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;

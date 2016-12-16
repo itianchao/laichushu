@@ -20,7 +20,6 @@ import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 机构列表
@@ -91,11 +90,11 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.iv_title_finish:
+            case R.id.iv_title_finish://关闭
                 finish();
                 break;
-            case R.id.iv_title_other:
-                // TODO: 2016/11/24  搜索
+            case R.id.iv_title_other://搜索
+                UIUtil.openActivity(this,MechanismSearchActivity.class);
                 break;
             case R.id.rbn_01:
                 if (position != 1){

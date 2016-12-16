@@ -81,15 +81,15 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
 
     @Override
     protected View createSuccessView() {
-        View successView = UIUtil.inflate(R.layout.activity_homesearch);//页面布局
-        finishIV = (ImageView) successView.findViewById(R.id.iv_finish);//返回
-        searchEt = (EditText) successView.findViewById(R.id.et_search);//搜索
-        clearTv = (TextView) successView.findViewById(R.id.tv_clear);//清除搜索历史
-        searchLay = (LinearLayout) successView.findViewById(R.id.lay_search);//整个搜索布局
-        searchLv = (ListView) successView.findViewById(R.id.lv_history);//搜索历史的容器
-        childLay = (ListView) successView.findViewById(R.id.lay_hot_child);//hot容器
-        bookRyv = (PullLoadMoreRecyclerView) successView.findViewById(R.id.ryv_book);//搜索结果
-        emptyIv = (ImageView) successView.findViewById(R.id.iv_empty);//搜索结果
+        View mSuccessView = UIUtil.inflate(R.layout.activity_homesearch);//页面布局
+        finishIV = (ImageView) mSuccessView.findViewById(R.id.iv_finish);//返回
+        searchEt = (EditText) mSuccessView.findViewById(R.id.et_search);//搜索
+        clearTv = (TextView) mSuccessView.findViewById(R.id.tv_clear);//清除搜索历史
+        searchLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_search);//整个搜索布局
+        searchLv = (ListView) mSuccessView.findViewById(R.id.lv_history);//搜索历史的容器
+        childLay = (ListView) mSuccessView.findViewById(R.id.lay_hot_child);//hot容器
+        bookRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_book);//搜索结果
+        emptyIv = (ImageView) mSuccessView.findViewById(R.id.iv_empty);//搜索结果
         finishIV.setOnClickListener(this);
         clearTv.setOnClickListener(this);
         searchEt.setOnClickListener(this);
@@ -102,7 +102,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         bookRyv.setAdapter(mAdapter);
         mHotAdapter = new HomeSearchHotHistoryAdapter(mHotData,this);
         childLay.setAdapter(mHotAdapter);
-        return successView;
+        return mSuccessView;
     }
 
     @Override
