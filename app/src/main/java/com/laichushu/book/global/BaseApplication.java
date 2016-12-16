@@ -12,9 +12,6 @@ import com.laichushu.book.utils.SharePrefManager;
 
 import org.geometerplus.android.fbreader.FBReaderApplication;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
-
-import cn.sharesdk.framework.ShareSDK;
-
 /**
  * 应用程序入口
  */

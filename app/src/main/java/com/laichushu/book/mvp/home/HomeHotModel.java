@@ -83,6 +83,15 @@ public class HomeHotModel implements Parcelable {
         private Boolean isEdit;
         private String sourceId;
         private String type;
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public String getSourceId() {
             return sourceId;

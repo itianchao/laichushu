@@ -226,7 +226,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             bundle.putParcelable("bean", dataBean);
             UIUtil.openActivity(this, BookDetailActivity.class, bundle);
         }else{
-           ToastUtil.showToast(model.getErrorMsg());
+           ToastUtil.showToast(model.getErrMsg());
         }
 
     }

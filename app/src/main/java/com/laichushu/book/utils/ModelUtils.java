@@ -61,6 +61,7 @@ public class ModelUtils {
             dataBean.setActivityName(result.getData().getName());
         }
         dataBean.setActivityId(result.getData().getArticleId());
+        dataBean.setArticleId(result.getData().getArticleId());
         dataBean.setActivityName(result.getData().getArticleName());
         dataBean.setActivityId(result.getData().getArticleId());
         dataBean.setAuthorId(result.getData().getAuthorId());

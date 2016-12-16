@@ -27,7 +27,6 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
-import com.laichushu.book.utils.ShareSdkUtils;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -242,7 +241,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 finish();
                 break;
             case R.id.iv_title_other://分享
-                ShareSdkUtils.showShare(mActivity);
+//                ShareSdkUtils.showShare(mActivity);
                 break;
             case R.id.iv_title_another://收藏
                 mvpPresenter.collectSave(articleId, collectType, ConstantValue.BOOKCOMMENTTYPE);

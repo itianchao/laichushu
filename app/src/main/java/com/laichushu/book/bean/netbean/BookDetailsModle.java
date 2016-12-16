@@ -14,7 +14,7 @@ public class BookDetailsModle implements Serializable {
      */
 
     private boolean success;
-    private String errorCode, errorMsg;
+    private String errorCode, errMsg;
     private DataBean data;
 
     public String getErrorCode() {
@@ -25,12 +25,12 @@ public class BookDetailsModle implements Serializable {
         this.errorCode = errorCode;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrMsg(String errorMsg) {
+        this.errMsg = errMsg;
     }
 
     public boolean isSuccess() {

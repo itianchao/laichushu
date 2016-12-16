@@ -28,7 +28,7 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
     private PersonalHomePageActivity context;
     private List<HomeUseDyrResult.DataBean> dataBeen;
     private HomePagePresener homePagePresener;
-    private String type;
+    private String type=null;
     private int currentNum = 0;
     public HomePageDynamicAdapter(PersonalHomePageActivity context, List<HomeUseDyrResult.DataBean> dataBean,HomePagePresener homePagePresener) {
         this.context = context;
@@ -49,21 +49,24 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
+        currentNum = dataBeen.get(position).getCollectNum();
         if(dataBeen.get(position).isCollect()){
-            holder.tvCollect.setText("收藏("+dataBeen.get(position).getCollectNum() + ")");
+            holder.tvCollect.setText("已收藏("+dataBeen.get(position).getCollectNum() + ")");
             Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
+            type = "1";
         }else{
-            holder.tvCollect.setText("已收藏("+dataBeen.get(position).getCollectNum() + ")");
+            holder.tvCollect.setText("收藏("+dataBeen.get(position).getCollectNum() + ")");
             Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
+            type = "0";
         }
         holder.llCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (type.equals("0")) {
+                if (("0").equals(type)) {
                     //添加收藏
                     currentNum++;
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);

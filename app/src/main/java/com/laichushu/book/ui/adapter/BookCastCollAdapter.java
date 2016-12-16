@@ -41,7 +41,7 @@ public class BookCastCollAdapter extends RecyclerView.Adapter<BookCastCollAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivImg);
-        holder.tvItem.setText(dataBeen.get(position).getArticleName());
+        holder.tvItem.setText(dataBeen.get(position).getName());
         holder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

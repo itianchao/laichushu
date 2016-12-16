@@ -41,7 +41,7 @@ import java.util.List;
 
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade,ivGreadDetails, ivAnother;
-    private TextView tvTitle, tvNickName, tvRealName, tvAuthorAgree;
+    private TextView tvTitle, tvNickName, tvAuthorAgree;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
     private RadioButton rbDy;
@@ -72,8 +72,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         ivAnother = (ImageView) inflate.findViewById(R.id.iv_title_another);
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvNickName = ((TextView) inflate.findViewById(R.id.tv_PerNickName));
-        tvRealName = ((TextView) inflate.findViewById(R.id.tv_perRealName));
-        tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perAuthorAgree));
+        tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perRealName));
         rbDy = ((RadioButton) inflate.findViewById(R.id.rb_dynamic));
 
         rgHomeList = ((RadioGroup) inflate.findViewById(R.id.rg_homeList));
@@ -138,7 +137,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                     //初始化个人信息
                     GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg,R.drawable.icon_percentre_defhead2x);
                     tvNickName.setText(result.getNickName());
-                    tvRealName.setText("");
                     if(!TextUtils.isEmpty(result.getLevelType())){
                         switch (result.getLevelType()){
                             case "1":

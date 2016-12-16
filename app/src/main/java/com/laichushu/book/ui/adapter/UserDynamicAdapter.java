@@ -57,13 +57,13 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
             type = "1";
-            holder.tvCollection.setText("收藏(" + dataBeen.get(position).getCollectNum() + ")");
+            holder.tvCollection.setText("已收藏(" + dataBeen.get(position).getCollectNum() + ")");
         } else {
             Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
             type = "0";
-            holder.tvCollection.setText("已收藏(" + dataBeen.get(position).getCollectNum() + ")");
+            holder.tvCollection.setText("收藏(" + dataBeen.get(position).getCollectNum() + ")");
         }
         holder.llCollection.setOnClickListener(new View.OnClickListener() {
             @Override
