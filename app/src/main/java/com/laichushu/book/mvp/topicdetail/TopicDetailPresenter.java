@@ -44,9 +44,9 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
         this.paramet = paramet;
     }
 
-    TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet("", "", pageNo, pageSize, userId);
+    TopicDetailCommentList_Paramet paramet = new TopicDetailCommentList_Paramet("", "","", pageNo, pageSize, userId);
     public void loadCommentData(String topicId,String sourceType) {
-        getParamet().setArticleId(topicId);
+        getParamet().setSourceId(topicId);
         getParamet().setSourceType(sourceType);
         Logger.e("获取全部评论");
         Logger.json(new Gson().toJson(paramet));

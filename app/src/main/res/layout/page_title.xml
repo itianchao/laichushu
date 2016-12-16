@@ -30,7 +30,7 @@
         android:layout_height="25dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
-        android:src="@drawable/icon_finish" />
+        android:src="@drawable/icon_finish2x" />
 
     <ImageView
         android:id="@+id/iv_title_other"
