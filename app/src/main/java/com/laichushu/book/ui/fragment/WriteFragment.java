@@ -143,6 +143,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     @Override
     public void getSignStateDeteSuccess(final SignStateResult model, final String articleId) {
+        writeBookAdapter.getFinalItemView().setEnabled(true);
         if (model.isSuccess()) {
             this.model = model;
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
@@ -245,8 +246,10 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         if (model.isSuccess()) {
             if (type.equals("1")) {
                 mData.get(index).setExpressStatus("0");
+                mData.get(index).setEdit(true);
             } else {
                 mData.get(index).setExpressStatus("1");
+                mData.get(index).setEdit(false);
             }
             writeBookAdapter.setmData(mData);
         } else {
@@ -278,6 +281,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     @Override
     public void getDataFail4(String msg) {
         ToastUtil.showToast("发表失败");
+        writeBookAdapter.getFinalItemView().setEnabled(true);
         LoggerUtil.e(msg);
         hideLoading();
     }

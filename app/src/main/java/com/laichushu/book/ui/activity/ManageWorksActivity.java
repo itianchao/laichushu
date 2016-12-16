@@ -255,8 +255,10 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         if (model.isSuccess()) {
             if (type.equals("1")) {
                 mData.get(index).setExpressStatus("0");
+                mData.get(index).setEdit(true);
             } else {
                 mData.get(index).setExpressStatus("1");
+                mData.get(index).setEdit(false);
             }
             writeBookAdapter.setmData(mData);
         } else {
