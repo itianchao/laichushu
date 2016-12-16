@@ -12,7 +12,6 @@ import com.laichushu.book.utils.SharePrefManager;
 
 import org.geometerplus.android.fbreader.FBReaderApplication;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
-
 /**
  * 应用程序入口
  */
@@ -45,6 +44,8 @@ public class BaseApplication extends FBReaderApplication {
         SharePrefManager.setPosition(0);
         //重写系统的异常处理器
 //        Thread.currentThread().setUncaughtExceptionHandler(new MyExceptionHandler());
+        // 初始化分享
+//        ShareSDK.initSDK(this);
     }
 
     public static Context getContext() {
@@ -71,9 +72,10 @@ public class BaseApplication extends FBReaderApplication {
         //当发现了未捕获异常的时候调用的方法
         @Override
         public void uncaughtException(Thread thread, Throwable ex) {
-                android.os.Process.killProcess(android.os.Process.myPid());
+            android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
+
     public static DaoMaster getDaoMaster(Context context) {
         if (daoMaster == null) {
             DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context,

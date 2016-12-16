@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
+import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.homepage.HomePagePresener;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.TopicDetilActivity;
 import com.laichushu.book.utils.GlideUitl;
@@ -24,10 +27,13 @@ import java.util.List;
 public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamicAdapter.ViewHolder> {
     private PersonalHomePageActivity context;
     private List<HomeUseDyrResult.DataBean> dataBeen;
-
-    public HomePageDynamicAdapter(PersonalHomePageActivity context, List<HomeUseDyrResult.DataBean> dataBean) {
+    private HomePagePresener homePagePresener;
+    private String type=null;
+    private int currentNum = 0;
+    public HomePageDynamicAdapter(PersonalHomePageActivity context, List<HomeUseDyrResult.DataBean> dataBean,HomePagePresener homePagePresener) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.homePagePresener=homePagePresener;
     }
 
     @Override
@@ -37,13 +43,51 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getCreaterPhoto(), holder.ivImg);
         holder.tvShopName.setText(dataBeen.get(position).getCreatUserName());
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
-        holder.tvCollect.setText(dataBeen.get(position).getCollectNum() + "");
+        currentNum = dataBeen.get(position).getCollectNum();
+        if(dataBeen.get(position).isCollect()){
+            holder.tvCollect.setText("已收藏("+dataBeen.get(position).getCollectNum() + ")");
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
+            type = "1";
+        }else{
+            holder.tvCollect.setText("收藏("+dataBeen.get(position).getCollectNum() + ")");
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
+            type = "0";
+        }
+        holder.llCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (("0").equals(type)) {
+                    //添加收藏
+                    currentNum++;
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
+                    homePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
+                    type = "1";
+                    holder.tvCollect.setText("已收藏("+currentNum + ")");
+                } else {
+                    //取消收藏
+                    currentNum--;
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
+                    homePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
+                    type = "0";
+                    holder.tvCollect.setText("收藏("+currentNum + ")");
+                }
+            }
+        });
+
         holder.llScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

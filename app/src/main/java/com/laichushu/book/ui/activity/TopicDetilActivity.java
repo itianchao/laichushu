@@ -100,9 +100,9 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             GlideUitl.loadRandImg(mActivity, homeBean.getCreaterPhoto(), topicUserheadIv);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (homeBean.isCollect()) {
-                ivLike.setImageResource(R.drawable.icon_likewhite2x);
-            } else {
                 ivLike.setImageResource(R.drawable.icon_likedwhite2x);
+            } else {
+                ivLike.setImageResource(R.drawable.icon_likewhite2x);
             }
         } else {
             bean = getIntent().getParcelableExtra("bean");

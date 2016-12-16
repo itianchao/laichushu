@@ -226,7 +226,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             bundle.putParcelable("bean", dataBean);
             UIUtil.openActivity(this, BookDetailActivity.class, bundle);
         }else{
-           ToastUtil.showToast("刷新页面失败！");
+           ToastUtil.showToast(model.getErrMsg());
         }
 
     }

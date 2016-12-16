@@ -51,18 +51,19 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
         holder.tvTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvTitle.setText(dataBeen.get(position).getTitle());
         holder.tvTitleContent.setText(dataBeen.get(position).getContent());
-        holder.tvCollection.setText(dataBeen.get(position).getCollectNum() + "");
         currentNum = dataBeen.get(position).getCollectNum();
         if (dataBeen.get(position).isCollect()) {
-            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
             type = "1";
+            holder.tvCollection.setText("已收藏(" + dataBeen.get(position).getCollectNum() + ")");
         } else {
-            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_red);
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
             type = "0";
+            holder.tvCollection.setText("收藏(" + dataBeen.get(position).getCollectNum() + ")");
         }
         holder.llCollection.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,21 +71,22 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
                 if (type.equals("0")) {
                     //添加收藏
                     currentNum++;
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_normal);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
                     userHomePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
                     type = "1";
+                    holder.tvCollection.setText("已收藏(" + currentNum + ")");
                 } else {
                     //取消收藏
                     currentNum--;
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_like_red);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
                     userHomePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
                     type = "0";
+                    holder.tvCollection.setText("收藏(" + currentNum + ")");
                 }
-                holder.tvCollection.setText(currentNum + "");
             }
         });
         holder.llScan.setOnClickListener(new View.OnClickListener() {

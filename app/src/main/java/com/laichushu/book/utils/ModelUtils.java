@@ -1,5 +1,6 @@
 package com.laichushu.book.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -53,8 +54,14 @@ public class ModelUtils {
 
     public static HomeHotModel.DataBean bean2HotBean(BookDetailsModle result) {
         HomeHotModel.DataBean dataBean = new HomeHotModel.DataBean();
-        dataBean.setActivityName(result.getData().getArticleName());
+        if (!TextUtils.isEmpty(result.getData().getArticleName())) {
+            dataBean.setActivityName(result.getData().getArticleName());
+        }
+        if (!TextUtils.isEmpty(result.getData().getName())) {
+            dataBean.setActivityName(result.getData().getName());
+        }
         dataBean.setActivityId(result.getData().getArticleId());
+        dataBean.setArticleId(result.getData().getArticleId());
         dataBean.setActivityName(result.getData().getArticleName());
         dataBean.setActivityId(result.getData().getArticleId());
         dataBean.setAuthorId(result.getData().getAuthorId());

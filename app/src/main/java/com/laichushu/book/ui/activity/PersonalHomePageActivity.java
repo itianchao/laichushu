@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomeInfo_paramet;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
@@ -40,7 +41,7 @@ import java.util.List;
 
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade,ivGreadDetails, ivAnother;
-    private TextView tvTitle, tvNickName, tvRealName, tvAuthorAgree;
+    private TextView tvTitle, tvNickName, tvAuthorAgree;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
     private RadioButton rbDy;
@@ -71,8 +72,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         ivAnother = (ImageView) inflate.findViewById(R.id.iv_title_another);
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvNickName = ((TextView) inflate.findViewById(R.id.tv_PerNickName));
-        tvRealName = ((TextView) inflate.findViewById(R.id.tv_perRealName));
-        tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perAuthorAgree));
+        tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perRealName));
         rbDy = ((RadioButton) inflate.findViewById(R.id.rb_dynamic));
 
         rgHomeList = ((RadioGroup) inflate.findViewById(R.id.rg_homeList));
@@ -105,7 +105,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
         mDyRecyclerView.setFooterViewText("加载中");
-        dyAdapter = new HomePageDynamicAdapter(this, dyData);
+        dyAdapter = new HomePageDynamicAdapter(this, dyData,mvpPresenter);
         mDyRecyclerView.setAdapter(dyAdapter);
         mDyRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView 关注我的
@@ -137,7 +137,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                     //初始化个人信息
                     GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg,R.drawable.icon_percentre_defhead2x);
                     tvNickName.setText(result.getNickName());
-                    tvRealName.setText("");
                     if(!TextUtils.isEmpty(result.getLevelType())){
                         switch (result.getLevelType()){
                             case "1":
@@ -289,6 +288,21 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         } else {
             ToastUtil.showToast("关注失败！");
             LoggerUtil.toJson(modle);
+        }
+    }
+
+    @Override
+    public void getSaveCollectSuccess(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏成功！");
+            } else {
+                ToastUtil.showToast("取消收藏！");
+            }
+
+        } else {
+            ToastUtil.showToast("操作失败！");
+            LoggerUtil.toJson(model);
         }
     }
 
