@@ -58,7 +58,7 @@ public class ArticleCommentModle {
     }
 
     public static class DataBean implements Parcelable {
-        private String scoreId;
+        private String sourceId;
         private String userId;
         private String articleId;
         private String content;
@@ -85,12 +85,12 @@ public class ArticleCommentModle {
             isLike = like;
         }
 
-        public String getScoreId() {
-            return scoreId;
+        public String getSourceId() {
+            return sourceId;
         }
 
-        public void setScoreId(String scoreId) {
-            this.scoreId = scoreId;
+        public void setSourceId(String sourceId) {
+            this.sourceId = sourceId;
         }
 
         public String getUserId() {
@@ -169,7 +169,7 @@ public class ArticleCommentModle {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.scoreId);
+            dest.writeString(this.sourceId);
             dest.writeString(this.userId);
             dest.writeString(this.articleId);
             dest.writeString(this.content);
@@ -182,7 +182,7 @@ public class ArticleCommentModle {
         }
 
         protected DataBean(Parcel in) {
-            this.scoreId = in.readString();
+            this.sourceId = in.readString();
             this.userId = in.readString();
             this.articleId = in.readString();
             this.content = in.readString();

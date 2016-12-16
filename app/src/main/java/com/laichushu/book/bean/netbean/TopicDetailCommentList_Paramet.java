@@ -6,13 +6,13 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class TopicDetailCommentList_Paramet {
-    private String sourceId;  //话题 id
+    private String articleId;  //话题 id
     private String sourceType;
     private String pageNo;
     private String pageSize;
     private String userId;
-    public TopicDetailCommentList_Paramet(String sourceId, String sourceType, String pageNo, String pageSize,String userId) {
-        this.sourceId = sourceId;
+    public TopicDetailCommentList_Paramet(String articleId, String sourceType, String pageNo, String pageSize,String userId) {
+        this.articleId = articleId;
         this.sourceType = sourceType;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
@@ -27,12 +27,12 @@ public class TopicDetailCommentList_Paramet {
         this.userId = userId;
     }
 
-    public String getSourceId() {
-        return sourceId;
+    public String getArticleId() {
+        return articleId;
     }
 
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
     }
 
     public String getSourceType() {

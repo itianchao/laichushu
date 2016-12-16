@@ -61,7 +61,7 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("commentId", dataBean.getScoreId());
+                bundle.putString("commentId", dataBean.getSourceId());
                 UIUtil.openActivity(mActivity,CommentSendActivity.class,bundle);
             }
         });
@@ -69,13 +69,13 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
             @Override
             public void onClick(View v) {
                 if (dataBean.isIsLike()) {
-                    mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"1");
+                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"1");
                     GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
                     dataBean.setIsLike(false);
                     dataBean.setLikeNum(dataBean.getLikeNum()-1);
                     holder.likeTv.setText(dataBean.getLikeNum() + "");
                 } else {
-                    mvpPresenter.saveScoreLikeData(dataBean.getScoreId(),"0");
+                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"0");
                     GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
                     dataBean.setIsLike(true);
                     dataBean.setLikeNum(dataBean.getLikeNum()+1);

@@ -5,13 +5,13 @@ package com.laichushu.book.bean.netbean;
  * Created by wangtong on 2016/11/4.
  */
 public class ReSavaComment_Paramet {
-    private String scoreId;
+    private String sourceId;
     private String userId;
     private String content;
     private String sourceType;
 
-    public ReSavaComment_Paramet(String scoreId, String userId, String content, String sourceType) {
-        this.scoreId = scoreId;
+    public ReSavaComment_Paramet(String sourceId, String userId, String content, String sourceType) {
+        this.sourceId = sourceId;
         this.userId = userId;
         this.content = content;
         this.sourceType = sourceType;
@@ -25,12 +25,12 @@ public class ReSavaComment_Paramet {
         this.sourceType = sourceType;
     }
 
-    public String getScoreId() {
-        return scoreId;
+    public String getSourceId() {
+        return sourceId;
     }
 
-    public void setScoreId(String scoreId) {
-        this.scoreId = scoreId;
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 
     public String getUserId() {

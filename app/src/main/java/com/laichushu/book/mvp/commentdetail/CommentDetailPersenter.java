@@ -21,7 +21,8 @@ public class CommentDetailPersenter extends BasePresenter<CommentDetailView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
-    private ReCommentList_Paramet paramet = new ReCommentList_Paramet("", userId, pageNo, pageSize);
+    private String sourceType = ConstantValue.BOOKCOMMENTTYPE;
+    private ReCommentList_Paramet paramet = new ReCommentList_Paramet("", userId, pageNo, pageSize,sourceType);
 
     public CommentDetailPersenter(CommentDetailView view) {
         attachView(view);
@@ -29,7 +30,7 @@ public class CommentDetailPersenter extends BasePresenter<CommentDetailView> {
     }
 
     public void loadCommentData(String commentId) {
-        getParamet().setScoreId(commentId);
+        getParamet().setSourceId(commentId);
         Logger.e("获取全部评论");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.CommentList(paramet), new ApiCallback<CommentDetailModle>() {

@@ -66,7 +66,7 @@ public class TopicdetailModel {
         private int likeNum;
         private String nickName;
         private String photo;
-        private String createDate;
+        private String commentTime;
         private boolean isLike;
 
         public String getId() {
@@ -149,12 +149,12 @@ public class TopicdetailModel {
             this.photo = photo;
         }
 
-        public String getCreateDate() {
-            return createDate;
+        public String getCommentTime() {
+            return commentTime;
         }
 
-        public void setCreateDate(String createDate) {
-            this.createDate = createDate;
+        public void setCommentTime(String commentTime) {
+            this.commentTime = commentTime;
         }
 
         public boolean isIsLike() {

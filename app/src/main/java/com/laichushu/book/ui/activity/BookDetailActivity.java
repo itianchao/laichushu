@@ -57,6 +57,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     private RadioButton readerRbn, dresserRbn;
     private HomeHotModel.DataBean bean;
     private ArrayList<HomeHotModel.DataBean> mdata = new ArrayList();
+    private ArrayList<HomeHotModel.DataBean> mLikeData = new ArrayList();
     private ArrayList<ArticleCommentModle.DataBean> mCommentdata = new ArrayList();
     private ImageView likeIv;
     private boolean isCheck;
@@ -379,10 +380,10 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     @Override
     public void getBestLikeSuggestlData(HomeHotModel model) {
         if (model.isSuccess()) {
-            mdata.clear();
+            mLikeData.clear();
             if (model.getData() != null) {
-                mdata = model.getData();
-                for (HomeHotModel.DataBean dataBean : mdata) {
+                mLikeData = model.getData();
+                for (final HomeHotModel.DataBean dataBean : mLikeData) {
                     View likeItemView = UIUtil.inflate(R.layout.item_home_book);
                     ImageView bookIv = (ImageView) likeItemView.findViewById(R.id.iv_book);
                     TextView titleTv = (TextView) likeItemView.findViewById(R.id.tv_title);
@@ -396,20 +397,20 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                     TextView rewardTv = (TextView) likeItemView.findViewById(R.id.tv_reward);
                     GlideUitl.loadImg(this, dataBean.getCoverUrl(), bookIv);//封面
                     titleTv.setText(dataBean.getArticleName());//书名
-                    commentTv.setText("(" + bean.getCommentNum() + ")评论");//评论数
-                    authorTv.setText(bean.getAuthorName());//作者
-                    typeTv.setText(bean.getTopCategoryName());//分类
-                    wordTv.setText("约" + bean.getWordNum() + "字");//字数
-                    moneyTv.setText(bean.getAwardMoney() + "元");//打赏金额
-                    rewardTv.setText(bean.getAwardNum() + "人打赏");//打赏人
-                    markTv.setText(bean.getScore() + "分");//评分
-                    numRb.setRating(bean.getLevel());//星级
+                    commentTv.setText("(" + dataBean.getCommentNum() + ")评论");//评论数
+                    authorTv.setText(dataBean.getAuthorName());//作者
+                    typeTv.setText(dataBean.getTopCategoryName());//分类
+                    wordTv.setText("约" + dataBean.getWordNum() + "字");//字数
+                    moneyTv.setText(dataBean.getAwardMoney() + "元");//打赏金额
+                    rewardTv.setText(dataBean.getAwardNum() + "人打赏");//打赏人
+                    markTv.setText(dataBean.getScore() + "分");//评分
+                    numRb.setRating(dataBean.getLevel());//星级
                     likeLay.addView(likeItemView);
                     likeItemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Bundle bundle = new Bundle();
-                            bundle.putParcelable("bean", bean);
+                            bundle.putParcelable("bean", dataBean);
                             UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
                             finish();
                         }
@@ -489,14 +490,14 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                     @Override
                     public void onClick(View v) {
                         if (dataBean.isIsLike()) {
-                            mvpPresenter.saveScoreLikeData(dataBean.getScoreId(), "1");
-//                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
+                            mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "1");
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
                             dataBean.setIsLike(false);
                             dataBean.setLikeNum(dataBean.getLikeNum() - 1);
                             likeTv.setText(dataBean.getLikeNum() + "");
                         } else {
-                            mvpPresenter.saveScoreLikeData(dataBean.getScoreId(), "0");
-//                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
+                            mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "0");
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
                             dataBean.setIsLike(true);
                             dataBean.setLikeNum(dataBean.getLikeNum() + 1);
                             likeTv.setText(dataBean.getLikeNum() + "");
@@ -518,7 +519,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("commentId", dataBean.getScoreId());
+                        bundle.putString("commentId", dataBean.getSourceId());
                         UIUtil.openActivity(BookDetailActivity.this, CommentSendActivity.class, bundle);
                     }
                 });

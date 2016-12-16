@@ -74,8 +74,6 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         mRecyclerView.setLinearLayout();
         mRecyclerView.setPushRefreshEnable(false);
         mRecyclerView.setPullRefreshEnable(false);
-        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter, mStrip);
-        mRecyclerView.setAdapter(writeBookAdapter);
         return mSuccessView;
     }
 
@@ -86,6 +84,8 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         for (int i = 0; i < 6; i++) {
             mStrip.add(new MyTabStrip(title[i], img[i]));
         }
+        writeBookAdapter = new WriteBookAdapter(mData, mActivity, mvpPresenter, mStrip);
+        mRecyclerView.setAdapter(writeBookAdapter);
 
         if (isLoad) {//只执行一次
             mvpPresenter.getArticleBookList();
