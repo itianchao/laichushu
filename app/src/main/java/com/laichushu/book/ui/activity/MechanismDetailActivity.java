@@ -99,7 +99,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         titleTv.setText("机构详情");//设置标题
         GlideUitl.loadImg(mActivity, R.drawable.mechanism_detail_bg, mechanismIv);//设置机构图片
         mechanismTv.setText(bean.getName());
-        if (bean.isCollect()) {
+        if (bean.isIsCollect()) {
             collectionTv.setText("已收藏");
         } else {
             collectionTv.setText("收藏");
@@ -149,8 +149,8 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     public void collectSaveData(RewardResult model, boolean collect) {
         collectionTv.setEnabled(true);
         if (model.isSuccess()) {
-            bean.setCollect(collect);
-            if (bean.isCollect()) {
+            bean.setIsCollect(collect);
+            if (bean.isIsCollect()) {
                 collectionTv.setText("已收藏");
             } else {
                 collectionTv.setText("收藏");
@@ -227,7 +227,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 finish();
                 break;
             case R.id.tv_msg:
-                mvpPresenter.sendMsgToPartyDialog(bean.getId());
+                mvpPresenter.sendMsgToPartyDialog(bean.getAdmin());
                 break;
             case R.id.rbn_01:
                 if (position != 1) {

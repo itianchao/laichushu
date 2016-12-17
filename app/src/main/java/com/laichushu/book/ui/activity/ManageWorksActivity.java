@@ -45,7 +45,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private boolean isLoad = true;
     private ArrayList<MyTabStrip> mStrip = new ArrayList<>();
-    private int img[] = {R.drawable.icon_draft, R.drawable.icon_material, R.drawable.icon_submission, R.drawable.icon_publishl, R.drawable.icon_delete, R.drawable.icon_sign2x};
+    private int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x,R.drawable.icon_delete2x,R.drawable.icon_publishl2x, R.drawable.icon_submission2x, R.drawable.icon_sign2x};
     private String title[] = {"编辑目录", "编辑素材", "删除", "发表", "投稿", "签约状态"};
     //-------------
     private SignStateResult model = new SignStateResult();

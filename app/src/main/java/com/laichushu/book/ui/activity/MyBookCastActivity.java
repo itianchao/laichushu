@@ -24,6 +24,8 @@ import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
+import org.geometerplus.android.fbreader.network.action.TopupAction;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -188,7 +190,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
 
             }
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ToastUtil.showToast(model.getErrMsg());
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
     }
 
@@ -211,7 +214,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             }
         } else {
             collAdapter.refreshAdapter(collData);
-            ToastUtil.showToast("没有更多内容！");
+            ToastUtil.showToast(model.getErrMsg());
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }

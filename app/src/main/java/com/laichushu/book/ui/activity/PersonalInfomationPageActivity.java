@@ -106,7 +106,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
         msgData.clear();
         mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
         mvpPresenter.LoadPerDetailsData(sendId, msgId);
-        ;//请求网络获取搜索列表
+        //请求网络获取搜索列表
 
     }
 

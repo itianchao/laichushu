@@ -81,6 +81,33 @@ public class MessageCommentResult implements Serializable {
         private String contributeStatus;
         private String articleId;
         private String coverUrl;
+        private String articleName;
+        private String authorId;
+        private String authorName;
+
+        public String getAuthorId() {
+            return authorId;
+        }
+
+        public void setAuthorId(String authorId) {
+            this.authorId = authorId;
+        }
+
+        public String getAuthorName() {
+            return authorName;
+        }
+
+        public void setAuthorName(String authorName) {
+            this.authorName = authorName;
+        }
+
+        public String getArticleName() {
+            return articleName;
+        }
+
+        public void setArticleName(String articleName) {
+            this.articleName = articleName;
+        }
 
         public String getMsgId() {
             return msgId;

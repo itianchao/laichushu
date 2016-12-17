@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
+import com.laichushu.book.event.RefreshHomePageEvent;
+import com.laichushu.book.event.RefreshUserPageEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
@@ -22,6 +25,8 @@ import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -50,6 +55,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     private TextView sendmsgIv;
     private String type;
     private HomeUseDyrResult.DataBean homeBean;
+    private String tag;
 
     @Override
     protected TopicDetailPresenter createPresenter() {
@@ -90,6 +96,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         ivShare.setVisibility(View.VISIBLE);
         ivShare.setImageResource(R.drawable.icon_share2x);
         type = getIntent().getStringExtra("type");
+        tag = getIntent().getStringExtra("tag");
         if (("homepage").equals(type)) {
             homeBean = (HomeUseDyrResult.DataBean) getIntent().getSerializableExtra("topBean");
             topicId = homeBean.getId();
@@ -151,7 +158,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             }
 
         } else {
-            ToastUtil.showToast("操作失败！");
+//            ToastUtil.showToast("操作失败！");
             LoggerUtil.toJson(model);
         }
     }
@@ -231,9 +238,9 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 break;
             case R.id.iv_sendmsg:
                 if (type.equals("homepage")) {
-                    mvpPresenter.topicDetailCommentSave(sendmsgEv, homeBean.getId(),ConstantValue.TOPICCOMMENT_TYPE);
+                    mvpPresenter.topicDetailCommentSave(sendmsgEv, homeBean.getId(), ConstantValue.TOPICCOMMENT_TYPE);
                 } else {
-                    mvpPresenter.topicDetailCommentSave(sendmsgEv, bean.getId(),ConstantValue.TOPICCOMMENT_TYPE);
+                    mvpPresenter.topicDetailCommentSave(sendmsgEv, bean.getId(), ConstantValue.TOPICCOMMENT_TYPE);
                 }
                 break;
         }
@@ -267,5 +274,23 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 mvpPresenter.loadCommentData(topicId, ConstantValue.TOPICCOMMENT_TYPE);
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        if (!TextUtils.isEmpty(tag)) {
+            switch (tag) {
+                case "home":
+                    EventBus.getDefault().postSticky(new RefreshHomePageEvent(true));
+                    break;
+                case "user":
+                    EventBus.getDefault().postSticky(new RefreshUserPageEvent(true));
+                    break;
+
+            }
+        }
+
+
     }
 }

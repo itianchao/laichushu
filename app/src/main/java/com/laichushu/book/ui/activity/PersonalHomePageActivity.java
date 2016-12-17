@@ -295,13 +295,13 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     public void getSaveCollectSuccess(RewardResult model, String type) {
         if (model.isSuccess()) {
             if (type.equals("0")) {
-                ToastUtil.showToast("收藏成功！");
+//                ToastUtil.showToast("收藏成功！");
             } else {
-                ToastUtil.showToast("取消收藏！");
+//                ToastUtil.showToast("取消收藏！");
             }
 
         } else {
-            ToastUtil.showToast("操作失败！");
+//            ToastUtil.showToast("操作失败！");
             LoggerUtil.toJson(model);
         }
     }
@@ -462,4 +462,5 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
         });
     }
+
 }

@@ -50,7 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/characterGray"
-                        android:textSize="@dimen/edit" />
+                        android:textSize="@dimen/edit2" />
 
                     <TextView
                         android:id="@+id/tv_publishName"

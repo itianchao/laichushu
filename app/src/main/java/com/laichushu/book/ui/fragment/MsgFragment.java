@@ -17,13 +17,11 @@ import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
-import com.laichushu.book.ui.activity.MainActivity;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.activity.MsgLikeDetailsActivity;
 import com.laichushu.book.ui.adapter.SubMissionAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -168,6 +166,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
                 mRecyclerView.setVisibility(View.VISIBLE);
                 mvpPresenter.getParamet().setMsgType(ConstantValue.MSG_TYPE_2);
                 if (!dibbleSub) {
+                    showProgressDialog();
                     mvpPresenter.LoaCommentdData();
                 }
                 dibbleSub = true;
@@ -200,6 +199,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
 
     @Override
     public void getMsgCommentDateSuccess(MessageCommentResult model) {
+        dismissProgressDialog();
         subData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -208,7 +208,6 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
             }
         }, 300);
         if (model.isSuccess()) {
-            ToastUtil.showToast("HomeUseFocusMerResult");
             subData = model.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!subData.isEmpty()) {

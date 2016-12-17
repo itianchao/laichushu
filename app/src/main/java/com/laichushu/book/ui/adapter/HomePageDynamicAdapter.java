@@ -52,13 +52,13 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
         currentNum = dataBeen.get(position).getCollectNum();
         if(dataBeen.get(position).isCollect()){
             holder.tvCollect.setText("已收藏("+dataBeen.get(position).getCollectNum() + ")");
-            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
             type = "1";
         }else{
             holder.tvCollect.setText("收藏("+dataBeen.get(position).getCollectNum() + ")");
-            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
+            Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
             type = "0";
@@ -69,21 +69,23 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
                 if (("0").equals(type)) {
                     //添加收藏
                     currentNum++;
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
                     homePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
                     type = "1";
                     holder.tvCollect.setText("已收藏("+currentNum + ")");
+                    dataBeen.get(position).setCollect(true);
                 } else {
                     //取消收藏
                     currentNum--;
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
                     homePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
                     type = "0";
                     holder.tvCollect.setText("收藏("+currentNum + ")");
+                    dataBeen.get(position).setCollect(false);
                 }
             }
         });
@@ -94,6 +96,7 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
                 //查看话题详情
                 Bundle topic = new Bundle();
                 topic.putString("type", "homepage");
+                topic.putString("tag", "home");
                 topic.putSerializable("topBean", dataBeen.get(position));
                 UIUtil.openActivity(context, TopicDetilActivity.class, topic);
             }
