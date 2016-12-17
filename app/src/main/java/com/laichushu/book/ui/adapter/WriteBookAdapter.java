@@ -218,7 +218,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         private TextView submissionTv;//投稿
         private TextView publishlTv;//发布
         private TextView deleteTv;//删除
-        private TextView jurTv;//权限
+        private ImageView jurTv;//权限
         private ImageView bookIv;
         private TextView titleTv;
         private TextView typeTv;
@@ -242,7 +242,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             submissionTv = (TextView) itemView.findViewById(R.id.tv_submission);
             publishlTv = (TextView) itemView.findViewById(R.id.tv_publishl);
             deleteTv = (TextView) itemView.findViewById(R.id.tv_delete);
-//            jurTv = (TextView) itemView.findViewById(R.id.tv_jurisdiction);
+            jurTv = (ImageView) itemView.findViewById(R.id.tv_jurisdiction);
             rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
             llTab = (LinearLayout) itemView.findViewById(R.id.ll_tab);
             hsView = (HorizontalScrollView) itemView.findViewById(R.id.hs_view);
