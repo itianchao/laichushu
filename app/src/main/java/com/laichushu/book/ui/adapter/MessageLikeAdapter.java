@@ -71,22 +71,24 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvReaderName.setText(dataBeen.get(position).getSenderName());
                 switch (dataBeen.get(position).getSourceType()) {
                     case "1":
+                    case "2":
                         //
-                        holder.tvContent.setVisibility(View.GONE);
                         holder.tvType.setText("收藏了你的书");
+                        holder.tvContent.setText(dataBeen.get(position).getContent());
                         holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
                         holder.tvBookName.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                               messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
+                                messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
                             }
                         });
                         break;
                     case "3":
                         //点赞
                         holder.tvContent.setVisibility(View.VISIBLE);
-                        holder.tvType.setText("点赞了您的评论");
+                        holder.tvType.setText("收藏了你的话题");
                         holder.tvContent.setText(dataBeen.get(position).getContent());
+                        holder.tvBookName.setText("#" + dataBeen.get(position).getSourceName() + "#");
                         break;
                 }
                 holder.tvReaderName.setOnClickListener(new View.OnClickListener() {
@@ -209,11 +211,11 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvFocusContent1.setVisibility(View.VISIBLE);
                 holder.tvFocusContent2.setVisibility(View.VISIBLE);
                 holder.tvFocusContent3.setVisibility(View.VISIBLE);
+                holder.tvFocusContent4.setVisibility(View.VISIBLE);
                 holder.tvFocusContent1.setText(dataBeen.get(position).getAuthorName());
                 holder.tvFocusContent2.setText("的作品:");
-                holder.tvFocusContent3.setText("《"+dataBeen.get(position).getSourceName()+"》");
-
-                holder.tvFocusContent.setText("更新了!");
+                holder.tvFocusContent3.setText("《" + dataBeen.get(position).getSourceName() + "》");
+                holder.tvFocusContent4.setText("更新了!");
                 holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -309,7 +311,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
         public TextView tvReward, tvRewardBookName, tvRewardTime;
         public Button btnWallet;
         //关注
-        public TextView tvFocusTime, tvFocusName, tvFocusContent,tvFocusContent1,tvFocusContent2,tvFocusContent3,tvFocusContent4;
+        public TextView tvFocusTime, tvFocusName, tvFocusContent, tvFocusContent1, tvFocusContent2, tvFocusContent3, tvFocusContent4;
         public ImageView ivFocusIcon, ivFocusNotice;
         public LinearLayout llFocusItem;
 

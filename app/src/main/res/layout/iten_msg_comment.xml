@@ -57,7 +57,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="24dp"
                 android:textColor="@color/characterLightGray2"
-                android:textSize="@dimen/edit3"
+                android:textSize="@dimen/edit2"
                 />
 
             <TextView
@@ -65,10 +65,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@+id/tv_appendName"
                 android:textColor="@color/auditing"
-                android:textSize="@dimen/edit3"
+                android:textSize="@dimen/edit2"
                 />
         </RelativeLayout>
 
@@ -86,7 +86,7 @@
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:textColor="@color/characterLightGray2"
-                android:textSize="@dimen/edit3"
+                android:textSize="@dimen/edit2"
                 />
 
             <TextView
@@ -98,7 +98,7 @@
                 android:layout_marginRight="12dp"
                 android:gravity="right"
                 android:textColor="@color/characterLightGray2"
-                android:textSize="@dimen/edit3"
+                android:textSize="@dimen/edit2"
                  />
         </RelativeLayout>
     </LinearLayout>
