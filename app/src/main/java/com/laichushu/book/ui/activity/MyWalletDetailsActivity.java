@@ -77,9 +77,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
                 break;
             case R.id.btn_Recharge:
                 //充值
-                Bundle recharge = new Bundle();
-                recharge.putSerializable("bean", bean);
-                UIUtil.openActivity(this, RechargeDetailsActivity.class, recharge);
+                UIUtil.openActivity(this, RechargeDetailsActivity.class);
                 break;
             case R.id.btn_withdrawals:
                 //提现
@@ -103,7 +101,6 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
             bean = model;
             recordData = model.getData();
             tvBalanceShow.setText(model.getBalance() + "");
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!recordData.isEmpty()) {
                 recordAdapter.refreshAdapter(recordData);
                 PAGE_NO++;
@@ -111,10 +108,11 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
 
             }
         } else {
-            if (model.getData() != null | model.getData().size() == 0) {
+            if (null==model.getData() &&model.getData().size() == 0) {
                 ToastUtil.showToast("没有更多内容!");
             }
         }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override

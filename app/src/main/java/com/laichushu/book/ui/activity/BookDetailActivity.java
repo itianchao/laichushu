@@ -2,6 +2,7 @@ package com.laichushu.book.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -176,9 +177,12 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             probationTv.setOnClickListener(this);//免费试读按钮
             payTv.setOnClickListener(this);//购买按钮
         }
-        if (bean.getExpressStatus().equals("3")){//电子书
-            payTv.setVisibility(View.INVISIBLE);
+        if(!TextUtils.isEmpty(bean.getExpressStatus())){
+            if (bean.getExpressStatus().equals("3")){//电子书
+                payTv.setVisibility(View.INVISIBLE);
+            }
         }
+
         if (bean.isSubscribe()) {
             subscriptionTv.setText(" 取消订阅 ");
         } else {

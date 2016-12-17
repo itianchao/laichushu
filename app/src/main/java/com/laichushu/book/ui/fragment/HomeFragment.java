@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,8 +133,10 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-//                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
+                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                if(lineLyt.getChildAt(1)!=null&&lineLyt.getChildAt(0)!=null){
+                    range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
+                }
             }
         });
         for (int i = 0; i < mTitleData.size(); i++) {

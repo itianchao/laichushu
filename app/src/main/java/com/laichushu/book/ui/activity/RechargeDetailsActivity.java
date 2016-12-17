@@ -16,6 +16,7 @@ import com.laichushu.book.mvp.wallet.WalletPresener;
 import com.laichushu.book.mvp.wallet.WalletView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implements WalletView, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -25,7 +26,7 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     private RadioButton rbAlipay, rbWechat;
     private Button btnSubmit;
     private EditText edMoney;
-    private String money = null, payPlat = null;
+    private String money = "1", payPlate = null;
 
     @Override
     protected WalletPresener createPresenter() {
@@ -65,8 +66,11 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                 break;
             case R.id.btn_Recharge:
                 money = edMoney.getText().toString().trim();
-//                if(!TextUtils.isEmpty(money))
-//                mvpPresenter.loadRechargeData(?);
+                if (TextUtils.isEmpty(money)) {
+                    ToastUtil.showToast("请输入金额");
+                    return;
+                }
+                mvpPresenter.loadRechargeData(money, payPlate);
                 break;
         }
     }
@@ -75,10 +79,10 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_aliPay:
-
+                payPlate = "1";
                 break;
             case R.id.rb_wxPay:
-
+                payPlate = "2";
                 break;
 
         }
@@ -96,7 +100,12 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
 
     @Override
     public void getRechargePayDateSuccess(RewardResult model) {
-//        ？
+        if (model.isSuccess()) {
+            ToastUtil.showToast("充值成功！");
+        } else {
+            ToastUtil.showToast("充值失败！");
+        }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override

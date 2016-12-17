@@ -88,13 +88,13 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
         if (model.isSuccess()){
             ToastUtil.showToast("获取验证码成功");
         }else {
-            ToastUtil.showToast("获取验证码失败");
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 
     @Override
     public void getDataFail(String msg) {
-        toastShow("请检查网络");
+        toastShow(msg);
         Logger.e("网络失败原因：", msg);
     }
 

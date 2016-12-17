@@ -104,6 +104,15 @@ public class BookDetailsModle implements Serializable {
         private boolean isCollect;
         private boolean isAward;
         private String name;
+        private String expressStatus;
+
+        public String getExpressStatus() {
+            return expressStatus;
+        }
+
+        public void setExpressStatus(String expressStatus) {
+            this.expressStatus = expressStatus;
+        }
 
         public String getName() {
             return name;
