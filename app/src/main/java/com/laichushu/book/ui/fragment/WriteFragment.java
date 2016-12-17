@@ -27,6 +27,7 @@ import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.mvp.write.WriteView;
+import com.laichushu.book.ui.activity.AgreementDetailsActivity;
 import com.laichushu.book.ui.activity.CreateNewBookActivity;
 import com.laichushu.book.ui.adapter.WriteBookAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
@@ -49,7 +50,7 @@ import java.util.List;
  * 写书
  * Created by wangtong on 2016/10/17.
  */
-public class WriteFragment extends MvpFragment2<WritePresenter> implements WriteView, View.OnClickListener {
+public class WriteFragment extends MvpFragment2<WritePresenter> implements WriteView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private PullLoadMoreRecyclerView mRecyclerView;
     private WriteBookAdapter writeBookAdapter;
@@ -77,8 +78,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         addNewBookLay.setOnClickListener(this);
         mRecyclerView = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_book);
         mRecyclerView.setLinearLayout();
-        mRecyclerView.setPushRefreshEnable(false);
-        mRecyclerView.setPullRefreshEnable(false);
+        mRecyclerView.setOnPullLoadMoreListener(this);
         return mSuccessView;
     }
 
@@ -107,6 +107,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     @Override
     public void getDataSuccess(HomeHotModel model) {
         if (model.isSuccess()) {
+            mRecyclerView.setPullLoadMoreCompleted();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             mData.addAll(model.getData());
             writeBookAdapter.setmData(mData);
@@ -354,5 +355,17 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         }
         cache_json.setJson(new Gson().toJson(result));
         cache_jsonDao.update(cache_json);
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshPage(LoadingPager.PageState.STATE_LOADING);
+        mData.clear();
+        mvpPresenter.getArticleBookList();
+    }
+
+    @Override
+    public void onLoadMore() {
+
     }
 }
