@@ -250,6 +250,17 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder3) holder).moneyTv.setText(dataBean.getAwardMoney() + "元");
                     ((ViewHolder3) holder).rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
                     ((ViewHolder3) holder).markTv.setText(dataBean.getScore() + "分");
+                    switch(dataBean.getStatus()){
+                        case "1":
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2, ((ViewHolder3) holder).bookStatueIv);
+                            break;
+                        case "2":
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3, ((ViewHolder3) holder).bookStatueIv);
+                            break;
+                        default:
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1, ((ViewHolder3) holder).bookStatueIv);
+                            break;
+                    }
                     break;
                 case STATE2://活动
                     final HomeHotModel.DataBean bean = mData.get(position - 2);
@@ -355,6 +366,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         //        全部
         private FrameLayout fristFay;
         private ImageView bookIv;
+        private ImageView bookStatueIv;
         private TextView titleTv;
         private TextView typeTv;
         private RatingBar numRb;
@@ -379,6 +391,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             super(itemView);
             fristFay = (FrameLayout) itemView.findViewById(R.id.fay_type_frist);
             bookIv = (ImageView) itemView.findViewById(R.id.iv_book);
+            bookStatueIv = (ImageView) itemView.findViewById(R.id.iv_book_statue);
             titleTv = (TextView) itemView.findViewById(R.id.tv_title);
             typeTv = (TextView) itemView.findViewById(R.id.tv_type);
             numRb = (RatingBar) itemView.findViewById(R.id.ratbar_num);
