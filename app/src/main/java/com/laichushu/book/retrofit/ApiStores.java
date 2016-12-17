@@ -443,6 +443,10 @@ public interface ApiStores {
     @POST("press/topics")
     Observable<MechanismTopicListModel> getMechanismTopicList(@Body MechanismTopicList_Paramet paramet);
 
+    //搜索机构
+    @POST("party/list")
+    Observable<MechanismListBean> getSearchMechanismList(@Body MechanismSearchList_Paramet paramet);
+
     //给机构发消息
     @POST("party/sendMsgToParty")
     Observable<RewardResult> sendMsgToParty(@Body SendMsgToParty_Paramet paramet);
