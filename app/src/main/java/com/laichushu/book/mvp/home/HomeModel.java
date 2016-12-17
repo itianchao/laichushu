@@ -60,24 +60,6 @@ public class HomeModel implements Parcelable {
         private int sort;
         private int status;
         private String statusName;
-        private String type;
-        private String sourceId;
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getSourceId() {
-            return sourceId;
-        }
-
-        public void setSourceId(String sourceId) {
-            this.sourceId = sourceId;
-        }
 
         public String getId() {
             return id;
@@ -127,9 +109,6 @@ public class HomeModel implements Parcelable {
             this.statusName = statusName;
         }
 
-        public DataBean() {
-        }
-
         @Override
         public int describeContents() {
             return 0;
@@ -143,8 +122,9 @@ public class HomeModel implements Parcelable {
             dest.writeInt(this.sort);
             dest.writeInt(this.status);
             dest.writeString(this.statusName);
-            dest.writeString(this.type);
-            dest.writeString(this.sourceId);
+        }
+
+        public DataBean() {
         }
 
         protected DataBean(Parcel in) {
@@ -154,8 +134,6 @@ public class HomeModel implements Parcelable {
             this.sort = in.readInt();
             this.status = in.readInt();
             this.statusName = in.readString();
-            this.type = in.readString();
-            this.sourceId = in.readString();
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {

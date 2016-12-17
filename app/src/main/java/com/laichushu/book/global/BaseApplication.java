@@ -5,10 +5,10 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+
 import com.laichushu.book.db.DaoMaster;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.utils.SharePrefManager;
-
 
 import org.geometerplus.android.fbreader.FBReaderApplication;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;

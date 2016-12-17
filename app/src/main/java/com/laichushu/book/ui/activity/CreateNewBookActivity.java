@@ -182,7 +182,18 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         hideLoading();
         if (modle.isSuccess()) {
             ToastUtil.showToast("创建成功");
-            updateDB();
+            Cache_JsonDao cache_jsonDao = BaseApplication.getDaoSession(this).getCache_JsonDao();
+            List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder()
+                    .where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).build().list();
+            Cache_Json cache_json = cache_jsons.get(0);
+            PersonalCentreResult result = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
+            if (result.getArticleCount() != null) {
+                result.setArticleCount(Integer.parseInt(result.getArticleCount())+1+"");
+            }else {
+                result.setArticleCount("1");
+            }
+            cache_json.setJson(new Gson().toJson(result));
+            cache_jsonDao.update(cache_json);
             UIUtil.postDelayed(new TimerTask() {
                 @Override
                 public void run() {
@@ -193,21 +204,6 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         }else {
             ToastUtil.showToast("创建失败");
         }
-    }
-
-    private void updateDB() {
-        Cache_JsonDao cache_jsonDao = BaseApplication.getDaoSession(this).getCache_JsonDao();
-        List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder()
-                .where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).build().list();
-        Cache_Json cache_json = cache_jsons.get(0);
-        PersonalCentreResult result = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
-        if (result.getArticleCount() != null) {
-            result.setArticleCount(Integer.parseInt(result.getArticleCount())+1+"");
-        }else {
-            result.setArticleCount("1");
-        }
-        cache_json.setJson(new Gson().toJson(result));
-        cache_jsonDao.update(cache_json);
     }
 
     @Override

@@ -71,7 +71,7 @@ public class HomeHotModel implements Parcelable {
         private String topCategoryId;
         private String topCategoryName;
         private String introduce;
-        private boolean isAward;//是否打赏
+
         private boolean isParticipate;
 
         private boolean isMake;// 是否制作电子书
@@ -79,19 +79,11 @@ public class HomeHotModel implements Parcelable {
         private String articleName;
         private String authorId;
         private String authorName;
-        private String status;//状态
+        private String status;
         private Boolean isEdit;
         private String sourceId;
         private String type;
         private String name;
-
-        public boolean isAward() {
-            return isAward;
-        }
-
-        public void setAward(boolean award) {
-            isAward = award;
-        }
 
         public String getName() {
             return name;
@@ -230,16 +222,7 @@ public class HomeHotModel implements Parcelable {
         private String imgName;
         private String imgUrl;
         private String detail;
-        private String creator;
         private int applyAmount;
-
-        public String getCreator() {
-            return creator;
-        }
-
-        public void setCreator(String creator) {
-            this.creator = creator;
-        }
 
         public boolean isPurchase() {
             return isPurchase;
@@ -504,7 +487,6 @@ public class HomeHotModel implements Parcelable {
             dest.writeString(this.topCategoryId);
             dest.writeString(this.topCategoryName);
             dest.writeString(this.introduce);
-            dest.writeByte(this.isAward ? (byte) 1 : (byte) 0);
             dest.writeByte(this.isParticipate ? (byte) 1 : (byte) 0);
             dest.writeByte(this.isMake ? (byte) 1 : (byte) 0);
             dest.writeString(this.articleId);
@@ -513,9 +495,6 @@ public class HomeHotModel implements Parcelable {
             dest.writeString(this.authorName);
             dest.writeString(this.status);
             dest.writeValue(this.isEdit);
-            dest.writeString(this.sourceId);
-            dest.writeString(this.type);
-            dest.writeString(this.name);
             dest.writeString(this.expressStatus);
             dest.writeString(this.freezeStatus);
             dest.writeInt(this.wordNum);
@@ -539,7 +518,6 @@ public class HomeHotModel implements Parcelable {
             dest.writeString(this.imgName);
             dest.writeString(this.imgUrl);
             dest.writeString(this.detail);
-            dest.writeString(this.creator);
             dest.writeInt(this.applyAmount);
         }
 
@@ -549,7 +527,6 @@ public class HomeHotModel implements Parcelable {
             this.topCategoryId = in.readString();
             this.topCategoryName = in.readString();
             this.introduce = in.readString();
-            this.isAward = in.readByte() != 0;
             this.isParticipate = in.readByte() != 0;
             this.isMake = in.readByte() != 0;
             this.articleId = in.readString();
@@ -558,9 +535,6 @@ public class HomeHotModel implements Parcelable {
             this.authorName = in.readString();
             this.status = in.readString();
             this.isEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-            this.sourceId = in.readString();
-            this.type = in.readString();
-            this.name = in.readString();
             this.expressStatus = in.readString();
             this.freezeStatus = in.readString();
             this.wordNum = in.readInt();
@@ -584,7 +558,6 @@ public class HomeHotModel implements Parcelable {
             this.imgName = in.readString();
             this.imgUrl = in.readString();
             this.detail = in.readString();
-            this.creator = in.readString();
             this.applyAmount = in.readInt();
         }
 

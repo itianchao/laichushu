@@ -23,7 +23,7 @@ public class GlideUitl {
      */
     public static void loadImg(Context mContext, String path, ImageView mImageView) {
         if (!TextUtils.isEmpty(path)) {
-            Glide.with(mContext).load(path).asBitmap().error(R.drawable.img_default).into(mImageView);
+            Glide.with(mContext).load(path).asBitmap().fitCenter().error(R.drawable.img_default).into(mImageView);
         } else {
             Glide.with(mContext).load(R.drawable.img_default).asBitmap().fitCenter().into(mImageView);
         }
@@ -37,7 +37,7 @@ public class GlideUitl {
      */
     public static void loadImg(Context mContext, int path, ImageView mImageView) {
         if (path != 0) {
-            Glide.with(mContext).load(path).error(R.drawable.img_default).into(mImageView);
+            Glide.with(mContext).load(path).centerCrop().error(R.drawable.img_default).into(mImageView);
         } else {
             Glide.with(mContext).load(R.drawable.img_default).centerCrop().into(mImageView);
         }
@@ -84,7 +84,7 @@ public class GlideUitl {
      */
     public static void loadRandImg(Context mContext, String path, ImageView mImageView) {
         if (!TextUtils.isEmpty(path)) {
-            Glide.with(mContext).load(path).asBitmap().transform(new GlideCircleTransform(mContext)).error(R.drawable.icon_percentre_defhead2x).into(mImageView);
+            Glide.with(mContext).load(path).asBitmap().fitCenter().transform(new GlideCircleTransform(mContext)).error(R.drawable.icon_percentre_defhead2x).into(mImageView);
         } else {
             Glide.with(mContext).load(R.drawable.icon_percentre_defhead2x).centerCrop().transform(new GlideCircleTransform(mContext)).into(mImageView);
         }
@@ -108,9 +108,9 @@ public class GlideUitl {
      */
     public static void loadRandImg(Context mContext, String path, ImageView mImageView, int loadErrorImage) {
         if (!TextUtils.isEmpty(path)) {
-            Glide.with(mContext).load(path).asBitmap().transform(new GlideCircleTransform(mContext)).error(loadErrorImage).into(mImageView);
+            Glide.with(mContext).load(path).asBitmap().fitCenter().transform(new GlideCircleTransform(mContext)).error(loadErrorImage).into(mImageView);
         } else {
-            Glide.with(mContext).load(loadErrorImage).transform(new GlideCircleTransform(mContext)).into(mImageView);
+            Glide.with(mContext).load(loadErrorImage).centerCrop().transform(new GlideCircleTransform(mContext)).into(mImageView);
         }
     }
 

@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.laichushu.book.mvp.home.HomeModel;
-import com.laichushu.book.mvp.home.HomePresenter;
 
 import java.util.ArrayList;
 
@@ -20,12 +19,10 @@ public class HomeTitleViewPagerAdapter extends PagerAdapter {
 
     private ArrayList<HomeModel.DataBean> imageList;
     private Activity mActivity;
-    private HomePresenter mvpPresenter;
 
-    public HomeTitleViewPagerAdapter(ArrayList<HomeModel.DataBean> imageList, Activity mActivity, HomePresenter mvpPresenter) {
+    public HomeTitleViewPagerAdapter(ArrayList<HomeModel.DataBean> imageList, Activity mActivity) {
         this.imageList = imageList;
         this.mActivity = mActivity;
-        this.mvpPresenter = mvpPresenter;
     }
 
     @Override
@@ -44,24 +41,13 @@ public class HomeTitleViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(final ViewGroup container, final int position) {
-        final ImageView v = new ImageView(mActivity);
-        HomeModel.DataBean dataBean = null;
+    public Object instantiateItem(ViewGroup container, int position) {
+        ImageView v = new ImageView(mActivity);
+        HomeModel.DataBean dataBean;
         if (imageList.size() != 0) {
             dataBean = imageList.get(position % (imageList.size() == 0 ? 1 : imageList.size()));
             Glide.with(mActivity).load(dataBean.getUrl()).centerCrop().into(v);
         }
-        final HomeModel.DataBean finalDataBean = dataBean;
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (finalDataBean.getType().equals("1")) {//图书
-                    mvpPresenter.getBookById(finalDataBean.getSourceId(),position % (imageList.size() == 0 ? 1 : imageList.size()));
-                }else {//活动
-                    mvpPresenter.getActivityById(finalDataBean.getSourceId(),position % (imageList.size() == 0 ? 1 : imageList.size()));
-                }
-            }
-        });
         container.addView(v);
         return v;
     }

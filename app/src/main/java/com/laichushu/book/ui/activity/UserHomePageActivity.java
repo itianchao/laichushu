@@ -79,6 +79,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     protected View createSuccessView() {
         View inflate = UIUtil.inflate(R.layout.activity_user_home_page);
+        EventBus.getDefault().register(this);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         ivAnthor = ((ImageView) inflate.findViewById(R.id.iv_title_another));
@@ -294,15 +295,18 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }, 300);
         if (result.isSuccess()) {
             dyData = result.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
             if (!dyData.isEmpty()) {
                 dyAdapter.refreshAdapter(dyData);
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(result.getErrMsg());
             }
         } else {
+            ToastUtil.showToast("没有更多数据");
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
+
     }
 
     @Override
@@ -563,6 +567,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         EventBus.getDefault().postSticky(new RefreshHomePageEvent(true));
         super.finish();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefreshUserPageEvent event) {
         EventBus.getDefault().removeStickyEvent(event);

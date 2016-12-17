@@ -123,7 +123,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      * 标题轮播图
      */
     private void titleViewPager() {
-        adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity,mvpPresenter);
+        adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity);
         homeVp.setAdapter(adapter);
         int remainder = Integer.MAX_VALUE / 2 %(mTitleData.size()==0?1:mTitleData.size());
         item = Integer.MAX_VALUE / 2 - remainder;

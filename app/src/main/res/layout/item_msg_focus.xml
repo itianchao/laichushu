@@ -117,8 +117,17 @@
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/tv_focusContent3"
                     android:lines="2"
-                    android:text="关注了你"
-                    android:textColor="@color/characterLightGray1"
+                    android:textColor="@color/characterLightGray1"/>
+                <TextView
+                    android:id="@+id/tv_focusContent4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_focusName"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/characterLightGray2"/>
                     android:textSize="@dimen/edit2" />
             </RelativeLayout>
         </RelativeLayout>

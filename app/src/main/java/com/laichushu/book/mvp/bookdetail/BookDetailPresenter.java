@@ -11,39 +11,26 @@ import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.AuthorDetail_Paramet;
 import com.laichushu.book.bean.netbean.Balance_Paramet;
 import com.laichushu.book.bean.netbean.BestLike_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
-import com.laichushu.book.bean.netbean.DownloadEpubFilePermission_Paramet;
 import com.laichushu.book.bean.netbean.Jurisdiction_Paramet;
 import com.laichushu.book.bean.netbean.Purchase_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
+import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
-import com.laichushu.book.bean.otherbean.BaseBookEntity;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 
 /**
  * 图书详情 presenter
@@ -54,8 +41,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     private String pageSize = "5";
     private String pageNo = "1";
     private BestLike_Paramet paramet;
-    private String userId = ConstantValue.USERID;
-    ;
+    private String userId = ConstantValue.USERID;;
 
     //初始化构造
     public BookDetailPresenter(BookDetailView view) {
@@ -234,17 +220,8 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             public void onClick(View v) {
                 dialogBuilder.dismiss();
                 buyBook(articleId, payMoney);
-                mActivity.getBean().setPurchase(true);
             }
         });
-        dialogBuilder
-                .withTitle(null)                                  // 为null时不显示title
-                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
-                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
-                .withDuration(500)                                // 对话框动画时间
-                .withEffect(Effectstype.Slidetop)                 // 动画形式
-                .setCustomView(customerView, mActivity)                // 添加自定义View
-                .show();
     }
 
     /**
@@ -324,7 +301,6 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                     if (Integer.parseInt(pay) > 0 || Integer.parseInt(pay) < 100) {
                         // TODO: 2016/11/8 请求打赏
                         rewardMoney(userId, accepterId, articleId, pay);
-                        mActivity.getBean().setAward(true);
                         dialogBuilder.dismiss();
                     } else {
                         ToastUtil.showToast("只能打赏1-100金额");
@@ -382,7 +358,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     public void saveScoreLikeData(String sourceId, final String type) {
         mvpView.showLoading();
         String sourceType = "1";
-        TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId, sourceId, sourceType, type);
+        TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId,sourceId,sourceType,type);
         Logger.e("点赞");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
@@ -412,7 +388,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      */
     public void collectSave(String targetId, String type, String collectType) {
         mvpView.showLoading();
-        CollectSave_Paramet paramet = new CollectSave_Paramet(userId, targetId, collectType, type);
+        CollectSave_Paramet paramet = new CollectSave_Paramet(userId, targetId, collectType,type);
         Logger.e("收藏");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.collectSave(paramet), new ApiCallback<RewardResult>() {
@@ -454,136 +430,6 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                 mvpView.hideLoading();
             }
         });
-    }
-
-    /**
-     * 获取下载url接口文件
-     *
-     * @param articleId
-     */
-    public void getDownloadUrl(final String articleId, final String author) {
-        mvpView.showLoading();
-        DownloadEpubFilePermission_Paramet paramet = new DownloadEpubFilePermission_Paramet(articleId);
-        addSubscription(apiStores.downloadEpubFile(paramet), new ApiCallback<UrlResult>() {
-            @Override
-            public void onSuccess(UrlResult modle) {
-                if (modle.isSuccess()) {
-                    String url = modle.getData();
-                    String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
-                    if (new File(path).exists()) {
-                        mvpView.hideLoading();
-                        BaseBookEntity baseBookEntity = new BaseBookEntity();
-                        baseBookEntity.setBook_path(path);
-                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author);
-                    }else {
-                        downloadEpub(url,articleId,author);
-                    }
-
-                } else {
-                    ToastUtil.showToast(modle.getErrMsg());
-                    mvpView.hideLoading();
-                }
-
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                ToastUtil.showToast("请检查网络");
-                mvpView.hideLoading();
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
-    }
-
-    public void downloadEpub(final String url,final String articleId,final String author) {
-
-        Call<ResponseBody> call = apiStores.downloadFile(url);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    boolean writtenToDisk = writeResponseBodyToDisk(response.body(), articleId);
-                    if (writtenToDisk){
-                        mvpView.hideLoading();
-                        String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
-                        BaseBookEntity baseBookEntity = new BaseBookEntity();
-                        baseBookEntity.setBook_path(path);
-                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author);
-                    }else {
-                        ToastUtil.showToast("请检查网络");
-                    }
-                } else {
-                    mvpView.hideLoading();
-                    ToastUtil.showToast("请检查网络");
-                }
-            }
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                mvpView.hideLoading();
-                ToastUtil.showToast("请检查网络");
-            }
-        });
-    }
-    private boolean writeResponseBodyToDisk(ResponseBody body, String articleId) {
-        try {
-            // todo change the file location/name according to your needs
-            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
-
-            File futureStudioIconFile = new File(path);
-
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-
-            try {
-                byte[] fileReader = new byte[4096];
-
-                long fileSize = body.contentLength();
-                long fileSizeDownloaded = 0;
-
-                inputStream = body.byteStream();
-                outputStream = new FileOutputStream(futureStudioIconFile);
-
-                while (true) {
-                    int read = inputStream.read(fileReader);
-
-                    if (read == -1) {
-                        break;
-                    }
-
-                    outputStream.write(fileReader, 0, read);
-
-                    fileSizeDownloaded += read;
-
-                }
-
-                outputStream.flush();
-
-                return true;
-            } catch (IOException e) {
-                mvpView.hideLoading();
-                futureStudioIconFile.delete();
-                return false;
-            } finally {
-                mvpView.hideLoading();
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-
-                if (outputStream != null) {
-                    outputStream.close();
-                }
-            }
-        } catch (IOException e) {
-            mvpView.hideLoading();
-            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
-            File futureStudioIconFile = new File(path);
-            futureStudioIconFile.delete();
-            return false;
-        }
     }
 }
 
