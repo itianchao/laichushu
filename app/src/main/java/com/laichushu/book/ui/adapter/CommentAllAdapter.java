@@ -65,22 +65,23 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
                 UIUtil.openActivity(mActivity,CommentSendActivity.class,bundle);
             }
         });
-        holder.likeTv.setOnClickListener(new View.OnClickListener() {
+        holder.likeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (dataBean.isIsLike()) {
                     mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"1");
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
+//                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
                     dataBean.setIsLike(false);
                     dataBean.setLikeNum(dataBean.getLikeNum()-1);
                     holder.likeTv.setText(dataBean.getLikeNum() + "");
                 } else {
                     mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"0");
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
+//                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
                     dataBean.setIsLike(true);
                     dataBean.setLikeNum(dataBean.getLikeNum()+1);
                     holder.likeTv.setText(dataBean.getLikeNum() + "");
                 }
+                notifyDataSetChanged();
             }
         });
         holder.inIv.setOnClickListener(new View.OnClickListener() {

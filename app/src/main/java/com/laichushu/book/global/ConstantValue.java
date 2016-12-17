@@ -4,6 +4,8 @@ import android.os.Environment;
 
 import com.laichushu.book.utils.SharePrefManager;
 
+import java.io.File;
+
 /**
  * Created by PCPC on 2016/11/18.
  */
@@ -67,7 +69,7 @@ public class ConstantValue {
     public static class LOCAL_PATH {
 
         // 文件保存在SD卡路径
-        public static final String SD_PATH = Environment.getExternalStorageDirectory().getPath();
+        public static final String SD_PATH = Environment.getExternalStorageDirectory().getPath()+ File.separator;
         // 项目名称
         public static final String PROJECT_NAME = "/laichushu";
         // 文件路径

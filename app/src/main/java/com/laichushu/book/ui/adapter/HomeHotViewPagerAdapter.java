@@ -53,6 +53,9 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
         ImageView hot1Iv = (ImageView) itemView.findViewById(R.id.iv_hot1);
         ImageView hot2Iv = (ImageView) itemView.findViewById(R.id.iv_hot2);
         ImageView hot3Iv = (ImageView) itemView.findViewById(R.id.iv_hot3);
+        ImageView status1Iv = (ImageView) itemView.findViewById(R.id.iv_status1);
+        ImageView status2Iv = (ImageView) itemView.findViewById(R.id.iv_status2);
+        ImageView status3Iv = (ImageView) itemView.findViewById(R.id.iv_status3);
         TextView title1Tv = (TextView) itemView.findViewById(R.id.tv_title1);
         TextView title2Tv = (TextView) itemView.findViewById(R.id.tv_title2);
         TextView title3Tv = (TextView) itemView.findViewById(R.id.tv_title3);
@@ -104,12 +107,45 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
         //设置书名
         if (!TextUtils.isEmpty(homeHotImgBean.getFristTitle())) {
             title1Tv.setText(homeHotImgBean.getFristTitle());
+            switch(homeHotImgBean.getFristBean().getStatus()){
+                case "1":
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2, status1Iv);
+                    break;
+                case "2":
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3, status1Iv);
+                    break;
+                default:
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1, status1Iv);
+                    break;
+            }
         }
         if (!TextUtils.isEmpty(homeHotImgBean.getSecondTitle())) {
             title2Tv.setText(homeHotImgBean.getSecondTitle());
+            switch(homeHotImgBean.getFristBean().getStatus()){
+                case "1":
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2, status2Iv);
+                    break;
+                case "2":
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3, status2Iv);
+                    break;
+                default:
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1, status2Iv);
+                    break;
+            }
         }
         if (!TextUtils.isEmpty(homeHotImgBean.getThirdTitle())) {
             title3Tv.setText(homeHotImgBean.getThirdTitle());
+            switch(homeHotImgBean.getFristBean().getStatus()){
+                case "1":
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2, status3Iv);
+                    break;
+                case "2":
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3, status3Iv);
+                    break;
+                default:
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1, status3Iv);
+                    break;
+            }
         }
         //设置作者名
         if (!TextUtils.isEmpty(homeHotImgBean.getFristName())) {

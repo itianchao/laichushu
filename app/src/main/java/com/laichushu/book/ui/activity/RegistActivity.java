@@ -11,18 +11,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.mvp.regist.RegistModel;
 import com.laichushu.book.mvp.regist.RegistPresenter;
+import com.laichushu.book.mvp.regist.RegistView;
 import com.laichushu.book.ui.base.MvpActivity;
-import com.laichushu.book.ui.widget.ServiceTermsDialog;
 import com.laichushu.book.utils.AMUtils;
 import com.laichushu.book.utils.ToastUtil;
-import com.orhanobut.logger.Logger;
-import com.laichushu.book.R;
-import com.laichushu.book.mvp.regist.RegistCodeModel;
-import com.laichushu.book.mvp.regist.RegistModel;
-import com.laichushu.book.mvp.regist.RegistView;
 import com.laichushu.book.utils.UIUtil;
+import com.orhanobut.logger.Logger;
 
 /**
  * 注册页面
@@ -88,7 +86,7 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
         if (model.isSuccess()){
             ToastUtil.showToast("获取验证码成功");
         }else {
-            ToastUtil.showToast("获取验证码失败");
+            ToastUtil.showToast(model.getErrMsg().toString());
         }
     }
 

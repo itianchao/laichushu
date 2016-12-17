@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
-    <include layout="@layout/page_title" />
+    <include layout="@layout/page_title"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,9 +16,9 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/item_home_book2" />
+            <include layout="@layout/item_home_book2"/>
 
-            <include layout="@layout/line" />
+            <include layout="@layout/line"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                         android:layout_margin="10dp"
                         android:drawableLeft="@drawable/bookdetail_write"
                         android:drawablePadding="5dp"
-                        tools:text="2016/07/17 18:00" />
+                        tools:text="2016/07/17 18:00"/>
 
                     <TextView
                         android:id="@+id/tv_refreshtime"
@@ -52,7 +52,7 @@
                         android:drawableLeft="@drawable/bookdetail_refuash"
                         android:drawablePadding="5dp"
                         android:textColor="@color/global"
-                        tools:text="2016/07/17 18:00" />
+                        tools:text="2016/07/17 18:00"/>
 
                     <TextView
                         android:id="@+id/textView3"
@@ -62,29 +62,29 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:layout_margin="10dp"
-                        android:text="人订阅" />
+                        android:text="人订阅"/>
 
                     <TextView
-                        android:layout_marginRight="15dp"
                         android:id="@+id/tv_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/tv_subscription"
                         android:layout_alignTop="@+id/textView3"
+                        android:layout_marginRight="15dp"
                         android:textColor="@color/global"
-                        tools:text="300" />
+                        tools:text="300"/>
 
                     <TextView
                         android:id="@+id/tv_subscription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/textView3"
+                        android:layout_alignRight="@+id/textView3"
+                        android:layout_alignTop="@+id/tv_refreshtime"
                         android:background="@drawable/shape_rectangle_fill_hint"
                         android:padding="3dp"
                         android:text="订阅更新"
-                        android:textColor="@color/orange"
-                        android:layout_alignTop="@+id/tv_refreshtime"
-                        android:layout_alignRight="@+id/textView3"
-                        android:layout_alignEnd="@+id/textView3" />
+                        android:textColor="@color/orange"/>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -102,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/red2"
-                        tools:text="￥10000.0" />
+                        tools:text="￥10000.0"/>
 
                     <TextView
                         android:id="@+id/tv_probation"
@@ -112,7 +112,7 @@
                         android:background="@drawable/shape_rectangle_fill_hint"
                         android:padding="5dp"
                         android:text="免费试读"
-                        android:textColor="@color/global" />
+                        android:textColor="@color/global"/>
 
                     <TextView
                         android:id="@+id/tv_pay"
@@ -125,12 +125,12 @@
                         android:paddingRight="15dp"
                         android:paddingTop="5dp"
                         android:text="购买"
-                        android:textSize="@dimen/edit3"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/edit3"/>
                 </LinearLayout>
             </FrameLayout>
 
-            <include layout="@layout/line" />
+            <include layout="@layout/line"/>
 
             <LinearLayout
                 android:id="@+id/lay_read"
@@ -141,15 +141,16 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/bookdetail_read"
                     android:drawablePadding="5dp"
                     android:text="阅读"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"/>
             </LinearLayout>
 
-            <include layout="@layout/item_distance" />
+            <include layout="@layout/item_distance"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,7 +162,7 @@
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@drawable/icon_pay" />
+                    android:src="@drawable/icon_pay"/>
 
                 <TextView
                     android:id="@+id/tv_msg"
@@ -170,7 +171,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    tools:text="收到的打赏：568元(150人)" />
+                    tools:text="收到的打赏：568元(150人)"/>
 
                 <TextView
                     android:id="@+id/btn_reward"
@@ -182,18 +183,18 @@
                     android:paddingRight="15dp"
                     android:paddingTop="5dp"
                     android:text="@string/reward"
-                    android:textColor="@color/red" />
+                    android:textColor="@color/red"/>
             </LinearLayout>
 
-            <include layout="@layout/item_distance" />
+            <include layout="@layout/item_distance"/>
 
-            <include layout="@layout/item_brief" />
+            <include layout="@layout/item_brief"/>
 
-            <include layout="@layout/item_distance" />
+            <include layout="@layout/item_distance"/>
 
-            <include layout="@layout/item_auther" />
+            <include layout="@layout/item_auther"/>
 
-            <include layout="@layout/item_distance" />
+            <include layout="@layout/item_distance"/>
 
             <include layout="@layout/item_comment"/>
 
