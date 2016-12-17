@@ -37,9 +37,9 @@ public class MyWalletRecordAdapter extends RecyclerView.Adapter<MyWalletRecordAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tvtransName.setText(dataBeen.get(position).getTradeName());
-        holder.tvTransDetails.setText(dataBeen.get(position).getTradeMoney()+"");
+        holder.tvTransDetails.setText(dataBeen.get(position).getTradeMoney()+"元  ");
         holder.tvTransState.setText(dataBeen.get(position).getStatus());
-        holder.tvTransData.setText(dataBeen.get(position).getTradeTime()+"");
+        holder.tvTransData.setText(dataBeen.get(position).getTradeTime()+"  ");
 //        holder.llItem.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

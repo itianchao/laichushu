@@ -189,8 +189,11 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
     }
 
 
-
-    //话题收藏
+    /**话题收藏
+     * @param sourceId
+     * @param sourceType
+     * @param type
+     */
     public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
         CollectSaveDate_Paramet collectSave = new CollectSaveDate_Paramet(userId, sourceId, sourceType, type);
         LoggerUtil.toJson(collectSave);

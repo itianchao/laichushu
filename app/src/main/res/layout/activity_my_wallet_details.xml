@@ -75,12 +75,12 @@
         android:layout_below="@+id/btn_withdrawals"
         android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
-        android:paddingLeft="12dp"
+        android:paddingLeft="24dp"
         android:paddingTop="24dp"
         android:text="交易记录"
-        android:textColor="@color/characterGray"
+        android:textColor="@color/characterLightGray2"
         android:textSize="@dimen/edit"
-        android:textStyle="bold" />
+         />
 
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/ryv_transRecord"

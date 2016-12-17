@@ -18,6 +18,7 @@ import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.event.RefreshHomePageEvent;
+import com.laichushu.book.event.RefreshUserPageEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.userhomepage.UserHomePagePresener;
 import com.laichushu.book.mvp.userhomepage.UserHomePageView;
@@ -35,6 +36,8 @@ import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +47,8 @@ import java.util.List;
  * 2016年11月25日17:04:06
  */
 public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivAnthor,ivOther, ivHead, ivGrade, ivGradeDetails;
-    private TextView tvTitle, nickName, tvRealName, tvAuthorGrade;
+    private ImageView ivBack, ivAnthor, ivOther, ivHead, ivGrade, ivGradeDetails;
+    private TextView tvTitle, nickName, tvAuthorGrade;
     private HomePersonFocusResult.DataBean dataBean;
     private Button btnFocus;
     private PullLoadMoreRecyclerView mDyRecyclerView, mWorksRecyclerView, mHeFocusRecyclerView, mFocusHeRecyclerView;
@@ -81,8 +84,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         ivAnthor = ((ImageView) inflate.findViewById(R.id.iv_title_another));
         ivOther = ((ImageView) inflate.findViewById(R.id.iv_title_other));
         nickName = ((TextView) inflate.findViewById(R.id.tv_userNickName));
-        tvRealName = ((TextView) inflate.findViewById(R.id.tv_userRealName));
-        tvAuthorGrade = ((TextView) inflate.findViewById(R.id.tv_userAuthorGrade));
+        tvAuthorGrade = ((TextView) inflate.findViewById(R.id.tv_userRealName));
         ivGrade = ((ImageView) inflate.findViewById(R.id.iv_userGrade));
         ivHead = ((ImageView) inflate.findViewById(R.id.iv_userHeadImg));
         ivGradeDetails = ((ImageView) inflate.findViewById(R.id.iv_userGradeDetails));
@@ -433,13 +435,13 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     public void getSaveCollectSuccess(RewardResult model, String type) {
         if (model.isSuccess()) {
             if (type.equals("0")) {
-                ToastUtil.showToast("收藏成功！");
+//                ToastUtil.showToast("收藏成功！");
             } else {
-                ToastUtil.showToast("取消收藏！");
+//                ToastUtil.showToast("取消收藏！");
             }
 
         } else {
-            ToastUtil.showToast("操作失败！");
+//            ToastUtil.showToast("操作失败！");
             LoggerUtil.toJson(model);
         }
     }
@@ -560,5 +562,12 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     public void finish() {
         EventBus.getDefault().postSticky(new RefreshHomePageEvent(true));
         super.finish();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshUserPageEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            initData();
+        }
     }
 }

@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
@@ -176,8 +177,8 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
     public void sendMsgToParty(String id, String content) {
         mvpView.showLoading();
         Logger.e("发消息");
-        SendMsgToParty_Paramet paramet = new SendMsgToParty_Paramet(userId, id, content);
-        addSubscription(apiStores.sendMsgToParty(paramet), new ApiCallback<RewardResult>() {
+        AddPerMsgInfo_Paramet paramet = new AddPerMsgInfo_Paramet(content,id,userId);
+        addSubscription(apiStores.getAddPerMsgInfDetails(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.getSendMsgToPartyDataSuccess(model);
@@ -197,11 +198,13 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
 
     /**
      * 发消息对话框
+     *
      * @param id
      */
     public void sendMsgToPartyDialog(final String id) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
-        final View customerView = UIUtil.inflate(R.layout.dialog_sendmsg);
+        final View customerView = UIUtil.inflate(R.layout.dialog_send_per_msg);
+        final EditText edMsg = (EditText) customerView.findViewById(R.id.et_dialogMsg);
 
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
@@ -211,24 +214,18 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
             }
         });
         //确认
-        final EditText dialogEt = (EditText) customerView.findViewById(R.id.et_dialog);
-
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = dialogEt.getText().toString().trim();
-                if (TextUtils.isEmpty(name)) {
-                    dialogEt.startAnimation(ShakeAnim.shakeAnimation(3));
-                } else {
-                    dialogBuilder.dismiss();
-                    sendMsgToParty(id, name);//发消息
-                }
+                // TODO: 2016/11/25 投稿
+
+                sendMsgToParty(userId, edMsg.getText().toString());
+                dialogBuilder.dismiss();
             }
         });
-
         dialogBuilder
-                .withTitle(null)                                  // 为null时不显示title
-                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .withTitle("发送私信")                                  // 为null时不显示title
+                .withDialogColor("#94C3B7")                       // 设置对话框背景色                               //def
                 .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
                 .withDuration(500)                                // 对话框动画时间
                 .withEffect(Effectstype.Slidetop)                 // 动画形式

@@ -35,8 +35,8 @@
 
             <ImageView
                 android:id="@+id/iv_focusIcon"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_centerVertical="true" />
 
             <RelativeLayout
@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="28dp"
                     android:layout_marginTop="12dp"
                     android:textColor="@color/characterGray"
                     android:textSize="@dimen/edit2" />
@@ -59,12 +59,52 @@
                     android:id="@+id/tv_focusName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_focusTime"
                     android:layout_below="@+id/tv_focusTime"
                     android:layout_marginBottom="24dp"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginTop="12dp"
                     android:textColor="@color/auditing"
                     android:textSize="@dimen/edit2" />
+
+                <TextView
+                    android:id="@+id/tv_focusContent1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_focusTime"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/tv_focusName"
+                    android:textColor="@color/auditing"
+                    android:textSize="@dimen/edit2"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_focusContent2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_focusTime"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/tv_focusContent1"
+                    android:textColor="@color/characterLightGray2"
+                    android:textSize="@dimen/edit2"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_focusContent3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_focusTime"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/tv_focusContent2"
+                    android:textColor="@color/auditing"
+                    android:textSize="@dimen/edit2"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_focusContent"
@@ -73,9 +113,10 @@
                     android:layout_below="@+id/tv_focusTime"
                     android:layout_marginBottom="12dp"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginRight="12dp"
                     android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@+id/tv_focusName"
+                    android:layout_toRightOf="@+id/tv_focusContent3"
+                    android:lines="2"
                     android:text="关注了你"
                     android:textColor="@color/characterLightGray1"
                     android:textSize="@dimen/edit2" />
