@@ -2,16 +2,13 @@ package com.laichushu.book.ui.adapter;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -22,7 +19,6 @@ import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.ui.activity.MechanismListActivity;
 import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
-import com.laichushu.book.ui.widget.SmoothTabTitle;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -89,6 +85,9 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         }
         if (dataBean.getExpressStatus().equals("2")){
             mStrip.get(3).setTitle("制作中");
+        }
+        if (dataBean.getExpressStatus().equals("3")){
+            mStrip.get(3).setTitle("已经发表");
         }
         if (dataBean.getStatus().equals("4")) {
             holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
