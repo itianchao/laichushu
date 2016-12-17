@@ -64,6 +64,17 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
     @Override
     public void onBindViewHolder(final WriteBookViewHolder holder, final int position) {
         final HomeHotModel.DataBean dataBean = mData.get(position);
+        switch(dataBean.getStatus()){
+            case "1":
+                GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2,  holder.bookStatueIv);
+                break;
+            case "2":
+                GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3,  holder.bookStatueIv);
+                break;
+            default:
+                GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1,  holder.bookStatueIv);
+                break;
+        }
         View itemView = null;
         ImageView imageView = null;
         TextView textView;
@@ -113,7 +124,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (dataBean.getExpressStatus().equals("4")) {
+                    if (dataBean.getStatus().equals("4")) {
                         return;
                     }
                     switch (finalJ) {
@@ -256,6 +267,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         private TextView deleteTv;//删除
         private ImageView jurTv;//权限
         private ImageView bookIv;
+        private ImageView bookStatueIv;
         private TextView titleTv;
         private TextView typeTv;
         private RatingBar numRb;
@@ -282,8 +294,10 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
             llTab = (LinearLayout) itemView.findViewById(R.id.ll_tab);
             hsView = (HorizontalScrollView) itemView.findViewById(R.id.hs_view);
+            hsView = (HorizontalScrollView) itemView.findViewById(R.id.hs_view);
 
             bookIv = (ImageView) itemView.findViewById(R.id.iv_book);
+            bookStatueIv = (ImageView) itemView.findViewById(R.id.iv_book_statue);
             titleTv = (TextView) itemView.findViewById(R.id.tv_title);
             typeTv = (TextView) itemView.findViewById(R.id.tv_type);
             numRb = (RatingBar) itemView.findViewById(R.id.ratbar_num);

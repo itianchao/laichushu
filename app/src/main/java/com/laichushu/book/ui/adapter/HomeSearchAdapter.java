@@ -58,6 +58,17 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
         holder.moneyTv.setText(dataBean.getAwardMoney()+"元");
         holder.rewardTv.setText("("+dataBean.getAwardNum()+"人打赏)");
         holder.numRb.setRating(dataBean.getLevel());
+        switch(dataBean.getStatus()){
+            case "1":
+                GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2,  holder.bookStatueIv);
+                break;
+            case "2":
+                GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3,  holder.bookStatueIv);
+                break;
+            default:
+                GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1,  holder.bookStatueIv);
+                break;
+        }
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +85,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView bookIv;
+        private ImageView bookStatueIv;
         private TextView titleTv;
         private TextView typeTv;
         private RatingBar numRb;
@@ -87,6 +99,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
             bookIv = (ImageView) itemView.findViewById(R.id.iv_book);
+            bookStatueIv = (ImageView) itemView.findViewById(R.id.iv_book_statue);
             titleTv = (TextView) itemView.findViewById(R.id.tv_title);
             typeTv = (TextView) itemView.findViewById(R.id.tv_type);
             numRb = (RatingBar) itemView.findViewById(R.id.ratbar_num);
