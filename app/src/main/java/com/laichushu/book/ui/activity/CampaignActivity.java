@@ -305,6 +305,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 GlideUitl.loadRandImg(this, bean.getPhoto(), headIv);
                 usernameIv.setText(bean.getNickName());
                 booknameIv.setText(bean.getArticleName());
+                articId = mData.get(i).getArticleId();
                 headIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

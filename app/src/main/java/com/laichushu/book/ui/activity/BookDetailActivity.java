@@ -176,17 +176,19 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             probationTv.setOnClickListener(this);//免费试读按钮
             payTv.setOnClickListener(this);//购买按钮
         }
+        if (bean.getExpressStatus().equals("3")){//电子书
+            payTv.setVisibility(View.INVISIBLE);
+        }
         if (bean.isSubscribe()) {
             subscriptionTv.setText(" 取消订阅 ");
         } else {
             subscriptionTv.setText("订阅更新");
         }
+        probationTv.setVisibility(View.INVISIBLE);
         if (bean.isPurchase()) {
             payTv.setText("已购买");
-            probationTv.setVisibility(View.INVISIBLE);
         } else {
             payTv.setText("购买");
-            probationTv.setVisibility(View.VISIBLE);
         }
     }
 

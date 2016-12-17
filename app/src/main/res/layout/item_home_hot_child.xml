@@ -20,6 +20,7 @@
 
             <ImageView
                 android:id="@+id/iv_hot1"
+                android:scaleType="centerCrop"
                 android:layout_width="105dp"
                 android:layout_height="156dp" />
 
@@ -48,6 +49,7 @@
 
             <ImageView
                 android:id="@+id/iv_hot2"
+                android:scaleType="centerCrop"
                 android:layout_width="105dp"
                 android:layout_height="156dp" />
 
@@ -76,6 +78,7 @@
 
             <ImageView
                 android:id="@+id/iv_hot3"
+                android:scaleType="centerCrop"
                 android:layout_width="105dp"
                 android:layout_height="156dp"/>
 

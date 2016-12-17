@@ -59,8 +59,7 @@ public class MechanismSearchListAdapter extends RecyclerView.Adapter<MechanismSe
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean",dataBean);
-//                bundle.putString("articleId",mActivity.getArticleId());
-
+                bundle.putString("articleId",mActivity.getArticleId());
                 UIUtil.openActivity(mActivity,MechanismDetailActivity.class,bundle);
             }
         });
@@ -86,3 +85,4 @@ public class MechanismSearchListAdapter extends RecyclerView.Adapter<MechanismSe
         }
     }
 }
+
