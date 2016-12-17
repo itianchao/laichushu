@@ -97,12 +97,12 @@ public class CreateNewMaterialPresenter extends BasePresenter<CreateNewMaterialV
             }
         });
 
-        mSuccessView.findViewById(R.id.action_subscript).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setSubscript();
-            }
-        });
+//        mSuccessView.findViewById(R.id.action_subscript).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mEditor.setSubscript();
+//            }
+//        });
 
 //        mSuccessView.findViewById(R.id.action_superscript).setOnClickListener(new View.OnClickListener() {
 //            @Override

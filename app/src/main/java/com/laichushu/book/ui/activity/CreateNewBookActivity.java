@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.laichushu.book.R;
@@ -65,6 +67,8 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
     private String parentId;
     private String childId;
     private String path;
+    private CheckBox codeCk;
+    private TextView agreementTv;
 
     @Override
     protected CreateNewBookPersenter createPresenter() {
@@ -86,6 +90,8 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         coverIv = (ImageView) mSuccessView.findViewById(R.id.iv_cover);//封面
         categoryLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_category);//封面
         permissionLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_permission);//封面
+        codeCk = (CheckBox) mSuccessView.findViewById(R.id.chkItem);
+        agreementTv = (TextView) mSuccessView.findViewById(R.id.tv_agreement);
         finishIv.setOnClickListener(this);
         categoryLay.setOnClickListener(this);
         coverIv.setOnClickListener(this);
@@ -93,6 +99,7 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         categoryIv.setOnClickListener(this);
         permissionLay.setOnClickListener(this);
         createBtn.setOnClickListener(this);
+        agreementTv.setOnClickListener(this);
         return mSuccessView;
     }
 
@@ -112,6 +119,10 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
                 String name = booknameEt.getText().toString().trim();
                 String introduce = briefEt.getText().toString().trim();
                 String category = categoryTv.getText().toString().trim();
+                if (!codeCk.isChecked()) {
+                    ToastUtil.showToast("请同意来出书协议");
+                    return;
+                }
                 if(mvpPresenter.isCheck(name, introduce, category, path)){
                     if (null!=compressedImageFile){
                         mvpPresenter.commitNewBook(compressedImageFile, name, parentId, childId, permission, introduce, "");
@@ -147,6 +158,9 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
                 break;
             case R.id.lay_permission:
                 mvpPresenter.openPermissionAlertDialog(permissionTv);
+                break;
+            case R.id.tv_agreement:
+                UIUtil.openActivity(mActivity,AgreementDetailsActivity.class);
                 break;
         }
     }

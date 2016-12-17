@@ -40,6 +40,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
     private WritePresenter mvpPresenter;
     private ArrayList<MyTabStrip> mStrip;
     private MyTabStripAdapter adapter;
+    private View finalItemView;
 
     public WriteBookAdapter(ArrayList<HomeHotModel.DataBean> mData, Activity mActivity, WritePresenter mvpPresenter, ArrayList<MyTabStrip> mStrip) {
         this.mData = mData;
@@ -82,6 +83,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             holder.llTab.addView(itemView);
             j = i;
             final int finalJ = j;
+            finalItemView = itemView;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -150,6 +152,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             break;
                         case 5:
                             //签约状态
+                            finalItemView.setEnabled(false);
                             mvpPresenter.getSignStateDeta(dataBean.getArticleId());
                             break;
                     }
@@ -239,7 +242,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             submissionTv = (TextView) itemView.findViewById(R.id.tv_submission);
             publishlTv = (TextView) itemView.findViewById(R.id.tv_publishl);
             deleteTv = (TextView) itemView.findViewById(R.id.tv_delete);
-            jurTv = (TextView) itemView.findViewById(R.id.tv_jurisdiction);
+//            jurTv = (TextView) itemView.findViewById(R.id.tv_jurisdiction);
             rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
             llTab = (LinearLayout) itemView.findViewById(R.id.ll_tab);
             hsView = (HorizontalScrollView) itemView.findViewById(R.id.hs_view);
@@ -266,4 +269,9 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         this.mData = mData;
         notifyDataSetChanged();
     }
+
+    public View getFinalItemView() {
+        return finalItemView;
+    }
+
 }

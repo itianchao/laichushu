@@ -144,7 +144,37 @@
             android:layout_height="15dp"
             android:src="@drawable/home_right2x" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <CheckBox
+            android:id="@+id/chkItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/regist1"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_agreement"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/regist2"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
     <include layout="@layout/item_distance2" />
 
     <LinearLayout
@@ -166,7 +196,7 @@
         android:gravity="top"
         android:id="@+id/et_brief"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="80dp"
         android:layout_margin="10dp"
         android:background="@drawable/shape_rectangle_fill_hint"
         android:textColor="@color/black"
