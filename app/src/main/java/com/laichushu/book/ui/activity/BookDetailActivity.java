@@ -266,7 +266,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             case R.id.lay_read://阅读
                 if (bean.getStatus().equals("2")&&!bean.isAward()){//电子书
                         ToastUtil.showToast("请打赏后阅读");
-                }else if (bean.getStatus().equals("4")){//已出版
+                }else if (bean.getStatus().equals("4")||bean.getStatus().equals("2")){//已出版
                     if (bean.isPurchase()){//购买
                         mvpPresenter.getDownloadUrl(articleId,bean.getAuthorId());//获取下载url
                     }else {//未购买
@@ -275,7 +275,6 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 }else {//未出版
                     mvpPresenter.loadJurisdiction(articleId);
                 }
-                // TODO: 2016/11/7 阅读
                 break;
             case R.id.tv_subscription://订阅
                 if (subscriptionTv.getText().equals(" 取消订阅 ")) {
@@ -290,7 +289,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 break;
             case R.id.tv_probation://免费试读
                 BaseBookEntity baseBookEntity = new BaseBookEntity();
-                baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH + "/test.epub");
+                baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH + "test.epub");
                 UIUtil.startBookFBReaderActivity(this, baseBookEntity,articleId,bean.getAuthorId());
                 break;
             case R.id.tv_pay://购买

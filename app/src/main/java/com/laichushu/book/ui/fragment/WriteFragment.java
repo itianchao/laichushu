@@ -14,11 +14,16 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.MyTabStrip;
+import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.SignStateResult;
+import com.laichushu.book.db.Cache_Json;
+import com.laichushu.book.db.Cache_JsonDao;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.mvp.write.WriteView;
@@ -127,6 +132,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             ToastUtil.showToast("删除成功");
             mData.remove(position);
             writeBookAdapter.setmData(mData);
+            updateDB();
         } else {
             ToastUtil.showToast("删除失败");
         }
@@ -334,5 +340,19 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     private void showSpinWindow(TextView tv) {
 
+    }
+    private void updateDB() {
+        Cache_JsonDao cache_jsonDao = BaseApplication.getDaoSession(getActivity()).getCache_JsonDao();
+        List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder()
+                .where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).build().list();
+        Cache_Json cache_json = cache_jsons.get(0);
+        PersonalCentreResult result = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
+        if (result.getArticleCount() != null) {
+            result.setArticleCount(Integer.parseInt(result.getArticleCount())-1+"");
+        }else {
+            result.setArticleCount("0");
+        }
+        cache_json.setJson(new Gson().toJson(result));
+        cache_jsonDao.update(cache_json);
     }
 }
