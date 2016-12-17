@@ -469,7 +469,15 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             public void onSuccess(UrlResult modle) {
                 if (modle.isSuccess()) {
                     String url = modle.getData();
-                    downloadEpub(url,articleId,author);
+                    String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
+                    if (new File(path).exists()) {
+                        mvpView.hideLoading();
+                        BaseBookEntity baseBookEntity = new BaseBookEntity();
+                        baseBookEntity.setBook_path(path);
+                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author);
+                    }else {
+                        downloadEpub(url,articleId,author);
+                    }
 
                 } else {
                     ToastUtil.showToast(modle.getErrMsg());
@@ -500,6 +508,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                 if (response.isSuccessful()) {
                     boolean writtenToDisk = writeResponseBodyToDisk(response.body(), articleId);
                     if (writtenToDisk){
+                        mvpView.hideLoading();
                         String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
                         BaseBookEntity baseBookEntity = new BaseBookEntity();
                         baseBookEntity.setBook_path(path);
@@ -555,6 +564,8 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
                 return true;
             } catch (IOException e) {
+                mvpView.hideLoading();
+                futureStudioIconFile.delete();
                 return false;
             } finally {
                 mvpView.hideLoading();
@@ -568,6 +579,9 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             }
         } catch (IOException e) {
             mvpView.hideLoading();
+            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
+            File futureStudioIconFile = new File(path);
+            futureStudioIconFile.delete();
             return false;
         }
     }

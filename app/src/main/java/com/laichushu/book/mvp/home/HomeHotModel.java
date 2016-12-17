@@ -230,7 +230,16 @@ public class HomeHotModel implements Parcelable {
         private String imgName;
         private String imgUrl;
         private String detail;
+        private String creator;
         private int applyAmount;
+
+        public String getCreator() {
+            return creator;
+        }
+
+        public void setCreator(String creator) {
+            this.creator = creator;
+        }
 
         public boolean isPurchase() {
             return isPurchase;
@@ -530,6 +539,7 @@ public class HomeHotModel implements Parcelable {
             dest.writeString(this.imgName);
             dest.writeString(this.imgUrl);
             dest.writeString(this.detail);
+            dest.writeString(this.creator);
             dest.writeInt(this.applyAmount);
         }
 
@@ -574,6 +584,7 @@ public class HomeHotModel implements Parcelable {
             this.imgName = in.readString();
             this.imgUrl = in.readString();
             this.detail = in.readString();
+            this.creator = in.readString();
             this.applyAmount = in.readInt();
         }
 

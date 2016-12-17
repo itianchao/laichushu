@@ -1,6 +1,7 @@
 package com.laichushu.book.retrofit;
 
 import com.laichushu.book.bean.JsonBean.BalanceBean;
+import com.laichushu.book.bean.JsonBean.HomeTitleBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
@@ -43,6 +44,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -170,6 +172,14 @@ public interface ApiStores {
     //获取作者作品 通过图书id查询图书详情
     @POST("searchArticle/findArticleByBookId")
     Observable<BookDetailsModle> getAuthorWorksByBookId(@Body AuthorWorksByBookId_Paramet paramet);
+
+    //获取作者作品 通过图书id查询图书详情
+    @POST("searchArticle/findArticleByBookId")
+    Observable<HomeTitleBean> getBookById(@Body AuthorWorksByBookId_Paramet paramet);
+
+    //获取活动 通过活动Id查询活动详情
+    @POST("activity/getActivityById")
+    Observable<HomeTitleBean> getActivityById(@Body ActivityById_Paramet paramet);
 
     //获取素材列表接口
     @POST("material/list")
@@ -520,7 +530,7 @@ public interface ApiStores {
     Observable<RewardResult> sendMsg(@Body SendMsg_Paramet paramet);
 
     //下载文件
-    @Streaming //大文件时要加不然会OOM
-    @POST
+//    @Streaming //大文件时要加不然会OOM
+    @GET
     Call<ResponseBody> downloadFile(@Url String fileUrl);
 }
