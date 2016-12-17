@@ -434,6 +434,9 @@ public interface ApiStores {
     //我的钱包提现
     @POST("withdraw/apply")
     Observable<RewardResult> getWithdrawalsApplayDetails(@Body WithdrawalsApplay_Paramet paramet);
+    //我的钱包充值
+    @POST("recharge/recharge")
+    Observable<RewardResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
 
     //获取机构公告列表
     @POST("press/notices")

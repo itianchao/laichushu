@@ -10,5 +10,6 @@ import com.laichushu.book.bean.netbean.WalletBalanceReward;
 public interface WalletView {
     void getWalletRecordDateSuccess(WalletBalanceReward modle);
     void getWithdrawalsApplayDateSuccess(RewardResult model);
+    void getRechargePayDateSuccess(RewardResult model);
     void getDataFail(String msg);
 }

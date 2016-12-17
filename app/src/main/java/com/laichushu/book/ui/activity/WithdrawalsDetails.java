@@ -114,6 +114,11 @@ public class WithdrawalsDetails extends MvpActivity2<WalletPresener> implements 
     }
 
     @Override
+    public void getRechargePayDateSuccess(RewardResult model) {
+
+    }
+
+    @Override
     public void getDataFail(String msg) {
         LoggerUtil.e(msg);
     }

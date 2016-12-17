@@ -123,6 +123,11 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
     }
 
     @Override
+    public void getRechargePayDateSuccess(RewardResult model) {
+
+    }
+
+    @Override
     public void getDataFail(String msg) {
         refreshPage(LoadingPager.PageState.STATE_ERROR);
     }

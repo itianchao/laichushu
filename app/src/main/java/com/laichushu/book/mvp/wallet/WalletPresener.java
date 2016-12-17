@@ -2,6 +2,7 @@ package com.laichushu.book.mvp.wallet;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
+import com.laichushu.book.bean.netbean.RechargeAppPay_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
 import com.laichushu.book.bean.netbean.WithdrawalsApplay_Paramet;
@@ -94,6 +95,28 @@ public class WalletPresener extends BasePresenter<WalletView> {
     }
 
     //钱包充值
+    public void loadRechargeData(String noney, String payPlate) {
+        RechargeAppPay_Paramet recharge_Paramet_paramet = new RechargeAppPay_Paramet(userId, noney, payPlate);
+        LoggerUtil.toJson(paramet);
+        addSubscription(apiStores.getRechargeAppPayDetails(recharge_Paramet_paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getRechargePayDateSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+    //钱包提现
     public void loadWithdrawalsData(String accountName, String applyMoney) {
         WithdrawalsApplay_Paramet withdrawalsApplay_paramet = new WithdrawalsApplay_Paramet(userId, accountName, applyMoney);
         LoggerUtil.toJson(paramet);
