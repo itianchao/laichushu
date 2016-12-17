@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textColor="@color/characterGray"
+                android:textColor="@color/characterLightGray2"
                 android:textSize="@dimen/edit2"
                 />
 
@@ -101,7 +101,7 @@
                 android:paddingRight="4dp"
                 android:background="@drawable/shape_rectangle_fill_hint"
                 android:text="查看钱包"
-                android:textColor="@color/characterGray"
+                android:textColor="@color/characterLightGray2"
                 android:textSize="@dimen/edit2"
                 />
         </RelativeLayout>
