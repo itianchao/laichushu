@@ -212,6 +212,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvFocusContent1.setText(dataBeen.get(position).getAuthorName());
                 holder.tvFocusContent2.setText("的作品:");
                 holder.tvFocusContent3.setText("《"+dataBeen.get(position).getSourceName()+"》");
+
                 holder.tvFocusContent.setText("更新了!");
                 holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -308,7 +309,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
         public TextView tvReward, tvRewardBookName, tvRewardTime;
         public Button btnWallet;
         //关注
-        public TextView tvFocusTime, tvFocusName, tvFocusContent,tvFocusContent1,tvFocusContent2,tvFocusContent3;
+        public TextView tvFocusTime, tvFocusName, tvFocusContent,tvFocusContent1,tvFocusContent2,tvFocusContent3,tvFocusContent4;
         public ImageView ivFocusIcon, ivFocusNotice;
         public LinearLayout llFocusItem;
 
@@ -347,6 +348,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                     tvFocusContent1 = (TextView) root.findViewById(R.id.tv_focusContent1);
                     tvFocusContent2 = (TextView) root.findViewById(R.id.tv_focusContent2);
                     tvFocusContent3 = (TextView) root.findViewById(R.id.tv_focusContent3);
+                    tvFocusContent4 = (TextView) root.findViewById(R.id.tv_focusContent4);
                     llFocusItem = (LinearLayout) root.findViewById(R.id.ll_item);
                     break;
             }

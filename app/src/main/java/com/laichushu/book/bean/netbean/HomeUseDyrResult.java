@@ -15,7 +15,16 @@ public class HomeUseDyrResult implements Serializable {
      */
 
     private boolean success;
+    private String errMsg;
     private List<DataBean> data;
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
+    }
 
     public boolean isSuccess() {
         return success;

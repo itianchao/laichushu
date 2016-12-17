@@ -267,13 +267,18 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
      */
     @Override
     public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
-        //跳转图书详情页
-        Bundle bundle = new Bundle();
+        if(model.isSuccess()){
+            //跳转图书详情页
+            Bundle bundle = new Bundle();
 //        String bd = gson.toJson(model, BookDetailsModle.class);
 //        HomeHotModel.DataBean homeHotModel = gson.fromJson(bd, new TypeToken<HomeHotModel.DataBean>() {}.getType());
-        HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
-        bundle.putParcelable("bean", dataBean);
-        UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+            HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
+            bundle.putParcelable("bean", dataBean);
+            UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+        }else{
+            ToastUtil.showToast(model.getErrMsg());
+        }
+
 
     }
     @Subscribe(threadMode = ThreadMode.MAIN)

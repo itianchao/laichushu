@@ -16,7 +16,6 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
-import com.laichushu.book.event.RefurshHomeTitleEvent;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.campaign.CampaignJoinModel;
 import com.laichushu.book.mvp.campaign.CampaignModel;
@@ -217,6 +216,7 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
+                EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean.isParticipate(), bean.getApplyAmount(), position));
                 finish();
                 break;
             case R.id.iv_title_other://分享
@@ -504,13 +504,5 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 .setCustomView(customerView, mActivity)                // 添加自定义View
                 .show();
 
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        if (position!=-1){
-            EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean.isParticipate(), bean.getApplyAmount(), position));
-        }
     }
 }

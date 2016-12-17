@@ -149,12 +149,7 @@ public class CoverListActivity extends MvpActivity2<CoverDirPresenter> implement
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.iv_title_finish:
-                UIUtil.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                },1700);
+                finish();
                 break;
         }
     }

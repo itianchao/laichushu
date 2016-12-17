@@ -294,7 +294,6 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
             llTab = (LinearLayout) itemView.findViewById(R.id.ll_tab);
             hsView = (HorizontalScrollView) itemView.findViewById(R.id.hs_view);
-            hsView = (HorizontalScrollView) itemView.findViewById(R.id.hs_view);
 
             bookIv = (ImageView) itemView.findViewById(R.id.iv_book);
             bookStatueIv = (ImageView) itemView.findViewById(R.id.iv_book_statue);

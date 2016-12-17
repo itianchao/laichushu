@@ -465,5 +465,21 @@ public class UIUtil
 		FBReaderIntents.putBookmarkExtra(intent, bookmark);
 		activity.startActivity(intent);
 	}
+	// View宽，高
+	public int[] getLocation(View v) {
+		int[] loc = new int[4];
+		int[] location = new int[2];
+		v.getLocationOnScreen(location);
+		loc[0] = location[0];
+		loc[1] = location[1];
+		int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+		int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+		v.measure(w, h);
 
+		loc[2] = v.getMeasuredWidth();
+		loc[3] = v.getMeasuredHeight();
+
+		//base = computeWH();
+		return loc;
+	}
 }

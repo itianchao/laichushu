@@ -11,23 +11,13 @@
         android:paddingLeft="10dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
-        <FrameLayout
+
+        <ImageView
+            android:id="@+id/iv_detail_book"
             android:layout_width="100dp"
-            android:layout_height="150dp">
-            
-            <ImageView
-                android:id="@+id/iv_detail_book"
-                android:layout_width="100dp"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/img_default" />
-            <ImageView
-                android:id="@+id/iv_book_statue"
-                tools:src="@drawable/icon_book_statue1"
-                android:scaleType="centerCrop"
-                android:layout_width="70dp"
-                android:layout_height="70dp" />
-        </FrameLayout>
+            android:layout_height="150dp"
+            tools:scaleType="centerCrop"
+            tools:src="@drawable/img_default" />
 
         <LinearLayout
             android:padding="10dp"

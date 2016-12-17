@@ -9,17 +9,12 @@ import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
 import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
-import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
 import com.laichushu.book.bean.netbean.HomeUserInfor_paramet;
 import com.laichushu.book.bean.netbean.HomeUserResult;
-import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
 import com.laichushu.book.global.ConstantValue;
@@ -89,10 +84,10 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
     }
 
     //获取用户动态详情
-    private HomeUserDy_parmet paramet = new HomeUserDy_parmet("", pageSize, pageNo, userId);
+    private HomeUserDy_parmet paramet = new HomeUserDy_parmet("", pageSize, pageNo,userId);
 
     public void getUserDynmicDate(String id) {
-        paramet.setUserId(id);
+        getParamet().setUserId(id);
         addSubscription(apiStores.getUserHomeDyDetails(paramet), new ApiCallback<HomeUseDyrResult>() {
 
             @Override

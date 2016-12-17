@@ -75,7 +75,7 @@
                 android:layout_toRightOf="@+id/tv_type"
                 android:singleLine="true"
                 android:textColor="@color/auditing"
-                android:textSize="@dimen/edit3" />
+                android:textSize="@dimen/edit2" />
         </RelativeLayout>
 
         <TextView
@@ -87,7 +87,6 @@
             android:paddingLeft="12dp"
             android:paddingTop="12dp"
             android:layout_marginBottom="12dp"
-            android:text="44"
             android:textColor="@color/characterLightGray2"
             android:textSize="@dimen/edit3" />
     </LinearLayout>

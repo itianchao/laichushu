@@ -68,24 +68,24 @@ public class UserDynamicAdapter extends RecyclerView.Adapter<UserDynamicAdapter.
         holder.llCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (type.equals("0")) {
+                if (!dataBeen.get(position).isCollect()) {
                     //添加收藏
                     currentNum++;
+                    type = "0";
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
                     userHomePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
-                    type = "1";
                     holder.tvCollection.setText("已收藏(" + currentNum + ")");
                     dataBeen.get(position).setCollect(true);
                 } else {
                     //取消收藏
                     currentNum--;
+                    type = "1";
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollection.setCompoundDrawables(drawable, null, null, null);
                     userHomePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
-                    type = "0";
                     holder.tvCollection.setText("收藏(" + currentNum + ")");
                     dataBeen.get(position).setCollect(false);
                 }

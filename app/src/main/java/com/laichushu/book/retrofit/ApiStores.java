@@ -1,7 +1,6 @@
 package com.laichushu.book.retrofit;
 
 import com.laichushu.book.bean.JsonBean.BalanceBean;
-import com.laichushu.book.bean.JsonBean.HomeTitleBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
@@ -41,17 +40,11 @@ import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import java.util.Map;
 
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
-import retrofit2.http.Path;
-import retrofit2.http.Streaming;
-import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -63,12 +56,12 @@ public interface ApiStores {
     //baseUrl
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
-    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.0.123:8082/book-app/";//施大勇4
-//    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
+    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
 //    String API_SERVER_URL = "http://192.168.1.130:8082/book-app/";//施大勇6
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //      String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//李红江
@@ -172,14 +165,6 @@ public interface ApiStores {
     //获取作者作品 通过图书id查询图书详情
     @POST("searchArticle/findArticleByBookId")
     Observable<BookDetailsModle> getAuthorWorksByBookId(@Body AuthorWorksByBookId_Paramet paramet);
-
-    //获取作者作品 通过图书id查询图书详情
-    @POST("searchArticle/findArticleByBookId")
-    Observable<HomeTitleBean> getBookById(@Body AuthorWorksByBookId_Paramet paramet);
-
-    //获取活动 通过活动Id查询活动详情
-    @POST("activity/getActivityById")
-    Observable<HomeTitleBean> getActivityById(@Body ActivityById_Paramet paramet);
 
     //获取素材列表接口
     @POST("material/list")
@@ -438,10 +423,6 @@ public interface ApiStores {
     @POST("party/list")
     Observable<MechanismListBean> getMechanismList(@Body MechanismList_Paramet paramet);
 
-    //搜索机构
-    @POST("party/list")
-    Observable<MechanismListBean> getSearchMechanismList(@Body MechanismSearchList_Paramet paramet);
-
     //我的钱包基本信息+交易记录
     @POST("wallet/find")
     Observable<WalletBalanceReward> getBalanceRecordDetails(@Body WalletBalanceRecord_Paramet paramet);
@@ -528,9 +509,4 @@ public interface ApiStores {
     //发送验证码的接口为：
     @POST("msg/send")
     Observable<RewardResult> sendMsg(@Body SendMsg_Paramet paramet);
-
-    //下载文件
-//    @Streaming //大文件时要加不然会OOM
-    @GET
-    Call<ResponseBody> downloadFile(@Url String fileUrl);
 }

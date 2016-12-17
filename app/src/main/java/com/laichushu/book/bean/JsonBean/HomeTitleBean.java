@@ -1,7 +1,5 @@
-package com.laichushu.book.bean.JsonBean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.laichushu.book.bean.JsonBean;
 
 import com.laichushu.book.mvp.home.HomeHotModel;
 
@@ -44,3 +42,4 @@ public class HomeTitleBean {
         this.data = data;
     }
 }
+

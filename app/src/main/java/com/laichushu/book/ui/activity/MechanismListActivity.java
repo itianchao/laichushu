@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -95,9 +94,7 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
                 finish();
                 break;
             case R.id.iv_title_other://搜索
-                Bundle bundle = new Bundle();
-                bundle.putString("articleId",articleId);
-                UIUtil.openActivity(this,MechanismSearchActivity.class,bundle);
+                UIUtil.openActivity(this,MechanismSearchActivity.class);
                 break;
             case R.id.rbn_01:
                 if (position != 1){
