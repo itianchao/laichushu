@@ -6,12 +6,12 @@ package com.laichushu.book.bean.netbean;
 
 public class HomeFocusResult {
     private boolean success;
-    private String errorCode, errorMsg;
+    private String errorCode, errMsg;
 
-    public HomeFocusResult(boolean success, String errorCode, String errorMsg) {
+    public HomeFocusResult(boolean success, String errorCode, String errMsg) {
         this.success = success;
         this.errorCode = errorCode;
-        this.errorMsg = errorMsg;
+        this.errMsg = errMsg;
     }
 
     public boolean isSuccess() {
@@ -31,10 +31,10 @@ public class HomeFocusResult {
     }
 
     public String getErrorMsg() {
-        return errorMsg;
+        return errMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrorMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 }

@@ -6,7 +6,7 @@ package com.laichushu.book.mvp.bookdetail;
  */
 public class SubscribeArticleModle {
     private boolean success;
-    private String errorMsg;
+    private String errMsg;
     public boolean isSuccess() {
         return success;
     }
@@ -16,10 +16,10 @@ public class SubscribeArticleModle {
     }
 
     public String getErrorMsg() {
-        return errorMsg;
+        return errMsg;
     }
 
     public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+        this.errMsg = errorMsg;
     }
 }

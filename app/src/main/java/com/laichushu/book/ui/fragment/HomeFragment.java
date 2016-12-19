@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +68,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private String pageNo2 = "1";//活动加载1次
     private ImageView categoryIv;
     private HomeHotModel model;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -76,9 +76,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         HomeModel homeModel = bundle.getParcelable("homeModel");
         HomeHotModel homeHotModel = bundle.getParcelable("homeHotModel");
         HomeHotModel homeAllModel = bundle.getParcelable("homeAllModel");
-        if (mTitleData.size()==0) mTitleData = homeModel.getData();
-        if (mHotData.size()==0) mHotData = homeHotModel.getData();
-        if (mData.size()==0) mData = homeAllModel.getData();
+        if (mTitleData.size() == 0) mTitleData = homeModel.getData();
+        if (mHotData.size() == 0) mHotData = homeHotModel.getData();
+        if (mData.size() == 0) mData = homeAllModel.getData();
     }
 
     @Override
@@ -114,7 +114,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private void initRecycler() {
         mRecyclerView.setLinearLayout();
         mRecyclerView.setFooterViewText("加载中");
-        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter,this);
+        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter, this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
     }
@@ -123,9 +123,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      * 标题轮播图
      */
     private void titleViewPager() {
-        adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity,mvpPresenter);
+        adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity, mvpPresenter);
         homeVp.setAdapter(adapter);
-        int remainder = Integer.MAX_VALUE / 2 %(mTitleData.size()==0?1:mTitleData.size());
+        int remainder = Integer.MAX_VALUE / 2 % (mTitleData.size() == 0 ? 1 : mTitleData.size());
         item = Integer.MAX_VALUE / 2 - remainder;
         homeVp.setCurrentItem(item);
         homeVp.setOnPageChangeListener(this);
@@ -133,7 +133,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             @Override
             public void onGlobalLayout() {
                 pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                if (lineLyt.getChildCount()>1){
+                if (lineLyt.getChildCount() > 1) {
                     range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
                 }
             }
@@ -182,8 +182,13 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }
     }
 
+    /**
+     * 获取图书列表成功
+     * @param model
+     */
     @Override
     public void getAllData(HomeHotModel model) {
+        mAdapter.getActivityRbn().setEnabled(true);
         hideLoading();
         mAllData.clear();
         UIUtil.postDelayed(new Runnable() {
@@ -194,7 +199,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }, 300);
         if (model.isSuccess()) {
             mAllData = model.getData();
-            if (mAllData.size()!=0){
+            if (mAllData.size() != 0) {
                 pageNo = Integer.parseInt(pageNo) + 1 + "";
                 mData.addAll(mAllData);
                 mAdapter.setmData(mData);
@@ -205,8 +210,14 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }
     }
 
+    /**
+     * 获取活动列表接成功
+     *
+     * @param model
+     */
     @Override
     public void getActivityData(HomeHotModel model) {
+        mAdapter.getAllRbn().setEnabled(true);
         hideLoading();
         mAllData.clear();
         UIUtil.postDelayed(new Runnable() {
@@ -217,7 +228,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }, 300);
         if (model.isSuccess()) {
             mAllData = model.getData();
-            if (mAllData.size()!=0){
+            if (mAllData.size() != 0) {
                 pageNo2 = Integer.parseInt(pageNo2) + 1 + "";
                 mData.addAll(mAllData);
                 mAdapter.notifyDataSetChanged();
@@ -229,6 +240,8 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     @Override
     public void getDataFail(String msg) {
+        mAdapter.getAllRbn().setEnabled(true);
+        mAdapter.getActivityRbn().setEnabled(true);
         mRecyclerView.setPullLoadMoreCompleted();
         Logger.e(msg);
     }
@@ -249,7 +262,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        int move = (int) ((position % (mTitleData.size()==0?1:mTitleData.size()) + positionOffset) * range);
+        int move = (int) ((position % (mTitleData.size() == 0 ? 1 : mTitleData.size()) + positionOffset) * range);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.leftMargin = move;
@@ -340,25 +353,42 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * 刷新 活动
+     *
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshHomeEvent event){
+    public void onEvent(RefurshHomeEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
-            for (HomeHotModel.DataBean dataBean : mData) {
-                if (dataBean.getArticleId().equals(event.getBean().getArticleId())){
-                    dataBean = event.getBean();
+            for (int position = 0; position < mData.size(); position++) {
+                if (mData.get(position).getArticleId().equals(event.getBean().getArticleId())) {
+                    mData.set(position, event.getBean());
                     mAdapter.setmData(mData);
                     break;
                 }
             }
         }
     }
+
+    /**
+     * 刷新 全部热门
+     *
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshBookDetaileCommentEvent event){
+    public void onEvent(RefurshBookDetaileCommentEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         int position = event.getPosition();
-        HomeHotModel.DataBean dataBean = mData.get(position);
-        dataBean = event.getBean();
+        mData.set(position, event.getBean());
+        for (int i = 0; i < mData.size(); i++) {
+            if (mHotData.get(i).getArticleId().equals(event.getBean().getArticleId())) {
+                mHotData.set(i, event.getBean());
+                break;
+            }
+        }
         mAdapter.setmData(mData);
+        mAdapter.setmHotData(mData);
     }
 }
