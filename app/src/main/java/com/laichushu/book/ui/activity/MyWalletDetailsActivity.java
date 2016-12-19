@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
+import com.laichushu.book.event.RefreshWalletEvent;
+import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.mvp.wallet.WalletPresener;
 import com.laichushu.book.mvp.wallet.WalletView;
 import com.laichushu.book.ui.adapter.MyWalletRecordAdapter;
@@ -18,6 +20,10 @@ import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +47,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
     @Override
     protected View createSuccessView() {
         View inflate = UIUtil.inflate(R.layout.activity_my_wallet_details);
+        EventBus.getDefault().register(this);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvBalanceShow = ((TextView) inflate.findViewById(R.id.tv_balanceShow));
@@ -77,12 +84,14 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
                 break;
             case R.id.btn_Recharge:
                 //充值
-                UIUtil.openActivity(this, RechargeDetailsActivity.class);
+                Bundle recharge = new Bundle();
+                recharge.putParcelable("bean", bean);
+                UIUtil.openActivity(this, RechargeDetailsActivity.class,recharge);
                 break;
             case R.id.btn_withdrawals:
                 //提现
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("bean", bean);
+                bundle.putParcelable("bean", bean);
                 UIUtil.openActivity(this, WithdrawalsDetails.class, bundle);
                 break;
         }
@@ -142,5 +151,12 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
     public void onLoadMore() {
         mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
         mvpPresenter.LoadWalletRecordData();//请求网络获取搜索列表
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshWalletEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            initData();
+        }
     }
 }

@@ -166,7 +166,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             mvpPresenter.loadBrowserListData("1");//请求网络获取搜索列表
              }else if(type==2){
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.LoadCollectionData();;//请求网络获取搜索列表
+            mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
         }
 
     }
@@ -201,11 +201,12 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mRecyclerView.setPullLoadMoreCompleted();
+                mCollRecyclerView.setPullLoadMoreCompleted();
             }
         }, 300);
         if (model.isSuccess()) {
             collData = model.getData();
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!collData.isEmpty()) {
                 collAdapter.refreshAdapter(collData);
                 PAGE_NO++;
@@ -213,8 +214,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
 
             }
         } else {
-            collAdapter.refreshAdapter(collData);
             ToastUtil.showToast(model.getErrMsg());
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }

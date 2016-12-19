@@ -1,13 +1,17 @@
 package com.laichushu.book.bean.netbean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by PCPC on 2016/11/26.
  */
 
-public class WalletBalanceReward implements Serializable {
+public class WalletBalanceReward implements Parcelable {
 
     /**
      * balance : 90.0
@@ -43,7 +47,7 @@ public class WalletBalanceReward implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         /**
          * accountId : 1
          * tradeName : 微信充值
@@ -117,5 +121,80 @@ public class WalletBalanceReward implements Serializable {
         public void setStatus(String status) {
             this.status = status;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.accountId);
+            dest.writeString(this.tradeName);
+            dest.writeString(this.type);
+            dest.writeString(this.sourceId);
+            dest.writeString(this.tradeTime);
+            dest.writeDouble(this.tradeMoney);
+            dest.writeString(this.status);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.accountId = in.readString();
+            this.tradeName = in.readString();
+            this.type = in.readString();
+            this.sourceId = in.readString();
+            this.tradeTime = in.readString();
+            this.tradeMoney = in.readDouble();
+            this.status = in.readString();
+        }
+
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(this.balance);
+        dest.writeByte(this.success ? (byte) 1 : (byte) 0);
+        dest.writeList(this.data);
+    }
+
+    public WalletBalanceReward() {
+    }
+
+    protected WalletBalanceReward(Parcel in) {
+        this.balance = in.readDouble();
+        this.success = in.readByte() != 0;
+        this.data = new ArrayList<DataBean>();
+        in.readList(this.data, DataBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<WalletBalanceReward> CREATOR = new Parcelable.Creator<WalletBalanceReward>() {
+        @Override
+        public WalletBalanceReward createFromParcel(Parcel source) {
+            return new WalletBalanceReward(source);
+        }
+
+        @Override
+        public WalletBalanceReward[] newArray(int size) {
+            return new WalletBalanceReward[size];
+        }
+    };
 }
