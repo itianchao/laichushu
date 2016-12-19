@@ -124,7 +124,9 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
             //用户协议
             case R.id.tv_agreement:
 //                new ServiceTermsDialog(mActivity).show();
-                UIUtil.openActivity(mActivity,AgreementDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("type","0");
+                UIUtil.openActivity(mActivity,AgreementDetailsActivity.class,bundle);
                 break;
             case R.id.tv_code:
                 String phonenum = phoneEt.getText().toString().trim();
