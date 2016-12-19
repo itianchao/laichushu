@@ -26,7 +26,7 @@ public class FindPresenter extends BasePresenter<FindView> {
      * 加载轮番图
      */
     public void loadFindCarouseData() {
-        mvpView.showLoading();
+//        mvpView.showLoading();
         addSubscription(apiStores.homeCarouselData(),
                 new ApiCallback<HomeModel>() {
                     @Override

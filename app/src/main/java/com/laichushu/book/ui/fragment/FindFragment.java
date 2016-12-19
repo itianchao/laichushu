@@ -1,13 +1,8 @@
 package com.laichushu.book.ui.fragment;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,9 +13,11 @@ import com.laichushu.book.mvp.FindPresenter;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.write.FindView;
 import com.laichushu.book.ui.adapter.FindTitleViewPagerAdapter;
-import com.laichushu.book.ui.base.MvpFragment;
+import com.laichushu.book.ui.base.MvpFragment2;
+import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 
@@ -28,7 +25,7 @@ import java.util.ArrayList;
  * 发现
  * Created by wangtong on 2016/10/17.
  */
-public class FindFragment extends MvpFragment<FindPresenter> implements FindView, View.OnClickListener, ViewPager.OnPageChangeListener {
+public class FindFragment extends MvpFragment2<FindPresenter> implements FindView, View.OnClickListener, ViewPager.OnPageChangeListener {
     private ImageView pointIv;
     private ViewPager findVp;
     private FindTitleViewPagerAdapter titleAdapter;
@@ -37,6 +34,8 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
     private int range;
     private LinearLayout lineLyt;
     private Handler mRefreshWidgetHandler = new Handler();
+
+    private PullLoadMoreRecyclerView mRecyclerView;
     private Runnable refreshThread = new Runnable() {
 
         public void run() {
@@ -46,25 +45,18 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
     };
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View createSuccessView() {
         View mRootView = UIUtil.inflate(R.layout.fragment_find);
         findVp = (ViewPager) mRootView.findViewById(R.id.vp_find_title);
         pointIv = (ImageView) mRootView.findViewById(R.id.iv_red_point);
         lineLyt = (LinearLayout) mRootView.findViewById(R.id.ll_container);
+        mRecyclerView = (PullLoadMoreRecyclerView) mRootView.findViewById(R.id.ryv_find);
         return mRootView;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void initData() {
+        super.initData();
         //初始化数据
         if (mTitleData.size() == 0) {
             mvpPresenter.loadFindCarouseData();
@@ -151,13 +143,19 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
     @Override
     public void getDataSuccess(HomeModel model) {
         dismissProgressDialog();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
         if (model.isSuccess()) {
             mTitleData = model.getData();
             titleViewPager();
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
-
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -173,6 +171,5 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
     @Override
     public void hideLoading() {
         dismissProgressDialog();
-
     }
 }
