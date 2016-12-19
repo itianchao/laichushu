@@ -216,7 +216,6 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
-                EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean.isParticipate(), bean.getApplyAmount(), position));
                 finish();
                 break;
             case R.id.iv_title_other://分享
@@ -504,5 +503,11 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
                 .setCustomView(customerView, mActivity)                // 添加自定义View
                 .show();
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean.isParticipate(), bean.getApplyAmount(), position));
     }
 }

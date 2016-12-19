@@ -271,9 +271,11 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                 UIUtil.openActivity(this, AllCommentActivity.class, bundle1);
                 break;
             case R.id.lay_read://阅读
-                if (bean.getStatus().equals("2")&&!bean.isAward()){//电子书
+                if (bean.getStatus().equals("2")&&!bean.isAward()){//电子书打赏后才能阅读
                     ToastUtil.showToast("请打赏后阅读");
-                }else if (bean.getStatus().equals("4")||bean.getStatus().equals("2")){//已出版
+                }else if (bean.getStatus().equals("2")&&bean.isAward()){
+                    mvpPresenter.getDownloadUrl(articleId,bean.getAuthorId());//获取下载url
+                }else if (bean.getStatus().equals("4")){//已出版购买后才能阅读
                     if (bean.isPurchase()){//购买
                         mvpPresenter.getDownloadUrl(articleId,bean.getAuthorId());//获取下载url
                     }else {//未购买
@@ -699,7 +701,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     @Override
     public void finish() {
         super.finish();
-        EventBus.getDefault().postSticky(new RefurshHomeEvent(true));
+        EventBus.getDefault().postSticky(new RefurshHomeEvent(true,bean));
     }
 
     public HomeHotModel.DataBean getBean() {

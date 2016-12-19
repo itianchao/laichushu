@@ -58,7 +58,6 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private int item;
     private Handler mRefreshWidgetHandler = new Handler();
     private Runnable refreshThread = new Runnable() {
-
         public void run() {
             homeVp.setCurrentItem(++item);
             mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
@@ -77,9 +76,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         HomeModel homeModel = bundle.getParcelable("homeModel");
         HomeHotModel homeHotModel = bundle.getParcelable("homeHotModel");
         HomeHotModel homeAllModel = bundle.getParcelable("homeAllModel");
-        mTitleData = homeModel.getData();
-        mHotData = homeHotModel.getData();
-        mData = homeAllModel.getData();
+        if (mTitleData.size()==0) mTitleData = homeModel.getData();
+        if (mHotData.size()==0) mHotData = homeHotModel.getData();
+        if (mData.size()==0) mData = homeAllModel.getData();
     }
 
     @Override
@@ -345,7 +344,13 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void onEvent(RefurshHomeEvent event){
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
-            onRefresh();
+            for (HomeHotModel.DataBean dataBean : mData) {
+                if (dataBean.getArticleId().equals(event.getBean().getArticleId())){
+                    dataBean = event.getBean();
+                    mAdapter.setmData(mData);
+                    break;
+                }
+            }
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)

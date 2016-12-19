@@ -136,6 +136,8 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     public void articleVote(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("投稿成功，15日内通知审核结果");
+            // TODO: 2016/12/19 刷新 写作页面
+
         } else {
             if (model.getErrMsg().contains("已经投稿")){
                 ToastUtil.showToast("投稿失败，此出版社已经投稿了");
