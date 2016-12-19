@@ -29,7 +29,7 @@ public class BookDetailsModle implements Serializable {
         return errMsg;
     }
 
-    public void setErrMsg(String errorMsg) {
+    public void setErrMsg(String errMsg) {
         this.errMsg = errMsg;
     }
 

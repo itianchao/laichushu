@@ -42,6 +42,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private ArrayList<HomeHotModel.DataBean> mData;
     private ArrayList<HomeHotModel.DataBean> mHotData;
     private RadioButton rankRbn;
+    private RadioButton allRbn;
+    private RadioButton activityRbn;
     public HomePresenter mvpPresenter;
     private HomeFragment homeFragment;
     public HomeRecyclerAdapter(ArrayList<HomeHotModel.DataBean> mData, MainActivity mActivity, ArrayList<HomeHotModel.DataBean> mHotData, HomePresenter mvpPresenter, HomeFragment homeFragment) {
@@ -356,6 +358,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             cityRbn = (RadioButton) itemView.findViewById(R.id.rbn_citywide);
             rankingRbn = (RadioButton) itemView.findViewById(R.id.rbn_ranking);
             rankRbn = rankingRbn;
+            HomeRecyclerAdapter.this.allRbn = allRbn;
+            HomeRecyclerAdapter.this.activityRbn = activityRbn;
         }
     }
 
@@ -433,6 +437,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 mvpPresenter.getParamet().setPageNo("1");
                 mvpPresenter.loadHomeAllData(STATE + "");
                 index = 1;
+                activityRbn.setEnabled(false);
                 break;
             case R.id.rbn_activity:
                 if (index == 2) {
@@ -445,6 +450,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 mData.clear();
                 mvpPresenter.getActivityListParamet().setPageNo("1");
                 mvpPresenter.loadActivityData();
+                allRbn.setEnabled(false);
                 break;
             case R.id.rbn_citywide:
                 if (index == 3) {
@@ -485,5 +491,18 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public void setmData(ArrayList<HomeHotModel.DataBean> mData) {
         this.mData = mData;
         notifyDataSetChanged();
+    }
+
+    public void setmHotData(ArrayList<HomeHotModel.DataBean> mHotData) {
+        this.mHotData = mHotData;
+        notifyDataSetChanged();
+    }
+
+    public RadioButton getAllRbn() {
+        return allRbn;
+    }
+
+    public RadioButton getActivityRbn() {
+        return activityRbn;
     }
 }

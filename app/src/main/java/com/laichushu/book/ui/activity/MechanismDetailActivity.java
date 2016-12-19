@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.event.RefurshHomeEvent;
+import com.laichushu.book.event.RefurshWriteFragment;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.mechanismdetail.MechanisDetailModel;
 import com.laichushu.book.mvp.mechanismdetail.MechanismDetailPresenter;
@@ -27,6 +29,9 @@ import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -136,6 +141,8 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     public void articleVote(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("投稿成功，15日内通知审核结果");
+            // TODO: 2016/12/19 刷新 写作页面
+            EventBus.getDefault().postSticky(new RefurshWriteFragment(true));
         } else {
             if (model.getErrMsg().contains("已经投稿")){
                 ToastUtil.showToast("投稿失败，此出版社已经投稿了");

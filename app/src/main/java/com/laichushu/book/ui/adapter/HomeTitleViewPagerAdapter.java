@@ -55,10 +55,12 @@ public class HomeTitleViewPagerAdapter extends PagerAdapter {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (finalDataBean.getType().equals("1")) {//图书
-                    mvpPresenter.getBookById(finalDataBean.getSourceId(),position % (imageList.size() == 0 ? 1 : imageList.size()));
-                }else {//活动
-                    mvpPresenter.getActivityById(finalDataBean.getSourceId(),position % (imageList.size() == 0 ? 1 : imageList.size()));
+                if (!imageList.isEmpty()) {
+                    if (finalDataBean.getType().equals("1")) {//图书
+                        mvpPresenter.getBookById(finalDataBean.getSourceId(),position % (imageList.size() == 0 ? 1 : imageList.size()));
+                    }else {//活动
+                        mvpPresenter.getActivityById(finalDataBean.getSourceId(),position % (imageList.size() == 0 ? 1 : imageList.size()));
+                    }
                 }
             }
         });

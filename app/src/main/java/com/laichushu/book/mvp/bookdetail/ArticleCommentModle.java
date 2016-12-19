@@ -29,14 +29,14 @@ public class ArticleCommentModle {
      * createDate : 2016-10-31 15:38:42
      * isLike : false
      */
-    private String errorMsg;
+    private String errMsg;
 
     public String getErrorMsg() {
-        return errorMsg;
+        return errMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrorMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 
     private ArrayList<DataBean> data;

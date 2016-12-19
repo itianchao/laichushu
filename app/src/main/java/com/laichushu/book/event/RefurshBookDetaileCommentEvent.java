@@ -1,35 +1,19 @@
 package com.laichushu.book.event;
 
+import com.laichushu.book.mvp.home.HomeHotModel;
+
 /**
  * 刷新活动列表
  * Created by wangtong on 2016/11/9.
  */
 
 public class RefurshBookDetaileCommentEvent {
-    public boolean participate;
-    public int applyAmount;
     public int position;
+    public HomeHotModel.DataBean bean;
 
-    public RefurshBookDetaileCommentEvent(boolean participate, int applyAmount, int position) {
-        this.participate = participate;
-        this.applyAmount = applyAmount;
+    public RefurshBookDetaileCommentEvent(HomeHotModel.DataBean bean, int position) {
         this.position = position;
-    }
-
-    public boolean isParticipate() {
-        return participate;
-    }
-
-    public void setParticipate(boolean participate) {
-        this.participate = participate;
-    }
-
-    public int getApplyAmount() {
-        return applyAmount;
-    }
-
-    public void setApplyAmount(int applyAmount) {
-        this.applyAmount = applyAmount;
+        this.bean = bean;
     }
 
     public int getPosition() {
@@ -38,5 +22,13 @@ public class RefurshBookDetaileCommentEvent {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public HomeHotModel.DataBean getBean() {
+        return bean;
+    }
+
+    public void setBean(HomeHotModel.DataBean bean) {
+        this.bean = bean;
     }
 }

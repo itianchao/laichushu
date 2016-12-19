@@ -57,7 +57,6 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private int item;
     private Handler mRefreshWidgetHandler = new Handler();
     private Runnable refreshThread = new Runnable() {
-
         public void run() {
             homeVp.setCurrentItem(++item);
             mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
@@ -77,9 +76,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         HomeModel homeModel = bundle.getParcelable("homeModel");
         HomeHotModel homeHotModel = bundle.getParcelable("homeHotModel");
         HomeHotModel homeAllModel = bundle.getParcelable("homeAllModel");
-        mTitleData = homeModel.getData();
-        mHotData = homeHotModel.getData();
-        mData = homeAllModel.getData();
+        if (mTitleData.size() == 0) mTitleData = homeModel.getData();
+        if (mHotData.size() == 0) mHotData = homeHotModel.getData();
+        if (mData.size() == 0) mData = homeAllModel.getData();
     }
 
     @Override
@@ -134,7 +133,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             @Override
             public void onGlobalLayout() {
                 pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                if ((lineLyt.getChildCount() > 1)) {
+                if (lineLyt.getChildCount() > 1) {
                     range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
                 }
             }
@@ -183,8 +182,13 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }
     }
 
+    /**
+     * 获取图书列表成功
+     * @param model
+     */
     @Override
     public void getAllData(HomeHotModel model) {
+        mAdapter.getActivityRbn().setEnabled(true);
         hideLoading();
         mAllData.clear();
         UIUtil.postDelayed(new Runnable() {
@@ -206,8 +210,14 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }
     }
 
+    /**
+     * 获取活动列表接成功
+     *
+     * @param model
+     */
     @Override
     public void getActivityData(HomeHotModel model) {
+        mAdapter.getAllRbn().setEnabled(true);
         hideLoading();
         mAllData.clear();
         UIUtil.postDelayed(new Runnable() {
@@ -230,6 +240,8 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     @Override
     public void getDataFail(String msg) {
+        mAdapter.getAllRbn().setEnabled(true);
+        mAdapter.getActivityRbn().setEnabled(true);
         mRecyclerView.setPullLoadMoreCompleted();
         Logger.e(msg);
     }
@@ -341,24 +353,42 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * 刷新 活动
+     *
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefurshHomeEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
-            onRefresh();
+            for (int position = 0; position < mData.size(); position++) {
+                if (mData.get(position).getArticleId().equals(event.getBean().getArticleId())) {
+                    mData.set(position, event.getBean());
+                    mAdapter.setmData(mData);
+                    break;
+                }
+            }
         }
     }
 
+    /**
+     * 刷新 全部热门
+     *
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefurshBookDetaileCommentEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
-        int applyAmount = event.getApplyAmount();
-        boolean participate = event.isParticipate();
         int position = event.getPosition();
-        HomeHotModel.DataBean dataBean = mData.get(position);
-        dataBean.setApplyAmount(applyAmount);
-        dataBean.setIsParticipate(participate);
+        mData.set(position, event.getBean());
+        for (int i = 0; i < mData.size(); i++) {
+            if (mHotData.get(i).getArticleId().equals(event.getBean().getArticleId())) {
+                mHotData.set(i, event.getBean());
+                break;
+            }
+        }
         mAdapter.setmData(mData);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setmHotData(mData);
     }
 }
