@@ -81,6 +81,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         mRecyclerView = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_book);
         mRecyclerView.setLinearLayout();
         mRecyclerView.setOnPullLoadMoreListener(this);
+        mRecyclerView.setPushRefreshEnable(false);
         return mSuccessView;
     }
 
