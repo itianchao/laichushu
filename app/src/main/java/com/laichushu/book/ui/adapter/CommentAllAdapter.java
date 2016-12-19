@@ -57,14 +57,14 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
         } else {
             GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
         }
-        holder.numberTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("commentId", dataBean.getSourceId());
-                UIUtil.openActivity(mActivity,CommentSendActivity.class,bundle);
-            }
-        });
+//        holder.numberTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("commentId", dataBean.getSourceId());
+//                UIUtil.openActivity(mActivity,CommentSendActivity.class,bundle);
+//            }
+//        });
         holder.likeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

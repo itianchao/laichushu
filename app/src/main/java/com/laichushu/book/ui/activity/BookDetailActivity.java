@@ -15,7 +15,7 @@ import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
 import com.laichushu.book.event.RefrushWriteFragmentEvent;
-import com.laichushu.book.event.RefurshCommentListEvent;
+import com.laichushu.book.event.RefurshBookCommentListEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
@@ -549,14 +549,14 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                     }
                 });
                 commentLay.addView(commentItemView);
-                numberTv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("commentId", dataBean.getSourceId());
-                        UIUtil.openActivity(BookDetailActivity.this, CommentSendActivity.class, bundle);
-                    }
-                });
+//                numberIv.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("commentId", dataBean.getSourceId());
+//                        UIUtil.openActivity(BookDetailActivity.this, CommentSendActivity.class, bundle);
+//                    }
+//                });
                 headIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -669,6 +669,10 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         }
     }
 
+    /**
+     * 阅读权限
+     * @param model
+     */
     @Override
     public void getJurisdictionData(RewardResult model) {
         if (model.isSuccess()) {
@@ -685,11 +689,16 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         return new BookDetailPresenter(this);
     }
 
+    /**
+     * 刷新评论列表 和 评论数
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshCommentListEvent event) {
+    public void onEvent(RefurshBookCommentListEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             position = 1;
+            if (event.getSize()!=-1) detailCommentTv.setText("(" + event.getSize() + ")评论");//评论数
             onClick(readerRbn);
             mvpPresenter.loadCommentData(articleId, "1");
         }
