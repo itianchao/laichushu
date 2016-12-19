@@ -14,6 +14,9 @@ public class AgreementDetailsActivity extends MvpActivity2 implements View.OnCli
 
     private TextView titleTv;
     private ImageView finishIv;
+    private TextView agreementContentTv;
+    private TextView agreementTitleTv;
+
 
     @Override
     protected BasePresenter createPresenter() {
@@ -24,6 +27,8 @@ public class AgreementDetailsActivity extends MvpActivity2 implements View.OnCli
     public View createSuccessView() {
         View inflate = UIUtil.inflate(R.layout.activity_agreement_details);
         titleTv = (TextView) inflate.findViewById(R.id.tv_title);
+        agreementContentTv = (TextView) inflate.findViewById(R.id.tv_agreement_content);
+        agreementTitleTv = (TextView) inflate.findViewById(R.id.tv_agreement_title);
         finishIv = (ImageView) inflate.findViewById(R.id.iv_title_finish);
         titleTv.setText("注册协议");
         return inflate;
@@ -31,6 +36,11 @@ public class AgreementDetailsActivity extends MvpActivity2 implements View.OnCli
 
     @Override
     protected void initData() {
+        String type = getIntent().getStringExtra("type");
+        if (type.equals("1")){
+            agreementContentTv.setText(UIUtil.getString(R.string.agreementcontent2));
+            agreementTitleTv.setText("著作权保护声明");
+        }
         finishIv.setOnClickListener(this);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
