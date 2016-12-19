@@ -22,6 +22,7 @@ import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.SignStateResult;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.event.RefurshWriteFragment;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.home.HomeHotModel;
@@ -39,6 +40,7 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -84,6 +86,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         //初始化strip列表
         mStrip.clear();
         for (int i = 0; i < 6; i++) {
@@ -367,5 +370,19 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     @Override
     public void onLoadMore() {
 
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefurshWriteFragment event){
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh()) {
+            onRefresh();
+        }
     }
 }

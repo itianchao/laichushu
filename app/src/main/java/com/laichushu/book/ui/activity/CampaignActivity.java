@@ -508,6 +508,6 @@ public class CampaignActivity extends MvpActivity<CampaignPresenter> implements 
     @Override
     public void finish() {
         super.finish();
-        EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean.isParticipate(), bean.getApplyAmount(), position));
+        EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean,position));
     }
 }

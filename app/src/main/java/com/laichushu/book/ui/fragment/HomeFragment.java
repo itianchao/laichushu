@@ -356,13 +356,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefurshBookDetaileCommentEvent event){
         EventBus.getDefault().removeStickyEvent(event);
-        int applyAmount = event.getApplyAmount();
-        boolean participate = event.isParticipate();
         int position = event.getPosition();
         HomeHotModel.DataBean dataBean = mData.get(position);
-        dataBean.setApplyAmount(applyAmount);
-        dataBean.setIsParticipate(participate);
+        dataBean = event.getBean();
         mAdapter.setmData(mData);
-        mAdapter.notifyDataSetChanged();
     }
 }
