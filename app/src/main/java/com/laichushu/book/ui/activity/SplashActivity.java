@@ -55,12 +55,12 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
                             Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .request();
 
-        }else {
+        }
             ObjectAnimator mAnimator = ObjectAnimator.ofFloat(splashIv, "alpha", 0, 0.25f, 0.5f, 0.75f, 1);
             mAnimator.setDuration(1000);
             mAnimator.start();
             mAnimator.addListener(this);
-        }
+
     }
 
     private void loadActivity() {

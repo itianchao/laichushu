@@ -31,6 +31,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
     private ActivityList_Paramet activityListParamet = new ActivityList_Paramet(pageNo2,pageSize,userId);;
     private int state = 1;
     private HomeFragment homeFragment;
+
     public HomePresenter(HomeView view) {
         attachView(view);
         homeFragment = (HomeFragment) view;

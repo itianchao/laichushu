@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +69,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private String pageNo2 = "1";//活动加载1次
     private ImageView categoryIv;
     private HomeHotModel model;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -115,7 +115,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private void initRecycler() {
         mRecyclerView.setLinearLayout();
         mRecyclerView.setFooterViewText("加载中");
-        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter,this);
+        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter, this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
     }
@@ -124,9 +124,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      * 标题轮播图
      */
     private void titleViewPager() {
-        adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity,mvpPresenter);
+        adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity, mvpPresenter);
         homeVp.setAdapter(adapter);
-        int remainder = Integer.MAX_VALUE / 2 %(mTitleData.size()==0?1:mTitleData.size());
+        int remainder = Integer.MAX_VALUE / 2 % (mTitleData.size() == 0 ? 1 : mTitleData.size());
         item = Integer.MAX_VALUE / 2 - remainder;
         homeVp.setCurrentItem(item);
         homeVp.setOnPageChangeListener(this);
@@ -134,7 +134,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             @Override
             public void onGlobalLayout() {
                 pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                if (lineLyt.getChildCount()>1){
+                if ((lineLyt.getChildCount() > 1)) {
                     range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
                 }
             }
@@ -195,7 +195,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }, 300);
         if (model.isSuccess()) {
             mAllData = model.getData();
-            if (mAllData.size()!=0){
+            if (mAllData.size() != 0) {
                 pageNo = Integer.parseInt(pageNo) + 1 + "";
                 mData.addAll(mAllData);
                 mAdapter.setmData(mData);
@@ -218,7 +218,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         }, 300);
         if (model.isSuccess()) {
             mAllData = model.getData();
-            if (mAllData.size()!=0){
+            if (mAllData.size() != 0) {
                 pageNo2 = Integer.parseInt(pageNo2) + 1 + "";
                 mData.addAll(mAllData);
                 mAdapter.notifyDataSetChanged();
@@ -250,7 +250,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        int move = (int) ((position % (mTitleData.size()==0?1:mTitleData.size()) + positionOffset) * range);
+        int move = (int) ((position % (mTitleData.size() == 0 ? 1 : mTitleData.size()) + positionOffset) * range);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.leftMargin = move;
@@ -342,14 +342,15 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshHomeEvent event){
+    public void onEvent(RefurshHomeEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             onRefresh();
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshBookDetaileCommentEvent event){
+    public void onEvent(RefurshBookDetaileCommentEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         int applyAmount = event.getApplyAmount();
         boolean participate = event.isParticipate();
