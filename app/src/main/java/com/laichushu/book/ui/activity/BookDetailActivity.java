@@ -269,6 +269,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             case R.id.tv_lookup://查看更多评论
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("articleId", articleId);
+                bundle1.putInt("commentNum",bean.getCommentNum());
                 UIUtil.openActivity(this, AllCommentActivity.class, bundle1);
                 break;
             case R.id.lay_read://阅读
@@ -699,6 +700,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         if (event.isRefursh) {
             position = 1;
             if (event.getSize()!=-1) detailCommentTv.setText("(" + event.getSize() + ")评论");//评论数
+            bean.setCommentNum(event.getSize());
             onClick(readerRbn);
             mvpPresenter.loadCommentData(articleId, "1");
         }

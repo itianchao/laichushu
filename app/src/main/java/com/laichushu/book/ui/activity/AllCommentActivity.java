@@ -200,6 +200,7 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
     @Override
     public void finish() {
         super.finish();
-        EventBus.getDefault().postSticky(new RefurshBookCommentListEvent(true,mData.size()));
+        int commentNum = getIntent().getIntExtra("commentNum",0);
+        EventBus.getDefault().postSticky(new RefurshBookCommentListEvent(true,commentNum));
     }
 }
