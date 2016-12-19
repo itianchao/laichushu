@@ -79,9 +79,13 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_aliPay:
+                rbAlipay.setChecked(true);
+                rbWechat.setChecked(false);
                 payPlate = "1";
                 break;
             case R.id.rb_wxPay:
+                rbAlipay.setChecked(false);
+                rbWechat.setChecked(true);
                 payPlate = "2";
                 break;
 
