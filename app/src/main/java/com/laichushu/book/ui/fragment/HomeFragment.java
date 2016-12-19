@@ -124,7 +124,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      * 标题轮播图
      */
     private void titleViewPager() {
-        adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity);
+        adapter = new HomeTitleViewPagerAdapter(mTitleData, mActivity,mvpPresenter);
         homeVp.setAdapter(adapter);
         int remainder = Integer.MAX_VALUE / 2 %(mTitleData.size()==0?1:mTitleData.size());
         item = Integer.MAX_VALUE / 2 - remainder;
@@ -134,7 +134,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             @Override
             public void onGlobalLayout() {
                 pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                if(lineLyt.getChildAt(1)!=null&&lineLyt.getChildAt(0)!=null){
+                if (lineLyt.getChildCount()>1){
                     range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
                 }
             }

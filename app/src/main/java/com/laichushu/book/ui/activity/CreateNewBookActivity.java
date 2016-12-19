@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.laichushu.book.R;
@@ -24,7 +23,6 @@ import com.laichushu.book.mvp.createnewbook.CreateNewBookModle;
 import com.laichushu.book.mvp.createnewbook.CreateNewBookPersenter;
 import com.laichushu.book.mvp.createnewbook.CreateNewBookView;
 import com.laichushu.book.mvp.homecategory.CategoryModle;
-import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.TypeCategoryPopWindow;
@@ -119,11 +117,8 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
                 String name = booknameEt.getText().toString().trim();
                 String introduce = briefEt.getText().toString().trim();
                 String category = categoryTv.getText().toString().trim();
-                if (!codeCk.isChecked()) {
-                    ToastUtil.showToast("请同意来出书协议");
-                    return;
-                }
-                if(mvpPresenter.isCheck(name, introduce, category, path)){
+
+                if(mvpPresenter.isCheck(name, introduce, category, path,!codeCk.isChecked())){
                     if (null!=compressedImageFile){
                         mvpPresenter.commitNewBook(compressedImageFile, name, parentId, childId, permission, introduce, "");
                     }else {

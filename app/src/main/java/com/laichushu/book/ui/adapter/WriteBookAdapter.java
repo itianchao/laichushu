@@ -20,7 +20,6 @@ import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.ui.activity.MechanismListActivity;
 import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
 import com.laichushu.book.utils.GlideUitl;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -86,9 +85,6 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         if (dataBean.getExpressStatus().equals("2")){
             mStrip.get(3).setTitle("制作中");
         }
-        if (dataBean.getExpressStatus().equals("3")){
-            mStrip.get(3).setTitle("已经发表");
-        }
         if (dataBean.getStatus().equals("4")) {
             holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
         }else {
@@ -123,14 +119,14 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (dataBean.getStatus().equals("4")) {
+                    if (dataBean.getStatus().equals("4")|| dataBean.getFreezeStatus().equals("2")) {
                         return;
                     }
                     switch (finalJ) {
                         case 0:
                             //目录
-                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getFreezeStatus().equals("2")) {
-                                ToastUtil.showToast("不可编辑");
+                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3")) {
+
                             } else {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("articleId", dataBean.getArticleId());
@@ -140,8 +136,8 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             break;
                         case 1:
                             //素材
-                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getFreezeStatus().equals("2")) {
-                                ToastUtil.showToast("不可编辑");
+                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3")) {
+
                             } else {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("articleId", dataBean.getArticleId());
@@ -153,18 +149,21 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             /**
                              * 删除
                              */
-                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getFreezeStatus().equals("2")) {
-                                ToastUtil.showToast("不可删除");
+                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3")) {
+
                             } else {
                                 String articleId = dataBean.getArticleId();
                                 mvpPresenter.loadDelete(mActivity, articleId, position);
                             }
                             break;
                         case 3:
-                            //电子书
                             /**
                              * 发表
                              */
+                            //发表状态为 制作中  电子书 则不可发表
+                            if (dataBean.getExpressStatus().equals("2")||dataBean.getExpressStatus().equals("3")) {
+                                return;
+                            }
 
                             String articleId = dataBean.getArticleId();
                             String type;
@@ -173,30 +172,23 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             } else {
                                 type = "1";
                             }
-                            //发表状态为 制作中  电子书 则不可发表
-                            if (!((dataBean.getExpressStatus().equals("2") | (dataBean.getExpressStatus().equals("3")|!dataBean.getFreezeStatus().equals("2"))))) {
-                                mvpPresenter.publishNewBook(articleId, type, position);
-                            } else {
-                                ToastUtil.showToast("不可发表");
-                            }
+                            mvpPresenter.publishNewBook(articleId, type, position);
                             break;
                         case 4:
                             //投稿
-                            if (!dataBean.getFreezeStatus().equals("2")){
-                                Bundle bundle = new Bundle();
-                                bundle.putString("articleId", dataBean.getArticleId());
-                                UIUtil.openActivity(mActivity, MechanismListActivity.class, bundle);
-                            }
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString("articleId", dataBean.getArticleId());
+                            UIUtil.openActivity(mActivity, MechanismListActivity.class, bundle);
+
 //                String articleId = dataBean.getArticleId();
 //                String pressId = "";
 //                mvpPresenter.voteBook(articleId, pressId);
                             break;
                         case 5:
                             //签约状态
-                            if (!dataBean.getFreezeStatus().equals("2")){
-                                finalItemView.setEnabled(false);
-                                mvpPresenter.getSignStateDeta(dataBean.getArticleId());
-                            }
+                            finalItemView.setEnabled(false);
+                            mvpPresenter.getSignStateDeta(dataBean.getArticleId());
                             break;
                     }
                 }
@@ -243,7 +235,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.jurTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dataBean.getStatus().equals("4")||dataBean.getStatus().equals("2")||!dataBean.getFreezeStatus().equals("2")) {
+                if (dataBean.getStatus().equals("4")||dataBean.getStatus().equals("2")||dataBean.getFreezeStatus().equals("2")) {
                     return;
                 }
                 //添加权限
@@ -292,6 +284,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             jurTv = (ImageView) itemView.findViewById(R.id.tv_jurisdiction);
             rewardTv = (TextView) itemView.findViewById(R.id.tv_reward);
             llTab = (LinearLayout) itemView.findViewById(R.id.ll_tab);
+            hsView = (HorizontalScrollView) itemView.findViewById(R.id.hs_view);
             hsView = (HorizontalScrollView) itemView.findViewById(R.id.hs_view);
 
             bookIv = (ImageView) itemView.findViewById(R.id.iv_book);

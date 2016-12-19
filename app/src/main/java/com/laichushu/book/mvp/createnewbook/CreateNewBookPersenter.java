@@ -22,7 +22,6 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.CoverDirActivity;
 import com.laichushu.book.ui.activity.CreateNewBookActivity;
 import com.laichushu.book.ui.base.BasePresenter;
-import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -244,7 +243,7 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
                 .show();
     }
 
-    public boolean isCheck(String name, String introduce, String category, String path) {
+    public boolean isCheck(String name, String introduce, String category, String path, boolean b) {
         if (TextUtils.isEmpty(name)) {
             ToastUtil.showToast("请输入书名");
             return false;
@@ -259,6 +258,10 @@ public class CreateNewBookPersenter extends BasePresenter<CreateNewBookView> {
         }
         if (TextUtils.isEmpty(path)) {
             ToastUtil.showToast("请选择图片");
+            return false;
+        }
+        if (b) {
+            ToastUtil.showToast("请同意来出书协议");
             return false;
         }
         return true;
