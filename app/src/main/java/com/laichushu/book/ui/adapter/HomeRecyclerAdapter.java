@@ -1,7 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,18 +14,18 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.laichushu.book.R;
 import com.laichushu.book.bean.otherbean.HomeHotImgBean;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomePresenter;
-import com.laichushu.book.ui.activity.HotListActivity;
-import com.laichushu.book.ui.activity.MainActivity;
-import com.laichushu.book.utils.GlideUitl;
-import com.laichushu.book.utils.SharePrefManager;
-import com.laichushu.book.R;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.CampaignActivity;
+import com.laichushu.book.ui.activity.HotListActivity;
+import com.laichushu.book.ui.activity.MainActivity;
 import com.laichushu.book.ui.fragment.HomeFragment;
 import com.laichushu.book.ui.widget.TypePopWindow;
+import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -46,13 +45,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private RadioButton activityRbn;
     public HomePresenter mvpPresenter;
     private HomeFragment homeFragment;
+
     public HomeRecyclerAdapter(ArrayList<HomeHotModel.DataBean> mData, MainActivity mActivity, ArrayList<HomeHotModel.DataBean> mHotData, HomePresenter mvpPresenter, HomeFragment homeFragment) {
         this.mActivity = mActivity;
         this.mData = mData;
         this.mHotData = mHotData;//最热
         this.mvpPresenter = mvpPresenter;
         this.homeFragment = homeFragment;
-
         rankingList.add("评分最高");//1
         rankingList.add("订阅最多");//2
         rankingList.add("打赏最多");//3
@@ -113,7 +112,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder,final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final ArrayList<HomeHotImgBean> homeHotImgBeans = new ArrayList<>();
         //处理数据
         HomeHotImgBean homeHotImgBean = null;
@@ -150,7 +149,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         if (position == 0) {
             ((ViewHolder1) holder).hotVp.setAdapter(new HomeHotViewPagerAdapter(homeHotImgBeans, mActivity));
             ((ViewHolder1) holder).ll_container.removeAllViews();
-            for (int i = 0; i < Math.ceil(((double)mHotData.size()-1) / 3); i++) {
+            for (int i = 0; i < Math.ceil(((double) mHotData.size() - 1) / 3); i++) {
                 ImageView imageView = new ImageView(mActivity);
                 imageView.setBackgroundResource(R.drawable.shape_point_hollow);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -198,8 +197,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 public void onClick(View v) {
                     //跳转热门详情页
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("bean",homeFragment.getModel());
-                    UIUtil.openActivity(mActivity, HotListActivity.class,bundle);
+                    bundle.putParcelable("bean", homeFragment.getModel());
+                    UIUtil.openActivity(mActivity, HotListActivity.class, bundle);
                 }
             });
 
@@ -252,7 +251,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder3) holder).moneyTv.setText(dataBean.getAwardMoney() + "元");
                     ((ViewHolder3) holder).rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
                     ((ViewHolder3) holder).markTv.setText(dataBean.getScore() + "分");
-                    switch(dataBean.getStatus()){
+                    switch (dataBean.getStatus()) {
                         case "1":
                             GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2, ((ViewHolder3) holder).bookStatueIv);
                             break;
@@ -274,7 +273,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                             //跳转活动详情页
                             Bundle bundle = new Bundle();
                             bundle.putParcelable("bean", bean);
-                            bundle.putInt("position", position-2);
+                            bundle.putInt("position", position - 2);
                             bundle.putString("type", "");
                             UIUtil.openActivity(mActivity, CampaignActivity.class, bundle);
                         }
@@ -285,7 +284,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder3) holder).briefTv.setText(bean.getDetail());//简介
                     ((ViewHolder3) holder).startTimeTv.setText("开始时间：" + bean.getBeginTime());
                     ((ViewHolder3) holder).endTimeTv.setText("结束时间：" + bean.getEndTime());
-                    ((ViewHolder3) holder).numberTv.setText("报名人数：" +bean.getApplyAmount() + "人");
+                    ((ViewHolder3) holder).numberTv.setText("报名人数：" + bean.getApplyAmount() + "人");
                     switch (bean.getStatus()) {
 //                        case "1":
 //                            GlideUitl.loadImg(mActivity, R.drawable.activity_start, ((ViewHolder3) holder).stateIv);
@@ -423,6 +422,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
      */
     ArrayList<String> rankingList = new ArrayList<>();
     int index = SharePrefManager.getPosition();
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -472,9 +472,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                         mvpPresenter.setState(STATE);
                         mData.clear();
                         rankRbn.setText(rankingList.get(position));
-                        FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
-                        HomeFragment home = (HomeFragment) fragmentManager.findFragmentByTag("home");
-                        home.setType(position + 1 + "");
+                        homeFragment.setType(position + 1 + "");
                         mvpPresenter.getParamet().setPageNo("1");
                         mvpPresenter.loadHomeAllData(position + 1 + "");
                     }

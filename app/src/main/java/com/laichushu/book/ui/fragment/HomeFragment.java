@@ -184,6 +184,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     /**
      * 获取图书列表成功
+     *
      * @param model
      */
     @Override
