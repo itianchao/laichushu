@@ -7,14 +7,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
-import com.laichushu.book.event.RefreshWalletEvent;
+import com.laichushu.book.event.RefrushWalletEvent;
 import com.laichushu.book.mvp.wallet.WalletPresener;
 import com.laichushu.book.mvp.wallet.WalletView;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -148,6 +147,6 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     @Override
     public void finish() {
         super.finish();
-        EventBus.getDefault().postSticky(new RefreshWalletEvent(true));
+        EventBus.getDefault().postSticky(new RefrushWalletEvent(true));
     }
 }

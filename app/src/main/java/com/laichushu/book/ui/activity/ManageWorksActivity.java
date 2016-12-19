@@ -22,6 +22,7 @@ import com.laichushu.book.bean.netbean.SignStateResult;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
 import com.laichushu.book.event.RefrushMineEvent;
+import com.laichushu.book.event.RefrushWriteFragmentEvent;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.home.HomeHotModel;
@@ -42,7 +43,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements WriteView, View.OnClickListener {
+public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements WriteView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle;
     private WriteBookAdapter writeBookAdapter;
@@ -75,8 +76,8 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         mRecyclerView = (PullLoadMoreRecyclerView) manageView.findViewById(R.id.manage_book_list);
         mRecyclerView.setLinearLayout();
         mRecyclerView.setScrollbarFadingEnabled(false);
+        mRecyclerView.setOnPullLoadMoreListener(this);
         mRecyclerView.setPushRefreshEnable(false);
-        mRecyclerView.setPullRefreshEnable(false);
         return manageView;
     }
 
@@ -114,6 +115,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
 
     @Override
     public void getDataSuccess(HomeHotModel model) {
+        mRecyclerView.setPullLoadMoreCompleted();
         if (model.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             mData.addAll(model.getData());
@@ -275,6 +277,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
 
     @Override
     public void getDataFail(String msg) {
+        mRecyclerView.setPullLoadMoreCompleted();
         refreshPage(LoadingPager.PageState.STATE_ERROR);
         refurshData();
         LoggerUtil.e(msg);
@@ -357,5 +360,27 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         }
         cache_json.setJson(new Gson().toJson(result));
         cache_jsonDao.update(cache_json);
+    }
+    @Override
+    public void onRefresh() {
+        refreshPage(LoadingPager.PageState.STATE_LOADING);
+        mData.clear();
+        mvpPresenter.getArticleBookList();
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+    /**
+     * 修改详情页后刷新数据
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefrushWriteFragmentEvent event){
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh()) {
+            onRefresh();
+        }
     }
 }

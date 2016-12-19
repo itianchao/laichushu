@@ -228,6 +228,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             Bundle bundle = new Bundle();
             HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
             bundle.putParcelable("bean", dataBean);
+            bundle.putString("pageMsg", "浏览收藏详情");
             UIUtil.openActivity(this, BookDetailActivity.class, bundle);
         }else{
            ToastUtil.showToast(model.getErrMsg());

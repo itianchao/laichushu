@@ -274,6 +274,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 //        HomeHotModel.DataBean homeHotModel = gson.fromJson(bd, new TypeToken<HomeHotModel.DataBean>() {}.getType());
             HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
             bundle.putParcelable("bean", dataBean);
+            bundle.putString("pageMsg", "消息喜欢");
             UIUtil.openActivity(this, BookDetailActivity.class, bundle);
         }else{
             ToastUtil.showToast(model.getErrMsg());

@@ -74,6 +74,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean", dataBean);
+                bundle.putString("pageMsg", "首页搜索");
                 UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
             }
         });

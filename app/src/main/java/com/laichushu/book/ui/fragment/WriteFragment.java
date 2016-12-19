@@ -22,6 +22,7 @@ import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.SignStateResult;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.event.RefrushWriteFragmentEvent;
 import com.laichushu.book.event.RefurshWriteFragment;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.BaseApplication;
@@ -378,8 +379,24 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * 投稿后刷新页面
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefurshWriteFragment event){
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh()) {
+            onRefresh();
+        }
+    }
+
+    /**
+     * 修改详情页后刷新数据
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefrushWriteFragmentEvent event){
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh()) {
             onRefresh();

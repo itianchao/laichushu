@@ -1,7 +1,6 @@
 package com.laichushu.book.ui.activity;
 
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,8 +16,8 @@ import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
-import com.laichushu.book.event.RefreshHomePageEvent;
-import com.laichushu.book.event.RefreshUserPageEvent;
+import com.laichushu.book.event.RefrushHomePageEvent;
+import com.laichushu.book.event.RefrushUserPageEvent;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.userhomepage.UserHomePagePresener;
 import com.laichushu.book.mvp.userhomepage.UserHomePageView;
@@ -564,12 +563,12 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
 
     @Override
     public void finish() {
-        EventBus.getDefault().postSticky(new RefreshHomePageEvent(true));
+        EventBus.getDefault().postSticky(new RefrushHomePageEvent(true));
         super.finish();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefreshUserPageEvent event) {
+    public void onEvent(RefrushUserPageEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             initData();

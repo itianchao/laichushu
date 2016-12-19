@@ -48,6 +48,7 @@ public class CaregoryListAdapter extends RecyclerView.Adapter<CaregoryListAdapte
                 //跳转图书详情页
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean", dataBean);
+                bundle.putString("pageMsg", "首页分类列表");
                 UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
             }
         });

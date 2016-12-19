@@ -15,7 +15,7 @@ import com.laichushu.book.bean.netbean.HomeInfo_paramet;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
-import com.laichushu.book.event.RefreshHomePageEvent;
+import com.laichushu.book.event.RefrushHomePageEvent;
 import com.laichushu.book.mvp.homepage.HomePagePresener;
 import com.laichushu.book.mvp.homepage.HomePageView;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -429,7 +429,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefreshHomePageEvent event) {
+    public void onEvent(RefrushHomePageEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             initData();

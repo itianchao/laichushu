@@ -121,6 +121,7 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         //跳转图书详情页
         Bundle bundle = new Bundle();
         bundle.putParcelable("bean", model.getData().get(0));
+        bundle.putString("pageMsg", "消息评论详情");
         UIUtil.openActivity(this, BookDetailActivity.class, bundle);
     }
 

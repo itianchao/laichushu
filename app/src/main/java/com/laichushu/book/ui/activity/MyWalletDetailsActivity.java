@@ -1,7 +1,6 @@
 package com.laichushu.book.ui.activity;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,8 +9,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
-import com.laichushu.book.event.RefreshWalletEvent;
-import com.laichushu.book.event.RefrushMineEvent;
+import com.laichushu.book.event.RefrushWalletEvent;
 import com.laichushu.book.mvp.wallet.WalletPresener;
 import com.laichushu.book.mvp.wallet.WalletView;
 import com.laichushu.book.ui.adapter.MyWalletRecordAdapter;
@@ -153,7 +151,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
         mvpPresenter.LoadWalletRecordData();//请求网络获取搜索列表
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefreshWalletEvent event) {
+    public void onEvent(RefrushWalletEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             initData();

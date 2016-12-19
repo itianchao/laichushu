@@ -218,6 +218,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                 //跳转图书详情页
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean", dataBean);
+                bundle.putString("pageMsg", "写作和作品管理");//页面信息
                 UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
             }
         });

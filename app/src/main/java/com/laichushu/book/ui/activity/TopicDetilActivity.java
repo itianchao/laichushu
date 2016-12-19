@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
-import com.laichushu.book.event.RefreshHomePageEvent;
-import com.laichushu.book.event.RefreshUserPageEvent;
+import com.laichushu.book.event.RefrushHomePageEvent;
+import com.laichushu.book.event.RefrushUserPageEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
@@ -282,10 +282,10 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         if (!TextUtils.isEmpty(tag)) {
             switch (tag) {
                 case "home":
-                    EventBus.getDefault().postSticky(new RefreshHomePageEvent(true));
+                    EventBus.getDefault().postSticky(new RefrushHomePageEvent(true));
                     break;
                 case "user":
-                    EventBus.getDefault().postSticky(new RefreshUserPageEvent(true));
+                    EventBus.getDefault().postSticky(new RefrushUserPageEvent(true));
                     break;
 
             }
