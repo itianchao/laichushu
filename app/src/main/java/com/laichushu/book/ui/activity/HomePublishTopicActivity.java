@@ -10,6 +10,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.PublishTopic_Paramet;
+import com.laichushu.book.event.RefreshHomePageEvent;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -18,6 +19,8 @@ import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class HomePublishTopicActivity extends MvpActivity2 implements View.OnClickListener {
     private ImageView ivBack;
@@ -106,5 +109,11 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBus.getDefault().postSticky(new RefreshHomePageEvent(true));
     }
 }

@@ -3,6 +3,8 @@ package com.laichushu.book.ui.activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
+import com.laichushu.book.event.RefreshWalletEvent;
 import com.laichushu.book.mvp.wallet.WalletPresener;
 import com.laichushu.book.mvp.wallet.WalletView;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -19,14 +22,17 @@ import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
-public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implements WalletView, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+import org.greenrobot.eventbus.EventBus;
+
+public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implements WalletView, View.OnClickListener {
     private ImageView ivBack;
     private TextView tvTitle;
     private RadioGroup rbPay;
-    private RadioButton rbAlipay, rbWechat;
+    private CheckBox rbAlipay, rbWechat;
     private Button btnSubmit;
     private EditText edMoney;
-    private String money = "1", payPlate = null;
+    private String money = null,defPlate="1", payPlate = "1";
+    private WalletBalanceReward bean;
 
     @Override
     protected WalletPresener createPresenter() {
@@ -40,8 +46,8 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         rbPay = (RadioGroup) inflate.findViewById(R.id.rg_pay);
-        rbAlipay = (RadioButton) inflate.findViewById(R.id.rb_aliPay);
-        rbWechat = (RadioButton) inflate.findViewById(R.id.rb_wxPay);
+        rbAlipay = (CheckBox) inflate.findViewById(R.id.rb_aliPay);
+        rbWechat = (CheckBox) inflate.findViewById(R.id.rb_wxPay);
         btnSubmit = (Button) inflate.findViewById(R.id.btn_Recharge);
         edMoney = (EditText) inflate.findViewById(R.id.ed_inputMoney);
         return inflate;
@@ -53,8 +59,41 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
         tvTitle.setText("充值");
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
-        rbPay.setOnCheckedChangeListener(this);
         btnSubmit.setOnClickListener(this);
+        rbAlipay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    rbAlipay.setChecked(true);
+                    rbWechat.setChecked(false);
+                    payPlate = "1";
+                } else {
+                    rbAlipay.setChecked(false);
+                    rbWechat.setChecked(true);
+                    payPlate = "2";
+                }
+
+            }
+        });
+        rbWechat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    rbAlipay.setChecked(false);
+                    rbWechat.setChecked(true);
+                    payPlate = "2";
+                } else {
+                    rbAlipay.setChecked(true);
+                    rbWechat.setChecked(false);
+                    payPlate = "1";
+                }
+
+            }
+        });
+
+        bean = getIntent().getParcelableExtra("bean");
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
@@ -70,27 +109,15 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                     ToastUtil.showToast("请输入金额");
                     return;
                 }
-                mvpPresenter.loadRechargeData(money, payPlate);
+                if (Integer.parseInt(money) <= 0) {
+                    edMoney.setText(null);
+                    ToastUtil.showToast("请输入正确充值金额");
+                }
+                mvpPresenter.loadRechargeData(money, defPlate);
                 break;
         }
     }
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R.id.rb_aliPay:
-                rbAlipay.setChecked(true);
-                rbWechat.setChecked(false);
-                payPlate = "1";
-                break;
-            case R.id.rb_wxPay:
-                rbAlipay.setChecked(false);
-                rbWechat.setChecked(true);
-                payPlate = "2";
-                break;
-
-        }
-    }
 
     @Override
     public void getWalletRecordDateSuccess(WalletBalanceReward modle) {
@@ -106,6 +133,7 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     public void getRechargePayDateSuccess(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("充值成功！");
+            mActivity.finish();
         } else {
             ToastUtil.showToast("充值失败！");
         }
@@ -115,5 +143,11 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     @Override
     public void getDataFail(String msg) {
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBus.getDefault().postSticky(new RefreshWalletEvent(true));
     }
 }

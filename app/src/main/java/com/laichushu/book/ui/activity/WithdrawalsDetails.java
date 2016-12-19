@@ -58,7 +58,7 @@ public class WithdrawalsDetails extends MvpActivity2<WalletPresener> implements 
         ivBack.setOnClickListener(this);
         btnWithdrawals.setOnClickListener(this);
 
-        bean = (WalletBalanceReward) getIntent().getSerializableExtra("bean");
+        bean =getIntent().getParcelableExtra("bean");
         if (bean != null) {
             tvAccountNum.setText(bean.getBalance() + " 元");
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);

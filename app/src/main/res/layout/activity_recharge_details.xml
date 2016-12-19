@@ -45,7 +45,7 @@
                 android:background="@color/bgGrey"
                 android:gravity="center_vertical"
                 android:hint="输入金额"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:paddingBottom="4dp"
                 android:paddingLeft="12dp"
                 android:paddingTop="4dp"
@@ -128,7 +128,7 @@
                     android:textSize="@dimen/edit"
                     android:textStyle="bold" />
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rb_aliPay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                     android:textSize="@dimen/edit"
                     android:textStyle="bold" />
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rb_wxPay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

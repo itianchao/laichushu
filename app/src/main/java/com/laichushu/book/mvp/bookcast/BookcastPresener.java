@@ -91,7 +91,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
         });
     }
     public void LoadCollectionData() {
-        LoggerUtil.toJson(paramet);
+        LoggerUtil.toJson(paramet2);
         addSubscription(apiStores.getCollectList(paramet2), new ApiCallback<HomeHotModel>() {
             @Override
             public void onSuccess(HomeHotModel model) {
