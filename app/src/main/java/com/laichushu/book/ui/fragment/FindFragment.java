@@ -18,9 +18,8 @@ import com.laichushu.book.mvp.FindPresenter;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.write.FindView;
 import com.laichushu.book.ui.adapter.FindTitleViewPagerAdapter;
-import com.laichushu.book.ui.adapter.HomeTitleViewPagerAdapter;
-import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpFragment;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -45,20 +44,19 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
             mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
         }
     };
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        //初始化数据
-        Bundle bundle = getArguments();
-        HomeModel homeModel = bundle.getParcelable("homeModel");
-        mTitleData = homeModel.getData();
+
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mRootView = UIUtil.inflate(R.layout.fragment_find);
-        findVp = (ViewPager) mRootView.findViewById(R.id.vp_home_title);
+        findVp = (ViewPager) mRootView.findViewById(R.id.vp_find_title);
         pointIv = (ImageView) mRootView.findViewById(R.id.iv_red_point);
         lineLyt = (LinearLayout) mRootView.findViewById(R.id.ll_container);
         return mRootView;
@@ -67,7 +65,10 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        titleViewPager();
+        //初始化数据
+        if (mTitleData.size() == 0) {
+            mvpPresenter.loadFindCarouseData();
+        }
     }
 
     @Override
@@ -79,13 +80,14 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
     public void onClick(View v) {
 
     }
+
     /**
      * 标题轮播图
      */
     private void titleViewPager() {
-        titleAdapter = new FindTitleViewPagerAdapter(mTitleData, mActivity,mvpPresenter);
+        titleAdapter = new FindTitleViewPagerAdapter(mTitleData, mActivity, mvpPresenter);
         findVp.setAdapter(titleAdapter);
-        int remainder = Integer.MAX_VALUE / 2 %(mTitleData.size()==0?1:mTitleData.size());
+        int remainder = Integer.MAX_VALUE / 2 % (mTitleData.size() == 0 ? 1 : mTitleData.size());
         item = Integer.MAX_VALUE / 2 - remainder;
         findVp.setCurrentItem(item);
         findVp.setOnPageChangeListener(this);
@@ -93,7 +95,7 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
             @Override
             public void onGlobalLayout() {
                 pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                if (lineLyt.getChildCount()>1){
+                if (lineLyt.getChildCount() > 1) {
                     range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
                 }
             }
@@ -128,7 +130,7 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
      */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        int move = (int) ((position % (mTitleData.size()==0?1:mTitleData.size()) + positionOffset) * range);
+        int move = (int) ((position % (mTitleData.size() == 0 ? 1 : mTitleData.size()) + positionOffset) * range);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.leftMargin = move;
@@ -143,6 +145,34 @@ public class FindFragment extends MvpFragment<FindPresenter> implements FindView
 
     @Override
     public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void getDataSuccess(HomeModel model) {
+        dismissProgressDialog();
+        if (model.isSuccess()) {
+            mTitleData = model.getData();
+            titleViewPager();
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+
+    }
+
+    @Override
+    public void getDataFail(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void hideLoading() {
+        dismissProgressDialog();
 
     }
 }
