@@ -11,11 +11,12 @@ import java.util.Map;
  */
 public class FragmentFactory {
     private static Map<Integer, BaseFragment> mCaches = new LinkedHashMap<Integer, BaseFragment>();
+
     public static BaseFragment getFragment(int position) {
         BaseFragment fragment = mCaches.get(position);
         if (fragment != null) {
             return fragment;
-        }else {
+        } else {
             switch (position) {
                 case 0:
                     fragment = new HomeFragment();//首页
