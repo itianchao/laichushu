@@ -124,7 +124,7 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
         }
         if (!TextUtils.isEmpty(homeHotImgBean.getSecondTitle())) {
             title2Tv.setText(homeHotImgBean.getSecondTitle());
-            switch(homeHotImgBean.getFristBean().getStatus()){
+            switch(homeHotImgBean.getSecondBean().getStatus()){
                 case "1":
                     GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2, status2Iv);
                     break;
@@ -138,7 +138,7 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
         }
         if (!TextUtils.isEmpty(homeHotImgBean.getThirdTitle())) {
             title3Tv.setText(homeHotImgBean.getThirdTitle());
-            switch(homeHotImgBean.getFristBean().getStatus()){
+            switch(homeHotImgBean.getThirdtBean().getStatus()){
                 case "1":
                     GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2, status3Iv);
                     break;

@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.laichushu.book.db.DaoMaster;
@@ -27,6 +28,7 @@ public class BaseApplication extends FBReaderApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);//支持5.0以下系统
         mContext = this;
         String proName = getCurProcessName(getApplicationContext());
         if (TextUtils.isEmpty(proName) || !FBReaderIntents.DEFAULT_PACKAGE.equals(proName)) {

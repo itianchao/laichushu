@@ -31,8 +31,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.util.List;
 
-import jp.wasabeef.richeditor.RichEditor;
-
 /**
  * 创建草稿
  * Created by wangtong on 2016/11/19.
@@ -49,7 +47,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
     private String articleId;
     private String path = "";
     private String type;
-    
+
     @Override
     protected View createSuccessView() {
         articleId = getIntent().getStringExtra("articleId");
@@ -69,7 +67,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         //    mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
         mEditor.setPlaceholder("");
 
-        mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
+        mEditor.setOnTextChangeListener(new MineRichEditor.OnTextChangeListener() {
             @Override
             public void onTextChange(String text) {
                 builder = new StringBuilder(text);
@@ -96,9 +94,9 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
     @Override
     protected void initData() {
         type = getIntent().getStringExtra("type");
-        if (type.equals("1")){
+        if (type.equals("1")) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-        }else {
+        } else {
             //TODO: 2016/11/21 请求草稿 并设置进去
 //            mvpPresenter.
         }
@@ -120,7 +118,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
                     EventBus.getDefault().postSticky(new RefurshDraftEvent(true));
                     finish();
                 }
-            },1700);
+            }, 1700);
         } else {
             Logger.e(modle.getErrMsg());
             ToastUtil.showToast("创建失败");
@@ -137,7 +135,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
         if (modle.isSuccess()) {
             String data = modle.getData();
 //            path = ConstantValue.PHOTO_SEVERCE_PATH + data;
-            path =  data;
+            path = data;
             LoggerUtil.e(path);
             mEditor.insertImage(path, "dachshund");
         } else {
