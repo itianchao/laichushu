@@ -8,14 +8,54 @@
 
     <include layout="@layout/item_distance" />
 
-    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-        android:id="@+id/ryv_find"
+    <HorizontalScrollView
+        android:id="@+id/hs_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:cacheColorHint="@null"
-        android:fadingEdge="none"
-        android:overScrollFooter="@android:color/transparent"
-        android:overScrollHeader="@android:color/transparent"
-        android:overScrollMode="never" />
+        android:layout_height="80dip"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:scrollbars="none">
 
+        <LinearLayout
+            android:id="@+id/ll_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+
+    </HorizontalScrollView>
+
+    <include layout="@layout/item_distance" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_find"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:cacheColorHint="@null"
+            android:fadingEdge="none"
+            android:overScrollFooter="@android:color/transparent"
+            android:overScrollHeader="@android:color/transparent"
+            android:overScrollMode="never" />
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_below="@+id/ryv_find"
+            android:background="@color/frenchGrey" />
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_find_course"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/view_line"
+            android:layout_gravity="bottom"
+            android:cacheColorHint="@null"
+            android:fadingEdge="none"
+            android:overScrollMode="never" />
+    </RelativeLayout>
 </LinearLayout>

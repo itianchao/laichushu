@@ -10,6 +10,7 @@ import com.laichushu.book.bean.netbean.AuthorWorksByBookId_Paramet;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.BookDetails_Paramet;
 import com.laichushu.book.bean.netbean.DelPerInfo_Paramet;
+import com.laichushu.book.bean.netbean.DeleteMsg_Paramet;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.MessageComment_Paramet;
 import com.laichushu.book.bean.netbean.PerInformationDetails_Paramet;
@@ -309,10 +310,11 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
     /**
      * 获取图书详情
+     *
      * @param articleId
      */
     public void loadBookDetailsByid(String articleId) {
-        AuthorWorksByBookId_Paramet  bookParamet = new AuthorWorksByBookId_Paramet(userId, articleId);
+        AuthorWorksByBookId_Paramet bookParamet = new AuthorWorksByBookId_Paramet(userId, articleId);
         LoggerUtil.e("获取图书详情");
         addSubscription(apiStores.getAuthorWorksByBookId(bookParamet), new ApiCallback<BookDetailsModle>() {
             @Override
@@ -330,5 +332,30 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
             }
         });
     }
+
+//    /**
+//     * 获取图书详情
+//     *
+//     * @param id
+//     */
+//    public void loadDeleteMsg(String id) {
+//        DeleteMsg_Paramet deleteMsgParamet = new DeleteMsg_Paramet(id);
+//        LoggerUtil.e("获取图书详情");
+//        addSubscription(apiStores.deleteMsgDetails(deleteMsgParamet), new ApiCallback<RewardResult>() {
+//            @Override
+//            public void onSuccess(RewardResult model) {
+//                mvpView.getDeleteMsgDateSuccess(model);
+//            }
+//
+//            @Override
+//            public void onFailure(int code, String msg) {
+//                mvpView.getDataFail("code" + code + "msg:" + msg);
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//            }
+//        });
+//    }
 
 }

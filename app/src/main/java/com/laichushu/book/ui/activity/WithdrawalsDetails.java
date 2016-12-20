@@ -123,5 +123,15 @@ public class WithdrawalsDetails extends MvpActivity2<WalletPresener> implements 
         LoggerUtil.e(msg);
     }
 
+    @Override
+    public void showDialog() {
+
+    }
+
+    @Override
+    public void dismissDialog() {
+
+    }
+
 
 }

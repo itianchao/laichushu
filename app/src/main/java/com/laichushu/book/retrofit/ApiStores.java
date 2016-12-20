@@ -180,6 +180,7 @@ public interface ApiStores {
     //获取活动 通过活动Id查询活动详情
     @POST("activity/getActivityById")
     Observable<HomeTitleBean> getActivityById(@Body ActivityById_Paramet paramet);
+
     //获取素材列表接口
     @POST("material/list")
     Observable<MaterialListModel> getMaterialList(@Body MaterialList_Paramet paramet);
@@ -219,6 +220,10 @@ public interface ApiStores {
     //点赞 -- 废除
     @POST("scoreLike/save")
     Observable<RewardResult> saveScoreLike(@Body ScoreLike_Paramet paramet);
+
+    //消息--删除
+    @POST("information/delete")
+    Observable<RewardResult> deleteMsgDetails(@Body DeleteMsg_Paramet paramet);
 
     //评论点赞
     @POST("like/save")
@@ -304,9 +309,11 @@ public interface ApiStores {
     //收藏列表
     @POST("collect/list")
     Observable<HomeHotModel> getCollectList(@Body MyArticBooklist_paramet paramet);
+
     //修改签约状态
     @POST("party/findPartyEditor")
     Observable<SignStateResult> getSignStateDetails(@Body MyArticBooklist_paramet paramet);
+
     //修改签约编辑
     @POST("article/signEditor")
     Observable<RewardResult> getSignEditorDetails(@Body MySignEditor_paramet paramet);
@@ -448,6 +455,7 @@ public interface ApiStores {
     //我的钱包提现
     @POST("withdraw/apply")
     Observable<RewardResult> getWithdrawalsApplayDetails(@Body WithdrawalsApplay_Paramet paramet);
+
     //我的钱包充值
     @POST("recharge/recharge")
     Observable<RewardResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
@@ -475,6 +483,7 @@ public interface ApiStores {
     //话题详情保存评论
     @POST("comment/save")
     Observable<RewardResult> topicDetailCommentSave(@Body TopicDetailCommentSave_Paramet paramet);
+
     //活动详情发送私信
     @POST("perInformation/addPerMsgInfo")
     Observable<RewardResult> appActPerMsgInfoDetails(@Body AddActPerMsgInfo_Paramet paramet);
@@ -518,6 +527,10 @@ public interface ApiStores {
     //修改素材权限
     @POST("article/updateMaterialPermission")
     Observable<RewardResult> getUpdateMaterialPermissionDetails(@Body UpdateMaterialPermission_Paramet paramet);
+
+    //发现小组推荐
+    @POST("team/findTopTeam")
+    Observable<FindCourseCommResult> findCourseCommendationDatails();
 
     //热门搜索历史
     @POST("searchArticle/findHotArticle")

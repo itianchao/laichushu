@@ -74,6 +74,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                     case "2":
                         //
                         holder.tvType.setText("收藏了你的书");
+                        holder.tvContent.setVisibility(View.GONE);
                         holder.tvContent.setText(dataBeen.get(position).getContent());
                         holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
                         holder.tvBookName.setOnClickListener(new View.OnClickListener() {

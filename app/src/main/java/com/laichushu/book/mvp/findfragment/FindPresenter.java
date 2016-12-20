@@ -1,8 +1,8 @@
-package com.laichushu.book.mvp;
+package com.laichushu.book.mvp.findfragment;
 
+import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeModel;
-import com.laichushu.book.mvp.write.FindView;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.FindFragment;
@@ -46,4 +46,24 @@ public class FindPresenter extends BasePresenter<FindView> {
                 });
     }
 
+    //加载小组推荐
+    public void loadFindCourseCommData() {
+        addSubscription(apiStores.findCourseCommendationDatails(),
+                new ApiCallback<FindCourseCommResult>() {
+                    @Override
+                    public void onSuccess(FindCourseCommResult model) {
+                        mvpView.getCourseDataSuccess(model);
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mvpView.hideLoading();
+                    }
+                });
+    }
 }

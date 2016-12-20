@@ -1,5 +1,6 @@
-package com.laichushu.book.mvp.write;
+package com.laichushu.book.mvp.findfragment;
 
+import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.mvp.home.HomeModel;
 
 /**
@@ -8,6 +9,7 @@ import com.laichushu.book.mvp.home.HomeModel;
 
 public interface FindView {
     void getDataSuccess(HomeModel model);
+    void getCourseDataSuccess(FindCourseCommResult model);
     void getDataFail(String msg);
     void showLoading();
     void hideLoading();

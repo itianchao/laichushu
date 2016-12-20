@@ -1,5 +1,7 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -31,9 +33,17 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     private CheckBox rbAlipay, rbWechat;
     private Button btnSubmit;
     private EditText edMoney;
-    private String money = null,defPlate="1", payPlate = "1";
+    private String money = null, defPlate = "1", payPlate = "1";
     private WalletBalanceReward bean;
-
+    private Handler  handler =new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==1){
+                finish();
+            }
+        }
+    };
     @Override
     protected WalletPresener createPresenter() {
 
@@ -69,9 +79,9 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                     rbWechat.setChecked(false);
                     payPlate = "1";
                 } else {
-                    rbAlipay.setChecked(false);
-                    rbWechat.setChecked(true);
-                    payPlate = "2";
+//                    rbAlipay.setChecked(false);
+//                    rbWechat.setChecked(true);
+//                    payPlate = "2";
                 }
 
             }
@@ -85,9 +95,9 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                     rbWechat.setChecked(true);
                     payPlate = "2";
                 } else {
-                    rbAlipay.setChecked(true);
-                    rbWechat.setChecked(false);
-                    payPlate = "1";
+//                    rbAlipay.setChecked(true);
+//                    rbWechat.setChecked(false);
+//                    payPlate = "1";
                 }
 
             }
@@ -112,7 +122,9 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                 if (Integer.parseInt(money) <= 0) {
                     edMoney.setText(null);
                     ToastUtil.showToast("请输入正确充值金额");
+                    return;
                 }
+                btnSubmit.setClickable(false);
                 mvpPresenter.loadRechargeData(money, defPlate);
                 break;
         }
@@ -133,9 +145,10 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     public void getRechargePayDateSuccess(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("充值成功！");
-            mActivity.finish();
+           handler.sendEmptyMessageDelayed(1,1700);
         } else {
             ToastUtil.showToast("充值失败！");
+            btnSubmit.setClickable(true);
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
@@ -143,6 +156,16 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     @Override
     public void getDataFail(String msg) {
 
+    }
+
+    @Override
+    public void showDialog() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void dismissDialog() {
+dismissProgressDialog();
     }
 
     @Override

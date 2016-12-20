@@ -96,6 +96,7 @@ public class WalletPresener extends BasePresenter<WalletView> {
 
     //钱包充值
     public void loadRechargeData(String noney, String payPlate) {
+        mvpView.showDialog();
         RechargeAppPay_Paramet recharge_Paramet_paramet = new RechargeAppPay_Paramet(userId, noney, payPlate);
         LoggerUtil.toJson(paramet);
         addSubscription(apiStores.getRechargeAppPayDetails(recharge_Paramet_paramet), new ApiCallback<RewardResult>() {
@@ -112,6 +113,7 @@ public class WalletPresener extends BasePresenter<WalletView> {
             @Override
             public void onFinish() {
 
+                mvpView.dismissDialog();
             }
         });
     }

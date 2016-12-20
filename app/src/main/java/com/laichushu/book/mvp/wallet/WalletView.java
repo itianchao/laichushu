@@ -12,4 +12,6 @@ public interface WalletView {
     void getWithdrawalsApplayDateSuccess(RewardResult model);
     void getRechargePayDateSuccess(RewardResult model);
     void getDataFail(String msg);
+    void showDialog();
+    void dismissDialog();
 }

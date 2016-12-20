@@ -3,16 +3,20 @@ package com.laichushu.book.ui.fragment;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.FindPresenter;
+import com.laichushu.book.bean.netbean.FindCourseCommResult;
+import com.laichushu.book.mvp.findfragment.FindPresenter;
 import com.laichushu.book.mvp.home.HomeModel;
-import com.laichushu.book.mvp.write.FindView;
+import com.laichushu.book.mvp.findfragment.FindView;
+import com.laichushu.book.ui.activity.MainActivity;
+import com.laichushu.book.ui.adapter.ClassRecycleAdapter;
 import com.laichushu.book.ui.adapter.FindTitleViewPagerAdapter;
+import com.laichushu.book.ui.adapter.GroupRecomAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.ToastUtil;
@@ -20,12 +24,13 @@ import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 发现
  * Created by wangtong on 2016/10/17.
  */
-public class FindFragment extends MvpFragment2<FindPresenter> implements FindView, View.OnClickListener, ViewPager.OnPageChangeListener {
+public class FindFragment extends MvpFragment2<FindPresenter> implements FindView, View.OnClickListener, ViewPager.OnPageChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView pointIv;
     private ViewPager findVp;
     private FindTitleViewPagerAdapter titleAdapter;
@@ -34,33 +39,68 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private int range;
     private LinearLayout lineLyt;
     private Handler mRefreshWidgetHandler = new Handler();
-
-    private PullLoadMoreRecyclerView mRecyclerView;
+    private PullLoadMoreRecyclerView mRecyclerView, mCourseRecyclerView;
     private Runnable refreshThread = new Runnable() {
 
         public void run() {
             findVp.setCurrentItem(++item);
-            mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+//            mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
         }
     };
+    //标签列表
+    private int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x, R.drawable.icon_delete2x, R.drawable.icon_publishl2x, R.drawable.icon_submission2x};
+    private String title[] = {"课程", "小组", "服务", "机构", "编辑"};
+    //课程
+    private ClassRecycleAdapter classAdapter;
+    private LinearLayout llContainer;
+    //小组
+    private GroupRecomAdapter courseAdapter;
+    private List<FindCourseCommResult.DataBean> mCourseDate = new ArrayList<>();
 
     @Override
     public View createSuccessView() {
         View mRootView = UIUtil.inflate(R.layout.fragment_find);
         findVp = (ViewPager) mRootView.findViewById(R.id.vp_find_title);
         pointIv = (ImageView) mRootView.findViewById(R.id.iv_red_point);
-        lineLyt = (LinearLayout) mRootView.findViewById(R.id.ll_container);
+        lineLyt = (LinearLayout) mRootView.findViewById(R.id.ll_container_find);
+        llContainer = (LinearLayout) mRootView.findViewById(R.id.ll_tab);
         mRecyclerView = (PullLoadMoreRecyclerView) mRootView.findViewById(R.id.ryv_find);
+        mCourseRecyclerView = (PullLoadMoreRecyclerView) mRootView.findViewById(R.id.ryv_find_course);
         return mRootView;
     }
 
     @Override
     protected void initData() {
         super.initData();
-        //初始化数据
-        if (mTitleData.size() == 0) {
-            mvpPresenter.loadFindCarouseData();
+        //标签列表
+        View itemView;
+        ImageView imageView;
+        TextView textView;
+        llContainer.removeAllViews();
+        for (int i = 0; i < img.length; i++) {
+            itemView = UIUtil.inflate(R.layout.item_tab_course, null);
+            imageView = (ImageView) itemView.findViewById(R.id.iv_stripIcon);
+            textView = (TextView) itemView.findViewById(R.id.tv_stripContent);
+            imageView.setImageResource(img[i]);
+            textView.setText(title[i]);
+            llContainer.addView(itemView);
         }
+        //初始化精选课程
+        mRecyclerView.setGridLayout(2);
+        mRecyclerView.setFooterViewText("加载中");
+//        classAdapter = new MyBookCastAdapter(this, scanData,mvpPresenter);
+//        mRecyclerView.setAdapter(scanAdapter);
+        mRecyclerView.setOnPullLoadMoreListener(this);
+        //初始化小组推荐
+        mCourseRecyclerView.setFooterViewText("加载中");
+        mCourseRecyclerView.setGridLayout(4);
+        courseAdapter = new GroupRecomAdapter(getActivity(), mCourseDate, mvpPresenter);
+        mCourseRecyclerView.setAdapter(courseAdapter);
+        mCourseRecyclerView.setOnPullLoadMoreListener(this);
+
+
+        mvpPresenter.loadFindCarouseData();
+        mvpPresenter.loadFindCourseCommData();
     }
 
     @Override
@@ -73,42 +113,10 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
 
     }
 
-    /**
-     * 标题轮播图
-     */
-    private void titleViewPager() {
-        titleAdapter = new FindTitleViewPagerAdapter(mTitleData, mActivity, mvpPresenter);
-        findVp.setAdapter(titleAdapter);
-        int remainder = Integer.MAX_VALUE / 2 % (mTitleData.size() == 0 ? 1 : mTitleData.size());
-        item = Integer.MAX_VALUE / 2 - remainder;
-        findVp.setCurrentItem(item);
-        findVp.setOnPageChangeListener(this);
-        pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                if (lineLyt.getChildCount() > 1) {
-                    range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
-                }
-            }
-        });
-        for (int i = 0; i < mTitleData.size(); i++) {
-            ImageView imageView = new ImageView(mActivity);
-            imageView.setBackgroundResource(R.drawable.shape_point_hollow);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            if (i > 0) {
-                params.leftMargin = UIUtil.px2dip(10);
-            }
-            imageView.setLayoutParams(params);
-            lineLyt.addView(imageView);
-        }
-    }
-
     @Override
     public void onStart() {
         super.onStart();
-        mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+//        mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
     }
 
     @Override
@@ -143,6 +151,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public void getDataSuccess(HomeModel model) {
         dismissProgressDialog();
+        mTitleData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -159,6 +168,24 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     }
 
     @Override
+    public void getCourseDataSuccess(FindCourseCommResult model) {
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCourseRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        hideLoading();
+        if (model.isSuccess()) {
+            mCourseDate = model.getData();
+            courseAdapter.refreshAdapter(mCourseDate);
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+
+    }
+
+    @Override
     public void getDataFail(String msg) {
 
     }
@@ -171,5 +198,47 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public void hideLoading() {
         dismissProgressDialog();
+    }
+
+    /**
+     * 标题轮播图
+     */
+    private void titleViewPager() {
+        titleAdapter = new FindTitleViewPagerAdapter(mTitleData, mActivity, mvpPresenter);
+        findVp.setAdapter(titleAdapter);
+//        int remainder = Integer.MAX_VALUE / 2 % (mTitleData.size() == 0 ? 1 : mTitleData.size());
+//        item = Integer.MAX_VALUE / 2 - remainder;
+//        findVp.setCurrentItem(item);
+//        findVp.setOnPageChangeListener(this);
+//        pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                if (lineLyt.getChildCount() > 1) {
+//                    range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
+//                }
+//            }
+//        });
+//        for (int i = 0; i < mTitleData.size(); i++) {
+//            ImageView imageView = new ImageView(mActivity);
+//            imageView.setBackgroundResource(R.drawable.shape_point_hollow);
+//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            if (i > 0) {
+//                params.leftMargin = UIUtil.px2dip(10);
+//            }
+//            imageView.setLayoutParams(params);
+//            lineLyt.addView(imageView);
+//        }
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+
     }
 }

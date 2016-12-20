@@ -89,7 +89,6 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
 
         //初始化mRecyclerView 投稿
         mRecyclerView.setGridLayout(1);
-        mRecyclerView.setFooterViewText("加载中");
         subAdapter = new SubMissionAdapter(getActivity(), subData);
         mRecyclerView.setAdapter(subAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
