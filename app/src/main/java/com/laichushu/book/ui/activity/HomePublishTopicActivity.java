@@ -8,9 +8,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.PublishTopic_Paramet;
-import com.laichushu.book.event.RefreshHomePageEvent;
+import com.laichushu.book.event.RefrushHomePageEvent;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -114,6 +113,6 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
     @Override
     public void finish() {
         super.finish();
-        EventBus.getDefault().postSticky(new RefreshHomePageEvent(true));
+        EventBus.getDefault().postSticky(new RefrushHomePageEvent(true));
     }
 }

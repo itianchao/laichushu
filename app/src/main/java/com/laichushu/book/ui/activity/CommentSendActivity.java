@@ -12,7 +12,6 @@ import com.laichushu.book.bean.netbean.ReSavaComment_Paramet;
 import com.laichushu.book.event.RefurshCommentListEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
-import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.R;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -60,8 +59,6 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.iv_title_finish:
-                RefurshCommentListEvent event = new RefurshCommentListEvent(true);
-                EventBus.getDefault().postSticky(event);
                 finish();
                 break;
         }
@@ -80,12 +77,11 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
                         dismissProgressDialog();
                         if (model.isSuccess()) {
                             ToastUtil.showToast("发送成功");
-                            RefurshCommentListEvent event = new RefurshCommentListEvent(true);
-                            EventBus.getDefault().postSticky(event);
                             UIUtil.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     finish();
+                                    EventBus.getDefault().postSticky(new RefurshCommentListEvent(true, -1));
                                 }
                             },1700);
                         }else {
@@ -117,4 +113,11 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
         return false;
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            EventBus.getDefault().postSticky(new RefurshCommentListEvent(true, -1));
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

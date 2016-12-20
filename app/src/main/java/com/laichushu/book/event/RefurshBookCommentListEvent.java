@@ -1,15 +1,15 @@
 package com.laichushu.book.event;
 
 /**
- * 刷新活动列表
- * Created by wangtong on 2016/11/9.
+ * 刷新刷新图书详情评论列表和评论数
+ * Created by wangtong on 2016/12/19.
  */
 
-public class RefurshCommentListEvent {
+public class RefurshBookCommentListEvent {
     public boolean isRefursh;
     public String type;
     public int size;
-    public RefurshCommentListEvent(boolean isRefursh, int size) {
+    public RefurshBookCommentListEvent(boolean isRefursh, int size) {
         this.isRefursh = isRefursh;
         this.size = size;
     }

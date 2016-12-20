@@ -4,7 +4,7 @@ package com.laichushu.book.event;
  * Created by PCPC on 2016/12/8.
  */
 
-public class RefreshHomePageEvent {
+public class RefrushHomePageEvent {
     public boolean isRefursh() {
         return isRefursh;
     }
@@ -14,7 +14,7 @@ public class RefreshHomePageEvent {
     }
 
     public boolean isRefursh;
-    public RefreshHomePageEvent(boolean isRefursh) {
+    public RefrushHomePageEvent(boolean isRefursh) {
         this.isRefursh = isRefursh;
     }
 }

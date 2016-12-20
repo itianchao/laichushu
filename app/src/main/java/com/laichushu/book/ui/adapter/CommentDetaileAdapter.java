@@ -107,6 +107,7 @@ public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAd
 
     public void setmData(ArrayList<CommentDetailModle.DataBean> mData) {
         this.mData = mData;
+        notifyDataSetChanged();
     }
 
     class CommentViewHolder extends RecyclerView.ViewHolder {

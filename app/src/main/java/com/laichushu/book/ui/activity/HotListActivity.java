@@ -105,6 +105,7 @@ public class HotListActivity extends BaseActivity {
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("bean",bean);
+                        bundle.putString("pageMsg", "热门推荐列表");
                         UIUtil.openActivity(mActivity, BookDetailActivity.class,bundle);
                     }
                 });

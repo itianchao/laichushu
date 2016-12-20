@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.laichushu.book.event.RefurshBookCommentListEvent;
 import com.laichushu.book.event.RefurshCommentListEvent;
 import com.laichushu.book.mvp.allcomment.AllCommentPresenter;
 import com.laichushu.book.mvp.allcomment.AllCommentView;
@@ -80,7 +81,6 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish:
-                EventBus.getDefault().postSticky(new RefurshCommentListEvent(true));
                 finish();
                 break;
         }
@@ -195,5 +195,12 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
     protected void onStart() {
         super.onStart();
         onRefresh();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        int commentNum = getIntent().getIntExtra("commentNum",0);
+        EventBus.getDefault().postSticky(new RefurshBookCommentListEvent(true,commentNum));
     }
 }

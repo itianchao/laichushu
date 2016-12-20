@@ -11,8 +11,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.BalanceBean;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
-import com.laichushu.book.event.RefurshCommentListEvent;
+import com.laichushu.book.event.RefrushWriteFragmentEvent;
+import com.laichushu.book.event.RefurshBookCommentListEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
@@ -27,8 +30,6 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
-import com.laichushu.book.bean.JsonBean.BalanceBean;
-import com.laichushu.book.bean.JsonBean.RewardResult;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -268,6 +269,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
             case R.id.tv_lookup://查看更多评论
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("articleId", articleId);
+                bundle1.putInt("commentNum",bean.getCommentNum());
                 UIUtil.openActivity(this, AllCommentActivity.class, bundle1);
                 break;
             case R.id.lay_read://阅读
@@ -435,6 +437,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                         public void onClick(View v) {
                             Bundle bundle = new Bundle();
                             bundle.putParcelable("bean", dataBean);
+                            bundle.putString("pageMsg", "猜你喜欢");
                             UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
                             finish();
                         }
@@ -547,14 +550,14 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
                     }
                 });
                 commentLay.addView(commentItemView);
-                numberTv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("commentId", dataBean.getSourceId());
-                        UIUtil.openActivity(BookDetailActivity.this, CommentSendActivity.class, bundle);
-                    }
-                });
+//                numberIv.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("commentId", dataBean.getSourceId());
+//                        UIUtil.openActivity(BookDetailActivity.this, CommentSendActivity.class, bundle);
+//                    }
+//                });
                 headIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -667,6 +670,10 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         }
     }
 
+    /**
+     * 阅读权限
+     * @param model
+     */
     @Override
     public void getJurisdictionData(RewardResult model) {
         if (model.isSuccess()) {
@@ -683,11 +690,17 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
         return new BookDetailPresenter(this);
     }
 
+    /**
+     * 刷新评论列表 和 评论数
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshCommentListEvent event) {
+    public void onEvent(RefurshBookCommentListEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             position = 1;
+            if (event.getSize()!=-1) detailCommentTv.setText("(" + event.getSize() + ")评论");//评论数
+            bean.setCommentNum(event.getSize());
             onClick(readerRbn);
             mvpPresenter.loadCommentData(articleId, "1");
         }
@@ -701,7 +714,15 @@ public class BookDetailActivity extends MvpActivity<BookDetailPresenter> impleme
     @Override
     public void finish() {
         super.finish();
-        EventBus.getDefault().postSticky(new RefurshHomeEvent(true,bean));
+        String pageMsg = getIntent().getStringExtra("pageMsg");
+        switch(pageMsg){
+            case "写作和作品管理":
+                EventBus.getDefault().postSticky(new RefrushWriteFragmentEvent(true,bean));
+                break;
+            default://默认刷新首页
+                EventBus.getDefault().postSticky(new RefurshHomeEvent(true,bean));
+                break;
+        }
     }
 
     public HomeHotModel.DataBean getBean() {

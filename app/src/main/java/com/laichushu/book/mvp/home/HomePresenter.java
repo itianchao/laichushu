@@ -133,6 +133,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
                 if (model.isSuccess()) {
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("bean", model.getData());
+                    bundle.putString("pageMsg", "首页");
                     UIUtil.openActivity(homeFragment.getActivity(), BookDetailActivity.class, bundle);
                 }else {
 

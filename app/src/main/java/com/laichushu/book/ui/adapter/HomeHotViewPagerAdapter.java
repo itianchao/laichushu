@@ -81,6 +81,7 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
                 HomeHotModel.DataBean fristBean = imageList.get(position).getFristBean();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean",fristBean);
+                bundle.putString("pageMsg", "首页热门推荐");
                 UIUtil.openActivity(mActivity, BookDetailActivity.class,bundle);
             }
         });
@@ -91,6 +92,7 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
                 HomeHotModel.DataBean secondBean = imageList.get(position).getSecondBean();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean",secondBean);
+                bundle.putString("pageMsg", "首页热门推荐");
                 UIUtil.openActivity(mActivity, BookDetailActivity.class,bundle);
             }
         });
@@ -101,6 +103,7 @@ public class HomeHotViewPagerAdapter extends PagerAdapter {
                 HomeHotModel.DataBean thirdtBean = imageList.get(position).getThirdtBean();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean",thirdtBean);
+                bundle.putString("pageMsg", "首页热门推荐");
                 UIUtil.openActivity(mActivity, BookDetailActivity.class,bundle);
             }
         });

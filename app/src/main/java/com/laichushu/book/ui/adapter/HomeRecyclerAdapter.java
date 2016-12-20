@@ -239,6 +239,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                             //跳转图书详情页
                             Bundle bundle = new Bundle();
                             bundle.putParcelable("bean", dataBean);
+                            bundle.putString("pageMsg", "首页");
                             UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
                         }
                     });

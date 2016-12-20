@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.event.RefurshBookCommentListEvent;
 import com.laichushu.book.event.RefurshCommentListEvent;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
@@ -50,9 +51,14 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     private ImageView commentIv;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     protected void initView() {
         setContentView(R.layout.activity_commentdetail);
-        EventBus.getDefault().register(this);
         initTitleBar("详情");
         commentRyv = (PullLoadMoreRecyclerView) findViewById(R.id.ryv_comment);
         commentRyv.setLinearLayout();
@@ -140,11 +146,13 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
             }
         }, 300);
         if (model.isSuccess()) {
+            if (mvpPresenter.getParamet().getPageNo().equals("1")) {
+                mData.clear();
+            }
             if (model.getData().size() != 0) {
                 pageNo = Integer.parseInt(pageNo) + 1 + "";
                 mData.addAll(model.getData());
                 mAdapter.setmData(mData);
-                mAdapter.notifyDataSetChanged();
             }
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -192,7 +200,6 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     @Override
     public void onRefresh() {
         pageNo = "1";
-        mData.clear();
         mvpPresenter.getParamet().setPageNo(pageNo);
         mvpPresenter.loadCommentData(commentId);
     }
@@ -211,8 +218,6 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         switch(v.getId()){
             case R.id.iv_title_finish:
                 finish();
-                RefurshCommentListEvent event = new RefurshCommentListEvent(true);
-                EventBus.getDefault().postSticky(event);
                 break;
             case R.id.iv_comment_head:
                 //跳转用户主页
@@ -231,12 +236,25 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        RefurshBookCommentListEvent event = new RefurshBookCommentListEvent(true, -1);
+        EventBus.getDefault().postSticky(event);
+    }
+
+    /**
+     * 发送评论刷新
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefurshCommentListEvent event){
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             onRefresh();
-            dataBean.setReplyNum(dataBean.getReplyNum()+1);
+            dataBean.setReplyNum(Integer.parseInt(numberTv.getText().toString())+1);
+            numberTv.setText(dataBean.getReplyNum() + "");//回复人数
         }
     }
 }
