@@ -138,6 +138,16 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
     }
 
     @Override
+    public void showDialog() {
+
+    }
+
+    @Override
+    public void dismissDialog() {
+
+    }
+
+    @Override
     public void onRefresh() {
         PAGE_NO = 1;
         recordData.clear();

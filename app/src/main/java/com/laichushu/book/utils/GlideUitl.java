@@ -141,7 +141,7 @@ public class GlideUitl {
     public static void loadCornersImg(Context mContext, String path, ImageView mImageView) {
         if (!TextUtils.isEmpty(path)) {
             //原图处理成圆角，如果是四周都是圆角则是RoundedCornersTransformation.CornerType.ALL
-            Glide.with(mContext).load(path).bitmapTransform(new RoundedCornersTransformation(mContext, 40, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(1000).into(mImageView);
+            Glide.with(mContext).load(path).bitmapTransform(new RoundedCornersTransformation(mContext, 60, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(1000).into(mImageView);
         } else {
             Glide.with(mContext).load(R.drawable.icon_percentre_defhead2x).bitmapTransform(new RoundedCornersTransformation(mContext, 40, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(1000).into(mImageView);
         }

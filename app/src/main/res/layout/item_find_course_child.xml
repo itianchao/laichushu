@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:orientation="vertical">
@@ -26,6 +27,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
             android:singleLine="true"
+            android:textSize="@dimen/edit3"
             android:textColor="@color/title_bg_color1" />
     </LinearLayout>
 </LinearLayout>
