@@ -12,6 +12,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -30,9 +31,6 @@ android {
             dirs 'libs'
         }
         jcenter()
-    }
-    defaultConfig {
-        multiDexEnabled true
     }
 }
 allprojects {
@@ -59,7 +57,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.7'
     compile 'com.orhanobut:logger:1.15'
     compile 'id.zelory:compressor:1.0.2'
     compile 'com.android.support:design:23.0.0'
@@ -72,6 +70,7 @@ dependencies {
     compile 'com.alanapi.wheelview:alanapi-wheelview:0.0.9'
     compile(name: 'notify-dialog-library', ext: 'aar')
     compile 'com.lovedise:permissiongen:0.0.6'
+    compile 'com.android.support:multidex:1.0.1'
     compile project(':pickerView')
     compile project(path: ':ambilWarna')
     compile project(path: ':code')

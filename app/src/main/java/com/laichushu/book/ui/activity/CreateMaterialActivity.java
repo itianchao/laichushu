@@ -31,8 +31,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.util.List;
 
-import jp.wasabeef.richeditor.RichEditor;
-
 
 /**
  * 创建素材页面
@@ -48,7 +46,7 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
     private String articleId;
     private String parentId;
     private MineRichEditor mEditor;
-    private StringBuilder builder ;
+    private StringBuilder builder;
     private String path;
     private TextView materialTv;
     private String type;
@@ -74,10 +72,10 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
         //mEditor.setBackgroundColor(Color.BLUE);
         //mEditor.setBackgroundResource(R.drawable.bg);
         mEditor.setPadding(10, 10, 10, 10);
-        //    mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
-        mEditor.setPlaceholder("");
+//            mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
+        mEditor.setPlaceholder("请输入简介内容");
 
-        mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
+        mEditor.setOnTextChangeListener(new MineRichEditor.OnTextChangeListener() {
             @Override
             public void onTextChange(String text) {
                 builder = new StringBuilder(text);
@@ -87,11 +85,11 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
         mSuccessView.findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Album.startAlbum(mActivity, ConstantValue.ACTIVITY_REQUEST_SELECT_PHOTO
-                        , 1                                                         // 指定选择数量。
-                        , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
-                        , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
-
+//                Album.startAlbum(mActivity, ConstantValue.ACTIVITY_REQUEST_SELECT_PHOTO
+//                        , 1                                                         // 指定选择数量。
+//                        , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
+//                        , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
+                ToastUtil.showToast("不可加入图片");
             }
         });
         mvpPresenter.setfunction(mSuccessView, mEditor);
@@ -180,6 +178,7 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
 
     /**
      * 修改素材
+     *
      * @param model
      */
     @Override
@@ -243,7 +242,7 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
                 if (type.equals("1")) {
                     mvpPresenter.createSourceMaterial(articleId, name, parentId, content);
                 } else {
-                    mvpPresenter.editMaterialBook(parentId,name,content);
+                    mvpPresenter.editMaterialBook(parentId, name, content);
                 }
                 break;
             case R.id.iv_title_finish:

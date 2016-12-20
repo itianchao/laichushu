@@ -10,12 +10,12 @@ import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.CreatNewDraftActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.widget.MineRichEditor;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
 
 import id.zelory.compressor.Compressor;
-import jp.wasabeef.richeditor.RichEditor;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -36,7 +36,7 @@ public class CreateNewDraftPersenter extends BasePresenter<CreateNewDraftView> {
         this.mActivity = (CreatNewDraftActivity) view;
     }
 
-    public void setfunction(View mSuccessView, final RichEditor mEditor) {
+    public void setfunction(View mSuccessView, final MineRichEditor mEditor) {
         mSuccessView.findViewById(R.id.action_undo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

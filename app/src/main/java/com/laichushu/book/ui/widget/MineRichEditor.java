@@ -29,32 +29,32 @@ public class MineRichEditor extends RichEditor {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        CustomInputConnection connection = new CustomInputConnection(this, false);
-        outAttrs.inputType = InputType.TYPE_NULL;
-        outAttrs.imeOptions = EditorInfo.IME_ACTION_NONE;
-        outAttrs.initialSelStart = -1;
-        outAttrs.initialSelEnd = -1;
-        return connection;
-    }
-
-    public class CustomInputConnection extends BaseInputConnection {
-
-        public CustomInputConnection(View targetView, boolean fullEditor) {
-            super(targetView, fullEditor);
-        }
-
-        @Override
-        public boolean deleteSurroundingText(int beforeLength, int afterLength) {
-            // magic: in latest Android, deleteSurroundingText(1, 0) will be called for backspace
-            if (beforeLength == 1 && afterLength == 0) {
-                // backspace
-                return super.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
-                        && super.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
-            }
-
-            return super.deleteSurroundingText(beforeLength, afterLength);
-        }
-    }
+//    @Override
+//    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+//        CustomInputConnection connection = new CustomInputConnection(this, false);
+//        outAttrs.inputType = InputType.TYPE_NULL;
+//        outAttrs.imeOptions = EditorInfo.IME_ACTION_NONE;
+//        outAttrs.initialSelStart = -1;
+//        outAttrs.initialSelEnd = -1;
+//        return connection;
+//    }
+//
+//    public class CustomInputConnection extends BaseInputConnection {
+//
+//        public CustomInputConnection(View targetView, boolean fullEditor) {
+//            super(targetView, fullEditor);
+//        }
+//
+//        @Override
+//        public boolean deleteSurroundingText(int beforeLength, int afterLength) {
+//            // magic: in latest Android, deleteSurroundingText(1, 0) will be called for backspace
+//            if (beforeLength == 1 && afterLength == 0) {
+//                // backspace
+//                return super.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
+//                        && super.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
+//            }
+//
+//            return super.deleteSurroundingText(beforeLength, afterLength);
+//        }
+//    }
 }
