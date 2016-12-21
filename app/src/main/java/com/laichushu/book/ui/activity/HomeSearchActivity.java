@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,6 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.laichushu.book.db.Search_History;
+import com.laichushu.book.event.RefrushHomeSearchEvent;
+import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.mvp.homesearch.HomeSearchModel;
 import com.laichushu.book.mvp.homesearch.HomeSearchPresenter;
 import com.laichushu.book.mvp.homesearch.HomeSearchView;
@@ -26,6 +29,10 @@ import com.laichushu.book.R;
 import com.laichushu.book.db.Search_HistoryDao;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,6 +68,17 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     private boolean two = false;
     private HomeSearchHotHistoryAdapter mHotAdapter;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
     @Override
     protected void initData() {
         mvpPresenter.loadHotSearchData();
@@ -123,7 +141,6 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 bookRyv.setVisibility(View.VISIBLE);
                 mAllData.addAll(mData);
                 mAdapter.setmAllData(mAllData);
-                mAdapter.notifyDataSetChanged();
                 pageNo = Integer.parseInt(pageNo) + 1 + "";
             }else {
                 emptyIv.setVisibility(View.VISIBLE);
@@ -316,5 +333,21 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 }
             }
         });
+    }
+    /**
+     * 刷新 首页分类
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefrushHomeSearchEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        for (int i = 0; i < mAllData.size(); i++) {
+            if (mAllData.get(i).getArticleId().equals(event.getBean().getArticleId())) {
+                mAllData.set(i, event.getBean());
+                break;
+            }
+        }
+        mAdapter.setmAllData(mAllData);
     }
 }

@@ -119,5 +119,6 @@ public class CaregoryListAdapter extends RecyclerView.Adapter<CaregoryListAdapte
 
     public void setmAllData(ArrayList<HomeHotModel.DataBean> mAllData) {
         this.mAllData = mAllData;
+        notifyDataSetChanged();
     }
 }

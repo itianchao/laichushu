@@ -12,6 +12,7 @@ import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
+import com.laichushu.book.mvp.bookdetail.BookDetailModle;
 import com.laichushu.book.mvp.bookdetail.SubscribeArticleModle;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.campaign.CampaignJoinModel;
@@ -176,6 +177,10 @@ public interface ApiStores {
     //获取作者作品 通过图书id查询图书详情
     @POST("searchArticle/findArticleByBookId")
     Observable<HomeTitleBean> getBookById(@Body AuthorWorksByBookId_Paramet paramet);
+
+    //获取作者作品 通过图书id查询图书详情
+    @POST("searchArticle/findArticleByBookId")
+    Observable<BookDetailModle> getBookById(@Body FindByBookId_Paramet paramet);
 
     //获取活动 通过活动Id查询活动详情
     @POST("activity/getActivityById")

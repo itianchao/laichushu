@@ -15,6 +15,7 @@ import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.CampaignActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.HomeFragment;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
@@ -136,7 +137,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     bundle.putString("pageMsg", "首页");
                     UIUtil.openActivity(homeFragment.getActivity(), BookDetailActivity.class, bundle);
                 }else {
-
+                    ToastUtil.showToast(model.getErrMsg());
                 }
                 mvpView.hideLoading();
             }

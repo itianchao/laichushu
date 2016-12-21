@@ -9,18 +9,17 @@ import com.laichushu.book.mvp.home.HomeHotModel;
  * Created by wangtong on 2016/11/03.
  */
 public interface BookDetailView {
-    void getAuthorDetailData(AuthorDetailModle model);
     void getDataFail(String msg);
-    void getPayResult(RewardResult model);
+    void getPayResult(RewardResult modle);
     void showLoading();
     void hideLoading();
-    void getBestLikeSuggestlData(HomeHotModel model);
-    void getSubscribeArticleData(SubscribeArticleModle model, String type);
-    void getArticleCommentData(ArticleCommentModle model);
-    void getBalanceData(BalanceBean model);
-    void getBalance2Data(BalanceBean model);
+    void getBookDataSuccess(BookDetailModle modle);
+    void getBookDataError(String msg);
+    void getSubscribeArticleData(SubscribeArticleModle modle, String type);
+    void getBalanceData(BalanceBean modle);
+    void getBalance2Data(BalanceBean modle);
     void getRewardMoneyData(RewardResult model);
-    void SaveScoreLikeData(RewardResult model, String type);
-    void collectSaveData(RewardResult model);
-    void getJurisdictionData(RewardResult model);
+    void SaveScoreLikeData(RewardResult modle, String type);
+    void collectSaveData(RewardResult modle);
+    void getJurisdictionData(RewardResult modle);
 }

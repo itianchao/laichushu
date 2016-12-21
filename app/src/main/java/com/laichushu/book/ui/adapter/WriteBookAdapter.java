@@ -85,7 +85,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         if (dataBean.getExpressStatus().equals("2")){
             mStrip.get(3).setTitle("制作中");
         }
-        if (dataBean.getStatus().equals("4")) {
+        if (dataBean.getStatus().equals("4")||dataBean.getFreezeStatus().equals("2")) {
             holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
         }else {
             holder.jurTv.setImageResource(R.drawable.manage_jur2x);

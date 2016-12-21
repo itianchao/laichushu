@@ -45,6 +45,7 @@ public class UserWorksListAdapter extends RecyclerView.Adapter<UserWorksListAdap
 //                跳转图书详情页
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean", dataBeen.get(position));
+                bundle.putString("pageMsg", "UserWorkList");
                 UIUtil.openActivity(context, BookDetailActivity.class, bundle);
             }
         });;

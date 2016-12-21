@@ -29,6 +29,9 @@ import org.geometerplus.android.fbreader.network.action.TopupAction;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 我的书架
+ */
 public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implements BookcastView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle;
