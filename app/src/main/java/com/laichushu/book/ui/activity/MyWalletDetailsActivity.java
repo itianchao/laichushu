@@ -26,6 +26,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 我的钱包
+ */
 public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implements WalletView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle, tvBalanceShow;

@@ -36,6 +36,9 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 
+/**
+ * 修改信息界面---身份验证
+ */
 public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClickListener {
     private ImageView ivBack, ivFront, ivOpposite;
     private TextView tvTitle;

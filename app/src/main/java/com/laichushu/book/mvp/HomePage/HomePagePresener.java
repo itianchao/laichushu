@@ -35,7 +35,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         this.paramet = paramet;
     }
 
-    private HomeUserDy_parmet paramet = new HomeUserDy_parmet(userId, pageSize, pageNo,"");
+    private HomeUserDy_parmet paramet = new HomeUserDy_parmet(userId,"", pageSize, pageNo,"");
 
     public HomeUserDy_parmet getParamet2() {
         return paramet;
@@ -48,6 +48,9 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         mActivity = (PersonalHomePageActivity) view;
     }
 
+    /**
+     * 个人主页--动态
+     */
     public void LoadData() {
         LoggerUtil.toJson(paramet);
         addSubscription(apiStores.getHomeUserDyDetails(paramet), new ApiCallback<HomeUseDyrResult>() {

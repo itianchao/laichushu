@@ -1,33 +1,43 @@
 package com.laichushu.book.mvp.mechanismdetail;
 
-import android.text.TextUtils;
+import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.google.gson.Gson;
 import com.laichushu.book.R;
-import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
-import com.laichushu.book.bean.netbean.SendMsgToParty_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.retrofit.ApiCallback;
+import com.laichushu.book.ui.activity.AnnounMangeActivity;
 import com.laichushu.book.ui.activity.MechanismDetailActivity;
-import com.laichushu.book.ui.adapter.JoinActivityAdapter;
+import com.laichushu.book.ui.activity.ModifyMechanismInfoActivity;
+import com.laichushu.book.ui.activity.TopicManageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 节 presenter
@@ -177,7 +187,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
     public void sendMsgToParty(String id, String content) {
         mvpView.showLoading();
         Logger.e("发消息");
-        AddPerMsgInfo_Paramet paramet = new AddPerMsgInfo_Paramet(content,id,userId);
+        AddPerMsgInfo_Paramet paramet = new AddPerMsgInfo_Paramet(content, id, userId);
         addSubscription(apiStores.getAddPerMsgInfDetails(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
@@ -231,5 +241,66 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
                 .withEffect(Effectstype.Slidetop)                 // 动画形式
                 .setCustomView(customerView, mActivity)                // 添加自定义View
                 .show();
+    }
+
+    /**
+     * 公告管理
+     *
+     * @param mActicity
+     * @param v
+     */
+    public void showManageDialog(final Activity mActicity, ImageView v, final String partyId) {
+        View customerView = UIUtil.inflate(R.layout.dialog_mechanis_manage_item);
+        final PopupWindow popupWindow = new PopupWindow(customerView,
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        ListView listView = (ListView) customerView.findViewById(R.id.lv_item);
+        List<String> data = new ArrayList<>();
+        data.clear();
+        data.add("公告管理");
+        data.add("话题管理");
+        data.add("机构资料管理");
+        ArrayAdapter adapter = new ArrayAdapter(mActicity, R.layout.spiner_item_layout, data);
+        listView.setAdapter(adapter);
+//        popupWindow.setAnimationStyle(R.style.periodpopwindow_anim_style);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        int xPos = mActicity.getWindowManager().getDefaultDisplay().getWidth() / 2
+                - popupWindow.getWidth() / 2;
+        int[] location = new int[2];
+        v.getLocationOnScreen(location);
+        popupWindow.showAsDropDown(v,xPos-100,40);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        //公告管理界面
+                        Bundle bundle = new Bundle();
+                        bundle.putString("partyId", partyId);
+                        UIUtil.openActivity(mActicity, AnnounMangeActivity.class, bundle);
+                        break;
+                    case 1:
+                        //话题管理
+                        Bundle topicBundle = new Bundle();
+                        topicBundle.putString("partyId", partyId);
+                        UIUtil.openActivity(mActicity, TopicManageActivity.class, topicBundle);
+                        break;
+                    case 2:
+                        //修改机构资料
+                        Bundle modifyBundle = new Bundle();
+                        modifyBundle.putString("partyId", partyId);
+                        UIUtil.openActivity(mActicity, ModifyMechanismInfoActivity.class, modifyBundle);
+                        break;
+                }
+                if (null != popupWindow) {
+                    popupWindow.dismiss();
+                }
+
+            }
+        });
+
     }
 }

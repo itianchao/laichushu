@@ -11,6 +11,9 @@ import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
+/**
+ * 关于App
+ */
 public class AboutAppDetails extends MvpActivity2 implements View.OnClickListener {
     private ImageView ivBack,appIcon;
     private TextView tvTitle;

@@ -10,12 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.MyHomeModel;
-import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.bookcast.BookcastPresener;
 import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.mvp.write.WritePresenter;
-import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;

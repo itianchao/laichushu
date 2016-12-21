@@ -10,6 +10,9 @@ import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.UIUtil;
 
+/**
+ * 协议界面
+ */
 public class AgreementDetailsActivity extends MvpActivity2 implements View.OnClickListener {
 
     private TextView titleTv;

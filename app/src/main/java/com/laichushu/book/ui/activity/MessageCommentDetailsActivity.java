@@ -18,6 +18,7 @@ import com.laichushu.book.ui.adapter.MessageCommentAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ModelUtils;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -58,7 +59,7 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         //初始化mRecyclerView 评论
         mRecyclerView.setGridLayout(1);
         mRecyclerView.setFooterViewText("加载中");
-        msgAdapter = new MessageCommentAdapter(this, commData,mvpPresenter);
+        msgAdapter = new MessageCommentAdapter(this, commData, mvpPresenter);
         mRecyclerView.setAdapter(msgAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
 
@@ -78,7 +79,7 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     public void onRefresh() {
-        PAGE_NO=1;
+        PAGE_NO = 1;
         commData.clear();
         mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
         mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
@@ -118,11 +119,7 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     public void getBookDetailsDateSuccess(HomeHotModel model, int position) {
-        //跳转图书详情页
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("bean", model.getData().get(0));
-        bundle.putString("pageMsg", "消息评论详情");
-        UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+
     }
 
     @Override
@@ -152,7 +149,18 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
-
+        if (model.isSuccess()) {
+            //跳转图书详情页
+            Bundle bundle = new Bundle();
+//        String bd = gson.toJson(model, BookDetailsModle.class);
+//        HomeHotModel.DataBean homeHotModel = gson.fromJson(bd, new TypeToken<HomeHotModel.DataBean>() {}.getType());
+            HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
+            bundle.putParcelable("bean", dataBean);
+            bundle.putString("pageMsg", "消息喜欢");
+            UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
     }
 
     @Override

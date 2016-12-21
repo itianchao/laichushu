@@ -120,6 +120,7 @@ public class WalletPresener extends BasePresenter<WalletView> {
 
     //钱包提现
     public void loadWithdrawalsData(String accountName, String applyMoney) {
+        mvpView.showDialog();
         WithdrawalsApplay_Paramet withdrawalsApplay_paramet = new WithdrawalsApplay_Paramet(userId, accountName, applyMoney);
         LoggerUtil.toJson(paramet);
         addSubscription(apiStores.getWithdrawalsApplayDetails(withdrawalsApplay_paramet), new ApiCallback<RewardResult>() {
@@ -135,7 +136,7 @@ public class WalletPresener extends BasePresenter<WalletView> {
 
             @Override
             public void onFinish() {
-
+                mvpView.dismissDialog();
             }
         });
     }

@@ -26,6 +26,9 @@ import com.laichushu.book.utils.UIUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+/**
+ * 充值界面
+ */
 public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implements WalletView, View.OnClickListener {
     private ImageView ivBack;
     private TextView tvTitle;

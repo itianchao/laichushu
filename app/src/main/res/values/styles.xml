@@ -98,8 +98,8 @@
         <item name="android:drawablePadding">5dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textSize">@dimen/edit3</item>
-        <item name="android:textColor">@color/edit</item>
+        <item name="android:textSize">@dimen/edit2</item>
+        <item name="android:textColor">@color/characterGray</item>
     </style>
     <style name="new_up">
         <item name="android:layout_width">wrap_content</item>

@@ -39,6 +39,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 用户主页
+ * 2016年12月21日14:34:31
+ *
+ */
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade,ivGreadDetails, ivAnother;
     private TextView tvTitle, tvNickName, tvAuthorAgree;
