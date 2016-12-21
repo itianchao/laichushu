@@ -291,7 +291,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                 if (TextUtils.isEmpty(pay)) {
                     ToastUtil.showToast("请输入打赏金额");
                 } else {
-                    if (Integer.parseInt(pay) > 0 || Integer.parseInt(pay) < 100) {
+                    if (Double.parseDouble(pay) > 0 || Double.parseDouble(pay) < 100) {
                         // TODO: 2016/11/8 请求打赏
                         rewardMoney(userId, accepterId, articleId, pay);
                         mActivity.getBean().setAward(true);
