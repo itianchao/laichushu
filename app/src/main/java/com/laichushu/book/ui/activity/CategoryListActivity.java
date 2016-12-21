@@ -1,10 +1,13 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
+import com.laichushu.book.event.RefrushHomeCategroyEvent;
+import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
@@ -16,6 +19,10 @@ import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -36,6 +43,18 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private ArrayList<HomeHotModel.DataBean> mAllData = new ArrayList<>();
     private CaregoryListAdapter mAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     protected void initView() {
@@ -104,7 +123,6 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
             if (!mData.isEmpty()) {
                 mAllData.addAll(mData);
                 mAdapter.setmAllData(mAllData);
-                mAdapter.notifyDataSetChanged();
             }
             pageNo = ++pageNo;
         } else {
@@ -152,5 +170,21 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
     public void onLoadMore() {
         getParamet().setPageNo(pageNo + "");
         loadDataForNet();
+    }
+    /**
+     * 刷新 首页分类
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefrushHomeCategroyEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        for (int i = 0; i < mAllData.size(); i++) {
+            if (mAllData.get(i).getArticleId().equals(event.getBean().getArticleId())) {
+                mAllData.set(i, event.getBean());
+                break;
+            }
+        }
+        mAdapter.setmAllData(mData);
     }
 }

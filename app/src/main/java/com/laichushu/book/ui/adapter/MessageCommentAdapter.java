@@ -10,21 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
-import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;
 
 /**
+ * 消息评论
  * Created by PCPC on 2016/11/28.
  */
 
@@ -73,6 +71,14 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
             public void onClick(View v) {
                 //跳转书详情
                 messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
+            }
+        });
+        holder.ivReplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //删除
+                dataBeen.remove(position);
+                notifyDataSetChanged();
             }
         });
     }

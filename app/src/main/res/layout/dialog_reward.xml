@@ -61,6 +61,7 @@
                 android:layout_height="40dp"
                 android:background="@color/white"
                 android:hint="只能打赏1-100金额"
+                android:digits="0123456789."
                 android:textColor="@color/black"
                 android:textColorHint="@color/hint"
                 android:textSize="@dimen/edit2" />

@@ -23,6 +23,9 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
+/**
+ * 通用设置
+ */
 public class GeneralSettingActivity extends MvpActivity2 implements View.OnClickListener {
     private ImageView ivBack;
     private TextView tvTitle, tvAnother, tvCacheSize;

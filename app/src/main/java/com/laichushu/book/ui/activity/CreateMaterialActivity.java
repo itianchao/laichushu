@@ -82,16 +82,16 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
                 LoggerUtil.e(builder.toString());
             }
         });
-        mSuccessView.findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        mSuccessView.findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 //                Album.startAlbum(mActivity, ConstantValue.ACTIVITY_REQUEST_SELECT_PHOTO
 //                        , 1                                                         // 指定选择数量。
 //                        , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
 //                        , ContextCompat.getColor(mActivity, R.color.global));  // 指定状态栏的颜色。
-                ToastUtil.showToast("不可加入图片");
-            }
-        });
+//                ToastUtil.showToast("不可加入图片");
+//            }
+//        });
         mvpPresenter.setfunction(mSuccessView, mEditor);
 
 

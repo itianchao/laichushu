@@ -13,11 +13,13 @@ import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.AuthorDetail_Paramet;
+import com.laichushu.book.bean.netbean.AuthorWorksByBookId_Paramet;
 import com.laichushu.book.bean.netbean.Balance_Paramet;
 import com.laichushu.book.bean.netbean.BestLike_Paramet;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.Comment_Paramet;
 import com.laichushu.book.bean.netbean.DownloadEpubFilePermission_Paramet;
+import com.laichushu.book.bean.netbean.FindByBookId_Paramet;
 import com.laichushu.book.bean.netbean.Jurisdiction_Paramet;
 import com.laichushu.book.bean.netbean.Purchase_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
@@ -51,11 +53,7 @@ import retrofit2.Response;
  */
 public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     private BookDetailActivity mActivity;
-    private String pageSize = "5";
-    private String pageNo = "1";
-    private BestLike_Paramet paramet;
     private String userId = ConstantValue.USERID;
-    ;
 
     //初始化构造
     public BookDetailPresenter(BookDetailView view) {
@@ -63,63 +61,34 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
         mActivity = (BookDetailActivity) view;
     }
 
-    public void loadAuthorData(String authorId) {
-        mvpView.showLoading();
-        AuthorDetail_Paramet paramet = new AuthorDetail_Paramet(authorId);
-        Logger.e("作者详情请求参数");
-        Logger.json(new Gson().toJson(paramet));
-        addSubscription(apiStores.authorDetail(paramet),
-                new ApiCallback<AuthorDetailModle>() {
-                    @Override
-                    public void onSuccess(AuthorDetailModle model) {
-                        mvpView.getAuthorDetailData(model);
-                    }
+    /**
+     * 根据Id获取图书
+     * @param articleId 图书Id
+     */
+    public void getBookById(String articleId){
+        FindByBookId_Paramet paramet = new FindByBookId_Paramet(userId,articleId);
+        addSubscription(apiStores.getBookById(paramet), new ApiCallback<BookDetailModle>() {
+            @Override
+            public void onSuccess(BookDetailModle model) {
+                mvpView.getBookDataSuccess(model);
+            }
 
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        mvpView.getDataFail("code+" + code + "/msg:" + msg);
-                    }
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getBookDataError(msg);
+            }
 
-                    @Override
-                    public void onFinish() {
-                        mvpView.hideLoading();
-                    }
-
-                });
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
     }
-
-    public void loadBestLikeSuggest(String articleId) {
-        mvpView.showLoading();
-        paramet = new BestLike_Paramet(articleId, pageSize, pageNo, userId);
-        Logger.e("喜欢本书的也喜欢请求参数");
-        Logger.json(new Gson().toJson(paramet));
-        addSubscription(apiStores.bestLikeSuggest(paramet),
-                new ApiCallback<HomeHotModel>() {
-                    @Override
-                    public void onSuccess(HomeHotModel model) {
-                        mvpView.getBestLikeSuggestlData(model);
-                    }
-
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        mvpView.getDataFail("code+" + code + "/msg:" + msg);
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        mvpView.hideLoading();
-                    }
-                });
-    }
-
-    public BestLike_Paramet getParamet() {
-        return paramet;
-    }
-
-    public void setParamet(BestLike_Paramet paramet) {
-        this.paramet = paramet;
-    }
-
+    /**
+     * 订阅
+     * @param aricleId
+     * @param type
+     */
     public void loadSubscribeArticle(String aricleId, final String type) {
         mvpView.showLoading();
         SubscribeArticle_Paramet paramet = new SubscribeArticle_Paramet(userId, aricleId, type);
@@ -149,28 +118,28 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      * @param articleId
      * @param type
      */
-    public void loadCommentData(String articleId, String type) {
-        mvpView.showLoading();
-        Comment_Paramet paramet = new Comment_Paramet(articleId, "5", "1", userId, type);
-        Logger.e("评论参数");
-        Logger.json(new Gson().toJson(paramet));
-        addSubscription(apiStores.articleComment(paramet), new ApiCallback<ArticleCommentModle>() {
-            @Override
-            public void onSuccess(ArticleCommentModle model) {
-                mvpView.getArticleCommentData(model);
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
-            }
-
-            @Override
-            public void onFinish() {
-                mvpView.hideLoading();
-            }
-        });
-    }
+//    public void loadCommentData(String articleId, String type) {
+//        mvpView.showLoading();
+//        Comment_Paramet paramet = new Comment_Paramet(articleId, "5", "1", userId, type);
+//        Logger.e("评论参数");
+//        Logger.json(new Gson().toJson(paramet));
+//        addSubscription(apiStores.articleComment(paramet), new ApiCallback<ArticleCommentModle>() {
+//            @Override
+//            public void onSuccess(ArticleCommentModle model) {
+//                mvpView.getArticleCommentData(model);
+//            }
+//
+//            @Override
+//            public void onFailure(int code, String msg) {
+//                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//                mvpView.hideLoading();
+//            }
+//        });
+//    }
 
     /**
      * 买书
@@ -235,6 +204,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                 dialogBuilder.dismiss();
                 buyBook(articleId, payMoney);
                 mActivity.getBean().setPurchase(true);
+                mActivity.getArticleData().setPurchase(true);
             }
         });
         dialogBuilder
@@ -325,6 +295,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                         // TODO: 2016/11/8 请求打赏
                         rewardMoney(userId, accepterId, articleId, pay);
                         mActivity.getBean().setAward(true);
+                        mActivity.getArticleData().setAward(true);
                         dialogBuilder.dismiss();
                     } else {
                         ToastUtil.showToast("只能打赏1-100金额");
@@ -499,6 +470,12 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
         });
     }
 
+    /**
+     * 下载epub文件
+     * @param url
+     * @param articleId
+     * @param author
+     */
     public void downloadEpub(final String url,final String articleId,final String author) {
 
         Call<ResponseBody> call = apiStores.downloadFile(url);
@@ -528,6 +505,13 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             }
         });
     }
+
+    /**
+     * 写入文件
+     * @param body
+     * @param articleId
+     * @return
+     */
     private boolean writeResponseBodyToDisk(ResponseBody body, String articleId) {
         try {
             // todo change the file location/name according to your needs
