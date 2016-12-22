@@ -63,12 +63,12 @@ public interface ApiStores {
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
-    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.0.123:8082/book-app/";//施大勇4
-//    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
+    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
 //    String API_SERVER_URL = "http://192.168.1.130:8082/book-app/";//施大勇6
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //      String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
@@ -339,7 +339,7 @@ public interface ApiStores {
     @POST("userDetail/findUserInfo")
     Observable<HomeUserResult> getUserInforDetails(@Body HomeUserInfor_paramet paramet);
 
-    //个人主页动态
+    //个人主页动态+机构话题列表
 //    @POST("userDetail/findDy")
     @POST("dynamic/find")
     Observable<HomeUseDyrResult> getHomeUserDyDetails(@Body HomeUserDy_parmet paramet);
@@ -388,6 +388,16 @@ public interface ApiStores {
     //个人主页发表动态话题
     @POST("topic/saveTopic")
     Observable<RewardResult> publishTopic(@Body PublishTopic_Paramet paramet);
+    //机构--删除话题
+    @POST("topic/deleteTopic")
+    Observable<RewardResult> deleteTopicManageDetails(@Body DeleteTopic_Paramet paramet);
+    //机构--修改资料
+    @POST("press/update")
+    Observable<RewardResult> deleteTopicManageDetails(@Body UpdateTopic_Paramet paramet);
+
+    //机构---修改机构信息
+    @POST("topic/selectMyTopic")
+    Observable<RewardResult>  checkTopicList(@Body PublishTopic_Paramet paramet);
 
     //个人主页等级分类详情
     @POST("gradeDetail/find")
@@ -455,7 +465,7 @@ public interface ApiStores {
 
     //我的钱包充值
     @POST("wallet/find")
-    Observable<WalletBalanceReward> getRechargeDetails(@Body WalletBalanceRecord_Paramet paramet);
+    Observable<WalletBalanceReward> getRechargeDetail(@Body WalletBalanceRecord_Paramet paramet);
 
     //我的钱包提现
     @POST("withdraw/apply")
@@ -468,6 +478,17 @@ public interface ApiStores {
     //获取机构公告列表
     @POST("press/notices")
     Observable<NoticeModle> getNoticesList(@Body NoticesList_Paramet paramet);
+    //机构--发表新话题
+    @POST("press/update")
+    Observable<RewardResult> updateTopicMsgDetails(@Body NoticesList_Paramet paramet);
+
+    //机构发标公告
+    @POST("notice/save")
+    Observable<RewardResult> getNoticesSaveList(@Body NoticesSave_Paramet paramet);
+
+    //删除机构公告
+    @POST("notice/delete")
+    Observable<RewardResult> dleteNoticesItem(@Body NoticesList_Paramet paramet);
 
     //获取机构话题
     @POST("press/topics")

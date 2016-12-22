@@ -1,5 +1,7 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -22,13 +24,24 @@ import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
+/**
+ * 我的钱包 提现
+ */
 public class WithdrawalsDetails extends MvpActivity2<WalletPresener> implements WalletView, View.OnClickListener {
     private ImageView ivBack;
     private TextView tvTitle, tvAccountNum;
     private WalletBalanceReward bean;
     private EditText edInputNum, edInputAcc;
     private Button btnWithdrawals;
-
+    private Handler handler =new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==1){
+                finish();
+            }
+        }
+    };
     @Override
     protected WalletPresener createPresenter() {
         return new WalletPresener(this);
@@ -88,7 +101,7 @@ public class WithdrawalsDetails extends MvpActivity2<WalletPresener> implements 
                     ToastUtil.showToast("请输入支付宝账户");
                     return;
                 }
-                showProgressDialog();
+                btnWithdrawals.setClickable(false);
                 mvpPresenter.loadWithdrawalsData(edInputAcc.getText().toString(), edInputNum.getText().toString());
                 break;
         }
@@ -106,7 +119,7 @@ public class WithdrawalsDetails extends MvpActivity2<WalletPresener> implements 
             edInputNum.setText(null);
             edInputAcc.setText(null);
             ToastUtil.showToast("提现申请成功！");
-            mActivity.finish();
+            handler.sendEmptyMessageDelayed(1,1700);
         } else {
             ToastUtil.showToast("操作失败！");
         }

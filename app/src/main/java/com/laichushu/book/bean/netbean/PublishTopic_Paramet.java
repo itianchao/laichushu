@@ -8,11 +8,15 @@ import java.io.Serializable;
 
 public class PublishTopic_Paramet implements Serializable {
     private String userId, title, content;
+    private String type;
+    private String partyId;
 
-    public PublishTopic_Paramet(String userId, String title, String content) {
+    public PublishTopic_Paramet(String userId, String partyId, String type, String title, String content) {
         this.userId = userId;
         this.title = title;
         this.content = content;
+        this.type = type;
+        this.partyId = partyId;
     }
 
     public String getUserId() {
@@ -37,5 +41,21 @@ public class PublishTopic_Paramet implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPartyId() {
+        return partyId;
+    }
+
+    public void setPartyId(String partyId) {
+        this.partyId = partyId;
     }
 }

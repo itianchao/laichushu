@@ -11,7 +11,7 @@ import com.laichushu.book.utils.LoggerUtil;
  * Created by wangtong on 2016/11/26.
  */
 public class MechanismTopicListPresenter extends BasePresenter<MechanismTopicListView> {
-    private MechanismTopicList_Paramet paramet = new MechanismTopicList_Paramet("","1", ConstantValue.PAGESIZE1);
+    private MechanismTopicList_Paramet paramet = new MechanismTopicList_Paramet("","","","1", ConstantValue.PAGESIZE1);
 
     public MechanismTopicList_Paramet getParamet() {
         return paramet;

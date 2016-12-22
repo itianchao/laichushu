@@ -1,5 +1,7 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -8,8 +10,11 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.NoticesSave_Paramet;
 import com.laichushu.book.bean.netbean.PublishTopic_Paramet;
+import com.laichushu.book.event.RefrushAunnManagerEvent;
 import com.laichushu.book.event.RefrushHomePageEvent;
+import com.laichushu.book.event.RefrushTopicManageEvent;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -25,6 +30,16 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
     private ImageView ivBack;
     private TextView tvTitle, tvRight;
     private EditText edAddTitle, edAddContent;
+    private String type = null, partyId;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                finish();
+            }
+        }
+    };
 
     @Override
     protected View createSuccessView() {
@@ -40,12 +55,26 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
     @Override
     protected void initData() {
         super.initData();
-        tvTitle.setText("发表话题");
+        type = getIntent().getStringExtra("type");
+        partyId = getIntent().getStringExtra("partyId");
+        if (null != type) {
+            switch (type) {
+                case "partyManage":
+                    tvTitle.setText("发表新公告");
+                    break;
+                case "topicManage":
+                    tvTitle.setText("发表新话题");
+                    break;
+            }
+        } else {
+            tvTitle.setText("发表话题");
+        }
         tvRight.setText("发表");
         tvRight.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         tvRight.setOnClickListener(this);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
     }
 
     @Override
@@ -63,31 +92,19 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
             case R.id.tv_title_right:
                 //提交话题
                 if (judgeContent()) {
-                    PublishTopic_Paramet paramet = new PublishTopic_Paramet(SharePrefManager.getUserId(), edAddTitle.getText().toString(), edAddContent.getText().toString());
-                    addSubscription(apiStores.publishTopic(paramet), new ApiCallback<RewardResult>() {
-                        @Override
-                        public void onSuccess(RewardResult result) {
-                            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                            if (result.isSuccess()) {
-                                ToastUtil.showToast("话题发表成功！");
-                                mActivity.finish();
-                            } else {
-                                ToastUtil.showToast("发表话题失败！");
-                                LoggerUtil.e(result.getErrMsg());
-                            }
+                    tvRight.setClickable(false);
+                    if (null != type) {
+                        switch (type) {
+                            case "partyManage":
+                                sendPartyMsg();
+                                break;
+                            case "topicManage":
+                                sendTopicMsg(partyId,"3");
+                                break;
                         }
-
-                        @Override
-                        public void onFailure(int code, String msg) {
-                            LoggerUtil.e(msg);
-                            refreshPage(LoadingPager.PageState.STATE_ERROR);
-                        }
-
-                        @Override
-                        public void onFinish() {
-                        }
-
-                    });
+                    } else {
+                        sendTopicMsg("","");
+                    }
                 }
                 break;
         }
@@ -113,6 +130,86 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
     @Override
     public void finish() {
         super.finish();
-        EventBus.getDefault().postSticky(new RefrushHomePageEvent(true));
+        if (null != type) {
+
+            switch (type) {
+                case "partyManage":
+                    EventBus.getDefault().postSticky(new RefrushAunnManagerEvent(true));
+                    break;
+                case "topicManage":
+                    EventBus.getDefault().postSticky(new RefrushTopicManageEvent(true));
+                    break;
+            }
+
+        } else {
+            EventBus.getDefault().postSticky(new RefrushHomePageEvent(true));
+        }
+
+    }
+
+    /**
+     * 发送话题
+     */
+    public void sendTopicMsg(String partyId, String type) {
+        showProgressDialog();
+        PublishTopic_Paramet paramet = new PublishTopic_Paramet(SharePrefManager.getUserId(), partyId, type, edAddTitle.getText().toString(), edAddContent.getText().toString());
+        addSubscription(apiStores.publishTopic(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult result) {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                if (result.isSuccess()) {
+                    ToastUtil.showToast("话题发表成功！");
+                    handler.sendEmptyMessageDelayed(1, 1700);
+                } else {
+                    ToastUtil.showToast("发表话题失败！");
+                    LoggerUtil.e(result.getErrMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                LoggerUtil.e(msg);
+                refreshPage(LoadingPager.PageState.STATE_ERROR);
+            }
+
+            @Override
+            public void onFinish() {
+                dismissProgressDialog();
+            }
+
+        });
+    }
+
+    /**
+     * 发布新公告
+     */
+    public void sendPartyMsg() {
+        showProgressDialog();
+        NoticesSave_Paramet saveParamet = new NoticesSave_Paramet(partyId, edAddTitle.getText().toString(), edAddContent.getText().toString());
+        addSubscription(apiStores.getNoticesSaveList(saveParamet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult result) {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                if (result.isSuccess()) {
+                    ToastUtil.showToast("公告发表成功！");
+                    handler.sendEmptyMessageDelayed(1, 1700);
+                } else {
+                    ToastUtil.showToast("公告发表失败！");
+                    LoggerUtil.e(result.getErrMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                LoggerUtil.e(msg);
+                refreshPage(LoadingPager.PageState.STATE_ERROR);
+            }
+
+            @Override
+            public void onFinish() {
+                dismissProgressDialog();
+            }
+
+        });
     }
 }

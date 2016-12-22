@@ -84,7 +84,7 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
     }
 
     //获取用户动态详情
-    private HomeUserDy_parmet paramet = new HomeUserDy_parmet("", pageSize, pageNo,userId);
+    private HomeUserDy_parmet paramet = new HomeUserDy_parmet("", "",pageSize, pageNo,userId);
 
     public void getUserDynmicDate(String id) {
         getParamet().setUserId(id);

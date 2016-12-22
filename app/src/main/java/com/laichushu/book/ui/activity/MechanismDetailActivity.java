@@ -26,6 +26,7 @@ import com.laichushu.book.ui.fragment.TopicListFragment;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
@@ -84,6 +85,9 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         mechanismTv = (TextView) mSuccessView.findViewById(R.id.tv_mechanism);//机构name
         collectionCountTv = (TextView) mSuccessView.findViewById(R.id.tv_collection_count);//收藏数
 
+        shareIv.setBackgroundResource(R.drawable.icon_share2x);
+        moreIv.setBackgroundResource(R.drawable.icon_sort2x);
+        shareIv.setVisibility(View.VISIBLE);
         finishIv.setOnClickListener(this);
         shareIv.setOnClickListener(this);
         moreIv.setOnClickListener(this);
@@ -100,6 +104,11 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     protected void initData() {
         bean = getIntent().getParcelableExtra("bean");
         articleId = getIntent().getStringExtra("articleId");
+        //判断当前是否是机构管理员
+//        if (null != bean.getAdmin() && SharePrefManager.getUserId().equals(bean.getAdmin())) {
+//            detailsIv.setVisibility(View.VISIBLE);
+//        }
+        moreIv.setVisibility(View.VISIBLE);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         titleTv.setText("机构详情");//设置标题
         GlideUitl.loadImg(mActivity, R.drawable.mechanism_detail_bg, mechanismIv);//设置机构图片
@@ -144,9 +153,9 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
             // TODO: 2016/12/19 刷新 写作页面
             EventBus.getDefault().postSticky(new RefurshWriteFragment(true));
         } else {
-            if (model.getErrMsg().contains("已经投稿")){
+            if (model.getErrMsg().contains("已经投稿")) {
                 ToastUtil.showToast("投稿失败，此出版社已经投稿了");
-            }else {
+            } else {
                 ToastUtil.showToast("投稿失败");
             }
         }
@@ -223,12 +232,18 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     }
 
     int position = 0;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_other:
+                //公告管理
+                mvpPresenter.showManageDialog(mActivity, moreIv, bean.getId());
+
                 break;
             case R.id.iv_title_another:
+                //分享
+
                 break;
             case R.id.iv_title_finish:
                 finish();
@@ -264,7 +279,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                     cType = "1";
                 }
                 collectionTv.setEnabled(false);
-                mvpPresenter.collectSave(bean.getId(),cType, "4");
+                mvpPresenter.collectSave(bean.getId(), cType, "4");
                 break;
         }
     }

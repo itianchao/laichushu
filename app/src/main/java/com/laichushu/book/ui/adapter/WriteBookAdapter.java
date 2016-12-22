@@ -59,17 +59,20 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
     @Override
     public void onBindViewHolder(final WriteBookViewHolder holder, final int position) {
         final HomeHotModel.DataBean dataBean = mData.get(position);
-        switch(dataBean.getStatus()){
-            case "1":
-                GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2,  holder.bookStatueIv);
-                break;
-            case "2":
-                GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3,  holder.bookStatueIv);
-                break;
-            default:
-                GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1,  holder.bookStatueIv);
-                break;
+        if(null!=dataBean.getStatus()){
+            switch(dataBean.getStatus()){
+                case "1":
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2,  holder.bookStatueIv);
+                    break;
+                case "2":
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3,  holder.bookStatueIv);
+                    break;
+                default:
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1,  holder.bookStatueIv);
+                    break;
+            }
         }
+
         View itemView = null;
         ImageView imageView = null;
         TextView textView;

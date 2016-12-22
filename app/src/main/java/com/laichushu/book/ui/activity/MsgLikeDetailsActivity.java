@@ -36,6 +36,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 消息界面
+ */
 public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter> implements MessageCommentView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle;
@@ -267,7 +270,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
      */
     @Override
     public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
-        if(model.isSuccess()){
+        if (model.isSuccess()) {
             //跳转图书详情页
             Bundle bundle = new Bundle();
 //        String bd = gson.toJson(model, BookDetailsModle.class);
@@ -276,17 +279,18 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
             bundle.putParcelable("bean", dataBean);
             bundle.putString("pageMsg", "消息喜欢");
             UIUtil.openActivity(this, BookDetailActivity.class, bundle);
-        }else{
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
 
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefrushPerInfoEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
-            type="3";
+            type = "3";
             initData();
         }
     }

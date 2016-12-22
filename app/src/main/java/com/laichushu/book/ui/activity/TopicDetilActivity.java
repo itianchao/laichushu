@@ -10,6 +10,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.event.RefrushHomePageEvent;
+import com.laichushu.book.event.RefrushTopicManageEvent;
 import com.laichushu.book.event.RefrushUserPageEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
@@ -286,6 +287,9 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                     break;
                 case "user":
                     EventBus.getDefault().postSticky(new RefrushUserPageEvent(true));
+                    break;
+                case "top":
+                    EventBus.getDefault().postSticky(new RefrushTopicManageEvent(true));
                     break;
 
             }

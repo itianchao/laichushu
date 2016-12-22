@@ -70,7 +70,7 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
             @Override
             public void onClick(View v) {
                 //跳转书详情
-                messageCommentPresenter.LoadBookDetailsData(dataBeen.get(position).getArticleId(), position);
+                messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
             }
         });
         holder.ivReplay.setOnClickListener(new View.OnClickListener() {
