@@ -187,7 +187,7 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
         });
         //确认
         final EditText dialogEt = (EditText) customerView.findViewById(R.id.et_dialog);
-        dialogEt.setHint("请输入草稿名称");
+        dialogEt.setHint("请输入草稿名称，添加草稿内容请到pc端");
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
