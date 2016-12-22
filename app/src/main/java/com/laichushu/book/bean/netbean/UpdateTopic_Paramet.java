@@ -7,13 +7,13 @@ import java.io.Serializable;
  */
 
 public class UpdateTopic_Paramet implements Serializable {
-    private String id, name, address, loginUrl, remarks;
+    private String id, name, address, logoUrl, remarks;
 
-    public UpdateTopic_Paramet(String id, String name, String address, String loginUrl, String remarks) {
+    public UpdateTopic_Paramet(String id, String name, String address, String logoUrl, String remarks) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.loginUrl = loginUrl;
+        this.logoUrl = logoUrl;
         this.remarks = remarks;
     }
 
@@ -41,12 +41,12 @@ public class UpdateTopic_Paramet implements Serializable {
         this.address = address;
     }
 
-    public String getLoginUrl() {
-        return loginUrl;
+    public String getLogoUrl() {
+        return logoUrl;
     }
 
-    public void setLoginUrl(String loginUrl) {
-        this.loginUrl = loginUrl;
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 
     public String getRemarks() {

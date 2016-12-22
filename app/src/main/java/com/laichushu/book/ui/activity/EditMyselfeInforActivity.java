@@ -239,7 +239,11 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             if (TextUtils.isEmpty(resultData.getSex())) {
                 tvSex.setText("男");
             } else {
-                tvSex.setText(resultData.getSex());
+                if (resultData.getSex().equals("1")) {
+                    tvSex.setText("男");
+                } else if (resultData.getSex().equals("2")) {
+                    tvSex.setText("女");
+                }
             }
             if (!TextUtils.isEmpty(resultData.getBirthday())) {
                 edBirthday.setText(resultData.getBirthday().toString());
@@ -255,12 +259,14 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                         break;
                     case 2:
                         tvIdCard.setText("认证中");
+                        rlIdCard.setClickable(false);
                         break;
                     case 3:
                         tvIdCard.setText("认证失败");
                         break;
                     case 4:
                         tvIdCard.setText("认证通过");
+                        rlIdCard.setClickable(false);
                         break;
                 }
             }
@@ -354,7 +360,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         Cache_Json cache_json = cache_jsons.get(0);
         PersonalCentreResult json = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
         json.setNickName(result.getData().getNickName());
-        json.setSex(result.getData().getSex());
+        json.setSex(result.getData().getSex().equals("1") ? "男" : "女");
         json.setBirthday(result.getData().getBirthday() + "");
         json.setCity(result.getData().getCity());
         json.setSign(result.getData().getSign());

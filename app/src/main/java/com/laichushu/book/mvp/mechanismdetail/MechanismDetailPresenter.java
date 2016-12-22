@@ -3,7 +3,6 @@ package com.laichushu.book.mvp.mechanismdetail;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +17,7 @@ import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.google.gson.Gson;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
@@ -32,7 +32,6 @@ import com.laichushu.book.ui.activity.ModifyMechanismInfoActivity;
 import com.laichushu.book.ui.activity.TopicManageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
@@ -249,7 +248,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
      * @param mActicity
      * @param v
      */
-    public void showManageDialog(final Activity mActicity, ImageView v, final String partyId) {
+    public void showManageDialog(final Activity mActicity, ImageView v, final String partyId, final MechanismListBean.DataBean bean) {
         View customerView = UIUtil.inflate(R.layout.dialog_mechanis_manage_item);
         final PopupWindow popupWindow = new PopupWindow(customerView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -292,6 +291,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
                         //修改机构资料
                         Bundle modifyBundle = new Bundle();
                         modifyBundle.putString("partyId", partyId);
+                        modifyBundle.putParcelable("bean",bean);
                         UIUtil.openActivity(mActicity, ModifyMechanismInfoActivity.class, modifyBundle);
                         break;
                 }

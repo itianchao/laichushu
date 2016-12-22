@@ -117,9 +117,9 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
                         public void onSuccess(RewardResult model) {
                             if (model.isSuccess()) {
                                 mActivity.finish();
-                                ToastUtil.showToast("审核成功！");
+                                ToastUtil.showToast("提交信息成功！");
                             } else {
-                                ToastUtil.showToast("审核失败！");
+                                ToastUtil.showToast("提交信息失败！");
                                 LoggerUtil.e(model.getErrMsg().toString());
                             }
                         }

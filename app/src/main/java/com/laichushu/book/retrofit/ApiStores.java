@@ -392,10 +392,11 @@ public interface ApiStores {
     @POST("topic/deleteTopic")
     Observable<RewardResult> deleteTopicManageDetails(@Body DeleteTopic_Paramet paramet);
     //机构--修改资料
+    @Multipart
     @POST("press/update")
-    Observable<RewardResult> deleteTopicManageDetails(@Body UpdateTopic_Paramet paramet);
+    Observable<RewardResult> updateTopicDetails(@PartMap Map<String, RequestBody> params, @Part("logoUrl\"; filename=\"logoUrl.jpg") RequestBody file);
 
-    //机构---修改机构信息
+    //机构---修改机构信息--弃用
     @POST("topic/selectMyTopic")
     Observable<RewardResult>  checkTopicList(@Body PublishTopic_Paramet paramet);
 

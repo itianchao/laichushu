@@ -58,16 +58,20 @@
                 android:textColor="@color/characterLightGray2"
                 android:textSize="@dimen/edit" />
 
-            <TextView
-                android:id="@+id/tv_mechanismName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/ed_mechanismName"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
-                android:text="北京文艺"
-                android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit" />
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="北京海淀"
+                android:maxLength="10"
+                android:textColor="@color/edit2"
+                android:textColorHint="@color/LightGrey"
+                android:textSize="@dimen/edit2" />
 
         </RelativeLayout>
 
@@ -88,22 +92,26 @@
                 android:textColor="@color/characterLightGray2"
                 android:textSize="@dimen/edit" />
 
-            <TextView
-                android:id="@+id/tv_mechanismAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/ed_mechanismAddress"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
-                android:text="北京市海淀区"
-                android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit" />
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="北京文艺出版社"
+                android:maxLength="10"
+                android:textColor="@color/edit2"
+                android:textColorHint="@color/LightGrey"
+                android:textSize="@dimen/edit2" />
 
         </RelativeLayout>
     </LinearLayout>
 
     <EditText
-        android:id="@+id/ed_signatureContent"
+        android:id="@+id/ed_modifyIntroduce"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_below="@+id/ll_item"

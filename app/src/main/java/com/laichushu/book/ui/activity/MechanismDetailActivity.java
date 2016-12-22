@@ -106,7 +106,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         articleId = getIntent().getStringExtra("articleId");
         //判断当前是否是机构管理员
 //        if (null != bean.getAdmin() && SharePrefManager.getUserId().equals(bean.getAdmin())) {
-//            detailsIv.setVisibility(View.VISIBLE);
+//            moreIv.setVisibility(View.VISIBLE);
 //        }
         moreIv.setVisibility(View.VISIBLE);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
@@ -238,7 +238,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         switch (v.getId()) {
             case R.id.iv_title_other:
                 //公告管理
-                mvpPresenter.showManageDialog(mActivity, moreIv, bean.getId());
+                mvpPresenter.showManageDialog(mActivity, moreIv, bean.getId(), bean);
 
                 break;
             case R.id.iv_title_another:
