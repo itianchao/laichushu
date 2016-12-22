@@ -239,7 +239,11 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             if (TextUtils.isEmpty(resultData.getSex())) {
                 tvSex.setText("男");
             } else {
-                tvSex.setText(resultData.getSex());
+                if (resultData.getSex().equals("1")) {
+                    tvSex.setText("男");
+                }else{
+                    tvSex.setText("女");
+                }
             }
             if (!TextUtils.isEmpty(resultData.getBirthday())) {
                 edBirthday.setText(resultData.getBirthday().toString());

@@ -163,9 +163,28 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         }
     }
 
+    /**
+     * 删除评论
+     * @param model
+     * @param position
+     */
+    @Override
+    public void messageDeleteCommentSuccess(RewardResult model, int position) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("删除成功");
+            commData.remove(position);
+            msgAdapter.refreshAdapter(commData);
+        }else {
+            ToastUtil.showToast("删除失败");
+        }
+    }
+
     @Override
     public void getDataFail(String msg) {
         LoggerUtil.e(msg);
+        if (msg.equals("删除评论")){
+            ToastUtil.showToast("删除失败");
+        }
     }
 
 

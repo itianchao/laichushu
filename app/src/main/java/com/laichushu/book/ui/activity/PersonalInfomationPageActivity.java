@@ -196,6 +196,11 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
 
     }
 
+    @Override
+    public void messageDeleteCommentSuccess(RewardResult model, int position) {
+
+    }
+
     //--------------------------------------
 
     @Override

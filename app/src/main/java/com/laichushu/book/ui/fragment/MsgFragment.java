@@ -256,6 +256,11 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
     }
 
     @Override
+    public void messageDeleteCommentSuccess(RewardResult model, int position) {
+
+    }
+
+    @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
     }

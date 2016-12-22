@@ -286,6 +286,11 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 
     }
 
+    @Override
+    public void messageDeleteCommentSuccess(RewardResult model, int position) {
+
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefrushPerInfoEvent event) {
         EventBus.getDefault().removeStickyEvent(event);

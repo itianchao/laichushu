@@ -29,7 +29,8 @@ public interface MessageCommentView {
 
     void getBookDetailsByIdDataSuccess(BookDetailsModle model);
 
-//    void getDeleteMsgDateSuccess(RewardResult model);
+    void messageDeleteCommentSuccess(RewardResult model, int position);
 
     void getDataFail(String msg);
+
 }
