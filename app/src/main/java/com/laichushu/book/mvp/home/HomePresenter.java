@@ -3,10 +3,7 @@ package com.laichushu.book.mvp.home;
 import android.os.Bundle;
 
 import com.google.gson.Gson;
-import com.laichushu.book.bean.JsonBean.HomeTitleBean;
-import com.laichushu.book.bean.netbean.ActivityById_Paramet;
 import com.laichushu.book.bean.netbean.ActivityList_Paramet;
-import com.laichushu.book.bean.netbean.AuthorWorksByBookId_Paramet;
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
 import com.laichushu.book.global.ConstantValue;
@@ -15,7 +12,6 @@ import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.CampaignActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.HomeFragment;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
@@ -28,8 +24,9 @@ public class HomePresenter extends BasePresenter<HomeView> {
     private String pageNo = "1";
     private String pageNo2 = "1";
     private String userId = ConstantValue.USERID;
-    private HomeAllBook_Paramet paramet = paramet = new HomeAllBook_Paramet("1",pageSize,pageNo,userId);
-    private ActivityList_Paramet activityListParamet = new ActivityList_Paramet(pageNo2,pageSize,userId);;
+    private HomeAllBook_Paramet paramet = paramet = new HomeAllBook_Paramet("1", pageSize, pageNo, userId);
+    private ActivityList_Paramet activityListParamet = new ActivityList_Paramet(pageNo2, pageSize, userId);
+    ;
     private int state = 1;
     private HomeFragment homeFragment;
 
@@ -37,10 +34,10 @@ public class HomePresenter extends BasePresenter<HomeView> {
         attachView(view);
         homeFragment = (HomeFragment) view;
     }
+
     public void loadHomeCarouseData() {
         mvpView.showLoading();
-        addSubscription(apiStores.homeCarouselData(),
-                new ApiCallback<HomeModel>() {
+        addSubscription(apiStores.homeCarouselData(),new ApiCallback<HomeModel>() {
                     @Override
                     public void onSuccess(HomeModel model) {
                         mvpView.getDataSuccess(model);
@@ -77,6 +74,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
             }
         });
     }
+
     public void loadHomeAllData(String type) {
         mvpView.showLoading();
         getParamet().setSortWay(type);
@@ -99,7 +97,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
             }
         });
     }
-    public void loadActivityData(){
+
+    public void loadActivityData() {
         mvpView.showLoading();
 
         addSubscription(apiStores.activityList(activityListParamet), new ApiCallback<HomeHotModel>() {
@@ -122,73 +121,37 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
     /**
      * 根据Id获取图书
+     *
      * @param articleId 图书Id
      * @param position
      */
-    public void getBookById(String articleId, int position){
-        mvpView.showLoading();
-        AuthorWorksByBookId_Paramet paramet = new AuthorWorksByBookId_Paramet(userId,articleId);
-        addSubscription(apiStores.getBookById(paramet), new ApiCallback<HomeTitleBean>() {
-            @Override
-            public void onSuccess(HomeTitleBean model) {
-                if (model.isSuccess()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("bean", model.getData());
-                    bundle.putString("pageMsg", "首页");
-                    UIUtil.openActivity(homeFragment.getActivity(), BookDetailActivity.class, bundle);
-                }else {
-                    ToastUtil.showToast(model.getErrMsg());
-                }
-                mvpView.hideLoading();
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                mvpView.hideLoading();
-            }
-
-            @Override
-            public void onFinish() {
-                mvpView.hideLoading();
-            }
-        });
+    public void getBookById(final String articleId, final int position) {
+        Bundle bundle = new Bundle();
+        HomeHotModel.DataBean data = new HomeHotModel.DataBean();
+        data.setArticleId(articleId);
+        bundle.putParcelable("bean", data);
+        bundle.putString("pageMsg", "首页轮播图");
+        UIUtil.openActivity(homeFragment.getActivity(), BookDetailActivity.class, bundle);
     }
 
     /**
      * 根据Id获取活动
+     *
      * @param activityId 活动Id
-     * @param index 轮播图位置
+     * @param index      轮播图位置
      */
-    public void getActivityById(String activityId, final int index){
-        mvpView.showLoading();
-        ActivityById_Paramet paramet = new ActivityById_Paramet(activityId,userId);
-        addSubscription(apiStores.getActivityById(paramet), new ApiCallback<HomeTitleBean>() {
-            @Override
-            public void onSuccess(HomeTitleBean model) {
-                if (model.isSuccess()) {
-                    //跳转活动详情页
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("bean", model.getData());
-                    bundle.putInt("position", -1);
-                    bundle.putString("type", "");
-                    UIUtil.openActivity(homeFragment.getActivity(), CampaignActivity.class, bundle);
-                }else {
-
-                }
-                mvpView.hideLoading();
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                mvpView.hideLoading();
-            }
-
-            @Override
-            public void onFinish() {
-                mvpView.hideLoading();
-            }
-        });
+    public void getActivityById(String activityId, final int index) {
+        //跳转活动详情页
+        Bundle bundle = new Bundle();
+        HomeHotModel.DataBean data = new HomeHotModel.DataBean();
+        data.setActivityId(activityId);
+        bundle.putParcelable("bean", data);
+        bundle.putInt("position", -1);
+        bundle.putString("type", "");
+        bundle.putString("pageMsg", "首页轮播图");
+        UIUtil.openActivity(homeFragment.getActivity(), CampaignActivity.class, bundle);
     }
+
     public HomeAllBook_Paramet getParamet() {
         return paramet;
     }

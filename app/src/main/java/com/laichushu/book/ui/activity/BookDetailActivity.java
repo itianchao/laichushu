@@ -782,6 +782,8 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 break;
             case "浏览收藏详情":
                 break;
+            case "首页轮播图":
+                break;
             default://默认刷新首页
                 EventBus.getDefault().postSticky(new RefurshHomeEvent(true, bean));
                 break;
