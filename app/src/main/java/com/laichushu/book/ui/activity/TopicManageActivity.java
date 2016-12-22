@@ -100,7 +100,7 @@ public class TopicManageActivity extends MvpActivity2<TopicManagePresenter> impl
     @Override
     public void getDeleteTopicDateSuccess(RewardResult model) {
         if (model.isSuccess()) {
-            ToastUtil.showToast("关注成功！");
+            ToastUtil.showToast("删除成功！");
             onRefresh();
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -148,6 +148,7 @@ public class TopicManageActivity extends MvpActivity2<TopicManagePresenter> impl
 
     @Override
     public void onRefresh() {
+        PAGE_NO=1;
         topListDate.clear();
         mvpPresenter.getTopicList_paramet().setPageNo(PAGE_NO + "");
         mvpPresenter.loadMechanismTopicListData(partyId);//请求网络获取搜索列表

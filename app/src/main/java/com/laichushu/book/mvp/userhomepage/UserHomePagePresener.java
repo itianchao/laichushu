@@ -7,6 +7,8 @@ import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
+import com.laichushu.book.bean.netbean.AuthorWorksByBookId_Paramet;
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
 import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
@@ -337,6 +339,31 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
             @Override
             public void onFinish() {
 
+            }
+        });
+    }
+    /**
+     * 获取图书详情
+     * @param articleId
+     */
+    public void loadBookDetailsByid(String articleId) {
+        mvpView.showDialog();
+        AuthorWorksByBookId_Paramet bookParamet = new AuthorWorksByBookId_Paramet(userId, articleId);
+        LoggerUtil.e("获取图书详情");
+        addSubscription(apiStores.getAuthorWorksByBookId(bookParamet), new ApiCallback<BookDetailsModle>() {
+            @Override
+            public void onSuccess(BookDetailsModle model) {
+                mvpView.getBookDetailsByIdDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code" + code + "msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
             }
         });
     }

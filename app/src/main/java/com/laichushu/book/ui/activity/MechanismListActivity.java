@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.netbean.MechanismList_Paramet;
+import com.laichushu.book.event.RefrushHomePageEvent;
+import com.laichushu.book.event.RefrushMechanismListEvent;
+import com.laichushu.book.event.RefrushUserPageEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.adapter.MechanismListAdapter;
@@ -18,6 +21,10 @@ import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -37,7 +44,7 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
     private int pageNo2 = 1;
     private int pageNo3 = 1;
     private String userId = ConstantValue.USERID;
-    private MechanismList_Paramet paramet = new MechanismList_Paramet(type, pageNo1+"", pageSize,userId);
+    private MechanismList_Paramet paramet = new MechanismList_Paramet(type, pageNo1 + "", pageSize, userId);
 
     private PullLoadMoreRecyclerView mRecyclerView;
     private MechanismListAdapter mAdapter;
@@ -59,6 +66,7 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
     @Override
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_mechanismlist);
+        EventBus.getDefault().register(this);
         TextView titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
         ImageView finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
         ImageView searchIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_other);
@@ -68,7 +76,7 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
         mRecyclerView = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_mechanism);
         mRecyclerView.setLinearLayout();
         mRecyclerView.setOnPullLoadMoreListener(this);
-        mAdapter = new MechanismListAdapter(this,mData1);
+        mAdapter = new MechanismListAdapter(this, mData1);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setFooterViewText("加载中");
         fristRbn.setOnClickListener(this);
@@ -86,22 +94,24 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
         loadMechanismListData("2");
         articleId = getIntent().getStringExtra("articleId");
     }
+
     int position = 0;
+
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.iv_title_finish://关闭
                 finish();
                 break;
             case R.id.iv_title_other://搜索
-                UIUtil.openActivity(this,MechanismSearchActivity.class);
+                UIUtil.openActivity(this, MechanismSearchActivity.class);
                 break;
             case R.id.rbn_01:
-                if (position != 1){
+                if (position != 1) {
                     type = "2";
-                    if (pageNo1 == 1){
+                    if (pageNo1 == 1) {
                         loadMechanismListData(type);
-                    }else {
+                    } else {
                         mAdapter.setmData(mData1);
                         mAdapter.notifyDataSetChanged();
                     }
@@ -163,18 +173,20 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
             }
         });
     }
+
     /**
      * 请求网络成功
      */
     private void getDataSuccess(MechanismListBean model) {
         mRecyclerView.setPullLoadMoreCompleted();
         if (model.isSuccess()) {
-            switch(type){
+            switch (type) {
                 case "2":
-                    if (pageNo1==1){
+                    if (pageNo1 == 1) {
                         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                     }
-                    if (null != model.getData() && !model.getData().isEmpty()){
+                    if (null != model.getData() && !model.getData().isEmpty()) {
+                        mData1.clear();
                         mData1.addAll(model.getData());
                         pageNo1++;
                     }
@@ -182,10 +194,10 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
                     mAdapter.notifyDataSetChanged();
                     break;
                 case "3":
-                    if (pageNo1==2){
+                    if (pageNo1 == 2) {
                         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                     }
-                    if (null != model.getData() && !model.getData().isEmpty()){
+                    if (null != model.getData() && !model.getData().isEmpty()) {
                         mData2.addAll(model.getData());
                         pageNo2++;
                     }
@@ -193,10 +205,10 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
                     mAdapter.notifyDataSetChanged();
                     break;
                 case "4":
-                    if (pageNo1==3){
+                    if (pageNo1 == 3) {
                         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                     }
-                    if (null != model.getData() && !model.getData().isEmpty()){
+                    if (null != model.getData() && !model.getData().isEmpty()) {
                         mData3.addAll(model.getData());
                         pageNo3++;
                     }
@@ -204,12 +216,13 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
                     mAdapter.notifyDataSetChanged();
                     break;
             }
-        }else {
+        } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             LoggerUtil.e(model.getErrMsg());
             reLoadData();
         }
     }
+
     /**
      * 请求网络失败
      */
@@ -224,25 +237,26 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
      */
     @Override
     public void onRefresh() {
-        switch(type){
+        switch (type) {
             case "2":
                 mData1.clear();
                 pageNo1 = 1;
-                paramet.setPageNo(pageNo1+"");
+                paramet.setPageNo(pageNo1 + "");
                 break;
             case "3":
                 mData2.clear();
                 pageNo2 = 1;
-                paramet.setPageNo(pageNo2+"");
+                paramet.setPageNo(pageNo2 + "");
                 break;
             case "4":
                 mData3.clear();
-                pageNo3= 1;
-                paramet.setPageNo(pageNo3+"");
+                pageNo3 = 1;
+                paramet.setPageNo(pageNo3 + "");
                 break;
         }
         loadMechanismListData(type);
     }
+
     /**
      * 上拉刷新
      */
@@ -251,7 +265,7 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
         loadMechanismListData(type);
     }
 
-    public void reLoadData(){
+    public void reLoadData() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {
@@ -259,6 +273,14 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
                 loadMechanismListData(type);
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefrushMechanismListEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            initData();
+        }
     }
 
 }

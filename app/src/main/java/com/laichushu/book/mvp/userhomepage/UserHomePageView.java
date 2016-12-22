@@ -1,6 +1,7 @@
 package com.laichushu.book.mvp.userhomepage;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
@@ -21,5 +22,8 @@ public interface UserHomePageView {
     void getFocusMeStatus(HomeFocusResult model,boolean flg);
     void getSaveCollectSuccess(RewardResult model,String type);
     void getAddPerInfoSuccess(RewardResult model);
+    void getBookDetailsByIdDataSuccess(BookDetailsModle model);
     void getDataFail(String errorMsg);
+    void showDialog();
+    void dismissDialog();
 }

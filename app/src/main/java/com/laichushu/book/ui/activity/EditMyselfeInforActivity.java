@@ -259,12 +259,14 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
                         break;
                     case 2:
                         tvIdCard.setText("认证中");
+                        rlIdCard.setClickable(false);
                         break;
                     case 3:
                         tvIdCard.setText("认证失败");
                         break;
                     case 4:
                         tvIdCard.setText("认证通过");
+                        rlIdCard.setClickable(false);
                         break;
                 }
             }

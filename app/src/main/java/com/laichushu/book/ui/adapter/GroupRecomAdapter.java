@@ -39,7 +39,7 @@ public class GroupRecomAdapter extends RecyclerView.Adapter<GroupRecomAdapter.Vi
 
     @Override
     public void onBindViewHolder(GroupRecomAdapter.ViewHolder holder, int position) {
-        GlideUitl.loadCornersImg(mActivity, dataBeen.get(position).getPhoto(), holder.hot1Iv);
+        GlideUitl.loadCornersImg(mActivity, 80,dataBeen.get(position).getPhoto(), holder.hot1Iv);
         holder.tvNAme.setText(dataBeen.get(position).getName());
     }
     @Override

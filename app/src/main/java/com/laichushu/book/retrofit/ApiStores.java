@@ -63,12 +63,12 @@ public interface ApiStores {
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
-    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.0.123:8082/book-app/";//施大勇4
-//    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
+    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
 //    String API_SERVER_URL = "http://192.168.1.130:8082/book-app/";//施大勇6
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //    String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
@@ -398,10 +398,11 @@ public interface ApiStores {
     Observable<RewardResult> deleteTopicManageDetails(@Body DeleteTopic_Paramet paramet);
 
     //机构--修改资料
+    @Multipart
     @POST("press/update")
-    Observable<RewardResult> deleteTopicManageDetails(@Body UpdateTopic_Paramet paramet);
+    Observable<RewardResult> updateTopicDetails(@PartMap Map<String, RequestBody> params, @Part("logoUrl\"; filename=\"logoUrl.jpg") RequestBody file);
 
-    //机构---修改机构信息
+    //机构---修改机构信息--弃用
     @POST("topic/selectMyTopic")
     Observable<RewardResult> checkTopicList(@Body PublishTopic_Paramet paramet);
 
