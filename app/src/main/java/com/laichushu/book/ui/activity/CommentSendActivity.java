@@ -113,11 +113,11 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
         return false;
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            EventBus.getDefault().postSticky(new RefurshCommentListEvent(true, -1));
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK){
+//            EventBus.getDefault().postSticky(new RefurshCommentListEvent(true, -1));
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

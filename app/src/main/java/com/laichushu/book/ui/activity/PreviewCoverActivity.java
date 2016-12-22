@@ -17,6 +17,7 @@ import com.laichushu.book.utils.AppManager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import org.greenrobot.eventbus.EventBus;
