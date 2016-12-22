@@ -6,6 +6,8 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.ActivityById_Paramet;
+import com.laichushu.book.bean.netbean.ActivityDetail_Paramet;
 import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.CampaignDetailsModel;
@@ -33,28 +35,6 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
         this.mActivity = (CampaignActivity)view;
     }
 
-    public void loadActivityResultData(String activityId) {
-        mvpView.showLoading();
-        ActivityResult_Paramet paramet = new ActivityResult_Paramet(activityId);
-        Logger.e("获取活动结果");
-        Logger.json(new Gson().toJson(paramet));
-        addSubscription(apiStores.getActivityResult(paramet), new ApiCallback<CampaignModel>() {
-            @Override
-            public void onSuccess(CampaignModel model) {
-                mvpView.getDataSuccess(model);
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
-            }
-
-            @Override
-            public void onFinish() {
-                mvpView.hideLoading();
-            }
-        });
-    }
     public void loadJoinActivityData(String activityId, String articleId, final String type) {
         mvpView.showLoading();
         JoinActivity_Paramet paramet = new JoinActivity_Paramet(activityId,articleId,userId,type);
@@ -77,6 +57,7 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
             }
         });
     }
+
     public void loadAuthorWorksData(){
         mvpView.showLoading();
         AuthorWorks_Paramet paramet = new AuthorWorks_Paramet(userId);
@@ -86,28 +67,6 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
             @Override
             public void onSuccess(AuthorWorksModle model) {
                 mvpView.getAuthorWorksDataSuccess(model);
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
-            }
-
-            @Override
-            public void onFinish() {
-                mvpView.hideLoading();
-            }
-        });
-    }
-    //获取活动详情列表  活动通知=====》活动详情
-    public void loadActivityDetailsData(String activityId){
-        ActivityResult_Paramet detailsParamet = new ActivityResult_Paramet(activityId);
-        Logger.e("获取活动结果");
-        Logger.json(new Gson().toJson(detailsParamet));
-        addSubscription(apiStores.getActivityDetailsResult(detailsParamet), new ApiCallback<CampaignDetailsModel>() {
-            @Override
-            public void onSuccess(CampaignDetailsModel model) {
-                mvpView.getDetailsDataSuccess(model);
             }
 
             @Override
@@ -148,7 +107,12 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
             }
         });
     }
-    //发送私信
+
+    /**
+     * 发送私信
+     * @param accepterId
+     * @param sendmsgEv
+     */
     public void loadAddPerInfoDate(String accepterId, final EditText sendmsgEv) {
         String msg = sendmsgEv.getText().toString().trim();
         if (TextUtils.isEmpty(msg)) {
@@ -166,6 +130,33 @@ public class CampaignPresenter extends BasePresenter<CampaignView> {
             @Override
             public void onFailure(int code, String msg) {
                 mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+
+    /**
+     * 活动详情
+     * @param activityId 活动ID
+     */
+    public void getActivityById(String activityId){
+        LoggerUtil.e("获取活动详情");
+        ActivityDetail_Paramet paramet = new ActivityDetail_Paramet(activityId,userId);
+        addSubscription(apiStores.getActivityById(paramet), new ApiCallback<CampaignModel>() {
+
+            @Override
+            public void onSuccess(CampaignModel model) {
+                mvpView.getgetActivityByIdDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail2(code+"/"+msg);
             }
 
             @Override

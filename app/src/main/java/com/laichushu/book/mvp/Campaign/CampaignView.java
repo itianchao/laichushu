@@ -8,9 +8,6 @@ import com.laichushu.book.bean.netbean.CampaignDetailsModel;
  * Created by wangtong on 2016/10/12.
  */
 public interface CampaignView {
-    void getDataSuccess(CampaignModel model);
-
-    void getDetailsDataSuccess(CampaignDetailsModel model);
 
     void getJoinDataSuccess(CampaignJoinModel model, String type);
 
@@ -21,9 +18,14 @@ public interface CampaignView {
     void getDataFail3(String msg);
 
     void articleVote(RewardResult model);
+
     void getAddPerInfoSuccess(RewardResult model);
+
     void showLoading();
 
     void hideLoading();
 
+    void getgetActivityByIdDataSuccess(CampaignModel model);
+
+    void getDataFail2(String msg);
 }

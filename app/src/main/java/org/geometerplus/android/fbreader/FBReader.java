@@ -822,7 +822,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     @Override
     protected void onResume() {
         super.onResume();
-//        titleTv.setText(myFBReaderApp.getCurrentBook().getTitle());
         showTitle();
         myStartTimer = true;
         Config.Instance().runOnConnect(new Runnable() {

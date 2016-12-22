@@ -63,15 +63,15 @@ public interface ApiStores {
 //    String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
-//    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+    String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    String API_SERVER_URL = "http://192.168.0.123:8082/book-app/";//施大勇4
-    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
+//    String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
 //    String API_SERVER_URL = "http://192.168.1.130:8082/book-app/";//施大勇6
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
-//      String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
+//    String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
 //      String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//李红江
 
     //登录接口
@@ -185,6 +185,10 @@ public interface ApiStores {
     //获取活动 通过活动Id查询活动详情
     @POST("activity/getActivityById")
     Observable<HomeTitleBean> getActivityById(@Body ActivityById_Paramet paramet);
+
+    //获取活动 通过活动Id查询活动详情
+    @POST("activity/getActivityById")
+    Observable<CampaignModel> getActivityById(@Body ActivityDetail_Paramet paramet);
 
     //获取素材列表接口
     @POST("material/list")
@@ -388,9 +392,11 @@ public interface ApiStores {
     //个人主页发表动态话题
     @POST("topic/saveTopic")
     Observable<RewardResult> publishTopic(@Body PublishTopic_Paramet paramet);
+
     //机构--删除话题
     @POST("topic/deleteTopic")
     Observable<RewardResult> deleteTopicManageDetails(@Body DeleteTopic_Paramet paramet);
+
     //机构--修改资料
     @Multipart
     @POST("press/update")
@@ -398,7 +404,7 @@ public interface ApiStores {
 
     //机构---修改机构信息--弃用
     @POST("topic/selectMyTopic")
-    Observable<RewardResult>  checkTopicList(@Body PublishTopic_Paramet paramet);
+    Observable<RewardResult> checkTopicList(@Body PublishTopic_Paramet paramet);
 
     //个人主页等级分类详情
     @POST("gradeDetail/find")
@@ -479,6 +485,7 @@ public interface ApiStores {
     //获取机构公告列表
     @POST("press/notices")
     Observable<NoticeModle> getNoticesList(@Body NoticesList_Paramet paramet);
+
     //机构--发表新话题
     @POST("press/update")
     Observable<RewardResult> updateTopicMsgDetails(@Body NoticesList_Paramet paramet);
