@@ -54,40 +54,39 @@ public class ModelUtils {
 
     public static HomeHotModel.DataBean bean2HotBean(BookDetailsModle result) {
         HomeHotModel.DataBean dataBean = new HomeHotModel.DataBean();
-        if (!TextUtils.isEmpty(result.getData().getArticleName())) {
-            dataBean.setActivityName(result.getData().getArticleName());
+        if (!TextUtils.isEmpty(result.getData().getArticleData().getArticleName())) {
+            dataBean.setActivityName(result.getData().getArticleData().getArticleName());
         }
-        if (!TextUtils.isEmpty(result.getData().getName())) {
-            dataBean.setActivityName(result.getData().getName());
+        if (!TextUtils.isEmpty(result.getData().getArticleData().getName())) {
+            dataBean.setActivityName(result.getData().getArticleData().getName());
         }
-        dataBean.setActivityId(result.getData().getArticleId());
-        dataBean.setArticleId(result.getData().getArticleId());
-        dataBean.setActivityName(result.getData().getArticleName());
-        dataBean.setActivityId(result.getData().getArticleId());
-        dataBean.setAuthorId(result.getData().getAuthorId());
-        dataBean.setAuthorName(result.getData().getAuthorName());
-        dataBean.setStatus(result.getData().getStatus());
-        dataBean.setFreezeStatus(result.getData().getFreezeStatus());
-        dataBean.setWordNum(result.getData().getWordNum());
-        dataBean.setSubscribeNum(result.getData().getSubscribeNum());
-        dataBean.setBrowseNum(result.getData().getBrowseNum());
-        dataBean.setCommentNum(result.getData().getCommentNum());
-        dataBean.setAwardNum(result.getData().getAwardNum());
-        dataBean.setLevel(result.getData().getLevel());
-        dataBean.setScore(result.getData().getScore());
-        dataBean.setAwardMoney(result.getData().getAwardMoney());
-        dataBean.setCreateDate(result.getData().getCreateDate());
-        dataBean.setIsPurchase(result.getData().isIsPurchase());
-        dataBean.setIsSubscribe(result.getData().isIsSubscribe());
-        dataBean.setCollect(result.getData().isIsCollect());
-        dataBean.setCoverUrl(result.getData().getCoverUrl());
-        dataBean.setCoverName(result.getData().getCoverName());
-        dataBean.setTopCategoryId(result.getData().getTopCategoryId());
-        dataBean.setTopCategoryName(result.getData().getTopCategoryName());
-        dataBean.setIntroduce(result.getData().getIntroduce());
-        dataBean.setFreezeStatus(result.getData().getFreezeStatus());
-        dataBean.setScore(result.getData().getScore());
-        dataBean.setUpdateDate(result.getData().getUpdateDate());
+        dataBean.setActivityId(result.getData().getArticleData().getArticleId());
+        dataBean.setArticleId(result.getData().getArticleData().getArticleId());
+        dataBean.setActivityName(result.getData().getArticleData().getArticleName());
+        dataBean.setActivityId(result.getData().getArticleData().getArticleId());
+        dataBean.setAuthorId(result.getData().getArticleData().getAuthorId());
+        dataBean.setAuthorName(result.getData().getArticleData().getAuthorName());
+        dataBean.setStatus(result.getData().getArticleData().getStatus());
+        dataBean.setFreezeStatus(result.getData().getArticleData().getFreezeStatus());
+        dataBean.setWordNum(result.getData().getArticleData().getWordNum());
+        dataBean.setSubscribeNum(result.getData().getArticleData().getSubscribeNum());
+        dataBean.setBrowseNum(result.getData().getArticleData().getBrowseNum());
+        dataBean.setCommentNum(result.getData().getArticleData().getCommentNum());
+        dataBean.setAwardNum(result.getData().getArticleData().getAwardNum());
+        dataBean.setLevel(result.getData().getArticleData().getLevel());
+        dataBean.setScore(result.getData().getArticleData().getScore());
+        dataBean.setAwardMoney(result.getData().getArticleData().getAwardMoney());
+        dataBean.setIsPurchase(result.getData().getArticleData().isIsPurchase());
+        dataBean.setIsSubscribe(result.getData().getArticleData().isIsSubscribe());
+        dataBean.setCollect(result.getData().getArticleData().isIsCollect());
+        dataBean.setCoverUrl(result.getData().getArticleData().getCoverUrl());
+        dataBean.setCoverName(result.getData().getArticleData().getCoverName());
+        dataBean.setTopCategoryId(result.getData().getArticleData().getTopCategoryId());
+        dataBean.setTopCategoryName(result.getData().getArticleData().getTopCategoryName());
+        dataBean.setIntroduce(result.getData().getArticleData().getIntroduce());
+        dataBean.setFreezeStatus(result.getData().getArticleData().getFreezeStatus());
+        dataBean.setScore(result.getData().getArticleData().getScore());
+        dataBean.setUpdateDate(result.getData().getArticleData().getUpdateDate());
         return dataBean;
     }
 }

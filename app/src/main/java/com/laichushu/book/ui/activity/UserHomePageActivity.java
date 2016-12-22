@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
@@ -29,6 +31,7 @@ import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ModelUtils;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -131,7 +134,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         //初始化mRecyclerView 他的作品
         mWorksRecyclerView.setGridLayout(3);
         mWorksRecyclerView.setFooterViewText("加载中");
-        worksAdapter = new UserWorksListAdapter(this, worksData);
+        worksAdapter = new UserWorksListAdapter(this, worksData, mvpPresenter);
         mWorksRecyclerView.setAdapter(worksAdapter);
         mWorksRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView 关注他的
@@ -303,9 +306,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             }
         } else {
             ToastUtil.showToast("没有更多数据");
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
-
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -465,8 +467,33 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     }
 
     @Override
+    public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
+        //跳转图书详情页
+        dismissProgressDialog();
+        if (model.isSuccess()) {
+            Bundle bundle = new Bundle();
+            HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
+            bundle.putParcelable("bean", dataBean);
+            bundle.putString("pageMsg", "浏览收藏详情");
+            UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
     public void getDataFail(String errorMsg) {
         Logger.e(errorMsg);
+    }
+
+    @Override
+    public void showDialog() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void dismissDialog() {
+        dismissProgressDialog();
     }
 
 

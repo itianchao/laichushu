@@ -360,7 +360,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         Cache_Json cache_json = cache_jsons.get(0);
         PersonalCentreResult json = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
         json.setNickName(result.getData().getNickName());
-        json.setSex(result.getData().getSex().equals("1") ? "男" : "女");
+        json.setSex(result.getData().getSex());
         json.setBirthday(result.getData().getBirthday() + "");
         json.setCity(result.getData().getCity());
         json.setSign(result.getData().getSign());

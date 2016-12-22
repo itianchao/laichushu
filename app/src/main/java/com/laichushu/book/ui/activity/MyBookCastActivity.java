@@ -35,7 +35,7 @@ import java.util.List;
 public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implements BookcastView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle;
-    private PullLoadMoreRecyclerView mRecyclerView,mCollRecyclerView;
+    private PullLoadMoreRecyclerView mRecyclerView, mCollRecyclerView;
     private RadioGroup radioGroup;
     private RadioButton rbScan, rbCollection;
     private int PAGE_NO = 1;
@@ -82,13 +82,13 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         //初始化mRecyclerView Scan
         mRecyclerView.setGridLayout(3);
         mRecyclerView.setFooterViewText("加载中");
-        scanAdapter = new MyBookCastAdapter(this, scanData,mvpPresenter);
+        scanAdapter = new MyBookCastAdapter(this, scanData, mvpPresenter);
         mRecyclerView.setAdapter(scanAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView Coll
         mCollRecyclerView.setGridLayout(3);
         mCollRecyclerView.setFooterViewText("加载中");
-        collAdapter = new BookCastCollAdapter(this, collData,mvpPresenter);
+        collAdapter = new BookCastCollAdapter(this, collData, mvpPresenter);
         mCollRecyclerView.setAdapter(collAdapter);
         mCollRecyclerView.setOnPullLoadMoreListener(this);
     }
@@ -164,10 +164,10 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
 
     @Override
     public void onLoadMore() {
-        if(type==1){
+        if (type == 1) {
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.loadBrowserListData("1");//请求网络获取搜索列表
-             }else if(type==2){
+        } else if (type == 2) {
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
         }
@@ -227,14 +227,14 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
         //跳转图书详情页
         dismissProgressDialog();
-        if(model.isSuccess()){
+        if (model.isSuccess()) {
             Bundle bundle = new Bundle();
             HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
             bundle.putParcelable("bean", dataBean);
             bundle.putString("pageMsg", "浏览收藏详情");
             UIUtil.openActivity(this, BookDetailActivity.class, bundle);
-        }else{
-           ToastUtil.showToast(model.getErrMsg());
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
         }
 
     }
@@ -242,5 +242,15 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
+    }
+
+    @Override
+    public void showDialog() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void dismissDialog() {
+        dismissProgressDialog();
     }
 }

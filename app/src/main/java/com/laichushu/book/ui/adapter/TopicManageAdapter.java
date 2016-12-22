@@ -95,7 +95,7 @@ public class TopicManageAdapter extends RecyclerView.Adapter<TopicManageAdapter.
                 //查看话题详情
                 Bundle topic = new Bundle();
                 topic.putString("type", "homepage");
-                topic.putString("tag", "home");
+                topic.putString("tag", "top");
                 topic.putSerializable("topBean", dataBeen.get(position));
                 UIUtil.openActivity(context, TopicDetilActivity.class, topic);
             }
@@ -124,8 +124,8 @@ public class TopicManageAdapter extends RecyclerView.Adapter<TopicManageAdapter.
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);
-            this.notifyDataSetChanged();
         }
+        this.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

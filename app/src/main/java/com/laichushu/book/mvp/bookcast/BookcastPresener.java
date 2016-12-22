@@ -115,6 +115,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
      * @param articleId
      */
     public void loadBookDetailsByid(String articleId) {
+        mvpView.showDialog();
         AuthorWorksByBookId_Paramet bookParamet = new AuthorWorksByBookId_Paramet(userId, articleId);
         LoggerUtil.e("获取图书详情");
         addSubscription(apiStores.getAuthorWorksByBookId(bookParamet), new ApiCallback<BookDetailsModle>() {
@@ -130,6 +131,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
 
             @Override
             public void onFinish() {
+                mvpView.dismissDialog();
             }
         });
     }

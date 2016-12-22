@@ -26,10 +26,11 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
     private MyBookCastActivity context;
     private List<HomeHotModel.DataBean> dataBeen;
     private BookcastPresener bookcastPresener;
-    public MyBookCastAdapter(MyBookCastActivity context, List<HomeHotModel.DataBean> dataBean,BookcastPresener bookcastPresener) {
+
+    public MyBookCastAdapter(MyBookCastActivity context, List<HomeHotModel.DataBean> dataBean, BookcastPresener bookcastPresener) {
         this.context = context;
         this.dataBeen = dataBean;
-        this.bookcastPresener=bookcastPresener;
+        this.bookcastPresener = bookcastPresener;
     }
 
     @Override
@@ -39,14 +40,15 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivImg);
         holder.tvItem.setText(dataBeen.get(position).getArticleName());
         holder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                跳转图书详情页
-              bookcastPresener.loadBookDetailsByid(dataBeen.get(position).getArticleId());
+                holder.llItem.setClickable(false);
+                bookcastPresener.loadBookDetailsByid(dataBeen.get(position).getArticleId());
             }
         });
     }

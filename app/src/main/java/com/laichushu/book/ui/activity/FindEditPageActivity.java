@@ -7,28 +7,23 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
-import com.laichushu.book.ui.widget.LoadingPager;
-import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
-/**
- * 关于App
- */
-public class AboutAppDetails extends MvpActivity2 implements View.OnClickListener {
-    private ImageView ivBack,appIcon;
+
+public class FindEditPageActivity extends MvpActivity2 implements View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
+    private ImageView ivBack;
     private TextView tvTitle;
 
     @Override
     protected BasePresenter createPresenter() {
-
         return null;
     }
 
     @Override
     protected View createSuccessView() {
-        View inflate = UIUtil.inflate(R.layout.activity_about_app_details);
+        View inflate = UIUtil.inflate(R.layout.activity_find_edit_page);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
-        appIcon = ((ImageView) inflate.findViewById(R.id.iv_appIcon));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         return inflate;
     }
@@ -36,11 +31,9 @@ public class AboutAppDetails extends MvpActivity2 implements View.OnClickListene
     @Override
     protected void initData() {
         super.initData();
-        tvTitle.setText("关于来出书");
-        tvTitle.setVisibility(View.VISIBLE);
-        GlideUitl.loadCornersImg(mActivity,20,R.drawable.ic_launcher,appIcon,R.drawable.ic_launcher);
+        tvTitle.setText("编辑");
+
         ivBack.setOnClickListener(this);
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -50,5 +43,15 @@ public class AboutAppDetails extends MvpActivity2 implements View.OnClickListene
                 this.finish();
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+
     }
 }

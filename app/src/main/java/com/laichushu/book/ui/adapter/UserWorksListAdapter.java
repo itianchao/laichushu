@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.userhomepage.UserHomePagePresener;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
@@ -24,9 +25,11 @@ import java.util.List;
 public class UserWorksListAdapter extends RecyclerView.Adapter<UserWorksListAdapter.ViewHolder> {
     private UserHomePageActivity context;
     private List<HomeHotModel.DataBean> dataBeen;
-    public UserWorksListAdapter(UserHomePageActivity context, List<HomeHotModel.DataBean> dataBean) {
+    private UserHomePagePresener userHomePagePresener;
+    public UserWorksListAdapter(UserHomePageActivity context, List<HomeHotModel.DataBean> dataBean,UserHomePagePresener userHomePagePresener) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.userHomePagePresener=userHomePagePresener;
     }
 
     @Override
@@ -43,12 +46,9 @@ public class UserWorksListAdapter extends RecyclerView.Adapter<UserWorksListAdap
             @Override
             public void onClick(View v) {
 //                跳转图书详情页
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("bean", dataBeen.get(position));
-                bundle.putString("pageMsg", "UserWorkList");
-                UIUtil.openActivity(context, BookDetailActivity.class, bundle);
+            userHomePagePresener.loadBookDetailsByid(dataBeen.get(position).getArticleId());
             }
-        });;
+        });
     }
 
 

@@ -24,7 +24,7 @@
     <application
         android:name=".global.BaseApplication"
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -179,7 +179,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.activity.CreateMaterialActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PersonalHomePageActivity"
             android:screenOrientation="portrait"
@@ -247,17 +247,19 @@
         <activity
             android:name=".ui.activity.ReportActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.activity.MechanismSearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".ui.activity.MessageCommentDetailsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.activity.MessageCommentDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".ui.activity.MsgLikeDetailsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.activity.MsgLikeDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- FBReader start -->
         <activity
@@ -583,9 +585,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name="org.geometerplus.android.fbreader.TOCActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -955,7 +957,8 @@
 
         <activity android:name=".ui.activity.PersonalInfomationPageActivity" />
         <activity android:name=".ui.activity.ActivityPageDetailsActivity" />
-        <activity android:name=".ui.activity.AgreementDetailsActivity"></activity>
+        <activity android:name=".ui.activity.AgreementDetailsActivity" />
+        <activity android:name=".ui.activity.FindEditPageActivity"></activity>
     </application>
 
 </manifest>
