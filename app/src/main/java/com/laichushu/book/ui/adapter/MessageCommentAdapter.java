@@ -31,10 +31,11 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
     private MessageCommentDetailsActivity context;
     private List<MessageCommentResult.DataBean> dataBeen;
     private MessageCommentPresenter messageCommentPresenter;
-    public MessageCommentAdapter(MessageCommentDetailsActivity context, List<MessageCommentResult.DataBean> dataBean,MessageCommentPresenter messageCommentPresenter) {
+
+    public MessageCommentAdapter(MessageCommentDetailsActivity context, List<MessageCommentResult.DataBean> dataBean, MessageCommentPresenter messageCommentPresenter) {
         this.context = context;
         this.dataBeen = dataBean;
-        this.messageCommentPresenter=messageCommentPresenter;
+        this.messageCommentPresenter = messageCommentPresenter;
     }
 
     @Override
@@ -46,14 +47,28 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
     @Override
     public void onBindViewHolder(MessageCommentAdapter.ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivImg);
+        holder.tvName.setTextColor(context.getResources().getColor(R.color.auditing));
         holder.tvName.setText(dataBeen.get(position).getSenderName());
-        holder.tvAppend.setText(dataBeen.get(position).getSenderName() + " 评论了你的文章");
-        if(!TextUtils.isEmpty(dataBeen.get(position).getSourceName())){
-            holder.tvBookName.setText("《"+dataBeen.get(position).getSourceName()+"》");
+        holder.tvAppend.setText(dataBeen.get(position).getSenderName() + " 评论了你的书");
+        if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
+            holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
         }
 
         holder.tvContent.setText(dataBeen.get(position).getContent());
         holder.tvData.setText(dataBeen.get(position).getSendTime() + "");
+        holder.tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转用户主页
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                } else {
+                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                }
+            }
+        });
         holder.ivImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +95,7 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
                 //删除
                 dataBeen.remove(position);
                 String id = dataBeen.get(position).getId();
-                messageCommentPresenter.messageDeleteComment(position,id);
+                messageCommentPresenter.messageDeleteComment(position, id);
             }
         });
     }

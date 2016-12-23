@@ -74,7 +74,7 @@ public class RegistPresenter extends BasePresenter<RegistView> {
             return;
         }
         //
-//        loadCode(phonenum);//发送验证码
+        loadCode(phonenum);//发送验证码
         codeTv.setClickable(false);
         TIME = 60;
         new Thread(new Runnable() {

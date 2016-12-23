@@ -143,6 +143,9 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivFocusIcon);
                 holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
                 holder.tvFocusName.setText(dataBeen.get(position).getSenderName());
+                holder.tvFocusContent1.setVisibility(View.VISIBLE);
+                holder.tvFocusContent1.setTextColor(context.getResources().getColor(R.color.characterGray));
+                holder.tvFocusContent1.setText("关注了你");
                 holder.tvFocusName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
