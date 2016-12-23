@@ -74,7 +74,7 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
             ToastUtil.showToast("请输入正确的手机号!");
             return;
         }
-//        loadCode(phonenum);
+        loadCode(phonenum);
         codeTv.setClickable(false);
         TIME = 60;
         new Thread(new Runnable() {

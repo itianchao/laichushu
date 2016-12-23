@@ -181,9 +181,11 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 if (!userBean.isBeFocused()) {
                     mvpPresenter.loadAddFocus(userId, true);
                     btnFocus.setText("已关注");
+                    userBean.setBeFocused(true);
                 } else {
                     mvpPresenter.loadDelFocus(userId, false);
                     btnFocus.setText("关注");
+                    userBean.setBeFocused(false);
                 }
                 break;
             case R.id.iv_title_another:
@@ -261,21 +263,25 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             userBean = result;
             GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
             nickName.setText(result.getNickName());
-            switch (result.getLevelType()) {
-                case "1":
-                    tvAuthorGrade.setText("金牌作家");
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivGrade);
-                    break;
-                case "2":
-                    tvAuthorGrade.setText("银牌作家");
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, ivGrade);
-                    break;
-                case "3":
-                    tvAuthorGrade.setText("铜牌作家");
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, ivGrade);
-                    break;
-
+            if (null != result.getLevelType()) {
+                switch (result.getLevelType()) {
+                    case "1":
+                        tvAuthorGrade.setText("金牌作家");
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivGrade);
+                        break;
+                    case "2":
+                        tvAuthorGrade.setText("银牌作家");
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, ivGrade);
+                        break;
+                    case "3":
+                        tvAuthorGrade.setText("铜牌作家");
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, ivGrade);
+                        break;
+                }
+            } else {
+                tvAuthorGrade.setVisibility(View.GONE);
             }
+
             if (result.isBeFocused()) {
                 btnFocus.setText("已关注");
             } else {
@@ -414,6 +420,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             ToastUtil.showToast("操作失败！");
             LoggerUtil.toJson(model);
         }
+        btnFocus.setClickable(true);
     }
 
     @Override
@@ -429,6 +436,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             ToastUtil.showToast("关注失败！");
             LoggerUtil.toJson(model);
         }
+        btnFocus.setClickable(true);
     }
 
     /**

@@ -52,7 +52,7 @@
             android:layout_alignTop="@+id/tv_userNickName"
             android:layout_marginLeft="12dp"
             android:layout_toRightOf="@+id/tv_userNickName"
-             />
+            android:background="@drawable/icon_geade_details2x" />
 
         <TextView
             android:id="@+id/tv_userRealName"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_userNickName"
             android:layout_below="@+id/tv_userNickName"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:textColor="@color/white"
             android:textSize="@dimen/edit"
             android:textStyle="bold" />
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_userNickName"
             android:layout_marginLeft="4dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/tv_userNickName"
             android:textColor="@color/white"
             android:textSize="@dimen/edit"
@@ -83,12 +83,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_userAuthorGrade"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:background="@color/global"
             android:text="关注"
             android:textColor="@color/white"
             android:textSize="@dimen/edit"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="8dp"
             android:textStyle="bold" />
     </RelativeLayout>
 
