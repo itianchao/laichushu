@@ -372,24 +372,4 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             }
         }
     }
-
-    /**
-     * 刷新 全部热门
-     *
-     * @param event
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshBookDetaileCommentEvent event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        int position = event.getPosition();
-        mData.set(position, event.getBean());
-        for (int i = 0; i < mData.size(); i++) {
-            if (mHotData.get(i).getArticleId().equals(event.getBean().getArticleId())) {
-                mHotData.set(i, event.getBean());
-                break;
-            }
-        }
-        mAdapter.setmData(mData);
-        mAdapter.setmHotData(mData);
-    }
 }
