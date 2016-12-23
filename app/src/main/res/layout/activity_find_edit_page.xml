@@ -17,39 +17,40 @@
         android:orientation="vertical">
 
         <RadioGroup
-            android:id="@+id/rg_bookList"
+            android:id="@+id/rg_find"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/backGray"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rb_totalRange"
-                style="@style/mechanism_select"
+                android:id="@+id/rb_total_ranking"
+                style="@style/find_select"
                 android:checked="true"
                 android:text="综合排行" />
 
             <RadioButton
-                android:id="@+id/rb_total"
-                style="@style/mechanism_select"
-                android:text="全部" />
-            <RadioButton
                 android:id="@+id/rb_city"
-                style="@style/mechanism_select"
+                style="@style/find_select"
                 android:text="城市" />
         </RadioGroup>
 
-        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-            android:id="@+id/ryv_bookCast"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp" />
+        <include layout="@layout/item_distance2" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-            android:id="@+id/ryv_bookCastColl"
+            android:id="@+id/ryv_total_ranking"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
+            android:background="@color/white" />
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
             android:visibility="gone" />
 
     </LinearLayout>

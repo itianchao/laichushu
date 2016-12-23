@@ -82,6 +82,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
 
     public void setmAllData(ArrayList<HomeHotModel.DataBean> mAllData) {
         this.mAllData = mAllData;
+        if(mAllData.size()>=0)
         notifyDataSetChanged();
     }
 

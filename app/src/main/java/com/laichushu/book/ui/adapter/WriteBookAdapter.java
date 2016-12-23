@@ -76,7 +76,6 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         View itemView = null;
         ImageView imageView = null;
         TextView textView;
-        int j;
         int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x, R.drawable.icon_delete2x, R.drawable.icon_publishl2x, R.drawable.icon_submission2x, R.drawable.icon_sign2x};
         int grayImgArray[] = {R.drawable.icon_draft_gray, R.drawable.icon_material_gray, R.drawable.icon_delete_gray, R.drawable.icon_publishl_gray, R.drawable.icon_submission_gray, R.drawable.icon_sign_gray};
         holder.llTab.removeAllViews();
@@ -111,8 +110,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             }
             textView.setText(mStrip.get(i).getTitle());
             holder.llTab.addView(itemView);
-            j = i;
-            final int finalJ = j;
+            final int finalJ = i;
             finalItemView = itemView;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

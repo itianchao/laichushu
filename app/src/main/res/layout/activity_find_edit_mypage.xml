@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_editHeadImg"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/mine_bg">
+
+        <include
+            android:id="@+id/edit_top"
+            layout="@layout/page_title_trans"
+            android:background="#9000" />
+
+        <ImageView
+            android:id="@+id/iv_userHeadImg"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/edit_top"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tv_userRealName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="@+id/iv_userHeadImg"
+            android:layout_below="@+id/edit_top"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_toRightOf="@+id/iv_userHeadImg"
+            android:text="柴静"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit2" />
+
+        <RatingBar
+            android:id="@+id/ratbar_detail_num"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="16.5dp"
+            android:layout_below="@+id/tv_userRealName"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/iv_userHeadImg"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressDrawable="@drawable/ratingbar_home"
+            android:rating="3"
+            android:stepSize="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/iv_userHeadImg"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_msg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_dyCollection"
+                    style="@style/new_up"
+                    android:drawableLeft="@drawable/icon_book_comment"
+                    android:text="私信"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_teamwork"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_teamwork"
+                    style="@style/new_up"
+                    android:drawableLeft="@drawable/icon_book_comment"
+                    android:text="合作"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_scan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_scan"
+                    style="@style/new_up"
+                    android:text="已有12人合作"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bookCast_top"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <RadioGroup
+            android:id="@+id/rg_userList"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_introduce"
+                style="@style/mechanism_select"
+                android:checked="true"
+                android:text="简介" />
+
+            <RadioButton
+                android:id="@+id/rb_case"
+                style="@style/mechanism_select"
+                android:text="案列" />
+
+            <RadioButton
+                android:id="@+id/rb_evaluate"
+                style="@style/mechanism_select"
+                android:text="评价" />
+
+        </RadioGroup>
+
+        <include layout="@layout/item_distance2" />
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/white" />
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_case"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
+            android:visibility="gone" />
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_evaluate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</LinearLayout>

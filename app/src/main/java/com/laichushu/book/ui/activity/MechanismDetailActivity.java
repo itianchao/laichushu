@@ -104,10 +104,10 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
     protected void initData() {
         bean = getIntent().getParcelableExtra("bean");
         articleId = getIntent().getStringExtra("articleId");
-        //判断当前是否是机构管理员
-//        if (null != bean.getAdmin() && SharePrefManager.getUserId().equals(bean.getAdmin())) {
-//            moreIv.setVisibility(View.VISIBLE);
-//        }
+//        判断当前是否是机构管理员
+        if (null != bean.getAdmin() && SharePrefManager.getUserId().equals(bean.getAdmin())) {
+            moreIv.setVisibility(View.VISIBLE);
+        }
         moreIv.setVisibility(View.VISIBLE);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         titleTv.setText("机构详情");//设置标题

@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,11 +11,10 @@ import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
-public class CoursePageActivity extends MvpActivity2 implements View.OnClickListener {
+
+public class FindCoursePageActivity extends MvpActivity2 implements View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle;
-    private PullLoadMoreRecyclerView mVideoRecyclerView, mFileRecyclerView, mMineRecyclerView;
-
 
     @Override
     protected BasePresenter createPresenter() {
@@ -25,18 +23,37 @@ public class CoursePageActivity extends MvpActivity2 implements View.OnClickList
 
     @Override
     protected View createSuccessView() {
-        View inflate = UIUtil.inflate(R.layout.activity_course_page);
+        View inflate = UIUtil.inflate(R.layout.activity_find_course_page);
+        ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
+        tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         return inflate;
     }
 
     @Override
     protected void initData() {
         super.initData();
+        tvTitle.setText("课程");
+
+        ivBack.setOnClickListener(this);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_title_finish:
+                this.finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
 
     }
 }

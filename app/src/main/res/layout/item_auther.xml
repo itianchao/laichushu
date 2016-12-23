@@ -35,6 +35,7 @@
             tools:text="金庸"
             android:id="@+id/tv_author_name"
             android:layout_alignParentTop="true"
+            android:textColor="@color/characterLightGray2"
             android:layout_toRightOf="@+id/iv_author_head"
             android:layout_toEndOf="@+id/iv_author_head" />
 
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             tools:text="取消发表"
             android:id="@+id/textView2"
+            android:textColor="@color/characterLightGray2"
             android:layout_below="@+id/tv_author_name"
             android:layout_toRightOf="@+id/iv_author_head"
             android:layout_toEndOf="@+id/iv_author_head" />
@@ -65,6 +67,7 @@
             android:layout_height="wrap_content"
             android:text="篇作品"
             android:id="@+id/textView5"
+            android:textColor="@color/characterLightGray2"
             android:layout_below="@+id/tv_author_name"
             android:layout_toRightOf="@+id/tv_individual"
             android:layout_toEndOf="@+id/tv_individual" />
@@ -74,5 +77,6 @@
         android:id="@+id/tv_author_brief"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/characterLightGray2"
         tools:text="金庸，原名查良镛，1924年3月10日生于浙江省海宁市，武侠小说作家、新闻学家、企业家、政治评论家、社会活动家."/>
 </LinearLayout>

@@ -147,6 +147,18 @@
         <item name="android:textColor">@drawable/select_home_color</item>
         <item name="android:layout_height">50dp</item>
     </style>
+    <style name="find_select">
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textSize">@dimen/edit</item>
+        <item name="android:paddingRight">30dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:drawableRight">@drawable/select_find_down</item>
+        <item name="android:textColor">@drawable/select_home_color</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
     <!-- FBReader -->
     <style name="FBReader.Activity" parent="android:Theme"></style>
 

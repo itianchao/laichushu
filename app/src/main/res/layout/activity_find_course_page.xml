@@ -30,27 +30,31 @@
                 android:text="视频" />
 
             <RadioButton
-                android:id="@+id/rb_file"
+                android:id="@+id/rb_total"
                 style="@style/mechanism_select"
                 android:text="文档" />
 
             <RadioButton
-                android:id="@+id/rb_mine"
+                android:id="@+id/rb_city"
                 style="@style/mechanism_select"
                 android:text="我的" />
         </RadioGroup>
+
+        <include layout="@layout/item_distance2" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:background="@color/white" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_file"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
+            android:background="@color/white"
             android:visibility="gone" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
@@ -58,6 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
+            android:background="@color/white"
             android:visibility="gone" />
 
     </LinearLayout>

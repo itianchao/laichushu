@@ -13,8 +13,8 @@ import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.mvp.findfragment.FindPresenter;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.findfragment.FindView;
-import com.laichushu.book.ui.activity.CoursePageActivity;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
+import com.laichushu.book.ui.activity.FindCoursePageActivity;
 import com.laichushu.book.ui.adapter.ClassRecycleAdapter;
 import com.laichushu.book.ui.adapter.FindTitleViewPagerAdapter;
 import com.laichushu.book.ui.adapter.GroupRecomAdapter;
@@ -38,7 +38,6 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private ArrayList<HomeModel.DataBean> mTitleData = new ArrayList<>();
     private int item;
     private int range;
-    private int position;
     private LinearLayout lineLyt;
     private Handler mRefreshWidgetHandler = new Handler();
     private PullLoadMoreRecyclerView mRecyclerView, mCourseRecyclerView;
@@ -76,26 +75,25 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
         super.initData();
         //标签列表
         View itemView;
-        LinearLayout llItem;
         ImageView imageView;
         TextView textView;
+        int j=0;
         llContainer.removeAllViews();
         for (int i = 0; i < img.length; i++) {
             itemView = UIUtil.inflate(R.layout.item_tab_course, null);
-            llItem = (LinearLayout) itemView.findViewById(R.id.ll_item);
             imageView = (ImageView) itemView.findViewById(R.id.iv_stripIcon);
             textView = (TextView) itemView.findViewById(R.id.tv_stripContent);
             imageView.setImageResource(img[i]);
             textView.setText(title[i]);
             llContainer.addView(itemView);
-            position=i;
-            llItem.setOnClickListener(new View.OnClickListener() {
+            final int finalJ = i;
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch (position) {
+                    switch (finalJ) {
                         case 0:
                             //课程主页
-                            UIUtil.openActivity(mActivity, CoursePageActivity.class);
+                            UIUtil.openActivity(mActivity, FindCoursePageActivity.class);
                             break;
                         case 1:
                             //小组主页
