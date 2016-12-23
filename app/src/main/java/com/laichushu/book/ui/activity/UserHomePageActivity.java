@@ -177,6 +177,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 break;
             case R.id.btn_userFocus:
                 //关注
+                btnFocus.setClickable(false);
                 if (!userBean.isBeFocused()) {
                     mvpPresenter.loadAddFocus(userId, true);
                     btnFocus.setText("已关注");

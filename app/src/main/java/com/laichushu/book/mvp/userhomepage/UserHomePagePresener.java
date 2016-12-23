@@ -86,7 +86,7 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
     }
 
     //获取用户动态详情
-    private HomeUserDy_parmet paramet = new HomeUserDy_parmet("", "",pageSize, pageNo,userId);
+    private HomeUserDy_parmet paramet = new HomeUserDy_parmet("", "", pageSize, pageNo, userId);
 
     public void getUserDynmicDate(String id) {
         getParamet().setUserId(id);
@@ -218,6 +218,7 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
 
     //添加关注
     public void loadAddFocus(String userId, final boolean flg) {
+        mvpView.showDialog();
         LoggerUtil.toJson(addFocus);
         addFocus.setUserId(userId);
         addSubscription(apiStores.getAddFocus(addFocus), new ApiCallback<HomeFocusResult>() {
@@ -233,7 +234,7 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
 
             @Override
             public void onFinish() {
-
+                mvpView.dismissDialog();
             }
         });
     }
@@ -342,8 +343,10 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
             }
         });
     }
+
     /**
      * 获取图书详情
+     *
      * @param articleId
      */
     public void loadBookDetailsByid(String articleId) {
