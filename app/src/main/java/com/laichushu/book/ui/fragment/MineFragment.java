@@ -234,7 +234,6 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener, 
             String action = intent.getAction();
             if (ConstantValue.ACTION_UPDATE_DATA.equals(action)) {
                 initData();
-                ToastUtil.showToast("update date!");
             }
         }
     }

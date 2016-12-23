@@ -149,7 +149,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         if (position == 0) {
             ((ViewHolder1) holder).hotVp.setAdapter(new HomeHotViewPagerAdapter(homeHotImgBeans, mActivity));
             ((ViewHolder1) holder).ll_container.removeAllViews();
-            for (int i = 0; i < Math.ceil(((double) mHotData.size() - 1) / 3); i++) {
+            for (int i = 0; i < Math.ceil(((double) mHotData.size()) / 3); i++) {
                 ImageView imageView = new ImageView(mActivity);
                 imageView.setBackgroundResource(R.drawable.shape_point_hollow);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

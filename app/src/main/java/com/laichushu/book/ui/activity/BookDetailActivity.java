@@ -159,7 +159,6 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
         publishLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_publish);//已出版布局
         priceTv = (TextView) mSuccessView.findViewById(R.id.tv_price);//价格
         probationTv = (TextView) mSuccessView.findViewById(R.id.tv_probation);//免费试读按钮
-        probationTv.setVisibility(View.INVISIBLE);//隐藏免费试读
         payTv = (TextView) mSuccessView.findViewById(R.id.tv_pay);//购买按钮
     }
 
@@ -249,9 +248,9 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 }
                 break;
             case R.id.tv_probation://免费试读
-                BaseBookEntity baseBookEntity = new BaseBookEntity();
-                baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH + "test.epub");
-                UIUtil.startBookFBReaderActivity(this, baseBookEntity, articleId, articleData.getAuthorId());
+//                BaseBookEntity baseBookEntity = new BaseBookEntity();
+//                baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH + "test.epub");
+//                UIUtil.startBookFBReaderActivity(this, baseBookEntity, articleId, articleData.getAuthorId());
                 break;
             case R.id.tv_pay://购买
                 //弹出对话框确认
@@ -425,7 +424,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             refreshtimeTv.setText(articleData.getUpdateDate());
             numberTv.setText(articleData.getSubscribeNum() + "");
             subscriptionTv.setOnClickListener(this);
-            stateTv.setText("试读");
+            stateTv.setText("阅读");
         } else {//2 已发表 3 出版
             nopublishRay.setVisibility(View.INVISIBLE);
             publishLay.setVisibility(View.VISIBLE);

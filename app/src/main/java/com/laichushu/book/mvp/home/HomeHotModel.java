@@ -84,6 +84,24 @@ public class HomeHotModel implements Parcelable {
         private String sourceId;
         private String type;
         private String name;
+        private boolean isDelete ; //是否删除
+        private boolean isPermission;//是否有权限
+
+        public boolean isDelete() {
+            return isDelete;
+        }
+
+        public void setDelete(boolean delete) {
+            isDelete = delete;
+        }
+
+        public boolean isPermission() {
+            return isPermission;
+        }
+
+        public void setPermission(boolean permission) {
+            isPermission = permission;
+        }
 
         public boolean isAward() {
             return isAward;

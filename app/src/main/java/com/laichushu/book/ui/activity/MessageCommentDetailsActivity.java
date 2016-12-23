@@ -36,8 +36,9 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     protected MessageCommentPresenter createPresenter() {
-
-        return new MessageCommentPresenter(this);
+        MessageCommentPresenter messageCommentPresenter = new MessageCommentPresenter(this);
+        messageCommentPresenter.setmActivity(this);
+        return messageCommentPresenter;
     }
 
     @Override
