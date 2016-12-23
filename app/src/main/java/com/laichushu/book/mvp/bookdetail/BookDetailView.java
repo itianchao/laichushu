@@ -1,5 +1,7 @@
 package com.laichushu.book.mvp.bookdetail;
 
+import android.widget.ImageView;
+
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.mvp.home.HomeHotModel;
@@ -19,7 +21,7 @@ public interface BookDetailView {
     void getBalanceData(BalanceBean modle);
     void getBalance2Data(BalanceBean modle);
     void getRewardMoneyData(RewardResult model);
-    void SaveScoreLikeData(RewardResult modle, String type);
+    void SaveScoreLikeData(RewardResult modle, String type, ImageView likeIv);
     void collectSaveData(RewardResult modle);
     void getJurisdictionData(RewardResult modle);
 }

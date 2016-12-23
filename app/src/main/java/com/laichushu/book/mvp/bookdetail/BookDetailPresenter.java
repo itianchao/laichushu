@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.bookdetail;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
@@ -346,11 +347,11 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 点赞 取消赞
-     *
-     * @param sourceId
+     *  @param sourceId
      * @param type
+     * @param likeIv
      */
-    public void saveScoreLikeData(String sourceId, final String type) {
+    public void saveScoreLikeData(String sourceId, final String type, final ImageView likeIv) {
         mvpView.showLoading();
         String sourceType = "1";
         TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId, sourceId, sourceType, type);
@@ -359,7 +360,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
         addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.SaveScoreLikeData(model, type);
+                mvpView.SaveScoreLikeData(model, type,likeIv);
             }
 
             @Override

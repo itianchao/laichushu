@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.otherbean.BaseBookEntity;
 import com.laichushu.book.event.RefrushHomeCategroyEvent;
 import com.laichushu.book.event.RefrushHomeSearchEvent;
 import com.laichushu.book.event.RefrushWriteFragmentEvent;
@@ -57,7 +56,6 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             authorNameTv, individualTv, authorBriefTv, commentNumberTv;
     private RadioButton readerRbn, dresserRbn;
     private HomeHotModel.DataBean bean;
-    private ImageView likeIv;
     private String type = "1";
     private String articleId;
     private int position = 0;
@@ -546,7 +544,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             TextView nameTv = (TextView) commentItemView.findViewById(R.id.tv_comment_name);
             TextView contentTv = (TextView) commentItemView.findViewById(R.id.tv_comment_content);
             TextView timeTv = (TextView) commentItemView.findViewById(R.id.tv_comment_time);
-            likeIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_like);
+            final ImageView likeIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_like);
             final TextView likeTv = (TextView) commentItemView.findViewById(R.id.tv_comment_like);
             final TextView numberTv = (TextView) commentItemView.findViewById(R.id.tv_comment_number);
             ImageView inIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_in);
@@ -556,6 +554,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             timeTv.setText(dataBean.getCommentTime());//创建时间
             likeTv.setText(dataBean.getLikeNum() + "");//喜欢人数
             numberTv.setText(dataBean.getReplyNum() + "");//回复人数
+            likeIv.setTag(R.id.image_tag, i);
             if (dataBean.isIsLike()) {
                 GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
             } else {
@@ -565,17 +564,9 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 @Override
                 public void onClick(View v) {
                     if (dataBean.isIsLike()) {
-                        mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "1");
-                        dataBean.setIsLike(false);
-                        GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
-                        dataBean.setLikeNum(dataBean.getLikeNum() - 1);
-                        likeTv.setText(dataBean.getLikeNum() + "");
+                        mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "1", likeIv);
                     } else {
-                        mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "0");
-                        dataBean.setIsLike(true);
-                        GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
-                        dataBean.setLikeNum(dataBean.getLikeNum() + 1);
-                        likeTv.setText(dataBean.getLikeNum() + "");
+                        mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "0", likeIv);
                     }
                 }
             });
@@ -669,15 +660,43 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
      *
      * @param model
      * @param typeState
+     * @param likeIv
      */
     @Override
-    public void SaveScoreLikeData(RewardResult model, String typeState) {
+    public void SaveScoreLikeData(RewardResult model, String typeState, ImageView likeIv) {
+        int index = (int) likeIv.getTag(R.id.image_tag);
         if (model.isSuccess()) {
             getArticleCommentData(scoreReaderData);
             if (typeState.equals("0")) {//点赞
                 Logger.e("点赞");
+                if ((position == 0)) {//普通
+                    ArticleCommentModle.DataBean dataBean = scoreReaderData.get(index);
+                    dataBean.setIsLike(true);
+                    dataBean.setLikeNum(dataBean.getLikeNum() + 1);
+                    scoreReaderData.set(index, dataBean);
+                    getArticleCommentData(scoreReaderData);
+                } else {//大咖
+                    ArticleCommentModle.DataBean dataBean = scoreCattleData.get(index);
+                    dataBean.setIsLike(true);
+                    dataBean.setLikeNum(dataBean.getLikeNum() + 1);
+                    scoreCattleData.set(index, dataBean);
+                    getArticleCommentData(scoreCattleData);
+                }
             } else {//取消赞
                 Logger.e("取消赞");
+                if ((position == 0)) {//普通
+                    ArticleCommentModle.DataBean dataBean = scoreReaderData.get(index);
+                    dataBean.setIsLike(false);
+                    dataBean.setLikeNum(dataBean.getLikeNum() - 1);
+                    scoreReaderData.set(index, dataBean);
+                    getArticleCommentData(scoreReaderData);
+                } else {//大咖
+                    ArticleCommentModle.DataBean dataBean = scoreCattleData.get(index);
+                    dataBean.setIsLike(false);
+                    dataBean.setLikeNum(dataBean.getLikeNum() - 1);
+                    scoreCattleData.set(index, dataBean);
+                    getArticleCommentData(scoreCattleData);
+                }
             }
         } else {
             ToastUtil.showToast(model.getErrMsg());
