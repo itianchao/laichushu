@@ -88,7 +88,7 @@ public class ConstantValue {
 //    public static String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    public static String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    public static String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
-//      public static String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+      public static String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    public static String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    public static String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    public static String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
@@ -96,6 +96,6 @@ public class ConstantValue {
 //    public static String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
 //    public static String API_SERVER_URL = "http://192.168.1.130:8082/book-app/";//施大勇6
 //    public static String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
-    public static String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
+//    public static String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
 //    public static String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//赵红江
 }

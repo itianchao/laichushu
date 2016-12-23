@@ -13,18 +13,15 @@ import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.ui.fragment.FragmentFactory;
 import com.laichushu.book.ui.fragment.HomeFragment;
 
-import java.util.ArrayList;
 
 /**
  * 主页
  */
 public class MainActivity extends BaseActivity implements  View.OnClickListener {
-    private ArrayList<Fragment> fragments;
     private int position;
     @Override
     protected void initView() {
         setContentView(R.layout.activity_main);
-        fragments = getFragments();
         RadioButton homeRbn = (RadioButton) findViewById(R.id.rbn_home);
         RadioButton findRbn = (RadioButton) findViewById(R.id.rbn_find);
         RadioButton writeRbn = (RadioButton) findViewById(R.id.rbn_write);
@@ -54,30 +51,16 @@ public class MainActivity extends BaseActivity implements  View.OnClickListener 
         position = 0;
     }
 
-    private ArrayList<Fragment> getFragments() {
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(FragmentFactory.getFragment(0));
-        fragments.add(FragmentFactory.getFragment(1));
-        fragments.add(FragmentFactory.getFragment(2));
-        fragments.add(FragmentFactory.getFragment(3));
-        fragments.add(FragmentFactory.getFragment(4));
-        return fragments;
-    }
-
     /**
      * 替换fragment
      * @param position
      */
     public void onTabSelected(int position) {
-        if (fragments != null) {
-            if (position < fragments.size()) {
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment fragment = fragments.get(position);
-                ft.replace(R.id.layFrame, fragment);
-                ft.commit();
-            }
-        }
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment fragment = FragmentFactory.getFragment(position);
+        ft.replace(R.id.layFrame, fragment);
+        ft.commit();
     }
 
     /**

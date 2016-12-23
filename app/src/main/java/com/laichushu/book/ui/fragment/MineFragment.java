@@ -114,6 +114,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener, 
         super.initData();
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         cache_jsonDao = daoSession.getCache_JsonDao();
+        loadData();
         getData();
     }
 
@@ -195,6 +196,9 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener, 
      */
     @Override
     public void onRefresh() {
+        loadData();
+    }
+    public void loadData(){
         addSubscription(apiStores.getPersonalDetails(new PersonalCentre_Parmet(ConstantValue.USERID)), new ApiCallback<PersonalCentreResult>() {
             @Override
             public void onSuccess(PersonalCentreResult result) {
@@ -226,7 +230,6 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener, 
             }
         });
     }
-
     public class UpdateReceiver extends BroadcastReceiver {
 
         @Override

@@ -73,12 +73,20 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void onAttach(Context context) {
         super.onAttach(context);
         Bundle bundle = getArguments();
-        HomeModel homeModel = bundle.getParcelable("homeModel");
-        HomeHotModel homeHotModel = bundle.getParcelable("homeHotModel");
-        HomeHotModel homeAllModel = bundle.getParcelable("homeAllModel");
-        if (mTitleData.size() == 0) mTitleData = homeModel.getData();
-        if (mHotData.size() == 0) mHotData = homeHotModel.getData();
-        if (mData.size() == 0) mData = homeAllModel.getData();
+        if (bundle!=null){
+            if (mTitleData.size() == 0) {
+                HomeModel homeModel = bundle.getParcelable("homeModel");
+                mTitleData = homeModel.getData();
+            }
+            if (mHotData.size() == 0){
+                HomeHotModel homeHotModel = bundle.getParcelable("homeHotModel");
+                mHotData = homeHotModel.getData();
+            }
+            if (mData.size() == 0){
+                HomeHotModel homeAllModel = bundle.getParcelable("homeAllModel");
+                mData = homeAllModel.getData();
+            }
+        }
     }
 
     @Override

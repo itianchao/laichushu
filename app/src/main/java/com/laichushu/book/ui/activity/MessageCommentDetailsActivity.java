@@ -111,10 +111,8 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
             }
         } else {
-            if (model.getData().size() == 0) {
-                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                ToastUtil.showToast("没有更多信息！");
-            }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            ToastUtil.showToast("没有更多信息！");
         }
     }
 

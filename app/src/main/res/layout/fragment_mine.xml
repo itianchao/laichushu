@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/bgGrey">
-
-    <include
-        android:id="@+id/mine_top"
-        layout="@layout/page_title" />
+    <include layout="@layout/page_title" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_data"
         android:layout_width="match_parent"
@@ -14,7 +12,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/mine_top"
             android:layout_marginTop="8dp">
 
             <LinearLayout
@@ -241,4 +238,4 @@
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</RelativeLayout>
+</LinearLayout>
