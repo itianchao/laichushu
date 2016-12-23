@@ -567,21 +567,13 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                     if (dataBean.isIsLike()) {
                         mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "1");
                         dataBean.setIsLike(false);
-                        if (dataBean.isIsLike()) {
-                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
-                        } else {
-                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
-                        }
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
                         dataBean.setLikeNum(dataBean.getLikeNum() - 1);
                         likeTv.setText(dataBean.getLikeNum() + "");
                     } else {
                         mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "0");
                         dataBean.setIsLike(true);
-                        if (dataBean.isIsLike()) {
-                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
-                        } else {
-                            GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
-                        }
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
                         dataBean.setLikeNum(dataBean.getLikeNum() + 1);
                         likeTv.setText(dataBean.getLikeNum() + "");
                     }

@@ -163,14 +163,14 @@ public class BookDetailModle {
             private String updateDate;
             private int wordNum;
             private String topCategoryName;
-            private double Price;
+            private double price;
 
             public double getPrice() {
-                return Price;
+                return price;
             }
 
             public void setPrice(double price) {
-                Price = price;
+                price = price;
             }
 
             public String getArticleId() {

@@ -143,9 +143,11 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 mAdapter.setmAllData(mAllData);
                 pageNo = Integer.parseInt(pageNo) + 1 + "";
             }else {
-                emptyIv.setVisibility(View.VISIBLE);
-                searchLay.setVisibility(View.GONE);
-                bookRyv.setVisibility(View.GONE);
+                if (mvpPresenter.getParamet().getPageNo().equals("1")){
+                    emptyIv.setVisibility(View.VISIBLE);
+                    searchLay.setVisibility(View.GONE);
+                    bookRyv.setVisibility(View.GONE);
+                }
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
