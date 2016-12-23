@@ -241,7 +241,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             } else {
                 if (resultData.getSex().equals("1")) {
                     tvSex.setText("男");
-                } else if (resultData.getSex().equals("2")) {
+                }else{
                     tvSex.setText("女");
                 }
             }

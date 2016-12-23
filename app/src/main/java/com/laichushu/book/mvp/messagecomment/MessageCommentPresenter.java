@@ -26,10 +26,6 @@ import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
 import com.pickerview.lib.Province;
 
-/**
- * Created by PCPC on 2016/11/28.
- */
-
 public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
     private MessageCommentDetailsActivity mActivity;
     private String pageSize = ConstantValue.PAGESIZE1;
@@ -333,29 +329,31 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
         });
     }
 
-//    /**
-//     * 获取图书详情
-//     *
-//     * @param id
-//     */
-//    public void loadDeleteMsg(String id) {
-//        DeleteMsg_Paramet deleteMsgParamet = new DeleteMsg_Paramet(id);
-//        LoggerUtil.e("获取图书详情");
-//        addSubscription(apiStores.deleteMsgDetails(deleteMsgParamet), new ApiCallback<RewardResult>() {
-//            @Override
-//            public void onSuccess(RewardResult model) {
-//                mvpView.getDeleteMsgDateSuccess(model);
-//            }
-//
-//            @Override
-//            public void onFailure(int code, String msg) {
-//                mvpView.getDataFail("code" + code + "msg:" + msg);
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//            }
-//        });
-//    }
+    /**
+     * 删除消息评论
+     * @param position 位置
+     * @param id id
+     */
+    public void messageDeleteComment(final int position, String id){
+        mActivity.showProgressDialog();
+        DeleteMsg_Paramet paramet = new DeleteMsg_Paramet(id);
+        addSubscription(apiStores.deleteMsgDetails(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.messageDeleteCommentSuccess(model,position);
+                mActivity.dismissProgressDialog();
+            }
 
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("删除评论");
+                mActivity.dismissProgressDialog();
+            }
+
+            @Override
+            public void onFinish() {
+                mActivity.dismissProgressDialog();
+            }
+        });
+    }
 }

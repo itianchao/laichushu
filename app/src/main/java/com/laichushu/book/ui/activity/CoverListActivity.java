@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gitonway.lee.niftymodaldialogeffects.lib.effects.NewsPaper;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
 import com.laichushu.book.mvp.coverdir.CoverDirModle;
@@ -100,12 +101,17 @@ public class CoverListActivity extends MvpActivity2<CoverDirPresenter> implement
         if (model.isSuccess()) {
             url = model.getData();
             if (!TextUtils.isEmpty(url)){
-                Bundle bundle = new Bundle();
-                bundle.putString("path",url);
-                bundle.putString("title",title);
-                bundle.putString("bookType",bookType);
-                UIUtil.openActivity(mActivity,PreviewCoverActivity.class,bundle);
                 dismissProgressDialog();
+                UIUtil.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("path",url);
+                        bundle.putString("title",title);
+                        bundle.putString("bookType",bookType);
+                        UIUtil.openActivity(mActivity,PreviewCoverActivity.class,bundle);
+                    }
+                },1710);
             }
         }else {
             ToastUtil.showToast("预览失败");

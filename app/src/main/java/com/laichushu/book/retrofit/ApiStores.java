@@ -8,6 +8,7 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.bookcast.BookCastModle;
 import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
@@ -73,6 +74,7 @@ public interface ApiStores {
 //    String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //    String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
 //      String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//李红江
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL;
 
     //登录接口
     @POST("login/do")

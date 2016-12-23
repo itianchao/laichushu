@@ -88,12 +88,6 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         if (dataBean.getExpressStatus().equals("2")){
             mStrip.get(3).setTitle("制作中");
         }
-        if (dataBean.getStatus().equals("4")||dataBean.getFreezeStatus().equals("2")) {
-            holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
-        }else {
-            holder.jurTv.setImageResource(R.drawable.manage_jur2x);
-            //权限
-        }
         for (int i = 0; i < mStrip.size(); i++) {
             itemView = UIUtil.inflate(R.layout.item_tabstrip, null);
             imageView = (ImageView) itemView.findViewById(R.id.iv_stripIcon);
@@ -103,10 +97,11 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             } else if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getFreezeStatus().equals("2")) {
                 if (i!=3&&i!=4&&i!=5){
                     imageView.setImageResource(grayImgArray[i]);
-                    if (mStrip.get(3).equals("发表")) {
-                        holder.jurTv.setImageResource(R.drawable.manage_jur2x);
-                    }else {
+                    if (dataBean.getStatus().equals("4")||dataBean.getFreezeStatus().equals("2")||!mStrip.get(3).equals("发表")) {
                         holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
+                    }else {
+                        holder.jurTv.setImageResource(R.drawable.manage_jur2x);
+                        //权限
                     }
                 }else {
                     imageView.setImageResource(mStrip.get(i).getDrawble());

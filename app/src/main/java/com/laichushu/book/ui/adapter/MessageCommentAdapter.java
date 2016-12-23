@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
@@ -78,7 +79,8 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
             public void onClick(View v) {
                 //删除
                 dataBeen.remove(position);
-                notifyDataSetChanged();
+                String id = dataBeen.get(position).getId();
+                messageCommentPresenter.messageDeleteComment(position,id);
             }
         });
     }
