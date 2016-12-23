@@ -108,6 +108,13 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             } else {
                 imageView.setImageResource(mStrip.get(i).getDrawble());
             }
+
+            if (dataBean.isDelete() && i==2){//可删除
+                imageView.setImageResource(mStrip.get(i).getDrawble());
+            }else if(!dataBean.isDelete() && i==2){//不可删除
+                imageView.setImageResource(grayImgArray[i]);
+            }
+
             textView.setText(mStrip.get(i).getTitle());
             holder.llTab.addView(itemView);
             final int finalJ = i;
@@ -145,7 +152,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             /**
                              * 删除
                              */
-                            if (!dataBean.isEdit() | dataBean.getStatus().equals("3")) {
+                            if (!dataBean.isDelete() | dataBean.getStatus().equals("3")) {//不能删除
 
                             } else {
                                 String articleId = dataBean.getArticleId();

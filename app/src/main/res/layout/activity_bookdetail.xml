@@ -137,7 +137,7 @@
             <LinearLayout
                 android:id="@+id/lay_read"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:background="@color/global"
                 android:gravity="center">
@@ -149,6 +149,7 @@
                     android:drawableLeft="@drawable/bookdetail_read"
                     android:drawablePadding="5dp"
                     android:text="阅读"
+                    android:textSize="16sp"
                     android:textColor="@color/white"/>
             </LinearLayout>
 

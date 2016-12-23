@@ -79,7 +79,6 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
     @Override
     protected void initData() {
         mvpPresenter.loadHotSearchData();
@@ -119,7 +118,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         childLay.setOnItemClickListener(this);
         mAdapter = new HomeSearchAdapter(mAllData, this);
         bookRyv.setAdapter(mAdapter);
-        mHotAdapter = new HomeSearchHotHistoryAdapter(mHotData, this);
+        mHotAdapter = new HomeSearchHotHistoryAdapter(mHotData,this);
         childLay.setAdapter(mHotAdapter);
         return mSuccessView;
     }
@@ -143,11 +142,12 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 mAllData.addAll(mData);
                 mAdapter.setmAllData(mAllData);
                 pageNo = Integer.parseInt(pageNo) + 1 + "";
-            } else {
-                ToastUtil.showToast("没有更多信息");
-//                emptyIv.setVisibility(View.VISIBLE);
-//                searchLay.setVisibility(View.GONE);
-//                bookRyv.setVisibility(View.GONE);
+            }else {
+                if (mvpPresenter.getParamet().getPageNo().equals("1")){
+                    emptyIv.setVisibility(View.VISIBLE);
+                    searchLay.setVisibility(View.GONE);
+                    bookRyv.setVisibility(View.GONE);
+                }
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -159,7 +159,6 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
 
     /**
      * 热门搜索接口成功回调
-     *
      * @param model 回调模型
      */
     @Override
@@ -168,11 +167,11 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
             two = false;
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             mHotData.clear();
-            if (model.getData() != null && !model.getData().isEmpty()) {
+            if (model.getData()!=null&&!model.getData().isEmpty()){
                 mHotData.addAll(model.getData());
                 mHotAdapter.setmData(mHotData);
             }
-        } else {
+        }else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             two = true;
             initListener();
@@ -187,10 +186,8 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         initListener();
         refreshPage(LoadingPager.PageState.STATE_ERROR);
     }
-
     /**
      * 热门搜索接口失败回调
-     *
      * @param msg 错误信息
      */
     @Override
@@ -314,7 +311,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (parent.getId()) {
+        switch(parent.getId()){
             case R.id.lv_history:
                 searchEt.setText(list.get(position).getHistory());
                 onEditorAction(searchEt, EditorInfo.IME_ACTION_SEARCH, null);
@@ -325,22 +322,20 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 break;
         }
     }
-
-    public void initListener() {
+    public void initListener(){
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
-                if (one) {
+                if (one){
                     mvpPresenter.LoadData(search);
                 }
-                if (two) {
+                if (two){
                     mvpPresenter.loadHotSearchData();
                 }
             }
         });
     }
-
     /**
      * 刷新 首页分类
      *

@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,6 +41,7 @@ import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
@@ -55,13 +58,13 @@ import de.greenrobot.dao.query.QueryBuilder;
  * 我的
  * Created by wangtong on 2016/10/17.
  */
-public class MineFragment extends MvpFragment2 implements View.OnClickListener {
+public class MineFragment extends MvpFragment2 implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private TextView tvTitle, tvMineName, tvMinebookNum;
     private ImageView ivMineHead, ivMineHeadInto;
     private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice, rlBody;
     private PersonalCentreResult res = new PersonalCentreResult();
     private Cache_JsonDao cache_jsonDao;
-    private EventBus eventBus;
+    private SwipeRefreshLayout dataSwipe;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -86,6 +89,9 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         rlService = (RelativeLayout) mRootView.findViewById(R.id.rl_service);
         rlGeneralSetting = (RelativeLayout) mRootView.findViewById(R.id.rl_GeneralSetting);
         rlAdvice = (RelativeLayout) mRootView.findViewById(R.id.rl_Advice);
+        dataSwipe = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe_data);
+        dataSwipe.setOnRefreshListener(this);
+        dataSwipe.setColorSchemeColors(UIUtil.getColor(R.color.global));
         //initListener
         rlHead.setOnClickListener(this);
         rlManage.setOnClickListener(this);
@@ -108,6 +114,7 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         super.initData();
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         cache_jsonDao = daoSession.getCache_JsonDao();
+        loadData();
         getData();
     }
 
@@ -120,10 +127,8 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
     }
 
     public void getData() {
-        QueryBuilder<Cache_Json> userQueryBuilder = cache_jsonDao.queryBuilder();
-        QueryBuilder<Cache_Json> builder = userQueryBuilder.where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails"));
-        Query<Cache_Json> build = builder.build();
-        List<Cache_Json> cache_jsons = build.list();
+        List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder().
+                where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).build().list();
         PersonalCentreResult result = new Gson().fromJson(cache_jsons.get(0).getJson(), PersonalCentreResult.class);
         GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivMineHead);
         tvMineName.setText("  " + result.getNickName());
@@ -186,6 +191,45 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
         }
     }
 
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        loadData();
+    }
+    public void loadData(){
+        addSubscription(apiStores.getPersonalDetails(new PersonalCentre_Parmet(ConstantValue.USERID)), new ApiCallback<PersonalCentreResult>() {
+            @Override
+            public void onSuccess(PersonalCentreResult result) {
+                dataSwipe.setRefreshing(false);
+                if (result.getSuccess()) {
+                    //更新数据库
+                    List<Cache_Json> list = cache_jsonDao.queryBuilder().
+                            where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).build().list();
+                    Cache_Json cache_json = list.get(0);
+                    cache_json.setJson(new Gson().toJson(result));
+                    cache_jsonDao.update(cache_json);
+                    //存储昵称
+                    SharePrefManager.setNickName(result.getNickName());
+                    getData();
+                } else {
+                    ToastUtil.showToast(result.getErrMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtil.showToast("加载失败");
+                dataSwipe.setRefreshing(false);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
     public class UpdateReceiver extends BroadcastReceiver {
 
         @Override
@@ -193,7 +237,6 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener {
             String action = intent.getAction();
             if (ConstantValue.ACTION_UPDATE_DATA.equals(action)) {
                 initData();
-                ToastUtil.showToast("update date!");
             }
         }
     }

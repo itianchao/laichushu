@@ -47,6 +47,7 @@ import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.gitonway.lee.niftymodaldialogeffects.lib.effects.NewsPaper;
 import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
@@ -131,7 +132,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
     public static final int REQUEST_EDITBOOKMARK = 6;
     public static final int RESULT_SELECTCOLOR = 7;
-    private TextView titleTv;
+    private static TextView titleTv;
     private ImageView finishIv;
     private ImageView selectIv;
     ArrayList<BookSelectOptionBean> list = new ArrayList();
@@ -206,7 +207,12 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(intent);
         if (myBook == null) {
             BaseBookEntity baseBookEntity = (BaseBookEntity) intent.getSerializableExtra(ConstantValue.BASEBOOK);
-            Uri data = Uri.parse(baseBookEntity.getBook_path());
+            Uri data = null;
+            if (baseBookEntity!=null){
+                data = Uri.parse(baseBookEntity.getBook_path());
+            }else {
+                data = intent.getData();
+            }
             if (data != null) {
                 myBook = createBookForFile(ZLFile.createFileByPath(data.getPath()));
             }
@@ -436,14 +442,22 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         }
     }
 
-    //获取标题
-    class RemindTask extends TimerTask {
-        public void run() {
-            if (!TextUtils.isEmpty(titleTv.getText())) {
-                timer.cancel();
+    private static Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            String title = (String) msg.obj;
+            if (title!=null){
+                titleTv.setText(title);
             }
-            titleTv.setText(myFBReaderApp.getCurrentBook().getTitle());
-            myMainView.invalidate();
+            return false;
+        }
+    });
+
+    public static void setBookTitle(String mBookTitle) {
+        if (titleTv!=null&&TextUtils.isEmpty(titleTv.getText())){
+            Message msg = new Message();
+            msg.obj = mBookTitle;
+            mHandler.sendMessage(msg);
         }
     }
 
@@ -455,14 +469,17 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             public void clickItem(int position) {
                 if ((position == 0)) {// TODO: 2016/12/8  举报
                     Bundle bundle = new Bundle();
-                    bundle.putString("articleId",getIntent().getStringExtra("articleId"));
-                    com.laichushu.book.utils.UIUtil.openActivity(FBReader.this, ReportActivity.class,bundle);
+                    String articleId = getIntent().getStringExtra("articleId");
+                    if (!TextUtils.isEmpty(articleId)){
+                        bundle.putString("articleId", articleId);
+                        com.laichushu.book.utils.UIUtil.openActivity(FBReader.this, ReportActivity.class,bundle);
+                    }
+
                 } else {//书签
                     BookCollectionShadow myCollection = getCollection();
                     Bookmark bookmark = myFBReaderApp.createBookmark(30, true);
                     bookmark.setStyleId(5);
 //                    bookmark.setText("");
-
                     for (BookmarkQuery query = new BookmarkQuery(myBook, 10000); ; query = query.next()) {
                         final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
                         if (thisBookBookmarks.isEmpty()) {
@@ -507,7 +524,9 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                     double balance = model.getData();
                     String accepterId = getIntent().getStringExtra("authorId");
                     String articleId = getIntent().getStringExtra("articleId");
-                    openReward(balance + "", accepterId, articleId);
+                    if (accepterId!=null&&articleId!=null){
+                        openReward(balance + "", accepterId, articleId);
+                    }
                 } else {
                     ToastUtil.showToast(model.getErrMsg());
                 }
@@ -811,18 +830,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         }
     }
 
-    private void showTitle() {
-        int seconds = 1;
-        if (TextUtils.isEmpty(titleTv.getText())) {
-            timer = new Timer();
-            timer.schedule(new RemindTask(), seconds * 100);
-        }
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        showTitle();
         myStartTimer = true;
         Config.Instance().runOnConnect(new Runnable() {
             public void run() {

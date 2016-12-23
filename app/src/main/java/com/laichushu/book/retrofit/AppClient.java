@@ -1,6 +1,7 @@
 package com.laichushu.book.retrofit;
 
 import com.laichushu.book.BuildConfig;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -35,8 +36,6 @@ public class AppClient {
                 loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                 //设置 Debug Log 模式
                 builder.addInterceptor(loggingInterceptor);
-                //看json
-                Logger.json(HttpLoggingInterceptor.Level.BODY.toString());
             }
             builder.connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)

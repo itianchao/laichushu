@@ -474,11 +474,6 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
             parentLay.addView(itemView);
         }
     }
-    @Override
-    public void finish() {
-        super.finish();
-        EventBus.getDefault().postSticky(new RefurshBookDetaileCommentEvent(bean, position));
-    }
 
     /**
      * 失败页面按钮重新加载

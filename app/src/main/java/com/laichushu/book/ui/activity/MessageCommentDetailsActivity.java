@@ -36,8 +36,9 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     protected MessageCommentPresenter createPresenter() {
-
-        return new MessageCommentPresenter(this);
+        MessageCommentPresenter messageCommentPresenter = new MessageCommentPresenter(this);
+        messageCommentPresenter.setmActivity(this);
+        return messageCommentPresenter;
     }
 
     @Override
@@ -110,10 +111,8 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
             }
         } else {
-            if (model.getData().size() == 0) {
-                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                ToastUtil.showToast("没有更多信息！");
-            }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            ToastUtil.showToast("没有更多信息！");
         }
     }
 

@@ -402,6 +402,12 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
     @Override
     public void drawString(int x, int y, char[] string, int offset, int length) {
+        String mBookTitle = fbReaderApp.getCurrentBook().getTitle();
+        if (mBookTitle.length() > 13) {
+            mBookTitle = mBookTitle.substring(0, 12) + "...";
+        }
+        FBReader.setBookTitle(mBookTitle);
+
         boolean containsSoftHyphen = false;
         for (int i = offset; i < offset + length; ++i) {
             if (string[i] == (char) 0xAD) {

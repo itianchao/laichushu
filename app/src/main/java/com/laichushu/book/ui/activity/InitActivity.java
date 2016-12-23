@@ -146,7 +146,6 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
         if (model.getSuccess()) {
             //本地存储--->已存在更新
             cache_jsonDao.insert(new Cache_Json(null, "PersonalDetails", new Gson().toJson(model)));
-            LoggerUtil.e("1."+new Gson().toJson(model));
             four = true;
             Message msg = new Message();
             msg.obj = four;
