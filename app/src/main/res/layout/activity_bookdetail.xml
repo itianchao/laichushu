@@ -39,6 +39,7 @@
                         android:layout_margin="10dp"
                         android:drawableLeft="@drawable/bookdetail_write"
                         android:drawablePadding="5dp"
+                        android:textColor="@color/main_text_color"
                         tools:text="2016/07/17 18:00"/>
 
                     <TextView
@@ -62,6 +63,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:layout_margin="10dp"
+                        android:textColor="@color/main_text_color"
                         android:text="人订阅"/>
 
                     <TextView
@@ -172,6 +174,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:textColor="@color/main_text_color"
                     tools:text="收到的打赏：568元(150人)"/>
 
                 <TextView
