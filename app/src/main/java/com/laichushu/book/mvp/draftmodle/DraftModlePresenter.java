@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.draftmodle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
@@ -137,7 +138,8 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
     public void openRameDialog(final String id, final int index) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
-
+        TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
+        dialogTitleTv.setText("确认修改草稿名称?");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +179,8 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
     public void openNewDialog(final String articleId) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
-
+        TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
+        dialogTitleTv.setText("创建草稿(添加内容请到pc端)");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +190,7 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
         });
         //确认
         final EditText dialogEt = (EditText) customerView.findViewById(R.id.et_dialog);
-        dialogEt.setHint("请输入草稿名称，添加草稿内容请到pc端");
+        dialogEt.setHint("请输入草稿名称");
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

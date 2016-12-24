@@ -322,7 +322,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="24dp"
                 android:paddingRight="8dp"
-                android:src="@drawable/msg_notic3x"
+                android:src="@drawable/msg_note3x"
                 android:textColor="@color/black"
                 android:textSize="@dimen/edit"
               />

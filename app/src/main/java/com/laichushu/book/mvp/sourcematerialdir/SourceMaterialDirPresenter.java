@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
@@ -165,7 +166,8 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
     public void openRenameDialog(final String id, final int index) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
-
+        TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
+        dialogTitleTv.setText("确认修改素材文件夹名称?");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,7 +310,8 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
     public void openNewDialog(final String articleId) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
-
+        TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
+        dialogTitleTv.setText("创建素材");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.sourcematerial;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
@@ -146,7 +147,8 @@ public class SourceMaterialPresenter extends BasePresenter<SourceMaterialView> {
     public void openRameDialog(final String id,final int index) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
-
+        TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
+        dialogTitleTv.setText("确认修改素材名称?");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
