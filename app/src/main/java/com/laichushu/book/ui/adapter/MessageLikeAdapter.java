@@ -2,6 +2,7 @@ package com.laichushu.book.ui.adapter;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -69,6 +70,16 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 //喜欢
                 holder.tvTime.setText(dataBeen.get(position).getSendTime());
                 holder.tvReaderName.setText(dataBeen.get(position).getSenderName());
+                holder.ivDeleteMsg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String id = dataBeen.get(position).getId();
+                        dataBeen.remove(position);
+                        messageCommentPresenter.messageDeleteComment(position, id);
+
+
+                    }
+                });
                 switch (dataBeen.get(position).getSourceType()) {
                     case "1":
                     case "2":
@@ -76,7 +87,9 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         holder.tvType.setText("收藏了你的书");
                         holder.tvContent.setVisibility(View.GONE);
                         holder.tvContent.setText(dataBeen.get(position).getContent());
-                        holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
+                        if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
+                            holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
+                        }
                         holder.tvBookName.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -85,11 +98,21 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         });
                         break;
                     case "3":
-                        //点赞
+                        //话题
                         holder.tvContent.setVisibility(View.VISIBLE);
                         holder.tvType.setText("收藏了你的话题");
                         holder.tvContent.setText(dataBeen.get(position).getContent());
-                        holder.tvBookName.setText("#" + dataBeen.get(position).getSourceName() + "#");
+                        if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
+                            holder.tvBookName.setText("#" + dataBeen.get(position).getSourceName() + "#");
+                        }
+                        break;
+                    case "8":
+                        holder.tvContent.setVisibility(View.VISIBLE);
+                        holder.tvType.setText("点赞了你的评论");
+                        if (!TextUtils.isEmpty(dataBeen.get(position).getContent())) {
+                            holder.tvContent.setText(dataBeen.get(position).getContent());
+                        }
+
                         break;
                 }
                 holder.tvReaderName.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +160,15 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
                     }
                 });
+                holder.ivRewardDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String id = dataBeen.get(position).getId();
+                        dataBeen.remove(position);
+                        messageCommentPresenter.messageDeleteComment(position, id);
+
+                    }
+                });
                 break;
             case "3":
                 //关注
@@ -172,6 +204,15 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         }
                     }
                 });
+                holder.ivFocusDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String id = dataBeen.get(position).getId();
+                        dataBeen.remove(position);
+                        messageCommentPresenter.messageDeleteComment(position, id);
+
+                    }
+                });
                 break;
             case "4":
                 //私信
@@ -180,6 +221,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvFocusName.setText(dataBeen.get(position).getContent());
                 holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
                 holder.tvFocusContent.setVisibility(View.GONE);
+                holder.ivFocusDelete.setVisibility(View.GONE);
                 holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -203,6 +245,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
 
                     }
                 });
+
                 break;
             case "5":
                 //订阅
@@ -253,6 +296,14 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
                     }
                 });
+                holder.ivFocusDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String id = dataBeen.get(position).getId();
+                        dataBeen.remove(position);
+                        messageCommentPresenter.messageDeleteComment(position, id);
+                    }
+                });
                 break;
             case "6":
                 //活动通知
@@ -272,6 +323,14 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
 //                            UIUtil.openActivity(context, CampaignActivity.class, bundle);
 //                    }
 //                });
+                holder.ivFocusDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String id = dataBeen.get(position).getId();
+                        dataBeen.remove(position);
+                        messageCommentPresenter.messageDeleteComment(position, id);
+                    }
+                });
                 break;
             case "7":
                 //其他消息
@@ -281,6 +340,14 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvFocusName.setText(dataBeen.get(position).getContent());
                 holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.black));
                 holder.tvFocusContent.setVisibility(View.GONE);
+                holder.ivFocusDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String id = dataBeen.get(position).getId();
+                        dataBeen.remove(position);
+                        messageCommentPresenter.messageDeleteComment(position, id);
+                    }
+                });
                 break;
         }
 
@@ -309,14 +376,15 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
         //喜欢
         public LinearLayout llItem;
         public TextView tvTime, tvReaderName, tvType, tvBookName, tvContent;
-        public ImageView ivLikeIcon;
+        public ImageView ivLikeIcon, ivDeleteMsg;
         public final View root;
         //打赏
         public TextView tvReward, tvRewardBookName, tvRewardTime;
         public Button btnWallet;
+        public ImageView ivRewardDelete;
         //关注
         public TextView tvFocusTime, tvFocusName, tvFocusContent, tvFocusContent1, tvFocusContent2, tvFocusContent3, tvFocusContent4;
-        public ImageView ivFocusIcon, ivFocusNotice;
+        public ImageView ivFocusIcon, ivFocusNotice, ivFocusDelete;
         public LinearLayout llFocusItem;
 
         public ViewHolder(View root) {
@@ -325,6 +393,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 case "1":
                     //喜欢
                     ivLikeIcon = (ImageView) root.findViewById(R.id.iv_likeIcons);
+                    ivDeleteMsg = (ImageView) root.findViewById(R.id.iv_deleteMsg);
                     llItem = (LinearLayout) root.findViewById(R.id.ll_item);
                     tvTime = (TextView) root.findViewById(R.id.tv_likeTime);
                     tvReaderName = (TextView) root.findViewById(R.id.tv_readerName);
@@ -339,6 +408,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                     tvRewardBookName = (TextView) root.findViewById(R.id.tv_rewardBookName);
                     tvRewardTime = (TextView) root.findViewById(R.id.tv_rewardTime);
                     btnWallet = (Button) root.findViewById(R.id.tv_checkWallet);
+                    ivRewardDelete = (ImageView) root.findViewById(R.id.iv_rewardDeleteMsg);
                     break;
                 case "3":
                 case "4":
@@ -348,6 +418,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                     //关注
                     ivFocusIcon = (ImageView) root.findViewById(R.id.iv_focusIcon);
                     ivFocusNotice = (ImageView) root.findViewById(R.id.iv_focusNoticeIcon);
+                    ivFocusDelete = (ImageView) root.findViewById(R.id.iv_deleteMsg);
                     tvFocusTime = (TextView) root.findViewById(R.id.tv_focusTime);
                     tvFocusName = (TextView) root.findViewById(R.id.tv_focusName);
                     tvFocusContent = (TextView) root.findViewById(R.id.tv_focusContent);

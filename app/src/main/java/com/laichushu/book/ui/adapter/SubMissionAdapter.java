@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.ActivityList_Paramet;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
@@ -31,10 +32,11 @@ import java.util.List;
 public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.ViewHolder> {
     private Activity context;
     private List<MessageCommentResult.DataBean> dataBeen;
-
-    public SubMissionAdapter(Activity context, List<MessageCommentResult.DataBean> dataBean) {
+private MessageCommentPresenter messageCommentPresenter;
+    public SubMissionAdapter(Activity context, List<MessageCommentResult.DataBean> dataBean,MessageCommentPresenter messageCommentPresenter) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.messageCommentPresenter=messageCommentPresenter;
     }
 
     @Override
@@ -65,13 +67,6 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
                 holder.status.setTextColor(context.getResources().getColor(R.color.red2));
                 break;
         }
-        //审批中
-//        holder.status.setTextColor(context.getResources().getColor(R.color.red2));
-
-//        if (!TextUtils.isEmpty(dataBeen.get(position).getContributeStatusName())) {
-//            holder.status.setText(dataBeen.get(position).getContributeStatusName());
-//        }
-
         holder.ivHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +78,14 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
                 } else {
                     UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
                 }
+            }
+        });
+        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = dataBeen.get(position).getId();
+                dataBeen.remove(position);
+                messageCommentPresenter.messageDeleteComment(position, id);
             }
         });
     }
@@ -108,7 +111,7 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final LinearLayout llItem;
         public final TextView tvPubName, tvBookName;
-        public final ImageView ivHead, ivReplay;
+        public final ImageView ivHead, ivReplay,ivDelete;
         public Button status;
         public final View root;
 
@@ -119,6 +122,7 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
             tvBookName = (TextView) root.findViewById(R.id.tv_bookName);
             ivHead = (ImageView) root.findViewById(R.id.iv_subHead);
             ivReplay = (ImageView) root.findViewById(R.id.iv_replayMsg);
+            ivDelete = (ImageView) root.findViewById(R.id.iv_subDeleteMsg);
             status = (Button) root.findViewById(R.id.btn_status);
             this.root = root;
         }

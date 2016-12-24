@@ -229,5 +229,15 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
         LoggerUtil.e(msg);
     }
 
+    @Override
+    public void showDialog() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void dismissDialog() {
+        dismissProgressDialog();
+    }
+
 
 }
