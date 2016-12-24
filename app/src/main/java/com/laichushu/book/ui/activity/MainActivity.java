@@ -1,8 +1,12 @@
 package com.laichushu.book.ui.activity;
 
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -12,6 +16,8 @@ import com.laichushu.book.R;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.ui.fragment.FragmentFactory;
 import com.laichushu.book.ui.fragment.HomeFragment;
+
+import java.util.List;
 
 
 /**
@@ -100,6 +106,26 @@ public class MainActivity extends BaseActivity implements  View.OnClickListener 
                     onTabSelected(position);
                 }
                 break;
+        }
+    }
+    /**
+     * 清理 FragmentManager 中的 Fragment。
+     * 解决在系统设置中更改权限后，App 被 kill 掉重启时的 Fragment 状态错误问题。
+     *
+     * @param activity
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void clearFragmentManagerInsideFragments(Activity activity) {
+        if (activity instanceof FragmentActivity) {
+            FragmentManager manager = ((FragmentActivity) activity).getSupportFragmentManager();
+            int count = manager.getBackStackEntryCount();
+            List<Fragment> list = manager.getFragments();
+            int fragmentCount = list == null ? 0 : list.size();
+            if (list != null) {
+                for (Fragment fragment : list) {
+                    manager.beginTransaction().remove(fragment).commit();
+                }
+            }
         }
     }
 }
