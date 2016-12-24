@@ -96,7 +96,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             } else if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getFreezeStatus().equals("2")) {
                 if (i!=3&&i!=4&&i!=5){
                     imageView.setImageResource(grayImgArray[i]);
-                    if (dataBean.getStatus().equals("4")||dataBean.getFreezeStatus().equals("2")||!mStrip.get(3).equals("发表")) {
+                    if (dataBean.getStatus().equals("4")||dataBean.getFreezeStatus().equals("2")||dataBean.getStatus().equals("2")) {
                         holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
                     }else {
                         holder.jurTv.setImageResource(R.drawable.manage_jur2x);

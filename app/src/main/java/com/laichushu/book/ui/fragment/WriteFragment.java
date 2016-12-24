@@ -1,5 +1,7 @@
 package com.laichushu.book.ui.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Display;
@@ -71,9 +73,14 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     private int currentPos;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.fragment_write);
-        EventBus.getDefault().register(this);
         mSuccessView.findViewById(R.id.iv_title_finish).setVisibility(View.INVISIBLE);
         TextView titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
         LinearLayout addNewBookLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_add_newbook);

@@ -4,6 +4,7 @@ package com.laichushu.book.ui.activity;
 import android.Manifest;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.laichushu.book.R;
@@ -50,18 +51,15 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
                     .permissions(
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WAKE_LOCK,
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.ACCESS_WIFI_STATE,
-                            Manifest.permission.CHANGE_WIFI_STATE,
-                            Manifest.permission.CLEAR_APP_CACHE)
+                            Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.CAMERA)
                     .request();
+        }else {
+            ObjectAnimator mAnimator = ObjectAnimator.ofFloat(splashIv, "alpha", 0, 0.25f, 0.5f, 0.75f, 1);
+            mAnimator.setDuration(1000);
+            mAnimator.start();
+            mAnimator.addListener(this);
         }
-
-        ObjectAnimator mAnimator = ObjectAnimator.ofFloat(splashIv, "alpha", 0, 0.25f, 0.5f, 0.75f, 1);
-        mAnimator.setDuration(1000);
-        mAnimator.start();
-        mAnimator.addListener(this);
     }
 
     private void loadActivity() {
@@ -94,6 +92,7 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
 
     @PermissionSuccess(requestCode = 100)
     public void success(){
+        Log.e("quanxian ","================");
         ObjectAnimator mAnimator = ObjectAnimator.ofFloat(splashIv, "alpha", 0, 0.25f, 0.5f, 0.75f, 1);
         mAnimator.setDuration(1000);
         mAnimator.start();
@@ -101,9 +100,9 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
     }
     @PermissionFail(requestCode =100)
     public void fail() {
-        //提示用户权限未被授予
-        ToastUtil.showToast("权限已拒绝");
-        finish();
+//        提示用户权限未被授予
+//        ToastUtil.showToast("权限已拒绝");
+        Log.e("quanxian ","================");
     }
     @Override
     public void onAnimationStart(Animator animation) {
