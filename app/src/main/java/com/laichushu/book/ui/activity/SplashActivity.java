@@ -54,7 +54,6 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .request();
-
         }
 
         ObjectAnimator mAnimator = ObjectAnimator.ofFloat(splashIv, "alpha", 0, 0.25f, 0.5f, 0.75f, 1);
@@ -86,8 +85,8 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult
+            (int requestCode, String[] permissions,int[] grantResults) {
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 
