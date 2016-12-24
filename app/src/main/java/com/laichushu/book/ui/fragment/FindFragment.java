@@ -13,6 +13,7 @@ import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.mvp.findfragment.FindPresenter;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.findfragment.FindView;
+import com.laichushu.book.ui.activity.FindEditMyPageActivity;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.ui.activity.FindCoursePageActivity;
 import com.laichushu.book.ui.adapter.ClassRecycleAdapter;
@@ -77,7 +78,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
         View itemView;
         ImageView imageView;
         TextView textView;
-        int j=0;
+        int j = 0;
         llContainer.removeAllViews();
         for (int i = 0; i < img.length; i++) {
             itemView = UIUtil.inflate(R.layout.item_tab_course, null);
@@ -105,7 +106,8 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
                             break;
                         case 3:
                             //机构主页
-
+//测试
+                            UIUtil.openActivity(mActivity, FindEditMyPageActivity.class);
                             break;
                         case 4:
                             //编辑主页

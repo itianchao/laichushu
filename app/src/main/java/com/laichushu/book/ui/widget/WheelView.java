@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -19,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.laichushu.book.R;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -37,6 +37,10 @@ public class WheelView extends ScrollView {
     int newCheck = 50;
     int selectedIndex = 1;
     int itemHeight = 0;
+    int textSize = 14;
+    int padd = 8;
+    String selectTextColor = "#93C2B7";
+    String lineColor = "#93C2B7";
 
     public WheelView(Context context) {
         super(context);
@@ -83,6 +87,37 @@ public class WheelView extends ScrollView {
         this.offset = offset;
     }
 
+    public int getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
+    }
+
+    public int getPadd() {
+        return padd;
+    }
+
+    public void setPadd(int padd) {
+        this.padd = padd;
+    }
+
+    public String getSelectTextColor() {
+        return selectTextColor;
+    }
+
+    public void setSelectTextColor(String selectTextColor) {
+        this.selectTextColor = selectTextColor;
+    }
+
+    public String getLineColor() {
+        return lineColor;
+    }
+
+    public void setLineColor(String lineColor) {
+        this.lineColor = lineColor;
+    }
 
     private void init(Context context) {
         this.context = context;
@@ -135,7 +170,6 @@ public class WheelView extends ScrollView {
     }
 
 
-
     private void initData() {
         displayItemCount = offset * 2 + 1;
         views.removeAllViews();
@@ -149,10 +183,10 @@ public class WheelView extends ScrollView {
         TextView tv = new TextView(context);
         tv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tv.setSingleLine(true);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         tv.setText(item);
         tv.setGravity(Gravity.CENTER);
-        int padding = dip2px(15);
+        int padding = dip2px(padd);
         tv.setPadding(padding, padding, padding, padding);
         if (0 == itemHeight) {
             itemHeight = getViewMeasuredHeight(tv);
@@ -164,9 +198,9 @@ public class WheelView extends ScrollView {
     }
 
 
-
     /**
      * 更改Item字体颜色
+     *
      * @param y
      */
     private void refreshItemView(int y) {
@@ -190,7 +224,7 @@ public class WheelView extends ScrollView {
                 return;
             }
             if (position == i) {
-                itemView.setTextColor(Color.parseColor("#0288ce"));//蓝色
+                itemView.setTextColor(Color.parseColor(selectTextColor));//主题色
             } else {
                 itemView.setTextColor(Color.parseColor("#bbbbbb"));//灰色
             }
@@ -227,7 +261,7 @@ public class WheelView extends ScrollView {
 
         if (null == paint) {
             paint = new Paint();
-            paint.setColor(Color.parseColor("#83cde6"));
+            paint.setColor(Color.parseColor(lineColor));
             paint.setStrokeWidth(dip2px(1f));
         }
 
@@ -256,6 +290,7 @@ public class WheelView extends ScrollView {
         super.setBackgroundDrawable(background);
 
     }
+
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
@@ -271,6 +306,7 @@ public class WheelView extends ScrollView {
         }
 
     }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -278,6 +314,7 @@ public class WheelView extends ScrollView {
         viewWidth = w;
         setBackgroundDrawable(null);
     }
+
     @Override
     public void fling(int velocityY) {
         //加快停下的速度
@@ -323,7 +360,6 @@ public class WheelView extends ScrollView {
     public int getSeletedIndex() {
         return selectedIndex - offset;
     }
-
 
 
     private OnWheelViewListener onWheelViewListener;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -42,12 +43,12 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
     }
 
     /**
-     * 公告管理
+     * 全部排行
      *
      * @param mActicity
      * @param v
      */
-    public void showRankingDialog(final Activity mActicity, RadioButton v) {
+    public void showRankingDialog(final Activity mActicity, CheckBox v) {
         View customerView = UIUtil.inflate(R.layout.dialog_mechanis_manage_item);
         final PopupWindow popupWindow = new PopupWindow(customerView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -60,15 +61,14 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
         data.add("评论分数");
         ArrayAdapter adapter = new ArrayAdapter(mActicity, R.layout.spiner_item_layout, data);
         listView.setAdapter(adapter);
-//        popupWindow.setAnimationStyle(R.style.periodpopwindow_anim_style);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int xPos = mActicity.getWindowManager().getDefaultDisplay().getWidth() / 2
-                - popupWindow.getWidth() / 2;
+        int xPos = mActicity.getWindowManager().getDefaultDisplay().getWidth() / 4
+                - v.getWidth() / 4;
         int[] location = new int[2];
         v.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(v, xPos -360, 40);
+        popupWindow.showAsDropDown(v, xPos, 40);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -97,4 +97,5 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
         });
 
     }
+
 }

@@ -24,13 +24,13 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <RadioButton
+            <CheckBox
                 android:id="@+id/rb_total_ranking"
                 style="@style/find_select"
                 android:checked="true"
                 android:text="综合排行" />
 
-            <RadioButton
+            <CheckBox
                 android:id="@+id/rb_city"
                 style="@style/find_select"
                 android:text="城市" />
