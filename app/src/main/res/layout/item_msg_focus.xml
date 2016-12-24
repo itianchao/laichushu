@@ -38,7 +38,14 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true" />
-
+            <ImageView
+                android:id="@+id/iv_deleteMsg"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/icon_delete2x"/>
             <RelativeLayout
                 android:id="@+id/rl_focusIcon"
                 android:layout_width="match_parent"

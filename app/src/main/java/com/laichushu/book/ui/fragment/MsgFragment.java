@@ -22,6 +22,7 @@ import com.laichushu.book.ui.activity.MsgLikeDetailsActivity;
 import com.laichushu.book.ui.adapter.SubMissionAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -89,7 +90,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
 
         //初始化mRecyclerView 投稿
         mRecyclerView.setGridLayout(1);
-        subAdapter = new SubMissionAdapter(getActivity(), subData);
+        subAdapter = new SubMissionAdapter(getActivity(), subData,mvpPresenter);
         mRecyclerView.setAdapter(subAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
 
@@ -219,7 +220,16 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
         }
         subAdapter.refreshAdapter(subData);
     }
-
+    @Override
+    public void messageDeleteCommentSuccess(RewardResult model, int position) {
+        if (model.isSuccess()) {
+            ToastUtil.showToast("删除成功");
+            subData.remove(position);
+            subAdapter.refreshAdapter(subData);
+        }else {
+            ToastUtil.showToast("删除失败");
+        }
+    }
     @Override
     public void getBookDetailsDateSuccess(HomeHotModel model, int position) {
 
@@ -256,13 +266,18 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
     }
 
     @Override
-    public void messageDeleteCommentSuccess(RewardResult model, int position) {
-
+    public void getDataFail(String msg) {
+        Logger.e(msg);
     }
 
     @Override
-    public void getDataFail(String msg) {
-        Logger.e(msg);
+    public void showDialog() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void dismissDialog() {
+        dismissProgressDialog();
     }
 
 

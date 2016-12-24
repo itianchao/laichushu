@@ -174,6 +174,16 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
         Logger.e(msg);
     }
 
+    @Override
+    public void showDialog() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void dismissDialog() {
+dismissProgressDialog();
+    }
+
 
     @Override
     public void onRefresh() {
@@ -288,7 +298,13 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 
     @Override
     public void messageDeleteCommentSuccess(RewardResult model, int position) {
-
+        if (model.isSuccess()) {
+            ToastUtil.showToast("删除成功");
+            likeData.remove(position);
+            msgAdapter.refreshAdapter(likeData);
+        }else {
+            ToastUtil.showToast("删除失败");
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

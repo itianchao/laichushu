@@ -83,7 +83,7 @@
             <TextView
                 android:id="@+id/tv_dyCollection"
                 style="@style/new_up"
-                android:drawableLeft="@drawable/icon_like_red"
+                android:drawableLeft="@drawable/icon_praise_no2x"
                 android:text=" 0"/>
         </LinearLayout>
 
@@ -97,7 +97,7 @@
 
             <TextView
                 android:id="@+id/tv_scan"
-                style="@style/new_books"
+                style="@style/new_up"
                 android:drawableLeft="@drawable/my_topdetails2x"
                 android:text="话题详情"/>
         </LinearLayout>

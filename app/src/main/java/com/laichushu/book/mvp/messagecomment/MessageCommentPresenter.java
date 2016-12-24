@@ -284,6 +284,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
 
     public void loadDelPerInfoDetails(String senderId, String msgId) {
+        mvpView.showDialog();
         DelPerInfo_Paramet delParamet = new DelPerInfo_Paramet(senderId, msgId, userId);
         LoggerUtil.e("发送评论");
         addSubscription(apiStores.getDelPerInfoDetails(delParamet), new ApiCallback<RewardResult>() {
@@ -299,6 +300,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFinish() {
+                mvpView.dismissDialog();
             }
         });
     }
@@ -310,6 +312,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
      * @param articleId
      */
     public void loadBookDetailsByid(String articleId) {
+        mvpView.showDialog();
         AuthorWorksByBookId_Paramet bookParamet = new AuthorWorksByBookId_Paramet(userId, articleId);
         LoggerUtil.e("获取图书详情");
         addSubscription(apiStores.getAuthorWorksByBookId(bookParamet), new ApiCallback<BookDetailsModle>() {
@@ -325,6 +328,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFinish() {
+                mvpView.dismissDialog();
             }
         });
     }
@@ -335,24 +339,24 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
      * @param id id
      */
     public void messageDeleteComment(final int position, String id){
-        mActivity.showProgressDialog();
+       mvpView.showDialog();
         DeleteMsg_Paramet paramet = new DeleteMsg_Paramet(id);
         addSubscription(apiStores.deleteMsgDetails(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.messageDeleteCommentSuccess(model,position);
-                mActivity.dismissProgressDialog();
+                mvpView.dismissDialog();
             }
 
             @Override
             public void onFailure(int code, String msg) {
                 mvpView.getDataFail("删除评论");
-                mActivity.dismissProgressDialog();
+                mvpView.dismissDialog();
             }
 
             @Override
             public void onFinish() {
-                mActivity.dismissProgressDialog();
+                mvpView.dismissDialog();;
             }
         });
     }

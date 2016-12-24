@@ -33,4 +33,7 @@ public interface MessageCommentView {
 
     void getDataFail(String msg);
 
+    void showDialog();
+
+    void dismissDialog();
 }
