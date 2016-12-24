@@ -262,12 +262,14 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     @Override
     public void publishNewBook(RewardResult model, int index, String type) {
         if (model.isSuccess()) {
-            if (type.equals("1")) {
+            if (type.equals("1")) {//取消发表
                 mData.get(index).setExpressStatus("0");
                 mData.get(index).setEdit(true);
-            } else {
+                mData.get(index).setDelete(true);
+            } else {//发表
                 mData.get(index).setExpressStatus("1");
                 mData.get(index).setEdit(false);
+                mData.get(index).setDelete(false);
             }
             writeBookAdapter.setmData(mData);
         } else {

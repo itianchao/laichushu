@@ -187,8 +187,8 @@
 
         <ImageView
             android:id="@+id/tv_jurisdiction"
-            style="@style/new_books"
-            android:layout_gravity="right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/manage_jur2x" />
     </LinearLayout>
 

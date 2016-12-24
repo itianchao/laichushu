@@ -265,9 +265,11 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             if (type.equals("1")) {
                 mData.get(index).setExpressStatus("0");
                 mData.get(index).setEdit(true);
+                mData.get(index).setDelete(true);
             } else {
                 mData.get(index).setExpressStatus("1");
                 mData.get(index).setEdit(false);
+                mData.get(index).setDelete(false);
             }
             writeBookAdapter.setmData(mData);
         } else {
