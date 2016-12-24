@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/shape_rectangle_fill_hint"
     android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/lv_item"
         android:layout_width="120dp"
+        android:background="@drawable/shape_rectangle_fill_hint"
         android:layout_height="wrap_content"
         android:scrollbars="none" />
 </LinearLayout>

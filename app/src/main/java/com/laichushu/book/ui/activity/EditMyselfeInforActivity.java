@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -241,7 +243,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             } else {
                 if (resultData.getSex().equals("1")) {
                     tvSex.setText("男");
-                }else{
+                } else {
                     tvSex.setText("女");
                 }
             }
@@ -482,7 +484,14 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         final WheelView wvCity = ((WheelView) customerView.findViewById(R.id.wv_city));
         TextView tvCancel = ((TextView) customerView.findViewById(R.id.tv_cancel));
         TextView tvSubmit = ((TextView) customerView.findViewById(R.id.tv_submit));
-
+        wvProvince.setTextSize(R.dimen.editTop);
+        wvProvince.setSelectTextColor("#969696");
+        wvProvince.setLineColor("#969696");
+        wvCity.setSelectTextColor("#969696");
+        wvCity.setLineColor("#969696");
+        wvCity.setPadd(15);
+        wvCity.setTextSize(R.dimen.editTop);
+        wvProvince.setPadd(15);
         wvProvince.setOffset(2);
         wvProvince.setSeletion(0);
         wvCity.setOffset(2);
@@ -517,7 +526,7 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         WindowManager m = getWindowManager();
         Display display = m.getDefaultDisplay();  //为获取屏幕宽、高
         alertDialog.getWindow().setGravity(Gravity.BOTTOM);
-        alertDialog.getWindow().setLayout(display.getWidth(), display.getHeight() / 2);
+        alertDialog.getWindow().setLayout(display.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT);
         alertDialog.getWindow().setWindowAnimations(R.style.timepopwindow_anim_style);
         alertDialog.show();
 

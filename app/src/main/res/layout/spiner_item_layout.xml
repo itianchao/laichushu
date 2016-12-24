@@ -6,6 +6,7 @@
     android:gravity="center"
     android:textColor="@color/characterGray"
     android:textSize="@dimen/edit"
+    android:singleLine="true"
     android:background="@color/white"
     android:layout_marginLeft="20dp">
 </TextView>
