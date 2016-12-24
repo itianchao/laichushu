@@ -48,11 +48,13 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
             PermissionGen.with(SplashActivity.this)
                     .addRequestCode(100)
                     .permissions(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WAKE_LOCK,
                             Manifest.permission.CAMERA,
-                            Manifest.permission.CLEAR_APP_CACHE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            Manifest.permission.ACCESS_WIFI_STATE,
+                            Manifest.permission.CHANGE_WIFI_STATE,
+                            Manifest.permission.CLEAR_APP_CACHE)
                     .request();
         }
 
@@ -101,6 +103,7 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
     public void fail() {
         //提示用户权限未被授予
         ToastUtil.showToast("权限已拒绝");
+        finish();
     }
     @Override
     public void onAnimationStart(Animator animation) {

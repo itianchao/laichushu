@@ -3,10 +3,7 @@ package com.laichushu.book.ui.fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,19 +13,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FeedBack_parmet;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
-import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.event.RefrushMineEvent;
-import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
-import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.retrofit.ApiCallback;
+import com.laichushu.book.mvp.mine.MinePresenter;
+import com.laichushu.book.mvp.mine.MineView;
 import com.laichushu.book.ui.activity.EditMyselfeInforActivity;
 import com.laichushu.book.ui.activity.FeedbackActivity;
 import com.laichushu.book.ui.activity.GeneralSettingActivity;
@@ -36,11 +29,9 @@ import com.laichushu.book.ui.activity.ManageWorksActivity;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
 import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
-import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
-import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -51,14 +42,11 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import de.greenrobot.dao.query.Query;
-import de.greenrobot.dao.query.QueryBuilder;
-
 /**
  * 我的
  * Created by wangtong on 2016/10/17.
  */
-public class MineFragment extends MvpFragment2 implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MineFragment extends MvpFragment2<MinePresenter> implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, MineView {
     private TextView tvTitle, tvMineName, tvMinebookNum;
     private ImageView ivMineHead, ivMineHeadInto;
     private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice, rlBody;
@@ -67,8 +55,8 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener, 
     private SwipeRefreshLayout dataSwipe;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected MinePresenter createPresenter() {
+        return new MinePresenter(this);
     }
 
     @Override
@@ -114,7 +102,6 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener, 
         super.initData();
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         cache_jsonDao = daoSession.getCache_JsonDao();
-        loadData();
         getData();
     }
 
@@ -196,40 +183,9 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener, 
      */
     @Override
     public void onRefresh() {
-        loadData();
+        mvpPresenter.loadData();
     }
-    public void loadData(){
-        addSubscription(apiStores.getPersonalDetails(new PersonalCentre_Parmet(ConstantValue.USERID)), new ApiCallback<PersonalCentreResult>() {
-            @Override
-            public void onSuccess(PersonalCentreResult result) {
-                dataSwipe.setRefreshing(false);
-                if (result.getSuccess()) {
-                    //更新数据库
-                    List<Cache_Json> list = cache_jsonDao.queryBuilder().
-                            where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).build().list();
-                    Cache_Json cache_json = list.get(0);
-                    cache_json.setJson(new Gson().toJson(result));
-                    cache_jsonDao.update(cache_json);
-                    //存储昵称
-                    SharePrefManager.setNickName(result.getNickName());
-                    getData();
-                } else {
-                    ToastUtil.showToast(result.getErrMsg());
-                }
-            }
 
-            @Override
-            public void onFailure(int code, String msg) {
-                ToastUtil.showToast("加载失败");
-                dataSwipe.setRefreshing(false);
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
-    }
     public class UpdateReceiver extends BroadcastReceiver {
 
         @Override
@@ -248,5 +204,29 @@ public class MineFragment extends MvpFragment2 implements View.OnClickListener, 
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
             }
         });
+    }
+
+    @Override
+    public void getDataSuccess(PersonalCentreResult result) {
+        dataSwipe.setRefreshing(false);
+        if (result.getSuccess()) {
+            //更新数据库
+            List<Cache_Json> list = cache_jsonDao.queryBuilder().
+                    where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).build().list();
+            Cache_Json cache_json = list.get(0);
+            cache_json.setJson(new Gson().toJson(result));
+            cache_jsonDao.update(cache_json);
+            //存储昵称
+            SharePrefManager.setNickName(result.getNickName());
+            getData();
+        } else {
+            ToastUtil.showToast(result.getErrMsg());
+        }
+    }
+
+    @Override
+    public void getDataFail(String msg) {
+        ToastUtil.showToast("加载失败");
+        dataSwipe.setRefreshing(false);
     }
 }
