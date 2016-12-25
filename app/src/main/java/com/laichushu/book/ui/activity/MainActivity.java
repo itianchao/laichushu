@@ -78,10 +78,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.rbn_find:
-                if (position != 1) {
-                    position = 1;
-                    setTabSelection(position);
-                }
+                // TODO: 2016/12/24 暂时屏蔽掉
+//                if (position != 1) {
+//                    position = 1;
+//                    setTabSelection(position);
+//                }
                 break;
             case R.id.rbn_write:
                 if (position != 2) {

@@ -33,6 +33,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.ui.activity.LoginActivity;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -481,5 +482,20 @@ public class UIUtil
 
 		//base = computeWH();
 		return loc;
+	}
+
+	/**
+	 * 延时跳转页面
+	 * @param mActivity
+	 * @param cls
+	 */
+	public static void postStartActivity(final Activity mActivity, final Class cls){
+		UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				UIUtil.openActivity(mActivity, cls);
+				mActivity.finish();
+			}
+		}, 1710);
 	}
 }

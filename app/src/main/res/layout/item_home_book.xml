@@ -58,7 +58,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/shape_rectangle_red"
                     android:textColor="@color/colorAccent"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     tools:text="文学" />
             </LinearLayout>
 

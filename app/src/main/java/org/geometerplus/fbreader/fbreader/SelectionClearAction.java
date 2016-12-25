@@ -19,13 +19,33 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-public class SelectionClearAction extends FBAction {
-	SelectionClearAction(FBReaderApp fbreader) {
-		super(fbreader);
-	}
+import android.content.Intent;
 
-	@Override
-	protected void run(Object ... params) {
-		Reader.getTextView().clearSelection();
-	}
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.fbreader.book.Bookmark;
+
+public class SelectionClearAction extends FBAction {
+    private FBReader baseApplication;
+    private Bookmark bookmark;
+    private final BookCollectionShadow myCollection = new BookCollectionShadow();
+
+    public SelectionClearAction(FBReader baseApplication, FBReaderApp fbreader) {
+        super(fbreader);
+        this.baseApplication = baseApplication;
+    }
+
+    @Override
+    protected void run(Object... params) {
+        Reader.getTextView().clearSelection();
+//        bookmark = Reader.addSelectionBookmark();
+//        Intent data = new Intent();
+//        baseApplication.setResult(7, data);
+//        myCollection.bindToService(baseApplication, new Runnable() {
+//            public void run() {
+//                myCollection.saveBookmark(bookmark);
+//                myCollection.deleteBookmark(bookmark);
+//            }
+//        });
+    }
 }

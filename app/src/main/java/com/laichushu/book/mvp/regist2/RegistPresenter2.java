@@ -4,12 +4,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.laichushu.book.bean.netbean.Login_Paramet;
 import com.laichushu.book.bean.netbean.Regist_Paramet;
+import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.login.LoginModel;
+import com.laichushu.book.ui.activity.InitActivity;
 import com.laichushu.book.ui.activity.Regist2Activity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
+import com.laichushu.book.utils.UIUtil;
 import com.laichushu.book.utils.Validator;
 import com.laichushu.book.retrofit.ApiCallback;
+import com.orhanobut.logger.Logger;
 
 /**
  * 注册 presenter
@@ -102,5 +110,55 @@ public class RegistPresenter2 extends BasePresenter<RegistView2> {
                 mvpView.hideLoading();
             }
         });
+    }
+
+    //网络请求
+    public void loginData(String username, String password) {
+        mvpView.showLoading();
+        Login_Paramet paramet = new Login_Paramet(username, password);
+        Logger.e("登录请求参数");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.loginLoadData(paramet),
+                new ApiCallback<LoginModel>() {
+                    @Override
+                    public void onSuccess(LoginModel model) {
+                        mvpView.getLoginSuccess(model);
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        mvpView.getLoginFail("code+" + code + "/msg:" + msg);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mvpView.hideLoading();
+                    }
+
+                });
+    }
+
+    /**
+     * 登录后的操作
+     * @param username
+     * @param password
+     * @param userId
+     * @param token
+     * @param type
+     */
+    public void lastLogin(String username, String password, String userId, String token, String type) {
+        //记住密码
+        SharePrefManager.setLoginInfo(username + "," + password);
+        //保存userId
+        SharePrefManager.setUserId(userId);
+        ConstantValue.USERID = userId;
+        //保存token
+        SharePrefManager.setToken(token);
+        //保存身份
+        SharePrefManager.setType(type);
+        //
+
+        //延时跳转页面
+        UIUtil.postStartActivity(mActivity, InitActivity.class);
     }
 }

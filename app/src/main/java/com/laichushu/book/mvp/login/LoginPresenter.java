@@ -121,12 +121,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         //
 
         //延时跳转页面
-        UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                UIUtil.openActivity(mActivity, InitActivity.class);
-                mActivity.finish();
-            }
-        }, 1710);
+        UIUtil.postStartActivity(mActivity, InitActivity.class);
     }
 }
