@@ -11,7 +11,10 @@ import com.laichushu.book.utils.LoggerUtil;
  * Created by wangtong on 2016/11/26.
  */
 public class MechanismTopicListPresenter extends BasePresenter<MechanismTopicListView> {
-    private MechanismTopicList_Paramet paramet = new MechanismTopicList_Paramet("","","","1", ConstantValue.PAGESIZE1);
+
+    private String userId = ConstantValue.USERID;
+
+    private MechanismTopicList_Paramet paramet = new MechanismTopicList_Paramet(userId,"","1", ConstantValue.PAGESIZE1);
 
     public MechanismTopicList_Paramet getParamet() {
         return paramet;
@@ -33,7 +36,7 @@ public class MechanismTopicListPresenter extends BasePresenter<MechanismTopicLis
      */
     public void loadMechanismTopicListData(String id) {
         LoggerUtil.e("获取机构话题列表");
-        getParamet().setId(id);
+        getParamet().setPartyId(id);
         addSubscription(apiStores.getMechanismTopicList(paramet), new ApiCallback<MechanismTopicListModel>() {
             @Override
             public void onSuccess(MechanismTopicListModel modle) {
