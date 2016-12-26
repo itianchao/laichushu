@@ -2,19 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="240dp"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
-
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        tools:text="创建草稿"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
     <EditText
         android:id="@+id/et_dialog"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:background="@color/white"
         android:gravity="center"
         android:hint="点击重命名"
         android:textColor="@color/global"
         android:textColorHint="@color/hint"
-        android:textSize="@dimen/album_sp_20" />
+        android:textSize="@dimen/album_sp_16" />
 
     <include layout="@layout/line" />
 

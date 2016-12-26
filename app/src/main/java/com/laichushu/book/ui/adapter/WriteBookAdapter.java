@@ -91,22 +91,22 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             itemView = UIUtil.inflate(R.layout.item_tabstrip, null);
             imageView = (ImageView) itemView.findViewById(R.id.iv_stripIcon);
             textView = (TextView) itemView.findViewById(R.id.tv_stripContent);
+            //如果是冻结和已出版 全灰色
             if (dataBean.getStatus().equals("4")||dataBean.getFreezeStatus().equals("2")) {
                 imageView.setImageResource(grayImgArray[i]);
-            } else if (!dataBean.isEdit() | dataBean.getStatus().equals("3") | dataBean.getFreezeStatus().equals("2")) {
-                if (i!=3&&i!=4&&i!=5){
-                    imageView.setImageResource(grayImgArray[i]);
-                    if (dataBean.getStatus().equals("4")||dataBean.getFreezeStatus().equals("2")||!mStrip.get(3).equals("发表")) {
-                        holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
-                    }else {
-                        holder.jurTv.setImageResource(R.drawable.manage_jur2x);
-                        //权限
-                    }
-                }else {
-                    imageView.setImageResource(mStrip.get(i).getDrawble());
-                }
+                holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
             } else {
+                //如果是不可编辑 或者 电子书 权限颜色为灰色
                 imageView.setImageResource(mStrip.get(i).getDrawble());
+
+                if (!dataBean.isEdit() || dataBean.getStatus().equals("3")) {
+                    if (i!=3&&i!=4&&i!=5){
+                        imageView.setImageResource(grayImgArray[i]);
+                    }
+                    holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
+                }else {
+                    holder.jurTv.setImageResource(R.drawable.manage_jur2x);
+                }
             }
 
             if (dataBean.isDelete() && i==2){//可删除
@@ -179,7 +179,6 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             break;
                         case 4:
                             //投稿
-
                             Bundle bundle = new Bundle();
                             bundle.putString("articleId", dataBean.getArticleId());
                             UIUtil.openActivity(mActivity, MechanismListActivity.class, bundle);
@@ -239,7 +238,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.jurTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dataBean.getStatus().equals("4")||dataBean.getStatus().equals("2")||dataBean.getFreezeStatus().equals("2")) {
+                if (!dataBean.isEdit()||dataBean.getStatus().equals("4")||dataBean.getStatus().equals("2")||dataBean.getFreezeStatus().equals("2")) {
                     return;
                 }
                 //添加权限

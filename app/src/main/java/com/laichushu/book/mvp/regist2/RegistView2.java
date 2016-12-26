@@ -1,5 +1,7 @@
 package com.laichushu.book.mvp.regist2;
 
+import com.laichushu.book.mvp.login.LoginModel;
+
 /**
  * 注册页面
  * Created by wangtong on 2016/10/12.
@@ -9,4 +11,7 @@ public interface RegistView2 {
     void getDataFail(String msg);
     void showLoading();
     void hideLoading();
+
+    void getLoginSuccess(LoginModel model);
+    void getLoginFail(String msg);
 }

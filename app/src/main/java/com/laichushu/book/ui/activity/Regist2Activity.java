@@ -6,8 +6,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.laichushu.book.mvp.login.LoginModel;
+import com.laichushu.book.mvp.login.LoginPresenter;
 import com.laichushu.book.mvp.regist2.RegistModel2;
 import com.laichushu.book.ui.base.MvpActivity;
+import com.laichushu.book.utils.DialogUtil;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
@@ -61,16 +64,19 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
 
     @Override
     public void getDataSuccess(RegistModel2 model) {
+        hideLoading();
         if (model.isSuccess()) {
             //登陆成功跳转页面
             ToastUtil.showToast("注册成功");
             UIUtil.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    UIUtil.openActivity(mActivity, LoginActivity.class);
-                    finish();
+                    showProgressDialog("登陆中...");
+                    String phone = phoneTv.getText().toString().trim();
+                    String pwd = pwdEt.getText().toString().trim();
+                    mvpPresenter.loginData(phone,pwd);
                 }
-            }, 1700);
+            }, 1710);
         }else {
             ToastUtil.showToast(model.getErrMsg());
             LoggerUtil.e(model.getErrMsg());
@@ -91,6 +97,48 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
     @Override
     public void hideLoading() {
         dismissProgressDialog();
+    }
+
+    /**
+     * 登录接口成功
+     * @param model
+     */
+    @Override
+    public void getLoginSuccess(LoginModel model) {
+        hideLoading();
+        if (model.isSuccess()) {
+            String username = phoneTv.getText().toString().trim();
+            String password = pwdEt.getText().toString().trim();
+            String userId = model.getUserId();
+            String token = model.getToken();
+            String type = "1";
+            mvpPresenter.lastLogin(username, password, userId, token, type);
+        } else {
+            String errMsg = model.getErrMsg();
+            if (errMsg.contains(UIUtil.getString(R.string.errMsg2))) {
+                DialogUtil.showDialog();
+            } else if (errMsg.contains(UIUtil.getString(R.string.errMsg3))) {
+                ToastUtil.showToast(UIUtil.getString(R.string.errMsg3));
+            } else if (errMsg.contains(UIUtil.getString(R.string.errMsg4))) {
+                ToastUtil.showToast(UIUtil.getString(R.string.errMsg4));
+            } else if (errMsg.contains(UIUtil.getString(R.string.errMsg5))) {
+                ToastUtil.showToast(UIUtil.getString(R.string.errMsg5));
+            } else {
+                ToastUtil.showToast(UIUtil.getString(R.string.errMsg1));
+            }
+            UIUtil.postStartActivity(mActivity, LoginActivity.class);
+        }
+    }
+
+    /**
+     * 登录接口失败
+     * @param msg
+     */
+    @Override
+    public void getLoginFail(String msg) {
+        hideLoading();
+        ToastUtil.showToast("登录失败");
+        UIUtil.postStartActivity(mActivity, LoginActivity.class);
     }
 
     @Override

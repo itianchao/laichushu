@@ -14,8 +14,11 @@ import android.widget.RadioButton;
 
 import com.laichushu.book.R;
 import com.laichushu.book.ui.base.BaseActivity;
-import com.laichushu.book.ui.fragment.FragmentFactory;
+import com.laichushu.book.ui.fragment.FindFragment;
 import com.laichushu.book.ui.fragment.HomeFragment;
+import com.laichushu.book.ui.fragment.MineFragment;
+import com.laichushu.book.ui.fragment.MsgFragment;
+import com.laichushu.book.ui.fragment.WriteFragment;
 
 import java.util.List;
 
@@ -23,8 +26,20 @@ import java.util.List;
 /**
  * 主页
  */
-public class MainActivity extends BaseActivity implements  View.OnClickListener {
-    private int position;
+public class MainActivity extends BaseActivity implements View.OnClickListener {
+    private int position = 0;
+    private HomeFragment homeFragment;
+    private FindFragment findFragment;
+    private WriteFragment writeFragment;
+    private MsgFragment msgFragment;
+    private MineFragment mineFragment;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTabSelection(position);
+    }
+
     @Override
     protected void initView() {
         setContentView(R.layout.activity_main);
@@ -41,73 +56,55 @@ public class MainActivity extends BaseActivity implements  View.OnClickListener 
         setDefaultFragment();
     }
 
-    /** * 设置默认的 */
-    private void setDefaultFragment() {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        HomeFragment fragment = (HomeFragment) FragmentFactory.getFragment(0);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("homeModel",getIntent().getParcelableExtra("homeModel"));
-        bundle.putParcelable("homeHotModel",getIntent().getParcelableExtra("homeHotModel"));
-        bundle.putParcelable("homeAllModel",getIntent().getParcelableExtra("homeAllModel"));
-        transaction.remove(fragment);
-        fragment.setArguments(bundle);
-        transaction.replace(R.id.layFrame, fragment,"home");
-        transaction.commit();
-        position = 0;
-    }
-
     /**
-     * 替换fragment
-     * @param position
+     * 设置默认的
      */
-    public void onTabSelected(int position) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment fragment = FragmentFactory.getFragment(position);
-        ft.replace(R.id.layFrame, fragment);
-        ft.commit();
+    private void setDefaultFragment() {
+        setTabSelection(0);
     }
 
     /**
      * 切换
+     *
      * @param v
      */
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.rbn_home:
-                if (position!=0){
+                if (position != 0) {
                     position = 0;
-                    onTabSelected(position);
+                    setTabSelection(position);
                 }
                 break;
             case R.id.rbn_find:
-                if (position!=1){
-                    position = 1;
-                    onTabSelected(position);
-                }
+                // TODO: 2016/12/24 暂时屏蔽掉
+//                if (position != 1) {
+//                    position = 1;
+//                    setTabSelection(position);
+//                }
                 break;
             case R.id.rbn_write:
-                if (position!=2){
+                if (position != 2) {
                     position = 2;
-                    onTabSelected(position);
+                    setTabSelection(position);
                 }
                 break;
             case R.id.rbn_msg:
-                if (position!=3){
+                if (position != 3) {
                     position = 3;
-                    onTabSelected(position);
+                    setTabSelection(position);
                 }
                 break;
             case R.id.rbn_mind:
-                if (position!=4){
+                if (position != 4) {
                     position = 4;
-                    onTabSelected(position);
+                    setTabSelection(position);
                 }
                 break;
         }
     }
+
     /**
      * 清理 FragmentManager 中的 Fragment。
      * 解决在系统设置中更改权限后，App 被 kill 掉重启时的 Fragment 状态错误问题。
@@ -127,5 +124,83 @@ public class MainActivity extends BaseActivity implements  View.OnClickListener 
                 }
             }
         }
+    }
+
+    private void setTabSelection(int position) {
+        //记录position
+        this.position = position;
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        hideFragments(transaction);
+        switch (position) {
+            case 0:
+                if (homeFragment == null) {
+                    homeFragment = new HomeFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("homeModel", getIntent().getParcelableExtra("homeModel"));
+                    bundle.putParcelable("homeHotModel", getIntent().getParcelableExtra("homeHotModel"));
+                    bundle.putParcelable("homeAllModel", getIntent().getParcelableExtra("homeAllModel"));
+                    homeFragment.setArguments(bundle);
+                    transaction.add(R.id.layFrame, homeFragment);
+                } else {
+                    transaction.show(homeFragment);
+                }
+                break;
+            case 1:
+                if (findFragment == null) {
+                    findFragment = new FindFragment();
+                    transaction.add(R.id.layFrame, findFragment);
+                } else {
+                    transaction.show(findFragment);
+                }
+                break;
+            case 2:
+                if (writeFragment == null) {
+                    writeFragment = new WriteFragment();
+                    transaction.add(R.id.layFrame, writeFragment);
+                } else {
+                    transaction.show(writeFragment);
+                }
+                break;
+            case 3:
+                if (msgFragment == null) {
+                    msgFragment = new MsgFragment();
+                    transaction.add(R.id.layFrame, msgFragment);
+                } else {
+                    transaction.show(msgFragment);
+                }
+                break;
+            case 4:
+                if (mineFragment == null) {
+                    mineFragment = new MineFragment();
+                    transaction.add(R.id.layFrame, mineFragment);
+                } else {
+                    transaction.show(mineFragment);
+                }
+                break;
+        }
+        transaction.commitAllowingStateLoss();
+    }
+
+    private void hideFragments(FragmentTransaction transaction) {
+        if (homeFragment != null) transaction.hide(homeFragment);
+        if (findFragment != null) transaction.hide(findFragment);
+        if (writeFragment != null) transaction.hide(writeFragment);
+        if (msgFragment != null) transaction.hide(msgFragment);
+        if (mineFragment != null) transaction.hide(mineFragment);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        position = savedInstanceState.getInt("position");
+        setTabSelection(position);
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //记录当前的position
+        outState.putInt("position", position);
     }
 }

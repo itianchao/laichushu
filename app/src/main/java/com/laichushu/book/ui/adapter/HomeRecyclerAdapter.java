@@ -192,15 +192,15 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             if (mHotData.size() != 0) {
                 ((ViewHolder1) holder).bookNumTv.setText(mHotData.size() + "本");
             }
-            ((ViewHolder1) holder).bookNumTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //跳转热门详情页
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("bean", homeFragment.getModel());
-                    UIUtil.openActivity(mActivity, HotListActivity.class, bundle);
-                }
-            });
+//            ((ViewHolder1) holder).bookNumTv.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    //跳转热门详情页
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("bean", homeFragment.getModel());
+//                    UIUtil.openActivity(mActivity, HotListActivity.class, bundle);
+//                }
+//            });
 
         } else if (position == 1) {
             ((ViewHolder2) holder).allRbn.setOnClickListener(this);
