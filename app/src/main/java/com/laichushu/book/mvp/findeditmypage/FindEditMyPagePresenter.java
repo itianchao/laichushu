@@ -18,7 +18,6 @@ import com.laichushu.book.ui.activity.FindEditMyPageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.UIUtil;
 
-import java.util.List;
 
 /**
  * Created by PCPC on 2016/12/24.
