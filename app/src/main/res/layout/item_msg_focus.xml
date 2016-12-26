@@ -30,7 +30,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="12dp"
-                android:src="@drawable/msg_note3x"
+                android:src="@drawable/msg_notic2x"
                 android:visibility="gone" />
 
             <ImageView
@@ -38,14 +38,16 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true" />
+
             <ImageView
                 android:id="@+id/iv_deleteMsg"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/icon_delete2x"/>
+                android:layout_marginTop="8dp"
+                android:background="@drawable/icon_delete2x" />
+
             <RelativeLayout
                 android:id="@+id/rl_focusIcon"
                 android:layout_width="match_parent"
@@ -124,7 +126,8 @@
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/tv_focusContent3"
                     android:lines="2"
-                    android:textColor="@color/characterLightGray1"/>
+                    android:textColor="@color/characterLightGray1" />
+
                 <TextView
                     android:id="@+id/tv_focusContent4"
                     android:layout_width="wrap_content"
@@ -134,9 +137,9 @@
                     android:layout_marginLeft="36dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginTop="12dp"
-                    android:visibility="gone"
-                    android:textColor="@color/characterLightGray2"/>
-                    android:textSize="@dimen/edit2" />
+                    android:textColor="@color/characterLightGray2"
+                    android:visibility="gone" />
+                android:textSize="@dimen/edit2" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

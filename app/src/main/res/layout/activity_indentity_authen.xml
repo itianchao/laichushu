@@ -141,7 +141,7 @@
                     android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="24dp"
-                    android:background="@drawable/icon_idcard_back3x" />
+                    android:background="@drawable/icon_idcard_back2x" />
 
                 <TextView
                     android:id="@+id/tv_idCardTips"
@@ -181,7 +181,7 @@
                     android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="24dp"
-                    android:background="@drawable/icon_idcard_back3x" />
+                    android:background="@drawable/icon_idcard_back2x" />
 
                 <TextView
                     android:id="@+id/tv_idCardTip"
