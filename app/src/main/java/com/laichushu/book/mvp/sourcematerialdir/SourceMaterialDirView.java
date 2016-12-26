@@ -14,7 +14,7 @@ public interface SourceMaterialDirView {
     void getCreateSourceMaterialDir(RewardResult model);
     void getDataFail(String msg);
     void getDataFail2(String msg);
-    void getUpdateMerPermission(RewardResult model);
+    void getUpdateMerPermission(RewardResult model,String permission);
     void getDeleteMateialDataFail(String msg);
     void getMaterialRenameDataFail(String s);
     void showLoading();

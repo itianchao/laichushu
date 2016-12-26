@@ -64,10 +64,11 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 根据Id获取图书
+     *
      * @param articleId 图书Id
      */
-    public void getBookById(String articleId){
-        FindByBookId_Paramet paramet = new FindByBookId_Paramet(userId,articleId);
+    public void getBookById(String articleId) {
+        FindByBookId_Paramet paramet = new FindByBookId_Paramet(userId, articleId);
         addSubscription(apiStores.getBookById(paramet), new ApiCallback<BookDetailModle>() {
             @Override
             public void onSuccess(BookDetailModle model) {
@@ -85,8 +86,10 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             }
         });
     }
+
     /**
      * 订阅
+     *
      * @param aricleId
      * @param type
      */
@@ -292,14 +295,23 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                 if (TextUtils.isEmpty(pay)) {
                     ToastUtil.showToast("请输入打赏金额");
                 } else {
-                    if (Double.parseDouble(pay) > 0 || Double.parseDouble(pay) < 100) {
-                        // TODO: 2016/11/8 请求打赏
-                        rewardMoney(userId, accepterId, articleId, pay);
-                        mActivity.getBean().setAward(true);
-                        mActivity.getArticleData().setAward(true);
-                        dialogBuilder.dismiss();
-                    } else {
-                        ToastUtil.showToast("只能打赏1-100金额");
+                    try {
+                        if (Double.parseDouble(pay) > 0 && Double.parseDouble(pay) < 100) {
+                            if (pay.contains(".") && pay.substring(pay.indexOf(".")+1,pay.length()).length()>2) {
+                                ToastUtil.showToast("不能超过小数点后两位");
+                            } else {
+                                // TODO: 2016/11/8 请求打赏
+                                rewardMoney(userId, accepterId, articleId, pay);
+                                mActivity.getBean().setAward(true);
+                                mActivity.getArticleData().setAward(true);
+                                dialogBuilder.dismiss();
+                            }
+
+                        } else {
+                            ToastUtil.showToast("只能打赏1-100金额");
+                        }
+                    } catch (NumberFormatException e) {
+                        ToastUtil.showToast("请输入正确的价格");
                     }
                 }
             }
@@ -347,7 +359,8 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 点赞 取消赞
-     *  @param sourceId
+     *
+     * @param sourceId
      * @param type
      * @param likeIv
      */
@@ -360,7 +373,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
         addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.SaveScoreLikeData(model, type,likeIv);
+                mvpView.SaveScoreLikeData(model, type, likeIv);
             }
 
             @Override
@@ -447,8 +460,8 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                         BaseBookEntity baseBookEntity = new BaseBookEntity();
                         baseBookEntity.setBook_path(path);
                         UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author);
-                    }else {
-                        downloadEpub(url,articleId,author);
+                    } else {
+                        downloadEpub(url, articleId, author);
                     }
 
                 } else {
@@ -473,11 +486,12 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 下载epub文件
+     *
      * @param url
      * @param articleId
      * @param author
      */
-    public void downloadEpub(final String url,final String articleId,final String author) {
+    public void downloadEpub(final String url, final String articleId, final String author) {
 
         Call<ResponseBody> call = apiStores.downloadFile(url);
         call.enqueue(new Callback<ResponseBody>() {
@@ -485,13 +499,13 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     boolean writtenToDisk = writeResponseBodyToDisk(response.body(), articleId);
-                    if (writtenToDisk){
+                    if (writtenToDisk) {
                         mvpView.hideLoading();
                         String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
                         BaseBookEntity baseBookEntity = new BaseBookEntity();
                         baseBookEntity.setBook_path(path);
                         UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author);
-                    }else {
+                    } else {
                         ToastUtil.showToast("请检查网络");
                     }
                 } else {
@@ -499,6 +513,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                     ToastUtil.showToast("请检查网络");
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 mvpView.hideLoading();
@@ -509,6 +524,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 写入文件
+     *
      * @param body
      * @param articleId
      * @return

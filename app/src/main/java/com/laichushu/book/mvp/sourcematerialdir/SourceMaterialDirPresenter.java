@@ -205,8 +205,9 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
      * 选择权限 对话框
      *
      * @param
+     * @param materialPermission
      */
-    public void openPermissionAlertDialog(Activity mActivity, final String articleId) {
+    public void openPermissionAlertDialog(Activity mActivity, final String articleId, String materialPermission) {
 
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_permission);
@@ -216,6 +217,15 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
         RadioButton pressRbn = (RadioButton) customerView.findViewById(R.id.rbn_press);
         RadioButton fansRbn = (RadioButton) customerView.findViewById(R.id.rbn_fans);
         ImageView cancelBtn = (ImageView) customerView.findViewById(R.id.btn_cancel);
+
+        switch(materialPermission){
+            case "1":
+                publicRbn.setChecked(true);
+                break;
+            case "2":
+                privateRbn.setChecked(true);
+                break;
+        }
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -282,14 +292,14 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
     }
 
     //修改素材权限
-    public void loadUpdateMerPermission(String id, String permission) {
+    public void loadUpdateMerPermission(String id, final String permission) {
         mvpView.showLoading();
         LoggerUtil.e("发表");
         UpdateMaterialPermission_Paramet merParamet = new UpdateMaterialPermission_Paramet(userId, id, permission);
         addSubscription(apiStores.getUpdateMaterialPermissionDetails(merParamet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.getUpdateMerPermission(model);
+                mvpView.getUpdateMerPermission(model,permission);
             }
 
             @Override

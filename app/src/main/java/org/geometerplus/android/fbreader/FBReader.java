@@ -576,12 +576,21 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                 if (TextUtils.isEmpty(pay)) {
                     ToastUtil.showToast("请输入打赏金额");
                 } else {
-                    if (Integer.parseInt(pay) > 0 || Integer.parseInt(pay) < 100) {
-                        // TODO: 2016/11/8 请求打赏
-                        rewardMoney(ConstantValue.USERID, accepterId, articleId, pay);
-                        dialogBuilder.dismiss();
-                    } else {
-                        ToastUtil.showToast("只能打赏1-100金额");
+                    try {
+                        if (Double.parseDouble(pay) > 0 && Double.parseDouble(pay) < 100) {
+                            if (pay.contains(".") && pay.substring(pay.indexOf(".")+1,pay.length()-1).length()>2) {
+                                ToastUtil.showToast("不能超过小数点后两位");
+                            } else {
+                                // TODO: 2016/11/8 请求打赏
+                                rewardMoney(ConstantValue.USERID, accepterId, articleId, pay);
+                                dialogBuilder.dismiss();
+                            }
+
+                        } else {
+                            ToastUtil.showToast("只能打赏1-100金额");
+                        }
+                    } catch (NumberFormatException e) {
+                        ToastUtil.showToast("请输入正确的价格");
                     }
                 }
             }

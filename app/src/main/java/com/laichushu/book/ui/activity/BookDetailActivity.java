@@ -428,7 +428,12 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             publishLay.setVisibility(View.VISIBLE);
             String price = "￥ " + articleData.getPrice();
             priceTv.setText(price);//价格
-            probationTv.setOnClickListener(this);//免费试读按钮
+            if (articleData.getStatus().equals("2")){//电子书
+                probationTv.setVisibility(View.INVISIBLE);
+            }else {
+                probationTv.setVisibility(View.VISIBLE);
+                probationTv.setOnClickListener(this);//免费试读按钮
+            }
             payTv.setOnClickListener(this);//购买按钮
             stateTv.setText("阅读");
         }

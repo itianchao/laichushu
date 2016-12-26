@@ -21,6 +21,7 @@ import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.SignStateResult;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.event.RefrushMerPermissionEvent;
 import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.event.RefrushWriteFragmentEvent;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
@@ -250,12 +251,20 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         }
     }
 
+    /**
+     * 更新权限
+     *
+     * @param model
+     */
     @Override
-    public void updateBookPermission(RewardResult model) {
+    public void updateBookPermission(RewardResult model,String permission, int position) {
         if (model.isSuccess()) {
-            ToastUtil.showToast("修改权限成功");
+            HomeHotModel.DataBean dataBean = mData.get(position);
+            dataBean.setPermission(permission);
+            mData.set(position,dataBean);
+            ToastUtil.showToast("设置权限成功");
         } else {
-            ToastUtil.showToast("修改权限失败");
+            ToastUtil.showToast("设置权限失败");
         }
     }
 
@@ -301,12 +310,21 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
 
     @Override
     public void getDataFail4(String msg) {
-        ToastUtil.showToast("发表失败");
+        switch (msg) {
+            case "发表":
+                ToastUtil.showToast("发表失败");
+                break;
+            case "更新权限":
+                ToastUtil.showToast("设置权限失败");
+                break;
+            case "签约状态":
+                ToastUtil.showToast("设置签约失败");
+                break;
+        }
         writeBookAdapter.getFinalItemView().setEnabled(true);
         LoggerUtil.e(msg);
         hideLoading();
     }
-
     @Override
     public void showLoading() {
         showProgressDialog();
@@ -383,6 +401,20 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh()) {
             onRefresh();
+        }
+    }
+    /**
+     * 修改 素材权限
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefrushMerPermissionEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.getIndex() != -1) {
+            HomeHotModel.DataBean dataBean = mData.get(event.getIndex());
+            dataBean.setMaterialPermission(event.getMaterialPermission());
+            mData.set(event.getIndex(),dataBean);
         }
     }
 }
