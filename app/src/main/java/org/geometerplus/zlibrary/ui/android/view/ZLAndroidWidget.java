@@ -31,6 +31,7 @@ import android.view.ViewConfiguration;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
@@ -55,7 +56,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 	private final BitmapManagerImpl myBitmapManager = new BitmapManagerImpl(this);
 	private Bitmap myFooterBitmap;
 	private final SystemInfo mySystemInfo;
-
+	public static int position = 0;
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mySystemInfo = Paths.systemInfo(context);
@@ -169,7 +170,10 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 					// 若为previous -> current->next,previous->current
 					myBitmapManager.shift(index == ZLView.PageIndex.next);
 					view.onScrollingFinished(index);
-					ZLApplication.Instance().onRepaintFinished();
+//					//记录当前页数 ---- 记录可不可点
+//					ZLApplication.Instance().onRepaintFinished();
+//					FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
+//					position = fbReaderApp.getTextView().pagePosition().Current;
 					break;
 				}
 				case AnimatedScrollingBackward:// 没有翻到 下一页/上一页 则还在当前页
@@ -568,4 +572,6 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 	protected void updateColorLevel() {
 		ViewUtil.setColorLevel(myPaint, myColorLevel);
 	}
+
+
 }

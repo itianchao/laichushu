@@ -18,15 +18,13 @@ public class MechanismTopicList_Paramet implements Parcelable {
      * pageSize : 10
      */
     private String userId;
-    private String sourceId;
-    private String id;
+    private String partyId;
     private String pageNo;
     private String pageSize;
 
-    public MechanismTopicList_Paramet(String userId, String sourceId, String id, String pageNo, String pageSize) {
+    public MechanismTopicList_Paramet(String userId, String partyId, String pageNo, String pageSize) {
         this.userId = userId;
-        this.sourceId = sourceId;
-        this.id = id;
+        this.partyId = partyId;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
     }
@@ -39,20 +37,12 @@ public class MechanismTopicList_Paramet implements Parcelable {
         this.userId = userId;
     }
 
-    public String getSourceId() {
-        return sourceId;
+    public String getPartyId() {
+        return partyId;
     }
 
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setPartyId(String partyId) {
+        this.partyId = partyId;
     }
 
     public String getPageNo() {
@@ -79,21 +69,19 @@ public class MechanismTopicList_Paramet implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.userId);
-        dest.writeString(this.sourceId);
-        dest.writeString(this.id);
+        dest.writeString(this.partyId);
         dest.writeString(this.pageNo);
         dest.writeString(this.pageSize);
     }
 
     protected MechanismTopicList_Paramet(Parcel in) {
         this.userId = in.readString();
-        this.sourceId = in.readString();
-        this.id = in.readString();
+        this.partyId = in.readString();
         this.pageNo = in.readString();
         this.pageSize = in.readString();
     }
 
-    public static final Parcelable.Creator<MechanismTopicList_Paramet> CREATOR = new Parcelable.Creator<MechanismTopicList_Paramet>() {
+    public static final Creator<MechanismTopicList_Paramet> CREATOR = new Creator<MechanismTopicList_Paramet>() {
         @Override
         public MechanismTopicList_Paramet createFromParcel(Parcel source) {
             return new MechanismTopicList_Paramet(source);

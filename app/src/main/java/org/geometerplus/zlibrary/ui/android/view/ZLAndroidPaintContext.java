@@ -439,6 +439,11 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
     @Override
     public void drawImage(int x, int y, ZLImageData imageData, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode) {
+        String mBookTitle = fbReaderApp.getCurrentBook().getTitle();
+        if (mBookTitle.length() > 13) {
+            mBookTitle = mBookTitle.substring(0, 12) + "...";
+        }
+        FBReader.setBookTitle(mBookTitle);
         final Bitmap bitmap = ((ZLAndroidImageData) imageData).getBitmap(maxSize, scaling);
         if (bitmap != null && !bitmap.isRecycled()) {
             switch (adjustingMode) {
@@ -472,10 +477,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
     private ArrayList<XYBookMarkListBean> xlist = new ArrayList<>();
     private FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
     public void drawLine(int[] xs, int[] ys, ZLTextHighlighting mbookmark) {
-        if (fbReaderApp.getTextView().pagePosition().Current != position){
-            position = fbReaderApp.getTextView().pagePosition().Current;
-            xlist.clear();
-        }
+        clearOnClickList();
         offsetY = (int) myTextPaint.getTextSize();
         LinkedList<Integer> tmpXs = new LinkedList<>();
         LinkedList<Integer> tmpYs = new LinkedList<>();
@@ -578,6 +580,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
             if (i == drawY.size() - 1) {
                 if (mbookmark != null) {
                     String number = dispose(mbookmark, tempRight.get(i) + 10, drawY.get(i) + 18);
+                    position = fbReaderApp.getTextView().pagePosition().Current;
                     if (number == null) {
                         return;
                     }
@@ -699,4 +702,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         myCanvas.drawCircle(x, y, radius, myFillPaint);
     }
 //                if ((event.getX() > x - 20 && event.getX() < x + 20) && ((event.getY() > y - 10 && event.getY() < y + 10))) {
+    public void clearOnClickList(){
+        if (fbReaderApp.getTextView().pagePosition().Current != position){
+            xlist.clear();
+        }
+    }
+
 }

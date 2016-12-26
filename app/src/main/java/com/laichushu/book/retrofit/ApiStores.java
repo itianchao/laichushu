@@ -488,7 +488,8 @@ public interface ApiStores {
     Observable<RewardResult> dleteNoticesItem(@Body NoticesList_Paramet paramet);
 
     //获取机构话题
-    @POST("press/topics")
+//    @POST("press/topics")
+    @POST("dynamic/find")
     Observable<MechanismTopicListModel> getMechanismTopicList(@Body MechanismTopicList_Paramet paramet);
 
     //搜索机构
