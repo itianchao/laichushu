@@ -1,8 +1,15 @@
 package com.laichushu.book.ui.adapter;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -132,18 +139,19 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 break;
             case "2":
                 //打赏
-                holder.tvReward.setText(dataBeen.get(position).getSenderName());
-                holder.tvRewardTime.setText(dataBeen.get(position).getSendTime());
-                holder.tvRewardBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
-                holder.btnWallet.setOnClickListener(new View.OnClickListener() {
+                String msg = dataBeen.get(position).getSenderName() + "  打赏了你的书 " + "《" + dataBeen.get(position).getSourceName() + "》";
+                SpannableStringBuilder msgSpan = new SpannableStringBuilder();
+                msgSpan.append(msg);
+                //setSpan时需要指定的 flag,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE(前后都不包括).
+                msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.global)), 0, dataBeen.get(position).getSenderName().length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), dataBeen.get(position).getSenderName().length(), msg.length() - ("《" + dataBeen.get(position).getSourceName() + "》").length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.global)), msg.length() - ("《" + dataBeen.get(position).getSourceName() + "》").length(), msg.length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ClickableSpan nameSpan = new ClickableSpan() {
                     @Override
-                    public void onClick(View v) {
-                        UIUtil.openActivity(context, MyWalletDetailsActivity.class);
-                    }
-                });
-                holder.tvReward.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
                         //跳转用户主页
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
@@ -153,13 +161,45 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                             UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
                         }
                     }
-                });
-                holder.tvRewardBookName.setOnClickListener(new View.OnClickListener() {
+                };
+                ClickableSpan bookNameSpan = new ClickableSpan() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
                         messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
                     }
-                });
+                };
+                msgSpan.setSpan(nameSpan, 0, dataBeen.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                msgSpan.setSpan(bookNameSpan, msg.length() - ("《" + dataBeen.get(position).getSourceName() + "》").length(), msg.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                holder.tvReward.setText(msgSpan);
+                holder.tvReward.setMovementMethod(LinkMovementMethod.getInstance());
+//  holder.tvReward.setText(dataBeen.get(position).getSenderName());
+//                holder.tvRewardTime.setText(dataBeen.get(position).getSendTime());
+//                holder.tvRewardBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
+//                holder.btnWallet.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        UIUtil.openActivity(context, MyWalletDetailsActivity.class);
+//                    }
+//                });
+//                holder.tvReward.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //跳转用户主页
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+//                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+//                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+//                        } else {
+//                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+//                        }
+//                    }
+//                });
+//                holder.tvRewardBookName.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
+//                    }
+//                });
                 holder.ivRewardDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -249,20 +289,57 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 break;
             case "5":
                 //订阅
+                String msgfoucs = "您订阅  "+dataBeen.get(position).getSenderName() + "  的作品  " + "《" + dataBeen.get(position).getSourceName() + "》"+"更新了";
+                SpannableStringBuilder msgFoucsSpan = new SpannableStringBuilder();
+                msgFoucsSpan.append(msgfoucs);
                 holder.ivFocusIcon.setVisibility(View.GONE);
+                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), 0, ("您订阅  ").length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.global)),("您订阅  ").length(),("您订阅  ").length()+  dataBeen.get(position).getSenderName().length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), ("您订阅  ").length()+  dataBeen.get(position).getSenderName().length(), ("您订阅  ").length()+  dataBeen.get(position).getSenderName().length()+ (" ").length()*4+3 ,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.global)), 6+(" ").length()*6+  dataBeen.get(position).getSenderName().length(),msgfoucs .length()-3,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), msgfoucs.length()-3,msgfoucs .length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ClickableSpan userSpan = new ClickableSpan() {
+                    @Override
+                    public void onClick(View view) {
+                        //跳转用户主页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                        } else {
+                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                        }
+                    }
+                };
+                ClickableSpan bookSpan = new ClickableSpan() {
+                    @Override
+                    public void onClick(View view) {
+                        messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
+                    }
+                };
+                msgFoucsSpan.setSpan(userSpan, ("您订阅  ").length(),("您订阅  ").length()+  dataBeen.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                msgFoucsSpan.setSpan(bookSpan,msgfoucs.length()-3-("《" + dataBeen.get(position).getSourceName() + "》").length(),msgfoucs .length()-3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                holder.tvFocusName.setText(msgFoucsSpan);
+                holder.tvFocusName.setMovementMethod(LinkMovementMethod.getInstance());
+
                 holder.ivFocusNotice.setVisibility(View.VISIBLE);
                 GlideUitl.loadRandImgLocal(context, R.drawable.msg_subscribe2x, holder.ivFocusNotice);
                 holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
-                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
-                holder.tvFocusName.setText("您订阅");
-                holder.tvFocusContent1.setVisibility(View.VISIBLE);
-                holder.tvFocusContent2.setVisibility(View.VISIBLE);
-                holder.tvFocusContent3.setVisibility(View.VISIBLE);
-                holder.tvFocusContent4.setVisibility(View.VISIBLE);
-                holder.tvFocusContent1.setText(dataBeen.get(position).getAuthorName());
-                holder.tvFocusContent2.setText("的作品:");
-                holder.tvFocusContent3.setText("《" + dataBeen.get(position).getSourceName() + "》");
-                holder.tvFocusContent4.setText("更新了!");
+//                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
+//                holder.tvFocusName.setText("您订阅");
+//                holder.tvFocusContent1.setVisibility(View.VISIBLE);
+//                holder.tvFocusContent2.setVisibility(View.VISIBLE);
+//                holder.tvFocusContent3.setVisibility(View.VISIBLE);
+//                holder.tvFocusContent4.setVisibility(View.VISIBLE);
+//                holder.tvFocusContent1.setText(dataBeen.get(position).getAuthorName());
+//                holder.tvFocusContent2.setText("的作品:");
+//                holder.tvFocusContent3.setText("《" + dataBeen.get(position).getSourceName() + "》");
+//                holder.tvFocusContent4.setText("更新了!");
                 holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -276,26 +353,26 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         }
                     }
                 });
-                holder.tvFocusContent1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //跳转用户主页
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
-                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
-                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
-                        } else {
-                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
-                        }
-                    }
-                });
-                //跳转图书详情
-                holder.tvFocusContent3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
-                    }
-                });
+//                holder.tvFocusContent1.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //跳转用户主页
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+//                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+//                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+//                        } else {
+//                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+//                        }
+//                    }
+//                });
+//                //跳转图书详情
+//                holder.tvFocusContent3.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
+//                    }
+//                });
                 holder.ivFocusDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

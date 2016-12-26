@@ -16,6 +16,7 @@ import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.event.RefrushHomePageEvent;
+import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.mvp.homepage.HomePagePresener;
 import com.laichushu.book.mvp.homepage.HomePageView;
 import com.laichushu.book.retrofit.ApiCallback;

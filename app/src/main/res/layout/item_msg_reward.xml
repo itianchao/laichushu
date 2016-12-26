@@ -7,11 +7,8 @@
 
     <LinearLayout
         android:id="@+id/ll_item"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:background="@color/white"
@@ -23,7 +20,7 @@
             android:background="@color/bgGrey"/>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="54dp">
 
             <ImageView
                 android:id="@+id/iv_rewardIcon"
@@ -31,11 +28,21 @@
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:background="@drawable/msg_rewardme2x" />
-
+            <ImageView
+                android:id="@+id/iv_rewardDeleteMsg"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/icon_delete2x"/>
             <LinearLayout
+                android:id="@+id/ll_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/iv_rewardIcon"
+                android:layout_toLeftOf="@+id/iv_rewardDeleteMsg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -59,7 +66,7 @@
                     android:text="打赏了你的书"
                     android:textColor="@color/characterGray"
                     android:textSize="@dimen/edit2"
-                     />
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tv_rewardBookName"
@@ -69,17 +76,8 @@
                     android:layout_marginLeft="8dp"
                     android:layout_toRightOf="@+id/tv_type"
                     android:textColor="@color/auditing"
-                    android:textSize="@dimen/edit2"
-                     />
+                    android:textSize="@dimen/edit2"/>
             </LinearLayout>
-            <ImageView
-                android:id="@+id/iv_rewardDeleteMsg"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/icon_delete2x"/>
         </RelativeLayout>
 
         <RelativeLayout

@@ -31,7 +31,6 @@
             android:id="@+id/tv_gradeFlg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_copper_medal2x"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/edit2" />
 

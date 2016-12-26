@@ -70,6 +70,26 @@
         <item name="android:textColor">@drawable/select_login_color</item>
         <item name="android:textSize">@dimen/edit</item>
     </style>
+    <style name="button_login_style1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:background">@drawable/select_login_button</item>
+        <item name="android:textColor">@drawable/btn_bg_global2white_selector</item>
+        <item name="android:textSize">@dimen/edit</item>
+    </style>
+    <style name="button_login_style2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:background">@drawable/select_background_button</item>
+        <item name="android:textColor">@drawable/btn_bg_white2global_selector</item>
+        <item name="android:textSize">@dimen/edit</item>
+    </style>
     <!-- 首页 全部活动同城排行-->
     <style name="radiubutton_home">
         <item name="android:background">@color/white</item>
