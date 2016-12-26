@@ -61,7 +61,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     private WriteBookAdapter writeBookAdapter;
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private ArrayList<MyTabStrip> mStrip = new ArrayList<>();
-    private int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x,R.drawable.icon_delete2x,R.drawable.icon_publishl2x, R.drawable.icon_submission2x, R.drawable.icon_sign2x};
+    private int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x, R.drawable.icon_delete2x, R.drawable.icon_publishl2x, R.drawable.icon_submission2x, R.drawable.icon_sign2x};
     private String title[] = {"编辑目录", "编辑素材", "删除", "发表", "投稿", "签约状态"};
     private boolean isLoad = true;
     //-----
@@ -71,6 +71,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     final List<String> editList = new ArrayList<>();//编辑
     private String pressId, editId;
     private int currentPos;
+    private AlertDialog alertDialog = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -164,8 +165,9 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         writeBookAdapter.getFinalItemView().setEnabled(true);
         if (model.isSuccess()) {
             this.model = model;
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
-            final AlertDialog alertDialog = dialogBuilder.create();
+            if (alertDialog == null) {
+                alertDialog = new AlertDialog.Builder(mActivity, R.style.DialogStyle).create();
+            }
             if (alertDialog.isShowing()) {
                 return;
             }
@@ -355,6 +357,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     private void showSpinWindow(TextView tv) {
 
     }
+
     private void updateDB() {
         Cache_JsonDao cache_jsonDao = BaseApplication.getDaoSession(getActivity()).getCache_JsonDao();
         List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder()
@@ -362,8 +365,8 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         Cache_Json cache_json = cache_jsons.get(0);
         PersonalCentreResult result = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
         if (result.getArticleCount() != null) {
-            result.setArticleCount(Integer.parseInt(result.getArticleCount())-1+"");
-        }else {
+            result.setArticleCount(Integer.parseInt(result.getArticleCount()) - 1 + "");
+        } else {
             result.setArticleCount("0");
         }
         cache_json.setJson(new Gson().toJson(result));
@@ -390,10 +393,11 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     /**
      * 投稿后刷新页面
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshWriteFragment event){
+    public void onEvent(RefurshWriteFragment event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh()) {
             onRefresh();
@@ -402,10 +406,11 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     /**
      * 修改详情页后刷新数据
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefrushWriteFragmentEvent event){
+    public void onEvent(RefrushWriteFragmentEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh()) {
             onRefresh();
