@@ -4,6 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <!--标题-->
-    <include layout="@layout/page_title"/>
-    
+    <include layout="@layout/page_title" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbn_01"
+            style="@style/mechanism_select"
+            android:checked="true"
+            android:text="小组" />
+
+        <RadioButton
+            android:id="@+id/rbn_02"
+            style="@style/mechanism_select"
+            android:text="最新话题" />
+    </RadioGroup>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+    </FrameLayout>
 </LinearLayout>
