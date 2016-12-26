@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.event.RefrushMerPermissionEvent;
 import com.laichushu.book.event.RefurshMaterialDirEvent;
 import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
 import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirPresenter;
@@ -46,6 +48,8 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
     private String articleId;
     private ArrayList<SourceMaterialDirModle.DataBean> mData = new ArrayList<>();
     private boolean isLoad = true;
+    private String materialPermission;
+    private int index;
 
     @Override
     protected SourceMaterialDirPresenter createPresenter() {
@@ -56,6 +60,8 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_sourcemateialdir);
         articleId = getIntent().getStringExtra("articleId");
+        materialPermission = getIntent().getStringExtra("materialPermission");
+        index = getIntent().getIntExtra("index",-1);
         addTv = (TextView) mSuccessView.findViewById(R.id.tv_add);
         addJur = (TextView) mSuccessView.findViewById(R.id.tv_title_right2);
         titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
@@ -173,8 +179,10 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
      * @param model
      */
     @Override
-    public void getUpdateMerPermission(RewardResult model) {
+    public void getUpdateMerPermission(RewardResult model,String permission) {
         if (model.isSuccess()) {
+            materialPermission = permission;
+            EventBus.getDefault().postSticky(new RefrushMerPermissionEvent(materialPermission,index));
             ToastUtil.showToast("修改权限成功");
         } else {
             ToastUtil.showToast("修改权限失败");
@@ -231,7 +239,7 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
                 break;
             case R.id.tv_title_right2:
                 //权限
-                mvpPresenter.openPermissionAlertDialog(mActivity,articleId);
+                mvpPresenter.openPermissionAlertDialog(mActivity,articleId,materialPermission);
                 break;
         }
     }
@@ -261,5 +269,10 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
                 mvpPresenter.getSourceMaterialList(articleId);
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
     }
 }

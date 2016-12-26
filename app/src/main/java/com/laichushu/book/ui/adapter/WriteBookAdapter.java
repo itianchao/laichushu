@@ -144,6 +144,8 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                             } else {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("articleId", dataBean.getArticleId());
+                                bundle.putString("materialPermission",dataBean.getMaterialPermission());
+                                bundle.putInt("index",position);
                                 UIUtil.openActivity(mActivity, SourceMaterialDirActivity.class, bundle);
                             }
                             break;
@@ -242,7 +244,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                     return;
                 }
                 //添加权限
-                mvpPresenter.openPermissionAlertDialog(mActivity, dataBean);
+                mvpPresenter.openPermissionAlertDialog(mActivity, dataBean,position);
 //                if (!dataBean.isEdit()) {
 //                    ToastUtil.showToast("不可改编权限");
 //                } else {

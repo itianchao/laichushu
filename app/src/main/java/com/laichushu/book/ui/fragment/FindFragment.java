@@ -16,6 +16,7 @@ import com.laichushu.book.mvp.findfragment.FindView;
 import com.laichushu.book.ui.activity.FindEditMyPageActivity;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.ui.activity.FindCoursePageActivity;
+import com.laichushu.book.ui.activity.GroupMainActivity;
 import com.laichushu.book.ui.adapter.ClassRecycleAdapter;
 import com.laichushu.book.ui.adapter.FindTitleViewPagerAdapter;
 import com.laichushu.book.ui.adapter.GroupRecomAdapter;
@@ -98,7 +99,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
                             break;
                         case 1:
                             //小组主页
-
+                            UIUtil.openActivity(mActivity, GroupMainActivity.class);
                             break;
                         case 2:
                             //服务主页

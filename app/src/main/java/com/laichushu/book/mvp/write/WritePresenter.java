@@ -1,28 +1,16 @@
 package com.laichushu.book.mvp.write;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
-import com.laichushu.book.bean.netbean.ArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.DeleteNewBook_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
 import com.laichushu.book.bean.netbean.MySignEditor_paramet;
@@ -32,18 +20,9 @@ import com.laichushu.book.bean.netbean.UpdateBookPermission_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.CreateNewBookActivity;
-import com.laichushu.book.ui.activity.MainActivity;
-import com.laichushu.book.ui.activity.ManageWorksActivity;
 import com.laichushu.book.ui.base.BasePresenter;
-import com.laichushu.book.ui.widget.SpinerPopWindow;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.UIUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.R.id.list;
 
 /**
  * 写书 presenter
@@ -136,7 +115,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail4("code:" + code + "\nmsg:" + msg);
+                mvpView.getDataFail4("发表");
             }
 
             @Override
@@ -148,11 +127,11 @@ public class WritePresenter extends BasePresenter<WriteView> {
 
     /**
      * 选择权限 对话框
-     *
-     * @param mActivity
+     *  @param mActivity
      * @param dataBean
+     * @param position
      */
-    public void openPermissionAlertDialog(Activity mActivity, final HomeHotModel.DataBean dataBean) {
+    public void openPermissionAlertDialog(Activity mActivity, final HomeHotModel.DataBean dataBean, final int position) {
 
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_permission);
@@ -162,6 +141,24 @@ public class WritePresenter extends BasePresenter<WriteView> {
         RadioButton pressRbn = (RadioButton) customerView.findViewById(R.id.rbn_press);
         RadioButton fansRbn = (RadioButton) customerView.findViewById(R.id.rbn_fans);
         ImageView cancelBtn = (ImageView) customerView.findViewById(R.id.btn_cancel);
+        String permission = dataBean.getPermission();//目前权限
+        switch(permission){
+            case "1":
+                publicRbn.setChecked(true);
+                break;
+            case "2":
+                privateRbn.setChecked(true);
+                break;
+            case "3":
+                masterRbn.setChecked(true);
+                break;
+            case "4":
+                pressRbn.setChecked(true);
+                break;
+            case "5":
+                fansRbn.setChecked(true);
+                break;
+        }
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +170,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
             public void onClick(View v) {
                 setPermission("1");
 //                permissionTv.setText("默认公开");
-                loadUpdateBookPermission(dataBean.getActivityId(), getPermission());
+                loadUpdateBookPermission(dataBean.getActivityId(), getPermission(),position);
                 dialogBuilder.dismiss();
 
             }
@@ -183,7 +180,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
             public void onClick(View v) {
                 setPermission("2");
 //                permissionTv.setText("仅个人");
-                loadUpdateBookPermission(dataBean.getArticleId(), getPermission());
+                loadUpdateBookPermission(dataBean.getArticleId(), getPermission(), position);
                 dialogBuilder.dismiss();
             }
         });
@@ -192,7 +189,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
             public void onClick(View v) {
                 setPermission("3");
 //                permissionTv.setText("编辑");
-                loadUpdateBookPermission(dataBean.getArticleId(), getPermission());
+                loadUpdateBookPermission(dataBean.getArticleId(), getPermission(), position);
                 dialogBuilder.dismiss();
             }
         });
@@ -201,7 +198,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
             public void onClick(View v) {
                 setPermission("4");
 //                permissionTv.setText("出版社");
-                loadUpdateBookPermission(dataBean.getArticleId(), getPermission());
+                loadUpdateBookPermission(dataBean.getArticleId(), getPermission(), position);
                 dialogBuilder.dismiss();
             }
         });
@@ -210,7 +207,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
             public void onClick(View v) {
                 setPermission("5");
 //                permissionTv.setText("粉丝");
-                loadUpdateBookPermission(dataBean.getArticleId(), getPermission());
+                loadUpdateBookPermission(dataBean.getArticleId(), getPermission(), position);
                 dialogBuilder.dismiss();
             }
         });
@@ -224,19 +221,19 @@ public class WritePresenter extends BasePresenter<WriteView> {
                 .show();
     }
 
-    public void loadUpdateBookPermission(String id, String permission) {
+    public void loadUpdateBookPermission(String id, final String permission, final int position) {
         mvpView.showLoading();
-        LoggerUtil.e("发表");
+        LoggerUtil.e("更新书的权限");
         UpdateBookPermission_Paramet bookParamet = new UpdateBookPermission_Paramet(userId, id, permission);
         addSubscription(apiStores.getUpdateBookPermissionDetails(bookParamet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.updateBookPermission(model);
+                mvpView.updateBookPermission(model,permission,position);
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail4("code:" + code + "\nmsg:" + msg);
+                mvpView.getDataFail4("更新权限");
             }
 
             @Override
@@ -260,7 +257,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail4("code:" + code + "\nmsg:" + msg);
+                mvpView.getDataFail4("签约状态");
             }
 
             @Override

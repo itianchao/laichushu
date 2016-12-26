@@ -15,7 +15,7 @@ public interface WriteView {
     void deleteNewBook(RewardResult model, int position);
     void articleVote(RewardResult model);
     void getSignStateDeteSuccess(SignStateResult model,String articleId);
-    void updateBookPermission(RewardResult model);
+    void updateBookPermission(RewardResult model,String permission, int position);
     void publishNewBook(RewardResult model,int index,String type);
     void getDataFail(String msg);
     void getDataFail2(String msg);

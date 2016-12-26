@@ -86,6 +86,14 @@ public class HomeHotModel implements Parcelable {
         private String name;
         private boolean isDelete ; //是否删除
         private boolean isPermission;//是否有权限
+        /**
+         * materialPermission : 1 默认公开 2 仅个人
+         * permission : 1 默认公开 2 仅本人 3 编辑 4 出版社 5 粉丝
+         */
+
+        private String materialPermission;//素材权限
+        private String permission;//图书权限
+
 
         public boolean isDelete() {
             return isDelete;
@@ -510,6 +518,22 @@ public class HomeHotModel implements Parcelable {
             this.applyAmount = applyAmount;
         }
 
+        public String getMaterialPermission() {
+            return materialPermission;
+        }
+
+        public void setMaterialPermission(String materialPermission) {
+            this.materialPermission = materialPermission;
+        }
+
+        public String getPermission() {
+            return permission;
+        }
+
+        public void setPermission(String permission) {
+            this.permission = permission;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -534,6 +558,10 @@ public class HomeHotModel implements Parcelable {
             dest.writeString(this.sourceId);
             dest.writeString(this.type);
             dest.writeString(this.name);
+            dest.writeByte(this.isDelete ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.isPermission ? (byte) 1 : (byte) 0);
+            dest.writeString(this.materialPermission);
+            dest.writeString(this.permission);
             dest.writeString(this.expressStatus);
             dest.writeString(this.freezeStatus);
             dest.writeInt(this.wordNum);
@@ -579,6 +607,10 @@ public class HomeHotModel implements Parcelable {
             this.sourceId = in.readString();
             this.type = in.readString();
             this.name = in.readString();
+            this.isDelete = in.readByte() != 0;
+            this.isPermission = in.readByte() != 0;
+            this.materialPermission = in.readString();
+            this.permission = in.readString();
             this.expressStatus = in.readString();
             this.freezeStatus = in.readString();
             this.wordNum = in.readInt();
