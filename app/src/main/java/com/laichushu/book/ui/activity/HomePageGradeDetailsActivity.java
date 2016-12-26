@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,19 +63,24 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
                     refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                     total.setText(result.getGrade() + "分，为");
                     tvRemarks.setText(result.getRemarks());
-                    String res = null;
+                    Drawable drawable=null;
                     switch (result.getType()) {
                         case 1:
-                            res = "金牌";
+                            //"金牌";
+                            drawable= mActivity.getResources().getDrawable(R.drawable.icon_gold_medal2x);
                             break;
                         case 2:
-                            res = "银牌";
+                            // "银牌";
+                            drawable= mActivity.getResources().getDrawable(R.drawable.icon_silver_medal2x);
                             break;
                         case 3:
-                            res = "铜牌";
+                          //"铜牌";
+                            drawable= mActivity.getResources().getDrawable(R.drawable.icon_copper_medal2x);
                             break;
                     }
-                    flg.setText(res+(result.getTypeName()));
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    flg.setCompoundDrawables(drawable, null, null, null);
+                    flg.setText(result.getTypeName());
                 } else {
                     refreshPage(LoadingPager.PageState.STATE_ERROR);
                 }

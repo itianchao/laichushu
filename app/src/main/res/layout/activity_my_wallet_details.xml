@@ -50,8 +50,8 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="15dp"
-        android:background="@color/auditing"
         android:text="充 值"
+        style="@style/button_login_style"
         android:textColor="@color/white"
         android:textSize="@dimen/edit" />
 
@@ -63,9 +63,8 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/select_background_button"
+        style="@style/button_login_style2"
         android:text="提 现"
-        android:textColor="@drawable/btn_bg_white2global_selector"
         android:textSize="@dimen/edit" />
 
     <TextView

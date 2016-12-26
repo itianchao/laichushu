@@ -17,6 +17,7 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.event.RefurshPhotoPathEvent;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.BaseApplication;
@@ -210,6 +211,7 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
                 @Override
                 public void run() {
                     EventBus.getDefault().postSticky(new RefurshWriteFragmentEvent(true));
+                    EventBus.getDefault().postSticky(new RefrushMineEvent(true));
                     finish();
                 }
             },1700);
