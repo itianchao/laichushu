@@ -59,6 +59,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="clip_horizontal"
             android:layout_marginLeft="12dp"
+            android:background="@null"
             android:clickable="true"
             android:drawableRight="@drawable/icon_select2_true"
             android:gravity="center_vertical|left"
@@ -90,6 +91,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="12dp"
             android:clickable="true"
+            android:background="@null"
             android:gravity="center_vertical|left"
             android:hint="请选择"
             android:textColorHint="@color/Grey" />
