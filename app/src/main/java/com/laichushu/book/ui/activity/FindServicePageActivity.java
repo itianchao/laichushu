@@ -6,66 +6,58 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FindEditorListModel;
 import com.laichushu.book.db.City_Id;
 import com.laichushu.book.db.City_IdDao;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.global.BaseApplication;
-import com.laichushu.book.mvp.findeditpage.FindEditPagePresenter;
-import com.laichushu.book.mvp.findeditpage.FindEditPageView;
-import com.laichushu.book.ui.adapter.TotalRanKingAdapter;
-import com.laichushu.book.ui.adapter.UserDynamicAdapter;
+import com.laichushu.book.mvp.findservicepage.FindServicePagePresenter;
+import com.laichushu.book.mvp.findservicepage.FindServicePageView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.WheelView;
-import com.laichushu.book.utils.ToastUtil;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> implements FindEditPageView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
+public class FindServicePageActivity extends MvpActivity2<FindServicePagePresenter> implements FindServicePageView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle;
-    private PullLoadMoreRecyclerView mEditorRecyclerView;
-    private TotalRanKingAdapter rangeAdapter;
-    private RadioGroup rgTitle;
+    private PullLoadMoreRecyclerView mVideoRecyclerView, mMineRecyclerView;
     private CheckBox rbRanking, rbCity;
-    private List<FindEditorListModel.DataBean> editorDate = new ArrayList<>();
-    private String orderBy = "0";
 
     private City_IdDao city_idDao;
     private List<City_Id> city_idList;
     private String curProCode = "01";
-    private String curCityCode = "01";
-    private int PAGE_NO = 1;
-
     @Override
-    protected FindEditPagePresenter createPresenter() {
-        return new FindEditPagePresenter(this);
+    protected FindServicePagePresenter createPresenter() {
+        return new FindServicePagePresenter(this);
     }
 
     @Override
     protected View createSuccessView() {
-        View inflate = UIUtil.inflate(R.layout.activity_find_edit_page);
+        View inflate = UIUtil.inflate(R.layout.activity_find_service_page);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
-        rgTitle = (RadioGroup) inflate.findViewById(R.id.rg_find);
+        mVideoRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_total_ranking);
+        mMineRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_city);
         rbRanking = (CheckBox) inflate.findViewById(R.id.rb_total_ranking);
         rbCity = (CheckBox) inflate.findViewById(R.id.rb_city);
-        mEditorRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_total_ranking);
+        mVideoRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_total_ranking);
+        mMineRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_city);
         return inflate;
     }
 
     @Override
     protected void initData() {
         super.initData();
-        tvTitle.setText("编辑");
+        tvTitle.setText("服务");
+
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         city_idDao = daoSession.getCity_IdDao();
         city_idList = city_idDao.queryBuilder().build().list();
@@ -74,15 +66,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         rbRanking.setOnClickListener(this);
         rbCity.setOnClickListener(this);
 
-
-        //初始化mRecyclerView 动态
-        mEditorRecyclerView.setGridLayout(1);
-        mEditorRecyclerView.setFooterViewText("加载中");
-        rangeAdapter = new TotalRanKingAdapter(this, editorDate);
-        mEditorRecyclerView.setAdapter(rangeAdapter);
-        mEditorRecyclerView.setOnPullLoadMoreListener(this);
-
-        mvpPresenter.loadEditorListData(curProCode+curCityCode, orderBy + "");
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -97,7 +81,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
                 if (!rbRanking.isChecked()) {
                     rbRanking.setChecked(true);
                 }
-                mvpPresenter.showRankingDialog(mActivity, rbRanking, curProCode);
+                mvpPresenter.showRankingDialog(mActivity, rbRanking);
                 break;
             case R.id.rb_city:
                 //城市
@@ -111,54 +95,23 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
     }
 
     @Override
-    public void getEditorListDataSuccess(FindEditorListModel model, String orderBy) {
-        editorDate.clear();
-        this.orderBy = orderBy;
-        UIUtil.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mEditorRecyclerView.setPullLoadMoreCompleted();
-            }
-        }, 300);
-        if (model.isSuccess()) {
-            editorDate = model.getData();
-
-            if (!editorDate.isEmpty()) {
-                rangeAdapter.refreshAdapter(editorDate);
-                PAGE_NO++;
-            } else {
-                ToastUtil.showToast(model.getErrMsg());
-                ToastUtil.showToast(model.getErrMsg());
-            }
-        } else {
-            ToastUtil.showToast("没有更多数据");
-        }
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-    }
-
-    @Override
     public void onRefresh() {
-        PAGE_NO = 1;
-        editorDate.clear();
-        mvpPresenter.getEditorList_paramet().setPageNo(PAGE_NO + "");
-        mvpPresenter.loadEditorListData(curProCode, orderBy + "");
+
     }
 
     @Override
     public void onLoadMore() {
-        mvpPresenter.getEditorList_paramet().setPageNo(PAGE_NO + "");
-        mvpPresenter.loadEditorListData(curProCode, orderBy + "");
-    }
 
-
-    @Override
-    public void showDialog() {
-        showProgressDialog();
     }
 
     @Override
     public void getDataFail(String msg) {
+        LoggerUtil.e(msg.toString());
+    }
 
+    @Override
+    public void showDialog() {
+        showProgressDialog();
     }
 
     @Override
@@ -182,20 +135,14 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         wvCity.setSeletion(0);
         wvProvince.setItems(getProvonce());
         wvCity.setItems(getCity("01"));
+        final String[] curProvince = {"北京市"};
         wvProvince.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(int position, String item) {
-               curProCode=getProCodeByProvince(item);
+                curProvince[0] = item;
                 wvCity.setItems(getCity(getProCodeByProvince(item)));
             }
         });
-        wvCity.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-            @Override
-            public void onSelected(int position, String item) {
-                curCityCode=getCodeByCity(item);
-            }
-        });
-
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,14 +153,14 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
             @Override
             public void onClick(View v) {
                 //提交数据
-                mvpPresenter.loadEditorListData(curProCode+curCityCode, orderBy);
+                curProCode = getProCodeByProvince(curProvince[0]);
                 popupWindow.dismiss();
             }
         });
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int xPos = mActivity.getWindowManager().getDefaultDisplay().getWidth() / 4
+        int xPos =  mActivity.getWindowManager().getDefaultDisplay().getWidth() / 4
                 - rbCity.getWidth() / 4;
         int[] location = new int[2];
         rbCity.getLocationOnScreen(location);
@@ -269,17 +216,6 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         return result;
     }
 
-    //通过城市名字获取城市code
-    private String getCodeByCity(String cityName) {
-        String result = null;
-        for (int i = 0; i < city_idList.size(); i++) {
-            if (city_idList.get(i).getCity().equals(cityName)) {
-                result = city_idList.get(i).getCityCode();
-            }
-        }
-        return result;
-    }
-
     /**
      * @param proCode
      * @return 根据proCode查询城市
@@ -295,3 +231,4 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         return cityDate;
     }
 }
+

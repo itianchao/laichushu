@@ -272,9 +272,8 @@
             android:name=".ui.activity.MsgLikeDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
-            android:name=".ui.activity.GroupMainActivity"
+            android:name=".ui.activity.FindGroupMainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
@@ -975,7 +974,8 @@
         <activity android:name=".ui.activity.PersonalInfomationPageActivity" />
         <activity android:name=".ui.activity.ActivityPageDetailsActivity" />
         <activity android:name=".ui.activity.AgreementDetailsActivity" />
-        <activity android:name=".ui.activity.FindEditMyPageActivity"></activity>
+        <activity android:name=".ui.activity.FindEditMyPageActivity" />
+        <activity android:name=".ui.activity.FindServicePageActivity"></activity>
     </application>
 
 </manifest>
