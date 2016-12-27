@@ -34,6 +34,7 @@ import com.laichushu.book.bean.otherbean.BaseBookEntity;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.activity.LoginActivity;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -497,5 +498,17 @@ public class UIUtil
 				mActivity.finish();
 			}
 		}, 1710);
+	}
+	/**
+	 * 延时关闭是上下拉刷新
+	 * @param ryv
+	 */
+	public static void postPullLoadMoreCompleted(final PullLoadMoreRecyclerView ryv){
+		UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				ryv.setPullLoadMoreCompleted();
+			}
+		}, 300);
 	}
 }

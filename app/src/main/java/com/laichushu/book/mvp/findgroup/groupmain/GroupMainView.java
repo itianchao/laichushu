@@ -12,7 +12,9 @@ public interface GroupMainView {
 
     void getGroupListDataFail(String msg);
 
-    void getTopicListDataSuccess(MechanismTopicListModel model);
+    void getNewTopicListDataSuccess(MechanismTopicListModel modle);
 
-    void getTopicListDataFail(String msg);
+    void getNewTopicDataFail(String msg);
+
+
 }

@@ -18,7 +18,7 @@ public class FindCourseCommResult implements Parcelable {
      */
 
     private boolean success;
-    private List<DataBean> data;
+    private ArrayList<DataBean> data;
 
     public String getErrMsg() {
         return errMsg;
@@ -37,11 +37,11 @@ public class FindCourseCommResult implements Parcelable {
         this.success = success;
     }
 
-    public List<DataBean> getData() {
+    public ArrayList<DataBean> getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(ArrayList<DataBean> data) {
         this.data = data;
     }
 
@@ -90,6 +90,9 @@ public class FindCourseCommResult implements Parcelable {
             this.joinNum = joinNum;
         }
 
+        public DataBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -101,9 +104,6 @@ public class FindCourseCommResult implements Parcelable {
             dest.writeString(this.name);
             dest.writeString(this.photo);
             dest.writeInt(this.joinNum);
-        }
-
-        public DataBean() {
         }
 
         protected DataBean(Parcel in) {
@@ -126,6 +126,9 @@ public class FindCourseCommResult implements Parcelable {
         };
     }
 
+    public FindCourseCommResult() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -134,16 +137,14 @@ public class FindCourseCommResult implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte(this.success ? (byte) 1 : (byte) 0);
-        dest.writeList(this.data);
-    }
-
-    public FindCourseCommResult() {
+        dest.writeTypedList(this.data);
+        dest.writeString(this.errMsg);
     }
 
     protected FindCourseCommResult(Parcel in) {
         this.success = in.readByte() != 0;
-        this.data = new ArrayList<DataBean>();
-        in.readList(this.data, DataBean.class.getClassLoader());
+        this.data = in.createTypedArrayList(DataBean.CREATOR);
+        this.errMsg = in.readString();
     }
 
     public static final Creator<FindCourseCommResult> CREATOR = new Creator<FindCourseCommResult>() {

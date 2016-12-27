@@ -19,6 +19,7 @@ import com.laichushu.book.mvp.findfragment.FindView;
 import com.laichushu.book.ui.activity.FindEditMyPageActivity;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.ui.activity.FindCoursePageActivity;
+import com.laichushu.book.ui.activity.FindGroupMainActivity;
 import com.laichushu.book.ui.activity.FindServicePageActivity;
 import com.laichushu.book.ui.activity.FindGroupDetailActivity;
 import com.laichushu.book.ui.adapter.ClassRecycleAdapter;
@@ -62,13 +63,13 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private LinearLayout llContainer;
     //小组
     private GroupRecomAdapter courseAdapter;
-    private List<FindCourseCommResult.DataBean> mCourseDate = new ArrayList<>();
+    private ArrayList<FindCourseCommResult.DataBean> mCourseDate = new ArrayList<>();
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Bundle bundle = getArguments();
-        if (bundle!=null){
+        if (bundle != null) {
             if (mTitleData.size() == 0) {
                 HomeModel homeModel = bundle.getParcelable("homeModel");
                 mTitleData = homeModel.getData();
@@ -115,7 +116,9 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
                             break;
                         case 1:
                             //小组主页
-                            UIUtil.openActivity(mActivity, FindGroupDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelableArrayList("recommend", mCourseDate);
+                            UIUtil.openActivity(mActivity, FindGroupMainActivity.class, bundle);
                             break;
                         case 2:
                             //服务主页
@@ -203,6 +206,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
 
     /**
      * 推荐小组
+     *
      * @param model
      */
     @Override
@@ -285,7 +289,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     /**
      * 失败后 重新请求按钮
      */
-    public void ErrorReloadData(){
+    public void ErrorReloadData() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {
