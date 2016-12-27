@@ -99,7 +99,7 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
     }
 
     //获取编辑数据
-    FindEditorList_Paramet editorList_paramet = new FindEditorList_Paramet(userId, "", "", pageNo, pageSize);
+    FindEditorList_Paramet editorList_paramet = new FindEditorList_Paramet("173", "", "", pageNo, pageSize);
 
     /**
      * orderBy

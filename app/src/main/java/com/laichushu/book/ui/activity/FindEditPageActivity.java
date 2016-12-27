@@ -37,11 +37,11 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
     private RadioGroup rgTitle;
     private CheckBox rbRanking, rbCity;
     private List<FindEditorListModel.DataBean> editorDate = new ArrayList<>();
-    private String orderBy = "0";
+    private String orderBy = "1";
 
     private City_IdDao city_idDao;
     private List<City_Id> city_idList;
-    private String curProCode = "01";
+    private String curProCode = "02";
     private String curCityCode = "01";
     private int PAGE_NO = 1;
 
@@ -82,7 +82,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         mEditorRecyclerView.setAdapter(rangeAdapter);
         mEditorRecyclerView.setOnPullLoadMoreListener(this);
 
-        mvpPresenter.loadEditorListData(curProCode+curCityCode, orderBy + "");
+        mvpPresenter.loadEditorListData(curProCode+curCityCode, orderBy);
     }
 
     @Override

@@ -38,8 +38,11 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
 
     @Override
     public void onBindViewHolder(TotalRanKingAdapter.ViewHolder holder, final int position) {
-//        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivImg);
-//        holder.tvItem.setText(dataBeen.get(position).getName());
+        GlideUitl.loadImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
+        holder.tvTeamWork.setText(dataBeen.get(position).getCooperateNum());
+        holder.tvPublish.setText(dataBeen.get(position).getPress());
+        holder.tvRealName.setText(dataBeen.get(position).getName());
+        holder.tvDegress.setText(dataBeen.get(position).getLevelName());
         holder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
