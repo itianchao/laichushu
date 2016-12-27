@@ -139,15 +139,15 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 break;
             case "2":
                 //打赏
-                String msg = dataBeen.get(position).getSenderName() + "  打赏了你的书 " + "《" + dataBeen.get(position).getSourceName() + "》";
+                String msg = dataBeen.get(position).getSenderName() + "  打赏了你的书  " + "《" + dataBeen.get(position).getSourceName() + "》";
                 SpannableStringBuilder msgSpan = new SpannableStringBuilder();
                 msgSpan.append(msg);
                 //setSpan时需要指定的 flag,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE(前后都不包括).
-                msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.global)), 0, dataBeen.get(position).getSenderName().length(),
+                msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), 0, dataBeen.get(position).getSenderName().length(),
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), dataBeen.get(position).getSenderName().length(), msg.length() - ("《" + dataBeen.get(position).getSourceName() + "》").length(),
+                msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), dataBeen.get(position).getSenderName().length(), dataBeen.get(position).getSenderName().length() + 6 + (" ").length() * 4,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.global)), msg.length() - ("《" + dataBeen.get(position).getSourceName() + "》").length(), msg.length(),
+                msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), msg.length() - ("《" + dataBeen.get(position).getSourceName() + "》").length(), msg.length(),
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 ClickableSpan nameSpan = new ClickableSpan() {
                     @Override
@@ -172,15 +172,16 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 msgSpan.setSpan(bookNameSpan, msg.length() - ("《" + dataBeen.get(position).getSourceName() + "》").length(), msg.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
                 holder.tvReward.setText(msgSpan);
                 holder.tvReward.setMovementMethod(LinkMovementMethod.getInstance());
-//  holder.tvReward.setText(dataBeen.get(position).getSenderName());
-//                holder.tvRewardTime.setText(dataBeen.get(position).getSendTime());
+
+//                holder.tvReward.setText(dataBeen.get(position).getSenderName());
+                holder.tvRewardTime.setText(dataBeen.get(position).getSendTime());
 //                holder.tvRewardBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
-//                holder.btnWallet.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        UIUtil.openActivity(context, MyWalletDetailsActivity.class);
-//                    }
-//                });
+                holder.btnWallet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UIUtil.openActivity(context, MyWalletDetailsActivity.class);
+                    }
+                });
 //                holder.tvReward.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
@@ -289,19 +290,19 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 break;
             case "5":
                 //订阅
-                String msgfoucs = "您订阅  "+dataBeen.get(position).getSenderName() + "  的作品  " + "《" + dataBeen.get(position).getSourceName() + "》"+"更新了";
+                String msgfoucs = "您订阅  " + dataBeen.get(position).getSenderName() + "  的作品  " + "《" + dataBeen.get(position).getSourceName() + "》" + "更新了";
                 SpannableStringBuilder msgFoucsSpan = new SpannableStringBuilder();
                 msgFoucsSpan.append(msgfoucs);
                 holder.ivFocusIcon.setVisibility(View.GONE);
                 msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), 0, ("您订阅  ").length(),
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.global)),("您订阅  ").length(),("您订阅  ").length()+  dataBeen.get(position).getSenderName().length(),
+                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), ("您订阅  ").length(), ("您订阅  ").length() + dataBeen.get(position).getSenderName().length(),
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), ("您订阅  ").length()+  dataBeen.get(position).getSenderName().length(), ("您订阅  ").length()+  dataBeen.get(position).getSenderName().length()+ (" ").length()*4+3 ,
+                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), ("您订阅  ").length() + dataBeen.get(position).getSenderName().length(), ("您订阅  ").length() + dataBeen.get(position).getSenderName().length() + (" ").length() * 4 + 3,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.global)), 6+(" ").length()*6+  dataBeen.get(position).getSenderName().length(),msgfoucs .length()-3,
+                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), 6 + (" ").length() * 6 + dataBeen.get(position).getSenderName().length(), msgfoucs.length() - 3,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), msgfoucs.length()-3,msgfoucs .length(),
+                msgFoucsSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterGray)), msgfoucs.length() - 3, msgfoucs.length(),
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 ClickableSpan userSpan = new ClickableSpan() {
                     @Override
@@ -322,8 +323,8 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
                     }
                 };
-                msgFoucsSpan.setSpan(userSpan, ("您订阅  ").length(),("您订阅  ").length()+  dataBeen.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-                msgFoucsSpan.setSpan(bookSpan,msgfoucs.length()-3-("《" + dataBeen.get(position).getSourceName() + "》").length(),msgfoucs .length()-3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                msgFoucsSpan.setSpan(userSpan, ("您订阅  ").length(), ("您订阅  ").length() + dataBeen.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                msgFoucsSpan.setSpan(bookSpan, msgfoucs.length() - 3 - ("《" + dataBeen.get(position).getSourceName() + "》").length(), msgfoucs.length() - 3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
                 holder.tvFocusName.setText(msgFoucsSpan);
                 holder.tvFocusName.setMovementMethod(LinkMovementMethod.getInstance());
 
