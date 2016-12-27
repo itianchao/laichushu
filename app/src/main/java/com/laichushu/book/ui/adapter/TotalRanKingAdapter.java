@@ -40,6 +40,7 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
     public void onBindViewHolder(TotalRanKingAdapter.ViewHolder holder, final int position) {
         GlideUitl.loadImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
         holder.tvTeamWork.setText(dataBeen.get(position).getCooperateNum());
+        holder.tvExperience.setText(dataBeen.get(position).getWorkingYears());
         holder.tvPublish.setText(dataBeen.get(position).getPress());
         holder.tvRealName.setText(dataBeen.get(position).getName());
         holder.tvDegress.setText(dataBeen.get(position).getLevelName());
@@ -73,7 +74,7 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout rlItem;
-        public final TextView tvTeamWork, tvExpresence, tvPublish, tvRealName, tvDegress;
+        public final TextView tvTeamWork, tvExperience, tvPublish, tvRealName, tvDegress;
         public final ImageView ivImg;
         public final View root;
 
@@ -82,7 +83,7 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
             rlItem = (RelativeLayout) root.findViewById(R.id.rl_item);
             ivImg = (ImageView) root.findViewById(R.id.iv_userHeadImg);
             tvTeamWork = (TextView) root.findViewById(R.id.tv_teamworkNum);
-            tvExpresence = (TextView) root.findViewById(R.id.tv_experience);
+            tvExperience = (TextView) root.findViewById(R.id.tv_experience);
             tvPublish = (TextView) root.findViewById(R.id.tv_publish);
             tvRealName = (TextView) root.findViewById(R.id.tv_realName);
             tvDegress = (TextView) root.findViewById(R.id.tv_authorDegree);
