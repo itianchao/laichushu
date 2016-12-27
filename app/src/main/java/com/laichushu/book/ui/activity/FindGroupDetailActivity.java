@@ -14,7 +14,7 @@ import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 /**
- * 小组主页
+ * 发现 - 小组详情
  * Created by wangtong on 2016/12/26.
  */
 

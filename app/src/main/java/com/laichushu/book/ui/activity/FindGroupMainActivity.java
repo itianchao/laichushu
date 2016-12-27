@@ -15,7 +15,7 @@ import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
 /**
- * 小组主页
+ * 发现 - 小组主页
  * Created by wangtong on 2016/12/26.
  */
 
