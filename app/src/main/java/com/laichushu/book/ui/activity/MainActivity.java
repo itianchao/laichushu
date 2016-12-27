@@ -78,7 +78,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.rbn_find:
-                // TODO: 2016/12/24 暂时屏蔽掉
                 if (position != 1) {
                     position = 1;
                     setTabSelection(position);
@@ -150,6 +149,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case 1:
                 if (findFragment == null) {
                     findFragment = new FindFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("homeModel", getIntent().getParcelableExtra("homeModel"));
+                    findFragment.setArguments(bundle);
                     transaction.add(R.id.layFrame, findFragment);
                 } else {
                     transaction.show(findFragment);

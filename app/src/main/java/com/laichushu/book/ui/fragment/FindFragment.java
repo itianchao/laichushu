@@ -1,8 +1,11 @@
 package com.laichushu.book.ui.fragment;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -48,7 +51,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
 
         public void run() {
             findVp.setCurrentItem(++item);
-//            mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+            mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
         }
     };
     //标签列表
@@ -60,6 +63,18 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     //小组
     private GroupRecomAdapter courseAdapter;
     private List<FindCourseCommResult.DataBean> mCourseDate = new ArrayList<>();
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            if (mTitleData.size() == 0) {
+                HomeModel homeModel = bundle.getParcelable("homeModel");
+                mTitleData = homeModel.getData();
+            }
+        }
+    }
 
     @Override
     public View createSuccessView() {
@@ -76,11 +91,11 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     protected void initData() {
         super.initData();
+        titleViewPager();
         //标签列表
         View itemView;
         ImageView imageView;
         TextView textView;
-        int j = 0;
         llContainer.removeAllViews();
         for (int i = 0; i < img.length; i++) {
             itemView = UIUtil.inflate(R.layout.item_tab_course, null);
@@ -138,8 +153,6 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
         mCourseRecyclerView.setAdapter(courseAdapter);
         mCourseRecyclerView.setOnPullLoadMoreListener(this);
 
-
-        mvpPresenter.loadFindCarouseData();
         mvpPresenter.loadFindCourseCommData();
     }
 
@@ -156,7 +169,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public void onStart() {
         super.onStart();
-//        mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+        mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
     }
 
     @Override
@@ -189,25 +202,6 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     }
 
     @Override
-    public void getDataSuccess(HomeModel model) {
-        dismissProgressDialog();
-        mTitleData.clear();
-        UIUtil.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setPullLoadMoreCompleted();
-            }
-        }, 300);
-        if (model.isSuccess()) {
-            mTitleData = model.getData();
-            titleViewPager();
-        } else {
-            ToastUtil.showToast(model.getErrMsg());
-        }
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-    }
-
-    @Override
     public void getCourseDataSuccess(FindCourseCommResult model) {
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -220,10 +214,10 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
             mCourseDate = model.getData();
             courseAdapter.refreshAdapter(mCourseDate);
             classAdapter.refreshAdapter(mCourseDate);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
-
     }
 
     @Override
@@ -247,30 +241,30 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private void titleViewPager() {
         titleAdapter = new FindTitleViewPagerAdapter(mTitleData, mActivity, mvpPresenter);
         findVp.setAdapter(titleAdapter);
-//        int remainder = Integer.MAX_VALUE / 2 % (mTitleData.size() == 0 ? 1 : mTitleData.size());
-//        item = Integer.MAX_VALUE / 2 - remainder;
-//        findVp.setCurrentItem(item);
-//        findVp.setOnPageChangeListener(this);
-//        pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                if (lineLyt.getChildCount() > 1) {
-//                    range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
-//                }
-//            }
-//        });
-//        for (int i = 0; i < mTitleData.size(); i++) {
-//            ImageView imageView = new ImageView(mActivity);
-//            imageView.setBackgroundResource(R.drawable.shape_point_hollow);
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//            if (i > 0) {
-//                params.leftMargin = UIUtil.px2dip(10);
-//            }
-//            imageView.setLayoutParams(params);
-//            lineLyt.addView(imageView);
-//        }
+        int remainder = Integer.MAX_VALUE / 2 % (mTitleData.size() == 0 ? 1 : mTitleData.size());
+        item = Integer.MAX_VALUE / 2 - remainder;
+        findVp.setCurrentItem(item);
+        findVp.setOnPageChangeListener(this);
+        pointIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                pointIv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                if (lineLyt.getChildCount() > 1) {
+                    range = lineLyt.getChildAt(1).getLeft() - lineLyt.getChildAt(0).getLeft();
+                }
+            }
+        });
+        for (int i = 0; i < mTitleData.size(); i++) {
+            ImageView imageView = new ImageView(mActivity);
+            imageView.setBackgroundResource(R.drawable.shape_point_hollow);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            if (i > 0) {
+                params.leftMargin = UIUtil.px2dip(10);
+            }
+            imageView.setLayoutParams(params);
+            lineLyt.addView(imageView);
+        }
     }
 
     @Override

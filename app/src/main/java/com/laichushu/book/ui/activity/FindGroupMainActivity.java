@@ -46,7 +46,6 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
     private MechanismTopicListAdapter mTopicAdapter;
     private boolean frist = false;
     private boolean second = false;
-    private boolean thried = false;
     private MyHandler mhandler = new MyHandler(this);
 
     /**
@@ -65,7 +64,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
             FindGroupMainActivity handlerMemoryActivity = weakReference.get();
             if (handlerMemoryActivity != null) {
                 if (handlerMemoryActivity.frist && handlerMemoryActivity.second) {
-                    handlerMemoryActivity.refreshPage(LoadingPager.PageState.STATE_ERROR);
+                    handlerMemoryActivity.refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 }
             }
         }
@@ -163,10 +162,11 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
             if (modle.getData() != null && modle.getData().isEmpty()) {
                 mGroupListAdapter.setmData(modle.getData());
                 frist = true;
+                Message msg = new Message();
+                mhandler.sendMessage(msg);
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-            frist = false;
         }
     }
 
@@ -178,7 +178,6 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
     @Override
     public void getGroupListDataFail(String msg) {
         refreshPage(LoadingPager.PageState.STATE_ERROR);
-        frist = false;
     }
 
     /**

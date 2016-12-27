@@ -42,7 +42,7 @@ public class InitPresenter extends BasePresenter<InitView> {
 
                     @Override
                     public void onFinish() {
-                        mvpView.hideLoading();
+
                     }
                 });
     }
@@ -62,7 +62,7 @@ public class InitPresenter extends BasePresenter<InitView> {
 
             @Override
             public void onFinish() {
-                mvpView.hideLoading();
+
             }
         });
     }
@@ -83,7 +83,7 @@ public class InitPresenter extends BasePresenter<InitView> {
 
             @Override
             public void onFinish() {
-                mvpView.hideLoading();
+
             }
         });
     }

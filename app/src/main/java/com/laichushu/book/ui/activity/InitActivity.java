@@ -13,27 +13,23 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
+import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
-import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.init.InitPresenter;
-import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.widget.LoadingPager;
-import com.laichushu.book.utils.GlideUitl;
-import com.laichushu.book.utils.LoggerUtil;
-import com.laichushu.book.utils.SharePrefManager;
-import com.laichushu.book.utils.ToastUtil;
-import com.laichushu.book.R;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
+import com.laichushu.book.mvp.init.InitPresenter;
 import com.laichushu.book.mvp.init.InitView;
 import com.laichushu.book.ui.base.MvpActivity;
+import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -53,23 +49,39 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     private HomeModel homeModel;
     private HomeHotModel homeHotModel;
     private HomeHotModel homeAllModel;
-    private Handler mhandler = new Handler() {
+
+    /**
+     * handler
+     */
+    private MyHandler mhandler = new MyHandler(this);
+    static class MyHandler extends Handler {
+        private WeakReference<InitActivity> weakReference;
+
+        MyHandler(InitActivity mActivity) {
+            weakReference = new WeakReference<>(mActivity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
-            if (frist && second && thried && four) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("homeModel", homeModel);
-                bundle.putParcelable("homeHotModel", homeHotModel);
-                bundle.putParcelable("homeAllModel", homeAllModel);
-                UIUtil.openActivity(InitActivity.this, MainActivity.class, bundle);
-                finish();
-            }
             super.handleMessage(msg);
+            InitActivity mActivity = weakReference.get();
+            if (mActivity != null) {
+                if (mActivity.frist && mActivity.second && mActivity.thried && mActivity.four) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("homeModel", mActivity.homeModel);
+                    bundle.putParcelable("homeHotModel", mActivity.homeHotModel);
+                    bundle.putParcelable("homeAllModel", mActivity.homeAllModel);
+                    UIUtil.openActivity(mActivity, MainActivity.class, bundle);
+                    mActivity.finish();
+                }
+            }
         }
-    };
+    }
+
     private Cache_JsonDao cache_jsonDao;
 
     private InitActivity.UpdateReceiver mUpdateReceiver;
+
     @Override
     protected void initView() {
         setContentView(R.layout.activity_init);
@@ -87,23 +99,25 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
         List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder()
                 .where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).list();
         if (cache_jsons.isEmpty()) {
-            mvpPresenter.loadMineData();
+            mvpPresenter.loadMineData();//个人中心
         } else {
             four = true;
         }
-        mvpPresenter.loadHomeCarouseData();
-        mvpPresenter.loadHomeHotData();
-        mvpPresenter.loadHomeAllData("1");
+        mvpPresenter.loadHomeCarouseData();//首页轮播图
+        mvpPresenter.loadHomeHotData();//热门推荐
+        mvpPresenter.loadHomeAllData("1");//全部图书
     }
 
+    /**
+     * 首页轮播图 成功返回数据
+     * @param model
+     */
     @Override
     public void getDataSuccess(HomeModel model) {
         if (model.isSuccess()) {
             this.homeModel = model;
             frist = true;
             Message msg = new Message();
-            msg.what = 1;
-            msg.obj = frist;
             mhandler.sendMessage(msg);
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -111,14 +125,16 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
         }
     }
 
+    /**
+     * 热门推荐 成功返回数据
+     * @param model
+     */
     @Override
     public void getHotDataSuccess(HomeHotModel model) {
         if (model.isSuccess()) {
             this.homeHotModel = model;
             second = true;
             Message msg = new Message();
-            msg.what = 2;
-            msg.obj = second;
             mhandler.sendMessage(msg);
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -126,14 +142,16 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
         }
     }
 
+    /**
+     * 全部图书 成功返回数据
+     * @param model
+     */
     @Override
     public void getAllData(HomeHotModel model) {
         if (model.isSuccess()) {
             this.homeAllModel = model;
             thried = true;
             Message msg = new Message();
-            msg.obj = thried;
-            msg.what = 3;
             mhandler.sendMessage(msg);
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -141,6 +159,10 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
         }
     }
 
+    /**
+     * 个人中心 成功返回数据
+     * @param model
+     */
     @Override
     public void loadMineDataSuccess(PersonalCentreResult model) {
         if (model.getSuccess()) {
@@ -148,8 +170,6 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
             cache_jsonDao.insert(new Cache_Json(null, "PersonalDetails", new Gson().toJson(model)));
             four = true;
             Message msg = new Message();
-            msg.obj = four;
-            msg.what = 4;
             mhandler.sendMessage(msg);
             //sharePerfance存储
             SharePrefManager.setNickName(model.getNickName());
@@ -169,11 +189,6 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
     public void showLoading() {
         errorLay.setVisibility(View.GONE);
         loadingPb.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoading() {
-
     }
 
     @Override
@@ -201,10 +216,6 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
         }
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-    }
     public class UpdateReceiver extends BroadcastReceiver {
 
         @Override
@@ -216,6 +227,7 @@ public class InitActivity extends MvpActivity<InitPresenter> implements InitView
             }
         }
     }
+
     private void registerPlayerReceiver() {
         if (mUpdateReceiver == null) {
             mUpdateReceiver = new InitActivity.UpdateReceiver();

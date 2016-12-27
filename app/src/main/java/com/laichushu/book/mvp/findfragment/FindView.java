@@ -8,7 +8,6 @@ import com.laichushu.book.mvp.home.HomeModel;
  */
 
 public interface FindView {
-    void getDataSuccess(HomeModel model);
     void getCourseDataSuccess(FindCourseCommResult model);
     void getDataFail(String msg);
     void showLoading();

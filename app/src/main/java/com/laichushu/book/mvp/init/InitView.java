@@ -15,6 +15,5 @@ public interface InitView {
     void loadMineDataSuccess(PersonalCentreResult result);
     void getDataFail(String msg);
     void showLoading();
-    void hideLoading();
 
 }
