@@ -55,7 +55,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         private WeakReference<FindGroupMainActivity> weakReference;
 
         MyHandler(FindGroupMainActivity FindGroupMainActivity) {
-            weakReference = new WeakReference<FindGroupMainActivity>(FindGroupMainActivity);
+            weakReference = new WeakReference<>(FindGroupMainActivity);
         }
 
         @Override

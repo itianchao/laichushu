@@ -201,6 +201,10 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
 
     }
 
+    /**
+     * 推荐小组
+     * @param model
+     */
     @Override
     public void getCourseDataSuccess(FindCourseCommResult model) {
         UIUtil.postDelayed(new Runnable() {
@@ -216,13 +220,14 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
             classAdapter.refreshAdapter(mCourseDate);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
-            ToastUtil.showToast(model.getErrMsg());
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ErrorReloadData();
         }
     }
 
     @Override
     public void getDataFail(String msg) {
-
+        ErrorReloadData();
     }
 
     @Override
@@ -275,5 +280,18 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public void onLoadMore() {
 
+    }
+
+    /**
+     * 失败后 重新请求按钮
+     */
+    public void ErrorReloadData(){
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.loadFindCourseCommData();
+            }
+        });
     }
 }
