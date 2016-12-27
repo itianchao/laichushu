@@ -16,7 +16,8 @@ import com.laichushu.book.mvp.findfragment.FindView;
 import com.laichushu.book.ui.activity.FindEditMyPageActivity;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.ui.activity.FindCoursePageActivity;
-import com.laichushu.book.ui.activity.GroupMainActivity;
+import com.laichushu.book.ui.activity.FindServicePageActivity;
+import com.laichushu.book.ui.activity.FindGroupMainActivity;
 import com.laichushu.book.ui.adapter.ClassRecycleAdapter;
 import com.laichushu.book.ui.adapter.FindTitleViewPagerAdapter;
 import com.laichushu.book.ui.adapter.GroupRecomAdapter;
@@ -99,16 +100,19 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
                             break;
                         case 1:
                             //小组主页
-                            UIUtil.openActivity(mActivity, GroupMainActivity.class);
+                            UIUtil.openActivity(mActivity, FindGroupMainActivity.class);
                             break;
                         case 2:
                             //服务主页
-
+                            UIUtil.openActivity(mActivity, FindServicePageActivity.class);
                             break;
                         case 3:
                             //机构主页
 //测试
                             UIUtil.openActivity(mActivity, FindEditMyPageActivity.class);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString("articleId", dataBean.getArticleId());
+//                            UIUtil.openActivity(mActivity, MechanismListActivity.class, bundle);
                             break;
                         case 4:
                             //编辑主页

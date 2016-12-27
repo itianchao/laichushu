@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.FindEditorListModel;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.utils.GlideUitl;
@@ -22,9 +23,9 @@ import java.util.List;
 
 public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapter.ViewHolder> {
     private FindEditPageActivity context;
-    private List<HomeHotModel.DataBean> dataBeen;
+    private List<FindEditorListModel.DataBean> dataBeen;
 
-    public TotalRanKingAdapter(FindEditPageActivity context, List<HomeHotModel.DataBean> dataBean) {
+    public TotalRanKingAdapter(FindEditPageActivity context, List<FindEditorListModel.DataBean> dataBean) {
         this.context = context;
         this.dataBeen = dataBean;
     }
@@ -37,7 +38,7 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
 
     @Override
     public void onBindViewHolder(TotalRanKingAdapter.ViewHolder holder, final int position) {
-        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivImg);
+//        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivImg);
 //        holder.tvItem.setText(dataBeen.get(position).getName());
         holder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +60,7 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
         return dataBeen == null ? 0 : dataBeen.size();
     }
 
-    public void refreshAdapter(List<HomeHotModel.DataBean> listData) {
+    public void refreshAdapter(List<FindEditorListModel.DataBean> listData) {
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);

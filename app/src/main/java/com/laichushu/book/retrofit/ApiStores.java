@@ -572,4 +572,8 @@ public interface ApiStores {
 //    @Streaming //大文件时要加不然会OOM
     @GET
     Call<ResponseBody> downloadFile(@Url String fileUrl);
+
+    //发现界面--编辑
+    @POST("editor/list")
+    Observable<FindEditorListModel> getEditorListDatails(@Body FindEditorList_Paramet paramet);
 }

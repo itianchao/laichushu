@@ -5,9 +5,10 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.group.main.GroupMainPresenter;
-import com.laichushu.book.mvp.group.main.GroupMainView;
+import com.laichushu.book.mvp.group.groupmain.GroupMainPresenter;
+import com.laichushu.book.mvp.group.groupmain.GroupMainView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
@@ -18,7 +19,7 @@ import com.laichushu.book.utils.UIUtil;
  * Created by wangtong on 2016/12/26.
  */
 
-public class GroupMainActivity extends MvpActivity2<GroupMainPresenter> implements GroupMainView, View.OnClickListener {
+public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> implements GroupMainView, View.OnClickListener {
 
     /**
      * @return 控制器
