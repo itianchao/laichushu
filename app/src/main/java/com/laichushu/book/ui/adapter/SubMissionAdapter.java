@@ -1,10 +1,8 @@
 package com.laichushu.book.ui.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,14 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.ActivityList_Paramet;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;
@@ -32,11 +28,12 @@ import java.util.List;
 public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.ViewHolder> {
     private Activity context;
     private List<MessageCommentResult.DataBean> dataBeen;
-private MessageCommentPresenter messageCommentPresenter;
-    public SubMissionAdapter(Activity context, List<MessageCommentResult.DataBean> dataBean,MessageCommentPresenter messageCommentPresenter) {
+    private MessageCommentPresenter messageCommentPresenter;
+
+    public SubMissionAdapter(Activity context, List<MessageCommentResult.DataBean> dataBean, MessageCommentPresenter messageCommentPresenter) {
         this.context = context;
         this.dataBeen = dataBean;
-        this.messageCommentPresenter=messageCommentPresenter;
+        this.messageCommentPresenter = messageCommentPresenter;
     }
 
     @Override
@@ -111,7 +108,7 @@ private MessageCommentPresenter messageCommentPresenter;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final LinearLayout llItem;
         public final TextView tvPubName, tvBookName;
-        public final ImageView ivHead, ivReplay,ivDelete;
+        public final ImageView ivHead, ivReplay, ivDelete;
         public Button status;
         public final View root;
 

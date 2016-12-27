@@ -49,10 +49,19 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
         GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivImg);
         holder.tvName.setTextColor(context.getResources().getColor(R.color.auditing));
         holder.tvName.setText(dataBeen.get(position).getSenderName());
-        holder.tvAppend.setText(dataBeen.get(position).getSenderName() + " 评论了你的书");
-        if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
-            holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
-        }
+       if(dataBeen.get(position).getSourceType().equals("1")){
+           holder.tvAppend.setText(dataBeen.get(position).getSenderName() + " 评论了你的书");
+           if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
+               holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
+           }
+       }else{
+           holder.tvAppend.setText(dataBeen.get(position).getSenderName() + " 评论了你的话题");
+           if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
+               holder.tvBookName.setTextColor(context.getResources().getColor(R.color.characterGray));
+               holder.tvBookName.setText("#" + dataBeen.get(position).getSourceName() + "#");
+           }
+       }
+
 
         holder.tvContent.setText(dataBeen.get(position).getContent());
         holder.tvData.setText(dataBeen.get(position).getSendTime() + "");
@@ -82,13 +91,15 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
                 }
             }
         });
-        holder.tvBookName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳转书详情
-                messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
-            }
-        });
+        if(dataBeen.get(position).getSourceType().equals("1")){
+            holder.tvBookName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //跳转书详情
+                    messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
+                }
+            });
+        }
         holder.ivReplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

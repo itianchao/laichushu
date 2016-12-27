@@ -4,10 +4,12 @@ import android.graphics.Paint;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -16,6 +18,7 @@ import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.login.LoginModel;
 import com.laichushu.book.mvp.login.LoginPresenter;
 import com.laichushu.book.mvp.login.LoginView;
+import com.laichushu.book.retrofit.ApiStores;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.AMUtils;
 import com.laichushu.book.utils.DialogUtil;
@@ -27,7 +30,7 @@ import com.orhanobut.logger.Logger;
  * 登录页面
  * Created by wangtong on 2016/10/11.
  */
-public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginView, View.OnClickListener {
+public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginView,View.OnClickListener ,RadioGroup.OnCheckedChangeListener{
 
     private TextView titleTv;
     private ImageView backIv;
@@ -36,17 +39,20 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     private Button loginBtn;
     private TextView registerTv;
     private TextView forgetTv;
-
+    private RadioGroup radioGroup;
+    private ImageView logo;
     @Override
     protected void initView() {
         setContentView(R.layout.activity_login);
         titleTv = (TextView) findViewById(R.id.tv_title);
         backIv = (ImageView) findViewById(R.id.iv_title_finish);
+        logo = (ImageView) findViewById(R.id.logo);
         usernameEt = (EditText) findViewById(R.id.et_username);
         passwordEt = (EditText) findViewById(R.id.et_password);
         loginBtn = (Button) findViewById(R.id.bt_login);
         registerTv = (TextView) findViewById(R.id.tv_register);
         forgetTv = (TextView) findViewById(R.id.tv_forget);
+        radioGroup = (RadioGroup) findViewById(R.id.apiSelected);
     }
 
     @Override
@@ -58,9 +64,12 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         loginBtn.setOnClickListener(this);
         registerTv.setOnClickListener(this);
         forgetTv.setOnClickListener(this);
+        logo.setOnClickListener(this);
+        radioGroup.setOnCheckedChangeListener(this);
         mvpPresenter.preLogin();
         usernameEt.setInputType(InputType.TYPE_CLASS_PHONE);
         usernameEt.setInputType(InputType.TYPE_CLASS_NUMBER);
+
         addEditListen();
     }
 
@@ -84,6 +93,13 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             case R.id.tv_forget:
                 UIUtil.openActivity(mActivity, ForgetPwdActivity.class);
                 //忘记密码
+                break;
+            case R.id.logo:
+                if(radioGroup.getVisibility()==View.GONE){
+                    radioGroup.setVisibility(View.VISIBLE);
+                }else{
+                    radioGroup.setVisibility(View.GONE);
+                }
                 break;
         }
     }
@@ -154,4 +170,20 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             }
         });
     }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId){
+            case R.id.dy:
+                ConstantValue.setApiServerUrl(ConstantValue.API_SERVER_URL1);
+                break;
+            case R.id.zf:
+                ConstantValue.setApiServerUrl(ConstantValue.API_SERVER_URL2);
+                break;
+            case R.id.other:
+                ConstantValue.setApiServerUrl(ConstantValue.API_SERVER_URL3);
+                break;
+        }
+    }
+
 }

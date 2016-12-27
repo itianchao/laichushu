@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/page_title" />
+    <include
+        android:id="@+id/include_top"
+        layout="@layout/page_title" />
 
     <include layout="@layout/item_distance" />
 

@@ -78,7 +78,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         //初始化mRecyclerView 动态
         mEditorRecyclerView.setGridLayout(1);
         mEditorRecyclerView.setFooterViewText("加载中");
-        rangeAdapter = new TotalRanKingAdapter(this, editorDate);
+        rangeAdapter = new TotalRanKingAdapter(this, editorDate,mvpPresenter);
         mEditorRecyclerView.setAdapter(rangeAdapter);
         mEditorRecyclerView.setOnPullLoadMoreListener(this);
 

@@ -12,11 +12,23 @@ import android.widget.Spinner;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.google.gson.Gson;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
+import com.laichushu.book.bean.netbean.FindEditorCommentList_Paramet;
+import com.laichushu.book.bean.netbean.FindEditorInfoModel;
+import com.laichushu.book.bean.netbean.FindEditorInfo_Paramet;
+import com.laichushu.book.bean.netbean.SaveComment_Paramet;
+import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
+import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
+import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindEditMyPageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.UIUtil;
+import com.orhanobut.logger.Logger;
 
 
 /**
@@ -39,7 +51,7 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
     /**
      * 发送私信对话框
      */
-    public void openSendPerMsgDialog() {
+    public void openSendPerMsgDialog(final String userID) {
 
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_send_per_msg);
@@ -57,7 +69,7 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
             @Override
             public void onClick(View v) {
                 // TODO: 请求私信接口
-//                mvpPresenter.loadAddPerInfoDate(userId, edMsg);
+                sendMsgToParty(userID, edMsg.getText().toString().trim());
                 dialogBuilder.dismiss();
             }
         });
@@ -91,5 +103,142 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
         if (!alertDialog.isShowing()) {
             alertDialog.show();
         }
+    }
+
+    /**
+     * 发消息
+     *
+     * @param content
+     */
+    public void sendMsgToParty(String id, String content) {
+        mvpView.showDialog();
+        Logger.e("发消息");
+        AddPerMsgInfo_Paramet paramet = new AddPerMsgInfo_Paramet(content, id, userId);
+        addSubscription(apiStores.getAddPerMsgInfDetails(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getSendMsgToPartyDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail5("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+
+
+    //获取编辑主页用户头像信息
+    public void loadEditorInfoData(String userID) {
+        FindEditorInfo_Paramet infoParamet = new FindEditorInfo_Paramet(userID);
+        mvpView.showDialog();
+        Logger.e("用户信息");
+        Logger.json(new Gson().toJson(infoParamet));
+        addSubscription(apiStores.getEditorInfoDatails(infoParamet), new ApiCallback<FindEditorInfoModel>() {
+            @Override
+            public void onSuccess(FindEditorInfoModel model) {
+                mvpView.getEditorInfoDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+
+    public FindEditorCommentList_Paramet getCommentList_paramet() {
+        return commentList_paramet;
+    }
+
+    public void setCommentList_paramet(FindEditorCommentList_Paramet commentList_paramet) {
+        this.commentList_paramet = commentList_paramet;
+    }
+
+    //编辑-查询所有评论
+    FindEditorCommentList_Paramet commentList_paramet = new FindEditorCommentList_Paramet(userId,"",pageSize,pageNo);
+    public void loadEditorCommentListData(String editorId) {
+       getCommentList_paramet().setEditorId(editorId);
+        mvpView.showDialog();
+        Logger.e("所有评论");
+        Logger.json(new Gson().toJson(commentList_paramet));
+        addSubscription(apiStores.getEditorCommentList(commentList_paramet), new ApiCallback<TopicdetailModel>() {
+            @Override
+            public void onSuccess(TopicdetailModel model) {
+                mvpView.getEditorCommentListDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+//发表评论
+    public void loadSendCommentData(String sourceId,String content,String starLevel){
+        mvpView.showDialog();
+        SaveComment_Paramet paramet = new SaveComment_Paramet(sourceId,userId,content,starLevel);
+        Logger.e("发送评论");
+        Logger.json(new Gson().toJson(paramet));
+
+        addSubscription(apiStores.saveComment(paramet), new ApiCallback<SendCommentMoudle>() {
+            @Override
+            public void onSuccess(SendCommentMoudle model) {
+                mvpView.getSendDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+    /**
+     * 点赞 取消赞
+     * @param sourceId
+     * @param type
+     */
+    public void saveScoreLikeData(String sourceId, final String type){
+        mvpView.showDialog();
+        String sourceType = "1";
+        TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId,sourceId,sourceType,type);
+        Logger.e("点赞");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.SaveScoreLikeData(model,type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
     }
 }

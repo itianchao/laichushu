@@ -1,5 +1,8 @@
 package com.laichushu.book.mvp.topicdetail;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 
 import java.util.ArrayList;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
  * 话题详情数据模型
  * Created by wangtong on 2016/10/12.
  */
-public class TopicdetailModel {
+public class TopicdetailModel implements Parcelable {
 
     /**
      * success : true
@@ -56,7 +59,7 @@ public class TopicdetailModel {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         private String id;
         private String scoreId;
         private String userId;
@@ -64,10 +67,19 @@ public class TopicdetailModel {
         private String content;
         private int replyNum;
         private int likeNum;
+        private String editorId;
         private String nickName;
         private String photo;
         private String commentTime;
         private boolean isLike;
+
+        public String getEditorId() {
+            return editorId;
+        }
+
+        public void setEditorId(String editorId) {
+            this.editorId = editorId;
+        }
 
         public String getId() {
             return id;
@@ -164,5 +176,90 @@ public class TopicdetailModel {
         public void setIsLike(boolean isLike) {
             this.isLike = isLike;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.scoreId);
+            dest.writeString(this.userId);
+            dest.writeString(this.articleId);
+            dest.writeString(this.content);
+            dest.writeInt(this.replyNum);
+            dest.writeInt(this.likeNum);
+            dest.writeString(this.editorId);
+            dest.writeString(this.nickName);
+            dest.writeString(this.photo);
+            dest.writeString(this.commentTime);
+            dest.writeByte(this.isLike ? (byte) 1 : (byte) 0);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.id = in.readString();
+            this.scoreId = in.readString();
+            this.userId = in.readString();
+            this.articleId = in.readString();
+            this.content = in.readString();
+            this.replyNum = in.readInt();
+            this.likeNum = in.readInt();
+            this.editorId = in.readString();
+            this.nickName = in.readString();
+            this.photo = in.readString();
+            this.commentTime = in.readString();
+            this.isLike = in.readByte() != 0;
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.success ? (byte) 1 : (byte) 0);
+        dest.writeString(this.errMsg);
+        dest.writeList(this.data);
+    }
+
+    public TopicdetailModel() {
+    }
+
+    protected TopicdetailModel(Parcel in) {
+        this.success = in.readByte() != 0;
+        this.errMsg = in.readString();
+        this.data = new ArrayList<CommentDetailModle.DataBean>();
+        in.readList(this.data, CommentDetailModle.DataBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<TopicdetailModel> CREATOR = new Parcelable.Creator<TopicdetailModel>() {
+        @Override
+        public TopicdetailModel createFromParcel(Parcel source) {
+            return new TopicdetailModel(source);
+        }
+
+        @Override
+        public TopicdetailModel[] newArray(int size) {
+            return new TopicdetailModel[size];
+        }
+    };
 }

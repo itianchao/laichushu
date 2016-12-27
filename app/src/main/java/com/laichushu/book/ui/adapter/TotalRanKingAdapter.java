@@ -1,16 +1,17 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindEditorListModel;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.findeditpage.FindEditPagePresenter;
+import com.laichushu.book.ui.activity.FindEditMyPageActivity;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -24,10 +25,12 @@ import java.util.List;
 public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapter.ViewHolder> {
     private FindEditPageActivity context;
     private List<FindEditorListModel.DataBean> dataBeen;
+    private FindEditPagePresenter findEditPagePresenter;
 
-    public TotalRanKingAdapter(FindEditPageActivity context, List<FindEditorListModel.DataBean> dataBean) {
+    public TotalRanKingAdapter(FindEditPageActivity context, List<FindEditorListModel.DataBean> dataBean, FindEditPagePresenter findEditPagePresenter) {
         this.context = context;
         this.dataBeen = dataBean;
+        this.findEditPagePresenter = findEditPagePresenter;
     }
 
     @Override
@@ -38,17 +41,19 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
 
     @Override
     public void onBindViewHolder(TotalRanKingAdapter.ViewHolder holder, final int position) {
-        GlideUitl.loadImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
-        holder.tvTeamWork.setText(dataBeen.get(position).getCooperateNum());
-        holder.tvExperience.setText(dataBeen.get(position).getWorkingYears());
+        GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
+        holder.tvTeamWork.setText(dataBeen.get(position).getCooperateNum() + "人已合作");
+        holder.tvExperience.setText(dataBeen.get(position).getWorkingYears() + "年工作经验");
         holder.tvPublish.setText(dataBeen.get(position).getPress());
         holder.tvRealName.setText(dataBeen.get(position).getName());
         holder.tvDegress.setText(dataBeen.get(position).getLevelName());
-        holder.rlItem.setOnClickListener(new View.OnClickListener() {
+        holder.ivImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                跳转图书详情页
-//                bookcastPresener.loadBookDetailsByid(dataBeen.get(position).getSourceId());
+//                跳转编辑主页
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userId", dataBeen.get(position).getId());
+                UIUtil.openActivity(context, FindEditMyPageActivity.class, bundle);
             }
         });
     }
@@ -82,7 +87,7 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
             super(root);
             rlItem = (RelativeLayout) root.findViewById(R.id.rl_item);
             ivImg = (ImageView) root.findViewById(R.id.iv_userHeadImg);
-            tvTeamWork = (TextView) root.findViewById(R.id.tv_teamworkNum);
+            tvTeamWork = (TextView) root.findViewById(R.id.tv_teamworkNumber);
             tvExperience = (TextView) root.findViewById(R.id.tv_experience);
             tvPublish = (TextView) root.findViewById(R.id.tv_publish);
             tvRealName = (TextView) root.findViewById(R.id.tv_realName);

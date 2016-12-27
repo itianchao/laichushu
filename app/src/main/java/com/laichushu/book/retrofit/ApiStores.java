@@ -389,7 +389,7 @@ public interface ApiStores {
     //机构--修改资料
     @Multipart
     @POST("press/update")
-    Observable<RewardResult> updateTopicDetails(@PartMap Map<String, RequestBody> params, @Part("logoUrl\"; filename=\"logoUrl.jpg") RequestBody file);
+    Observable<RewardResult> updateTopicDetails(@PartMap Map<String, RequestBody> params, @Part("file\"; filename=\"logoUrl.jpg") RequestBody file);
 
     //机构---修改机构信息--弃用
     @POST("topic/selectMyTopic")
@@ -576,4 +576,12 @@ public interface ApiStores {
     //发现界面--编辑
     @POST("editor/list")
     Observable<FindEditorListModel> getEditorListDatails(@Body FindEditorList_Paramet paramet);
+
+    //发现编辑--个人主页
+    @POST("editor/info")
+    Observable<FindEditorInfoModel> getEditorInfoDatails(@Body FindEditorInfo_Paramet paramet);
+
+    //发现编辑--查询所有评论
+    @POST("editor/commentList")
+    Observable<TopicdetailModel> getEditorCommentList(@Body FindEditorCommentList_Paramet paramet);
 }
