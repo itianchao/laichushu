@@ -12,8 +12,7 @@ import android.widget.PopupWindow;
 
 import com.laichushu.book.R;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.ui.activity.FindGroupMainActivity;
-import com.laichushu.book.ui.activity.FindServicePageActivity;
+import com.laichushu.book.ui.activity.FindGroupDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.UIUtil;
 
@@ -25,7 +24,7 @@ import java.util.List;
  */
 
 public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
-    private FindGroupMainActivity mActivity;
+    private FindGroupDetailActivity mActivity;
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
@@ -33,7 +32,7 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
     //初始化构造
     public FindGroupPagePresenter(FindGroupPageView view) {
         attachView(view);
-        mActivity = (FindGroupMainActivity) view;
+        mActivity = (FindGroupDetailActivity) view;
     }
     /**
      * 全部排行
