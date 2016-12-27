@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <include layout="@layout/page_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="添加头像"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/edit2" />
+
+        <ImageView
+            android:id="@+id/iv_select_group_head"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="10dp"
+            tools:src="@drawable/img_default" />
+    </LinearLayout>
+
+    <include layout="@layout/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="小组名称"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/edit2" />
+
+        <EditText
+            android:layout_gravity="center_vertical"
+            android:id="@+id/et_groupname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@null"
+            android:hint=" 请输入小组名"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            android:textSize="@dimen/edit2" />
+    </LinearLayout>
+
+    <include layout="@layout/line" />
+
+    <EditText
+        android:id="@+id/et_brief"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_rectangle_fill_hint"
+        android:gravity="top"
+        android:hint="书写小组简介"
+        android:maxLength="15"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint"
+        android:textSize="@dimen/edit2" />
+</LinearLayout>

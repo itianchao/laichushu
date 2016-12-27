@@ -25,6 +25,7 @@ import com.laichushu.book.mvp.directories.BookMoudle;
 import com.laichushu.book.mvp.directories.MaterialContentModel;
 import com.laichushu.book.mvp.directories.MaterialListModel;
 import com.laichushu.book.mvp.draftmodle.DraftModle;
+import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
 import com.laichushu.book.mvp.forgetpwd.ForgetPwdModel;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
@@ -39,6 +40,7 @@ import com.laichushu.book.mvp.regist2.RegistModel2;
 import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
 import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
+import com.laichushu.book.utils.UIUtil;
 
 import java.util.Map;
 
@@ -584,4 +586,16 @@ public interface ApiStores {
     //发现编辑--查询所有评论
     @POST("editor/commentList")
     Observable<TopicdetailModel> getEditorCommentList(@Body FindEditorCommentList_Paramet paramet);
+
+    /**
+     * 小组
+     */
+    //已加入的小组列表
+    @POST("team/myJoin")
+    Observable<GroupListModle> getJoinGroupList(@Body JoinGroupList_Paramet paramet);
+
+    //创建小组
+    @Multipart
+    @POST("team/save")
+    Observable<RewardResult> createNewGroup(@Part("file\"; filename=\"group.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
 }
