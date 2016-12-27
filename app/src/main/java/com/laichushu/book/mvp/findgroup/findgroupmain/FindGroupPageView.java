@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.findgroupmain;
+package com.laichushu.book.mvp.findgroup.findgroupmain;
 
 /**
  * Created by PCPC on 2016/12/26.

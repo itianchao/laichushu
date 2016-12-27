@@ -6,8 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.findgroupmain.FindGroupPagePresenter;
-import com.laichushu.book.mvp.findgroupmain.FindGroupPageView;
+import com.laichushu.book.mvp.findgroup.findgroupmain.FindGroupPagePresenter;
+import com.laichushu.book.mvp.findgroup.findgroupmain.FindGroupPageView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.UIUtil;

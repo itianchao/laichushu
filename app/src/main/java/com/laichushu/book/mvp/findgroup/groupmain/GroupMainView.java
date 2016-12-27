@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.group.groupmain;
+package com.laichushu.book.mvp.findgroup.groupmain;
 
 /**
  * 小组主页

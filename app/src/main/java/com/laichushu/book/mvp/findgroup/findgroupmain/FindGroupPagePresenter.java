@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.findgroupmain;
+package com.laichushu.book.mvp.findgroup.findgroupmain;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;

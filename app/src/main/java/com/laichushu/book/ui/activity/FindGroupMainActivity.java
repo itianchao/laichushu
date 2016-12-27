@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.group.groupmain.GroupMainPresenter;
-import com.laichushu.book.mvp.group.groupmain.GroupMainView;
+import com.laichushu.book.mvp.findgroup.groupmain.GroupMainPresenter;
+import com.laichushu.book.mvp.findgroup.groupmain.GroupMainView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
