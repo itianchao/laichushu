@@ -114,6 +114,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         scondRbn.setOnClickListener(this);
         finishIv.setOnClickListener(this);
         searchIv.setOnClickListener(this);
+        mineIv.setOnClickListener(this);
         //设置标题图片
         GlideUitl.loadImg2(this, R.drawable.search_icon, searchIv);
         GlideUitl.loadImg2(this, R.drawable.navigation_mine_normal, mineIv);
@@ -151,8 +152,11 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
             case R.id.iv_title_finish://关闭
                 finish();
                 break;
-            case R.id.iv_title_other://搜索
-//                UIUtil.openActivity(mActivity,);
+            case R.id.iv_title_another://搜索
+                UIUtil.openActivity(mActivity,FindGroupSearchActivity.class);
+                break;
+            case R.id.iv_title_other://我的
+
                 break;
             case R.id.rbn_01://小组
                 groupFay.setVisibility(View.VISIBLE);

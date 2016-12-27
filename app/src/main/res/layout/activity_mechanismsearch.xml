@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@null"
-                android:hint="输入机构名称"
+                android:hint="输入关键字搜索机构"
                 android:singleLine="true"
                 android:textColorHint="@color/white" />
         </LinearLayout>
