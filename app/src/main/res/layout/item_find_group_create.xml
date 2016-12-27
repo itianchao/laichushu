@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/characterLightGray3"
+    android:orientation="horizontal">
+
+    <TextView
+        android:drawableLeft="@drawable/icon_add"
+        android:id="@+id/tv_create_group"
+        android:layout_alignParentRight="true"
+        android:text="@string/create_group"
+        android:textColor="@color/global"
+        android:textSize="@dimen/album_sp_14"
+        android:background="@color/white"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="25dp" />
+
+    <TextView
+        android:text="@string/find_join_group"
+        android:textSize="@dimen/album_sp_14"
+        android:textColor="@color/find_group_gray"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="14dp" />
+
+    <TextView
+        android:background="@color/white"
+        android:layout_width="@dimen/afc_10dp"
+        android:layout_height="25dp"
+        android:layout_alignTop="@+id/tv_create_group"
+        android:layout_toLeftOf="@+id/tv_create_group"
+        android:layout_toStartOf="@+id/tv_create_group" />
+</RelativeLayout>

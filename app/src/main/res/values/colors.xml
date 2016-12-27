@@ -18,6 +18,7 @@
     <color name="characterLightGray">#C1DAD4</color>
     <color name="characterLightGray1">#383838</color>
     <color name="characterLightGray2">#969696</color>
+    <color name="characterLightGray3">#F1F0EE</color>
     <!-- hint -->
     <color name="hint">#CCCCCC</color>
     <!-- 自定义通知栏颜色  -->
@@ -44,4 +45,7 @@
     <color name="LightGrey">#E9E6E1</color>
     <color name="bar">#AFAFAF</color>
     <color name="ea">#EAEAEA</color>
+    <!--小组-->
+    <color name="find_group_gray">#61605B</color>
+
 </resources>

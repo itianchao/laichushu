@@ -53,6 +53,12 @@ public class ConstantValue {
     //短信验证码
     public static String REGIST_CODE = "1";//注册
     public static String FORGETPWD_CODE = "2";//忘记密码
+
+    //小组状态
+    public static String GROUP_START = "0";//0：启用，1：停用，3：解散
+    public static String GROUP_END = "1";
+    public static String GROUP_DISMISS = "3";
+
     //baseBook
     public static final String BASEBOOK = "basebook";
 
