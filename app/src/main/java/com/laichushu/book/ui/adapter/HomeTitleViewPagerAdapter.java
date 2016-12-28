@@ -2,6 +2,7 @@ package com.laichushu.book.ui.adapter;
 
 import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -55,7 +56,7 @@ public class HomeTitleViewPagerAdapter extends PagerAdapter {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!imageList.isEmpty()) {
+                if (!TextUtils.isEmpty(finalDataBean.getSourceId())) {
                     if (finalDataBean.getType().equals("1")) {//图书
                         mvpPresenter.getBookById(finalDataBean.getSourceId(),position % (imageList.size() == 0 ? 1 : imageList.size()));
                     }else {//活动

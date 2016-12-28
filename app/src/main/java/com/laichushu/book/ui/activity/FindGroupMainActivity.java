@@ -1,5 +1,7 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -87,6 +89,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         View mSuccessView = UIUtil.inflate(R.layout.activity_groupmain);
         //标题
         TextView titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
+        TextView createGroupTv = (TextView) mSuccessView.findViewById(R.id.tv_create_group);
         ImageView finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
         ImageView mineIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_other);
         ImageView searchIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_another);
@@ -113,6 +116,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         finishIv.setOnClickListener(this);
         searchIv.setOnClickListener(this);
         mineIv.setOnClickListener(this);
+        createGroupTv.setOnClickListener(this);
         //设置标题图片
         GlideUitl.loadImg2(this, R.drawable.search_icon, searchIv);
         GlideUitl.loadImg2(this, R.drawable.navigation_mine_normal, mineIv);
@@ -164,6 +168,9 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 topicRyv.setVisibility(View.VISIBLE);
                 groupFay.setVisibility(View.GONE);
                 break;
+            case R.id.tv_create_group://创建小组
+                UIUtil.openActivity(mActivity, FindGroupCreateNewActivity.class);
+                break;
         }
     }
 
@@ -176,10 +183,10 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
     public void getGroupListDataSuccess(GroupListModle modle) {
         UIUtil.postPullLoadMoreCompleted(topicRyv);
         if (modle.isSuccess()) {
+            frist = true;
             if (modle.getData() != null && !modle.getData().isEmpty()) {
                 mGroupListdata = modle.getData();
                 mGroupListAdapter.setmData(mGroupListdata);
-                frist = true;
                 Message msg = new Message();
                 mhandler.sendMessage(msg);
             }
@@ -277,5 +284,19 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
     @Override
     public void onLoadMore() {
         mvpPresenter.loadNewTopicList();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 2){
+            Bundle bundle=data.getExtras();
+            String str = bundle.getString("back");
+            if (str.equals("updata")){
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                frist = false;
+                mGroupListdata.clear();
+                mvpPresenter.loadGroupList();
+            }
+        }
     }
 }

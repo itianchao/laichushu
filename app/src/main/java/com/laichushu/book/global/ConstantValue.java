@@ -59,6 +59,10 @@ public class ConstantValue {
     public static String GROUP_END = "1";
     public static String GROUP_DISMISS = "3";
 
+    //搜索历史
+    public static String SEARCH_TYPE_BOOK = "1";
+    public static String SEARCH_TYPE_GROUP = "2";
+    public static String SEARCH_TYPE_TOPIC = "3";
     //baseBook
     public static final String BASEBOOK = "basebook";
 

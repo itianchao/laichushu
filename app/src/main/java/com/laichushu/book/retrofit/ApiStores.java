@@ -26,6 +26,7 @@ import com.laichushu.book.mvp.directories.MaterialContentModel;
 import com.laichushu.book.mvp.directories.MaterialListModel;
 import com.laichushu.book.mvp.draftmodle.DraftModle;
 import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
+import com.laichushu.book.mvp.findgroup.groupsearch.FindGroupModle;
 import com.laichushu.book.mvp.forgetpwd.ForgetPwdModel;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
@@ -586,6 +587,10 @@ public interface ApiStores {
     @POST("team/myJoin")
     Observable<GroupListModle> getJoinGroupList(@Body JoinGroupList_Paramet paramet);
 
+    //我创建的小组列表
+    @POST("team/myCreate")
+    Observable<GroupListModle> getMyCreateGroupList(@Body JoinGroupList_Paramet paramet);
+
     //创建小组
     @Multipart
     @POST("team/save")
@@ -594,4 +599,10 @@ public interface ApiStores {
     //最新话题列表
     @POST("topic/findNewTopic")
     Observable<MechanismTopicListModel> getNewTopicList(@Body NewTopicList_Paramet paramet);
+
+    //我发表的话题列表
+
+    //搜索小组
+    @POST("team/all")
+    Observable<FindGroupModle> searchGroupList(@Body SearchGroupList_Paramet paramet);
 }

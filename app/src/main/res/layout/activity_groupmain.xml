@@ -36,6 +36,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <include layout="@layout/item_find_group_create"/>
             <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
                 android:id="@+id/ryv_group"
                 android:layout_width="match_parent"

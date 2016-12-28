@@ -24,7 +24,8 @@ public class Search_HistoryDao extends AbstractDao<Search_History, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property History = new Property(1, String.class, "history", false, "HISTORY");
+        public final static Property Type = new Property(1, String.class, "type", false, "TYPE");
+        public final static Property History = new Property(2, String.class, "history", false, "HISTORY");
     };
 
 
@@ -41,7 +42,8 @@ public class Search_HistoryDao extends AbstractDao<Search_History, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"SEARCH__HISTORY\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"HISTORY\" TEXT);"); // 1: history
+                "\"TYPE\" TEXT," + // 1: type
+                "\"HISTORY\" TEXT);"); // 2: history
     }
 
     /** Drops the underlying database table. */
@@ -60,9 +62,14 @@ public class Search_HistoryDao extends AbstractDao<Search_History, Long> {
             stmt.bindLong(1, id);
         }
  
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(2, type);
+        }
+ 
         String history = entity.getHistory();
         if (history != null) {
-            stmt.bindString(2, history);
+            stmt.bindString(3, history);
         }
     }
 
@@ -77,7 +84,8 @@ public class Search_HistoryDao extends AbstractDao<Search_History, Long> {
     public Search_History readEntity(Cursor cursor, int offset) {
         Search_History entity = new Search_History( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // history
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // type
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // history
         );
         return entity;
     }
@@ -86,7 +94,8 @@ public class Search_HistoryDao extends AbstractDao<Search_History, Long> {
     @Override
     public void readEntity(Cursor cursor, Search_History entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setHistory(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setType(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setHistory(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
      }
     
     /** @inheritdoc */

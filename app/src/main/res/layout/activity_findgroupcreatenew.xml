@@ -66,11 +66,26 @@
     <EditText
         android:id="@+id/et_brief"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_margin="10dp"
         android:background="@drawable/shape_rectangle_fill_hint"
         android:gravity="top"
-        android:hint="书写小组简介"
+        android:hint="请书写小组简介"
+        android:maxLength="15"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint"
+        android:textSize="@dimen/edit2" />
+
+    <EditText
+        android:id="@+id/et_mark_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_rectangle_fill_hint"
+        android:gravity="top"
+        android:hint="请书写里程碑"
         android:maxLength="15"
         android:textColor="@color/black"
         android:textColorHint="@color/hint"

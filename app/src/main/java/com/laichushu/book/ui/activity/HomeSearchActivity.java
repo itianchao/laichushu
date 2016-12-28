@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.laichushu.book.db.Search_History;
 import com.laichushu.book.event.RefrushHomeSearchEvent;
 import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.homesearch.HomeSearchModel;
 import com.laichushu.book.mvp.homesearch.HomeSearchPresenter;
 import com.laichushu.book.mvp.homesearch.HomeSearchView;
@@ -67,6 +68,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     private boolean one = false;
     private boolean two = false;
     private HomeSearchHotHistoryAdapter mHotAdapter;
+    private String type = ConstantValue.SEARCH_TYPE_BOOK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,12 +128,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     @Override
     public void getDataSuccess(HomeHotModel model) {
         mData.clear();
-        UIUtil.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                bookRyv.setPullLoadMoreCompleted();
-            }
-        }, 300);
+        UIUtil.postPullLoadMoreCompleted(bookRyv);
         if (model.isSuccess()) {
             one = false;
             mData = model.getData();
@@ -147,6 +144,8 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                     emptyIv.setVisibility(View.VISIBLE);
                     searchLay.setVisibility(View.GONE);
                     bookRyv.setVisibility(View.GONE);
+                }else {
+                    ToastUtil.showToast("没有更多数据了");
                 }
             }
         } else {
@@ -206,7 +205,9 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 break;
             case R.id.tv_clear:
                 if (list != null) {
-                    dao.deleteAll();
+                    for (int i = list.size() - 1; i >= 0; i--) {
+                        dao.delete(list.get(i));
+                    }
                     list.clear();
                     historyAdapter.notifyDataSetChanged();
                 }
@@ -252,7 +253,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
             }
             if (isSearch) {//判断是否相同
                 //将记录添加到数据库中
-                Search_History history = new Search_History(null, search);
+                Search_History history = new Search_History(null, type,search);
                 if (list.size() != 0) {
                     for (int i = list.size(); i > 0; i--) {
                         if (i == list.size()) {
@@ -300,8 +301,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     }
 
     public List<Search_History> getHistoryList() {
-        QueryBuilder<Search_History> search_historyQueryBuilder = dao.queryBuilder();
-        Query<Search_History> build = search_historyQueryBuilder.build();
+        Query<Search_History> build = dao.queryBuilder().where(Search_HistoryDao.Properties.Type.eq("1")).build();
         return build.list();
     }
 

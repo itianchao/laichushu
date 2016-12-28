@@ -7,6 +7,7 @@ package com.laichushu.book.db;
 public class Search_History {
 
     private Long id;
+    private String type;
     private String history;
 
     public Search_History() {
@@ -16,8 +17,9 @@ public class Search_History {
         this.id = id;
     }
 
-    public Search_History(Long id, String history) {
+    public Search_History(Long id, String type, String history) {
         this.id = id;
+        this.type = type;
         this.history = history;
     }
 
@@ -27,6 +29,14 @@ public class Search_History {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getHistory() {

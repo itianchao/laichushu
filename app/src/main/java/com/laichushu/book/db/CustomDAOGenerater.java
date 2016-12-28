@@ -20,6 +20,7 @@ public class CustomDAOGenerater {
         Entity entity = schema.addEntity("Search_History");
         // 为表添加字段
         entity.addIdProperty();// 该字段为id
+        entity.addStringProperty("type");// String类型字段 1、图书 2、小组 3、话题
         entity.addStringProperty("history");// String类型字段
         // 缓存表
         Entity cache = schema.addEntity("Cache_Json");

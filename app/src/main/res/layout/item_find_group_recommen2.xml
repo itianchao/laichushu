@@ -11,6 +11,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
         tools:src="@drawable/img_default" />
 
     <TextView

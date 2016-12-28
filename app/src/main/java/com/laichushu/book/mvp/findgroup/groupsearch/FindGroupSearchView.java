@@ -6,5 +6,6 @@ package com.laichushu.book.mvp.findgroup.groupsearch;
  */
 
 public interface FindGroupSearchView {
-
+    void searchGroupDataSuccess(FindGroupModle model);
+    void searchGroupDataFail(String msg);
 }

@@ -24,6 +24,8 @@ import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.yanzhenjie.album.Album;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
@@ -50,8 +52,7 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
     private File file;
     private TextView completeTv;
     private String userId = ConstantValue.USERID;
-    private String status = ConstantValue.GROUP_START;
-    private String code = UUID.randomUUID()+"";
+    private EditText markContentEt;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -67,7 +68,9 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
         completeTv = (TextView)mSuccessView.findViewById(R.id.tv_title_right);
         briefEt = (EditText)mSuccessView.findViewById(R.id.et_brief);
         nameEt = (EditText)mSuccessView.findViewById(R.id.et_groupname);
-
+        markContentEt = (EditText)mSuccessView.findViewById(R.id.et_mark_content);
+        titleTv.setText("创建小组");
+        completeTv.setText("完成");
         completeTv.setVisibility(View.VISIBLE);
         GlideUitl.loadRandImg(this,"", headIv);
         completeTv.setOnClickListener(this);
@@ -80,16 +83,16 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
     protected void initData() {
         super.initData();
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-        titleTv.setText("创建小组");
-        completeTv.setText("完成");
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.iv_select_group_head:
-                path = "";
-                file = null;
+                if (TextUtils.isEmpty(path)){
+                    path = "";
+                    file = null;
+                }
                 Album.startAlbum(mActivity, ACTIVITY_REQUEST_SELECT_PHOTO
                         , 1                                                         // 指定选择数量。
                         , ContextCompat.getColor(mActivity, R.color.global)        // 指定Toolbar的颜色。
@@ -101,6 +104,7 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
             case R.id.tv_title_right:
                 String brief = briefEt.getText().toString().trim();
                 String name = nameEt.getText().toString().trim();
+                String markContent = markContentEt.getText().toString().trim();
                 if (TextUtils.isEmpty(name)){
                     ToastUtil.showToast("请添加小组名称");
                     return;
@@ -109,11 +113,15 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
                     ToastUtil.showToast("请添加小组简介");
                     return;
                 }
+                if (TextUtils.isEmpty(markContent)){
+                    ToastUtil.showToast("请添加小组里程碑");
+                    return;
+                }
                 if (file == null){
                     ToastUtil.showToast("请添加小组头像");
                     return;
                 }
-                createNewGroup(name,brief);
+                createNewGroup(name,brief,markContent);
                 break;
         }
     }
@@ -123,7 +131,7 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
      * @param name
      * @param brief
      */
-    private void createNewGroup(String name, String brief) {
+    private void createNewGroup(String name, String brief,String markContent) {
         Logger.e("创建小组");
         showProgressDialog();
 
@@ -131,15 +139,13 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
 
         RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), name);
         RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), userId);
-        RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), status);
-        RequestBody requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), code);
-        RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"), brief);
+        RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), brief);
+        RequestBody requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), markContent);
 
         params.put("name", requestBody2);
         params.put("leaderId", requestBody3);
-        params.put("status", requestBody4);
-        params.put("subCategoryId", requestBody5);
-        params.put("remarks", requestBody6);
+        params.put("remarks", requestBody4);
+        params.put("markContent", requestBody5);
 
         Observable<RewardResult> newGroup;
         RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(file));
@@ -154,6 +160,9 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
                     UIUtil.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            Intent intent=new Intent();
+                            intent.putExtra("back", "updata");
+                            setResult(2, intent);
                             finish();
                         }
                     },1700);
