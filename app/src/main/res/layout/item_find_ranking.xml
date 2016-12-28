@@ -7,37 +7,43 @@
     <RelativeLayout
         android:id="@+id/rl_item"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_centerVertical="true"
+        android:layout_height="80dp"
         android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/iv_userHeadImg"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/edit_top"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="12dp" />
-
-        <TextView
-            android:id="@+id/tv_teamworkNum"
+        <RelativeLayout
+            android:id="@+id/rl_head"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_below="@+id/iv_userHeadImg"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center_vertical"
-            android:text="88人已合作"
-            android:textColor="@color/characterGray"
-            android:textSize="@dimen/edit2" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="24dp">
+
+            <ImageView
+                android:id="@+id/iv_userHeadImg"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:id="@+id/tv_teamworkNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/iv_userHeadImg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:singleLine="true"
+                android:textColor="@color/characterLightGray2"
+                android:textSize="@dimen/edit2" />
+        </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:layout_margin="24dp"
-            android:layout_toRightOf="@+id/tv_teamworkNum"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/rl_head"
             android:orientation="vertical">
 
             <LinearLayout
@@ -49,21 +55,20 @@
                 <TextView
                     android:id="@+id/tv_experience"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="5年工作经验"
+                    android:singleLine="true"
                     android:textColor="@color/characterGray"
                     android:textSize="@dimen/edit2" />
 
                 <TextView
                     android:id="@+id/tv_publish"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="24dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="人民出版社"
+                    android:gravity="center|left"
+                    android:singleLine="true"
                     android:textColor="@color/characterGray"
                     android:textSize="@dimen/edit2" />
             </LinearLayout>
@@ -77,24 +82,28 @@
                 <TextView
                     android:id="@+id/tv_realName"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="柴静"
-                    android:textColor="@color/red"
+                    android:singleLine="true"
+                    android:textColor="@color/red2"
                     android:textSize="@dimen/edit2" />
 
                 <TextView
                     android:id="@+id/tv_authorDegree"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="24dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="金牌编辑"
-                    android:textColor="@color/red"
+                    android:gravity="center|left"
+                    android:singleLine="true"
+                    android:textColor="@color/red2"
                     android:textSize="@dimen/edit2" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_below="@+id/rl_item" />
 </RelativeLayout>

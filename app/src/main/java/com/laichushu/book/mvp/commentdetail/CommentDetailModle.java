@@ -1,5 +1,8 @@
 package com.laichushu.book.mvp.commentdetail;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -54,7 +57,7 @@ public class CommentDetailModle {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         private String id;
         private String userId;
         private String articleId;
@@ -162,5 +165,54 @@ public class CommentDetailModle {
         public void setIsLike(boolean isLike) {
             this.isLike = isLike;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.userId);
+            dest.writeString(this.articleId);
+            dest.writeString(this.sourceId);
+            dest.writeString(this.content);
+            dest.writeInt(this.replyNum);
+            dest.writeInt(this.likeNum);
+            dest.writeString(this.nickName);
+            dest.writeString(this.photo);
+            dest.writeString(this.commentTime);
+            dest.writeByte(this.isLike ? (byte) 1 : (byte) 0);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.id = in.readString();
+            this.userId = in.readString();
+            this.articleId = in.readString();
+            this.sourceId = in.readString();
+            this.content = in.readString();
+            this.replyNum = in.readInt();
+            this.likeNum = in.readInt();
+            this.nickName = in.readString();
+            this.photo = in.readString();
+            this.commentTime = in.readString();
+            this.isLike = in.readByte() != 0;
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
 }

@@ -13,7 +13,7 @@ import java.io.File;
 
 public class ConstantValue {
 
-    public static String GlidCacheUrl="files/file";
+    public static String GlidCacheUrl = "files/file";
     public static String ACTION_UPDATE_DATA = "ACTION_UPDATE_DATA";
     public static String ACTION_UPDATE_DATA_PERINFO = "ACTION_UPDATE_DATA_PERINFO";
     public static String ACTION_UPDATE_DATA_MINEINFO = "ACTION_UPDATE_DATA_MINEINFO";
@@ -58,6 +58,9 @@ public class ConstantValue {
     public static String GROUP_START = "0";//0：启用，1：停用，3：解散
     public static String GROUP_END = "1";
     public static String GROUP_DISMISS = "3";
+    //发现类型  1:编辑 2：服务者
+    public static String FIND_EDITORTYPE = "1";
+    public static String FIND_SERVICETYPE = "2";
 
     //搜索历史
     public static String SEARCH_TYPE_BOOK = "1";
@@ -80,8 +83,8 @@ public class ConstantValue {
     public static class LOCAL_PATH {
 
         // 文件保存在SD卡路径
-        public static final String SD_PATH = UIUtil.getContext().getFilesDir().getAbsolutePath()+ File.separator;//应用根目录
-//        public static final String SD_PATH = Environment.getExternalStorageDirectory().getPath()+ File.separator;
+        public static final String SD_PATH = UIUtil.getContext().getFilesDir().getAbsolutePath() + File.separator;//应用根目录
+        //        public static final String SD_PATH = Environment.getExternalStorageDirectory().getPath()+ File.separator;
         // 项目名称
         public static final String PROJECT_NAME = "/laichushu";
         // 文件路径
@@ -95,17 +98,28 @@ public class ConstantValue {
     }
 
     //baseUrl
-//    public static String API_SERVER_URL = "http://60.205.141.21:8099/";
+    public static String API_SERVER_URL1 = "http://192.168.1.103:8082/book-app/";//张峰
+    public static String API_SERVER_URL2 = "http://192.168.1.150:8082/book-app/";//施大勇5
+    public static String API_SERVER_URL3 = "http://test2.laichushu.com/book-app-web/";
+    //    public static String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    public static String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    public static String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
-      public static String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
+//      public static String API_SERVER_URL = "http://192.168.1.103:8082/book-app/";//张峰
 //    public static String API_SERVER_URL = "http://192.168.1.119:8082/book-app/";//施大勇1
 //    public static String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    public static String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    public static String API_SERVER_URL = "http://192.168.0.123:8082/book-app/";//施大勇4
-//    public static String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
+    public static String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
 //    public static String API_SERVER_URL = "http://192.168.1.130:8082/book-app/";//施大勇6
 //    public static String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //    public static String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
 //    public static String API_SERVER_URL = "http://192.168.1.122:8082/book-app/";//赵红江
+
+    public static String getApiServerUrl() {
+        return API_SERVER_URL;
+    }
+
+    public static void setApiServerUrl(String apiServerUrl) {
+        API_SERVER_URL = apiServerUrl;
+    }
 }

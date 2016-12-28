@@ -9,8 +9,31 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="130dp">
+            <RadioGroup
+                android:id="@+id/apiSelected"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/dy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="大勇"/>
+                <RadioButton
+                    android:id="@+id/zf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="张峰"/>
+                <RadioButton
+                    android:id="@+id/other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="其他"/>
 
+            </RadioGroup>
         <ImageView
+            android:id="@+id/logo"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_centerInParent="true"

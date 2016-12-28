@@ -41,8 +41,8 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
 
     private City_IdDao city_idDao;
     private List<City_Id> city_idList;
-    private String curProCode = "02";
-    private String curCityCode = "01";
+    private String curProCode="";
+    private String curCityCode ="";
     private int PAGE_NO = 1;
 
     @Override
@@ -78,11 +78,11 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         //初始化mRecyclerView 动态
         mEditorRecyclerView.setGridLayout(1);
         mEditorRecyclerView.setFooterViewText("加载中");
-        rangeAdapter = new TotalRanKingAdapter(this, editorDate);
+        rangeAdapter = new TotalRanKingAdapter(this, editorDate,mvpPresenter);
         mEditorRecyclerView.setAdapter(rangeAdapter);
         mEditorRecyclerView.setOnPullLoadMoreListener(this);
 
-        mvpPresenter.loadEditorListData(curProCode+curCityCode, orderBy);
+        mvpPresenter.loadEditorListData(curProCode, orderBy);
     }
 
     @Override
@@ -122,24 +122,23 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         }, 300);
         if (model.isSuccess()) {
             editorDate = model.getData();
-
-            if (!editorDate.isEmpty()) {
-                rangeAdapter.refreshAdapter(editorDate);
+            if (!model.getData().isEmpty()) {
                 PAGE_NO++;
             } else {
                 ToastUtil.showToast(model.getErrMsg());
                 ToastUtil.showToast(model.getErrMsg());
             }
+
         } else {
             ToastUtil.showToast("没有更多数据");
         }
+        rangeAdapter.refreshAdapter(editorDate);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
     public void onRefresh() {
         PAGE_NO = 1;
-        editorDate.clear();
         mvpPresenter.getEditorList_paramet().setPageNo(PAGE_NO + "");
         mvpPresenter.loadEditorListData(curProCode, orderBy + "");
     }
@@ -182,6 +181,8 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         wvCity.setSeletion(0);
         wvProvince.setItems(getProvonce());
         wvCity.setItems(getCity("01"));
+        curProCode="01";
+        curCityCode="01";
         wvProvince.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(int position, String item) {
@@ -217,7 +218,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
                 - rbCity.getWidth() / 4;
         int[] location = new int[2];
         rbCity.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(rbCity, xPos, 40);
+        popupWindow.showAsDropDown(rbCity, xPos-rbCity.getWidth() / 4, 20);
 
     }
 

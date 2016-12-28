@@ -5,22 +5,22 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class FindEditorList_Paramet {
-    private String userId, cityId, orderBy, pageNo, pageSize;
+    private String loginUserId, cityId, orderBy, pageNo, pageSize;
 
-    public FindEditorList_Paramet(String userId, String cityId, String orderBy, String pageNo, String pageSize) {
-        this.userId = userId;
+    public FindEditorList_Paramet(String loginUserId, String cityId, String orderBy, String pageNo, String pageSize) {
+        this.loginUserId = loginUserId;
         this.cityId = cityId;
         this.orderBy = orderBy;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getLoginUserId() {
+        return loginUserId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setLoginUserId(String loginUserId) {
+        this.loginUserId = loginUserId;
     }
 
     public String getCityId() {

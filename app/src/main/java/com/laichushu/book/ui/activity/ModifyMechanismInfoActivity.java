@@ -160,15 +160,16 @@ public class ModifyMechanismInfoActivity extends MvpActivity2 implements View.On
                     RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), edMechName.getText().toString().trim());
                     RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), edMechaAddress.getText().toString().trim());
                     RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), edModifyIntro.getText().toString().trim());
+                    RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"),logoUrl);
                     RequestBody requestBody5 = null;
                     if (photoFile != null) {
                         requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(photoFile));
-                        logoUrl = null;
                     }
                     params.put("id", requestBody1);
                     params.put("name", requestBody2);
                     params.put("address", requestBody3);
                     params.put("remarks", requestBody4);
+                    params.put("logoUrl", requestBody6);
                     saveModifyMechanisDate(params, requestBody5);
                 }
                 break;

@@ -41,8 +41,10 @@
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_total_ranking"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content"
+            android:divider="@color/backGray"
+            android:showDividers="middle"
+            android:dividerPadding="1dp"
             android:background="@color/white" />
 
     </LinearLayout>
