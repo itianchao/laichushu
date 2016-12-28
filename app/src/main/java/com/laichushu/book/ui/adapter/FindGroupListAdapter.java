@@ -39,7 +39,6 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
      */
     private final static int TYPE1 = 0;
     private final static int TYPE2 = 1;
-    private final static int TYPE3 = 2;
 
     /**
      * @return 条目数量
@@ -59,9 +58,7 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
     public int getItemViewType(int position) {
         if (position == 0) {
             return TYPE1;
-        } else if (position == (mData == null ? 1 : mData.size() + 1)) {
-            return TYPE3;
-        } else {
+        }else {
             return TYPE2;
         }
     }
