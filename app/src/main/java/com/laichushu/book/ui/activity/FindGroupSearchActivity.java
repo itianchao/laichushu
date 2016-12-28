@@ -32,7 +32,6 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
     private TextView clearTv;
     private LinearLayout searchLay;
     private ListView searchLv;
-    private ListView hotLv;
     private ImageView emptyIv;
 
     @Override
@@ -59,7 +58,6 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
         searchEt.setOnEditorActionListener(this);
         mRecyclerView.setOnPullLoadMoreListener(this);
         searchLv.setOnItemClickListener(this);
-        hotLv.setOnItemClickListener(this);
         return mSuccessView;
     }
 
