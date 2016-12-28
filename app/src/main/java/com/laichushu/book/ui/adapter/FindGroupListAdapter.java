@@ -45,7 +45,7 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
      */
     @Override
     public int getItemCount() {
-        return mData == null ? 2 : mData.size() + 2;
+        return mData == null ? 1 : mData.size() + 1;
     }
 
     /**
@@ -93,6 +93,8 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
             RelativeLayout.LayoutParams parames = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, UIUtil.dip2px(40));
             ((ViewHolder1) holder).itemView.setLayoutParams(parames);
         } else {
+            RelativeLayout.LayoutParams parames = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, UIUtil.dip2px(70));
+            ((ViewHolder2) holder).itemView.setLayoutParams(parames);
             GroupListModle.DataBean dataBean = mData.get(position - 1);
             ((ViewHolder2) holder).groupNameTv.setText(dataBean.getName());
             GlideUitl.loadImg(mActivity, dataBean.getPhoto(), ((ViewHolder2) holder).groupIv);
