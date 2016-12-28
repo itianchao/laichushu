@@ -13,7 +13,7 @@ import java.io.File;
 
 public class ConstantValue {
 
-    public static String GlidCacheUrl="files/file";
+    public static String GlidCacheUrl = "files/file";
     public static String ACTION_UPDATE_DATA = "ACTION_UPDATE_DATA";
     public static String ACTION_UPDATE_DATA_PERINFO = "ACTION_UPDATE_DATA_PERINFO";
     public static String ACTION_UPDATE_DATA_MINEINFO = "ACTION_UPDATE_DATA_MINEINFO";
@@ -58,6 +58,9 @@ public class ConstantValue {
     public static String GROUP_START = "0";//0：启用，1：停用，3：解散
     public static String GROUP_END = "1";
     public static String GROUP_DISMISS = "3";
+    //发现类型  1:编辑 2：服务者
+    public static String FIND_EDITORTYPE = "1";
+    public static String FIND_SERVICETYPE = "2";
 
     //baseBook
     public static final String BASEBOOK = "basebook";
@@ -76,8 +79,8 @@ public class ConstantValue {
     public static class LOCAL_PATH {
 
         // 文件保存在SD卡路径
-        public static final String SD_PATH = UIUtil.getContext().getFilesDir().getAbsolutePath()+ File.separator;//应用根目录
-//        public static final String SD_PATH = Environment.getExternalStorageDirectory().getPath()+ File.separator;
+        public static final String SD_PATH = UIUtil.getContext().getFilesDir().getAbsolutePath() + File.separator;//应用根目录
+        //        public static final String SD_PATH = Environment.getExternalStorageDirectory().getPath()+ File.separator;
         // 项目名称
         public static final String PROJECT_NAME = "/laichushu";
         // 文件路径
@@ -102,7 +105,7 @@ public class ConstantValue {
 //    public static String API_SERVER_URL = "http://192.168.1.129:8082/book-app/";//施大勇2
 //    public static String API_SERVER_URL = "http://192.168.1.148:8082/book-app/";//施大勇3
 //    public static String API_SERVER_URL = "http://192.168.0.123:8082/book-app/";//施大勇4
-      public static String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
+    public static String API_SERVER_URL = "http://192.168.1.150:8082/book-app/";//施大勇5
 //    public static String API_SERVER_URL = "http://192.168.1.130:8082/book-app/";//施大勇6
 //    public static String API_SERVER_URL = "http://192.168.147.101:8082/book-app/";//张永生
 //    public static String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";

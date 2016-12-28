@@ -45,8 +45,7 @@
             android:divider="@color/backGray"
             android:showDividers="middle"
             android:dividerPadding="1dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/backGray" />
+            android:background="@color/white" />
 
     </LinearLayout>
 </RelativeLayout>

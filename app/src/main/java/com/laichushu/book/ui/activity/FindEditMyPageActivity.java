@@ -17,11 +17,14 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.FindEditorInfoModel;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
+import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.findeditmypage.FindEditMyPagePresenter;
 import com.laichushu.book.mvp.findeditmypage.FindEditMyPageView;
+import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.ui.adapter.EditCommentListAdapter;
+import com.laichushu.book.ui.adapter.EditorFindCaseAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
@@ -32,21 +35,30 @@ import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter> implements FindEditMyPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
     private ImageView ivBack, ivHeadImg;
-    private TextView tvTitle, tvRealName, tvIntroduction;
+    private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum;
     private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView;
     private LinearLayout llFindMsg, llTeamwork, llCommentList;
     private String userId = null;
     private RatingBar ratingBar, numRb;
-    ;
+    //案列
+    private EditorFindCaseAdapter caseAdapter;
+    private List<HomeHotModel.DataBean> caseDate = new ArrayList<>();
+
+    //合作
+    private List<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
+
     private RadioGroup radioGroup;
     private ScrollView scrollBrief;
     private EditCommentListAdapter commAdapter;
     private ArrayList<CommentDetailModle.DataBean> commDate = new ArrayList<>();
     private int PAGE_NO = 1;
     private EditText commentEt;
+
+    private String type = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +77,7 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
         ivHeadImg = ((ImageView) inflate.findViewById(R.id.iv_userHeadImg));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvRealName = ((TextView) inflate.findViewById(R.id.tv_userRealName));
+        tvTeamNum = ((TextView) inflate.findViewById(R.id.tv_teamworkNum));
         llFindMsg = (LinearLayout) inflate.findViewById(R.id.ll_findMsg);
         commentEt = (EditText) inflate.findViewById(R.id.et_comment);
         llTeamwork = (LinearLayout) inflate.findViewById(R.id.ll_teamwork);
@@ -90,7 +103,13 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
         llTeamwork.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         commentEt.setOnEditorActionListener(this);
-
+        //查询案列
+        mCaseRecyclerView.setGridLayout(1);
+        mCaseRecyclerView.setFooterViewText("加载中");
+        caseAdapter = new EditorFindCaseAdapter(this, caseDate, mvpPresenter);
+        mCaseRecyclerView.setAdapter(caseAdapter);
+        mCaseRecyclerView.setOnPullLoadMoreListener(this);
+        //查询评论
         mCommentRecyclerView.setGridLayout(1);
         mCommentRecyclerView.setFooterViewText("加载中");
         commAdapter = new EditCommentListAdapter(this, commDate, mvpPresenter);
@@ -118,8 +137,8 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
                 mvpPresenter.openSendPerMsgDialog(userId);
                 break;
             case R.id.ll_teamwork:
-                //合作
-                mvpPresenter.openTeamworkDialog();
+                //合作  TODO 获取图书列表--》选择图书---》合作
+                mvpPresenter.loadAuthorWorksData();
                 break;
         }
     }
@@ -135,14 +154,16 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
                 break;
             case R.id.rb_case:
                 //案列
+                type = "1";
                 scrollBrief.setVisibility(View.GONE);
                 llCommentList.setVisibility(View.GONE);
                 mCaseRecyclerView.setVisibility(View.VISIBLE);
-
+                mvpPresenter.loadFindArticleByCaseIdData(userId);
 
                 break;
             case R.id.rb_evaluate:
                 //评价
+                type = "2";
                 scrollBrief.setVisibility(View.GONE);
                 llCommentList.setVisibility(View.VISIBLE);
                 mCaseRecyclerView.setVisibility(View.GONE);
@@ -159,15 +180,19 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
             if (!TextUtils.isEmpty(model.getData().getLevel())) {
                 ratingBar.setNumStars(Integer.parseInt(model.getData().getLevel()));
             }
+            tvTeamNum.setText("已有" + model.getData().getCooperateNum() + "人合作");
             //简介
             if (!TextUtils.isEmpty(model.getData().getIntroduction()))
                 tvIntroduction.setText(model.getData().getIntroduction());
-            //评价
 
-        } else {
+        } else
+
+        {
             ToastUtil.showToast(model.getErrMsg());
         }
+
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
     }
 
 
@@ -206,7 +231,33 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
     }
 
     @Override
-    public void getSendDataSuccess(SendCommentMoudle model) {
+    public void getAuthorWorksDataSuccess(AuthorWorksModle model) {
+        dismissDialog();
+        if (model.isSuccess()) {
+            mArticleData.clear();
+            mArticleData.addAll(model.getData());
+            if (!model.getData().isEmpty()) {
+                mvpPresenter.openTeamworkDialog(mArticleData, userId);
+            } else {
+                ToastUtil.showToast("您还没有作品");
+            }
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
+    public void getArticleVoteDataSuccess(RewardResult model) {
+        dismissDialog();
+        if (model.isSuccess()) {
+            ToastUtil.showToast("合作成功！");
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
+    public void getSendDataSuccess(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("发送成功");
             commentEt.setText(null);
@@ -216,9 +267,31 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
             if (errorMsg.contains("该用户已经评分了")) {
                 ToastUtil.showToast(errorMsg);
             } else {
-                ToastUtil.showToast("发送失败");
+                ToastUtil.showToast(model.getErrMsg());
             }
         }
+    }
+
+    @Override
+    public void getEditorFindArticleDataSuccess(HomeHotModel model) {
+        dismissDialog();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCaseRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        if (model.isSuccess()) {
+            if (model.getData().size() != 0) {
+                PAGE_NO++;
+                caseDate.clear();
+                caseDate = model.getData();
+                caseAdapter.refreshAdapter(caseDate);
+            }
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -249,14 +322,25 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
     @Override
     public void onRefresh() {
         PAGE_NO = 1;
-        mvpPresenter.getCommentList_paramet().setPageNo(PAGE_NO + "");
-        mvpPresenter.loadEditorCommentListData(userId);
+        if (type.equals("2")) {
+            mvpPresenter.getCommentList_paramet().setPageNo(PAGE_NO + "");
+            mvpPresenter.loadEditorCommentListData(userId);
+        } else if (type.equals("1")) {
+            mvpPresenter.getCaseIdParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.loadFindArticleByCaseIdData(userId);
+        }
+
     }
 
     @Override
     public void onLoadMore() {
-        mvpPresenter.getCommentList_paramet().setPageNo(PAGE_NO + "");
-        mvpPresenter.loadEditorCommentListData(userId);
+        if (type.equals("2")) {
+            mvpPresenter.getCommentList_paramet().setPageNo(PAGE_NO + "");
+            mvpPresenter.loadEditorCommentListData(userId);
+        } else if (type.equals("1")) {
+            mvpPresenter.getCaseIdParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.loadFindArticleByCaseIdData(userId);
+        }
     }
 
 

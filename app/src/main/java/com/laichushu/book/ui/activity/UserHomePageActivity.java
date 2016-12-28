@@ -52,7 +52,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private ImageView ivBack, ivAnthor, ivOther, ivHead, ivGrade, ivGradeDetails;
     private TextView tvTitle, nickName, tvAuthorGrade;
     private HomePersonFocusResult.DataBean dataBean;
-    private Button btnFocus;
+    private TextView btnFocus;
     private PullLoadMoreRecyclerView mDyRecyclerView, mWorksRecyclerView, mHeFocusRecyclerView, mFocusHeRecyclerView;
     private UserDynamicAdapter dyAdapter;
     private UserWorksListAdapter worksAdapter;
@@ -91,7 +91,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         ivGrade = ((ImageView) inflate.findViewById(R.id.iv_userGrade));
         ivHead = ((ImageView) inflate.findViewById(R.id.iv_userHeadImg));
         ivGradeDetails = ((ImageView) inflate.findViewById(R.id.iv_userGradeDetails));
-        btnFocus = ((Button) inflate.findViewById(R.id.btn_userFocus));
+        btnFocus = ((TextView) inflate.findViewById(R.id.btn_userFocus));
 
         radioGroup = (RadioGroup) inflate.findViewById(R.id.rg_userList);
         mDyRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_userDynamic);

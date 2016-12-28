@@ -1,57 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:clickable="true"
-    android:gravity="center"
-    android:background="@android:color/transparent"
-    android:orientation="vertical">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/shape_rectangle_nocolor"
-    android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:id="@+id/rl_head"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="12dp">
 
         <TextView
+            android:id="@+id/tv_selectBook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:paddingLeft="24dp"
-            android:layout_gravity="center_vertical"
             android:text="选择书籍  :"
+
             android:textColor="@color/characterGray"
             android:textSize="@dimen/edit" />
 
-        <Spinner
-            android:id="@+id/sp_bookList"
+        <TextView
+            android:id="@+id/tv_bookList"
             android:layout_width="180dp"
-            android:background="@drawable/shape_rectangle_fill_hint"
             android:layout_height="match_parent"
-            android:layout_gravity="clip_horizontal"
             android:layout_marginLeft="12dp"
-            android:clickable="true"
-            android:drawableRight="@drawable/icon_select2_true"
-            android:gravity="center_vertical|left"
+            android:layout_toRightOf="@+id/tv_selectBook"
+            android:background="@drawable/shape_drop_down_normal"
+            android:gravity="center"
             android:hint="请选择"
+            android:paddingLeft="12dp"
+            android:textColor="@color/characterGray"
             android:textColorHint="@color/Grey" />
-    </LinearLayout>
+
+    </RelativeLayout>
+
     <View
+        android:id="@+id/view_line1"
         android:layout_width="match_parent"
         android:layout_height="0.7dp"
+        android:layout_below="@+id/rl_head"
         android:layout_marginTop="12dp"
-        android:layout_below="@+id/tv_signature"
         android:background="@color/Grey" />
+
     <RelativeLayout
         android:id="@+id/rl_signature"
         android:layout_width="match_parent"
         android:layout_height="180dp"
+        android:layout_below="@+id/view_line1"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="12dp"
@@ -63,7 +65,7 @@
         <TextView
             android:id="@+id/tv_signature"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="24dp"
             android:gravity="center_vertical"
             android:paddingLeft="24dp"
             android:text="备注信息"
@@ -81,25 +83,40 @@
             android:id="@+id/ed_remarksContent"
             android:layout_width="match_parent"
             android:layout_height="160dp"
+            android:layout_below="@+id/tv_signature"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:background="@drawable/shape_rectangle_fill_hint"
             android:gravity="top"
+            android:hint="请写下备注的信息"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingTop="8dp"
-            android:hint="请写下备注的信息"
-            android:textColorHint="@color/Grey"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
             android:textColor="@color/edit2"
-            android:textSize="@dimen/edit2"
-            android:layout_below="@+id/tv_signature" />
+            android:textColorHint="@color/Grey"
+            android:textSize="@dimen/edit2" />
     </RelativeLayout>
 
 
     <Button
         android:id="@+id/bt_sendContract"
-        android:layout_margin="36dp"
         style="@style/button_login_style"
-        android:text="发送合同" />
-</LinearLayout>
-</LinearLayout>
+        android:layout_below="@+id/rl_signature"
+        android:layout_margin="36dp"
+        android:text="合作" />
+
+    <ListView
+        android:id="@+id/lv_item"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bt_sendContract"
+        android:layout_alignRight="@+id/rl_head"
+        android:layout_below="@+id/rl_head"
+        android:layout_marginLeft="12dp"
+        android:background="@drawable/shape_rectangle_nocolor"
+        android:gravity="center"
+        android:scrollbars="none"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

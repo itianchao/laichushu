@@ -200,6 +200,7 @@
         android:background="@color/hint" />
 
     <RelativeLayout
+        android:id="@+id/rl_hsView"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_centerInParent="true">

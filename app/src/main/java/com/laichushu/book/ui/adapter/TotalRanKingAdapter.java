@@ -73,8 +73,8 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);
-            this.notifyDataSetChanged();
         }
+        this.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

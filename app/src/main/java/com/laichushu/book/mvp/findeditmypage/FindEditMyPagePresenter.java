@@ -2,13 +2,17 @@ package com.laichushu.book.mvp.findeditmypage;
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutCompat;
-import android.view.Display;
+import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
@@ -16,6 +20,10 @@ import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
+import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
+import com.laichushu.book.bean.netbean.EditorSaveComment_Paramet;
+import com.laichushu.book.bean.netbean.FindArticleByCaseId_Paramet;
+import com.laichushu.book.bean.netbean.FindArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.FindEditorCommentList_Paramet;
 import com.laichushu.book.bean.netbean.FindEditorInfoModel;
 import com.laichushu.book.bean.netbean.FindEditorInfo_Paramet;
@@ -23,12 +31,18 @@ import com.laichushu.book.bean.netbean.SaveComment_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
+import com.laichushu.book.mvp.campaign.AuthorWorksModle;
+import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindEditMyPageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -84,19 +98,127 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
 
     }
 
-    public void openTeamworkDialog() {
+    /**
+     * 获取作品列表
+     */
+    public void loadAuthorWorksData() {
+        mvpView.showDialog();
+        AuthorWorks_Paramet paramet = new AuthorWorks_Paramet(userId);
+        Logger.e("获取作者作品结果");
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.getAuthorWorks(paramet), new ApiCallback<AuthorWorksModle>() {
+            @Override
+            public void onSuccess(AuthorWorksModle model) {
+                mvpView.getAuthorWorksDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+
+    /**  //合作
+     * @param id
+     * @param cooperateId
+     * @param remarks
+     */
+
+    public void loadArticleVoteData(String id, String cooperateId, String remarks) {
+        mvpView.showDialog();
+        FindArticleVote_Paramet vote_paramet = new FindArticleVote_Paramet(id, userId, cooperateId, ConstantValue.FIND_EDITORTYPE, remarks);
+        Logger.e("合作");
+        Logger.json(new Gson().toJson(vote_paramet));
+        addSubscription(apiStores.getArticleVoteDetails(vote_paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getArticleVoteDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+
+    /**
+     * 打开合作对话框
+     */
+    public void openTeamworkDialog(final List<AuthorWorksModle.DataBean> workDate, final String cooperateId) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
         final AlertDialog alertDialog = dialogBuilder.create();
         View customerView = UIUtil.inflate(R.layout.item_pop_teamwork);
-        Spinner spBook = (Spinner) customerView.findViewById(R.id.sp_bookList);
-        EditText edContent = (EditText) customerView.findViewById(R.id.ed_remarksContent);
+        final List<String> articleName = new ArrayList<>();
+        articleName.clear();
+        final String[] currentArticleId = {null};
+        final TextView tvSelect = (TextView) customerView.findViewById(R.id.tv_bookList);
+        final ListView lvItem = (ListView) customerView.findViewById(R.id.lv_item);
+        final EditText edContent = (EditText) customerView.findViewById(R.id.ed_remarksContent);
         Button btnContract = (Button) customerView.findViewById(R.id.bt_sendContract);
+        for (int i = 0; i < workDate.size(); i++) {
+            articleName.add(workDate.get(i).getArticleName());
+        }
+        tvSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lvItem.getVisibility() == View.GONE) {
+                    lvItem.setVisibility(View.VISIBLE);
+                } else {
+                    lvItem.setVisibility(View.GONE);
+                }
+            }
+        });
 
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mActivity, R.layout.spiner_item_layout, articleName);
+        lvItem.setAdapter(adapter);
+        customerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (lvItem.getVisibility() == View.VISIBLE) {
+                    lvItem.setVisibility(View.GONE);
+                }
+                return false;
+            }
+        });
+        lvItem.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO 获取当前选中的图书id
+                currentArticleId[0] = workDate.get(position).getArticleId();
+                tvSelect.setText(articleName.get(position));
+                lvItem.setVisibility(View.GONE);
+            }
+        }));
+        btnContract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 请求合作   判断参数
+                if (TextUtils.isEmpty(currentArticleId[0])) {
+                    ToastUtil.showToast("请选择图书！");
+                    return;
+                }
+                if (TextUtils.isEmpty(edContent.getText().toString().trim())) {
+                    ToastUtil.showToast("请输入备注信息！");
+                    return;
+                }
+                loadArticleVoteData(currentArticleId[0], cooperateId, edContent.getText().toString().trim());
+                alertDialog.dismiss();
+            }
+        });
         alertDialog.setView(customerView);
         alertDialog.show();
-        WindowManager m = mActivity.getWindowManager();
-        Display display = m.getDefaultDisplay();  //为获取屏幕宽、高
         alertDialog.getWindow().setGravity(Gravity.CENTER);
         alertDialog.getWindow().setLayout(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
         alertDialog.getWindow().setWindowAnimations(R.style.periodpopwindow_anim_style);
@@ -136,7 +258,6 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
     //获取编辑主页用户头像信息
     public void loadEditorInfoData(String userID) {
         FindEditorInfo_Paramet infoParamet = new FindEditorInfo_Paramet(userID);
-        mvpView.showDialog();
         Logger.e("用户信息");
         Logger.json(new Gson().toJson(infoParamet));
         addSubscription(apiStores.getEditorInfoDatails(infoParamet), new ApiCallback<FindEditorInfoModel>() {
@@ -166,10 +287,10 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
     }
 
     //编辑-查询所有评论
-    FindEditorCommentList_Paramet commentList_paramet = new FindEditorCommentList_Paramet(userId,"",pageSize,pageNo);
+    FindEditorCommentList_Paramet commentList_paramet = new FindEditorCommentList_Paramet(userId, "", pageSize, pageNo);
+
     public void loadEditorCommentListData(String editorId) {
-       getCommentList_paramet().setEditorId(editorId);
-        mvpView.showDialog();
+        getCommentList_paramet().setEditorId(editorId);
         Logger.e("所有评论");
         Logger.json(new Gson().toJson(commentList_paramet));
         addSubscription(apiStores.getEditorCommentList(commentList_paramet), new ApiCallback<TopicdetailModel>() {
@@ -189,16 +310,17 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
             }
         });
     }
-//发表评论
-    public void loadSendCommentData(String sourceId,String content,String starLevel){
+
+    //发表评论
+    public void loadSendCommentData(String sourceId, String content, String starLevel) {
         mvpView.showDialog();
-        SaveComment_Paramet paramet = new SaveComment_Paramet(sourceId,userId,content,starLevel);
+        EditorSaveComment_Paramet paramet = new EditorSaveComment_Paramet(userId,sourceId, content, starLevel);
         Logger.e("发送评论");
         Logger.json(new Gson().toJson(paramet));
 
-        addSubscription(apiStores.saveComment(paramet), new ApiCallback<SendCommentMoudle>() {
+        addSubscription(apiStores.saveEditorComment(paramet), new ApiCallback<RewardResult>() {
             @Override
-            public void onSuccess(SendCommentMoudle model) {
+            public void onSuccess(RewardResult model) {
                 mvpView.getSendDataSuccess(model);
             }
 
@@ -213,21 +335,56 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
             }
         });
     }
+
     /**
      * 点赞 取消赞
+     *
      * @param sourceId
      * @param type
      */
-    public void saveScoreLikeData(String sourceId, final String type){
+    public void saveScoreLikeData(String sourceId, final String type) {
         mvpView.showDialog();
         String sourceType = "1";
-        TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId,sourceId,sourceType,type);
+        TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId, sourceId, sourceType, type);
         Logger.e("点赞");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.SaveScoreLikeData(model,type);
+                mvpView.SaveScoreLikeData(model, type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+
+    public FindArticleByCaseId_Paramet getCaseIdParamet() {
+        return caseIdParamet;
+    }
+
+    public void setCaseIdParamet(FindArticleByCaseId_Paramet caseIdParamet) {
+        this.caseIdParamet = caseIdParamet;
+    }
+
+    //查询案列图书
+    FindArticleByCaseId_Paramet caseIdParamet = new FindArticleByCaseId_Paramet(userId, "", ConstantValue.FIND_EDITORTYPE, pageNo, pageSize);
+
+    public void loadFindArticleByCaseIdData(String sourceId) {
+        getCaseIdParamet().setSourceId(sourceId);
+        Logger.e("查询案列图书");
+        Logger.json(new Gson().toJson(caseIdParamet));
+        addSubscription(apiStores.getEditorFindArticleByCaseId(caseIdParamet), new ApiCallback<HomeHotModel>() {
+            @Override
+            public void onSuccess(HomeHotModel model) {
+                mvpView.getEditorFindArticleDataSuccess(model);
             }
 
             @Override

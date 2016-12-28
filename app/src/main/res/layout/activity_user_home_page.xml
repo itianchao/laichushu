@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/rl_editHeadImg"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="230dp"
         android:background="@drawable/mine_bg">
 
         <include
@@ -77,18 +77,22 @@
             android:textSize="@dimen/edit"
             android:textStyle="bold" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_userFocus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_userAuthorGrade"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
             android:background="@color/global"
             android:text="关注"
-            android:textColor="@color/white"
-            android:textSize="@dimen/edit"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit2"
             android:textStyle="bold" />
     </RelativeLayout>
 

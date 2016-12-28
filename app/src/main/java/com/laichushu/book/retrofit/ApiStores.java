@@ -1,5 +1,7 @@
 package com.laichushu.book.retrofit;
 
+import android.widget.EditText;
+
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.HomeTitleBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
@@ -40,7 +42,6 @@ import com.laichushu.book.mvp.regist2.RegistModel2;
 import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
 import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
-import com.laichushu.book.utils.UIUtil;
 
 import java.util.Map;
 
@@ -582,10 +583,18 @@ public interface ApiStores {
     //发现编辑--个人主页
     @POST("editor/info")
     Observable<FindEditorInfoModel> getEditorInfoDatails(@Body FindEditorInfo_Paramet paramet);
-
+    //编辑界面--编辑评论
+    @POST("editor/commentSave")
+    Observable<RewardResult> saveEditorComment(@Body EditorSaveComment_Paramet paramet);
     //发现编辑--查询所有评论
     @POST("editor/commentList")
     Observable<TopicdetailModel> getEditorCommentList(@Body FindEditorCommentList_Paramet paramet);
+    //发现编辑--案列
+    @POST("searchArticle/findArticleByCaseId")
+    Observable<HomeHotModel> getEditorFindArticleByCaseId(@Body FindArticleByCaseId_Paramet paramet);
+    //发现编辑--个人主页合作
+    @POST("article/vote")
+    Observable<RewardResult> getArticleVoteDetails(@Body FindArticleVote_Paramet paramet);
 
     /**
      * 小组

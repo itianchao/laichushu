@@ -74,7 +74,7 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
                 - v.getWidth() / 4;
         int[] location = new int[2];
         v.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(v, xPos, 40);
+        popupWindow.showAsDropDown(v, xPos, 20);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -111,7 +111,6 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
     public void loadEditorListData(String cityId, final String orderBy) {
         getEditorList_paramet().setCityId(cityId);
         getEditorList_paramet().setOrderBy(orderBy);
-        mvpView.showDialog();
         Logger.e("参加活动");
         Logger.json(new Gson().toJson(editorList_paramet));
         addSubscription(apiStores.getEditorListDatails(editorList_paramet), new ApiCallback<FindEditorListModel>() {

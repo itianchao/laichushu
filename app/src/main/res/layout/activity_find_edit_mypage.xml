@@ -92,14 +92,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_scan"
+                android:id="@+id/ll_teamworkNum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/tv_scan"
+                    android:id="@+id/tv_teamworkNum"
                     style="@style/new_up"
                     android:text="已有12人合作"
                     android:textColor="@color/white" />
