@@ -97,27 +97,6 @@
 
             </LinearLayout>
             <include layout="@layout/item_distance"/>
-            <LinearLayout
-                android:id="@+id/lay_hot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
-                    android:text="热门搜索"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/edit2" />
-                <include layout="@layout/line"/>
-                <ListView
-                    android:id="@+id/lay_hot_child"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
         </LinearLayout>
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_search"

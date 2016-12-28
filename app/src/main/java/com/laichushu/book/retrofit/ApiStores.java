@@ -592,6 +592,6 @@ public interface ApiStores {
     Observable<RewardResult> createNewGroup(@Part("file\"; filename=\"group.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
 
     //最新话题列表
-    @POST("team/findNewTopic")
+    @POST("topic/findNewTopic")
     Observable<MechanismTopicListModel> getNewTopicList(@Body NewTopicList_Paramet paramet);
 }

@@ -2,7 +2,6 @@ package com.laichushu.book.ui.activity;
 
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -21,7 +20,6 @@ import com.laichushu.book.ui.adapter.MechanismTopicListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
-import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -102,7 +100,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         recommendRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_recommend_group);//小组推荐列表
         topicRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_topic);//话题推荐列表
         groupRyv.setLinearLayout();
-        recommendRyv.setLinearLayout();
+        recommendRyv.setGridLayout(4);
         topicRyv.setLinearLayout();
         groupRyv.setPushRefreshEnable(false);
         groupRyv.setPullRefreshEnable(false);
@@ -153,7 +151,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 finish();
                 break;
             case R.id.iv_title_another://搜索
-                UIUtil.openActivity(mActivity,FindGroupSearchActivity.class);
+                UIUtil.openActivity(mActivity, FindGroupSearchActivity.class);
                 break;
             case R.id.iv_title_other://我的
 
@@ -178,7 +176,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
     public void getGroupListDataSuccess(GroupListModle modle) {
         UIUtil.postPullLoadMoreCompleted(topicRyv);
         if (modle.isSuccess()) {
-            if (modle.getData() != null && modle.getData().isEmpty()) {
+            if (modle.getData() != null && !modle.getData().isEmpty()) {
                 mGroupListdata = modle.getData();
                 mGroupListAdapter.setmData(mGroupListdata);
                 frist = true;
@@ -210,8 +208,8 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
     @Override
     public void getNewTopicListDataSuccess(MechanismTopicListModel modle) {
         if (modle.isSuccess()) {
+            second = true;
             if (mvpPresenter.getParamet().getPageNo().equals("1")) {
-                second = true;
                 Message msg = new Message();
                 mhandler.sendMessage(msg);
                 mTopicData.clear();
