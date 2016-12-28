@@ -158,7 +158,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 UIUtil.openActivity(mActivity, FindGroupSearchActivity.class);
                 break;
             case R.id.iv_title_other://我的
-
+                UIUtil.openActivity(mActivity, FindGroupMineActivity.class);
                 break;
             case R.id.rbn_01://小组
                 groupFay.setVisibility(View.VISIBLE);
