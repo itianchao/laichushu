@@ -4,8 +4,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <item name="primary" type="color">#444444</item>
-    <item name="primary_dark" type="color">#222222</item>
     <color name="white">#FFFFFF</color>
     <color name="edit">#666666</color>
     <color name="edit2">#343434</color>
@@ -22,7 +20,6 @@
     <!-- hint -->
     <color name="hint">#CCCCCC</color>
     <!-- 自定义通知栏颜色  -->
-    <color name="title_bg_color">#3fabda</color>
     <color name="title_bg_color1">#1F1D1E</color>
     <!-- 全局色调 -->
     <color name="global">#93C2B7</color>

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -38,14 +39,13 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
      */
     private final static int TYPE1 = 0;
     private final static int TYPE2 = 1;
-    private final static int TYPE3 = 2;
 
     /**
      * @return 条目数量
      */
     @Override
     public int getItemCount() {
-        return mData == null ? 2 : mData.size() + 2;
+        return mData == null ? 1 : mData.size() + 1;
     }
 
     /**
@@ -58,9 +58,7 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
     public int getItemViewType(int position) {
         if (position == 0) {
             return TYPE1;
-        } else if (position == (mData == null ? 1 : mData.size() + 1)) {
-            return TYPE3;
-        } else {
+        }else {
             return TYPE2;
         }
     }
@@ -78,10 +76,6 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
                 itemView = UIUtil.inflate(R.layout.item_find_group_list);
                 holder = new ViewHolder2(itemView);
                 break;
-            case TYPE3:
-                itemView = UIUtil.inflate(R.layout.item_find_group_recommen);
-                holder = new ViewHolder3(itemView);
-                break;
         }
         return holder;
     }
@@ -96,10 +90,12 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
                     UIUtil.openActivity(mActivity, FindGroupCreateNewActivity.class);
                 }
             });
-        } else if (position == (mData == null ? 1 : mData.size() + 1)) {
-
+            RelativeLayout.LayoutParams parames = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, UIUtil.dip2px(40));
+            ((ViewHolder1) holder).itemView.setLayoutParams(parames);
         } else {
-            GroupListModle.DataBean dataBean = mData.get(position);
+            RelativeLayout.LayoutParams parames = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, UIUtil.dip2px(70));
+            ((ViewHolder2) holder).itemView.setLayoutParams(parames);
+            GroupListModle.DataBean dataBean = mData.get(position - 1);
             ((ViewHolder2) holder).groupNameTv.setText(dataBean.getName());
             GlideUitl.loadImg(mActivity, dataBean.getPhoto(), ((ViewHolder2) holder).groupIv);
         }
@@ -120,9 +116,11 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
     private class ViewHolder1 extends FindGroupListViewHolder {
 
         private TextView createGroupTv;
+        private View itemView;
 
         private ViewHolder1(View itemView) {
             super(itemView);
+            this.itemView = itemView;
             createGroupTv = (TextView) itemView.findViewById(R.id.tv_create_group);//创建小组按钮
         }
 
@@ -135,24 +133,17 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
 
         private TextView groupNameTv;
         private ImageView groupIv;
+        private View itemView;
 
         private ViewHolder2(View itemView) {
             super(itemView);
+            this.itemView = itemView;
             groupIv = (ImageView) itemView.findViewById(R.id.iv_group);
             groupNameTv = (TextView) itemView.findViewById(R.id.tv_group_name);
 
         }
     }
 
-    /**
-     * 小组推荐
-     */
-    private class ViewHolder3 extends FindGroupListViewHolder {
-
-        private ViewHolder3(View itemView) {
-            super(itemView);
-        }
-    }
 
     public void setmData(ArrayList<GroupListModle.DataBean> mData) {
         this.mData = mData;

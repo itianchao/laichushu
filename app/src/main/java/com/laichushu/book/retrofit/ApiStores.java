@@ -607,4 +607,8 @@ public interface ApiStores {
     @Multipart
     @POST("team/save")
     Observable<RewardResult> createNewGroup(@Part("file\"; filename=\"group.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
+
+    //最新话题列表
+    @POST("topic/findNewTopic")
+    Observable<MechanismTopicListModel> getNewTopicList(@Body NewTopicList_Paramet paramet);
 }

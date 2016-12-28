@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
-
+            <include layout="@layout/item_find_group_recommen"/>
             <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
                 android:id="@+id/ryv_recommend_group"
                 android:layout_width="match_parent"

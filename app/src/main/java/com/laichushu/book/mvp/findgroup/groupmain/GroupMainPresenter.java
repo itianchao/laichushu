@@ -1,6 +1,7 @@
 package com.laichushu.book.mvp.findgroup.groupmain;
 
 import com.laichushu.book.bean.netbean.JoinGroupList_Paramet;
+import com.laichushu.book.bean.netbean.NewTopicList_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -14,6 +15,9 @@ import com.laichushu.book.utils.LoggerUtil;
 
 public class GroupMainPresenter extends BasePresenter<GroupMainView> {
     private String userId = ConstantValue.USERID;
+    private String pageNo = "1";
+    private String pageSize = ConstantValue.PAGESIZE3;
+    private NewTopicList_Paramet paramet = new NewTopicList_Paramet(userId,pageNo,pageSize);
 
     public GroupMainPresenter(GroupMainView view) {
         attachView(view);
@@ -44,26 +48,35 @@ public class GroupMainPresenter extends BasePresenter<GroupMainView> {
     }
 
     /**
-     * 获最新构话题列
+     * 获取最新话题
      */
-    public void loadMechanismTopicListData(String id) {
-        LoggerUtil.e("获取最新话题列表");
-//        getParamet().setPartyId(id);
-//        addSubscription(apiStores.getMechanismTopicList(paramet), new ApiCallback<MechanismTopicListModel>() {
-//            @Override
-//            public void onSuccess(MechanismTopicListModel modle) {
-//                mvpView.getDataSuccess(modle);
-//            }
-//
-//            @Override
-//            public void onFailure(int code, String msg) {
-//                mvpView.getDataFail("code:" + code + "\nmsg:" + msg);
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//        });
+    public void loadNewTopicList() {
+        LoggerUtil.e("获取最新话题");
+
+        addSubscription(apiStores.getNewTopicList(paramet), new ApiCallback<MechanismTopicListModel>() {
+            @Override
+            public void onSuccess(MechanismTopicListModel model) {
+                mvpView.getNewTopicListDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getNewTopicDataFail(code+"|"+msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
+
+    public NewTopicList_Paramet getParamet() {
+        return paramet;
+    }
+
+    public void setParamet(NewTopicList_Paramet paramet) {
+        this.paramet = paramet;
     }
 }

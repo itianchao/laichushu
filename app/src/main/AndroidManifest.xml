@@ -284,6 +284,10 @@
             android:name=".ui.activity.FindGroupCreateNewActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.activity.FindGroupSearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- FBReader start -->
         <activity

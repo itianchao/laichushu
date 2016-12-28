@@ -265,8 +265,8 @@ final class NavigationPopup extends ZLApplication.PopupPanel implements View.OnC
             myFBReader.getViewWidget().reset();
             myFBReader.getViewWidget().repaint();
         }
-        final SeekBar slider = (SeekBar) myWindow.findViewById(R.id.navigation_slider);
-        final TextView text = (TextView) myWindow.findViewById(R.id.navigation_text);
+//        final SeekBar slider = (SeekBar) myWindow.findViewById(R.id.navigation_slider);
+//        final TextView text = (TextView) myWindow.findViewById(R.id.navigation_text);
 
 //        final ZLTextView textView = myFBReader.getTextView();
 //		final ZLTextView.PagePosition pagePosition = textView.pagePosition();

@@ -86,5 +86,6 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
 
     public void setmData(ArrayList<MechanismTopicListModel.DataBean> mData) {
         this.mData = mData;
+        notifyDataSetChanged();
     }
 }

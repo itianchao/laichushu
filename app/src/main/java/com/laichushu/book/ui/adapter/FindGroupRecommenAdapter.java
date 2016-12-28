@@ -7,9 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.ui.activity.FindGroupMainActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
+
+import java.util.ArrayList;
 
 /**
  * 发现 - 小组主页 - 小组推荐
@@ -17,10 +20,13 @@ import com.laichushu.book.utils.UIUtil;
  */
 
 public class FindGroupRecommenAdapter extends RecyclerView.Adapter<FindGroupRecommenAdapter.FindGroupRecommenViewHolder> {
-    private FindGroupMainActivity mActivity;
 
-    public FindGroupRecommenAdapter(FindGroupMainActivity mActivity) {
+    private FindGroupMainActivity mActivity;
+    private ArrayList<FindCourseCommResult.DataBean> mRecommendData;
+
+    public FindGroupRecommenAdapter(ArrayList<FindCourseCommResult.DataBean> mRecommendData, FindGroupMainActivity mActivity) {
         this.mActivity = mActivity;
+        this.mRecommendData = mRecommendData;
     }
 
     @Override
@@ -31,17 +37,20 @@ public class FindGroupRecommenAdapter extends RecyclerView.Adapter<FindGroupReco
 
     @Override
     public void onBindViewHolder(FindGroupRecommenViewHolder holder, int position) {
-        holder.groupRecommenNameTv.setText("");
-        GlideUitl.loadImg(mActivity,"",holder.groupRecommenIv);
+        FindCourseCommResult.DataBean dataBean = mRecommendData.get(position);
+        holder.groupRecommenNameTv.setText(dataBean.getName());
+        GlideUitl.loadImg(mActivity, dataBean.getPhoto(), holder.groupRecommenIv);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mRecommendData.size() > 4 ? 4 : mRecommendData.size();
     }
 
+    /**
+     * 推荐列表
+     */
     class FindGroupRecommenViewHolder extends RecyclerView.ViewHolder {
-
         private ImageView groupRecommenIv;
         private TextView groupRecommenNameTv;
 
@@ -50,5 +59,10 @@ public class FindGroupRecommenAdapter extends RecyclerView.Adapter<FindGroupReco
             groupRecommenIv = (ImageView) itemView.findViewById(R.id.iv_group_recommen);
             groupRecommenNameTv = (TextView) itemView.findViewById(R.id.tv_group_recommen_name);
         }
+    }
+
+    public void setmRecommendData(ArrayList<FindCourseCommResult.DataBean> mRecommendData) {
+        this.mRecommendData = mRecommendData;
+        notifyDataSetChanged();
     }
 }

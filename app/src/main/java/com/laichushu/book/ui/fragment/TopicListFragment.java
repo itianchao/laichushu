@@ -79,7 +79,6 @@ public class TopicListFragment extends MvpFragment2<MechanismTopicListPresenter>
                 mData.addAll(model.getData());
                 pageNo++;
                 mAdapter.setmData(mData);
-                mAdapter.notifyDataSetChanged();
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
