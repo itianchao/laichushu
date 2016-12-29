@@ -94,7 +94,12 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
         mRecyclerView.setAdapter(subAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
 
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        },10);
     }
 
     @Override

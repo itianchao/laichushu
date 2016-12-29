@@ -1,13 +1,18 @@
 package com.laichushu.book.mvp.findgroup.findgroupmain;
 
+import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
+
 /**
+ * 小组详情
  * Created by PCPC on 2016/12/26.
  */
 
 public interface FindGroupPageView {
-    void getDataFail(String msg);
+    void getGroupTopicListDataSuccess(MechanismTopicListModel model);
 
-    void showDialog();
+    void getGroupTopicListDataFail(String msg);
 
-    void dismissDialog();
+    void getGroupSuggestTopicListSuccess(MechanismTopicListModel model);
+
+    void getGroupSuggestTopicListFail(String msg);
 }

@@ -50,6 +50,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
     private boolean second = false;
     private MyHandler mhandler = new MyHandler(this);
     private int pageNo = 1;
+    private ImageView emptyIv;
 
     /**
      * handler
@@ -93,6 +94,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         ImageView finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
         ImageView mineIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_other);
         ImageView searchIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_another);
+        emptyIv = (ImageView) mSuccessView.findViewById(R.id.iv_empty);
         //切换
         RadioButton fristRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_01);//小组
         RadioButton scondRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_02);//推荐话题
@@ -109,7 +111,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         groupRyv.setPullRefreshEnable(false);
         recommendRyv.setPushRefreshEnable(false);
         recommendRyv.setPullRefreshEnable(false);
-        recommendRyv.setOnPullLoadMoreListener(this);
+        topicRyv.setOnPullLoadMoreListener(this);
         //点击事件
         fristRbn.setOnClickListener(this);
         scondRbn.setOnClickListener(this);
@@ -158,15 +160,21 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 UIUtil.openActivity(mActivity, FindGroupSearchActivity.class);
                 break;
             case R.id.iv_title_other://我的
-
+                UIUtil.openActivity(mActivity, FindGroupMineActivity.class);
                 break;
             case R.id.rbn_01://小组
                 groupFay.setVisibility(View.VISIBLE);
                 topicRyv.setVisibility(View.GONE);
                 break;
             case R.id.rbn_02://最新话题
-                topicRyv.setVisibility(View.VISIBLE);
                 groupFay.setVisibility(View.GONE);
+                if (mTopicData.isEmpty()) {
+                    emptyIv.setVisibility(View.VISIBLE);
+                    topicRyv.setVisibility(View.GONE);
+                } else {
+                    topicRyv.setVisibility(View.VISIBLE);
+                    emptyIv.setVisibility(View.GONE);
+                }
                 break;
             case R.id.tv_create_group://创建小组
                 UIUtil.openActivity(mActivity, FindGroupCreateNewActivity.class);
@@ -214,6 +222,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
      */
     @Override
     public void getNewTopicListDataSuccess(MechanismTopicListModel modle) {
+        UIUtil.postPullLoadMoreCompleted(topicRyv);
         if (modle.isSuccess()) {
             second = true;
             if (mvpPresenter.getParamet().getPageNo().equals("1")) {
@@ -224,6 +233,9 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
             if (modle.getData() != null && !modle.getData().isEmpty()) {
                 pageNo++;
                 mvpPresenter.getParamet().setPageNo(pageNo + "");
+            }
+            if (modle.getData().isEmpty()) {
+                ToastUtil.showToast("没用更多数据");
             }
             mTopicData.addAll(modle.getData());
             mTopicAdapter.setmData(mTopicData);
@@ -288,14 +300,25 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 2){
-            Bundle bundle=data.getExtras();
+        if (resultCode == 2) {//创建小组后
+            Bundle bundle = data.getExtras();
             String str = bundle.getString("back");
-            if (str.equals("updata")){
+            if (str.equals("updata")) {//刷新小组列表
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
                 frist = false;
                 mGroupListdata.clear();
                 mvpPresenter.loadGroupList();
+            }
+        } else if (resultCode == 3) {//发话题后
+            Bundle bundle = data.getExtras();
+            String str = bundle.getString("refrush");
+            if (str.equals("refrush")) {//刷新话题列表
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                second = false;
+                mTopicData.clear();
+                pageNo = 1;
+                mvpPresenter.getParamet().setPageNo(pageNo + "");
+                mvpPresenter.loadNewTopicList();
             }
         }
     }

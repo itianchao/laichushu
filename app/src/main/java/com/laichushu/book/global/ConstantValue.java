@@ -63,9 +63,10 @@ public class ConstantValue {
     public static String FIND_SERVICETYPE = "2";
 
     //搜索历史
-    public static String SEARCH_TYPE_BOOK = "1";
-    public static String SEARCH_TYPE_GROUP = "2";
-    public static String SEARCH_TYPE_TOPIC = "3";
+    public static String SEARCH_TYPE_BOOK = "1";//图书
+    public static String SEARCH_TYPE_GROUP = "2";//小组
+    public static String SEARCH_TYPE_TOPIC = "3";//话题
+    public static String SEARCH_TYPE_MECHANISM = "4";//机构
     //baseBook
     public static final String BASEBOOK = "basebook";
 

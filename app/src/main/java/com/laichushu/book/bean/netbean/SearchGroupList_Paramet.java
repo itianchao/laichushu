@@ -6,7 +6,7 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class SearchGroupList_Paramet {
-    private String userId,name,pageNo,pageSize;
+    private String userId, name, pageNo, pageSize;
 
     public SearchGroupList_Paramet(String userId, String name, String pageNo, String pageSize) {
         this.userId = userId;

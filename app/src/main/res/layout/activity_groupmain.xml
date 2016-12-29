@@ -2,8 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
     android:orientation="vertical">
     <!--标题-->
     <include layout="@layout/page_title" />
@@ -36,13 +34,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/item_find_group_create"/>
+            <include layout="@layout/item_find_group_create" />
+
             <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
                 android:id="@+id/ryv_group"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
-            <include layout="@layout/item_find_group_recommen"/>
+
+            <include layout="@layout/item_find_group_recommen" />
+
             <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
                 android:id="@+id/ryv_recommend_group"
                 android:layout_width="match_parent"
@@ -54,7 +55,16 @@
     <!-- 最新话题 -->
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/ryv_topic"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_empty"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="180dp"
+        android:src="@drawable/ic_empty_page"
+        android:visibility="gone" />
 </LinearLayout>

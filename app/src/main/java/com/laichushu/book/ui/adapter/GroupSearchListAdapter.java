@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
+import com.laichushu.book.ui.activity.FindGroupDetailActivity;
 import com.laichushu.book.ui.activity.FindGroupSearchActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -40,9 +42,17 @@ public class GroupSearchListAdapter extends RecyclerView.Adapter<GroupSearchList
     public void onBindViewHolder(GroupSearchListViewHolder holder, int position) {
         RelativeLayout.LayoutParams parames = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, UIUtil.dip2px(70));
         holder.itemView.setLayoutParams(parames);
-        GroupListModle.DataBean dataBean = mData.get(position);
+        final GroupListModle.DataBean dataBean = mData.get(position);
         holder.groupNameTv.setText(dataBean.getName());
         GlideUitl.loadImg(mActivity, dataBean.getPhoto(), holder.groupIv);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bean",dataBean);
+                UIUtil.openActivity(mActivity,FindGroupDetailActivity.class,bundle);
+            }
+        });
     }
 
     @Override

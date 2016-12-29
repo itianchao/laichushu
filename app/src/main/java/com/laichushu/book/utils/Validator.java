@@ -10,7 +10,7 @@ public class Validator
 	/**
 	 * 正则表达式：验证用户名
 	 */
-	public static final String	REGEX_USERNAME	= "^[a-zA-Z0-9]{4,30}$";
+	public static final String	REGEX_USERNAME	= "^[a-zA-Z0-9]{6,20}$";
 
 	/**
 	 * 正则表达式：验证密码(字母+数字)
