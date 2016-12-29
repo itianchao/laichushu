@@ -81,8 +81,12 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
 
     @Override
     protected void initData() {
-        super.initData();
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);//加载成功页面
+            }
+        },10);
     }
 
     @Override

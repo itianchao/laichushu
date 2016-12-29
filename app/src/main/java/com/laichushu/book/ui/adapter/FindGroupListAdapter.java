@@ -11,6 +11,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
 import com.laichushu.book.ui.activity.FindGroupCreateNewActivity;
 import com.laichushu.book.ui.activity.FindGroupMainActivity;
+import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -23,13 +24,13 @@ import java.util.ArrayList;
 
 public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdapter.FindGroupListViewHolder> {
 
-    private FindGroupMainActivity mActivity;
+    private BaseActivity mActivity;
     private ArrayList<GroupListModle.DataBean> mData;
 
     /**
      * 构造方法
      */
-    public FindGroupListAdapter(ArrayList<GroupListModle.DataBean> mData, FindGroupMainActivity mActivity) {
+    public FindGroupListAdapter(ArrayList<GroupListModle.DataBean> mData, BaseActivity mActivity) {
         this.mActivity = mActivity;
         this.mData = mData;
     }
@@ -54,7 +55,9 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
         holder.itemView.setLayoutParams(parames);
         GroupListModle.DataBean dataBean = mData.get(position);
         holder.groupNameTv.setText(dataBean.getName());
+        holder.groupNumberTv.setText(dataBean.getJoinNum()+"人");
         GlideUitl.loadImg(mActivity, dataBean.getPhoto(), holder.groupIv);
+
     }
 
     /**
@@ -62,6 +65,7 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
      */
     class FindGroupListViewHolder extends RecyclerView.ViewHolder {
         private TextView groupNameTv;
+        private TextView groupNumberTv;
         private ImageView groupIv;
         private View itemView;
 
@@ -70,7 +74,7 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
             this.itemView = itemView;
             groupIv = (ImageView) itemView.findViewById(R.id.iv_group);
             groupNameTv = (TextView) itemView.findViewById(R.id.tv_group_name);
-
+            groupNumberTv = (TextView) itemView.findViewById(R.id.tv_group_number);
         }
     }
 

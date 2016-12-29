@@ -57,6 +57,24 @@ public class GroupListModle {
         private String photo;
         private String remarks;
         private String status;
+        private String markContent;
+        private String createDate;
+
+        public String getMarkContent() {
+            return markContent;
+        }
+
+        public void setMarkContent(String markContent) {
+            this.markContent = markContent;
+        }
+
+        public String getCreateDate() {
+            return createDate;
+        }
+
+        public void setCreateDate(String createDate) {
+            this.createDate = createDate;
+        }
 
         public String getCode() {
             return code;

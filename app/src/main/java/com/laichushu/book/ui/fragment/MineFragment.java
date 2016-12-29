@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.NewTopicList_Paramet;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;
@@ -124,7 +125,12 @@ public class MineFragment extends MvpFragment2<MinePresenter> implements View.On
         } else {
             tvMinebookNum.setText(result.getArticleCount() + "部  ");
         }
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        },0);
         res = result;
     }
 

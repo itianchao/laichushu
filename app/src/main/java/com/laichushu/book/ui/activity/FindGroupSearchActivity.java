@@ -91,7 +91,12 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
     @Override
     protected void initData() {
         super.initData();
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);//加载成功页面
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);//加载成功页面
+            }
+        },10);
         mvpPresenter.setupDatabase();
         dao = mvpPresenter.getSearch_historyDao();
         List<Search_History> hisList = mvpPresenter.getHistoryList();
