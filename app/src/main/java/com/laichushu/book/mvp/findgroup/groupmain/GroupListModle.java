@@ -1,5 +1,8 @@
 package com.laichushu.book.mvp.findgroup.groupmain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +38,7 @@ public class GroupListModle {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         /**
          * code : 100001
          * id : 275
@@ -147,6 +150,55 @@ public class GroupListModle {
         public void setStatus(String status) {
             this.status = status;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.code);
+            dest.writeString(this.id);
+            dest.writeInt(this.joinNum);
+            dest.writeString(this.joinStatus);
+            dest.writeString(this.leaderId);
+            dest.writeString(this.name);
+            dest.writeString(this.photo);
+            dest.writeString(this.remarks);
+            dest.writeString(this.status);
+            dest.writeString(this.markContent);
+            dest.writeString(this.createDate);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.code = in.readString();
+            this.id = in.readString();
+            this.joinNum = in.readInt();
+            this.joinStatus = in.readString();
+            this.leaderId = in.readString();
+            this.name = in.readString();
+            this.photo = in.readString();
+            this.remarks = in.readString();
+            this.status = in.readString();
+            this.markContent = in.readString();
+            this.createDate = in.readString();
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
 
     public String getErrMsg() {

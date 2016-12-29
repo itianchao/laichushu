@@ -75,4 +75,6 @@
     <string name="create_group">创建小组</string>
     <string name="find_join_group">加入的小组</string>
     <string name="recomment_group">推荐小组</string>
+    <string name="find">发现</string>
+    <string name="recommend">推荐</string>
 </resources>
