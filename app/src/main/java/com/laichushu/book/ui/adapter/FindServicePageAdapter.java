@@ -80,7 +80,7 @@ public class FindServicePageAdapter extends RecyclerView.Adapter<FindServicePage
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout rlItem;
-        public final TextView tvRealName,tvDeails;
+        public final TextView tvRealName, tvDeails;
         public final ImageView ivImg;
         public final RatingBar rbNum;
 
