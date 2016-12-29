@@ -79,7 +79,7 @@
             <RadioButton
                 android:id="@+id/rbn_find"
                 style="@style/mechanism_select"
-                android:text="@string/find" />
+                android:text="话题" />
 
             <RadioButton
                 android:id="@+id/rbn_recommend"
@@ -111,6 +111,12 @@
             android:layout_marginTop="12dp"
             android:background="@color/white"
             android:visibility="gone" />
-
+        <ImageView
+            android:id="@+id/iv_empty"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_empty_page"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
     </LinearLayout>
 </LinearLayout>

@@ -1,7 +1,6 @@
 package com.laichushu.book.ui.activity;
 
-import android.os.Handler;
-import android.os.Message;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -31,15 +30,6 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
     private TextView tvTitle, tvRight;
     private EditText edAddTitle, edAddContent;
     private String type = null, partyId;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 1) {
-                finish();
-            }
-        }
-    };
 
     @Override
     protected View createSuccessView() {
@@ -65,6 +55,9 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                 case "topicManage":
                     tvTitle.setText("发表新话题");
                     break;
+                case "2":
+                    tvTitle.setText("发表新话题");
+                    break;
             }
         } else {
             tvTitle.setText("发表话题");
@@ -73,8 +66,12 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
         tvRight.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         tvRight.setOnClickListener(this);
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
 
     @Override
@@ -99,11 +96,14 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                                 sendPartyMsg();
                                 break;
                             case "topicManage":
-                                sendTopicMsg(partyId,"3");
+                                sendTopicMsg(partyId, "3");
+                                break;
+                            case "2"://小组话题
+                                sendTopicMsg(partyId, type);
                                 break;
                         }
                     } else {
-                        sendTopicMsg("","");
+                        sendTopicMsg("", "");
                     }
                 }
                 break;
@@ -150,7 +150,7 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
     /**
      * 发送话题
      */
-    public void sendTopicMsg(String partyId, String type) {
+    public void sendTopicMsg(String partyId, final String type) {
         showProgressDialog();
         PublishTopic_Paramet paramet = new PublishTopic_Paramet(SharePrefManager.getUserId(), partyId, type, edAddTitle.getText().toString(), edAddContent.getText().toString());
         addSubscription(apiStores.publishTopic(paramet), new ApiCallback<RewardResult>() {
@@ -159,7 +159,17 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 if (result.isSuccess()) {
                     ToastUtil.showToast("话题发表成功！");
-                    handler.sendEmptyMessageDelayed(1, 1700);
+                    UIUtil.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (type.equals("2")) {
+                                Intent intent = new Intent();
+                                intent.putExtra("back", "updata");
+                                setResult(2, intent);
+                            }
+                            finish();
+                        }
+                    }, 1700);
                 } else {
                     ToastUtil.showToast("发表话题失败！");
                     LoggerUtil.e(result.getErrMsg());
@@ -192,7 +202,12 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 if (result.isSuccess()) {
                     ToastUtil.showToast("公告发表成功！");
-                    handler.sendEmptyMessageDelayed(1, 1700);
+                    UIUtil.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 1700);
                 } else {
                     ToastUtil.showToast("公告发表失败！");
                     LoggerUtil.e(result.getErrMsg());

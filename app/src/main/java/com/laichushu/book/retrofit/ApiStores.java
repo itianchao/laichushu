@@ -1,7 +1,5 @@
 package com.laichushu.book.retrofit;
 
-import android.widget.EditText;
-
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.HomeTitleBean;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
@@ -584,15 +582,19 @@ public interface ApiStores {
     //发现编辑--个人主页
     @POST("editor/info")
     Observable<FindEditorInfoModel> getEditorInfoDatails(@Body FindEditorInfo_Paramet paramet);
+
     //编辑界面--编辑评论
     @POST("editor/commentSave")
     Observable<RewardResult> saveEditorComment(@Body EditorSaveComment_Paramet paramet);
+
     //发现编辑--查询所有评论
     @POST("editor/commentList")
     Observable<TopicdetailModel> getEditorCommentList(@Body FindEditorCommentList_Paramet paramet);
+
     //发现编辑--案列
     @POST("searchArticle/findArticleByCaseId")
     Observable<HomeHotModel> getEditorFindArticleByCaseId(@Body FindArticleByCaseId_Paramet paramet);
+
     //发现编辑--个人主页合作
     @POST("article/vote")
     Observable<RewardResult> getArticleVoteDetails(@Body FindArticleVote_Paramet paramet);
@@ -613,13 +615,23 @@ public interface ApiStores {
     @POST("team/save")
     Observable<RewardResult> createNewGroup(@Part("file\"; filename=\"group.jpg") RequestBody file, @PartMap Map<String, RequestBody> params);
 
+    //搜索小组
+    @POST("team/all")
+    Observable<FindGroupModle> searchGroupList(@Body SearchGroupList_Paramet paramet);
+
     //最新话题列表
     @POST("topic/findNewTopic")
     Observable<MechanismTopicListModel> getNewTopicList(@Body NewTopicList_Paramet paramet);
 
     //我发表的话题列表
+    @POST("topic/findTopicList")
+    Observable<MechanismTopicListModel> getMyPublishTopicList(@Body MyPublishTopicList_Paramet paramet);
 
-    //搜索小组
-    @POST("team/all")
-    Observable<FindGroupModle> searchGroupList(@Body SearchGroupList_Paramet paramet);
+    //小组话题
+    @POST("topic/findTopicList")
+    Observable<MechanismTopicListModel> getGroupTopicList(@Body MyPublishTopicList_Paramet paramet);
+
+    //推荐话题
+    @POST("topic/findSuggestTopicList")
+    Observable<MechanismTopicListModel> getGroupSuggestTopicList(@Body MyPublishTopicList_Paramet paramet);
 }

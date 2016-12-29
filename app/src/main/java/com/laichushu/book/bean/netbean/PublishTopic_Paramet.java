@@ -3,6 +3,7 @@ package com.laichushu.book.bean.netbean;
 import java.io.Serializable;
 
 /**
+ * 发表话题
  * Created by PCPC on 2016/11/25.
  */
 

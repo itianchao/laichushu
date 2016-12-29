@@ -9,6 +9,7 @@
         android:drawableLeft="@drawable/icon_add"
         android:id="@+id/tv_create_group"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
         android:text="@string/create_group"
         android:textColor="@color/global"
         android:textSize="@dimen/album_sp_14"
