@@ -26,8 +26,6 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
-import org.geometerplus.android.fbreader.libraryService.PositionWithTimestamp;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
@@ -37,7 +35,7 @@ import java.util.ArrayList;
  */
 
 public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter> implements FindGroupPageView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView backIv, headIv, searchIv, moreIv, topicIv,emptyIv;
+    private ImageView backIv, headIv, searchIv, moreIv, topicIv, emptyIv;
     private TextView titleTv, groupNameTv, linemarksTv, briefTv, createTimeTv, numberTv;
     private PullLoadMoreRecyclerView mRecyclerView;
     public RadioButton briefRbn, findRbn, recommendRbn;
@@ -76,6 +74,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
             }
         }
     }
+
     @Override
     protected FindGroupPagePresenter createPresenter() {
         return new FindGroupPagePresenter(this);
@@ -151,13 +150,13 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                 emptyIv.setVisibility(View.GONE);
                 break;
             case R.id.rbn_find://话题
-                if (position!=1){
+                if (position != 1) {
                     position = 1;
                     briefLay.setVisibility(View.GONE);
-                    if (mGroupTopicList.isEmpty()){
+                    if (mGroupTopicList.isEmpty()) {
                         emptyIv.setVisibility(View.VISIBLE);
                         mRecyclerView.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         emptyIv.setVisibility(View.GONE);
                         mRecyclerView.setVisibility(View.VISIBLE);
                     }
@@ -165,13 +164,13 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                 }
                 break;
             case R.id.rbn_recommend://推荐
-                if (position!=2){
+                if (position != 2) {
                     position = 2;
                     briefLay.setVisibility(View.GONE);
-                    if (mSuggestTopicList.isEmpty()){
+                    if (mSuggestTopicList.isEmpty()) {
                         emptyIv.setVisibility(View.VISIBLE);
                         mRecyclerView.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         mRecyclerView.setVisibility(View.VISIBLE);
                         emptyIv.setVisibility(View.GONE);
                     }
@@ -214,8 +213,10 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         }
 
     }
+
     /**
      * 获取小组话题列表 成功
+     *
      * @param model
      */
     @Override
@@ -225,23 +226,23 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
             frist = true;
             Message msg = new Message();
             mhandler.sendMessage(msg);
-            if ((model.getData()!=null)) {//判null
+            if ((model.getData() != null)) {//判null
                 if (model.getData().isEmpty()) {//判空
-                    if (!mvpPresenter.getParamet1().getPageNo().equals("1")){//如果是第一页
+                    if (!mvpPresenter.getParamet1().getPageNo().equals("1")) {//如果是第一页
                         ToastUtil.showToast("没有更多数据啦");
                     }
-                }else {
+                } else {
                     pageNo1++;
-                    mvpPresenter.getParamet1().setPageNo(pageNo1+"");
+                    mvpPresenter.getParamet1().setPageNo(pageNo1 + "");
                     mGroupTopicList.addAll(model.getData());
                     mTopicAdapter.setmData(mGroupTopicList);
                 }
             }
-        }else {
-            if (mvpPresenter.getParamet1().getPageNo().equals("1")){//如果是第一页
+        } else {
+            if (mvpPresenter.getParamet1().getPageNo().equals("1")) {//如果是第一页
                 frist = false;
                 refreshPage(LoadingPager.PageState.STATE_ERROR);
-            }else {
+            } else {
                 ErrorReloadData();
             }
         }
@@ -251,24 +252,27 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
 
     /**
      * 获取小组话题列表 失败
+     *
      * @param msg
      */
     @Override
     public void getGroupTopicListDataFail(String msg) {
         LoggerUtil.e(msg);
         UIUtil.postPullLoadMoreCompleted(mRecyclerView);
-        if (mvpPresenter.getParamet1().getPageNo().equals("1")){//如果是第一页
+        if (mvpPresenter.getParamet1().getPageNo().equals("1")) {//如果是第一页
             frist = false;
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-        }else {
+        } else {
             ToastUtil.showToast("获取小组话题列表失败");
             ErrorReloadData();
         }
         briefRbn.setEnabled(true);
         recommendRbn.setEnabled(true);
     }
+
     /**
      * 获取推荐话题列表 成功
+     *
      * @param model
      */
     @Override
@@ -277,23 +281,23 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
             second = true;
             Message msg = new Message();
             mhandler.sendMessage(msg);
-            if ((model.getData()!=null)) {//判null
+            if ((model.getData() != null)) {//判null
                 if (model.getData().isEmpty()) {//判空
-                    if (!mvpPresenter.getParamet2().getPageNo().equals("1")){//如果是第一页
+                    if (!mvpPresenter.getParamet2().getPageNo().equals("1")) {//如果是第一页
                         ToastUtil.showToast("没有更多数据啦");
                     }
-                }else {
+                } else {
                     pageNo2++;
-                    mvpPresenter.getParamet2().setPageNo(pageNo1+"");
+                    mvpPresenter.getParamet2().setPageNo(pageNo1 + "");
                     mSuggestTopicList.addAll(model.getData());
                     mTopicAdapter.setmData(mSuggestTopicList);
                 }
             }
-        }else {
-            if (mvpPresenter.getParamet2().getPageNo().equals("1")){//如果是第一页
+        } else {
+            if (mvpPresenter.getParamet2().getPageNo().equals("1")) {//如果是第一页
                 frist = false;
                 refreshPage(LoadingPager.PageState.STATE_ERROR);
-            }else {
+            } else {
                 ErrorReloadData();
             }
         }
@@ -303,15 +307,16 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
 
     /**
      * 获取推荐话题列表 失败
+     *
      * @param msg
      */
     @Override
     public void getGroupSuggestTopicListFail(String msg) {
         LoggerUtil.e(msg);
-        if (mvpPresenter.getParamet1().getPageNo().equals("1")){//如果是第一页
+        if (mvpPresenter.getParamet1().getPageNo().equals("1")) {//如果是第一页
             second = false;
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-        }else {
+        } else {
             ToastUtil.showToast("获取小组推荐话题列表失败");
             ErrorReloadData();
         }
@@ -325,15 +330,15 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
      */
     @Override
     public void onRefresh() {
-        if (position == 1){
+        if (position == 1) {
             pageNo1 = 1;
             mGroupTopicList.clear();
-            mvpPresenter.getParamet1().setPageNo(pageNo1+"");
+            mvpPresenter.getParamet1().setPageNo(pageNo1 + "");
             mvpPresenter.getGroupTopicList(bean.getId());
-        }else {
+        } else {
             pageNo2 = 1;
             mSuggestTopicList.clear();
-            mvpPresenter.getParamet2().setPageNo(pageNo2+"");
+            mvpPresenter.getParamet2().setPageNo(pageNo2 + "");
             mvpPresenter.getGroupSuggestTopicList(bean.getId());
         }
     }
@@ -343,9 +348,9 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
      */
     @Override
     public void onLoadMore() {
-        if (position == 1){
+        if (position == 1) {
             mvpPresenter.getGroupTopicList(bean.getId());
-        }else {
+        } else {
             mvpPresenter.getGroupSuggestTopicList(bean.getId());
         }
     }
@@ -378,8 +383,8 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                 second = false;
                 pageNo1 = 1;
                 pageNo2 = 1;
-                mvpPresenter.getParamet1().setPageNo(pageNo1+"");
-                mvpPresenter.getParamet2().setPageNo(pageNo2+"");
+                mvpPresenter.getParamet1().setPageNo(pageNo1 + "");
+                mvpPresenter.getParamet2().setPageNo(pageNo2 + "");
                 mvpPresenter.getGroupTopicList(bean.getId());
                 mvpPresenter.getGroupSuggestTopicList(bean.getId());
                 Intent intent = new Intent();

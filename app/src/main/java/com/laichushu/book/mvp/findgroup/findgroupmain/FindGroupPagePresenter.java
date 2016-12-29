@@ -8,7 +8,6 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindGroupDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
-import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
 
@@ -26,10 +25,12 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
     private String type = ConstantValue.SEARCH_TYPE_GROUP;
     private ArrayList<String> leaderList = new ArrayList<>();
     private ArrayList<String> memberList = new ArrayList<>();
-    private MyPublishTopicList_Paramet paramet1 = new MyPublishTopicList_Paramet(userId,type,pageNo1,pageSize,"");
-    private MyPublishTopicList_Paramet paramet2 = new MyPublishTopicList_Paramet(userId,type,pageNo2,pageSize,"");
+    private MyPublishTopicList_Paramet paramet1 = new MyPublishTopicList_Paramet(userId, type, pageNo1, pageSize, "");
+    private MyPublishTopicList_Paramet paramet2 = new MyPublishTopicList_Paramet(userId, type, pageNo2, pageSize, "");
+
     /**
      * //初始化构造
+     *
      * @param view
      */
 
@@ -51,9 +52,9 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
         leaderList.add("解散");
         memberList.clear();
         memberList.add("分享");
-        if (mActivity.isJoin()){
+        if (mActivity.isJoin()) {
             memberList.add("退出小组");
-        }else {
+        } else {
             memberList.add("加入小组");
         }
     }
@@ -89,7 +90,7 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getGroupTopicListDataFail(code+"|"+msg);
+                mvpView.getGroupTopicListDataFail(code + "|" + msg);
             }
 
             @Override
@@ -116,7 +117,7 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getGroupSuggestTopicListFail(code+"|"+msg);
+                mvpView.getGroupSuggestTopicListFail(code + "|" + msg);
             }
 
             @Override

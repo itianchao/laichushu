@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -17,10 +17,10 @@
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/edit_top"
-            tools:src="@drawable/img_default"
-            android:scaleType="centerCrop"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/img_default" />
 
         <TextView
             android:id="@+id/tv_userRealName"
@@ -31,9 +31,9 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="24dp"
             android:layout_toRightOf="@+id/iv_head"
-            tools:text="来出书官方组"
             android:textColor="@color/white"
-            android:textSize="@dimen/edit2" />
+            android:textSize="@dimen/edit2"
+            tools:text="来出书官方组" />
 
         <TextView
             android:id="@+id/tv_number"
@@ -43,10 +43,10 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/iv_head"
-            tools:text="100人"
             android:drawableRight="@drawable/home_right2x"
             android:textColor="@color/white"
-            android:textSize="@dimen/edit2" />
+            android:textSize="@dimen/edit2"
+            tools:text="100人" />
 
         <include
             android:id="@+id/edit_top"
@@ -89,16 +89,19 @@
         </RadioGroup>
 
         <include layout="@layout/item_distance2" />
+
         <LinearLayout
             android:id="@+id/lay_brief"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical">
 
-            <include layout="@layout/item_brief"/>
-            <include layout="@layout/item_create_time"/>
-            <include layout="@layout/item_landmarks"/>
+            <include layout="@layout/item_brief" />
+
+            <include layout="@layout/item_create_time" />
+
+            <include layout="@layout/item_landmarks" />
 
         </LinearLayout>
 
@@ -111,12 +114,14 @@
             android:layout_marginTop="12dp"
             android:background="@color/white"
             android:visibility="gone" />
+
         <ImageView
             android:id="@+id/iv_empty"
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_empty_page"
             android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="180dp"
+            android:src="@drawable/ic_empty_page"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

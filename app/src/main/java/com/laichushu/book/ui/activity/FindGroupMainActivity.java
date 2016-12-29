@@ -168,10 +168,10 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 break;
             case R.id.rbn_02://最新话题
                 groupFay.setVisibility(View.GONE);
-                if (mTopicData.isEmpty()){
+                if (mTopicData.isEmpty()) {
                     emptyIv.setVisibility(View.VISIBLE);
                     topicRyv.setVisibility(View.GONE);
-                }else {
+                } else {
                     topicRyv.setVisibility(View.VISIBLE);
                     emptyIv.setVisibility(View.GONE);
                 }
@@ -234,7 +234,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 pageNo++;
                 mvpPresenter.getParamet().setPageNo(pageNo + "");
             }
-            if (modle.getData().isEmpty()){
+            if (modle.getData().isEmpty()) {
                 ToastUtil.showToast("没用更多数据");
             }
             mTopicData.addAll(modle.getData());
@@ -317,7 +317,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 second = false;
                 mTopicData.clear();
                 pageNo = 1;
-                mvpPresenter.getParamet().setPageNo(pageNo+"");
+                mvpPresenter.getParamet().setPageNo(pageNo + "");
                 mvpPresenter.loadNewTopicList();
             }
         }
