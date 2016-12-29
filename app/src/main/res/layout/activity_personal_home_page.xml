@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/rl_editHeadImg"
         android:layout_width="match_parent"
-        android:layout_height="215dp"
+        android:layout_height="200dp"
         android:background="@drawable/mine_bg">
 
         <include
@@ -38,31 +38,38 @@
 
         <ImageView
             android:id="@+id/iv_perGrade"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="12dp"
             android:layout_toRightOf="@+id/tv_PerNickName" />
 
         <ImageView
             android:id="@+id/iv_perGradeDetails"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_alignTop="@+id/tv_PerNickName"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="6dp"
             android:layout_toRightOf="@+id/iv_perGrade"
-            android:background="@drawable/icon_geade_details2x" />
-
+           />
+<ImageView
+    android:id="@+id/iv_perGradeDetail"
+    android:layout_width="24dp"
+    android:layout_height="16dp"
+    android:layout_alignTop="@+id/tv_PerNickName"
+    android:layout_marginLeft="6dp"
+    android:layout_toRightOf="@+id/iv_perGrade"/>
         <TextView
             android:id="@+id/tv_perRealName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_PerNickName"
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/tv_PerNickName"
             android:layout_marginTop="12dp"
             android:textColor="@color/white"
+            android:text="暂无等级"
             android:textSize="@dimen/edit"
-            android:textStyle="bold" />
+            />
 
         <TextView
             android:id="@+id/tv_perAuthorAgree"
@@ -74,7 +81,7 @@
             android:layout_toRightOf="@+id/tv_PerNickName"
             android:textColor="@color/white"
             android:textSize="@dimen/edit"
-            android:textStyle="bold" />
+           />
     </RelativeLayout>
 
     <LinearLayout

@@ -41,8 +41,8 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
 
     private City_IdDao city_idDao;
     private List<City_Id> city_idList;
-    private String curProCode="";
-    private String curCityCode ="";
+    private String curProCode = "";
+    private String curCityCode = "";
     private int PAGE_NO = 1;
 
     @Override
@@ -78,7 +78,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         //初始化mRecyclerView 动态
         mEditorRecyclerView.setGridLayout(1);
         mEditorRecyclerView.setFooterViewText("加载中");
-        rangeAdapter = new TotalRanKingAdapter(this, editorDate,mvpPresenter);
+        rangeAdapter = new TotalRanKingAdapter(this, editorDate, mvpPresenter);
         mEditorRecyclerView.setAdapter(rangeAdapter);
         mEditorRecyclerView.setOnPullLoadMoreListener(this);
 
@@ -181,19 +181,19 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         wvCity.setSeletion(0);
         wvProvince.setItems(getProvonce());
         wvCity.setItems(getCity("01"));
-        curProCode="01";
-        curCityCode="01";
+        curProCode = "01";
+        curCityCode = "01";
         wvProvince.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(int position, String item) {
-               curProCode=getProCodeByProvince(item);
+                curProCode = getProCodeByProvince(item);
                 wvCity.setItems(getCity(getProCodeByProvince(item)));
             }
         });
         wvCity.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(int position, String item) {
-                curCityCode=getCodeByCity(item);
+                curCityCode = getCodeByCity(item);
             }
         });
 
@@ -207,7 +207,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
             @Override
             public void onClick(View v) {
                 //提交数据
-                mvpPresenter.loadEditorListData(curProCode+curCityCode, orderBy);
+                mvpPresenter.loadEditorListData(curProCode + curCityCode, orderBy);
                 popupWindow.dismiss();
             }
         });
@@ -218,7 +218,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
                 - rbCity.getWidth() / 4;
         int[] location = new int[2];
         rbCity.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(rbCity, xPos-rbCity.getWidth() / 4, 20);
+        popupWindow.showAsDropDown(rbCity, xPos - rbCity.getWidth() / 4, 20);
 
     }
 

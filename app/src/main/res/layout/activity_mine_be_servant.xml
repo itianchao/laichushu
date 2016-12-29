@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgGrey">
+
+    <include
+        android:id="@+id/edit_top"
+        layout="@layout/page_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_top"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_servantName"
+                android:layout_width="match_parent"
+                android:layout_height="82dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tv_editHead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="24dp"
+                    android:text="姓名"
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit" />
+
+                <EditText
+                    android:id="@+id/ed_servantName"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="24dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="王小明"
+                    android:maxLength="10"
+                    android:textColor="@color/edit2"
+                    android:textColorHint="@color/LightGrey"
+                    android:textSize="@dimen/edit2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_servantPostOffice"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tv_servantPostOffice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:paddingLeft="24dp"
+                    android:text="任职机构"
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit" />
+
+                <EditText
+                    android:id="@+id/ed_servantPostOffice"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="24dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="国家知识出版社"
+                    android:maxLength="10"
+                    android:textColor="@color/edit2"
+                    android:textColorHint="@color/LightGrey"
+                    android:textSize="@dimen/edit2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_servantPosition"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tv_servantPosition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="24dp"
+                    android:text="头衔/职位"
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit" />
+
+                <EditText
+                    android:id="@+id/ed_servantPosition"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="24dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="主管"
+                    android:maxLength="10"
+                    android:textColor="@color/edit2"
+                    android:textColorHint="@color/LightGrey"
+                    android:textSize="@dimen/edit2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_servantEmails"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tv_servantEmails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="24dp"
+                    android:text="常用邮箱"
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit" />
+
+                <EditText
+                    android:id="@+id/ed_servantEmails"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="24dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="****@163.com"
+                    android:maxLength="10"
+                    android:textColor="@color/edit2"
+                    android:textColorHint="@color/LightGrey"
+                    android:textSize="@dimen/edit2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_servantWitness"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tv_servantWitness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="24dp"
+                    android:text="身份证明人"
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit" />
+
+                <EditText
+                    android:id="@+id/ed_servantWitness"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="24dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="***"
+                    android:maxLength="10"
+                    android:textColor="@color/edit2"
+                    android:textColorHint="@color/LightGrey"
+                    android:textSize="@dimen/edit2" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_servantType"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tv_servantType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="24dp"
+                    android:text="服务类型"
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit" />
+
+                <TextView
+                    android:id="@+id/tv_servantTypeContent"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="24dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textColor="@color/edit2"
+                    android:textSize="@dimen/edit2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_servantVisitingCard"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+
+                <ImageView
+                    android:id="@+id/iv_VisitingCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/default_shape"
+                    android:paddingTop="8dp" />
+
+                <ImageView
+                    android:id="@+id/iv_idCardFront"
+                    android:layout_width="240dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/icon_idcard_back2x" />
+
+                <TextView
+                    android:id="@+id/tv_idCardTips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_idCardFront"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="14dp"
+                    android:text="支持jpg、png格式"
+                    android:textColor="@color/characterLightGray2"
+                    android:textSize="@dimen/edit2" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_servantIntroduce"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tv_servantIntroduce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:paddingLeft="24dp"
+                    android:gravity="center_vertical"
+                    android:text="个人介绍"
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit" />
+
+                <View
+                    android:id="@+id/view_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tv_servantIntroduce"
+                    android:background="@color/white" />
+
+                <EditText
+                    android:id="@+id/ed_servantIntroduce"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/view_line"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:background="@drawable/shape_rectangle_fill_hint"
+                    android:gravity="top"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/edit2"
+                    android:textSize="@dimen/edit2" />
+            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cb_ServantChkItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:button="@drawable/checkbox" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@string/regist1"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tv_agreement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/copyright"
+                        android:textColor="@color/global" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_servantSubmit"
+                    style="@style/button_login_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/rl_head"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginTop="15dp"
+                    android:text="提交审核"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/edit" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+            </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

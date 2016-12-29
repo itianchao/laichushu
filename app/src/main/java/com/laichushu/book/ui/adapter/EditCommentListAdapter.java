@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
-import com.laichushu.book.mvp.findeditmypage.FindEditMyPagePresenter;
+import com.laichushu.book.mvp.findeditmainpage.FindEditMainPagePresenter;
 import com.laichushu.book.ui.activity.CommentDetailActivity;
-import com.laichushu.book.ui.activity.FindEditMyPageActivity;
+import com.laichushu.book.ui.activity.FindEditMainPageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -23,10 +23,10 @@ import java.util.List;
  */
 
 public class EditCommentListAdapter extends RecyclerView.Adapter<EditCommentListAdapter.CommentViewHolder> {
-    private FindEditMyPageActivity mActivity;
+    private FindEditMainPageActivity mActivity;
     private ArrayList<CommentDetailModle.DataBean> mData;
-    private FindEditMyPagePresenter mvpPresenter;
-    public EditCommentListAdapter(FindEditMyPageActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData, FindEditMyPagePresenter mvpPresenter) {
+    private FindEditMainPagePresenter mvpPresenter;
+    public EditCommentListAdapter(FindEditMainPageActivity mActivity, ArrayList<CommentDetailModle.DataBean> mData, FindEditMainPagePresenter mvpPresenter) {
         this.mActivity = mActivity;
         this.mData = mData;
         this.mvpPresenter = mvpPresenter;

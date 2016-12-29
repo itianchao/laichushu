@@ -1,6 +1,5 @@
 package com.laichushu.book.retrofit;
 
-import android.widget.EditText;
 
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.HomeTitleBean;
@@ -474,6 +473,9 @@ public interface ApiStores {
     //我的钱包充值
     @POST("recharge/recharge")
     Observable<RewardResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
+    //我的服务者列表--合作
+    @POST("servicer/findMyServerList")
+    Observable<RewardResult> getfindMyServerListDetails(@Body FindMyServerList_Paramet paramet);
 
     //获取机构公告列表
     @POST("press/notices")
@@ -584,6 +586,9 @@ public interface ApiStores {
     //发现编辑--个人主页
     @POST("editor/info")
     Observable<FindEditorInfoModel> getEditorInfoDatails(@Body FindEditorInfo_Paramet paramet);
+    //发现服务--个人主页
+    @POST("servicer/findServerInfo")
+    Observable<FindServiceInfoModel> getServiceInfoDatails(@Body FindEditorInfo_Paramet paramet);
     //编辑界面--编辑评论
     @POST("editor/commentSave")
     Observable<RewardResult> saveEditorComment(@Body EditorSaveComment_Paramet paramet);
@@ -596,6 +601,13 @@ public interface ApiStores {
     //发现编辑--个人主页合作
     @POST("article/vote")
     Observable<RewardResult> getArticleVoteDetails(@Body FindArticleVote_Paramet paramet);
+    //发现--服务列表
+    @POST("servicer/findServerList")
+    Observable<FindServiceInfoModel> getFindServerListDetails(@Body FindSertverList_Paramet paramet);
+    //我的服务--成为服务者
+    @Multipart
+    @POST("servicer/saveServerInfo")
+    Observable<RewardResult> SaveServerInfoDetails(@PartMap Map<String, RequestBody> params, @Part("visitingCardFile\"; filename=\"visiting.jpg") RequestBody file);
 
     /**
      * 小组

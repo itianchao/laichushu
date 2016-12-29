@@ -12,10 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.findeditmypage.FindEditMyPagePresenter;
+import com.laichushu.book.mvp.findeditmainpage.FindEditMainPagePresenter;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.ui.activity.BookDetailActivity;
-import com.laichushu.book.ui.activity.FindEditMyPageActivity;
+import com.laichushu.book.ui.activity.FindEditMainPageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -27,10 +27,10 @@ import java.util.List;
 
 public class EditorFindCaseAdapter extends RecyclerView.Adapter<EditorFindCaseAdapter.WriteBookViewHolder> {
     private List<HomeHotModel.DataBean> mData;
-    private FindEditMyPageActivity mActivity;
-    private FindEditMyPagePresenter mvpPresenter;
+    private FindEditMainPageActivity mActivity;
+    private FindEditMainPagePresenter mvpPresenter;
 
-    public EditorFindCaseAdapter(FindEditMyPageActivity mActivity,List<HomeHotModel.DataBean> mData,FindEditMyPagePresenter mvpPresenter) {
+    public EditorFindCaseAdapter(FindEditMainPageActivity mActivity, List<HomeHotModel.DataBean> mData, FindEditMainPagePresenter mvpPresenter) {
         this.mData = mData;
         this.mActivity = mActivity;
         this.mvpPresenter = mvpPresenter;

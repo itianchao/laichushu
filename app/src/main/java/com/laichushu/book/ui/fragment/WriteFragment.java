@@ -122,6 +122,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         if (model.isSuccess()) {
             mRecyclerView.setPullLoadMoreCompleted();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            mData.clear();
             mData.addAll(model.getData());
             writeBookAdapter.setmData(mData);
             isLoad = false;

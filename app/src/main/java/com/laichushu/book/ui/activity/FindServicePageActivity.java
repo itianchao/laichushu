@@ -9,16 +9,20 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.FindEditorListModel;
+import com.laichushu.book.bean.netbean.FindServiceInfoModel;
 import com.laichushu.book.db.City_Id;
 import com.laichushu.book.db.City_IdDao;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.findservicepage.FindServicePagePresenter;
 import com.laichushu.book.mvp.findservicepage.FindServicePageView;
+import com.laichushu.book.ui.adapter.FindServicePageAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.WheelView;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
@@ -30,12 +34,18 @@ import java.util.List;
 public class FindServicePageActivity extends MvpActivity2<FindServicePagePresenter> implements FindServicePageView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle;
-    private PullLoadMoreRecyclerView mVideoRecyclerView, mMineRecyclerView;
+    private PullLoadMoreRecyclerView mServerRecyclerView;
     private CheckBox rbRanking, rbCity;
+    private FindServicePageAdapter serverAdapter;
+    private List<FindServiceInfoModel.DataBean> serverDate = new ArrayList<>();
 
     private City_IdDao city_idDao;
     private List<City_Id> city_idList;
-    private String curProCode = "01";
+    private String orderBy = "1";
+    private String curProCode = "";
+    private String curCityCode = "";
+    private int PAGE_NO = 1;
+
     @Override
     protected FindServicePagePresenter createPresenter() {
         return new FindServicePagePresenter(this);
@@ -46,12 +56,9 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
         View inflate = UIUtil.inflate(R.layout.activity_find_service_page);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
-        mVideoRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_total_ranking);
-        mMineRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_city);
+        mServerRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_total_ranking);
         rbRanking = (CheckBox) inflate.findViewById(R.id.rb_total_ranking);
         rbCity = (CheckBox) inflate.findViewById(R.id.rb_city);
-        mVideoRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_total_ranking);
-        mMineRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_city);
         return inflate;
     }
 
@@ -68,7 +75,18 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
         rbRanking.setOnClickListener(this);
         rbCity.setOnClickListener(this);
 
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        rbRanking.setOnClickListener(this);
+        rbCity.setOnClickListener(this);
+
+
+        //初始化mRecyclerView 动态
+        mServerRecyclerView.setGridLayout(1);
+        mServerRecyclerView.setFooterViewText("加载中");
+        serverAdapter = new FindServicePageAdapter(this, serverDate, mvpPresenter);
+        mServerRecyclerView.setAdapter(serverAdapter);
+        mServerRecyclerView.setOnPullLoadMoreListener(this);
+
+       mvpPresenter.loadServerListData(curProCode,orderBy);
     }
 
     @Override
@@ -97,15 +115,43 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
     }
 
     @Override
-    public void onRefresh() {
+    public void getServercerListDataSuccess(FindServiceInfoModel model, String orderBy) {
+        serverDate.clear();
+        this.orderBy = orderBy;
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mServerRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        if (model.isSuccess()) {
+            serverDate = model.getData();
+            if (!model.getData().isEmpty()) {
+                PAGE_NO++;
+            } else {
+                ToastUtil.showToast(model.getErrMsg());
+                ToastUtil.showToast(model.getErrMsg());
+            }
 
+        } else {
+            ToastUtil.showToast("没有更多数据");
+        }
+        serverAdapter.refreshAdapter(serverDate);
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+    }
+    @Override
+    public void onRefresh() {
+        PAGE_NO = 1;
+        mvpPresenter.getSertverList_paramet().setPageNo(PAGE_NO + "");
+        mvpPresenter.loadServerListData(curProCode, orderBy + "");
     }
 
     @Override
     public void onLoadMore() {
-
+        PAGE_NO = 1;
+        mvpPresenter.getSertverList_paramet().setPageNo(PAGE_NO + "");
+        mvpPresenter.loadServerListData(curProCode, orderBy + "");
     }
-
     @Override
     public void getDataFail(String msg) {
         LoggerUtil.e(msg.toString());

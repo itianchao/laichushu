@@ -16,11 +16,10 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.FindEditorInfoModel;
-import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
-import com.laichushu.book.mvp.findeditmypage.FindEditMyPagePresenter;
-import com.laichushu.book.mvp.findeditmypage.FindEditMyPageView;
+import com.laichushu.book.mvp.findservicemainpage.FindServiceMainPagePresenter;
+import com.laichushu.book.mvp.findservicemainpage.FindServiceMainPageView;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.ui.adapter.EditCommentListAdapter;
@@ -37,7 +36,12 @@ import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter> implements FindEditMyPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
+/**
+ * 发现--服务主页
+ * Created by PCPC on 2016/12/29.
+ */
+
+public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPagePresenter> implements FindServiceMainPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
     private ImageView ivBack, ivHeadImg;
     private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum;
     private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView;
@@ -66,13 +70,13 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
     }
 
     @Override
-    protected FindEditMyPagePresenter createPresenter() {
-        return new FindEditMyPagePresenter(this);
+    protected FindServiceMainPagePresenter createPresenter() {
+        return new FindServiceMainPagePresenter(this);
     }
 
     @Override
     protected View createSuccessView() {
-        View inflate = UIUtil.inflate(R.layout.activity_find_edit_mypage);
+        View inflate = UIUtil.inflate(R.layout.activity_find_service_mainpage);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         ivHeadImg = ((ImageView) inflate.findViewById(R.id.iv_userHeadImg));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
@@ -106,13 +110,13 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
         //查询案列
         mCaseRecyclerView.setGridLayout(1);
         mCaseRecyclerView.setFooterViewText("加载中");
-        caseAdapter = new EditorFindCaseAdapter(this, caseDate, mvpPresenter);
+//        caseAdapter = new EditorFindCaseAdapter(this, caseDate, mvpPresenter);
         mCaseRecyclerView.setAdapter(caseAdapter);
         mCaseRecyclerView.setOnPullLoadMoreListener(this);
         //查询评论
         mCommentRecyclerView.setGridLayout(1);
         mCommentRecyclerView.setFooterViewText("加载中");
-        commAdapter = new EditCommentListAdapter(this, commDate, mvpPresenter);
+//        commAdapter = new EditCommentListAdapter(this, commDate, mvpPresenter);
         mCommentRecyclerView.setAdapter(commAdapter);
         mCommentRecyclerView.setOnPullLoadMoreListener(this);
 
@@ -366,3 +370,4 @@ public class FindEditMyPageActivity extends MvpActivity2<FindEditMyPagePresenter
 
 
 }
+

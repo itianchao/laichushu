@@ -38,9 +38,9 @@ public class GlideUitl {
      */
     public static void loadImg(Context mContext, int path, ImageView mImageView) {
         if (path != 0) {
-            Glide.with(mContext).load(path).centerCrop().error(R.drawable.img_default).into(mImageView);
+            Glide.with(mContext).load(path).fitCenter().error(R.drawable.img_default).into(mImageView);
         } else {
-            Glide.with(mContext).load(R.drawable.img_default).centerCrop().into(mImageView);
+            Glide.with(mContext).load(R.drawable.img_default).fitCenter().into(mImageView);
         }
     }
 
@@ -53,9 +53,9 @@ public class GlideUitl {
      */
     public static void loadImg2(Context mContext, int path, ImageView mImageView) {
         if (path != 0) {
-            Glide.with(mContext).load(path).error(R.drawable.img_default).into(mImageView);
+            Glide.with(mContext).load(path).fitCenter().error(R.drawable.img_default).into(mImageView);
         } else {
-            Glide.with(mContext).load(R.drawable.img_default).into(mImageView);
+            Glide.with(mContext).load(R.drawable.img_default).fitCenter().into(mImageView);
         }
     }
 

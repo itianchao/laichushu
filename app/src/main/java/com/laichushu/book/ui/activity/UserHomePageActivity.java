@@ -49,7 +49,7 @@ import java.util.List;
  * 2016年11月25日17:04:06
  */
 public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivAnthor, ivOther, ivHead, ivGrade, ivGradeDetails;
+    private ImageView ivBack, ivAnthor, ivOther, ivHead, ivGrade, ivGradeDetails,ivGradeDetail;
     private TextView tvTitle, nickName, tvAuthorGrade;
     private HomePersonFocusResult.DataBean dataBean;
     private TextView btnFocus;
@@ -83,7 +83,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         View inflate = UIUtil.inflate(R.layout.activity_user_home_page);
         EventBus.getDefault().register(this);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
-        tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
+        tvTitle = ((TextView) inflate.findViewById(R.id.tv_middleLeft));
         ivAnthor = ((ImageView) inflate.findViewById(R.id.iv_title_another));
         ivOther = ((ImageView) inflate.findViewById(R.id.iv_title_other));
         nickName = ((TextView) inflate.findViewById(R.id.tv_userNickName));
@@ -91,6 +91,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         ivGrade = ((ImageView) inflate.findViewById(R.id.iv_userGrade));
         ivHead = ((ImageView) inflate.findViewById(R.id.iv_userHeadImg));
         ivGradeDetails = ((ImageView) inflate.findViewById(R.id.iv_userGradeDetails));
+        ivGradeDetail = ((ImageView) inflate.findViewById(R.id.iv_userGradeDetail));
         btnFocus = ((TextView) inflate.findViewById(R.id.btn_userFocus));
 
         radioGroup = (RadioGroup) inflate.findViewById(R.id.rg_userList);
@@ -115,11 +116,12 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         tvTitle.setVisibility(View.VISIBLE);
         ivAnthor.setVisibility(View.VISIBLE);
         ivOther.setVisibility(View.VISIBLE);
-        GlideUitl.loadImg(mActivity, R.drawable.find_msg2x_94, ivAnthor);
-        GlideUitl.loadImg(mActivity, R.drawable.icon_share2x, ivOther);
+        GlideUitl.loadImg(mActivity, R.drawable.icon_book_comment, ivAnthor);
+        GlideUitl.loadImg(mActivity, R.drawable.icon_share, ivOther);
+        GlideUitl.loadImg(mActivity,R.drawable.icon_geade_details2x,ivGradeDetails);
 
         ivBack.setOnClickListener(this);
-        ivGradeDetails.setOnClickListener(this);
+        ivGradeDetail.setOnClickListener(this);
         btnFocus.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         ivAnthor.setOnClickListener(this);
@@ -171,7 +173,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             case R.id.iv_title_finish:
                 this.finish();
                 break;
-            case R.id.iv_userGradeDetails:
+            case R.id.iv_userGradeDetail:
                 //等级说明
                 UIUtil.openActivity(this, HomePageGradeDetailsActivity.class);
                 break;
@@ -279,7 +281,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                         break;
                 }
             } else {
-                tvAuthorGrade.setVisibility(View.GONE);
+                ivGrade.setVisibility(View.GONE);
+                tvAuthorGrade.setText("暂无等级");
             }
 
             if (result.isBeFocused()) {

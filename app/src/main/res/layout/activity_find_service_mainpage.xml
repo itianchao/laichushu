@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_editHeadImg"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/agency_backimg2x">
+
+        <include
+            android:id="@+id/edit_top"
+            layout="@layout/page_title_trans"
+            android:background="#9000" />
+
+        <ImageView
+            android:id="@+id/iv_userHeadImg"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/edit_top"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tv_userRealName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="@+id/iv_userHeadImg"
+            android:layout_below="@+id/edit_top"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_toRightOf="@+id/iv_userHeadImg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit2" />
+
+        <RatingBar
+            android:id="@+id/ratbar_detail_num"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="16.5dp"
+            android:layout_below="@+id/tv_userRealName"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/iv_userHeadImg"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressDrawable="@drawable/ratingbar_home"
+            android:rating="3"
+            android:stepSize="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/iv_userHeadImg"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_findMsg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_dyCollection"
+                    style="@style/new_up"
+                    android:drawableLeft="@drawable/icon_book_comment"
+                    android:text="私信"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_teamwork"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_teamwork"
+                    style="@style/new_up"
+                    android:drawableLeft="@drawable/icon_book_comment"
+                    android:text="合作"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_teamworkNum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_teamworkNum"
+                    style="@style/new_up"
+                    android:text="已有12人合作"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bookCast_top"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <RadioGroup
+            android:id="@+id/rg_editorList"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_introduce"
+                style="@style/mechanism_select"
+                android:checked="true"
+                android:text="简介" />
+
+            <RadioButton
+                android:id="@+id/rb_case"
+                style="@style/mechanism_select"
+                android:text="案列" />
+
+            <RadioButton
+                android:id="@+id/rb_evaluate"
+                style="@style/mechanism_select"
+                android:text="评价" />
+
+        </RadioGroup>
+
+        <include layout="@layout/item_distance2" />
+
+        <ScrollView
+            android:id="@+id/scroll_brief"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <include layout="@layout/item_brief" />
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_commentList"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/marking"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/edit2" />
+
+                <RatingBar
+                    android:id="@+id/ratbar_num"
+                    style="@style/foodRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="120dp"
+                    android:layout_marginTop="3dp"
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:rating="3"
+                    android:stepSize="1" />
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <EditText
+                android:id="@+id/et_comment"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:hint="@string/comment_hint"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+                android:paddingLeft="12dp"
+                android:textSize="@dimen/edit"
+                android:textColor="@color/characterGray"
+                android:textColorHint="@color/hint" />
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="全部评论"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit2" />
+
+            <include layout="@layout/line" />
+
+            <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+                android:id="@+id/ryv_commentList"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_case"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</LinearLayout>

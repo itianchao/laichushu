@@ -23,6 +23,10 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
+import java.io.File;
+
+import okhttp3.Cache;
+
 /**
  * 通用设置
  */
@@ -152,7 +156,8 @@ public class GeneralSettingActivity extends MvpActivity2 implements View.OnClick
                         Message message = new Message();
                         try {
                             GlideCacheUtil.getInstance().clearImageAllCache(context);
-                            GlideCacheUtil.getInstance().deleteFolderFile(context.getCacheDir() + "/" + ConstantValue.GlidCacheUrl,true);
+                            GlideCacheUtil.getInstance().deleteFolderFile((context.getCacheDir()).getPath(),true);
+                            GlideCacheUtil.getInstance().deleteFolderFile((context.getDir(ConstantValue.LOCAL_PATH.FileCacheCompress, Context.MODE_PRIVATE)).getAbsolutePath(),true);
                                     message.what = 1;
                         } catch (Exception e) {
                             e.printStackTrace();

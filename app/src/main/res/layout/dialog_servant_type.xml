@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:gravity="center"
+    android:background="@color/albumTransparent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/auditing">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text="选择类型"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit2" />
+
+
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_servant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="12dp"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/rb_ghost"
+            style="@style/servanttype_select"
+            android:drawableLeft="@drawable/select_permission_radiobutton"
+            android:text="代笔" />
+
+        <include layout="@layout/line" />
+
+        <RadioButton
+            android:id="@+id/rb_design"
+            style="@style/servanttype_select"
+            android:layout_marginTop="12dp"
+            android:drawableLeft="@drawable/select_permission_radiobutton"
+            android:text="设计" />
+
+        <include layout="@layout/line" />
+
+    </RadioGroup>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/albumTransparent">
+
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/edit2"
+            android:textSize="@dimen/edit2" />
+
+
+    </RelativeLayout>
+</LinearLayout>

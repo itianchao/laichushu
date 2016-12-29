@@ -79,7 +79,7 @@ public class GlideCacheUtil {
      */
     public String getCacheSize(Context context) {
         try {
-            return getFormatSize(getFolderSize(new File(context.getCacheDir() + "/" + ConstantValue.GlidCacheUrl)));
+            return getFormatSize(getFolderSize(context.getCacheDir()));
         } catch (Exception e) {
             e.printStackTrace();
         }

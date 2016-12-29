@@ -10,13 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import com.google.gson.Gson;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.FindEditorListModel;
+import com.laichushu.book.bean.netbean.FindSertverList_Paramet;
+import com.laichushu.book.bean.netbean.FindServiceInfoModel;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.findeditpage.FindEditPageView;
+import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.ui.activity.FindServicePageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.UIUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,4 +97,38 @@ public class FindServicePagePresenter extends BasePresenter<FindServicePageView>
         });
 
     }
+
+    public FindSertverList_Paramet getSertverList_paramet() {
+        return sertverList_paramet;
+    }
+
+    public void setSertverList_paramet(FindSertverList_Paramet sertverList_paramet) {
+        this.sertverList_paramet = sertverList_paramet;
+    }
+
+    // 查询列表
+    FindSertverList_Paramet sertverList_paramet =new FindSertverList_Paramet(userId,"","",pageNo,pageSize);
+    public void loadServerListData(String cityId, final String orderBy) {
+        getSertverList_paramet().setCityId(cityId);
+        getSertverList_paramet().setOrderBy(orderBy);
+        Logger.e("参加活动");
+        Logger.json(new Gson().toJson(sertverList_paramet));
+        addSubscription(apiStores.getFindServerListDetails(sertverList_paramet), new ApiCallback<FindServiceInfoModel>() {
+            @Override
+            public void onSuccess(FindServiceInfoModel model) {
+                mvpView.getServercerListDataSuccess(model,orderBy);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
 }
+

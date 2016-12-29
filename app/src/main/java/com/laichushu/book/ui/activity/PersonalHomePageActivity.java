@@ -46,7 +46,7 @@ import java.util.List;
  *
  */
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade,ivGreadDetails, ivAnother;
+    private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade,ivGreadDetails,ivGreadDetail, ivAnother;
     private TextView tvTitle, tvNickName, tvAuthorAgree;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
@@ -74,9 +74,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         ivEdit = ((ImageView) inflate.findViewById(R.id.iv_title_another));
         ivPerGrade = ((ImageView) inflate.findViewById(R.id.iv_perGrade));
         ivGreadDetails = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetails));
+        ivGreadDetail = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetail));
         iv_headImg = ((ImageView) inflate.findViewById(R.id.iv_PerHeadImg));
         ivAnother = (ImageView) inflate.findViewById(R.id.iv_title_another);
-        tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
+        tvTitle = ((TextView) inflate.findViewById(R.id.tv_middleLeft));
         tvNickName = ((TextView) inflate.findViewById(R.id.tv_PerNickName));
         tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perRealName));
         rbDy = ((RadioButton) inflate.findViewById(R.id.rb_dynamic));
@@ -101,10 +102,11 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         tvTitle.setText("个人主页");
         tvTitle.setVisibility(View.VISIBLE);
         GlideUitl.loadImg(mActivity,R.drawable.my_reset2x,ivAnother);
+        GlideUitl.loadImg(mActivity,R.drawable.icon_geade_details2x,ivGreadDetails);
         ivAnother.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
-        ivGreadDetails.setOnClickListener(this);
+        ivGreadDetail.setOnClickListener(this);
         ivAnother.setOnClickListener(this);
         rgHomeList.setOnCheckedChangeListener(this);
         initHeadInfo();
@@ -158,6 +160,9 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                                 GlideUitl.loadImg(mActivity,R.drawable.icon_copper_medal2x,ivPerGrade);
                                 break;
                         }
+                    }else{
+                        ivPerGrade.setVisibility(View.GONE);
+                        tvAuthorAgree.setText("暂无等级");
                     }
 
 
@@ -193,7 +198,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 //编辑
 
                 break;
-            case R.id.iv_perGradeDetails:
+            case R.id.iv_perGradeDetail:
                 //作者等级说明
                 Bundle bundle = new Bundle();
                 UIUtil.openActivity(this, HomePageGradeDetailsActivity.class, bundle);

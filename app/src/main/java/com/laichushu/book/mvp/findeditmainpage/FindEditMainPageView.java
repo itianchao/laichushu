@@ -1,8 +1,7 @@
-package com.laichushu.book.mvp.findeditmypage;
+package com.laichushu.book.mvp.findeditmainpage;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.FindEditorInfoModel;
-import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
@@ -11,7 +10,7 @@ import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
  * Created by PCPC on 2016/12/24.
  */
 
-public interface FindEditMyPageView {
+public interface FindEditMainPageView {
 
     void getEditorInfoDataSuccess(FindEditorInfoModel model);
 

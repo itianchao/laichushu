@@ -24,8 +24,10 @@ import com.laichushu.book.mvp.mine.MinePresenter;
 import com.laichushu.book.mvp.mine.MineView;
 import com.laichushu.book.ui.activity.EditMyselfeInforActivity;
 import com.laichushu.book.ui.activity.FeedbackActivity;
+import com.laichushu.book.ui.activity.FindServicePageActivity;
 import com.laichushu.book.ui.activity.GeneralSettingActivity;
 import com.laichushu.book.ui.activity.ManageWorksActivity;
+import com.laichushu.book.ui.activity.MineServicePageActivity;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
 import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
@@ -166,6 +168,8 @@ public class MineFragment extends MvpFragment2<MinePresenter> implements View.On
                 UIUtil.openActivity(mActivity, MyWalletDetailsActivity.class);
                 break;
             case R.id.rl_service:
+                //我的服务
+                UIUtil.openActivity(mActivity, MineServicePageActivity.class);
                 break;
             case R.id.rl_GeneralSetting:
                 //通用设置

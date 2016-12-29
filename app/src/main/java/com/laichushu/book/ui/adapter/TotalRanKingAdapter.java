@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindEditorListModel;
 import com.laichushu.book.mvp.findeditpage.FindEditPagePresenter;
-import com.laichushu.book.ui.activity.FindEditMyPageActivity;
+import com.laichushu.book.ui.activity.FindEditMainPageActivity;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -53,7 +53,7 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
 //                跳转编辑主页
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("userId", dataBeen.get(position).getId());
-                UIUtil.openActivity(context, FindEditMyPageActivity.class, bundle);
+                UIUtil.openActivity(context, FindEditMainPageActivity.class, bundle);
             }
         });
     }

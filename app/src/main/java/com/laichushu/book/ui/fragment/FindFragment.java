@@ -16,23 +16,20 @@ import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.mvp.findfragment.FindPresenter;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.findfragment.FindView;
-import com.laichushu.book.ui.activity.FindEditMyPageActivity;
+import com.laichushu.book.ui.activity.FindEditMainPageActivity;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.ui.activity.FindCoursePageActivity;
 import com.laichushu.book.ui.activity.FindGroupMainActivity;
 import com.laichushu.book.ui.activity.FindServicePageActivity;
-import com.laichushu.book.ui.activity.FindGroupDetailActivity;
 import com.laichushu.book.ui.adapter.ClassRecycleAdapter;
 import com.laichushu.book.ui.adapter.FindTitleViewPagerAdapter;
 import com.laichushu.book.ui.adapter.GroupRecomAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 发现
@@ -127,7 +124,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
                         case 3:
                             //机构主页
 //测试
-                            UIUtil.openActivity(mActivity, FindEditMyPageActivity.class);
+                            UIUtil.openActivity(mActivity, FindEditMainPageActivity.class);
 //                            Bundle bundle = new Bundle();
 //                            bundle.putString("articleId", dataBean.getArticleId());
 //                            UIUtil.openActivity(mActivity, MechanismListActivity.class, bundle);

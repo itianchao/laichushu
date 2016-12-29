@@ -93,7 +93,8 @@ public class ConstantValue {
         public static final String IMAGE = "/image/";
         // apk路径
         public static final String APK = "/apk/";
-
+      // 图片压缩文件
+        public static final String FileCacheCompress="cache:Compressor";
 
     }
 

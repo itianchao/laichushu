@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.findeditmypage;
+package com.laichushu.book.mvp.findservicemainpage;
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
@@ -27,15 +26,13 @@ import com.laichushu.book.bean.netbean.FindArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.FindEditorCommentList_Paramet;
 import com.laichushu.book.bean.netbean.FindEditorInfoModel;
 import com.laichushu.book.bean.netbean.FindEditorInfo_Paramet;
-import com.laichushu.book.bean.netbean.SaveComment_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.FindEditMyPageActivity;
+import com.laichushu.book.ui.activity.FindEditMainPageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -49,16 +46,16 @@ import java.util.List;
  * Created by PCPC on 2016/12/24.
  */
 
-public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
-    private FindEditMyPageActivity mActivity;
+public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainPageView> {
+    private FindEditMainPageActivity mActivity;
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
 
     //初始化构造
-    public FindEditMyPagePresenter(FindEditMyPageView view) {
+    public FindServiceMainPagePresenter(FindServiceMainPageView view) {
         attachView(view);
-        mActivity = (FindEditMyPageActivity) view;
+        mActivity = (FindEditMainPageActivity) view;
     }
     //显示私信
 
@@ -124,7 +121,9 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
         });
     }
 
-    /**  //合作
+    /**
+     * //合作
+     *
      * @param id
      * @param cooperateId
      * @param remarks
@@ -255,12 +254,12 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
     }
 
 
-    //获取编辑主页用户头像信息
+    //获取服务主页用户头像信息
     public void loadEditorInfoData(String userID) {
-        FindEditorInfo_Paramet infoParamet = new FindEditorInfo_Paramet(userID);
+        FindEditorInfo_Paramet infoParamet = new FindEditorInfo_Paramet(userID, userId);
         Logger.e("用户信息");
         Logger.json(new Gson().toJson(infoParamet));
-        addSubscription(apiStores.getEditorInfoDatails(infoParamet), new ApiCallback<FindEditorInfoModel>() {
+        addSubscription(apiStores.getServiceInfoDatails(infoParamet), new ApiCallback<FindEditorInfoModel>() {
             @Override
             public void onSuccess(FindEditorInfoModel model) {
                 mvpView.getEditorInfoDataSuccess(model);
@@ -314,7 +313,7 @@ public class FindEditMyPagePresenter extends BasePresenter<FindEditMyPageView> {
     //发表评论
     public void loadSendCommentData(String sourceId, String content, String starLevel) {
         mvpView.showDialog();
-        EditorSaveComment_Paramet paramet = new EditorSaveComment_Paramet(userId,sourceId, content, starLevel);
+        EditorSaveComment_Paramet paramet = new EditorSaveComment_Paramet(userId, sourceId, content, starLevel);
         Logger.e("发送评论");
         Logger.json(new Gson().toJson(paramet));
 
