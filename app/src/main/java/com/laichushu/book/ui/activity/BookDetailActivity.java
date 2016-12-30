@@ -600,7 +600,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                     //跳转用户主页
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("userId", dataBean.getUserId());
-                    if (SharePrefManager.getUserId().equals(dataBean.getNickName())) {
+                    if (SharePrefManager.getUserId().equals(dataBean.getUserId())) {
                         UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
                     } else {
                         UIUtil.openActivity(mActivity, UserHomePageActivity.class, bundle);

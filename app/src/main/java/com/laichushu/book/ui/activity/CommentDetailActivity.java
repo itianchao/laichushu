@@ -121,16 +121,8 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
             public void onClick(View v) {
                 if (dataBean.isIsLike()) {
                     mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"1");
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
-                    dataBean.setIsLike(false);
-                    dataBean.setLikeNum(dataBean.getLikeNum()-1);
-                    likeTv.setText(dataBean.getLikeNum() + "");
                 } else {
                     mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"0");
-                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
-                    dataBean.setIsLike(true);
-                    dataBean.setLikeNum(dataBean.getLikeNum()+1);
-                    likeTv.setText(dataBean.getLikeNum() + "");
                 }
             }
         });
@@ -171,8 +163,16 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         if (model.isSuccess()) {
             if (type.equals("0")){//点赞
                 Logger.e("点赞");
+                GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
+                dataBean.setIsLike(true);
+                dataBean.setLikeNum(dataBean.getLikeNum()+1);
+                likeTv.setText(dataBean.getLikeNum() + "");
             }else {//取消赞
                 Logger.e("取消赞");
+                GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
+                dataBean.setIsLike(false);
+                dataBean.setLikeNum(dataBean.getLikeNum()-1);
+                likeTv.setText(dataBean.getLikeNum() + "");
             }
         }else {
             ToastUtil.showToast(model.getErrMsg());
