@@ -89,7 +89,6 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         moreIv = ((ImageView) inflate.findViewById(R.id.iv_title_other));//更多
         topicIv = ((ImageView) inflate.findViewById(R.id.iv_title_the));//发话题
         emptyIv = ((ImageView) inflate.findViewById(R.id.iv_empty));//发话题
-
         titleTv = ((TextView) inflate.findViewById(R.id.tv_title));//标题
         groupNameTv = ((TextView) inflate.findViewById(R.id.tv_userRealName));//标题
         linemarksTv = ((TextView) inflate.findViewById(R.id.tv_linemarks));//里程碑内容
@@ -122,9 +121,9 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         linemarksTv.setText(bean.getMarkContent());//里程碑数据
         numberTv.setText(bean.getJoinNum() + "人");//人数
         GlideUitl.loadImg(mActivity, bean.getPhoto(), headIv);//头像
-        GlideUitl.loadImg(mActivity, R.drawable.search_icon, searchIv);//搜索
+        GlideUitl.loadImg(mActivity, R.drawable.search_icon,searchIv);//搜索
         GlideUitl.loadImg2(mActivity, R.drawable.icon_more, moreIv);//更多
-        GlideUitl.loadImg(mActivity, R.drawable.icon_comment, topicIv);//发话题
+        GlideUitl.loadImg(mActivity, R.drawable.icon_comment,topicIv);//发话题
         //==============================================点击事件
         backIv.setOnClickListener(this);
         briefRbn.setOnClickListener(this);
@@ -133,12 +132,14 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         searchIv.setOnClickListener(this);
         moreIv.setOnClickListener(this);
         topicIv.setOnClickListener(this);
+        numberTv.setOnClickListener(this);
         mvpPresenter.getGroupTopicList(bean.getId());
         mvpPresenter.getGroupSuggestTopicList(bean.getId());
     }
 
     @Override
     public void onClick(View v) {
+        final Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.iv_title_finish:
                 finish();
@@ -190,9 +191,33 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                     @Override
                     public void clickItem(int position) {
                         if (isLeader) {//组长：待处理申请、成员管理、修改资料、分享、解散
+                            switch(position){
+                                case 0://待处理申请
+                                    bundle.putInt("type", 2);
+                                    bundle.putString("title","小组成员("+bean.getJoinNum()+")");
+                                    bundle.putString("teamId",bean.getId());
+                                    UIUtil.openActivity(mActivity, FindGroupMemberListActivity.class, bundle);
+                                    break;
+                                case 1://成员管理
+                                    bundle.putInt("type", 3);
+                                    bundle.putString("title","成员管理");
+                                    bundle.putString("teamId",bean.getId());
+                                    UIUtil.openActivity(mActivity, FindGroupMemberListActivity.class, bundle);
+                                    break;
+                                case 2://修改资料
 
+                                    break;
+                                case 3://分享
+                                    break;
+                                case 4://解散
+                                    break;
+                            }
                         } else {//成员：分享、加入小组or退出小组
+                            if (position == 0){//分享
 
+                            }else {//加入小组or退出小组
+
+                            }
                         }
                     }
                 });
@@ -205,13 +230,17 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                 popWindow.showAsDropDown(v);
                 break;
             case R.id.iv_title_the://发表话题
-                Bundle bundle = new Bundle();
                 bundle.putString("type", "2");
                 bundle.putString("partyId", bean.getId());
                 UIUtil.openActivity(mActivity, HomePublishTopicActivity.class, bundle);
                 break;
+            case R.id.tv_number://跳转成员列表
+                bundle.putInt("type", 1);
+                bundle.putString("title","小组成员("+bean.getJoinNum()+")");
+                bundle.putString("teamId",bean.getId());
+                UIUtil.openActivity(mActivity, FindGroupMemberListActivity.class, bundle);
+                break;
         }
-
     }
 
     /**
@@ -262,9 +291,9 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         if (mvpPresenter.getParamet1().getPageNo().equals("1")) {//如果是第一页
             frist = false;
             refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ErrorReloadData();
         } else {
             ToastUtil.showToast("获取小组话题列表失败");
-            ErrorReloadData();
         }
         briefRbn.setEnabled(true);
         recommendRbn.setEnabled(true);

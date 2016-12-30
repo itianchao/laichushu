@@ -57,7 +57,7 @@ public class MechanismTopicListModel {
          * createDate : 30澶╁墠
          * topFlag : 0
          * starterId : 14
-         * creatUserName : 鍝︾殑鐨勫摝
+         * v : 鍝︾殑鐨勫摝
          * creatUserId : 112
          * type : 2
          * createrPhoto : group1/M00/00/0F/wKiTPlg4FM2ANV-AAACe5hadIhg819.jpg
@@ -70,6 +70,7 @@ public class MechanismTopicListModel {
         private String content;
         private int replyNum;
         private int browseNum;
+        private int collectNum;
         private String createDate;
         private String topFlag;
         private String starterId;
@@ -77,6 +78,23 @@ public class MechanismTopicListModel {
         private String creatUserId;
         private int type;
         private String createrPhoto;
+        private boolean isCollect;
+
+        public int getCollectNum() {
+            return collectNum;
+        }
+
+        public void setCollectNum(int collectNum) {
+            this.collectNum = collectNum;
+        }
+
+        public boolean isCollect() {
+            return isCollect;
+        }
+
+        public void setCollect(boolean collect) {
+            isCollect = collect;
+        }
 
         public String getId() {
             return id;
@@ -190,6 +208,9 @@ public class MechanismTopicListModel {
             this.createrPhoto = createrPhoto;
         }
 
+        public DataBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -204,6 +225,7 @@ public class MechanismTopicListModel {
             dest.writeString(this.content);
             dest.writeInt(this.replyNum);
             dest.writeInt(this.browseNum);
+            dest.writeInt(this.collectNum);
             dest.writeString(this.createDate);
             dest.writeString(this.topFlag);
             dest.writeString(this.starterId);
@@ -211,9 +233,7 @@ public class MechanismTopicListModel {
             dest.writeString(this.creatUserId);
             dest.writeInt(this.type);
             dest.writeString(this.createrPhoto);
-        }
-
-        public DataBean() {
+            dest.writeByte(this.isCollect ? (byte) 1 : (byte) 0);
         }
 
         protected DataBean(Parcel in) {
@@ -224,6 +244,7 @@ public class MechanismTopicListModel {
             this.content = in.readString();
             this.replyNum = in.readInt();
             this.browseNum = in.readInt();
+            this.collectNum = in.readInt();
             this.createDate = in.readString();
             this.topFlag = in.readString();
             this.starterId = in.readString();
@@ -231,9 +252,10 @@ public class MechanismTopicListModel {
             this.creatUserId = in.readString();
             this.type = in.readInt();
             this.createrPhoto = in.readString();
+            this.isCollect = in.readByte() != 0;
         }
 
-        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);

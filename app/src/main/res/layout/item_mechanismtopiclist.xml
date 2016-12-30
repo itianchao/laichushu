@@ -79,8 +79,10 @@
         android:numColumns="3"
         android:verticalSpacing="10dp" />
     <LinearLayout
+        android:id="@+id/lay_content"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:orientation="horizontal">
         <LinearLayout
@@ -91,7 +93,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_dyCollection"
+                android:id="@+id/tv_like"
                 style="@style/new_up"
                 android:drawableLeft="@drawable/icon_like_red"
                 android:text=" 0"/>
@@ -112,4 +114,6 @@
                 android:text="话题详情"/>
         </LinearLayout>
     </LinearLayout>
+    <include layout="@layout/item_distance"/>
+
 </LinearLayout>
