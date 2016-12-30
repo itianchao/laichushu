@@ -2,6 +2,7 @@ package com.laichushu.book.mvp.findservicemainpage;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.FindEditorInfoModel;
+import com.laichushu.book.bean.netbean.FindServerInfoModel;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
@@ -12,10 +13,11 @@ import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 
 public interface FindServiceMainPageView {
 
-    void getEditorInfoDataSuccess(FindEditorInfoModel model);
+    void getEditorInfoDataSuccess(FindServerInfoModel model);
 
     void getSendDataSuccess(RewardResult model);
     void getEditorFindArticleDataSuccess(HomeHotModel model);
+    void getSaveCollectSuccess(RewardResult model,String type);
 
     void SaveScoreLikeData(RewardResult model, String type);
 

@@ -46,6 +46,9 @@ public class ConstantValue {
     public static String COMMENTBOOK_TYPE = "1";//图书
     public static String MECHANISM_TYPE = "2";//机构
     public static String COLLECTTOPIC_TYPE = "3";//话题
+    public static String COLLECTSERVICE_TYPE = "4";//服务
+    public static String COLLECTCOURSE_TYPE = "5";//课程
+    public static String COLLECTEDITOR_TYPE = "4";//编辑
     //分类类型
     public static String HOME_CATEGROY_TYPE = "1";//首页
     public static String CREADTBOOK_CATEGROY_TYPE = "2";//创建新书

@@ -132,16 +132,28 @@ public class TopicManageActivity extends MvpActivity2<TopicManagePresenter> impl
     }
 
     @Override
-    public void getSaveCollectSuccess(RewardResult model, String type) {
+    public void getSaveCollectSuccess(RewardResult model, String type,List<HomeUseDyrResult.DataBean> dataBeen,int position) {
         if (model.isSuccess()) {
+                HomeUseDyrResult.DataBean bean = dataBeen.get(position);
             if (type.equals("0")) {
-//                ToastUtil.showToast("收藏成功！");
+                bean.setCollect(true);
+                bean.setCollectNum(bean.getCollectNum()+1);
+                ToastUtil.showToast("收藏成功！");
             } else {
-//                ToastUtil.showToast("取消收藏！");
+                bean.setCollect(false);
+                bean.setCollectNum(bean.getCollectNum()-1);
+                ToastUtil.showToast("取消收藏！");
             }
+            topListDate.set(position, bean);
+            topicAdapter.setDataBeen(topListDate);
 
         } else {
-//            ToastUtil.showToast("操作失败！");
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏失败！");
+            }else{
+                ToastUtil.showToast("取消收藏失败！");
+            }
+
             LoggerUtil.toJson(model);
         }
     }

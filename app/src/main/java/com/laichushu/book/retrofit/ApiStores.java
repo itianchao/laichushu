@@ -64,7 +64,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL;
 
     //登录接口
     @POST("login/do")
@@ -475,7 +475,7 @@ public interface ApiStores {
     Observable<RewardResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
     //我的服务者列表--合作
     @POST("servicer/findMyServerList")
-    Observable<RewardResult> getfindMyServerListDetails(@Body FindMyServerList_Paramet paramet);
+    Observable<RewardResult> getFindMyServerListDetails(@Body FindMyServerList_Paramet paramet);
 
     //获取机构公告列表
     @POST("press/notices")
@@ -588,12 +588,11 @@ public interface ApiStores {
     Observable<FindEditorInfoModel> getEditorInfoDatails(@Body FindEditorInfo_Paramet paramet);
     //发现服务--个人主页
     @POST("servicer/findServerInfo")
-    Observable<FindServiceInfoModel> getServiceInfoDatails(@Body FindEditorInfo_Paramet paramet);
+    Observable<FindServerInfoModel> getServiceInfoDatails(@Body FindEditorInfo_Paramet paramet);
 
     //编辑界面--编辑评论
     @POST("editor/commentSave")
     Observable<RewardResult> saveEditorComment(@Body EditorSaveComment_Paramet paramet);
-
     //发现编辑--查询所有评论
     @POST("editor/commentList")
     Observable<TopicdetailModel> getEditorCommentList(@Body FindEditorCommentList_Paramet paramet);

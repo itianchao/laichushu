@@ -17,11 +17,13 @@ import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.messagecomment.MessageCommentView;
+import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.activity.MsgLikeDetailsActivity;
 import com.laichushu.book.ui.adapter.SubMissionAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.ModelUtils;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -267,7 +269,18 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
 
     @Override
     public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
-
+        if (model.isSuccess()) {
+            //跳转图书详情页
+            Bundle bundle = new Bundle();
+//        String bd = gson.toJson(model, BookDetailsModle.class);
+//        HomeHotModel.DataBean homeHotModel = gson.fromJson(bd, new TypeToken<HomeHotModel.DataBean>() {}.getType());
+            HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
+            bundle.putParcelable("bean", dataBean);
+            bundle.putString("pageMsg", "消息喜欢");
+            UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
     }
 
     @Override

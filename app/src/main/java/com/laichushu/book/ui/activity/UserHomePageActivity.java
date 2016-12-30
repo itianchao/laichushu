@@ -49,7 +49,7 @@ import java.util.List;
  * 2016年11月25日17:04:06
  */
 public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivAnthor, ivOther, ivHead, ivGrade, ivGradeDetails,ivGradeDetail;
+    private ImageView ivBack, ivAnthor, ivOther, ivHead, ivGrade, ivGradeDetails, ivGradeDetail;
     private TextView tvTitle, nickName, tvAuthorGrade;
     private HomePersonFocusResult.DataBean dataBean;
     private TextView btnFocus;
@@ -118,7 +118,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         ivOther.setVisibility(View.VISIBLE);
         GlideUitl.loadImg(mActivity, R.drawable.icon_book_comment, ivAnthor);
         GlideUitl.loadImg(mActivity, R.drawable.icon_share, ivOther);
-        GlideUitl.loadImg(mActivity,R.drawable.icon_geade_details2x,ivGradeDetails);
+        GlideUitl.loadImg(mActivity, R.drawable.icon_geade_details2x, ivGradeDetails);
 
         ivBack.setOnClickListener(this);
         ivGradeDetail.setOnClickListener(this);
@@ -142,13 +142,13 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         //初始化mRecyclerView 关注他的
         mHeFocusRecyclerView.setGridLayout(1);
         mHeFocusRecyclerView.setFooterViewText("加载中");
-        beAdapter = new UserHeFoucsAdapter(this, focusBeData, mvpPresenter);
+        beAdapter = new UserHeFoucsAdapter(this, focusBeData, mvpPresenter, 1);
         mHeFocusRecyclerView.setAdapter(beAdapter);
         mHeFocusRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView 他关注的
         mFocusHeRecyclerView.setGridLayout(1);
         mFocusHeRecyclerView.setFooterViewText("加载中");
-        heAdapter = new UserFocusHeAdapter(this, focusMeData, mvpPresenter);
+        heAdapter = new UserFocusHeAdapter(this, focusMeData, mvpPresenter, 2);
         mFocusHeRecyclerView.setAdapter(heAdapter);
         mFocusHeRecyclerView.setOnPullLoadMoreListener(this);
         // 初始化头像+动态
@@ -179,15 +179,10 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 break;
             case R.id.btn_userFocus:
                 //关注
-                btnFocus.setClickable(false);
                 if (!userBean.isBeFocused()) {
-                    mvpPresenter.loadAddFocus(userId, true);
-                    btnFocus.setText("已关注");
-                    userBean.setBeFocused(true);
+                    mvpPresenter.loadAddFocus(userId, true, null, 0, 0);
                 } else {
-                    mvpPresenter.loadDelFocus(userId, false);
-                    btnFocus.setText("关注");
-                    userBean.setBeFocused(false);
+                    mvpPresenter.loadDelFocus(userId, false, null, 0, 0);
                 }
                 break;
             case R.id.iv_title_another:
@@ -406,40 +401,106 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     }
 
     /**
-     * 关注他的
+     * 添加关注
      *
      * @param model
      * @param flg
      */
     @Override
-    public void getFocusBeStatus(HomeFocusResult model, boolean flg) {
+    public void getFocusBeStatus(HomeFocusResult model, boolean flg, HomePersonFocusResult.DataBean dataBean, int position, int types) {
         if (model.isSuccess()) {
-            if (flg) {
-                ToastUtil.showToast("关注成功！");
+            HomePersonFocusResult.DataBean bean = dataBean;
+            if (types != 0) {
+                if (flg) {
+                    bean.setStatus(true);
+                    ToastUtil.showToast("关注成功！");
+                } else {
+                    bean.setStatus(false);
+                    ToastUtil.showToast("关注失败！");
+                }
+                if (types == 1) {
+                    focusBeData.set(position, bean);
+                    beAdapter.setDataBeen(focusBeData);
+                } else if (types == 2) {
+                    focusMeData.set(position, bean);
+                    heAdapter.setDataBeen(focusMeData);
+                }
             } else {
-                ToastUtil.showToast("取消关注！");
+                if (flg) {
+                    btnFocus.setText("已关注");
+                    userBean.setBeFocused(true);
+                    ToastUtil.showToast("关注成功！");
+                } else {
+                    btnFocus.setText("关注");
+                    userBean.setBeFocused(false);
+                    ToastUtil.showToast("取消关注！");
+                }
             }
+
         } else {
-            ToastUtil.showToast("操作失败！");
+            if (flg) {
+                ToastUtil.showToast("关注失败！");
+            } else {
+                ToastUtil.showToast("取消关注失败！");
+            }
+
             LoggerUtil.toJson(model);
+            btnFocus.setClickable(true);
         }
-        btnFocus.setClickable(true);
+
+
     }
 
+    /**
+     * 取消关注
+     *
+     * @param model
+     * @param flg
+     * @param dataBean
+     * @param position
+     * @param types
+     */
     @Override
-    public void getFocusMeStatus(HomeFocusResult model, boolean flg) {
+    public void getFocusMeStatus(HomeFocusResult model, boolean flg, HomePersonFocusResult.DataBean dataBean, int position, int types) {
         if (model.isSuccess()) {
-            if (flg) {
-                ToastUtil.showToast("关注成功！");
+            HomePersonFocusResult.DataBean bean = dataBean;
+            if (types != 0) {
+                if (flg) {
+                    bean.setStatus(true);
+                    ToastUtil.showToast("关注成功！");
+                } else {
+                    bean.setStatus(false);
+                    ToastUtil.showToast("取消关注成功！");
+                }
+                if (types == 1) {
+                    focusBeData.set(position, bean);
+                    beAdapter.setDataBeen(focusBeData);
+                } else if (types == 2) {
+                    focusMeData.set(position, bean);
+                    heAdapter.setDataBeen(focusMeData);
+                }
             } else {
-                ToastUtil.showToast("取消关注！");
+                if (!flg) {
+                    btnFocus.setText("关注");
+                    userBean.setBeFocused(false);
+                    ToastUtil.showToast("取消关注！");
+                } else {
+                    btnFocus.setText("已关注");
+                    userBean.setBeFocused(true);
+                    ToastUtil.showToast("关注成功！");
+                }
             }
-
         } else {
-            ToastUtil.showToast("关注失败！");
+            if (flg) {
+                ToastUtil.showToast("关注失败！");
+            } else {
+                ToastUtil.showToast("取消关注失败！");
+            }
             LoggerUtil.toJson(model);
+            btnFocus.setClickable(true);
         }
-        btnFocus.setClickable(true);
+
+
     }
 
     /**
@@ -449,16 +510,28 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
      * @param type
      */
     @Override
-    public void getSaveCollectSuccess(RewardResult model, String type) {
+    public void getSaveCollectSuccess(RewardResult model, String type, HomeUseDyrResult.DataBean dataBean, int position) {
         if (model.isSuccess()) {
+            HomeUseDyrResult.DataBean bean = dataBean;
             if (type.equals("0")) {
-//                ToastUtil.showToast("收藏成功！");
+                bean.setCollect(true);
+                bean.setCollectNum(bean.getCollectNum() + 1);
+                ToastUtil.showToast("收藏成功！");
             } else {
-//                ToastUtil.showToast("取消收藏！");
+                bean.setCollect(false);
+                bean.setCollectNum(bean.getCollectNum() - 1);
+                ToastUtil.showToast("取消收藏！");
             }
+            dyData.set(position, bean);
+            dyAdapter.setDataBeen(dyData);
 
         } else {
-//            ToastUtil.showToast("操作失败！");
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏失败！");
+            } else {
+                ToastUtil.showToast("取消收藏失败！");
+            }
+
             LoggerUtil.toJson(model);
         }
     }

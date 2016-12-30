@@ -44,8 +44,17 @@ public class FindServicePageAdapter extends RecyclerView.Adapter<FindServicePage
     @Override
     public void onBindViewHolder(FindServicePageAdapter.ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
-
-        holder.rbNum.setNumStars(dataBeen.get(position).getScore());
+        switch (dataBeen.get(position).getServiceType()) {
+            case 1:
+                holder.rbNum.setRating(5);
+                break;
+            case 2:
+                holder.rbNum.setRating(4);
+                break;
+            case 3:
+                holder.rbNum.setRating(3);
+                break;
+        }
         holder.tvRealName.setText(dataBeen.get(position).getName());
         holder.tvDeails.setText(dataBeen.get(position).getServiceIntroduce());
         holder.ivImg.setOnClickListener(new View.OnClickListener() {

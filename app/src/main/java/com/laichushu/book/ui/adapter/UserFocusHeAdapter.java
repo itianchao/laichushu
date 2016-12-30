@@ -29,11 +29,13 @@ public class UserFocusHeAdapter extends RecyclerView.Adapter<UserFocusHeAdapter.
     private UserHomePageActivity context;
     private List<HomePersonFocusResult.DataBean> dataBeen;
     private UserHomePagePresener homePagePresener;
+    private int type;
 
-    public UserFocusHeAdapter(UserHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean, UserHomePagePresener homePagePresener) {
+    public UserFocusHeAdapter(UserHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean, UserHomePagePresener homePagePresener, int type) {
         this.context = context;
         this.dataBeen = dataBean;
         this.homePagePresener = homePagePresener;
+        this.type = type;
     }
 
     @Override
@@ -57,15 +59,15 @@ public class UserFocusHeAdapter extends RecyclerView.Adapter<UserFocusHeAdapter.
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!dataBeen.get(position).isStatus()) {
-                    holder.checkBox.setText("取消关注");
-                    homePagePresener.loadAddFocus(dataBeen.get(position).getSourceUserId(), true);
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
-                    dataBeen.get(position).setStatus(true);
+//                    holder.checkBox.setText("取消关注");
+                    homePagePresener.loadAddFocus(dataBeen.get(position).getSourceUserId(), true, dataBeen.get(position), position, type);
+//                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
+//                    dataBeen.get(position).setStatus(true);
                 } else {
-                    holder.checkBox.setText("关注");
-                    homePagePresener.loadDelFocus(dataBeen.get(position).getSourceUserId(), false);
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
-                    dataBeen.get(position).setStatus(false);
+//                    holder.checkBox.setText("关注");
+                    homePagePresener.loadDelFocus(dataBeen.get(position).getSourceUserId(), false, dataBeen.get(position), position, type);
+//                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
+//                    dataBeen.get(position).setStatus(false);
                 }
 
             }
@@ -120,5 +122,10 @@ public class UserFocusHeAdapter extends RecyclerView.Adapter<UserFocusHeAdapter.
             checkBox = (CheckBox) root.findViewById(R.id.cb_focus);
             this.root = root;
         }
+    }
+
+    public void setDataBeen(List<HomePersonFocusResult.DataBean> dataBeen) {
+        this.dataBeen = dataBeen;
+        notifyDataSetChanged();
     }
 }

@@ -15,15 +15,16 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.FindEditorInfoModel;
+import com.laichushu.book.bean.netbean.FindServerInfoModel;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.findservicemainpage.FindServiceMainPagePresenter;
 import com.laichushu.book.mvp.findservicemainpage.FindServiceMainPageView;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
-import com.laichushu.book.ui.adapter.EditCommentListAdapter;
-import com.laichushu.book.ui.adapter.EditorFindCaseAdapter;
+import com.laichushu.book.ui.adapter.ServiceCommentListAdapter;
+import com.laichushu.book.ui.adapter.ServiceFindCaseAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
@@ -42,27 +43,29 @@ import java.util.List;
  */
 
 public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPagePresenter> implements FindServiceMainPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
-    private ImageView ivBack, ivHeadImg;
+    private ImageView ivBack, ivHeadImg, ivCollect;
     private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum;
-    private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView;
+    private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView, mServiceRecyclerView;
     private LinearLayout llFindMsg, llTeamwork, llCommentList;
     private String userId = null;
     private RatingBar ratingBar, numRb;
     //案列
-    private EditorFindCaseAdapter caseAdapter;
+    private ServiceFindCaseAdapter caseAdapter;
     private List<HomeHotModel.DataBean> caseDate = new ArrayList<>();
+    //服务
 
     //合作
     private List<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
-
     private RadioGroup radioGroup;
     private ScrollView scrollBrief;
-    private EditCommentListAdapter commAdapter;
+    private ServiceCommentListAdapter commAdapter;
     private ArrayList<CommentDetailModle.DataBean> commDate = new ArrayList<>();
     private int PAGE_NO = 1;
     private EditText commentEt;
 
     private String type = null;
+
+    private FindServerInfoModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         View inflate = UIUtil.inflate(R.layout.activity_find_service_mainpage);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         ivHeadImg = ((ImageView) inflate.findViewById(R.id.iv_userHeadImg));
+        ivCollect = ((ImageView) inflate.findViewById(R.id.iv_title_another));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvRealName = ((TextView) inflate.findViewById(R.id.tv_userRealName));
         tvTeamNum = ((TextView) inflate.findViewById(R.id.tv_teamworkNum));
@@ -87,6 +91,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         llTeamwork = (LinearLayout) inflate.findViewById(R.id.ll_teamwork);
         mCaseRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_case);
         mCommentRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_commentList);
+        mServiceRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_myService);
         ratingBar = (RatingBar) inflate.findViewById(R.id.ratbar_detail_num);
         numRb = (RatingBar) inflate.findViewById(R.id.ratbar_num);
         radioGroup = (RadioGroup) inflate.findViewById(R.id.rg_editorList);
@@ -101,8 +106,10 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         super.initData();
         tvTitle.setText("个人主页");
         userId = getIntent().getStringExtra("userId");
+        ivCollect.setVisibility(View.VISIBLE);
 
         ivBack.setOnClickListener(this);
+        ivCollect.setOnClickListener(this);
         llFindMsg.setOnClickListener(this);
         llTeamwork.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
@@ -110,13 +117,16 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         //查询案列
         mCaseRecyclerView.setGridLayout(1);
         mCaseRecyclerView.setFooterViewText("加载中");
-//        caseAdapter = new EditorFindCaseAdapter(this, caseDate, mvpPresenter);
+        caseAdapter = new ServiceFindCaseAdapter(this, caseDate, mvpPresenter);
         mCaseRecyclerView.setAdapter(caseAdapter);
         mCaseRecyclerView.setOnPullLoadMoreListener(this);
+
+        //我的服务
+
         //查询评论
         mCommentRecyclerView.setGridLayout(1);
         mCommentRecyclerView.setFooterViewText("加载中");
-//        commAdapter = new EditCommentListAdapter(this, commDate, mvpPresenter);
+        commAdapter = new ServiceCommentListAdapter(this, commDate, mvpPresenter);
         mCommentRecyclerView.setAdapter(commAdapter);
         mCommentRecyclerView.setOnPullLoadMoreListener(this);
 
@@ -124,7 +134,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
             ToastUtil.showToast("加载失败");
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
-            mvpPresenter.loadEditorInfoData(userId);
+            mvpPresenter.loadServerInfoData(userId);
         }
 
         scrollBrief.setVisibility(View.VISIBLE);
@@ -135,6 +145,19 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         switch (v.getId()) {
             case R.id.iv_title_finish:
                 this.finish();
+                break;
+            case R.id.iv_title_another:
+                //收藏
+                if (null == model) {
+                    ToastUtil.showToast("参数错误！");
+                    return;
+                }
+                if (this.model.getData().isIsCollect()) {
+                    mvpPresenter.loadCollectSaveDate(userId, ConstantValue.COLLECTSERVICE_TYPE, "1");
+
+                } else {
+                    mvpPresenter.loadCollectSaveDate(userId, ConstantValue.COLLECTSERVICE_TYPE, "0");
+                }
                 break;
             case R.id.ll_findMsg:
                 //私信
@@ -154,6 +177,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 //简介
                 scrollBrief.setVisibility(View.VISIBLE);
                 llCommentList.setVisibility(View.GONE);
+                mServiceRecyclerView.setVisibility(View.GONE);
                 mCaseRecyclerView.setVisibility(View.GONE);
                 break;
             case R.id.rb_case:
@@ -161,8 +185,19 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 type = "1";
                 scrollBrief.setVisibility(View.GONE);
                 llCommentList.setVisibility(View.GONE);
+                mServiceRecyclerView.setVisibility(View.GONE);
                 mCaseRecyclerView.setVisibility(View.VISIBLE);
                 mvpPresenter.loadFindArticleByCaseIdData(userId);
+
+                break;
+            case R.id.rb_myService:
+                // 我的服务
+                type = "3";
+                scrollBrief.setVisibility(View.GONE);
+                llCommentList.setVisibility(View.GONE);
+                mCaseRecyclerView.setVisibility(View.GONE);
+                mServiceRecyclerView.setVisibility(View.VISIBLE);
+//                mvpPresenter.loadFindArticleByCaseIdData(userId);
 
                 break;
             case R.id.rb_evaluate:
@@ -170,6 +205,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 type = "2";
                 scrollBrief.setVisibility(View.GONE);
                 llCommentList.setVisibility(View.VISIBLE);
+                mServiceRecyclerView.setVisibility(View.GONE);
                 mCaseRecyclerView.setVisibility(View.GONE);
                 mvpPresenter.loadEditorCommentListData(userId);
                 break;
@@ -177,17 +213,34 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
     }
 
     @Override
-    public void getEditorInfoDataSuccess(FindEditorInfoModel model) {
+    public void getEditorInfoDataSuccess(FindServerInfoModel model) {
         if (model.isSuccess() && model.getData() != null) {
+            this.model = model;
             GlideUitl.loadRandImg(mActivity, model.getData().getPhoto(), ivHeadImg);
             tvRealName.setText(model.getData().getName());
-            if (!TextUtils.isEmpty(model.getData().getLevel())) {
-                ratingBar.setNumStars(Integer.parseInt(model.getData().getLevel()));
+            if (model.getData().getServiceType() != 0) {
+                switch (model.getData().getServiceType()) {
+                    case 1:
+                        ratingBar.setRating(5);
+                        break;
+                    case 2:
+                        ratingBar.setRating(4);
+                        break;
+                    case 3:
+                        ratingBar.setRating(3);
+                        break;
+                }
             }
             tvTeamNum.setText("已有" + model.getData().getCooperateNum() + "人合作");
+            if (model.getData().isIsCollect()) {
+                ivCollect.setImageResource(R.drawable.icon_likedwhite2x);
+            } else {
+                ivCollect.setImageResource(R.drawable.icon_likewhite2x);
+            }
+
             //简介
-            if (!TextUtils.isEmpty(model.getData().getIntroduction()))
-                tvIntroduction.setText(model.getData().getIntroduction());
+            if (!TextUtils.isEmpty(model.getData().getServiceIntroduce()))
+                tvIntroduction.setText(model.getData().getServiceIntroduce());
 
         } else
 
@@ -299,11 +352,35 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
     }
 
     @Override
+    public void getSaveCollectSuccess(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏成功！");
+                this.model.getData().setIsCollect(false);
+                ivCollect.setImageResource(R.drawable.icon_likewhite2x);
+            } else {
+                ToastUtil.showToast("取消收藏！");
+                this.model.getData().setIsCollect(true);
+                ivCollect.setImageResource(R.drawable.icon_likedwhite2x);
+            }
+
+        } else {
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏失败！");
+            } else {
+                ToastUtil.showToast("取消收藏失败！");
+            }
+
+            LoggerUtil.toJson(model);
+        }
+    }
+
+    @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEND) {
             String conent = commentEt.getText().toString();
             if (!TextUtils.isEmpty(conent)) {
-                mvpPresenter.loadSendCommentData(userId, conent, (int) numRb.getRating() + "");
+                mvpPresenter.loadSendServiceCommentData(userId, conent, (int) numRb.getRating() + "");
                 commentEt.setText("");
                 UIUtil.hideKeyboard(commentEt);
             } else {
@@ -346,7 +423,6 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
             mvpPresenter.loadFindArticleByCaseIdData(userId);
         }
     }
-
 
     @Override
     public void getDataFail(String msg) {

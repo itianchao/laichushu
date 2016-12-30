@@ -34,24 +34,28 @@
             android:layout_below="@+id/edit_top"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="24dp"
+            android:text="茶机加工"
             android:layout_toRightOf="@+id/iv_userHeadImg"
             android:textColor="@color/white"
             android:textSize="@dimen/edit2" />
-
-        <RatingBar
-            android:id="@+id/ratbar_detail_num"
-            style="?android:attr/ratingBarStyleSmall"
+        <TextView
+            android:id="@+id/iv_userGradeContent"
             android:layout_width="wrap_content"
-            android:layout_height="16.5dp"
-            android:layout_below="@+id/tv_userRealName"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
+            android:layout_below="@+id/tv_userRealName"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/iv_userHeadImg"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:progressDrawable="@drawable/ratingbar_home"
-            android:rating="3"
-            android:stepSize="1" />
+            android:textColor="@color/characterLightGray"
+            android:textSize="@dimen/edit"/>
+        <ImageView
+            android:id="@+id/iv_userGrade"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_below="@+id/tv_userRealName"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/iv_userGradeContent" />
 
         <LinearLayout
             android:layout_width="match_parent"

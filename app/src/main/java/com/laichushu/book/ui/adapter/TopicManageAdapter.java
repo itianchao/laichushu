@@ -67,24 +67,24 @@ public class TopicManageAdapter extends RecyclerView.Adapter<TopicManageAdapter.
             public void onClick(View v) {
                 if (!dataBeen.get(position).isCollect()) {
                     //添加收藏
-                    currentNum++;
+//                    currentNum++;
                     type = "0";
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
-                    topicPagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
-                    holder.tvCollect.setText("已收藏(" + currentNum + ")");
-                    dataBeen.get(position).setCollect(true);
+                    topicPagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type,dataBeen,position);
+//                    holder.tvCollect.setText("已收藏(" + currentNum + ")");
+//                    dataBeen.get(position).setCollect(true);
                 } else {
                     //取消收藏
-                    currentNum--;
+//                    currentNum--;
                     type = "1";
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
-                    topicPagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type);
-                    holder.tvCollect.setText("收藏(" + currentNum + ")");
-                    dataBeen.get(position).setCollect(false);
+                    topicPagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type,dataBeen,position);
+//                    holder.tvCollect.setText("收藏(" + currentNum + ")");
+//                    dataBeen.get(position).setCollect(false);
                 }
             }
         });
@@ -149,5 +149,10 @@ public class TopicManageAdapter extends RecyclerView.Adapter<TopicManageAdapter.
             llScan = (LinearLayout) root.findViewById(R.id.ll_scan);
             this.root = root;
         }
+    }
+
+    public void setDataBeen(List<HomeUseDyrResult.DataBean> dataBeen) {
+        this.dataBeen = dataBeen;
+        notifyDataSetChanged();
     }
 }

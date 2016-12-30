@@ -67,14 +67,8 @@ public class SubMissionAdapter extends RecyclerView.Adapter<SubMissionAdapter.Vi
         holder.ivHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转用户主页
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
-                if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
-                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
-                } else {
-                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
-                }
+                //跳转图书详情？
+                messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
             }
         });
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {

@@ -217,14 +217,14 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
     private ChangeFocusState_Paramet addFocus = new ChangeFocusState_Paramet(userId, "");
 
     //添加关注
-    public void loadAddFocus(String userId, final boolean flg) {
+    public void loadAddFocus(String userId, final boolean flg,final HomePersonFocusResult.DataBean dataBean, final int position, final int type) {
         mvpView.showDialog();
         LoggerUtil.toJson(addFocus);
         addFocus.setUserId(userId);
         addSubscription(apiStores.getAddFocus(addFocus), new ApiCallback<HomeFocusResult>() {
             @Override
             public void onSuccess(HomeFocusResult model) {
-                mvpView.getFocusBeStatus(model, flg);
+                mvpView.getFocusBeStatus(model, flg,dataBean, position, type);
             }
 
             @Override
@@ -250,13 +250,14 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
     private ChangeFocusState_Paramet delFocus = new ChangeFocusState_Paramet(userId, "");
 
     //取消关注
-    public void loadDelFocus(String userId, final boolean isFocus) {
+    public void loadDelFocus(String userId, final boolean isFocus, final HomePersonFocusResult.DataBean dataBean, final int position, final int type) {
         LoggerUtil.toJson(delFocus);
         delFocus.setUserId(userId);
+        mvpView.showDialog();
         addSubscription(apiStores.getDelFocus(delFocus), new ApiCallback<HomeFocusResult>() {
             @Override
             public void onSuccess(HomeFocusResult model) {
-                mvpView.getFocusMeStatus(model, isFocus);
+                mvpView.getFocusMeStatus(model, isFocus,dataBean, position, type);
             }
 
             @Override
@@ -266,7 +267,7 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
 
             @Override
             public void onFinish() {
-
+mvpView.dismissDialog();
             }
         });
     }
@@ -296,13 +297,14 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
     }
 
     //话题收藏
-    public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
+    public void loadCollectSaveDate(String sourceId, String sourceType, final String type, final HomeUseDyrResult.DataBean dataBean, final int position) {
         CollectSaveDate_Paramet collectSave = new CollectSaveDate_Paramet(userId, sourceId, sourceType, type);
         LoggerUtil.toJson(collectSave);
+        mvpView.showDialog();
         addSubscription(apiStores.collectSaveData(collectSave), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.getSaveCollectSuccess(model, type);
+                mvpView.getSaveCollectSuccess(model, type,dataBean,position);
             }
 
             @Override
@@ -312,7 +314,7 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
 
             @Override
             public void onFinish() {
-
+mvpView.dismissDialog();
             }
         });
     }

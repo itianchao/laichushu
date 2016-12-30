@@ -7,11 +7,12 @@ import java.io.Serializable;
  */
 
 public class EditorSaveComment_Paramet implements Serializable{
-    private String userId,editorId,content,starLevel;
+    private String userId,editorId,servierId,content,starLevel;
 
-    public EditorSaveComment_Paramet(String userId, String editorId, String content, String starLevel) {
+    public EditorSaveComment_Paramet(String userId, String editorId, String servierId, String content, String starLevel) {
         this.userId = userId;
         this.editorId = editorId;
+        this.servierId = servierId;
         this.content = content;
         this.starLevel = starLevel;
     }
@@ -30,6 +31,14 @@ public class EditorSaveComment_Paramet implements Serializable{
 
     public void setEditorId(String editorId) {
         this.editorId = editorId;
+    }
+
+    public String getServierId() {
+        return servierId;
+    }
+
+    public void setServierId(String servierId) {
+        this.servierId = servierId;
     }
 
     public String getContent() {

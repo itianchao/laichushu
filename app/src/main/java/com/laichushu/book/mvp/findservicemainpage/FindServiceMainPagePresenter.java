@@ -20,20 +20,23 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
+import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
 import com.laichushu.book.bean.netbean.EditorSaveComment_Paramet;
 import com.laichushu.book.bean.netbean.FindArticleByCaseId_Paramet;
 import com.laichushu.book.bean.netbean.FindArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.FindEditorCommentList_Paramet;
 import com.laichushu.book.bean.netbean.FindEditorInfoModel;
 import com.laichushu.book.bean.netbean.FindEditorInfo_Paramet;
+import com.laichushu.book.bean.netbean.FindServerInfoModel;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.FindEditMainPageActivity;
+import com.laichushu.book.ui.activity.FindServerMainPageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -47,7 +50,7 @@ import java.util.List;
  */
 
 public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainPageView> {
-    private FindEditMainPageActivity mActivity;
+    private FindServerMainPageActivity mActivity;
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
@@ -55,7 +58,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
     //初始化构造
     public FindServiceMainPagePresenter(FindServiceMainPageView view) {
         attachView(view);
-        mActivity = (FindEditMainPageActivity) view;
+        mActivity = (FindServerMainPageActivity) view;
     }
     //显示私信
 
@@ -255,13 +258,13 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
 
     //获取服务主页用户头像信息
-    public void loadEditorInfoData(String userID) {
+    public void loadServerInfoData(String userID) {
         FindEditorInfo_Paramet infoParamet = new FindEditorInfo_Paramet(userID, userId);
         Logger.e("用户信息");
         Logger.json(new Gson().toJson(infoParamet));
-        addSubscription(apiStores.getServiceInfoDatails(infoParamet), new ApiCallback<FindEditorInfoModel>() {
+        addSubscription(apiStores.getServiceInfoDatails(infoParamet), new ApiCallback<FindServerInfoModel>() {
             @Override
-            public void onSuccess(FindEditorInfoModel model) {
+            public void onSuccess(FindServerInfoModel model) {
                 mvpView.getEditorInfoDataSuccess(model);
             }
 
@@ -285,7 +288,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
         this.commentList_paramet = commentList_paramet;
     }
 
-    //编辑-查询所有评论
+    //服务-查询所有评论
     FindEditorCommentList_Paramet commentList_paramet = new FindEditorCommentList_Paramet(userId, "", pageSize, pageNo);
 
     public void loadEditorCommentListData(String editorId) {
@@ -311,9 +314,9 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
     }
 
     //发表评论
-    public void loadSendCommentData(String sourceId, String content, String starLevel) {
+    public void loadSendServiceCommentData(String sourceId, String content, String starLevel) {
         mvpView.showDialog();
-        EditorSaveComment_Paramet paramet = new EditorSaveComment_Paramet(userId, sourceId, content, starLevel);
+        EditorSaveComment_Paramet paramet = new EditorSaveComment_Paramet(userId, "", sourceId, content, starLevel);
         Logger.e("发送评论");
         Logger.json(new Gson().toJson(paramet));
 
@@ -397,4 +400,28 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
             }
         });
     }
+
+    //收藏服务
+    public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
+        CollectSaveDate_Paramet collectSave = new CollectSaveDate_Paramet(userId, sourceId, sourceType, type);
+        mvpView.showDialog();
+        LoggerUtil.toJson(collectSave);
+        addSubscription(apiStores.collectSaveData(collectSave), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getSaveCollectSuccess(model, type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+
 }

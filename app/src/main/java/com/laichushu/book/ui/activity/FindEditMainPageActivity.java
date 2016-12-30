@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.FindEditorInfoModel;
+import com.laichushu.book.bean.netbean.FindServerInfoModel;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.findeditmainpage.FindEditMainPagePresenter;
@@ -37,12 +39,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePresenter> implements FindEditMainPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
-    private ImageView ivBack, ivHeadImg;
-    private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum;
+    private ImageView ivBack, ivHeadImg,ivCollect,ivGrade;
+    private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum,tvGrade;
     private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView;
     private LinearLayout llFindMsg, llTeamwork, llCommentList;
     private String userId = null;
-    private RatingBar ratingBar, numRb;
+    private RatingBar numRb;
     //案列
     private EditorFindCaseAdapter caseAdapter;
     private List<HomeHotModel.DataBean> caseDate = new ArrayList<>();
@@ -58,7 +60,7 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
     private EditText commentEt;
 
     private String type = null;
-
+    private FindEditorInfoModel model;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +76,9 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
         View inflate = UIUtil.inflate(R.layout.activity_find_edit_mypage);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         ivHeadImg = ((ImageView) inflate.findViewById(R.id.iv_userHeadImg));
+        ivGrade = ((ImageView) inflate.findViewById(R.id.iv_userGrade));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
+        ivCollect = ((ImageView) inflate.findViewById(R.id.iv_title_another));
         tvRealName = ((TextView) inflate.findViewById(R.id.tv_userRealName));
         tvTeamNum = ((TextView) inflate.findViewById(R.id.tv_teamworkNum));
         llFindMsg = (LinearLayout) inflate.findViewById(R.id.ll_findMsg);
@@ -82,7 +86,7 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
         llTeamwork = (LinearLayout) inflate.findViewById(R.id.ll_teamwork);
         mCaseRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_case);
         mCommentRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_commentList);
-        ratingBar = (RatingBar) inflate.findViewById(R.id.ratbar_detail_num);
+        tvGrade = (TextView) inflate.findViewById(R.id.iv_userGradeContent);
         numRb = (RatingBar) inflate.findViewById(R.id.ratbar_num);
         radioGroup = (RadioGroup) inflate.findViewById(R.id.rg_editorList);
         tvIntroduction = (TextView) inflate.findViewById(R.id.tv_brief);
@@ -96,8 +100,10 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
         super.initData();
         tvTitle.setText("个人主页");
         userId = getIntent().getStringExtra("userId");
+        ivCollect.setVisibility(View.VISIBLE);
 
         ivBack.setOnClickListener(this);
+        ivCollect.setOnClickListener(this);
         llFindMsg.setOnClickListener(this);
         llTeamwork.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
@@ -130,6 +136,18 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
         switch (v.getId()) {
             case R.id.iv_title_finish:
                 this.finish();
+                break;
+            case R.id.iv_title_another:
+                //收藏
+                if (null == model) {
+                    ToastUtil.showToast("参数错误！");
+                    return;
+                }
+                if (this.model.getData().isIsCollect()) {
+                    mvpPresenter.loadCollectSaveDate(userId, ConstantValue.COLLECTEDITOR_TYPE, "1");
+                } else {
+                    mvpPresenter.loadCollectSaveDate(userId, ConstantValue.COLLECTEDITOR_TYPE, "0");
+                }
                 break;
             case R.id.ll_findMsg:
                 //私信
@@ -174,12 +192,31 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
     @Override
     public void getEditorInfoDataSuccess(FindEditorInfoModel model) {
         if (model.isSuccess() && model.getData() != null) {
+            this.model = model;
             GlideUitl.loadRandImg(mActivity, model.getData().getPhoto(), ivHeadImg);
             tvRealName.setText(model.getData().getName());
-            if (!TextUtils.isEmpty(model.getData().getLevel())) {
-                ratingBar.setNumStars(Integer.parseInt(model.getData().getLevel()));
+            if (model.getData().getScoreNum() != 0) {
+                switch (model.getData().getScoreNum()) {
+                    case 1:
+                        tvGrade.setText("金牌作家");
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivGrade);
+                        break;
+                    case 2:
+                        tvGrade.setText("银牌作家");
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, ivGrade);
+                        break;
+                    case 3:
+                        tvGrade.setText("铜牌作家");
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, ivGrade);
+                        break;
+                }
             }
             tvTeamNum.setText("已有" + model.getData().getCooperateNum() + "人合作");
+            if (model.getData().isIsCollect()) {
+                ivCollect.setImageResource(R.drawable.icon_likedwhite2x);
+            } else {
+                ivCollect.setImageResource(R.drawable.icon_likewhite2x);
+            }
             //简介
             if (!TextUtils.isEmpty(model.getData().getIntroduction()))
                 tvIntroduction.setText(model.getData().getIntroduction());
@@ -291,6 +328,30 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
             ToastUtil.showToast(model.getErrMsg());
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+    }
+
+    @Override
+    public void getSaveCollectSuccess(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏成功！");
+                this.model.getData().setIsCollect(false);
+                ivCollect.setImageResource(R.drawable.icon_likewhite2x);
+            } else {
+                ToastUtil.showToast("取消收藏！");
+                this.model.getData().setIsCollect(true);
+                ivCollect.setImageResource(R.drawable.icon_likedwhite2x);
+            }
+
+        } else {
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏失败！");
+            } else {
+                ToastUtil.showToast("取消收藏失败！");
+            }
+
+            LoggerUtil.toJson(model);
+        }
     }
 
     @Override

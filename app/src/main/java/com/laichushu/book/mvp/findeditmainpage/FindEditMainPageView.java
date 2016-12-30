@@ -16,6 +16,7 @@ public interface FindEditMainPageView {
 
     void getSendDataSuccess(RewardResult model);
     void getEditorFindArticleDataSuccess(HomeHotModel model);
+    void getSaveCollectSuccess(RewardResult model,String type);
 
     void SaveScoreLikeData(RewardResult model, String type);
 

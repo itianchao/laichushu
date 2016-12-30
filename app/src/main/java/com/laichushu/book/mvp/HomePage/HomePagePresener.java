@@ -9,9 +9,6 @@ import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserDy_parmet;
 import com.laichushu.book.bean.netbean.HomeUserFocusBe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusMe_parmet;
-import com.laichushu.book.bean.netbean.HomeUserFocusState_Paramet;
-import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
@@ -27,6 +24,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
     private String pageSize = ConstantValue.PAGESIZE1;
     private String pageNo = "1";
     private String userId = ConstantValue.USERID;
+
     public HomeUserDy_parmet getParamet() {
         return paramet;
     }
@@ -35,7 +33,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         this.paramet = paramet;
     }
 
-    private HomeUserDy_parmet paramet = new HomeUserDy_parmet(userId,"", pageSize, pageNo,"");
+    private HomeUserDy_parmet paramet = new HomeUserDy_parmet(userId, "", pageSize, pageNo, "");
 
     public HomeUserDy_parmet getParamet2() {
         return paramet;
@@ -137,26 +135,28 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         this.addFocus = addFocus;
     }
 
-    private ChangeFocusState_Paramet addFocus = new ChangeFocusState_Paramet(userId,"");
-//添加关注
-    public void loadAddFocus(String userId,final boolean flg){
+    private ChangeFocusState_Paramet addFocus = new ChangeFocusState_Paramet(userId, "");
+
+    //添加关注
+    public void loadAddFocus(String userId, final boolean flg, final HomePersonFocusResult.DataBean dataBean, final int position, final int type) {
         addFocus.setUserId(userId);
         LoggerUtil.toJson(addFocus);
-                    addSubscription(apiStores.getAddFocus(addFocus), new ApiCallback<HomeFocusResult>() {
-                        @Override
-                        public void onSuccess(HomeFocusResult model) {
-                            mvpView.getFocusBeStatus(model,flg);
-                        }
+        mvpView.showDialog();
+        addSubscription(apiStores.getAddFocus(addFocus), new ApiCallback<HomeFocusResult>() {
+            @Override
+            public void onSuccess(HomeFocusResult model) {
+                mvpView.getFocusBeStatus(model, flg, dataBean, position, type);
+            }
 
-                        @Override
-                        public void onFailure(int code, String msg) {
-                            mvpView.getDataFail("code+" + code + "/msg:" + msg);
-                        }
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
 
-                        @Override
-                        public void onFinish() {
-
-                        }
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
         });
     }
 
@@ -168,15 +168,17 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
         this.delFocus = delFocus;
     }
 
-    private ChangeFocusState_Paramet delFocus = new ChangeFocusState_Paramet(userId,"");
+    private ChangeFocusState_Paramet delFocus = new ChangeFocusState_Paramet(userId, "");
+
     //取消关注
-    public void loadDelFocus(String userId,final boolean isFocus){
+    public void loadDelFocus(String userId, final boolean isFocus, final HomePersonFocusResult.DataBean dataBean, final int position, final int type) {
         delFocus.setUserId(userId);
         LoggerUtil.toJson(delFocus);
+        mvpView.showDialog();
         addSubscription(apiStores.getDelFocus(delFocus), new ApiCallback<HomeFocusResult>() {
             @Override
             public void onSuccess(HomeFocusResult model) {
-                mvpView.getFocusMeStatus(model,isFocus);
+                mvpView.getFocusMeStatus(model, isFocus, dataBean, position, type);
             }
 
             @Override
@@ -186,24 +188,27 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
             @Override
             public void onFinish() {
-
+                mvpView.dismissDialog();
             }
         });
     }
 
 
-    /**话题收藏
+    /**
+     * 话题收藏
+     *
      * @param sourceId
      * @param sourceType
      * @param type
      */
-    public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
+    public void loadCollectSaveDate(String sourceId, String sourceType, final String type, final HomeUseDyrResult.DataBean dataBean, final int position) {
         CollectSaveDate_Paramet collectSave = new CollectSaveDate_Paramet(userId, sourceId, sourceType, type);
         LoggerUtil.toJson(collectSave);
+        mvpView.showDialog();
         addSubscription(apiStores.collectSaveData(collectSave), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.getSaveCollectSuccess(model, type);
+                mvpView.getSaveCollectSuccess(model, type, dataBean, position);
             }
 
             @Override
@@ -213,19 +218,21 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
             @Override
             public void onFinish() {
-
+                mvpView.dismissDialog();
             }
         });
     }
+
     //查看话题详情
-    private CollectSave_Paramet collect =new CollectSave_Paramet(userId,"","0","5");
-    public void loadLikeUp(String targetId){
+    private CollectSave_Paramet collect = new CollectSave_Paramet(userId, "", "0", "5");
+
+    public void loadLikeUp(String targetId) {
         collect.setSourceId(targetId);
         LoggerUtil.toJson(collect);
         addSubscription(apiStores.collectSave(collect), new ApiCallback<HomeFocusResult>() {
             @Override
             public void onSuccess(HomeFocusResult model) {
-                mvpView.getFocusMeStatus(model,false);
+                mvpView.getFocusMeStatus(model, false, null, 0, 0);
             }
 
             @Override

@@ -16,6 +16,7 @@ import com.laichushu.book.mvp.homepage.HomePagePresener;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;
@@ -30,11 +31,13 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
     private PersonalHomePageActivity context;
     private List<HomePersonFocusResult.DataBean> dataBeen;
     private HomePagePresener homePagePresener;
+    private int type;
 
-    public HomePageFocusBeAdapter(PersonalHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean, HomePagePresener homePagePresener) {
+    public HomePageFocusBeAdapter(PersonalHomePageActivity context, List<HomePersonFocusResult.DataBean> dataBean, HomePagePresener homePagePresener, int type) {
         this.context = context;
         this.dataBeen = dataBean;
         this.homePagePresener = homePagePresener;
+        this.type = type;
     }
 
     @Override
@@ -60,15 +63,15 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!dataBeen.get(position).isStatus()) {
-                    holder.checkBox.setText("取消关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
-                    homePagePresener.loadAddFocus(dataBeen.get(position).getTargetUserId(),true);
-                    dataBeen.get(position).setStatus(true);
+//                    holder.checkBox.setText("取消关注");
+//                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.characterGray));
+                    homePagePresener.loadAddFocus(dataBeen.get(position).getTargetUserId(), true, dataBeen.get(position), position, type);
+//                    dataBeen.get(position).setStatus(true);
                 } else {
                     holder.checkBox.setText("关注");
-                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
-                    homePagePresener.loadDelFocus(dataBeen.get(position).getTargetUserId(),false);
-                    dataBeen.get(position).setStatus(false);
+//                    holder.checkBox.setTextColor(context.getResources().getColor(R.color.auditing));
+                    homePagePresener.loadDelFocus(dataBeen.get(position).getTargetUserId(), false, dataBeen.get(position), position, type);
+//                    dataBeen.get(position).setStatus(false);
                 }
 
             }
@@ -80,7 +83,11 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", 2);
                 bundle.putSerializable("bean", dataBeen.get(position));
-                UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                if (SharePrefManager.getUserId().equals(dataBeen.get(position).getTargetUserId())) {
+                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                } else {
+                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                }
             }
         });
     }
@@ -119,6 +126,11 @@ public class HomePageFocusBeAdapter extends RecyclerView.Adapter<HomePageFocusBe
             checkBox = (CheckBox) root.findViewById(R.id.cb_focus);
             this.root = root;
         }
+    }
+
+    public void setDataBeen(List<HomePersonFocusResult.DataBean> dataBeen) {
+        this.dataBeen = dataBeen;
+        notifyDataSetChanged();
     }
 }
 

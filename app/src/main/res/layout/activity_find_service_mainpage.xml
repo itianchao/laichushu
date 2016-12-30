@@ -133,6 +133,10 @@
                 android:id="@+id/rb_case"
                 style="@style/mechanism_select"
                 android:text="案列" />
+            <RadioButton
+                android:id="@+id/rb_myService"
+                style="@style/mechanism_select"
+                android:text="服务" />
 
             <RadioButton
                 android:id="@+id/rb_evaluate"
@@ -225,6 +229,14 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_myService"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
+            android:visibility="gone" />
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_case"
             android:layout_width="match_parent"

@@ -20,6 +20,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AddPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorks_Paramet;
+import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
 import com.laichushu.book.bean.netbean.EditorSaveComment_Paramet;
 import com.laichushu.book.bean.netbean.FindArticleByCaseId_Paramet;
 import com.laichushu.book.bean.netbean.FindArticleVote_Paramet;
@@ -34,6 +35,7 @@ import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindEditMainPageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -311,7 +313,7 @@ public class FindEditMainPagePresenter extends BasePresenter<FindEditMainPageVie
     //发表评论
     public void loadSendCommentData(String sourceId, String content, String starLevel) {
         mvpView.showDialog();
-        EditorSaveComment_Paramet paramet = new EditorSaveComment_Paramet(userId,sourceId, content, starLevel);
+        EditorSaveComment_Paramet paramet = new EditorSaveComment_Paramet(userId,sourceId,"", content, starLevel);
         Logger.e("发送评论");
         Logger.json(new Gson().toJson(paramet));
 
@@ -395,4 +397,27 @@ public class FindEditMainPagePresenter extends BasePresenter<FindEditMainPageVie
             }
         });
     }
+    //收藏编辑
+    public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
+        CollectSaveDate_Paramet collectSave = new CollectSaveDate_Paramet(userId, sourceId, sourceType, type);
+        mvpView.showDialog();
+        LoggerUtil.toJson(collectSave);
+        addSubscription(apiStores.collectSaveData(collectSave), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getSaveCollectSuccess(model, type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+
 }

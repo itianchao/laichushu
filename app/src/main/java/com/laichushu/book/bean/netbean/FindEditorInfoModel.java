@@ -11,7 +11,7 @@ public class FindEditorInfoModel implements Parcelable {
 
     /**
      * success : true
-     * data : {"id":"209","name":"马大哈","workingYears":0,"cityId":"0201","introduction":"","level":"","levelName":"","press":"河北教育出版社","pressId":"9","cooperateNum":0,"photo":"http://101.254.183.67:9980/group1/M00/00/2A/wKiTPlhc8UGAVkxwAAEpvVkWswE362.jpg","score":0,"scoreNum":0}
+     * data : {"id":"157","name":"sllE001b涓浗涔︾睄","workingYears":0,"cityId":"2807","introduction":"","level":"","levelName":"","press":"璇昏�呯敤鎴风粍","pressId":"2","cooperateNum":0,"photo":"","score":0,"scoreNum":0,"isCollect":false}
      */
 
     private boolean success;
@@ -44,19 +44,20 @@ public class FindEditorInfoModel implements Parcelable {
 
     public static class DataBean implements Parcelable {
         /**
-         * id : 209
-         * name : 马大哈
+         * id : 157
+         * name : sllE001b涓浗涔︾睄
          * workingYears : 0
-         * cityId : 0201
+         * cityId : 2807
          * introduction :
          * level :
          * levelName :
-         * press : 河北教育出版社
-         * pressId : 9
+         * press : 璇昏�呯敤鎴风粍
+         * pressId : 2
          * cooperateNum : 0
-         * photo : http://101.254.183.67:9980/group1/M00/00/2A/wKiTPlhc8UGAVkxwAAEpvVkWswE362.jpg
-         * score : 0
+         * photo :
+         * score : 0.0
          * scoreNum : 0
+         * isCollect : false
          */
 
         private String id;
@@ -70,8 +71,9 @@ public class FindEditorInfoModel implements Parcelable {
         private String pressId;
         private int cooperateNum;
         private String photo;
-        private int score;
+        private double score;
         private int scoreNum;
+        private boolean isCollect;
 
         public String getId() {
             return id;
@@ -161,11 +163,11 @@ public class FindEditorInfoModel implements Parcelable {
             this.photo = photo;
         }
 
-        public int getScore() {
+        public double getScore() {
             return score;
         }
 
-        public void setScore(int score) {
+        public void setScore(double score) {
             this.score = score;
         }
 
@@ -175,6 +177,14 @@ public class FindEditorInfoModel implements Parcelable {
 
         public void setScoreNum(int scoreNum) {
             this.scoreNum = scoreNum;
+        }
+
+        public boolean isIsCollect() {
+            return isCollect;
+        }
+
+        public void setIsCollect(boolean isCollect) {
+            this.isCollect = isCollect;
         }
 
         @Override
@@ -195,8 +205,9 @@ public class FindEditorInfoModel implements Parcelable {
             dest.writeString(this.pressId);
             dest.writeInt(this.cooperateNum);
             dest.writeString(this.photo);
-            dest.writeInt(this.score);
+            dest.writeDouble(this.score);
             dest.writeInt(this.scoreNum);
+            dest.writeByte(this.isCollect ? (byte) 1 : (byte) 0);
         }
 
         public DataBean() {
@@ -214,8 +225,9 @@ public class FindEditorInfoModel implements Parcelable {
             this.pressId = in.readString();
             this.cooperateNum = in.readInt();
             this.photo = in.readString();
-            this.score = in.readInt();
+            this.score = in.readDouble();
             this.scoreNum = in.readInt();
+            this.isCollect = in.readByte() != 0;
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
@@ -239,6 +251,7 @@ public class FindEditorInfoModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte(this.success ? (byte) 1 : (byte) 0);
+        dest.writeString(this.errMsg);
         dest.writeParcelable(this.data, flags);
     }
 
@@ -247,6 +260,7 @@ public class FindEditorInfoModel implements Parcelable {
 
     protected FindEditorInfoModel(Parcel in) {
         this.success = in.readByte() != 0;
+        this.errMsg = in.readString();
         this.data = in.readParcelable(DataBean.class.getClassLoader());
     }
 

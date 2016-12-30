@@ -43,10 +43,9 @@ import java.util.List;
 /**
  * 用户主页
  * 2016年12月21日14:34:31
- *
  */
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade,ivGreadDetails,ivGreadDetail, ivAnother;
+    private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade, ivGreadDetails, ivGreadDetail, ivAnother;
     private TextView tvTitle, tvNickName, tvAuthorAgree;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
@@ -101,8 +100,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
         tvTitle.setText("个人主页");
         tvTitle.setVisibility(View.VISIBLE);
-        GlideUitl.loadImg(mActivity,R.drawable.my_reset2x,ivAnother);
-        GlideUitl.loadImg(mActivity,R.drawable.icon_geade_details2x,ivGreadDetails);
+        GlideUitl.loadImg(mActivity, R.drawable.my_reset2x, ivAnother);
+        GlideUitl.loadImg(mActivity, R.drawable.icon_geade_details2x, ivGreadDetails);
         ivAnother.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
@@ -113,19 +112,19 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
         mDyRecyclerView.setFooterViewText("加载中");
-        dyAdapter = new HomePageDynamicAdapter(this, dyData,mvpPresenter);
+        dyAdapter = new HomePageDynamicAdapter(this, dyData, mvpPresenter);
         mDyRecyclerView.setAdapter(dyAdapter);
         mDyRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView 关注我的
         mFocuMeRecyclerView.setGridLayout(1);
         mFocuMeRecyclerView.setFooterViewText("加载中");
-        fmAdapter = new HomePageFocusMeAdapter(this, focusMeData, mvpPresenter);
+        fmAdapter = new HomePageFocusMeAdapter(this, focusMeData, mvpPresenter, 2);
         mFocuMeRecyclerView.setAdapter(fmAdapter);
         mFocuMeRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView 我关注的
         mFocuRecyclerView.setGridLayout(1);
         mFocuRecyclerView.setFooterViewText("加载中");
-        fbAdapter = new HomePageFocusBeAdapter(this, focusBeData, mvpPresenter);
+        fbAdapter = new HomePageFocusBeAdapter(this, focusBeData, mvpPresenter, 3);
         mFocuRecyclerView.setAdapter(fbAdapter);
         mFocuRecyclerView.setOnPullLoadMoreListener(this);
         //初始化动态
@@ -143,24 +142,24 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             public void onSuccess(HomeUserResult result) {
                 if (result.isSuccess()) {
                     //初始化个人信息
-                    GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg,R.drawable.icon_percentre_defhead2x);
+                    GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg, R.drawable.icon_percentre_defhead2x);
                     tvNickName.setText(result.getNickName());
-                    if(!TextUtils.isEmpty(result.getLevelType())){
-                        switch (result.getLevelType()){
+                    if (!TextUtils.isEmpty(result.getLevelType())) {
+                        switch (result.getLevelType()) {
                             case "1":
                                 tvAuthorAgree.setText("金牌作家");
-                                GlideUitl.loadImg(mActivity,R.drawable.icon_gold_medal2x,ivPerGrade);
+                                GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivPerGrade);
                                 break;
                             case "2":
                                 tvAuthorAgree.setText("银牌作家");
-                                GlideUitl.loadImg(mActivity,R.drawable.icon_silver_medal2x,ivPerGrade);
+                                GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, ivPerGrade);
                                 break;
                             case "3":
                                 tvAuthorAgree.setText("铜牌作家");
-                                GlideUitl.loadImg(mActivity,R.drawable.icon_copper_medal2x,ivPerGrade);
+                                GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, ivPerGrade);
                                 break;
                         }
-                    }else{
+                    } else {
                         ivPerGrade.setVisibility(View.GONE);
                         tvAuthorAgree.setText("暂无等级");
                     }
@@ -231,6 +230,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
     /**
      * 关注我的
+     *
      * @param model
      */
     @Override
@@ -257,8 +257,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     }
 
     /**
+     * 我关注的
      *
-     *我关注的
      * @param model
      */
     @Override
@@ -289,50 +289,94 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
      * @param flg   添加关注
      */
     @Override
-    public void getFocusBeStatus(HomeFocusResult modle, boolean flg) {
+    public void getFocusBeStatus(HomeFocusResult modle, boolean flg, HomePersonFocusResult.DataBean dataBean, int position, int types) {
         if (modle.isSuccess()) {
+            HomePersonFocusResult.DataBean bean = dataBean;
             if (flg) {
+                bean.setStatus(true);
                 ToastUtil.showToast("关注成功！");
             } else {
+                bean.setStatus(false);
                 ToastUtil.showToast("取消关注成功！");
             }
+            if (types == 2) {
+                focusMeData.set(position, bean);
+                fmAdapter.setDataBeen(focusMeData);
+            } else {
+                focusBeData.set(position, bean);
+                fbAdapter.setDataBeen(focusBeData);
+            }
+
         } else {
-            ToastUtil.showToast("关注失败！");
+            if (flg) {
+                ToastUtil.showToast("关注失败！");
+            } else {
+                ToastUtil.showToast("取消关注失败！");
+            }
+
             LoggerUtil.toJson(modle);
         }
     }
 
     @Override
-    public void getSaveCollectSuccess(RewardResult model, String type) {
+    public void getSaveCollectSuccess(RewardResult model, String type, HomeUseDyrResult.DataBean dataBean, int position) {
         if (model.isSuccess()) {
+            HomeUseDyrResult.DataBean bean = dataBean;
             if (type.equals("0")) {
-//                ToastUtil.showToast("收藏成功！");
+                bean.setCollect(true);
+                bean.setCollectNum(bean.getCollectNum() + 1);
+                ToastUtil.showToast("收藏成功！");
             } else {
-//                ToastUtil.showToast("取消收藏！");
+                bean.setCollect(false);
+                bean.setCollectNum(bean.getCollectNum() - 1);
+                ToastUtil.showToast("取消收藏！");
             }
+            dyData.set(position, bean);
+            dyAdapter.setDataBeen(dyData);
 
         } else {
-//            ToastUtil.showToast("操作失败！");
+            if (type.equals("0")) {
+                ToastUtil.showToast("收藏失败！");
+            } else {
+                ToastUtil.showToast("取消收藏失败！");
+            }
+
             LoggerUtil.toJson(model);
         }
     }
 
     /**
-     * @param modle
+     * @param model
      * @param flg   取消关注
      */
     @Override
-    public void getFocusMeStatus(HomeFocusResult modle, boolean flg) {
-        if (modle.isSuccess()) {
+    public void getFocusMeStatus(HomeFocusResult model, boolean flg, HomePersonFocusResult.DataBean dataBean, int position, int types) {
+        if (model.isSuccess()) {
+            HomePersonFocusResult.DataBean bean = dataBean;
             if (flg) {
+                bean.setStatus(true);
                 ToastUtil.showToast("关注成功！");
             } else {
-                ToastUtil.showToast("取消关注成功！");
+                bean.setStatus(false);
+                ToastUtil.showToast("取消关注！");
+            }
+            if (types == 2) {
+                focusMeData.set(position, bean);
+                fmAdapter.setDataBeen(focusMeData);
+            } else {
+                focusBeData.set(position, bean);
+                fbAdapter.setDataBeen(focusBeData);
             }
 
+
         } else {
-            ToastUtil.showToast("关注失败！");
-            LoggerUtil.toJson(modle);
+            if (flg) {
+                ToastUtil.showToast("关注失败！");
+            } else {
+                ToastUtil.showToast("取消关注失败！");
+            }
+
+            LoggerUtil.toJson(model);
         }
     }
 
@@ -340,6 +384,16 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     @Override
     public void getDataFail(String msg) {
         Logger.e(msg);
+    }
+
+    @Override
+    public void showDialog() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void dismissDialog() {
+        dismissProgressDialog();
     }
 
     @Override
@@ -435,10 +489,11 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
 
         }
-        if(position==0){
+        if (position == 0) {
             rbDy.setChecked(true);
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefrushHomePageEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
@@ -446,11 +501,13 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             initData();
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
     public void reLoadDatas() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override

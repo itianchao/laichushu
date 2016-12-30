@@ -11,6 +11,8 @@ import com.laichushu.book.ui.activity.TopicManageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
 
+import java.util.List;
+
 /**
  * Created by PCPC on 2016/12/21.
  */
@@ -62,9 +64,11 @@ public class TopicManagePresenter extends BasePresenter<TopicManageView> {
 
     /**
      * 获取机构话题列
+     *
      * @param id
      */
-    HomeUserDy_parmet topicList_paramet =new HomeUserDy_parmet(userId,"",PageSize,PageNo,"");
+    HomeUserDy_parmet topicList_paramet = new HomeUserDy_parmet(userId, "", PageSize, PageNo, "");
+
     public void loadMechanismTopicListData(String partyId) {
         LoggerUtil.e("获取机构话题列表");
         getTopicList_paramet().setUserId(userId);
@@ -86,18 +90,22 @@ public class TopicManagePresenter extends BasePresenter<TopicManageView> {
             }
         });
     }
-    /**话题收藏
+
+    /**
+     * 话题收藏
+     *
      * @param sourceId
      * @param sourceType
      * @param type
      */
-    public void loadCollectSaveDate(String sourceId, String sourceType, final String type) {
+    public void loadCollectSaveDate(String sourceId, String sourceType, final String type, final List<HomeUseDyrResult.DataBean> dataBeen, final int position) {
         CollectSaveDate_Paramet collectSave = new CollectSaveDate_Paramet(userId, sourceId, sourceType, type);
         LoggerUtil.toJson(collectSave);
+        mvpView.showDialog();
         addSubscription(apiStores.collectSaveData(collectSave), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.getSaveCollectSuccess(model, type);
+                mvpView.getSaveCollectSuccess(model, type, dataBeen, position);
             }
 
             @Override
@@ -107,7 +115,7 @@ public class TopicManagePresenter extends BasePresenter<TopicManageView> {
 
             @Override
             public void onFinish() {
-
+                mvpView.dissmissDialog();
             }
         });
     }

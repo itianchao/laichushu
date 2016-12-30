@@ -200,7 +200,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
 
     @Override
     public void getCollectionDataSuccess(HomeHotModel model) {
-        scanData.clear();
+        collData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
