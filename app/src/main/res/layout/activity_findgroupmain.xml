@@ -74,7 +74,7 @@
                 android:id="@+id/rbn_brief"
                 style="@style/mechanism_select"
                 android:checked="true"
-                android:text="@string/brief" />
+                android:text="@string/brief2" />
 
             <RadioButton
                 android:id="@+id/rbn_find"

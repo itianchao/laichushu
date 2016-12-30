@@ -27,12 +27,12 @@ import rx.subscriptions.CompositeSubscription;
  * on 2016/10/11.
  */
 public class BaseFragment extends Fragment {
-    public Activity mActivity;
+    public BaseActivity mActivity;
     public ApiStores apiStores = AppClient.retrofit().create(ApiStores.class);
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivity = getActivity();
+        mActivity = (BaseActivity) getActivity();
     }
 
     public void toastShow(int resId) {

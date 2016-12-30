@@ -89,7 +89,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_ok);
         TextView msgTitleTv = (TextView) customerView.findViewById(R.id.tv_msg_title);
-        msgTitleTv.setText("是否投稿");
+        msgTitleTv.setText("确认是否投稿?");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override

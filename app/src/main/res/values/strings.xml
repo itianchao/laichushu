@@ -64,6 +64,7 @@
     <string name="cover">封 面 ：</string>
     <string name="permission">阅读权限 ：</string>
     <string name="brief">简 介 ：</string>
+    <string name="brief2">简 介</string>
     <string name="draftname">草稿名称</string>
     <string name="draftcontent">草稿内容</string>
     <string name="material_category">素材文件夹</string>

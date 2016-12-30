@@ -107,10 +107,16 @@ public class FindGroupMineActivity extends MvpActivity2 implements AdapterView.O
                 UIUtil.openActivity(mActivity,FindGroupListActivity.class,bundle);
                 break;
             case 2:
+                bundle.putString("title","我发表的话题");
+                UIUtil.openActivity(mActivity,FindGroupMineTopicListActivity.class,bundle);
                 break;
             case 3:
+                bundle.putString("title","我回复的话题");
+                UIUtil.openActivity(mActivity,FindGroupMineTopicListActivity.class,bundle);
                 break;
             case 4:
+                bundle.putString("title","我收藏的话题");
+                UIUtil.openActivity(mActivity,FindGroupMineTopicListActivity.class,bundle);
                 break;
         }
     }

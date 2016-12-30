@@ -72,13 +72,30 @@ public class GlideUitl {
         if (!TextUtils.isEmpty(path)) {
 
 
-            Glide.with(mContext).load(path).override(width, height).centerCrop().into(mImageView);
+            Glide.with(mContext).load(path).override(UIUtil.dip2px(width), UIUtil.dip2px(height)).centerCrop().into(mImageView);
 
         } else {
-            Glide.with(mContext).load(R.drawable.img_default).override(width, height).centerCrop().into(mImageView);
+            Glide.with(mContext).load(R.drawable.img_default).override(UIUtil.dip2px(width), UIUtil.dip2px(height)).centerCrop().into(mImageView);
         }
     }
+    /**
+     * 指定大小加载图片
+     *
+     * @param mContext   上下文
+     * @param path       图片路径
+     * @param width      宽
+     * @param height     高
+     * @param mImageView 控件
+     */
+    public static void loadImg(Context mContext, int path, int width, int height, ImageView mImageView) {
+        if (path!=0) {
 
+            Glide.with(mContext).load(path).override(UIUtil.dip2px(width), UIUtil.dip2px(height)).centerCrop().into(mImageView);
+
+        } else {
+            Glide.with(mContext).load(R.drawable.img_default).override(UIUtil.dip2px(width), UIUtil.dip2px(height)).centerCrop().into(mImageView);
+        }
+    }
     /**
      * 快速加载圆形图片
      *

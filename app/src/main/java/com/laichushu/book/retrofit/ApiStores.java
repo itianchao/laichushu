@@ -26,6 +26,7 @@ import com.laichushu.book.mvp.directories.BookMoudle;
 import com.laichushu.book.mvp.directories.MaterialContentModel;
 import com.laichushu.book.mvp.directories.MaterialListModel;
 import com.laichushu.book.mvp.draftmodle.DraftModle;
+import com.laichushu.book.mvp.findgroup.findgroupmenber.FindGroupMenberModle;
 import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
 import com.laichushu.book.mvp.findgroup.groupsearch.FindGroupModle;
 import com.laichushu.book.mvp.forgetpwd.ForgetPwdModel;
@@ -377,7 +378,7 @@ public interface ApiStores {
     @POST("perFocus/addFocus")
     Observable<HomeFocusResult> getAddFocus(@Body ChangeFocusState_Paramet paramet);
 
-    //添加关注
+    //删除关注
     @POST("perFocus/delFocus")
     Observable<HomeFocusResult> getDelFocus(@Body ChangeFocusState_Paramet paramet);
 
@@ -640,6 +641,10 @@ public interface ApiStores {
     @POST("topic/findTopicList")
     Observable<MechanismTopicListModel> getMyPublishTopicList(@Body MyPublishTopicList_Paramet paramet);
 
+    //我收藏的话题列表
+    @POST("collect/list")
+    Observable<MechanismTopicListModel> getMyCollectTopicList(@Body MyPublishTopicList_Paramet paramet);
+
     //小组话题
     @POST("topic/findTopicList")
     Observable<MechanismTopicListModel> getGroupTopicList(@Body MyPublishTopicList_Paramet paramet);
@@ -647,4 +652,28 @@ public interface ApiStores {
     //推荐话题
     @POST("topic/findSuggestTopicList")
     Observable<MechanismTopicListModel> getGroupSuggestTopicList(@Body MyPublishTopicList_Paramet paramet);
+
+    //获取小组成员列表
+    @POST("team/memberList")
+    Observable<FindGroupMenberModle> getGroupMemberList(@Body GroupApplyMemberList_Paramet paramet);
+
+    //获取申请成员列表
+    @POST("team/todoList")
+    Observable<FindGroupMenberModle> getGroupApplyMemberList(@Body GroupApplyMemberList_Paramet paramet);
+
+    //处理申请成员 同意or拒绝
+    @POST("team/approve")
+    Observable<RewardResult> getGroupApplyMemberResult(@Body GroupApplyMemberResult_Paramet paramet);
+
+    //搜索的话题列表
+    @POST("topic/findTopicList")
+    Observable<MechanismTopicListModel> getSearchTopicList(@Body MyPublishTopicList_Paramet paramet);
+
+    //删除小组成员 or 退出小组成员
+    @POST("team/leaveTeam")
+    Observable<RewardResult> deleteGroupMember(@Body DeleteGroupMember_Paramet paramet);
+
+    //解散
+    @POST("team/dismiss")
+    Observable<RewardResult> dismissGroup(@Body DismissGroup_Paramet paramet);
 }

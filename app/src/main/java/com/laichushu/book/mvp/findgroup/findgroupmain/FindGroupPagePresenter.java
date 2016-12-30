@@ -23,10 +23,11 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
     private String pageNo2 = "1";
     private String userId = ConstantValue.USERID;
     private String type = ConstantValue.SEARCH_TYPE_GROUP;
+    private String teamId = ConstantValue.STRING_NULL;
     private ArrayList<String> leaderList = new ArrayList<>();
     private ArrayList<String> memberList = new ArrayList<>();
-    private MyPublishTopicList_Paramet paramet1 = new MyPublishTopicList_Paramet(userId, type, pageNo1, pageSize, "");
-    private MyPublishTopicList_Paramet paramet2 = new MyPublishTopicList_Paramet(userId, type, pageNo2, pageSize, "");
+    private MyPublishTopicList_Paramet paramet1 = new MyPublishTopicList_Paramet(userId, type, pageNo1, pageSize, teamId);
+    private MyPublishTopicList_Paramet paramet2 = new MyPublishTopicList_Paramet(userId, type, pageNo2, pageSize, teamId);
 
     /**
      * //初始化构造

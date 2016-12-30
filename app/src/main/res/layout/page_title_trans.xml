@@ -43,7 +43,7 @@
     <ImageView
         android:id="@+id/iv_title_another"
         android:layout_width="26dp"
-        android:layout_height="20dp"
+        android:layout_height="26dp"
         android:layout_alignTop="@+id/iv_title_other"
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/iv_title_other"
@@ -51,8 +51,8 @@
         tools:src="@drawable/img_default" />
     <ImageView
         android:id="@+id/iv_title_the"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="26dp"
+        android:layout_height="20dp"
         android:layout_alignTop="@+id/iv_title_other"
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/iv_title_another"
