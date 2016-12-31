@@ -49,6 +49,11 @@ public class ConstantValue {
     public static String COLLECTSERVICE_TYPE = "4";//服务
     public static String COLLECTCOURSE_TYPE = "5";//课程
     public static String COLLECTEDITOR_TYPE = "4";//编辑
+    //用户类型  作者:1  服务者:3  读者:4
+    public static String AUTHOR = "1";
+    public static String EDITOR = "2";
+    public static String SERVICER = "3";
+    public static String READER = "4";
     //分类类型
     public static String HOME_CATEGROY_TYPE = "1";//首页
     public static String CREADTBOOK_CATEGROY_TYPE = "2";//创建新书
@@ -99,8 +104,8 @@ public class ConstantValue {
         public static final String IMAGE = "/image/";
         // apk路径
         public static final String APK = "/apk/";
-      // 图片压缩文件
-        public static final String FileCacheCompress="cache:Compressor";
+        // 图片压缩文件
+        public static final String FileCacheCompress = "cache:Compressor";
 
     }
 

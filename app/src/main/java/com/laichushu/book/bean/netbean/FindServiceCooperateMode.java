@@ -3,20 +3,26 @@ package com.laichushu.book.bean.netbean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Created by PCPC on 2016/12/27.
+ * Created by PCPC on 2016/12/31.
  */
 
-public class FindEditorInfoModel implements Parcelable {
+public class FindServiceCooperateMode implements Parcelable {
+
 
     /**
      * success : true
-     * data : {"id":"4","userId":"150","jobTitle":"鍗栫伀鏌�","idProve":"璺汉鐢蹭箼涓�","serviceType":2,"auditStatus":1,"serviceIntroduce":"鍗栫伀鏌寸殑灏忓コ瀛╁紑濮嬪崠鐏煷涓�闀滀簩娆°�� action","companyName":"澶ц","cooperateNum":1,"name":"鍗栫伀鏌寸殑灏忓コ瀛�","email":"123@qq.com","nickName":"鏃犲敖涔嬪","cityId":"0101","photo":"http://101.254.183.67:9980/group1/M00/00/2C/wKiTPlhh3M2AeuqXAADCsbGO7uw091.jpg","isCollect":false,"score":0,"partyId":"2"}
+     * data : [{"id":"4","userId":"150","jobTitle":"鍗栫伀鏌�","idProve":"璺汉鐢蹭箼涓�","serviceType":2,"auditStatus":1,"serviceIntroduce":"鍗栫伀鏌寸殑灏忓コ瀛╁紑濮嬪崠鐏煷涓�闀滀簩娆°�� action","companyName":"澶ц","cooperateNum":2,"name":"鍗栫伀鏌寸殑灏忓コ瀛�","email":"123@qq.com","nickName":"鏃犲敖涔嬪","cityId":"0101","photo":"http://101.254.183.67:9980/group1/M00/00/2C/wKiTPlhh3M2AeuqXAADCsbGO7uw091.jpg","isCollect":false,"score":0,"partyId":"2"}]
+     * auditStatus : 1
      */
 
     private boolean success;
     private String errMsg;
-    private DataBean data;
+    private int auditStatus;
+    private List<DataBean> data;
 
     public String getErrMsg() {
         return errMsg;
@@ -34,11 +40,19 @@ public class FindEditorInfoModel implements Parcelable {
         this.success = success;
     }
 
-    public DataBean getData() {
+    public int getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(int auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public List<DataBean> getData() {
         return data;
     }
 
-    public void setData(DataBean data) {
+    public void setData(List<DataBean> data) {
         this.data = data;
     }
 
@@ -52,7 +66,7 @@ public class FindEditorInfoModel implements Parcelable {
          * auditStatus : 1
          * serviceIntroduce : 鍗栫伀鏌寸殑灏忓コ瀛╁紑濮嬪崠鐏煷涓�闀滀簩娆°�� action
          * companyName : 澶ц
-         * cooperateNum : 1
+         * cooperateNum : 2
          * name : 鍗栫伀鏌寸殑灏忓コ瀛�
          * email : 123@qq.com
          * nickName : 鏃犲敖涔嬪
@@ -287,26 +301,29 @@ public class FindEditorInfoModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte(this.success ? (byte) 1 : (byte) 0);
-        dest.writeParcelable(this.data, flags);
+        dest.writeInt(this.auditStatus);
+        dest.writeList(this.data);
     }
 
-    public FindEditorInfoModel() {
+    public FindServiceCooperateMode() {
     }
 
-    protected FindEditorInfoModel(Parcel in) {
+    protected FindServiceCooperateMode(Parcel in) {
         this.success = in.readByte() != 0;
-        this.data = in.readParcelable(DataBean.class.getClassLoader());
+        this.auditStatus = in.readInt();
+        this.data = new ArrayList<DataBean>();
+        in.readList(this.data, DataBean.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<FindEditorInfoModel> CREATOR = new Parcelable.Creator<FindEditorInfoModel>() {
+    public static final Parcelable.Creator<FindServiceCooperateMode> CREATOR = new Parcelable.Creator<FindServiceCooperateMode>() {
         @Override
-        public FindEditorInfoModel createFromParcel(Parcel source) {
-            return new FindEditorInfoModel(source);
+        public FindServiceCooperateMode createFromParcel(Parcel source) {
+            return new FindServiceCooperateMode(source);
         }
 
         @Override
-        public FindEditorInfoModel[] newArray(int size) {
-            return new FindEditorInfoModel[size];
+        public FindServiceCooperateMode[] newArray(int size) {
+            return new FindServiceCooperateMode[size];
         }
     };
 }

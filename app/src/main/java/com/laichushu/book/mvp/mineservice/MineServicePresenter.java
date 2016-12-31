@@ -3,9 +3,10 @@ package com.laichushu.book.mvp.mineservice;
 import com.laichushu.book.bean.netbean.AuthorWorksByBookId_Paramet;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.FindMyServerList_Paramet;
+import com.laichushu.book.bean.netbean.FindServiceCooperateMode;
+import com.laichushu.book.bean.netbean.FindServiceInfoModel;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.MineServicePageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
@@ -36,16 +37,14 @@ public class MineServicePresenter extends BasePresenter<MineServiceView> {
     }
 
     //服务收藏
-    private MyArticBooklist_paramet coll_paramet = new MyArticBooklist_paramet(userId, pageNo, pageSize, ConstantValue.COLLECTSERVICE_TYPE, ConstantValue.BOOKCOMMENTTYPE);
-
+    private MyArticBooklist_paramet coll_paramet = new MyArticBooklist_paramet(userId, pageNo, pageSize, ConstantValue.COLLECTSERVICE_TYPE, ConstantValue.COLLECTSERVICE_TYPE);
     public void LoadCollectionData() {
         LoggerUtil.toJson(coll_paramet);
-        addSubscription(apiStores.getCollectList(coll_paramet), new ApiCallback<HomeHotModel>() {
+        addSubscription(apiStores.getCollectServiceDateList(coll_paramet), new ApiCallback<FindServiceInfoModel>() {
             @Override
-            public void onSuccess(HomeHotModel model) {
+            public void onSuccess(FindServiceInfoModel model) {
                 mvpView.getCollectionDataSuccess(model);
             }
-
             @Override
             public void onFailure(int code, String msg) {
                 mvpView.getDataFail("code+" + code + "/msg:" + msg);
@@ -53,11 +52,9 @@ public class MineServicePresenter extends BasePresenter<MineServiceView> {
 
             @Override
             public void onFinish() {
-
             }
         });
     }
-
     public FindMyServerList_Paramet getCoop_paramet() {
         return coop_paramet;
     }
@@ -66,15 +63,15 @@ public class MineServicePresenter extends BasePresenter<MineServiceView> {
         this.coop_paramet = coop_paramet;
     }
 
-    //服务合作
+    //服务合作FindMyServerList_Paramet
     private FindMyServerList_Paramet coop_paramet = new FindMyServerList_Paramet(userId, "", pageNo, pageSize);
 
-    public void LoadFindMyServerListData(String userID) {
+    public void LoadCooperateData() {
         LoggerUtil.toJson(coop_paramet);
-        addSubscription(apiStores.getFindMyServerListDetails(coop_paramet), new ApiCallback<HomeHotModel>() {
+        addSubscription(apiStores.getFindMyServerListDetails(coop_paramet), new ApiCallback<FindServiceCooperateMode>() {
             @Override
-            public void onSuccess(HomeHotModel model) {
-                mvpView.getCollectionDataSuccess(model);
+            public void onSuccess(FindServiceCooperateMode model) {
+                mvpView.getCooperateDataSuccess(model);
             }
 
             @Override
@@ -85,33 +82,6 @@ public class MineServicePresenter extends BasePresenter<MineServiceView> {
             @Override
             public void onFinish() {
 
-            }
-        });
-    }
-
-    /**
-     * 获取图书详情
-     *
-     * @param articleId
-     */
-    public void loadBookDetailsByid(String articleId) {
-        mvpView.showDialog();
-        AuthorWorksByBookId_Paramet bookParamet = new AuthorWorksByBookId_Paramet(userId, articleId);
-        LoggerUtil.e("获取图书详情");
-        addSubscription(apiStores.getAuthorWorksByBookId(bookParamet), new ApiCallback<BookDetailsModle>() {
-            @Override
-            public void onSuccess(BookDetailsModle model) {
-                mvpView.getBookDetailsByIdDataSuccess(model);
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg);
-            }
-
-            @Override
-            public void onFinish() {
-                mvpView.dismissDialog();
             }
         });
     }

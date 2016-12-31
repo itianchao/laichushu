@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.FindServerInfoModel;
+import com.laichushu.book.bean.netbean.FindServiceItemListModel;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
@@ -25,6 +26,7 @@ import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.ui.adapter.ServiceCommentListAdapter;
 import com.laichushu.book.ui.adapter.ServiceFindCaseAdapter;
+import com.laichushu.book.ui.adapter.ServiceFindServiceAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
@@ -53,7 +55,8 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
     private ServiceFindCaseAdapter caseAdapter;
     private List<HomeHotModel.DataBean> caseDate = new ArrayList<>();
     //服务
-
+    private List<FindServiceItemListModel.DataBean> serviceDate = new ArrayList<>();
+    private ServiceFindServiceAdapter serviceAdapter;
     //合作
     private List<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
     private RadioGroup radioGroup;
@@ -65,7 +68,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
 
     private String type = null;
 
-    private FindServerInfoModel model;
+    private FindServerInfoModel.DataBean dataBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +125,11 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         mCaseRecyclerView.setOnPullLoadMoreListener(this);
 
         //我的服务
-
+        mServiceRecyclerView.setGridLayout(1);
+        mServiceRecyclerView.setFooterViewText("加载中");
+        serviceAdapter = new ServiceFindServiceAdapter(this, serviceDate);
+        mServiceRecyclerView.setAdapter(serviceAdapter);
+        mServiceRecyclerView.setOnPullLoadMoreListener(this);
         //查询评论
         mCommentRecyclerView.setGridLayout(1);
         mCommentRecyclerView.setFooterViewText("加载中");
@@ -148,11 +155,11 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 break;
             case R.id.iv_title_another:
                 //收藏
-                if (null == model) {
+                if (null == dataBean) {
                     ToastUtil.showToast("参数错误！");
                     return;
                 }
-                if (this.model.getData().isIsCollect()) {
+                if (dataBean.isIsCollect()) {
                     mvpPresenter.loadCollectSaveDate(userId, ConstantValue.COLLECTSERVICE_TYPE, "1");
 
                 } else {
@@ -197,7 +204,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 llCommentList.setVisibility(View.GONE);
                 mCaseRecyclerView.setVisibility(View.GONE);
                 mServiceRecyclerView.setVisibility(View.VISIBLE);
-//                mvpPresenter.loadFindArticleByCaseIdData(userId);
+                mvpPresenter.loadServiceItemListDate(userId);
 
                 break;
             case R.id.rb_evaluate:
@@ -215,7 +222,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
     @Override
     public void getEditorInfoDataSuccess(FindServerInfoModel model) {
         if (model.isSuccess() && model.getData() != null) {
-            this.model = model;
+            dataBean = model.getData();
             GlideUitl.loadRandImg(mActivity, model.getData().getPhoto(), ivHeadImg);
             tvRealName.setText(model.getData().getName());
             if (model.getData().getServiceType() != 0) {
@@ -351,17 +358,44 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
+    /**
+     * 服务
+     *
+     * @param model
+     */
+    @Override
+    public void getFindServerItemListDetails(FindServiceItemListModel model) {
+        dismissDialog();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mServiceRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        if (model.isSuccess()) {
+            if (model.getData().size() != 0) {
+                PAGE_NO++;
+                serviceDate.clear();
+                serviceDate = model.getData();
+                serviceAdapter.refreshAdapter(serviceDate);
+            }
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+    }
+
     @Override
     public void getSaveCollectSuccess(RewardResult model, String type) {
         if (model.isSuccess()) {
             if (type.equals("0")) {
                 ToastUtil.showToast("收藏成功！");
-                this.model.getData().setIsCollect(false);
-                ivCollect.setImageResource(R.drawable.icon_likewhite2x);
+                dataBean.setIsCollect(true);
+                ivCollect.setImageResource(R.drawable.icon_likedwhite2x);
             } else {
                 ToastUtil.showToast("取消收藏！");
-                this.model.getData().setIsCollect(true);
-                ivCollect.setImageResource(R.drawable.icon_likedwhite2x);
+                dataBean.setIsCollect(false);
+                ivCollect.setImageResource(R.drawable.icon_likewhite2x);
             }
 
         } else {
@@ -374,6 +408,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
             LoggerUtil.toJson(model);
         }
     }
+
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -409,6 +444,9 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         } else if (type.equals("1")) {
             mvpPresenter.getCaseIdParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.loadFindArticleByCaseIdData(userId);
+        } else if (type.equals("3")) {
+            mvpPresenter.getCaseIdParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.loadServiceItemListDate(userId);
         }
 
     }
@@ -421,6 +459,9 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         } else if (type.equals("1")) {
             mvpPresenter.getCaseIdParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.loadFindArticleByCaseIdData(userId);
+        } else if (type.equals("3")) {
+            mvpPresenter.getCaseIdParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.loadServiceItemListDate(userId);
         }
     }
 

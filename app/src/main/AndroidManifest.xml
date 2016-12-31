@@ -1010,7 +1010,8 @@
         <activity android:name=".ui.activity.FindEditMainPageActivity" />
         <activity android:name=".ui.activity.FindServicePageActivity" />
         <activity android:name=".ui.activity.MineServicePageActivity" />
-        <activity android:name=".ui.activity.MineBeServantActivity"></activity>
+        <activity android:name=".ui.activity.MineBeServantActivity" />
+        <activity android:name=".ui.activity.MineAddServantActivity" />
     </application>
 
 </manifest>

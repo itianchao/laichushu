@@ -7,13 +7,13 @@ import java.io.Serializable;
  */
 
 public class FindMyServerList_Paramet implements Serializable {
-    private String loginUserId, userId, pageNo, pangeSize;
+    private String loginUserId, userId, pageNo, pageSize;
 
-    public FindMyServerList_Paramet(String loginUserId, String userId, String pageNo, String pangeSize) {
+    public FindMyServerList_Paramet(String loginUserId, String userId, String pageNo, String pageSize) {
         this.loginUserId = loginUserId;
         this.userId = userId;
         this.pageNo = pageNo;
-        this.pangeSize = pangeSize;
+        this.pageSize = pageSize;
     }
 
     public String getLoginUserId() {
@@ -40,11 +40,11 @@ public class FindMyServerList_Paramet implements Serializable {
         this.pageNo = pageNo;
     }
 
-    public String getPangeSize() {
-        return pangeSize;
+    public String getPageSize() {
+        return pageSize;
     }
 
-    public void setPangeSize(String pangeSize) {
-        this.pangeSize = pangeSize;
+    public void setPageSize(String pageSize) {
+        this.pageSize = pageSize;
     }
 }

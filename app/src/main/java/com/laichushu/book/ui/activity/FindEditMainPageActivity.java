@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.FindEditorInfoModel;
-import com.laichushu.book.bean.netbean.FindServerInfoModel;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
@@ -195,8 +194,8 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
             this.model = model;
             GlideUitl.loadRandImg(mActivity, model.getData().getPhoto(), ivHeadImg);
             tvRealName.setText(model.getData().getName());
-            if (model.getData().getScoreNum() != 0) {
-                switch (model.getData().getScoreNum()) {
+            if (model.getData().getScore() != 0) {
+                switch ((int)model.getData().getScore()) {
                     case 1:
                         tvGrade.setText("金牌作家");
                         GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivGrade);
@@ -218,8 +217,8 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
                 ivCollect.setImageResource(R.drawable.icon_likewhite2x);
             }
             //简介
-            if (!TextUtils.isEmpty(model.getData().getIntroduction()))
-                tvIntroduction.setText(model.getData().getIntroduction());
+            if (!TextUtils.isEmpty(model.getData().getServiceIntroduce()))
+                tvIntroduction.setText(model.getData().getServiceIntroduce());
 
         } else
 
@@ -335,12 +334,12 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
         if (model.isSuccess()) {
             if (type.equals("0")) {
                 ToastUtil.showToast("收藏成功！");
-                this.model.getData().setIsCollect(false);
-                ivCollect.setImageResource(R.drawable.icon_likewhite2x);
-            } else {
-                ToastUtil.showToast("取消收藏！");
                 this.model.getData().setIsCollect(true);
                 ivCollect.setImageResource(R.drawable.icon_likedwhite2x);
+            } else {
+                ToastUtil.showToast("取消收藏！");
+                this.model.getData().setIsCollect(false);
+                ivCollect.setImageResource(R.drawable.icon_likewhite2x);
             }
 
         } else {

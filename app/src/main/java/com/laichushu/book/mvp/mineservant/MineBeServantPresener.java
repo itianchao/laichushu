@@ -1,7 +1,12 @@
 package com.laichushu.book.mvp.mineservant;
 
 import android.support.v4.util.ArrayMap;
+
+import com.google.gson.Gson;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.FindEditorInfoModel;
+import com.laichushu.book.bean.netbean.FindEditorInfo_Paramet;
+import com.laichushu.book.bean.netbean.FindServerInfoModel;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.MineBeServantActivity;
@@ -49,5 +54,27 @@ public class MineBeServantPresener extends BasePresenter<MineBeServantView> {
         });
     }
 
+    //获取服务用户头像信息
+    public void loadEditorInfoData(String userID) {
+        FindEditorInfo_Paramet infoParamet = new FindEditorInfo_Paramet(userID,"");
+        Logger.e("用户信息");
+        Logger.json(new Gson().toJson(infoParamet));
+        addSubscription(apiStores.getServiceInfoDatails(infoParamet), new ApiCallback<FindServerInfoModel>() {
+            @Override
+            public void onSuccess(FindServerInfoModel model) {
+                mvpView.getEditorInfoDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
 
 }

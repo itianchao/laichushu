@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.FindEditorInfoModel;
+import com.laichushu.book.bean.netbean.FindServerInfoModel;
 import com.laichushu.book.mvp.mineservant.MineBeServantPresener;
 import com.laichushu.book.mvp.mineservant.MineBeServantView;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -44,18 +46,20 @@ import okhttp3.RequestBody;
 /**
  * 我的---成为服务者
  */
-public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> implements MineBeServantView, View.OnClickListener{
+public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> implements MineBeServantView, View.OnClickListener {
 
     private ImageView ivBack;
     private TextView tvTitle, tvServantType;
     private RelativeLayout rlNickName, rlPostOffice, rlJobTitle, rlEmail, rlIdProve, rlServantType;
-    private ImageView ivVisiting;
+    private LinearLayout llItem;
+    private ImageView ivVisiting,vistingFront;
     private EditText edNickName, edPostOffice, edJobTitle, edEmail, edIdProve, edIntroduce;
     private Button btnSubmit;
     private CheckBox checkBox;
     private File visitingFile;
     private String curServantType = null;
     private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
+    private String type = null;
 
     //TODO 判断邮箱格式
     @Override
@@ -76,6 +80,7 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
         rlIdProve = (RelativeLayout) inflate.findViewById(R.id.rl_servantWitness);
         rlServantType = (RelativeLayout) inflate.findViewById(R.id.rl_servantType);
         ivVisiting = (ImageView) inflate.findViewById(R.id.iv_VisitingCard);
+        vistingFront = (ImageView) inflate.findViewById(R.id.iv_idCardFront);
 
         edNickName = (EditText) inflate.findViewById(R.id.ed_servantName);
         edPostOffice = (EditText) inflate.findViewById(R.id.ed_servantPosition);
@@ -86,6 +91,7 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
         btnSubmit = (Button) inflate.findViewById(R.id.btn_servantSubmit);
         checkBox = (CheckBox) inflate.findViewById(R.id.cb_ServantChkItem);
 
+        llItem = (LinearLayout) inflate.findViewById(R.id.ll_item);
         return inflate;
     }
 
@@ -93,11 +99,20 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
     protected void initData() {
         super.initData();
         tvTitle.setText("成为服务者");
+        type = getIntent().getStringExtra("type");
 
         ivBack.setOnClickListener(this);
-        rlServantType.setOnClickListener(this);
-        ivVisiting.setOnClickListener(this);
-        btnSubmit.setOnClickListener(this);
+        if (null == type) {
+            rlServantType.setOnClickListener(this);
+            ivVisiting.setOnClickListener(this);
+            btnSubmit.setOnClickListener(this);
+        } else {
+            //点击事件
+            llItem.setClickable(false);
+            //请求服务详情
+            mvpPresenter.loadEditorInfoData(SharePrefManager.getUserId());
+        }
+
 
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
@@ -152,6 +167,34 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
             ToastUtil.showToast("请求已受理！");
         } else {
             ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    @Override
+    public void getEditorInfoDataSuccess(FindServerInfoModel model) {
+        if (model.isSuccess()) {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            if (null != model) {
+                edNickName.setText(model.getData().getName());
+                edPostOffice.setText(model.getData().getCompanyName());
+                edJobTitle.setText(model.getData().getJobTitle());
+                edEmail.setText(model.getData().getEmail());
+                edIdProve.setText(model.getData().getIdProve());
+                if (model.getData().getServiceType() == 1) {
+                    tvServantType.setText("代笔");
+                } else if (model.getData().getServiceType() == 2) {
+                    tvServantType.setText("设计");
+                }
+                GlideUitl.loadImg(mActivity, model.getData().getPhoto(), 240, 100, ivVisiting);
+                edIntroduce.setText(model.getData().getServiceIntroduce());
+                btnSubmit.setClickable(false);
+                btnSubmit.setBackgroundColor(getResources().getColor(R.color.characterGray));
+                vistingFront.setVisibility(View.GONE);
+            }
+
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
     }
 

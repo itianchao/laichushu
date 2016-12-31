@@ -1,6 +1,8 @@
 package com.laichushu.book.mvp.mineservant;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.FindEditorInfoModel;
+import com.laichushu.book.bean.netbean.FindServerInfoModel;
 
 /**
  * Created by PCPC on 2016/12/29.
@@ -9,6 +11,7 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 public interface MineBeServantView {
 
     void getSaveServerInfoDataSuccess(RewardResult model);
+    void getEditorInfoDataSuccess(FindServerInfoModel model);
     void getDataFail(String msg);
 
     void showDialog();

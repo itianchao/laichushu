@@ -1,7 +1,9 @@
 package com.laichushu.book.mvp.mineservice;
 
 import com.laichushu.book.bean.netbean.BookDetailsModle;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.bean.netbean.FindEditorListModel;
+import com.laichushu.book.bean.netbean.FindServiceCooperateMode;
+import com.laichushu.book.bean.netbean.FindServiceInfoModel;
 
 /**
  * Created by PCPC on 2016/12/30.
@@ -14,6 +16,6 @@ public interface MineServiceView {
 
     void getDataFail(String msg);
 
-    void getCollectionDataSuccess(HomeHotModel model);
-    void getBookDetailsByIdDataSuccess(BookDetailsModle model);
+    void getCollectionDataSuccess(FindServiceInfoModel model);
+    void getCooperateDataSuccess(FindServiceCooperateMode model);
 }

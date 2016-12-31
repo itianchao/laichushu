@@ -11,8 +11,10 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.NoticesSave_Paramet;
 import com.laichushu.book.bean.netbean.PublishTopic_Paramet;
+import com.laichushu.book.bean.netbean.SaveServeItem_paramet;
 import com.laichushu.book.event.RefrushAunnManagerEvent;
 import com.laichushu.book.event.RefrushHomePageEvent;
+import com.laichushu.book.event.RefrushMineBeServiceEvent;
 import com.laichushu.book.event.RefrushTopicManageEvent;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
@@ -51,18 +53,25 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
             switch (type) {
                 case "partyManage":
                     tvTitle.setText("发表新公告");
+                    tvRight.setText("发表");
                     break;
                 case "topicManage":
                     tvTitle.setText("发表新话题");
+                    tvRight.setText("发表");
+                    break;
+                case "service":
+                    tvTitle.setText("添加服务");
+                    tvRight.setText("保存");
                     break;
                 case "2":
                     tvTitle.setText("发表新话题");
+                    tvRight.setText("发表");
                     break;
             }
         } else {
             tvTitle.setText("发表话题");
+            tvRight.setText("发表");
         }
-        tvRight.setText("发表");
         tvRight.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         tvRight.setOnClickListener(this);
@@ -97,6 +106,9 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                                 break;
                             case "topicManage":
                                 sendTopicMsg(partyId, "3");
+                                break;
+                            case "service":
+                                addServiceMsg();
                                 break;
                             case "2"://小组话题
                                 sendTopicMsg(partyId, type);
@@ -138,6 +150,9 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                     break;
                 case "topicManage":
                     EventBus.getDefault().postSticky(new RefrushTopicManageEvent(true));
+                    break;
+                case "service":
+                    EventBus.getDefault().postSticky(new RefrushMineBeServiceEvent(true));
                     break;
             }
 
@@ -210,6 +225,41 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                     }, 1700);
                 } else {
                     ToastUtil.showToast("公告发表失败！");
+                    LoggerUtil.e(result.getErrMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                LoggerUtil.e(msg);
+                refreshPage(LoadingPager.PageState.STATE_ERROR);
+            }
+
+            @Override
+            public void onFinish() {
+                dismissProgressDialog();
+            }
+
+        });
+    }
+    //我的服务--添加服务
+    public void addServiceMsg() {
+        showProgressDialog();
+        SaveServeItem_paramet saveServiceParamet = new SaveServeItem_paramet(SharePrefManager.getUserId(), edAddTitle.getText().toString(), edAddContent.getText().toString());
+        addSubscription(apiStores.getSaveServeItem(saveServiceParamet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult result) {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                if (result.isSuccess()) {
+                    ToastUtil.showToast("保存服务成功！");
+                    UIUtil.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 1700);
+                } else {
+                    ToastUtil.showToast("保存服务失败！");
                     LoggerUtil.e(result.getErrMsg());
                 }
             }

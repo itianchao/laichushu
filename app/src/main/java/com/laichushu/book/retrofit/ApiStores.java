@@ -308,7 +308,7 @@ public interface ApiStores {
     @POST("article/delete")
     Observable<RewardResult> deleteNewBook(@Body DeleteNewBook_Paramet paramet);
 
-    //收藏列表
+    //图书-收藏列表
     @POST("collect/list")
     Observable<HomeHotModel> getCollectList(@Body MyArticBooklist_paramet paramet);
 
@@ -476,7 +476,10 @@ public interface ApiStores {
     Observable<RewardResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
     //我的服务者列表--合作
     @POST("servicer/findMyServerList")
-    Observable<RewardResult> getFindMyServerListDetails(@Body FindMyServerList_Paramet paramet);
+    Observable<FindServiceCooperateMode> getFindMyServerListDetails(@Body FindMyServerList_Paramet paramet);
+    //我的服务者--服务内容列表
+    @POST("servicerItem/findServerItemList")
+    Observable<FindServiceItemListModel> getFindServerItemListDetails(@Body FindServerItemList_Paramet paramet);
 
     //获取机构公告列表
     @POST("press/notices")
@@ -612,7 +615,12 @@ public interface ApiStores {
     @Multipart
     @POST("servicer/saveServerInfo")
     Observable<RewardResult> SaveServerInfoDetails(@PartMap Map<String, RequestBody> params, @Part("visitingCardFile\"; filename=\"visiting.jpg") RequestBody file);
-
+    //服务--收藏列表
+    @POST("collect/list")
+    Observable<FindServiceInfoModel> getCollectServiceDateList(@Body MyArticBooklist_paramet paramet);
+    //服务--添加服务
+    @POST("servicerItem/saveServeItem")
+    Observable<RewardResult> getSaveServeItem(@Body SaveServeItem_paramet paramet);
     /**
      * 小组
      */

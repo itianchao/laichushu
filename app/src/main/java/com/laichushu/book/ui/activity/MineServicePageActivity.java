@@ -3,22 +3,21 @@ package com.laichushu.book.ui.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.BookDetailsModle;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.bean.netbean.FindServiceCooperateMode;
+import com.laichushu.book.bean.netbean.FindServiceInfoModel;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.mineservice.MineServicePresenter;
 import com.laichushu.book.mvp.mineservice.MineServiceView;
-import com.laichushu.book.ui.adapter.BookCastCollAdapter;
 import com.laichushu.book.ui.adapter.MineServiceCollectAdapter;
-import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.adapter.MineServiceCooperateAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.LoggerUtil;
-import com.laichushu.book.utils.ModelUtils;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -29,22 +28,26 @@ import java.util.List;
 /**
  * 我的--服务
  */
-public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> implements MineServiceView, View.OnClickListener, RadioGroup.OnCheckedChangeListener,PullLoadMoreRecyclerView.PullLoadMoreListener {
+public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> implements MineServiceView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private ImageView ivBack;
     private TextView tvTitle, tvRight;
     private PullLoadMoreRecyclerView mCooprerateRecyclerView, mCollectRecyclerView;
     private RadioGroup radioGroup;
-    private RadioButton rbScan, rbCollection;
     private int PAGE_NO = 1;
-    private List<HomeHotModel.DataBean> collData = new ArrayList<>();
+    //收藏
+    private List<FindServiceInfoModel.DataBean> collData = new ArrayList<>();
     private MineServiceCollectAdapter collAdapter;
+    //合作
+    private MineServiceCooperateAdapter coopAdapter;
+    private List<FindServiceCooperateMode.DataBean> coopData = new ArrayList<>();
+    private FindServiceCooperateMode model;
     /**
      * 当前是否连续点击
      */
     private boolean scanDibble = false, collDibble = false;
     /**
-     * type 1: 浏览  2：收藏
+     * type 1: 合作  2：收藏
      */
     private int type = 1;
 
@@ -62,8 +65,6 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
         mCooprerateRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_cooperate);
         mCollectRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_collection);
         radioGroup = ((RadioGroup) inflate.findViewById(R.id.rg_serviceList));
-        rbScan = ((RadioButton) inflate.findViewById(R.id.rb_cooperate));
-        rbCollection = ((RadioButton) inflate.findViewById(R.id.rb_collection));
         return inflate;
     }
 
@@ -71,21 +72,31 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
     protected void initData() {
         super.initData();
         tvTitle.setText("我的服务");
-        tvRight.setVisibility(View.VISIBLE);
         tvRight.setText("成为服务者");
+        if (equals(ConstantValue.READER) || SharePrefManager.getType().equals(ConstantValue.SERVICER) || SharePrefManager.getType().equals(ConstantValue.AUTHOR)) {
+            tvRight.setVisibility(View.VISIBLE);
+        } else {
+            tvRight.setVisibility(View.GONE);
+        }
 
         radioGroup.setOnCheckedChangeListener(this);
         ivBack.setOnClickListener(this);
         tvRight.setOnClickListener(this);
 
-        //初始化mRecyclerView Coll
-        mCollectRecyclerView.setGridLayout(3);
+        //初始化合作 mCollectRecyclerView
+        mCooprerateRecyclerView.setGridLayout(1);
+        mCooprerateRecyclerView.setFooterViewText("加载中");
+        coopAdapter = new MineServiceCooperateAdapter(this, coopData, mvpPresenter);
+        mCooprerateRecyclerView.setAdapter(coopAdapter);
+        mCooprerateRecyclerView.setOnPullLoadMoreListener(this);
+        //初始化收藏  mCollectRecyclerView
+        mCollectRecyclerView.setGridLayout(1);
         mCollectRecyclerView.setFooterViewText("加载中");
         collAdapter = new MineServiceCollectAdapter(this, collData, mvpPresenter);
         mCollectRecyclerView.setAdapter(collAdapter);
         mCollectRecyclerView.setOnPullLoadMoreListener(this);
 
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        mvpPresenter.LoadCooperateData();
     }
 
     @Override
@@ -96,23 +107,43 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
                 break;
             case R.id.tv_title_right:
                 //成为服务者
-                UIUtil.openActivity(mActivity, MineBeServantActivity.class);
+                switch (model.getAuditStatus()) {
+                    case 1:
+                        ToastUtil.showToast("审核通过");
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("model",this.model);
+                        UIUtil.openActivity(mActivity, MineAddServantActivity.class);
+                        break;
+                    case 2:
+                        ToastUtil.showToast("审批被拒绝");
+                        break;
+                    case 3:
+                        //跳转添加服务页面
+                        ToastUtil.showToast("审核中");
+                        break;
+                    default:
+                        //成为服务者
+                        UIUtil.openActivity(mActivity, MineBeServantActivity.class);
+                        break;
+                }
+
                 break;
         }
     }
+
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         PAGE_NO = 1;
         switch (checkedId) {
             case R.id.rb_cooperate:
-                //点击浏览
+                //点击合作
                 mCooprerateRecyclerView.setVisibility(View.VISIBLE);
                 mCollectRecyclerView.setVisibility(View.GONE);
                 collDibble = false;
                 type = 1;
                 if (!scanDibble) {
-//                    scanData.clear();
-//                    mvpPresenter.loadBrowserListData("1");
+                    coopData.clear();
+                    mvpPresenter.LoadCooperateData();
                 }
                 scanDibble = true;
                 break;
@@ -130,49 +161,10 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
                 break;
         }
     }
-    @Override
-    public void onRefresh() {
-        PAGE_NO = 1;
 
-        if (type == 1) {
-//            scanData.clear();
-//            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-//            mvpPresenter.loadBrowserListData("1");//请求网络获取搜索列表
-        } else if (type == 2) {
-            collData.clear();
-            mvpPresenter.getColl_paramet().setPageNo(PAGE_NO + "");
-            mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
-        }
-    }
 
     @Override
-    public void onLoadMore() {
-        if (type == 1) {
-//            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-//            mvpPresenter.loadBrowserListData("1");//请求网络获取搜索列表
-        } else if (type == 2) {
-            mvpPresenter.getColl_paramet().setPageNo(PAGE_NO + "");
-            mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
-        }
-    }
-
-    @Override
-    public void showDialog() {
-        showProgressDialog();
-    }
-
-    @Override
-    public void dismissDialog() {
-        dismissProgressDialog();
-    }
-
-    @Override
-    public void getDataFail(String msg) {
-        LoggerUtil.toJson(msg);
-    }
-
-    @Override
-    public void getCollectionDataSuccess(HomeHotModel model) {
+    public void getCollectionDataSuccess(FindServiceInfoModel model) {
         collData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -196,21 +188,71 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
-
     @Override
-    public void getBookDetailsByIdDataSuccess(BookDetailsModle model) {
-        //跳转图书详情页
-        dismissProgressDialog();
+    public void getCooperateDataSuccess(FindServiceCooperateMode model) {
+        coopData.clear();
+        this.model = model;
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCooprerateRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
         if (model.isSuccess()) {
-            Bundle bundle = new Bundle();
-            HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
-            bundle.putParcelable("bean", dataBean);
-            bundle.putString("pageMsg", "浏览收藏详情");
-            UIUtil.openActivity(this, BookDetailActivity.class, bundle);
+            coopData = model.getData();
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            if (!collData.isEmpty()) {
+                coopAdapter.refreshAdapter(coopData);
+                PAGE_NO++;
+            } else {
+
+            }
         } else {
             ToastUtil.showToast(model.getErrMsg());
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+    }
+
+    @Override
+    public void onRefresh() {
+        PAGE_NO = 1;
+
+        if (type == 1) {
+            coopData.clear();
+            mvpPresenter.getCoop_paramet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadCooperateData();//请求网络获取搜索列表
+        } else if (type == 2) {
+            collData.clear();
+            mvpPresenter.getColl_paramet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
         }
     }
 
+    @Override
+    public void onLoadMore() {
+        if (type == 1) {
+            mvpPresenter.getCoop_paramet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadCooperateData();//请求网络获取搜索列表
+        } else if (type == 2) {
+            mvpPresenter.getColl_paramet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
+        }
+    }
+
+    @Override
+    public void showDialog() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void dismissDialog() {
+        dismissProgressDialog();
+    }
+
+    @Override
+    public void getDataFail(String msg) {
+        LoggerUtil.toJson(msg);
+    }
 
 }

@@ -25,9 +25,10 @@ import com.laichushu.book.bean.netbean.EditorSaveComment_Paramet;
 import com.laichushu.book.bean.netbean.FindArticleByCaseId_Paramet;
 import com.laichushu.book.bean.netbean.FindArticleVote_Paramet;
 import com.laichushu.book.bean.netbean.FindEditorCommentList_Paramet;
-import com.laichushu.book.bean.netbean.FindEditorInfoModel;
 import com.laichushu.book.bean.netbean.FindEditorInfo_Paramet;
 import com.laichushu.book.bean.netbean.FindServerInfoModel;
+import com.laichushu.book.bean.netbean.FindServerItemList_Paramet;
+import com.laichushu.book.bean.netbean.FindServiceItemListModel;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
@@ -37,6 +38,7 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindServerMainPageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -410,6 +412,28 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
             @Override
             public void onSuccess(RewardResult model) {
                 mvpView.getSaveCollectSuccess(model, type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+    //服务内容列表
+    public void loadServiceItemListDate(String userID) {
+        FindServerItemList_Paramet coop_paramet = new FindServerItemList_Paramet(userID, "","", pageNo + "", pageSize);
+        mvpView.showDialog();
+        LoggerUtil.toJson(coop_paramet);
+        addSubscription(apiStores.getFindServerItemListDetails(coop_paramet), new ApiCallback<FindServiceItemListModel>() {
+            @Override
+            public void onSuccess(FindServiceItemListModel model) {
+                mvpView.getFindServerItemListDetails(model);
             }
 
             @Override
