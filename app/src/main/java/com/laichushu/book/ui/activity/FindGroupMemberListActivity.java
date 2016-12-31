@@ -1,5 +1,8 @@
 package com.laichushu.book.ui.activity;
 
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -9,6 +12,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.findgroup.findgroupmenber.FindGroupMenberModle;
 import com.laichushu.book.mvp.findgroup.findgroupmenber.FindGroupMenberPresenter;
 import com.laichushu.book.mvp.findgroup.findgroupmenber.FindGroupMenberView;
@@ -27,7 +31,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/12/30.
  */
 
-public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPresenter> implements FindGroupMenberView, View.OnClickListener {
+public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPresenter> implements FindGroupMenberView, View.OnClickListener, TextWatcher {
 
     private PullLoadMoreRecyclerView mRecyclerView;
     private EditText searchEt;
@@ -69,6 +73,7 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
         mAdapter = new FindGroupMemberAdapter(this, mData, type, mvpPresenter);
         mRecyclerView.setAdapter(mAdapter);
         backIv.setOnClickListener(this);
+        searchEt.addTextChangedListener(this);
         if (type == 2){
             mvpPresenter.getGroupApplyMemberList(teamId);//审核成员列表
         }else {
@@ -96,6 +101,11 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (modle.getData() != null && !modle.getData().isEmpty()) {
                 mData = modle.getData();
+                for (FindGroupMenberModle.DataBean dataBean : mData) {//移除自己
+                    if (dataBean.getUserId().equals(ConstantValue.USERID)) {
+                        mData.remove(dataBean);
+                    }
+                }
                 mAdapter.setmData(mData);
             }else {
                 emptyIv.setVisibility(View.VISIBLE);
@@ -243,5 +253,32 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
                 }
             }
         });
+    }
+    //====================================================================================
+    //EditView 监听搜索
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    private ArrayList<FindGroupMenberModle.DataBean> searchData = new ArrayList<>();
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        searchData.clear();
+        for (FindGroupMenberModle.DataBean bean : mData) {
+            if (bean.getName().contains(s)) {
+                searchData.add(bean);
+            }
+        }
+        if (TextUtils.isEmpty(searchEt.getText().toString())){
+            mAdapter.setmData(mData);
+        }else {
+            mAdapter.setmData(searchData);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
