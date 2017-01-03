@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         msgRbn.setOnClickListener(this);
         mindRbn.setOnClickListener(this);
         setDefaultFragment();
+        findRbn.setEnabled(false);
     }
 
     /**

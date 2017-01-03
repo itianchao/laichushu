@@ -92,7 +92,12 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
         if (isLoad) {//只执行一次
             mvpPresenter.getSourceMaterialList(parentId);
         } else {
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            UIUtil.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                }
+            },30);
         }
         mAdapter = new MaterialListAdapter(this, mData, mvpPresenter);
         mateialRyv.setAdapter(mAdapter);

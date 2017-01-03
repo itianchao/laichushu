@@ -76,7 +76,7 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
         titleRightTv.setText("管理");
         titleRightTv.setTextColor(Color.WHITE);
         titleTv.setText("素材模式");
-        addTv.setText("添加素材");
+        addTv.setText("添加素材文件夹");
         addJur.setText("权限");
         addJur.setVisibility(View.VISIBLE);
 
