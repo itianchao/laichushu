@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.findgroup.findgroupmain;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
 
 /**
@@ -8,11 +9,23 @@ import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
  */
 
 public interface FindGroupPageView {
-    void getGroupTopicListDataSuccess(MechanismTopicListModel model);
+    void getGroupTopicListDataSuccess(MechanismTopicListModel modle);
 
     void getGroupTopicListDataFail(String msg);
 
-    void getGroupSuggestTopicListSuccess(MechanismTopicListModel model);
+    void getGroupSuggestTopicListSuccess(MechanismTopicListModel modle);
 
     void getGroupSuggestTopicListFail(String msg);
+
+    void dismissGroupSuccess(RewardResult modle);
+
+    void dismissGroupFail(String msg);
+
+    void getLeaveGroupSuccess(RewardResult modle);
+
+    void getLeaveGroupFail(String msg);
+
+    void getJoinGroupSuccess(RewardResult modle);
+
+    void getJoinGroupFail(String msg);
 }

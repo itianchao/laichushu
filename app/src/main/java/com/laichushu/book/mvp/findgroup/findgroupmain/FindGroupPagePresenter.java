@@ -1,6 +1,17 @@
 package com.laichushu.book.mvp.findgroup.findgroupmain;
 
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.google.gson.Gson;
+import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.ApplyJoinGroupMember_Paramet;
+import com.laichushu.book.bean.netbean.DeleteGroupMember_Paramet;
+import com.laichushu.book.bean.netbean.DismissGroup_Paramet;
 import com.laichushu.book.bean.netbean.MyPublishTopicList_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
@@ -8,6 +19,9 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindGroupDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.UIUtil;
+
+import org.apache.http.impl.client.EntityEnclosingRequestWrapper;
 
 import java.util.ArrayList;
 
@@ -129,6 +143,68 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
     }
 
     /**
+     * 解散小组对话框
+     */
+    public void openDismissGroupDialog(final String teamId) {
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_ok);
+        TextView msgTitleTv = (TextView) customerView.findViewById(R.id.tv_msg_title);
+        msgTitleTv.setText("确认是否解散小组？");
+        //取消
+        Button cancelBtn = (Button) customerView.findViewById(R.id.btn_cancel);
+        cancelBtn.setText("取消");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismissGroup(teamId);
+                dialogBuilder.dismiss();
+            }
+        });
+        dialogBuilder
+                .withTitle(null)                                  // 为null时不显示title
+                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, mActivity)                // 添加自定义View
+                .show();
+    }
+
+    /**
+     * 解散小组接口
+     */
+    public void dismissGroup(String teamId){
+        mActivity.showProgressDialog();
+        LoggerUtil.e("解散小组");
+        DismissGroup_Paramet paramet = new DismissGroup_Paramet(teamId);
+        LoggerUtil.toJson(new Gson().toJson(paramet));
+        addSubscription(apiStores.dismissGroup(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mActivity.dismissProgressDialog();
+                mvpView.dismissGroupSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mActivity.dismissProgressDialog();
+                mvpView.dismissGroupFail(code + "|" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mActivity.dismissProgressDialog();
+            }
+        });
+    }
+    /**
      * @return 小组话题
      */
     public MyPublishTopicList_Paramet getParamet1() {
@@ -140,5 +216,129 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
      */
     public MyPublishTopicList_Paramet getParamet2() {
         return paramet2;
+    }
+
+    /**
+     * 申请加入小组 对话框
+     */
+    public void openJoinGroupDialog(final String teamId) {
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_ok);
+        TextView msgTitleTv = (TextView) customerView.findViewById(R.id.tv_msg_title);
+        msgTitleTv.setText("确认是否申请加入小组？");
+        //取消
+        Button cancelBtn = (Button) customerView.findViewById(R.id.btn_cancel);
+        cancelBtn.setText("取消");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                joinGroup(teamId);
+                dialogBuilder.dismiss();
+            }
+        });
+        dialogBuilder
+                .withTitle(null)                                  // 为null时不显示title
+                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, mActivity)                // 添加自定义View
+                .show();
+    }
+
+    /**
+     * 退出小组 对话框
+     */
+    public void openLeaveGroupDialog(final String teamId) {
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_ok);
+        TextView msgTitleTv = (TextView) customerView.findViewById(R.id.tv_msg_title);
+        msgTitleTv.setText("确认是否退出小组？");
+        //取消
+        Button cancelBtn = (Button) customerView.findViewById(R.id.btn_cancel);
+        cancelBtn.setText("取消");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                leaveGroup(teamId);
+                dialogBuilder.dismiss();
+            }
+        });
+        dialogBuilder
+                .withTitle(null)                                  // 为null时不显示title
+                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, mActivity)                // 添加自定义View
+                .show();
+    }
+
+    /**
+     * 退出小组
+     */
+    public void leaveGroup(String teamId){
+        mActivity.showProgressDialog();
+        LoggerUtil.e("退出小组");
+        DeleteGroupMember_Paramet paramet = new DeleteGroupMember_Paramet(teamId,userId);
+        addSubscription(apiStores.deleteGroupMember(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult modle) {
+                mActivity.dismissProgressDialog();
+                mvpView.getLeaveGroupSuccess(modle);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mActivity.dismissProgressDialog();
+                mvpView.getLeaveGroupFail(code+"|"+msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mActivity.dismissProgressDialog();
+            }
+        });
+    }
+
+    /**
+     * 申请加入小组
+     */
+    public void joinGroup(String teamId){
+        mActivity.showProgressDialog();
+        LoggerUtil.e("申请加入小组");
+        ApplyJoinGroupMember_Paramet paramet = new ApplyJoinGroupMember_Paramet(userId,teamId);
+        addSubscription(apiStores.applyJoinGroup(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult modle) {
+                mActivity.dismissProgressDialog();
+                mvpView.getJoinGroupSuccess(modle);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mActivity.dismissProgressDialog();
+                mvpView.getJoinGroupFail(code+"|"+msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mActivity.dismissProgressDialog();
+            }
+        });
     }
 }

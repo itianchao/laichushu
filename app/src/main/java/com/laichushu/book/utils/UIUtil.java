@@ -500,6 +500,18 @@ public class UIUtil
 		}, 1710);
 	}
 	/**
+	 * 延时关闭页面
+	 * @param mActivity
+	 */
+	public static void postFinishActivity(final Activity mActivity){
+		UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				mActivity.finish();
+			}
+		}, 1710);
+	}
+	/**
 	 * 延时关闭是上下拉刷新
 	 * @param ryv
 	 */

@@ -82,4 +82,12 @@ public class MyPublishTopicList_Paramet {
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
