@@ -50,6 +50,9 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
     private String path;
     private TextView materialTv;
     private String type;
+    private String urlSource;
+    private String dir;
+    private String title;
 
     @Override
     protected CreateNewMaterialPresenter createPresenter() {
@@ -104,19 +107,24 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
     protected void initData() {
         articleId = getIntent().getStringExtra("articleId");
         parentId = getIntent().getStringExtra("parentId");
-        String title = getIntent().getStringExtra("title");
+        title = getIntent().getStringExtra("title");
         type = getIntent().getStringExtra("type");
 
 
 //        ;
         //1、新建 2、编辑
         if (type.equals("1")) {
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            UIUtil.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                }
+            },30);
             titleTv.setText("添加素材");
             materialTv.setText(title);
         } else {
-            String dir = getIntent().getStringExtra("dir");
-            materialEt.setHint(title);
+            dir = getIntent().getStringExtra("dir");
+            materialEt.setText(title);
             materialTv.setText(dir);
             createBtn.setText("修改");
             titleTv.setText("编辑素材");
@@ -125,12 +133,13 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
                 public void run() {
                     try {
                         String html = getIntent().getStringExtra("html");
-                        final String urlSource = HtmlUtil.getURLSource(html);
+                        urlSource = HtmlUtil.getURLSource(html);
                         UIUtil.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 mEditor.setHtml(urlSource);
                                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                                builder = new StringBuilder(urlSource);
                             }
                         });
                     } catch (Exception e) {
@@ -239,6 +248,13 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
                     ToastUtil.showToast("请输入素材内容");
                     return;
                 }
+                if (type.equals("2")){
+                    if (content.equals(urlSource)&& name.equals(title)) {
+                        ToastUtil.showToast("请修改素材标题或内容");
+                        return;
+                    }
+                }
+
                 if (type.equals("1")) {
                     mvpPresenter.createSourceMaterial(articleId, name, parentId, content);
                 } else {
