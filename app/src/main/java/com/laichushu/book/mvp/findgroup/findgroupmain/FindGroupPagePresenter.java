@@ -183,7 +183,7 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
     public void dismissGroup(String teamId){
         mActivity.showProgressDialog();
         LoggerUtil.e("解散小组");
-        DismissGroup_Paramet paramet = new DismissGroup_Paramet(teamId);
+        DismissGroup_Paramet paramet = new DismissGroup_Paramet(teamId,userId);
         LoggerUtil.toJson(new Gson().toJson(paramet));
         addSubscription(apiStores.dismissGroup(paramet), new ApiCallback<RewardResult>() {
             @Override
@@ -256,7 +256,7 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
     /**
      * 退出小组 对话框
      */
-    public void openLeaveGroupDialog(final String teamId) {
+    public void openLeaveGroupDialog(final String memberId) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_ok);
         TextView msgTitleTv = (TextView) customerView.findViewById(R.id.tv_msg_title);
@@ -274,7 +274,7 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                leaveGroup(teamId);
+                leaveGroup(memberId);
                 dialogBuilder.dismiss();
             }
         });
@@ -291,10 +291,10 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
     /**
      * 退出小组
      */
-    public void leaveGroup(String teamId){
+    public void leaveGroup(String memberId){
         mActivity.showProgressDialog();
         LoggerUtil.e("退出小组");
-        DeleteGroupMember_Paramet paramet = new DeleteGroupMember_Paramet(teamId,userId);
+        DeleteGroupMember_Paramet paramet = new DeleteGroupMember_Paramet(memberId);
         addSubscription(apiStores.deleteGroupMember(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult modle) {

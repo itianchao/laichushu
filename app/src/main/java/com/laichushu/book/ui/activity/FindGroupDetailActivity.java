@@ -224,7 +224,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                                 if (isJoin){//加入小组
                                     mvpPresenter.openJoinGroupDialog(bean.getId());
                                 }else {//退出小组
-                                    mvpPresenter.openLeaveGroupDialog(bean.getId());
+                                    mvpPresenter.openLeaveGroupDialog(bean.getMemberId());
                                 }
                             }
                         }

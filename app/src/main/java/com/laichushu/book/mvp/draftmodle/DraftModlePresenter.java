@@ -80,7 +80,7 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
      */
     public void deleteDraftBook(String articleId, final int position) {
         mvpView.showLoading();
-        Logger.e("删除草稿");
+        Logger.e("删除目录");
         DeleteDraft_Paramet paramet = new DeleteDraft_Paramet(articleId, userId);
         addSubscription(apiStores.deleteDraftBook(paramet), new ApiCallback<RewardResult>() {
             @Override
@@ -108,7 +108,7 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
      */
     public void chapterRename(String id, final String rename, final int index) {
         mvpView.showLoading();
-        LoggerUtil.e("草稿重命名");
+        LoggerUtil.e("目录重命名");
         ChapterRename_Paramet paramet = new ChapterRename_Paramet(id, rename, userId);
         LoggerUtil.toJson(paramet);
         addSubscription(apiStores.chapterRename(paramet), new ApiCallback<RewardResult>() {
@@ -139,7 +139,7 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
         TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
-        dialogTitleTv.setText("确认修改草稿名称?");
+        dialogTitleTv.setText("确认修改目录名称?");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +180,7 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
         TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
-        dialogTitleTv.setText("创建草稿(添加内容请到pc端)");
+        dialogTitleTv.setText("创建目录\n(添加内容请到pc端)");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,7 +190,7 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
         });
         //确认
         final EditText dialogEt = (EditText) customerView.findViewById(R.id.et_dialog);
-        dialogEt.setHint("请输入草稿名称");
+        dialogEt.setHint("请输入目录名称");
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

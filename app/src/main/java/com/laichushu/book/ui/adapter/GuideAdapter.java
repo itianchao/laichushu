@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.laichushu.book.utils.GlideUitl;
+
 import java.util.ArrayList;
 
 /**
@@ -40,7 +42,7 @@ public class GuideAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView v = new ImageView(mActivity);
-        v.setBackgroundResource(imageList.get(position));
+        GlideUitl.loadImg(mActivity,imageList.get(position),v);
         container.addView(v);
         return v;
     }

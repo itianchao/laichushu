@@ -6,10 +6,19 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class DismissGroup_Paramet {
-    public String teamId;
+    public String teamId,userId;
 
-    public DismissGroup_Paramet(String teamId) {
+    public DismissGroup_Paramet(String teamId, String userId) {
         this.teamId = teamId;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTeamId() {

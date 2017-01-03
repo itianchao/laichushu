@@ -54,7 +54,7 @@
     <string name="permission_dialog">发表前请设置阅读权限</string>
     <string name="sign_state_dialog">选择出版社及编辑</string>
     <string name="add_newbook">点击创建新书</string>
-    <string name="draft">编辑草稿</string>
+    <string name="draft">编辑目录</string>
     <string name="material">编辑素材</string>
     <string name="submission">投稿</string>
     <string name="delete">删除</string>
@@ -65,8 +65,8 @@
     <string name="permission">阅读权限 ：</string>
     <string name="brief">简 介 ：</string>
     <string name="brief2">简 介</string>
-    <string name="draftname">草稿名称</string>
-    <string name="draftcontent">草稿内容</string>
+    <string name="draftname">目录名称</string>
+    <string name="draftcontent">目录内容</string>
     <string name="material_category">素材文件夹</string>
     <string name="advice_content">清在这儿写下你对来出书的意见和建议,我们将会在第一时间解决您的问题,如果你的意见或者建议被我们采纳,我们将会联系你送出我们的礼物.</string>
     <string name="empty_string"></string>
@@ -76,6 +76,5 @@
     <string name="create_group">创建小组</string>
     <string name="find_join_group">加入的小组</string>
     <string name="recomment_group">推荐小组</string>
-    <string name="find">发现</string>
     <string name="recommend">推荐</string>
 </resources>

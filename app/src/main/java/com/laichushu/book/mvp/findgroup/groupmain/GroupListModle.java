@@ -62,6 +62,15 @@ public class GroupListModle {
         private String status;
         private String markContent;
         private String createDate;
+        private String memberId;
+
+        public String getMemberId() {
+            return memberId;
+        }
+
+        public void setMemberId(String memberId) {
+            this.memberId = memberId;
+        }
 
         public String getMarkContent() {
             return markContent;
@@ -151,6 +160,9 @@ public class GroupListModle {
             this.status = status;
         }
 
+        public DataBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -169,9 +181,7 @@ public class GroupListModle {
             dest.writeString(this.status);
             dest.writeString(this.markContent);
             dest.writeString(this.createDate);
-        }
-
-        public DataBean() {
+            dest.writeString(this.memberId);
         }
 
         protected DataBean(Parcel in) {
@@ -186,9 +196,10 @@ public class GroupListModle {
             this.status = in.readString();
             this.markContent = in.readString();
             this.createDate = in.readString();
+            this.memberId = in.readString();
         }
 
-        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);

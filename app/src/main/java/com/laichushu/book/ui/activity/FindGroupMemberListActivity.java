@@ -101,10 +101,11 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (modle.getData() != null && !modle.getData().isEmpty()) {
                 mData = modle.getData();
-                for (FindGroupMenberModle.DataBean dataBean : mData) {//移除自己
-                    if (dataBean.getUserId().equals(ConstantValue.USERID)) {
-                        mData.remove(dataBean);
+                for (int i = mData.size() - 1; i >= 0; i--) {
+                    if (mData.get(i).getUserId().equals(ConstantValue.USERID)) {
+                        mData.remove(i);
                     }
+
                 }
                 mAdapter.setmData(mData);
             }else {
