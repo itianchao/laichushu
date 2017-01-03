@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.activity;
 
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> implements FindEditPageView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
+    private View inflate;
     private ImageView ivBack;
     private TextView tvTitle;
     private PullLoadMoreRecyclerView mEditorRecyclerView;
@@ -52,7 +54,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
 
     @Override
     protected View createSuccessView() {
-        View inflate = UIUtil.inflate(R.layout.activity_find_edit_page);
+        inflate = UIUtil.inflate(R.layout.activity_find_edit_page);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         rgTitle = (RadioGroup) inflate.findViewById(R.id.rg_find);
@@ -214,11 +216,10 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int xPos = mActivity.getWindowManager().getDefaultDisplay().getWidth() / 4
-                - rbCity.getWidth() / 4;
+        int xPos = mActivity.getWindowManager().getDefaultDisplay().getWidth() / 4;
         int[] location = new int[2];
         rbCity.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(rbCity, xPos - rbCity.getWidth() / 4, 20);
+        popupWindow.showAsDropDown(rbRanking,xPos, 0);
 
     }
 

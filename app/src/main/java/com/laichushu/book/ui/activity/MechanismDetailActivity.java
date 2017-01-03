@@ -14,6 +14,7 @@ import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.event.RefurshHomeEvent;
 import com.laichushu.book.event.RefurshWriteFragment;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.mechanismdetail.MechanisDetailModel;
 import com.laichushu.book.mvp.mechanismdetail.MechanismDetailPresenter;
@@ -107,7 +108,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
 //        判断当前是否是机构管理员
         if (null != bean.getAdmin() && SharePrefManager.getUserId().equals(bean.getAdmin())) {
             moreIv.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             moreIv.setVisibility(View.INVISIBLE);
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
@@ -126,6 +127,10 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
 
     @Override
     public void getDataSuccess(MechanisDetailModel model) {
+        if (model.isSuccess()) {
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
 
     }
 
@@ -137,7 +142,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
             if (model.getData() != null) {
                 data = model.getData();
                 if (!data.isEmpty()) {
-//                    mvpPresenter.openSelectBookDialog(data, bean.getId());
+                    mvpPresenter.openSelectBookDialog(data, bean.getId());
                 } else {
                     ToastUtil.showToast("您还没有作品");
                 }
@@ -271,16 +276,21 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 }
                 break;
             case R.id.tv_submission:
-                mvpPresenter.openSelectBookDialog(articleId, bean.getId());
+                if (null != articleId) {
+                    mvpPresenter.openSelectBookDialog(articleId, bean.getId());
+                } else {
+                    mvpPresenter.loadAuthorWorksData();
+                }
+
                 break;
             case R.id.tv_collection:
-                if (collectionTv.getText().equals("收藏")) {
-                    cType = "0";
-                } else {
+                if (bean.isIsCollect()) {
                     cType = "1";
+                } else {
+                    cType = "0";
                 }
                 collectionTv.setEnabled(false);
-                mvpPresenter.collectSave(bean.getId(), cType, "4");
+                mvpPresenter.collectSave(bean.getId(), cType, ConstantValue.MECHANISM_TYPE);
                 break;
         }
     }

@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.findeditpage;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -55,7 +56,7 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
      * @param mActicity
      * @param v
      */
-    public void showRankingDialog(final Activity mActicity, CheckBox v, final String curProcode) {
+    public void showRankingDialog(final Activity mActicity,CheckBox v, final String curProcode) {
         View customerView = UIUtil.inflate(R.layout.dialog_mechanis_manage_item);
         final PopupWindow popupWindow = new PopupWindow(customerView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -70,12 +71,8 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int xPos = mActicity.getWindowManager().getDefaultDisplay().getWidth() / 4
-                - v.getWidth() / 4;
-        int[] location = new int[2];
-        v.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(v, xPos, 20);
-
+        int xPos = mActivity.getWindowManager().getDefaultDisplay().getWidth() / 2-v.getWidth()/2;
+        popupWindow.showAsDropDown(v,xPos,0);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

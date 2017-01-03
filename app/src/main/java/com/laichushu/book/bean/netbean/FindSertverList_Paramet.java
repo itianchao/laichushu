@@ -6,12 +6,13 @@ import java.io.Serializable;
  * Created by PCPC on 2016/12/29.
  */
 
-public class FindSertverList_Paramet implements Serializable{
-    private String loginUserId, cityId, orderBy, pageNo, pageSize;
+public class FindSertverList_Paramet implements Serializable {
+    private String loginUserId, cityId, serviceType, orderBy, pageNo, pageSize;
 
-    public FindSertverList_Paramet(String loginUserId, String cityId, String orderBy, String pageNo, String pageSize) {
+    public FindSertverList_Paramet(String loginUserId, String cityId, String serviceType, String orderBy, String pageNo, String pageSize) {
         this.loginUserId = loginUserId;
         this.cityId = cityId;
+        this.serviceType = serviceType;
         this.orderBy = orderBy;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
@@ -31,6 +32,14 @@ public class FindSertverList_Paramet implements Serializable{
 
     public void setCityId(String cityId) {
         this.cityId = cityId;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 
     public String getOrderBy() {

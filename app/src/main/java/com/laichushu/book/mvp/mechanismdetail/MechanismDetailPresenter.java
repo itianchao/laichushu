@@ -30,6 +30,7 @@ import com.laichushu.book.ui.activity.AnnounMangeActivity;
 import com.laichushu.book.ui.activity.MechanismDetailActivity;
 import com.laichushu.book.ui.activity.ModifyMechanismInfoActivity;
 import com.laichushu.book.ui.activity.TopicManageActivity;
+import com.laichushu.book.ui.adapter.JoinActivityAdapter;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -104,6 +105,53 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
                 // TODO: 2016/11/25 投稿
 //                voteBook(mArticleData.get(joinAdapter.getPosition()).getArticleId(), pressId);
                 voteBook(articleId, pressId);
+                dialogBuilder.dismiss();
+            }
+        });
+        dialogBuilder
+                .withTitle(null)                                  // 为null时不显示title
+                .withDialogColor("#FFFFFF")                       // 设置对话框背景色                               //def
+                .isCancelableOnTouchOutside(true)                 // 点击其他地方或按返回键是否可以关闭对话框
+                .withDuration(500)                                // 对话框动画时间
+                .withEffect(Effectstype.Slidetop)                 // 动画形式
+                .setCustomView(customerView, mActivity)                // 添加自定义View
+                .show();
+
+    }
+    /**
+     * 投稿对话框
+     *
+     * @param mArticleData
+     * @param pressId
+     */
+    public void openSelectBookDialog(final ArrayList<AuthorWorksModle.DataBean> mArticleData, final String pressId) {
+        for (int i = 0; i < mArticleData.size(); i++) {
+            AuthorWorksModle.DataBean bean = mArticleData.get(i);
+            if (i == 0) {
+                bean.setIscheck(true);
+            } else {
+                bean.setIscheck(false);
+            }
+        }
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        final View customerView = UIUtil.inflate(R.layout.dialog_join);
+        ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
+        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0);
+        joinLv.setAdapter(joinAdapter);
+
+        //取消
+        customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+        //确认
+        customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2016/11/25 投稿
+                voteBook(mArticleData.get(joinAdapter.getPosition()).getArticleId(), pressId);
                 dialogBuilder.dismiss();
             }
         });

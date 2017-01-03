@@ -2,6 +2,7 @@ package com.laichushu.book.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
@@ -49,7 +50,7 @@ import okhttp3.RequestBody;
 public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> implements MineBeServantView, View.OnClickListener {
 
     private ImageView ivBack;
-    private TextView tvTitle, tvServantType;
+    private TextView tvTitle, tvServantType,tvAgreement;
     private RelativeLayout rlNickName, rlPostOffice, rlJobTitle, rlEmail, rlIdProve, rlServantType;
     private LinearLayout llItem;
     private ImageView ivVisiting,vistingFront;
@@ -72,6 +73,7 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
         View inflate = UIUtil.inflate(R.layout.activity_mine_be_servant);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
+        tvAgreement = ((TextView) inflate.findViewById(R.id.tv_agreement));
         tvServantType = ((TextView) inflate.findViewById(R.id.tv_servantTypeContent));
         rlNickName = (RelativeLayout) inflate.findViewById(R.id.rl_servantName);
         rlPostOffice = (RelativeLayout) inflate.findViewById(R.id.rl_servantPostOffice);
@@ -83,7 +85,7 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
         vistingFront = (ImageView) inflate.findViewById(R.id.iv_idCardFront);
 
         edNickName = (EditText) inflate.findViewById(R.id.ed_servantName);
-        edPostOffice = (EditText) inflate.findViewById(R.id.ed_servantPosition);
+        edPostOffice = (EditText) inflate.findViewById(R.id.ed_servantPostOffice);
         edJobTitle = (EditText) inflate.findViewById(R.id.ed_servantPosition);
         edEmail = (EditText) inflate.findViewById(R.id.ed_servantEmails);
         edIdProve = (EditText) inflate.findViewById(R.id.ed_servantWitness);
@@ -102,6 +104,7 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
         type = getIntent().getStringExtra("type");
 
         ivBack.setOnClickListener(this);
+        tvAgreement.setOnClickListener(this);
         if (null == type) {
             rlServantType.setOnClickListener(this);
             ivVisiting.setOnClickListener(this);
@@ -130,6 +133,12 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
             case R.id.iv_VisitingCard:
                 //上传明信片
                 openAlertDialog();
+                break;
+            case R.id.tv_agreement:
+                //著作协议
+                Bundle bundle = new Bundle();
+                bundle.putString("type","1");
+                UIUtil.openActivity(mActivity,AgreementDetailsActivity.class,bundle);
                 break;
             case R.id.btn_servantSubmit:
                 //提交审核
@@ -185,11 +194,19 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
                 } else if (model.getData().getServiceType() == 2) {
                     tvServantType.setText("设计");
                 }
-                GlideUitl.loadImg(mActivity, model.getData().getPhoto(), 240, 100, ivVisiting);
+                GlideUitl.loadImg(mActivity, model.getData().getPhoto(), ivVisiting.getWidth(), ivVisiting.getHeight(), ivVisiting);
                 edIntroduce.setText(model.getData().getServiceIntroduce());
                 btnSubmit.setClickable(false);
-                btnSubmit.setBackgroundColor(getResources().getColor(R.color.characterGray));
-                vistingFront.setVisibility(View.GONE);
+                edNickName.setFocusable(false);
+                edPostOffice.setFocusable(false);
+                edJobTitle.setFocusable(false);
+                edEmail.setFocusable(false);
+                edIdProve.setFocusable(false);
+                edIntroduce.setFocusable(false);
+                checkBox.setChecked(true);
+                checkBox.setClickable(false);
+                btnSubmit.setBackgroundResource(R.drawable.shape_rectangle_normal_gray);
+                vistingFront.setVisibility(View.INVISIBLE);
             }
 
         } else {
@@ -279,7 +296,7 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
             if (imagesPath != null && imagesPath.size() > 0) {
                 String path = imagesPath.get(0);
                 //压缩图片
-                GlideUitl.loadImg(mActivity, path, 240, 100, ivVisiting);
+                GlideUitl.loadImg(mActivity, path, ivVisiting.getWidth(), ivVisiting.getHeight(), ivVisiting);
                 visitingFile = new File(path);
             }
         }

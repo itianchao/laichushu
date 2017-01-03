@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.activity;
 
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -28,14 +29,15 @@ import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- *  发现 - 服务
+ * 发现 - 服务
  */
 public class FindServicePageActivity extends MvpActivity2<FindServicePagePresenter> implements FindServicePageView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle;
     private PullLoadMoreRecyclerView mServerRecyclerView;
-    private CheckBox rbRanking, rbCity;
+    private CheckBox rbRanking, rbServiceType, rbCity;
     private FindServicePageAdapter serverAdapter;
     private List<FindServiceInfoModel.DataBean> serverDate = new ArrayList<>();
 
@@ -44,6 +46,7 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
     private String orderBy = "1";
     private String curProCode = "";
     private String curCityCode = "";
+    private String curServiceType = null;
     private int PAGE_NO = 1;
 
     @Override
@@ -58,6 +61,7 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         mServerRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_total_ranking);
         rbRanking = (CheckBox) inflate.findViewById(R.id.rb_total_ranking);
+        rbServiceType = (CheckBox) inflate.findViewById(R.id.rb_serviceType);
         rbCity = (CheckBox) inflate.findViewById(R.id.rb_city);
         return inflate;
     }
@@ -73,6 +77,7 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
 
         ivBack.setOnClickListener(this);
         rbRanking.setOnClickListener(this);
+        rbServiceType.setOnClickListener(this);
         rbCity.setOnClickListener(this);
 
         rbRanking.setOnClickListener(this);
@@ -86,7 +91,7 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
         mServerRecyclerView.setAdapter(serverAdapter);
         mServerRecyclerView.setOnPullLoadMoreListener(this);
 
-       mvpPresenter.loadServerListData(curProCode,orderBy);
+        mvpPresenter.loadServerListData(curProCode, curServiceType, orderBy);
     }
 
     @Override
@@ -98,14 +103,24 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
             case R.id.rb_total_ranking:
                 //全部排行
                 rbCity.setChecked(false);
+                rbServiceType.setChecked(false);
                 if (!rbRanking.isChecked()) {
                     rbRanking.setChecked(true);
                 }
-                mvpPresenter.showRankingDialog(mActivity, rbRanking);
+                mvpPresenter.showRankingDialog(mActivity, rbServiceType, curProCode, curServiceType);
+                break;
+            case R.id.rb_serviceType:
+                //服务类型
+                rbRanking.setChecked(false);
+                rbCity.setChecked(false);
+                if (!rbServiceType.isChecked())
+                    rbServiceType.setChecked(true);
+                mvpPresenter.showServiceTypeDialog(mActivity, rbServiceType, curProCode, orderBy);
                 break;
             case R.id.rb_city:
                 //城市
                 rbRanking.setChecked(false);
+                rbServiceType.setChecked(false);
                 if (!rbCity.isChecked()) {
                     rbCity.setChecked(true);
                 }
@@ -115,9 +130,10 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
     }
 
     @Override
-    public void getServercerListDataSuccess(FindServiceInfoModel model, String orderBy) {
+    public void getServercerListDataSuccess(FindServiceInfoModel model, String serviceType, String orderBy) {
         serverDate.clear();
         this.orderBy = orderBy;
+        this.curServiceType = serviceType;
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -139,19 +155,21 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
         serverAdapter.refreshAdapter(serverDate);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
+
     @Override
     public void onRefresh() {
         PAGE_NO = 1;
         mvpPresenter.getSertverList_paramet().setPageNo(PAGE_NO + "");
-        mvpPresenter.loadServerListData(curProCode, orderBy + "");
+        mvpPresenter.loadServerListData(curProCode, curServiceType, orderBy + "");
     }
 
     @Override
     public void onLoadMore() {
         PAGE_NO = 1;
         mvpPresenter.getSertverList_paramet().setPageNo(PAGE_NO + "");
-        mvpPresenter.loadServerListData(curProCode, orderBy + "");
+        mvpPresenter.loadServerListData(curProCode, curServiceType, orderBy + "");
     }
+
     @Override
     public void getDataFail(String msg) {
         LoggerUtil.e(msg.toString());
@@ -208,11 +226,11 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int xPos =  mActivity.getWindowManager().getDefaultDisplay().getWidth() / 4
+        int xPos = mActivity.getWindowManager().getDefaultDisplay().getWidth() / 4
                 - rbCity.getWidth() / 4;
         int[] location = new int[2];
         rbCity.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(rbCity, xPos, 40);
+        popupWindow.showAsDropDown(rbServiceType, Gravity.CENTER_HORIZONTAL,0);
 
     }
 

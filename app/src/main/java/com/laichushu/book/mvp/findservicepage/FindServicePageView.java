@@ -8,7 +8,7 @@ import com.laichushu.book.bean.netbean.FindServiceInfoModel;
 
 public interface FindServicePageView {
 
-    void getServercerListDataSuccess(FindServiceInfoModel model, final String orderBy);
+    void getServercerListDataSuccess(FindServiceInfoModel model,final String serviceType, final String orderBy);
     void getDataFail(String msg);
 
     void showDialog();

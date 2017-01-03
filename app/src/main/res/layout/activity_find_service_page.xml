@@ -27,8 +27,11 @@
             <CheckBox
                 android:id="@+id/rb_total_ranking"
                 style="@style/find_select"
-                android:checked="true"
                 android:text="综合排行" />
+            <CheckBox
+                android:id="@+id/rb_serviceType"
+                style="@style/find_select"
+                android:text="服务类型" />
 
             <CheckBox
                 android:id="@+id/rb_city"

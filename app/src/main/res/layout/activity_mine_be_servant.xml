@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_top"
+        android:scrollbars="none"
         android:fillViewport="true">
 
         <LinearLayout
@@ -233,7 +234,7 @@
             <RelativeLayout
                 android:id="@+id/rl_servantVisitingCard"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white">
 
@@ -241,18 +242,16 @@
                 <ImageView
                     android:id="@+id/iv_VisitingCard"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/default_shape"
+                    android:layout_height="150dp"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
                     android:paddingTop="8dp" />
 
                 <ImageView
                     android:id="@+id/iv_idCardFront"
-                    android:layout_width="240dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_margin="8dp"
                     android:background="@drawable/icon_idcard_back2x" />
 
                 <TextView
@@ -261,9 +260,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_idCardFront"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
                     android:text="支持jpg、png格式"
                     android:textColor="@color/characterLightGray2"
                     android:textSize="@dimen/edit2" />

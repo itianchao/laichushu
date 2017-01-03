@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.adapter;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -111,16 +110,27 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         holder.tvContent.setText(dataBeen.get(position).getContent());
                         if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
                             holder.tvBookName.setText("#" + dataBeen.get(position).getSourceName() + "#");
+                        } else {
+                            holder.tvContent.setVisibility(View.GONE);
                         }
                         break;
+                    case "4":
+                    case "6":
+                        //服务+编辑
+                        holder.tvType.setText("收藏了你");
+                        holder.tvContent.setVisibility(View.GONE);
+                        break;
                     case "8":
+                        //评论
                         holder.tvContent.setVisibility(View.VISIBLE);
                         holder.tvType.setText("点赞了你的评论");
                         if (!TextUtils.isEmpty(dataBeen.get(position).getContent())) {
                             holder.tvContent.setText(dataBeen.get(position).getContent());
+                        } else {
+                            holder.tvContent.setVisibility(View.GONE);
                         }
-
                         break;
+
                 }
                 holder.tvReaderName.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -169,7 +179,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                     }
                 };
                 msgSpan.setSpan(nameSpan, 0, dataBeen.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-                msgSpan.setSpan(bookNameSpan, msg.length() - ("《" + dataBeen.get(position).getSourceName() + "》").length(), msg.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                msgSpan.setSpan(bookNameSpan,(dataBeen.get(position).getSenderName() + "打赏了你的书").length()+(" ").length()*5, msg.length()-(" ").length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
                 holder.tvReward.setText(msgSpan);
                 holder.tvReward.setMovementMethod(LinkMovementMethod.getInstance());
 

@@ -56,7 +56,7 @@ public class MineBeServantPresener extends BasePresenter<MineBeServantView> {
 
     //获取服务用户头像信息
     public void loadEditorInfoData(String userID) {
-        FindEditorInfo_Paramet infoParamet = new FindEditorInfo_Paramet(userID,"");
+        FindEditorInfo_Paramet infoParamet = new FindEditorInfo_Paramet(userID,userId);
         Logger.e("用户信息");
         Logger.json(new Gson().toJson(infoParamet));
         addSubscription(apiStores.getServiceInfoDatails(infoParamet), new ApiCallback<FindServerInfoModel>() {

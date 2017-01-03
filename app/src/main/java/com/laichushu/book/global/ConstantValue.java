@@ -48,7 +48,7 @@ public class ConstantValue {
     public static String COLLECTTOPIC_TYPE = "3";//话题
     public static String COLLECTSERVICE_TYPE = "4";//服务
     public static String COLLECTCOURSE_TYPE = "5";//课程
-    public static String COLLECTEDITOR_TYPE = "4";//编辑
+    public static String COLLECTEDITOR_TYPE = "6";//编辑
     //用户类型  作者:1  服务者:3  读者:4
     public static String AUTHOR = "1";
     public static String EDITOR = "2";
