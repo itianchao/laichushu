@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -42,7 +43,8 @@ public class MaterialListDirAdapter extends RecyclerView.Adapter<MaterialListDir
 
     @Override
     public void onBindViewHolder(DraftListViewHolder holder, final int position) {
-
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        holder.itemView.setLayoutParams(params);
         if (isGone) {
             holder.deleteIv.setVisibility(View.VISIBLE);
             holder.renameTv.setVisibility(View.INVISIBLE);
@@ -55,13 +57,13 @@ public class MaterialListDirAdapter extends RecyclerView.Adapter<MaterialListDir
         holder.renameTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mvpPresenter.openRenameDialog(dataBean.getId(),position);
+                mvpPresenter.openRenameDialog(dataBean.getId(), position);
             }
         });
         holder.deleteIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mvpPresenter.openDeleteDialog(dataBean.getId(),position);
+                mvpPresenter.openDeleteDialog(dataBean.getId(), position);
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {

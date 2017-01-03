@@ -85,7 +85,7 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
             }
         });
         mvpPresenter.setfunction(mSuccessView, mEditor);
-        titleTv.setText("创建草稿");
+        titleTv.setText("创建目录");
         finishIv.setOnClickListener(this);
         createBtn.setOnClickListener(this);
         return mSuccessView;

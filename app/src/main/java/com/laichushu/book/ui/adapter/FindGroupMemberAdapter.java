@@ -50,10 +50,13 @@ public class FindGroupMemberAdapter extends RecyclerView.Adapter<FindGroupMember
         final FindGroupMenberModle.DataBean dataBean = mData.get(position);
         switch (type) {
             case 1://关注 已经关注
+                holder.colorTv.setVisibility(View.VISIBLE);
                 if (dataBean.isFollow()) {//已关注
                     holder.colorTv.setTextColor(UIUtil.getColor(R.color.global));
+                    holder.colorTv.setText("已关注");
                 } else {//关注
                     holder.colorTv.setTextColor(UIUtil.getColor(R.color.hint));
+                    holder.colorTv.setText("关注");
                 }
                 holder.colorTv.setOnClickListener(new View.OnClickListener() {
                     @Override

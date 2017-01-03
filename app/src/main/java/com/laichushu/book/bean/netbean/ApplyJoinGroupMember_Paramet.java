@@ -1,16 +1,17 @@
 package com.laichushu.book.bean.netbean;
 
 /**
- * 解散小组
- * Created by wangtong on 2016/12/30.
+ * 申请加入小组
+ * Created by wangtong on 2017/1/3.
  */
 
-public class DismissGroup_Paramet {
-    public String teamId,userId;
+public class ApplyJoinGroupMember_Paramet {
+    private String userId;
+    private String teamId;
 
-    public DismissGroup_Paramet(String teamId, String userId) {
-        this.teamId = teamId;
+    public ApplyJoinGroupMember_Paramet(String userId, String teamId) {
         this.userId = userId;
+        this.teamId = teamId;
     }
 
     public String getUserId() {

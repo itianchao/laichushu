@@ -72,8 +72,8 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
         titleRightTv.setVisibility(View.VISIBLE);
         titleRightTv.setText("管理");
         titleRightTv.setTextColor(Color.WHITE);
-        titleTv.setText("草稿模式");
-        addTv.setText("添加草稿");
+        titleTv.setText("目录模式");
+        addTv.setText("添加目录");
         finishIv.setOnClickListener(this);
         newDraftLay.setOnClickListener(this);
         titleRightTv.setOnClickListener(this);

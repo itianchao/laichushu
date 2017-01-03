@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.findgroup.findgroupmain.FindGroupPagePresenter;
 import com.laichushu.book.mvp.findgroup.findgroupmain.FindGroupPageView;
@@ -178,7 +179,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                 }
                 break;
             case R.id.iv_title_another://搜索：话题
-
+                UIUtil.openActivity(mActivity,FindSearchGroupTopicActivity.class);
                 break;
             case R.id.iv_title_other://更多
                 TypePopWindow popWindow = null;
@@ -205,18 +206,26 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                                     UIUtil.openActivity(mActivity, FindGroupMemberListActivity.class, bundle);
                                     break;
                                 case 2://修改资料
-
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt("type",2);
+                                    bundle.putParcelable("bean",bean);
+                                    UIUtil.openActivity(mActivity, FindGroupCreateNewActivity.class,bundle);
                                     break;
                                 case 3://分享
                                     break;
-                                case 4://解散
+                                case 4://解散小组
+                                    mvpPresenter.openDismissGroupDialog(bean.getId());
                                     break;
                             }
                         } else {//成员：分享、加入小组or退出小组
                             if (position == 0){//分享
 
                             }else {//加入小组or退出小组
-
+                                if (isJoin){//加入小组
+                                    mvpPresenter.openJoinGroupDialog(bean.getId());
+                                }else {//退出小组
+                                    mvpPresenter.openLeaveGroupDialog(bean.getMemberId());
+                                }
                             }
                         }
                     }
@@ -351,6 +360,75 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         }
         briefRbn.setEnabled(true);
         findRbn.setEnabled(true);
+    }
+
+    /**
+     * 解散小组 成功
+     * @param modle
+     */
+    @Override
+    public void dismissGroupSuccess(RewardResult modle) {
+        if (modle.isSuccess()) {
+            ToastUtil.showToast("解散成功");
+            UIUtil.postFinishActivity(this);
+        }else {
+            ToastUtil.showToast("解散失败");
+        }
+    }
+
+    /**
+     * 解散小组 失败
+     * @param msg
+     */
+    @Override
+    public void dismissGroupFail(String msg) {
+        ToastUtil.showToast("解散失败");
+    }
+
+    /**
+     * 退出小组 成功
+     * @param modle
+     */
+    @Override
+    public void getLeaveGroupSuccess(RewardResult modle) {
+        if (modle.isSuccess()) {
+            ToastUtil.showToast("退出小组成功");
+            isJoin = false;
+        }else {
+            ToastUtil.showToast("退出小组失败");
+        }
+    }
+
+    /**
+     * 退出小组 失败
+     * @param msg
+     */
+    @Override
+    public void getLeaveGroupFail(String msg) {
+        ToastUtil.showToast("退出小组失败");
+    }
+
+    /**
+     * 加入小组 成功
+     * @param modle
+     */
+    @Override
+    public void getJoinGroupSuccess(RewardResult modle) {
+        if (modle.isSuccess()) {
+            ToastUtil.showToast("加入小组成功");
+            isJoin = true;
+        }else {
+            ToastUtil.showToast("加入小组失败");
+        }
+    }
+
+    /**
+     * 加入小组 失败
+     * @param msg
+     */
+    @Override
+    public void getJoinGroupFail(String msg) {
+        ToastUtil.showToast("加入小组失败");
     }
 
 

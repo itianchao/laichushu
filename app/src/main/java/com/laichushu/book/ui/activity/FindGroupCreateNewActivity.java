@@ -14,6 +14,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ArticleSave_Paramet;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -53,6 +54,8 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
     private TextView completeTv;
     private String userId = ConstantValue.USERID;
     private EditText markContentEt;
+    private GroupListModle.DataBean bean;
+    private int type;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -62,17 +65,17 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
     @Override
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_findgroupcreatenew);
-        ImageView finishIv = (ImageView)mSuccessView.findViewById(R.id.iv_title_finish);
-        headIv = (ImageView)mSuccessView.findViewById(R.id.iv_select_group_head);
-        titleTv = (TextView)mSuccessView.findViewById(R.id.tv_title);
-        completeTv = (TextView)mSuccessView.findViewById(R.id.tv_title_right);
-        briefEt = (EditText)mSuccessView.findViewById(R.id.et_brief);
-        nameEt = (EditText)mSuccessView.findViewById(R.id.et_groupname);
-        markContentEt = (EditText)mSuccessView.findViewById(R.id.et_mark_content);
+        ImageView finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
+        headIv = (ImageView) mSuccessView.findViewById(R.id.iv_select_group_head);
+        titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
+        completeTv = (TextView) mSuccessView.findViewById(R.id.tv_title_right);
+        briefEt = (EditText) mSuccessView.findViewById(R.id.et_brief);
+        nameEt = (EditText) mSuccessView.findViewById(R.id.et_groupname);
+        markContentEt = (EditText) mSuccessView.findViewById(R.id.et_mark_content);
         titleTv.setText("创建小组");
         completeTv.setText("完成");
         completeTv.setVisibility(View.VISIBLE);
-        GlideUitl.loadRandImg(this,"", headIv);
+        GlideUitl.loadRandImg(this, "", headIv);
         completeTv.setOnClickListener(this);
         finishIv.setOnClickListener(this);
         headIv.setOnClickListener(this);
@@ -86,14 +89,29 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
             public void run() {
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);//加载成功页面
             }
-        },10);
+        }, 10);
+        type = getIntent().getIntExtra("type", 0);
+        if (type == 1) {//创建小组
+            titleTv.setText("创建小组");
+            completeTv.setText("完成");
+        } else if (type == 2) {//修改小组
+            titleTv.setText("修改小组资料");
+            completeTv.setText("完成");
+            bean = getIntent().getParcelableExtra("bean");
+            path = bean.getPhoto();
+            GlideUitl.loadRandImg(this, path, headIv);
+            file = new File(path);
+            nameEt.setText(bean.getName());//组名
+            briefEt.setText(bean.getRemarks());//简介
+            markContentEt.setText(bean.getMarkContent());//里程碑
+        }
     }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.iv_select_group_head:
-                if (TextUtils.isEmpty(path)){
+                if (TextUtils.isEmpty(path)) {
                     path = "";
                     file = null;
                 }
@@ -109,33 +127,34 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
                 String brief = briefEt.getText().toString().trim();
                 String name = nameEt.getText().toString().trim();
                 String markContent = markContentEt.getText().toString().trim();
-                if (TextUtils.isEmpty(name)){
+                if (TextUtils.isEmpty(name)) {
                     ToastUtil.showToast("请添加小组名称");
                     return;
                 }
-                if (TextUtils.isEmpty(brief)){
+                if (TextUtils.isEmpty(brief)) {
                     ToastUtil.showToast("请添加小组简介");
                     return;
                 }
-                if (TextUtils.isEmpty(markContent)){
+                if (TextUtils.isEmpty(markContent)) {
                     ToastUtil.showToast("请添加小组里程碑");
                     return;
                 }
-                if (file == null){
+                if (file == null) {
                     ToastUtil.showToast("请添加小组头像");
                     return;
                 }
-                createNewGroup(name,brief,markContent);
+                createNewGroup(name, brief, markContent);
                 break;
         }
     }
 
     /**
-     * 创建小组
+     * 创建小组 or 修改小组
+     *
      * @param name
      * @param brief
      */
-    private void createNewGroup(String name, String brief,String markContent) {
+    private void createNewGroup(String name, String brief, String markContent) {
         Logger.e("创建小组");
         showProgressDialog();
 
@@ -164,13 +183,13 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
                     UIUtil.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent intent=new Intent();
+                            Intent intent = new Intent();
                             intent.putExtra("back", "updata");
                             setResult(2, intent);
                             finish();
                         }
-                    },1700);
-                }else {
+                    }, 1700);
+                } else {
                     ToastUtil.showToast("创建失败");
                 }
 

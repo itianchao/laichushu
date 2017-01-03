@@ -177,7 +177,9 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 }
                 break;
             case R.id.tv_create_group://创建小组
-                UIUtil.openActivity(mActivity, FindGroupCreateNewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("type",1);
+                UIUtil.openActivity(mActivity, FindGroupCreateNewActivity.class,bundle);
                 break;
         }
     }

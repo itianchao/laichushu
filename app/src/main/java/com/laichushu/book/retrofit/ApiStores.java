@@ -653,6 +653,10 @@ public interface ApiStores {
     @POST("collect/list")
     Observable<MechanismTopicListModel> getMyCollectTopicList(@Body MyPublishTopicList_Paramet paramet);
 
+    //我回复的话题列表
+    @POST("topic/findTopicByCommentId")
+    Observable<MechanismTopicListModel> getMyReplyTopicList(@Body MyPublishTopicList_Paramet paramet);
+
     //小组话题
     @POST("topic/findTopicList")
     Observable<MechanismTopicListModel> getGroupTopicList(@Body MyPublishTopicList_Paramet paramet);
@@ -680,6 +684,10 @@ public interface ApiStores {
     //删除小组成员 or 退出小组成员
     @POST("team/leaveTeam")
     Observable<RewardResult> deleteGroupMember(@Body DeleteGroupMember_Paramet paramet);
+
+    //申请加入小组
+    @POST("team/applyJoin")
+    Observable<RewardResult> applyJoinGroup(@Body ApplyJoinGroupMember_Paramet paramet);
 
     //解散
     @POST("team/dismiss")

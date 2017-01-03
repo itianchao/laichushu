@@ -1,14 +1,14 @@
-package com.laichushu.book.mvp.findgroup.groupsearch;
+package com.laichushu.book.mvp.findgroup.topicsearch;
 
-import com.laichushu.book.bean.netbean.SearchGroupList_Paramet;
+import com.laichushu.book.bean.netbean.MyPublishTopicList_Paramet;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.db.Search_History;
 import com.laichushu.book.db.Search_HistoryDao;
 import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
+import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.FindGroupSearchActivity;
+import com.laichushu.book.ui.activity.FindSearchGroupTopicActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.orhanobut.logger.Logger;
 
@@ -17,43 +17,45 @@ import java.util.List;
 import de.greenrobot.dao.query.Query;
 
 /**
- * 搜索 Presenter
- * Created by wangtong on 2016/12/27.
+ * 小组话题搜索
+ * Created by wangtong on 2017/1/3.
  */
 
-public class FindGroupSearchPresenter extends BasePresenter<FindGroupSearchView> {
+public class SearchGroupTopicPresenter extends BasePresenter<SearchGroupTopicView> {
 
     private String userId = ConstantValue.USERID;
     private String pageNo = "1";
     private String pageSize = ConstantValue.PAGESIZE1;
-    private SearchGroupList_Paramet paramet = new SearchGroupList_Paramet(userId,"",pageNo,pageSize);
-    private FindGroupSearchActivity mActivity;
+    private String type = ConstantValue.SEARCH_TYPE_GROUP;
+    private String teamId = ConstantValue.STRING_NULL;
+    private MyPublishTopicList_Paramet paramet = new MyPublishTopicList_Paramet(userId, type, pageNo, pageSize, teamId, "");
+    private FindSearchGroupTopicActivity mActivity;
     private Search_HistoryDao search_historyDao;
 
-    public FindGroupSearchPresenter(FindGroupSearchView view) {
-        attachView(view);
-        mActivity = (FindGroupSearchActivity)view;
+    public SearchGroupTopicPresenter(SearchGroupTopicView view) {
+        mActivity = (FindSearchGroupTopicActivity) view;
     }
 
     /**
-     * 获取搜索小组结果
+     * 获取搜索话题结果
+     *
      * @param search 关键字
      */
     public void loadSearchResultData(String search) {
         mActivity.showProgressDialog();
-        Logger.e("搜索小组");
-        getParamet().setName(search);//设置搜索关键字
-        addSubscription(apiStores.searchGroupList(paramet), new ApiCallback<FindGroupModle>() {
+        Logger.e("搜索话题");
+        getParamet().setTitle(search);//设置搜索关键字
+        addSubscription(apiStores.getSearchTopicList(paramet), new ApiCallback<MechanismTopicListModel>() {
             @Override
-            public void onSuccess(FindGroupModle model) {
+            public void onSuccess(MechanismTopicListModel model) {
                 mActivity.dismissProgressDialog();
-                mvpView.searchGroupDataSuccess(model);
+                mvpView.searchTopicDataSuccess(model);
             }
 
             @Override
             public void onFailure(int code, String msg) {
                 mActivity.dismissProgressDialog();
-                mvpView.searchGroupDataFail(code+"|"+msg);
+                mvpView.searchTopicDataFail(code + "|" + msg);
             }
 
             @Override
@@ -63,19 +65,11 @@ public class FindGroupSearchPresenter extends BasePresenter<FindGroupSearchView>
         });
     }
 
-    /**
-     * 搜索小组接口参数 获取
-     * @return 搜索接口参数
-     */
-    public SearchGroupList_Paramet getParamet() {
+    public MyPublishTopicList_Paramet getParamet() {
         return paramet;
     }
 
-    /**
-     * 搜索小组接口参数 设置
-     * @param paramet 搜索接口参数
-     */
-    public void setParamet(SearchGroupList_Paramet paramet) {
+    public void setParamet(MyPublishTopicList_Paramet paramet) {
         this.paramet = paramet;
     }
 
@@ -98,7 +92,7 @@ public class FindGroupSearchPresenter extends BasePresenter<FindGroupSearchView>
      * @return 搜索小组历史
      */
     public List<Search_History> getHistoryList() {
-        String type = ConstantValue.SEARCH_TYPE_GROUP;//搜索小组
+        String type = ConstantValue.SEARCH_TYPE_TOPIC;//搜索小组
         Query<Search_History> build = search_historyDao.queryBuilder().where(Search_HistoryDao.Properties.Type.eq(type)).build();
         return build.list();
     }

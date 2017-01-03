@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="修改草稿"
+                android:text="修改目录"
                 android:textColor="@color/global"
                 android:textSize="@dimen/edit4"/>
 
