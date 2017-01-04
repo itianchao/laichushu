@@ -50,7 +50,7 @@ import java.util.List;
  */
 public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack, ivAnthor, ivOther, ivHead, ivGrade, ivGradeDetails, ivGradeDetail;
-    private TextView tvTitle, nickName, tvAuthorGrade;
+    private TextView tvTitle, nickName, tvAuthorGrade,tvTips;
     private HomePersonFocusResult.DataBean dataBean;
     private TextView btnFocus;
     private PullLoadMoreRecyclerView mDyRecyclerView, mWorksRecyclerView, mHeFocusRecyclerView, mFocusHeRecyclerView;
@@ -93,6 +93,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         ivGradeDetails = ((ImageView) inflate.findViewById(R.id.iv_userGradeDetails));
         ivGradeDetail = ((ImageView) inflate.findViewById(R.id.iv_userGradeDetail));
         btnFocus = ((TextView) inflate.findViewById(R.id.btn_userFocus));
+        tvTips = ((TextView) inflate.findViewById(R.id.tv_empTips));
 
         radioGroup = (RadioGroup) inflate.findViewById(R.id.rg_userList);
         mDyRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_userDynamic);
@@ -175,6 +176,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 break;
             case R.id.iv_userGradeDetail:
                 //等级说明
+                Bundle bundle = new Bundle();
+                bundle.putString("userID",userId);
                 UIUtil.openActivity(this, HomePageGradeDetailsActivity.class);
                 break;
             case R.id.btn_userFocus:
@@ -195,6 +198,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         PAGE_NO = 1;
+        tvTips.setVisibility(View.GONE);
         switch (checkedId) {
             case R.id.rb_userDynamic:
                 // 动态
@@ -277,6 +281,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 }
             } else {
                 ivGrade.setVisibility(View.GONE);
+                ivGradeDetails.setVisibility(View.GONE);
                 tvAuthorGrade.setText("暂无等级");
             }
 
@@ -307,10 +312,11 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dyAdapter.refreshAdapter(dyData);
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast(result.getErrMsg());
+
             }
         } else {
-            ToastUtil.showToast("没有更多数据");
+            tvTips.setVisibility(View.VISIBLE);
+            tvTips.setText(result.getErrMsg());
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
@@ -336,6 +342,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
+            tvTips.setVisibility(View.VISIBLE);
+            tvTips.setText(result.getErrMsg());
         }
     }
 
@@ -360,11 +368,12 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             if (!focusMeData.isEmpty()) {
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast(result.getErrMsg());
+                tvTips.setVisibility(View.VISIBLE);
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            ToastUtil.showToast(result.getErrMsg());
+            tvTips.setVisibility(View.VISIBLE);
+            tvTips.setText(result.getErrMsg());
         }
         heAdapter.refreshAdapter(focusMeData);
     }
@@ -390,12 +399,13 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             if (!focusBeData.isEmpty()) {
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast(result.getErrMsg());
+                tvTips.setVisibility(View.VISIBLE);
             }
         } else {
             beAdapter.refreshAdapter(focusBeData);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            ToastUtil.showToast(result.getErrMsg());
+            tvTips.setVisibility(View.VISIBLE);
+            tvTips.setText(result.getErrMsg());
         }
         beAdapter.refreshAdapter(focusBeData);
     }

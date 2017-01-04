@@ -19,6 +19,7 @@ import com.laichushu.book.utils.UIUtil;
 public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.OnClickListener {
     private ImageView ivBack;
     private TextView tvTitle, tvRemarks, total, flg;
+    private String userID;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -39,6 +40,7 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
     @Override
     protected void initData() {
         super.initData();
+        userID=getIntent().getStringExtra("userID");
         tvTitle.setText("等级分类");
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
@@ -55,7 +57,7 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
     }
 
     public void getRemarks() {
-        GradeDetails_Paramet paramet = new GradeDetails_Paramet(SharePrefManager.getUserId());
+        GradeDetails_Paramet paramet = new GradeDetails_Paramet(userID);
         addSubscription(apiStores.gradeDetails(paramet), new ApiCallback<GradeRemarksResult>() {
             @Override
             public void onSuccess(GradeRemarksResult result) {
@@ -63,19 +65,19 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
                     refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                     total.setText(result.getGrade() + "分，为");
                     tvRemarks.setText(result.getRemarks());
-                    Drawable drawable=null;
+                    Drawable drawable = null;
                     switch (result.getType()) {
                         case 1:
                             //"金牌";
-                            drawable= mActivity.getResources().getDrawable(R.drawable.icon_gold_medal2x);
+                            drawable = mActivity.getResources().getDrawable(R.drawable.icon_gold_medal2x);
                             break;
                         case 2:
                             // "银牌";
-                            drawable= mActivity.getResources().getDrawable(R.drawable.icon_silver_medal2x);
+                            drawable = mActivity.getResources().getDrawable(R.drawable.icon_silver_medal2x);
                             break;
                         case 3:
-                          //"铜牌";
-                            drawable= mActivity.getResources().getDrawable(R.drawable.icon_copper_medal2x);
+                            //"铜牌";
+                            drawable = mActivity.getResources().getDrawable(R.drawable.icon_copper_medal2x);
                             break;
                     }
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
