@@ -33,6 +33,7 @@ public interface UserHomePageView {
 
     void getBookDetailsByIdDataSuccess(BookDetailsModle model);
 
+    void getDataFail1(String errorMsg);
     void getDataFail(String errorMsg);
 
     void showDialog();

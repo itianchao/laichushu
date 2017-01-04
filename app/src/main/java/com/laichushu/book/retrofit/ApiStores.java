@@ -65,7 +65,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL2;
 
     //登录接口
     @POST("login/do")

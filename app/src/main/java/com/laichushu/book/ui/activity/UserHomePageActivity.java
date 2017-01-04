@@ -1,6 +1,8 @@
 package com.laichushu.book.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +43,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +53,7 @@ import java.util.List;
  */
 public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack, ivAnthor, ivOther, ivHead, ivGrade, ivGradeDetails, ivGradeDetail;
-    private TextView tvTitle, nickName, tvAuthorGrade,tvTips;
+    private TextView tvTitle, nickName, tvAuthorGrade, tvTips;
     private HomePersonFocusResult.DataBean dataBean;
     private TextView btnFocus;
     private PullLoadMoreRecyclerView mDyRecyclerView, mWorksRecyclerView, mHeFocusRecyclerView, mFocusHeRecyclerView;
@@ -68,10 +71,36 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private List<View> pulls = new ArrayList<>();
     private String userId;
     private HomeUserResult userBean;
+    private boolean headLoadState, dyLoadState;
     /**
      * 1 关注我的 2 我关注的
      */
     private int flg;
+
+    /**
+     * handler
+     */
+    private UserHomePageActivity.MyHandler mhandler = new UserHomePageActivity.MyHandler(this);
+
+    static class MyHandler extends Handler {
+        private WeakReference<UserHomePageActivity> weakReference;
+
+        MyHandler(UserHomePageActivity mActivity) {
+            weakReference = new WeakReference<>(mActivity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            UserHomePageActivity mActivity = weakReference.get();
+            if (mActivity != null) {
+                if (mActivity.headLoadState && mActivity.dyLoadState) {
+                    //TODO 更改状态
+                    mActivity.refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                }
+            }
+        }
+    }
 
     @Override
     protected UserHomePagePresener createPresenter() {
@@ -133,7 +162,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         dyAdapter = new UserDynamicAdapter(this, dyData, mvpPresenter);
         mDyRecyclerView.setAdapter(dyAdapter);
         mDyRecyclerView.setOnPullLoadMoreListener(this);
-        //初始化作品
         //初始化mRecyclerView 他的作品
         mWorksRecyclerView.setGridLayout(3);
         mWorksRecyclerView.setFooterViewText("加载中");
@@ -177,7 +205,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             case R.id.iv_userGradeDetail:
                 //等级说明
                 Bundle bundle = new Bundle();
-                bundle.putString("userID",userId);
+                bundle.putString("userID", userId);
                 UIUtil.openActivity(this, HomePageGradeDetailsActivity.class);
                 break;
             case R.id.btn_userFocus:
@@ -265,6 +293,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
             nickName.setText(result.getNickName());
             if (null != result.getLevelType()) {
+                ivGradeDetails.setVisibility(View.VISIBLE);
                 switch (result.getLevelType()) {
                     case "1":
                         tvAuthorGrade.setText("金牌作家");
@@ -290,8 +319,12 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             } else {
                 btnFocus.setText("关注");
             }
+            headLoadState = true;
+            Message msg = new Message();
+            mhandler.sendMessage(msg);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
+            reLoadDatas();
         }
 
     }
@@ -314,11 +347,16 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             } else {
 
             }
+            dyLoadState = true;
+            Message msg = new Message();
+            mhandler.sendMessage(msg);
         } else {
             tvTips.setVisibility(View.VISIBLE);
             tvTips.setText(result.getErrMsg());
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            reLoadDatas();
         }
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
     }
 
     @Override
@@ -577,7 +615,14 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     }
 
     @Override
+    public void getDataFail1(String errorMsg) {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        reLoadDatas();
+    }
+
+    @Override
     public void getDataFail(String errorMsg) {
+        reLoadDatas();
         Logger.e(errorMsg);
     }
 
@@ -695,5 +740,34 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         if (event.isRefursh) {
             initData();
         }
+    }
+
+    public void reLoadDatas() {
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                switch (type) {
+                    case 1:
+                        if (!dyLoadState)
+                            mvpPresenter.getUserDynmicDate(userId);
+                        if (!headLoadState)
+                            mvpPresenter.getUserHeadDate(userId);
+                        break;
+                    case 2:
+                        mvpPresenter.getUserBookListDate(userId);
+                        break;
+                    case 3:
+                        mvpPresenter.getUserHeFocusDate(userId);
+                        break;
+                    case 4:
+                        mvpPresenter.getUserFocusHeDate(userId);
+                        break;
+                    default:
+                        mvpPresenter.getUserHeadDate(userId);
+                        break;
+                }
+            }
+        });
     }
 }

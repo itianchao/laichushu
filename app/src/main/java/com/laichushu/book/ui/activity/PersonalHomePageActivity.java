@@ -1,8 +1,11 @@
 package com.laichushu.book.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -37,6 +40,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +63,31 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     private int PAGE_NO = 1, type = 1;
     private boolean dibbleDy = false, dibbleFoMe = false, dibbleFo = false;
     private List<View> pulls = new ArrayList<>();
+    private boolean headLoadState, dyLoadState;
+    /**
+     * handler
+     */
+    private PersonalHomePageActivity.MyHandler mhandler = new PersonalHomePageActivity.MyHandler(this);
+
+    static class MyHandler extends Handler {
+        private WeakReference<PersonalHomePageActivity> weakReference;
+
+        MyHandler(PersonalHomePageActivity mActivity) {
+            weakReference = new WeakReference<>(mActivity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            PersonalHomePageActivity mActivity = weakReference.get();
+            if (mActivity != null) {
+                if (mActivity.headLoadState && mActivity.dyLoadState) {
+                    //TODO 更改状态
+                    mActivity.refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                }
+            }
+        }
+    }
 
     @Override
     protected HomePagePresener createPresenter() {
@@ -146,6 +175,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                     GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg, R.drawable.icon_percentre_defhead2x);
                     tvNickName.setText(result.getNickName());
                     if (!TextUtils.isEmpty(result.getLevelType())) {
+                        ivGreadDetails.setVisibility(View.VISIBLE);
                         switch (result.getLevelType()) {
                             case "1":
                                 tvAuthorAgree.setText("金牌作家");
@@ -165,16 +195,19 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                         ivGreadDetails.setVisibility(View.GONE);
                         tvAuthorAgree.setText("暂无等级");
                     }
-
-                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                    headLoadState = true;
+                    Message msg = new Message();
+                    mhandler.sendMessage(msg);
                 } else {
                     refreshPage(LoadingPager.PageState.STATE_ERROR);
+                    reLoadDatas();
                 }
             }
 
             @Override
             public void onFailure(int code, String msg) {
                 refreshPage(LoadingPager.PageState.STATE_ERROR);
+                reLoadDatas();
             }
 
             @Override
@@ -202,7 +235,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             case R.id.iv_perGradeDetail:
                 //作者等级说明
                 Bundle bundle = new Bundle();
-                bundle.putString("userID",SharePrefManager.getUserId());
+                bundle.putString("userID", SharePrefManager.getUserId());
                 UIUtil.openActivity(this, HomePageGradeDetailsActivity.class, bundle);
                 break;
         }
@@ -226,9 +259,12 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText("您还没有添加动态，赶快点击右上角去添加吧！");
             }
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            dyLoadState = true;
+            Message msg = new Message();
+            mhandler.sendMessage(msg);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
+            reLoadDatas();
         }
     }
 
@@ -390,6 +426,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
     @Override
     public void getDataFail(String msg) {
+        reLoadDatas();
         Logger.e(msg);
     }
 
@@ -523,7 +560,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
                 switch (type) {
                     case 1:
-                        mvpPresenter.LoadData();
+                        if (!headLoadState)
+                            initHeadInfo();
+                        if (!dyLoadState)
+                            mvpPresenter.LoadData();
                         break;
                     case 2:
                         mvpPresenter.LoadFocusMeData();
