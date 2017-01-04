@@ -398,6 +398,10 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         if (modle.isSuccess()) {
             ToastUtil.showToast("退出小组成功");
             isJoin = false;
+            UIUtil.postFinishActivity(this);
+            Intent intent = new Intent();
+            intent.putExtra("back","updata");
+            setResult(2,intent);
         }else {
             ToastUtil.showToast("退出小组失败");
         }
