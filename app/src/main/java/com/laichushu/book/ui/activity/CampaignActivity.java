@@ -57,13 +57,10 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
     private ArrayList<CampaignDetailsModel.DataBean> mDetailsData = new ArrayList<>();
     private ArrayList<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
     private int position;
-    private String articId;
     private MessageCommentResult.DataBean dataBeen;
     private View mSuccessView;
     private String activityId;
     private CampaignModel.DataBean dataBean;
-    private String authorId;
-
 
     @Override
     protected View createSuccessView() {
@@ -455,7 +452,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
             GlideUitl.loadRandImg(this, bean.getPhoto(), headIv);
             usernameIv.setText(bean.getNickName());
             booknameIv.setText(bean.getArticleName());
-            authorId = resultData.get(i - 1).getAuthorId();
+            final String authorId = resultData.get(i - 1).getAuthorId();
             headIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
