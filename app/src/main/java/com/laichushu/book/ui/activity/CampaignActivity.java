@@ -57,12 +57,10 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
     private ArrayList<CampaignDetailsModel.DataBean> mDetailsData = new ArrayList<>();
     private ArrayList<AuthorWorksModle.DataBean> mArticleData = new ArrayList<>();
     private int position;
-    private String articId;
     private MessageCommentResult.DataBean dataBeen;
     private View mSuccessView;
     private String activityId;
     private CampaignModel.DataBean dataBean;
-
 
     @Override
     protected View createSuccessView() {
@@ -141,12 +139,8 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
                 openSendPerMsgDialog();
                 break;
             case R.id.tv_join://参加活动
-                if (mArticleData.size() == 0) {
-                    ToastUtil.showToast("您还没有作品");
-                } else {
-                    if (joinTv.getText().equals("参加活动") | joinTv.getText().equals("已结束")) {
-                        mvpPresenter.loadAuthorWorksData();
-                    }
+                if (joinTv.getText().equals("参加活动")) {
+                    mvpPresenter.loadAuthorWorksData();
                 }
                 break;
         }
@@ -232,8 +226,8 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
         if (model.isSuccess()) {
             mArticleData.addAll(model.getData());
             if (!model.getData().isEmpty()) {
-                openSelectBookDialog(mArticleData, dataBeen.getArticleId());
-//                openAlertDialog();
+//                openSelectBookDialog(mArticleData, dataBeen.getArticleId());
+                openAlertDialog();
             } else {
                 ToastUtil.showToast("您还没有作品");
             }
@@ -297,7 +291,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             dataBean = modle.getData();
             setData(dataBean);//活动详情
-            if (dataBean.getResult()!=null){
+            if (dataBean.getResult() != null) {
                 getResultData(dataBean.getResult());//活动结果
             }
         } else {
@@ -407,6 +401,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
 
     /**
      * 设置数据
+     *
      * @param dataBean
      */
     private void setData(CampaignModel.DataBean dataBean) {
@@ -438,8 +433,10 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
             detailsTv.setText(dataBean.getDetail());
         }
     }
+
     /**
      * 比赛结束获取排名
+     *
      * @param resultData 结果集合
      */
     public void getResultData(ArrayList<CampaignModel.DataBean.ResultBean> resultData) {
@@ -455,15 +452,15 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
             GlideUitl.loadRandImg(this, bean.getPhoto(), headIv);
             usernameIv.setText(bean.getNickName());
             booknameIv.setText(bean.getArticleName());
-            articId = resultData.get(i-1).getArticleId();
+            final String authorId = resultData.get(i - 1).getAuthorId();
             headIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //跳转用户主页
-                    if (!TextUtils.isEmpty(articId)) {
+                    if (!TextUtils.isEmpty(authorId)) {
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("userId", articId);
-                        if (SharePrefManager.getUserId().equals(articId)) {
+                        bundle.putSerializable("userId", authorId);
+                        if (SharePrefManager.getUserId().equals(authorId)) {
                             UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
                         } else {
                             UIUtil.openActivity(mActivity, UserHomePageActivity.class, bundle);
@@ -478,7 +475,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
     /**
      * 失败页面按钮重新加载
      */
-    public void refurshErrorViewOnClick(){
+    public void refurshErrorViewOnClick() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {
