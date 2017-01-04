@@ -25,8 +25,8 @@
                 android:id="@+id/iv_book_statue"
                 tools:src="@drawable/icon_book_statue1"
                 android:scaleType="centerCrop"
-                android:layout_width="70dp"
-                android:layout_height="70dp" />
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
         </FrameLayout>
 
         <LinearLayout
