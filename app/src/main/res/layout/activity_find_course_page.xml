@@ -1,69 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgGrey">
+    android:background="@color/bgGrey"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/bookCast_top"
-        layout="@layout/page_title" />
+    <include layout="@layout/page_title" />
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/rg_bookList"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_video"
+            style="@style/mechanism_select"
+            android:checked="true"
+            android:text="视频" />
+
+        <RadioButton
+            android:id="@+id/rb_doc"
+            style="@style/mechanism_select"
+            android:text="文档" />
+
+        <RadioButton
+            android:id="@+id/rb_mine"
+            style="@style/mechanism_select"
+            android:text="我的" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/fay_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/bookCast_top"
-        android:layout_centerHorizontal="true"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:background="@color/white">
 
-        <RadioGroup
-            android:id="@+id/rg_bookList"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+    </FrameLayout>
 
-            <RadioButton
-                android:id="@+id/rb_video"
-                style="@style/mechanism_select"
-                android:checked="true"
-                android:text="视频" />
-
-            <RadioButton
-                android:id="@+id/rb_total"
-                style="@style/mechanism_select"
-                android:text="文档" />
-
-            <RadioButton
-                android:id="@+id/rb_city"
-                style="@style/mechanism_select"
-                android:text="我的" />
-        </RadioGroup>
-
-        <include layout="@layout/item_distance2" />
-
-        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-            android:id="@+id/ryv_video"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:background="@color/white" />
-
-        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-            android:id="@+id/ryv_file"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:background="@color/white"
-            android:visibility="gone" />
-
-        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-            android:id="@+id/ryv_mine"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:background="@color/white"
-            android:visibility="gone" />
-
-    </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
