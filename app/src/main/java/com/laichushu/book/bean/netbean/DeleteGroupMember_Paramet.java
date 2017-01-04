@@ -53,8 +53,8 @@ public class DeleteGroupMember_Paramet {
     private String teamId;
     private String userId;
 
-    public DeleteGroupMember_Paramet(String teamId, String userId) {
-        this.teamId = teamId;
+    public DeleteGroupMember_Paramet(String memberId, String userId) {
+        this.memberId = memberId;
         this.userId = userId;
     }
 

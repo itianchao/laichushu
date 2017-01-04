@@ -23,7 +23,7 @@ import com.laichushu.book.utils.UIUtil;
 public class FindGroupMineActivity extends MvpActivity2 implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private ListView mineLv;
-    private String[] itemName = {"我加入的小组", "我创建的小组", "我发表的话题", "我回复的话题", "我点赞的话题"};
+    private String[] itemName = {"我加入的小组", "我创建的小组", "我发表的话题", "我回复的话题", "我收藏的话题"};
     private TextView titleTv;
     private ImageView finishIv;
 

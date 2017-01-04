@@ -273,11 +273,12 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     /**
      * 打赏 对话框
      */
-    public void openReward(String balance, final String accepterId, final String articleId) {
+    public void openReward(String balance, final String accepterId, final String articleId, final double maxLimit, final double minLimit) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_reward);
         final EditText payEt = (EditText) customerView.findViewById(R.id.et_pay);
         TextView balanceTv = (TextView) customerView.findViewById(R.id.tv_balance);
+        payEt.setHint("只能打赏"+minLimit+"-"+maxLimit+"金额");
         balanceTv.setText(balance);
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
@@ -296,7 +297,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                     ToastUtil.showToast("请输入打赏金额");
                 } else {
                     try {
-                        if (Double.parseDouble(pay) > 0 && Double.parseDouble(pay) < 100) {
+                        if (Double.parseDouble(pay) >= minLimit && Double.parseDouble(pay) <= maxLimit) {
                             if (pay.contains(".") && pay.substring(pay.indexOf(".")+1,pay.length()).length()>2) {
                                 ToastUtil.showToast("不能超过小数点后两位");
                             } else {
@@ -308,7 +309,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                             }
 
                         } else {
-                            ToastUtil.showToast("只能打赏1-100金额");
+                            ToastUtil.showToast("只能打赏"+minLimit+"-"+maxLimit+"金额");
                         }
                     } catch (NumberFormatException e) {
                         ToastUtil.showToast("请输入正确的价格");

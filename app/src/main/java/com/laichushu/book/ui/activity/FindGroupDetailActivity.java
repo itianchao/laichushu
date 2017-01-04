@@ -183,6 +183,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                 break;
             case R.id.iv_title_other://更多
                 TypePopWindow popWindow = null;
+                mvpPresenter.initData();
                 if (isLeader) {//组长：待处理申请、成员管理、修改资料、分享、解散
                     popWindow = new TypePopWindow(mActivity, mvpPresenter.getLeaderList());
                 } else {//成员：分享、退出
@@ -222,9 +223,9 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
 
                             }else {//加入小组or退出小组
                                 if (isJoin){//加入小组
-                                    mvpPresenter.openJoinGroupDialog(bean.getId());
-                                }else {//退出小组
                                     mvpPresenter.openLeaveGroupDialog(bean.getMemberId());
+                                }else {//退出小组
+                                    mvpPresenter.openJoinGroupDialog(bean.getId());
                                 }
                             }
                         }
@@ -371,6 +372,9 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         if (modle.isSuccess()) {
             ToastUtil.showToast("解散成功");
             UIUtil.postFinishActivity(this);
+            Intent intent = new Intent();
+            intent.putExtra("back","updata");
+            setResult(2,intent);
         }else {
             ToastUtil.showToast("解散失败");
         }
@@ -409,26 +413,26 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
     }
 
     /**
-     * 加入小组 成功
+     * 申请加入小组 成功
      * @param modle
      */
     @Override
     public void getJoinGroupSuccess(RewardResult modle) {
         if (modle.isSuccess()) {
-            ToastUtil.showToast("加入小组成功");
+            ToastUtil.showToast("申请加入小组成功");
             isJoin = true;
         }else {
-            ToastUtil.showToast("加入小组失败");
+            ToastUtil.showToast("申请加入小组失败");
         }
     }
 
     /**
-     * 加入小组 失败
+     * 申请加入小组 失败
      * @param msg
      */
     @Override
     public void getJoinGroupFail(String msg) {
-        ToastUtil.showToast("加入小组失败");
+        ToastUtil.showToast("申请加入小组失败");
     }
 
 

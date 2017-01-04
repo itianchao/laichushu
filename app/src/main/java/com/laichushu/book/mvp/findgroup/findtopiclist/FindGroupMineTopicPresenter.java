@@ -41,6 +41,7 @@ public class FindGroupMineTopicPresenter extends BasePresenter<FindGroupMineTopi
                 observable = apiStores.getMyReplyTopicList(paramet);
                 break;
             case "3"://我收藏的
+                paramet.setSourceType("2");
                 observable = apiStores.getMyCollectTopicList(paramet);
                 break;
         }

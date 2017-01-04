@@ -1,5 +1,7 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -265,5 +267,15 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
      */
     public FindGroupSearchPresenter getPresenter() {
         return mvpPresenter;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 2) {//创建小组后
+            Bundle bundle = data.getExtras();
+            String str = bundle.getString("back");
+            if (str.equals("updata")) {//刷新小组列表
+                onRefresh();
+            }
+        }
     }
 }
