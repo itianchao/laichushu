@@ -59,18 +59,22 @@ public class NoticeFragment extends MvpFragment2<NoticePresenter> implements Not
 
     @Override
     public void getDataSuccess(NoticeModle model) {
-        noticemRyv.setPullLoadMoreCompleted();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                noticemRyv.setPullLoadMoreCompleted();
+            }
+        }, 300);
         if (model.isSuccess()) {
             if (pageNo ==1){
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             }
             if (model.getData()!=null &&model.getData().size()>0){
                 mData.addAll(model.getData());
-
                 pageNo++;
-
                 mAdapter.notifyDataSetChanged();
             }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             refreshData();

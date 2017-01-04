@@ -47,7 +47,7 @@ public class NoticePresenter extends BasePresenter<NoticeView> {
 
             @Override
             public void onFinish() {
-
+                mvpView.hideLoading();
             }
         });
     }

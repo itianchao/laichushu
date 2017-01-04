@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -111,27 +112,29 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         } else {
             moreIv.setVisibility(View.INVISIBLE);
         }
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         titleTv.setText("机构详情");//设置标题
         GlideUitl.loadImg(mActivity, R.drawable.mechanism_detail_bg, mechanismIv);//设置机构图片
         mechanismTv.setText(bean.getName());
         if (bean.isIsCollect()) {
             collectionTv.setText("已收藏");
+            Drawable drawable =getResources().getDrawable(R.drawable.icon_likedwhite2x);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            collectionTv.setCompoundDrawables(drawable, null, null, null);
         } else {
             collectionTv.setText("收藏");
+            Drawable drawable =getResources().getDrawable(R.drawable.icon_likewhite2x);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            collectionTv.setCompoundDrawables(drawable, null, null, null);
         }
         collectionCountTv.setText("收藏:" + bean.getCollectCount() + "人");
         position = 0;
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         onClick(firstRbn);
     }
 
     @Override
     public void getDataSuccess(MechanisDetailModel model) {
-        if (model.isSuccess()) {
-        } else {
-            ToastUtil.showToast(model.getErrMsg());
-        }
-
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -174,8 +177,14 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
             bean.setIsCollect(collect);
             if (bean.isIsCollect()) {
                 collectionTv.setText("已收藏");
+                Drawable drawable =getResources().getDrawable(R.drawable.icon_likedwhite2x);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                collectionTv.setCompoundDrawables(drawable, null, null, null);
             } else {
                 collectionTv.setText("收藏");
+                Drawable drawable =getResources().getDrawable(R.drawable.icon_likewhite2x);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                collectionTv.setCompoundDrawables(drawable, null, null, null);
             }
         } else {
             ToastUtil.showToast("收藏失败");
@@ -289,7 +298,6 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 } else {
                     cType = "0";
                 }
-                collectionTv.setEnabled(false);
                 mvpPresenter.collectSave(bean.getId(), cType, ConstantValue.MECHANISM_TYPE);
                 break;
         }

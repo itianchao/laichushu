@@ -200,7 +200,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
     public void collectSave(String targetId, String type, final String collectType) {
         mvpView.showLoading();
         Logger.e("收藏");
-        CollectSave_Paramet paramet = new CollectSave_Paramet(userId, targetId, type, collectType);
+        CollectSave_Paramet paramet = new CollectSave_Paramet(userId, targetId, collectType, type);
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.collectSave(paramet), new ApiCallback<RewardResult>() {
             @Override

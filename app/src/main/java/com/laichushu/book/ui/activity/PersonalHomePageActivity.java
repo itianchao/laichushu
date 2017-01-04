@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade, ivGreadDetails, ivGreadDetail, ivAnother;
-    private TextView tvTitle, tvNickName, tvAuthorAgree;
+    private TextView tvTitle, tvNickName, tvAuthorAgree, tvTips;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
     private RadioButton rbDy;
@@ -79,6 +79,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_middleLeft));
         tvNickName = ((TextView) inflate.findViewById(R.id.tv_PerNickName));
         tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perRealName));
+        tvTips = ((TextView) inflate.findViewById(R.id.tv_empTips));
         rbDy = ((RadioButton) inflate.findViewById(R.id.rb_dynamic));
 
         rgHomeList = ((RadioGroup) inflate.findViewById(R.id.rg_homeList));
@@ -161,10 +162,11 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                         }
                     } else {
                         ivPerGrade.setVisibility(View.GONE);
+                        ivGreadDetails.setVisibility(View.GONE);
                         tvAuthorAgree.setText("暂无等级");
                     }
 
-
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 } else {
                     refreshPage(LoadingPager.PageState.STATE_ERROR);
                 }
@@ -200,6 +202,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             case R.id.iv_perGradeDetail:
                 //作者等级说明
                 Bundle bundle = new Bundle();
+                bundle.putString("userID",SharePrefManager.getUserId());
                 UIUtil.openActivity(this, HomePageGradeDetailsActivity.class, bundle);
                 break;
         }
@@ -216,13 +219,14 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         }, 300);
         if (model.isSuccess()) {
             dyData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!dyData.isEmpty()) {
                 dyAdapter.refreshAdapter(dyData);
                 PAGE_NO++;
             } else {
-
+                tvTips.setVisibility(View.VISIBLE);
+                tvTips.setText("您还没有添加动态，赶快点击右上角去添加吧！");
             }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
@@ -251,7 +255,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
             }
         } else {
-            ToastUtil.showToast(model.getErrMsg());
+            tvTips.setVisibility(View.VISIBLE);
+            tvTips.setText("您还未被其他用户关注！");
         }
         fmAdapter.refreshAdapter(focusMeData);
     }
@@ -276,10 +281,12 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             if (!focusBeData.isEmpty()) {
                 PAGE_NO++;
             } else {
+
             }
         } else {
             fbAdapter.refreshAdapter(focusBeData);
-            ToastUtil.showToast(model.getErrMsg());
+            tvTips.setVisibility(View.VISIBLE);
+            tvTips.setText("您还没有关注其他用户，赶快去添加吧！");
         }
         fbAdapter.refreshAdapter(focusBeData);
     }
@@ -399,6 +406,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         PAGE_NO = 1;
+        tvTips.setVisibility(View.GONE);
         switch (checkedId) {
             case R.id.rb_dynamic:
                 // 动态

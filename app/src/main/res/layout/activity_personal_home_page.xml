@@ -50,26 +50,26 @@
             android:layout_height="12dp"
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="6dp"
-            android:layout_toRightOf="@+id/iv_perGrade"
-           />
-<ImageView
-    android:id="@+id/iv_perGradeDetail"
-    android:layout_width="24dp"
-    android:layout_height="16dp"
-    android:layout_alignTop="@+id/tv_PerNickName"
-    android:layout_marginLeft="6dp"
-    android:layout_toRightOf="@+id/iv_perGrade"/>
+            android:layout_toRightOf="@+id/iv_perGrade" />
+
+        <ImageView
+            android:id="@+id/iv_perGradeDetail"
+            android:layout_width="24dp"
+            android:layout_height="16dp"
+            android:layout_alignTop="@+id/tv_PerNickName"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@+id/iv_perGrade" />
+
         <TextView
             android:id="@+id/tv_perRealName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/tv_PerNickName"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
-            android:textColor="@color/white"
             android:text="暂无等级"
-            android:textSize="@dimen/edit"
-            />
+            android:textColor="@color/white"
+            android:textSize="@dimen/edit" />
 
         <TextView
             android:id="@+id/tv_perAuthorAgree"
@@ -80,8 +80,7 @@
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/tv_PerNickName"
             android:textColor="@color/white"
-            android:textSize="@dimen/edit"
-           />
+            android:textSize="@dimen/edit" />
     </RelativeLayout>
 
     <LinearLayout
@@ -123,11 +122,21 @@
             android:layout_width="match_parent"
             android:layout_height="12dp" />
 
+        <TextView
+            android:id="@+id/tv_empTips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/characterGray"
+            android:visibility="gone"
+            android:textSize="@dimen/edit2" />
+
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_dynamic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"/>
+            android:overScrollMode="never" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_focusMe"
