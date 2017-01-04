@@ -24,7 +24,7 @@ public class FeedbackActivity extends MvpActivity2 implements View.OnClickListen
     private TextView tvTitle;
     private EditText edContent, edAccount;
     private Button btnSubmit;
-
+private String conHint,accHint;
     @Override
     protected BasePresenter createPresenter() {
         return null;
@@ -49,6 +49,32 @@ public class FeedbackActivity extends MvpActivity2 implements View.OnClickListen
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+
+        edContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    conHint=edContent.getHint().toString();
+                    edContent.setHint(null);
+                }else{
+                    if(TextUtils.isEmpty(edContent.getText().toString()))
+                    edContent.setHint(conHint);
+                }
+            }
+        }); edAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    accHint=edAccount.getHint().toString();
+                    edAccount.setHint(null);
+                }else{
+                    if(TextUtils.isEmpty(edContent.getText()))
+                        if(TextUtils.isEmpty(edAccount.getText().toString()))
+                            edAccount.setHint(accHint);
+                }
+            }
+        });
+
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 

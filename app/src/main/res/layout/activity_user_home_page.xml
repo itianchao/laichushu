@@ -51,6 +51,7 @@
             android:layout_height="12dp"
             android:layout_alignTop="@+id/tv_userNickName"
             android:layout_marginLeft="6dp"
+            android:visibility="invisible"
             android:layout_toRightOf="@+id/iv_userGrade" />
 
         <ImageView

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.NewTopicList_Paramet;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.db.Cache_Json;
 import com.laichushu.book.db.Cache_JsonDao;

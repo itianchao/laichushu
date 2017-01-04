@@ -417,4 +417,13 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
             mData.set(event.getIndex(),dataBean);
         }
     }
+
+    public void reLoadData() {
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                mvpPresenter.getArticleBookList();
+            }
+        });
+    }
 }

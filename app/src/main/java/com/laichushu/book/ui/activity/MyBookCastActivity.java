@@ -194,7 +194,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             }
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ErrorReloadData();
         }
     }
 
@@ -252,5 +253,13 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     @Override
     public void dismissDialog() {
         dismissProgressDialog();
+    }
+    public void ErrorReloadData() {
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                mvpPresenter.loadBrowserListData("1");
+            }
+        });
     }
 }

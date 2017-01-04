@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <include layout="@layout/page_title" />
@@ -11,7 +11,7 @@
     <EditText
         android:id="@+id/ed_adviceContent"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
@@ -23,31 +23,29 @@
         android:paddingRight="24dp"
         android:paddingTop="12dp"
         android:textColor="@color/characterGray"
-        android:textColorHint="@color/Grey"
+        android:textColorHint="@color/characterLightGray2"
         android:textSize="@dimen/edit2" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="36dp"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-        android:layout_marginTop="24dp"
         android:background="@color/white"
-        android:gravity="top"
+        android:gravity="center_vertical"
         android:hint="留下联系方式方便我们与你取得联系"
         android:paddingLeft="12dp"
-        android:paddingTop="12dp"
-        android:textColor="@color/characterGray"
+        android:textColor="@color/characterLightGray2"
         android:textColorHint="@color/Grey"
         android:textSize="@dimen/edit2" />
 
     <EditText
         android:id="@+id/ed_adviceAccount"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-        android:layout_marginTop="24dp"
+        android:layout_gravity="center_vertical"
         android:background="@drawable/shape_rectangle_fill_hint"
         android:gravity="center_vertical"
         android:hint="邮箱/微信号"
@@ -63,7 +61,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/shape_rectangle_btn"
         android:text="提 交"
         android:textColor="@color/white"

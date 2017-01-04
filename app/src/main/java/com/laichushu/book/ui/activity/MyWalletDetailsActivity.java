@@ -87,7 +87,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
                 //充值
                 Bundle recharge = new Bundle();
                 recharge.putParcelable("bean", bean);
-                UIUtil.openActivity(this, RechargeDetailsActivity.class,recharge);
+                UIUtil.openActivity(this, RechargeDetailsActivity.class, recharge);
                 break;
             case R.id.btn_withdrawals:
                 //提现
@@ -118,11 +118,11 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
 
             }
         } else {
-            if (null==model.getData() &&model.getData().size() == 0) {
-                ToastUtil.showToast("没有更多内容!");
-            }
+                refreshPage(LoadingPager.PageState.STATE_ERROR);
+                ToastUtil.showToast(model.getErrMsg());
+                reLoadData();
         }
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
     }
 
     @Override
@@ -138,6 +138,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
     @Override
     public void getDataFail(String msg) {
         refreshPage(LoadingPager.PageState.STATE_ERROR);
+        reLoadData();
     }
 
     @Override
@@ -163,11 +164,21 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
         mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
         mvpPresenter.LoadWalletRecordData();//请求网络获取搜索列表
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefrushWalletEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             initData();
         }
+    }
+
+    public void reLoadData() {
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                mvpPresenter.LoadWalletRecordData();
+            }
+        });
     }
 }
