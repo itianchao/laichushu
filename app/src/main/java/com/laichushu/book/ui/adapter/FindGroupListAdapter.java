@@ -52,7 +52,7 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
     }
 
     @Override
-    public void onBindViewHolder(FindGroupListViewHolder holder, int position) {
+    public void onBindViewHolder(FindGroupListViewHolder holder, final int position) {
         RelativeLayout.LayoutParams parames = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, UIUtil.dip2px(70));
         holder.itemView.setLayoutParams(parames);
         final GroupListModle.DataBean dataBean = mData.get(position);
@@ -64,6 +64,7 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean",dataBean);
+                bundle.putInt("position",position);
                 UIUtil.openActivity(mActivity,FindGroupDetailActivity.class,bundle);
             }
         });

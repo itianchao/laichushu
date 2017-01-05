@@ -276,6 +276,11 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
             if (str.equals("updata")) {//刷新小组列表
                 onRefresh();
             }
+        }else if (resultCode == 4){//更新小组人数
+            Bundle bundle = data.getExtras();
+            int argsMember = bundle.getInt("argsMember");
+            int index = bundle.getInt("index");
+            mData.get(index).setJoinNum(mData.get(index).getJoinNum()+argsMember);
         }
     }
 }

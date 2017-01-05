@@ -47,4 +47,19 @@ public class DeleteTopic_Paramet implements Parcelable {
             return new DeleteTopic_Paramet[size];
         }
     };
+
+    private String userId;
+
+    public DeleteTopic_Paramet(String id, String userId) {
+        this.id = id;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

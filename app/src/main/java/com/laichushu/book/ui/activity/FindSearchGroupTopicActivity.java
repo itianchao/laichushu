@@ -72,7 +72,7 @@ public class FindSearchGroupTopicActivity extends MvpActivity2<SearchGroupTopicP
         mRecyclerView = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_search);//搜索列表
         emptyIv = (ImageView) mSuccessView.findViewById(R.id.iv_empty);//搜索空结果
         mRecyclerView.setLinearLayout();
-        mTopicAdapter = new MechanismTopicListAdapter(mData, this);
+        mTopicAdapter = new MechanismTopicListAdapter(mData, this,5);
         mRecyclerView.setAdapter(mTopicAdapter);
         finishIV.setOnClickListener(this);
         searchEt.setOnClickListener(this);

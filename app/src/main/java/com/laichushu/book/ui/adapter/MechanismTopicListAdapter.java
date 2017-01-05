@@ -3,6 +3,7 @@ package com.laichushu.book.ui.adapter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,11 +13,18 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
+import com.laichushu.book.bean.netbean.DeleteTopic_Paramet;
+import com.laichushu.book.bean.netbean.UpdateTopicTop_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.retrofit.ApiCallback;
+import com.laichushu.book.ui.activity.FindGroupDetailActivity;
+import com.laichushu.book.ui.activity.FindGroupMainActivity;
+import com.laichushu.book.ui.activity.FindGroupMineTopicListActivity;
+import com.laichushu.book.ui.activity.FindSearchGroupTopicActivity;
 import com.laichushu.book.ui.activity.TopicDetilActivity;
 import com.laichushu.book.ui.base.BaseActivity;
+import com.laichushu.book.ui.widget.TypePopWindow;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
@@ -33,12 +41,21 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
     private ArrayList<MechanismTopicListModel.DataBean> mData;
     private BaseActivity mActivity;
     private String type;
-    private int currentNum;
     private String userId = ConstantValue.USERID;
+    private ArrayList<String> permissionList1;
+    private ArrayList<String> permissionList2;
+    //1 机构话题 2、小组话题-详情 3、小组话题-我的 4、小组最新话题 5、搜索话题
+    private int topicType;
 
-    public MechanismTopicListAdapter(ArrayList<MechanismTopicListModel.DataBean> mData, BaseActivity mActivity) {
+    public MechanismTopicListAdapter(ArrayList<MechanismTopicListModel.DataBean> mData, BaseActivity mActivity,int topicType) {
         this.mData = mData;
         this.mActivity = mActivity;
+        this.topicType = topicType;
+        permissionList1 = new ArrayList<>();
+        permissionList2 = new ArrayList<>();
+        permissionList1.add("置顶话题");
+        permissionList1.add("删除话题");
+        permissionList2.add("删除话题");
     }
 
     @Override
@@ -54,6 +71,13 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
                 android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
         holder.contentIay.setVisibility(View.VISIBLE);
         final MechanismTopicListModel.DataBean dataBean = mData.get(position);
+
+        if (topicType!=1 && (dataBean.getLeaderId().equals(ConstantValue.USERID)||dataBean.getCreatUserId().equals(ConstantValue.USERID))){
+            holder.permissionIv.setVisibility(View.VISIBLE);
+        }else {
+            holder.permissionIv.setVisibility(View.GONE);
+        }
+
         holder.topicNameTv.setText(dataBean.getTitle());
         holder.topicAuthorTv.setText(dataBean.getCreatUserName());
         holder.topicContentTv.setText(dataBean.getContent());
@@ -68,7 +92,7 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
                 UIUtil.openActivity(mActivity, TopicDetilActivity.class, bundle);
             }
         });
-        currentNum = dataBean.getCollectNum();
+
         if (dataBean.isCollect()) {
             holder.likeTv.setText("已收藏(" + dataBean.getCollectNum() + ")");
             Drawable drawable = mActivity.getResources().getDrawable(R.drawable.icon_praise_yes2x);
@@ -94,6 +118,40 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
                 }
             }
         });
+        holder.permissionIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TypePopWindow popWindow = null;
+                final boolean isLeader = dataBean.getLeaderId().equals(ConstantValue.USERID);
+                if (isLeader) {
+                    popWindow = new TypePopWindow(mActivity, permissionList1);
+                    popWindow.setHeight(UIUtil.dip2px(40)*2);
+                }else {
+                    popWindow = new TypePopWindow(mActivity, permissionList2);
+                    popWindow.setHeight(UIUtil.dip2px(40));
+                }
+
+                popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
+                    @Override
+                    public void clickItem(int index) {
+                        if (isLeader) {
+                            if (index == 0){//置顶话题
+                                topicSticky(dataBean.getId());
+                            }else {//删除话题
+                                topicDelete(dataBean.getId());
+                            }
+                        }else {
+                            if (index == 0){////删除话题
+                                topicDelete(dataBean.getId());
+                            }
+                        }
+                    }
+                });
+                popWindow.setWidth(UIUtil.dip2px(90));
+                popWindow.showAsDropDown(v);
+//                popWindow.showAtLocation(v, Gravity.BOTTOM,0,0);
+            }
+        });
     }
 
     @Override
@@ -106,6 +164,7 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
         private LinearLayout scanIay;
         private LinearLayout contentIay;
         private ImageView topicUserheadIv;
+        private ImageView permissionIv;
         private TextView likeTv;
         private TextView topicAuthorTv;
         private TextView topicNameTv;
@@ -115,6 +174,7 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
         public ViewHolder(View itemView) {
             super(itemView);
             topicUserheadIv = (ImageView) itemView.findViewById(R.id.iv_topic_userhead);
+            permissionIv = (ImageView) itemView.findViewById(R.id.iv_permission);
             likeTv = (TextView) itemView.findViewById(R.id.tv_like);
             scanIay = (LinearLayout) itemView.findViewById(R.id.ll_scan);
             contentIay = (LinearLayout) itemView.findViewById(R.id.lay_content);
@@ -152,13 +212,12 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
                 mActivity.dismissProgressDialog();
                 if (model.isSuccess()) {
                     if (type.equals("0")) {//收藏
-                        currentNum++;
+                        dataBean.setCollectNum(dataBean.getCollectNum()+1);
                         dataBean.setCollect(true);
                     } else {//取消收藏
-                        currentNum--;
+                        dataBean.setCollectNum(dataBean.getCollectNum()-1);
                         dataBean.setCollect(false);
                     }
-                    dataBean.setCollectNum(currentNum);
                     mData.set(position,dataBean);
                     notifyDataSetChanged();
                 } else {
@@ -185,5 +244,89 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
                 mActivity.dismissProgressDialog();
             }
         });
+    }
+
+    /**
+     * 话题置顶
+     */
+    private void topicSticky(String topicId) {
+        mActivity.showProgressDialog();
+        UpdateTopicTop_Paramet paramet = new UpdateTopicTop_Paramet(topicId,userId);
+        mActivity.addSubscription(mActivity.apiStores.updateTopicTop(paramet),new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mActivity.dismissProgressDialog();
+                if (model.isSuccess()){
+                    ToastUtil.showToast("话题置顶成功");
+                    //刷新话题列表
+                    refurshTopicList();
+                }else {
+
+                    ToastUtil.showToast("话题置顶失败");
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mActivity.dismissProgressDialog();
+                ToastUtil.showToast("话题置顶失败");
+            }
+
+            @Override
+            public void onFinish() {
+                mActivity.dismissProgressDialog();
+            }
+        });
+    }
+
+    /**
+     * 删除话题
+     */
+    private void topicDelete(String topicId) {
+        mActivity.showProgressDialog();
+        DeleteTopic_Paramet paramet = new DeleteTopic_Paramet(topicId,userId);
+        mActivity.addSubscription(mActivity.apiStores.deleteTopic(paramet),new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mActivity.dismissProgressDialog();
+                if (model.isSuccess()){
+                    ToastUtil.showToast("删除话题成功");
+                    //刷新话题列表
+                    refurshTopicList();
+                }else {
+                    ToastUtil.showToast("删除话题失败");
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mActivity.dismissProgressDialog();
+                ToastUtil.showToast("删除话题失败");
+            }
+
+            @Override
+            public void onFinish() {
+                mActivity.dismissProgressDialog();
+            }
+        });
+    }
+    public void refurshTopicList(){
+        //1 机构话题 2、小组话题-详情 3、小组话题-我的 4、小组最新话题 5、搜索话题
+        switch(topicType){
+            case 1:
+                break;
+            case 2:
+                ((FindGroupDetailActivity)mActivity).onRefresh();
+                break;
+            case 3:
+                ((FindGroupMineTopicListActivity)mActivity).onRefresh();
+                break;
+            case 4:
+                ((FindGroupMainActivity)mActivity).onRefresh();
+                break;
+            case 5:
+                ((FindSearchGroupTopicActivity)mActivity).onRefresh();
+                break;
+        }
     }
 }

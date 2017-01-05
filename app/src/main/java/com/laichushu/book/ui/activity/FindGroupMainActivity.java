@@ -127,7 +127,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         //创建adapter
         mGroupListAdapter = new FindGroupListAdapter(mGroupListdata, this);
         mRecommendAdapter = new FindGroupRecommenAdapter(mRecommendData, this);
-        mTopicAdapter = new MechanismTopicListAdapter(mTopicData, this);
+        mTopicAdapter = new MechanismTopicListAdapter(mTopicData, this,4);
         //设置adapter
         groupRyv.setAdapter(mGroupListAdapter);
         recommendRyv.setAdapter(mRecommendAdapter);
@@ -322,6 +322,11 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 mvpPresenter.getParamet().setPageNo(pageNo + "");
                 mvpPresenter.loadNewTopicList();
             }
+        }else if (resultCode == 4){//更新小组人数
+            Bundle bundle = data.getExtras();
+            int argsMember = bundle.getInt("argsMember");
+            int index = bundle.getInt("index");
+            mGroupListdata.get(index).setJoinNum(mGroupListdata.get(index).getJoinNum()+argsMember);
         }
     }
 }

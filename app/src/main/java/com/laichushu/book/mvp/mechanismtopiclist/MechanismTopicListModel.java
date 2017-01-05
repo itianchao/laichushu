@@ -79,6 +79,15 @@ public class MechanismTopicListModel {
         private int type;
         private String createrPhoto;
         private boolean isCollect;
+        private String leaderId;
+
+        public String getLeaderId() {
+            return leaderId;
+        }
+
+        public void setLeaderId(String leaderId) {
+            this.leaderId = leaderId;
+        }
 
         public int getCollectNum() {
             return collectNum;
@@ -234,6 +243,7 @@ public class MechanismTopicListModel {
             dest.writeInt(this.type);
             dest.writeString(this.createrPhoto);
             dest.writeByte(this.isCollect ? (byte) 1 : (byte) 0);
+            dest.writeString(this.leaderId);
         }
 
         protected DataBean(Parcel in) {
@@ -253,6 +263,7 @@ public class MechanismTopicListModel {
             this.type = in.readInt();
             this.createrPhoto = in.readString();
             this.isCollect = in.readByte() != 0;
+            this.leaderId = in.readString();
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {

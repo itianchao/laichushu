@@ -75,7 +75,7 @@ public class FindGroupMineTopicListActivity extends MvpActivity2<FindGroupMineTo
         titleTv.setText(title);
         backIv.setOnClickListener(this);
         mRecyclerView.setLinearLayout();
-        mAdapter = new MechanismTopicListAdapter(mData, this);
+        mAdapter = new MechanismTopicListAdapter(mData, this,3);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
         mvpPresenter.loadData(type);

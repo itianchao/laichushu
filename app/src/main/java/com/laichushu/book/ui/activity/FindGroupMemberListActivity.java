@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -43,7 +44,7 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
     private int type;
     private LinearLayout searchLay;
     private String teamId;
-
+    private int argsMember = 0;
     @Override
     protected FindGroupMenberPresenter createPresenter() {
         return new FindGroupMenberPresenter(this);
@@ -159,6 +160,7 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
                 mData.get(position).setStatus("2");
             }else {//加入
                 mData.get(position).setStatus("3");
+                argsMember++;
             }
             mAdapter.setmData(mData);
         }else {
@@ -187,6 +189,7 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
         if (model.isSuccess()) {
             mData.remove(position);
             mAdapter.setmData(mData);
+            argsMember--;
         }else {
             ToastUtil.showToast("删除失败");
             LoggerUtil.e(model.getErrMsg());
@@ -281,5 +284,13 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        Intent data = new Intent();
+        data.putExtra("argsMember",argsMember);
+        setResult(4,data);
     }
 }

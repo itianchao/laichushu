@@ -1,5 +1,7 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -120,5 +122,15 @@ public class FindGroupListActivity extends MvpActivity2<FindGroupListPresenter> 
                 }
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 4){//更新小组人数
+            Bundle bundle = data.getExtras();
+            int argsMember = bundle.getInt("argsMember");
+            int index = bundle.getInt("index");
+            GroupListModle.DataBean bean = mGroupListdata.get(index);
+            bean.setJoinNum(bean.getJoinNum()+argsMember);
+        }
     }
 }

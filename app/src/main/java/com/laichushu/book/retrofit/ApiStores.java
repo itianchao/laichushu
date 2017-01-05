@@ -692,4 +692,17 @@ public interface ApiStores {
     //解散
     @POST("team/dismiss")
     Observable<RewardResult> dismissGroup(@Body DismissGroup_Paramet paramet);
+
+    //话题置顶
+    @POST("topic/updateTopicTopFlag")
+    Observable<RewardResult> updateTopicTop(@Body UpdateTopicTop_Paramet paramet);
+
+    //话题删除
+    @POST("topic/deleteTopic")
+    Observable<RewardResult> deleteTopic(@Body DeleteTopic_Paramet paramet);
+
+    //话题设置推荐
+    @POST("topic/updateTopicRecommended")
+    Observable<RewardResult> updateTopicRecommended(@Body UpdateTopicRecommended_Paramet paramet);
+
 }

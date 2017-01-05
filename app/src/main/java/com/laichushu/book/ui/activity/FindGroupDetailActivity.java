@@ -53,6 +53,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
     private ArrayList<MechanismTopicListModel.DataBean> mSuggestTopicList = new ArrayList<>();//推荐
     private MyHandler mhandler = new MyHandler(this);
     private MechanismTopicListAdapter mTopicAdapter;
+    private int index;
 
     /**
      * handler
@@ -103,7 +104,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         briefRbn = (RadioButton) inflate.findViewById(R.id.rbn_brief);
         findRbn = (RadioButton) inflate.findViewById(R.id.rbn_find);
         recommendRbn = (RadioButton) inflate.findViewById(R.id.rbn_recommend);
-        mTopicAdapter = new MechanismTopicListAdapter(mGroupTopicList, this);
+        mTopicAdapter = new MechanismTopicListAdapter(mGroupTopicList, this,2);
         mRecyclerView.setAdapter(mTopicAdapter);
         return inflate;
     }
@@ -113,6 +114,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         //==============================================设置数据
         titleTv.setText("小组主页");//标题
         bean = getIntent().getParcelableExtra("bean");//小组数据
+        index = getIntent().getIntExtra("bean",-1);//小组数据
         groupNameTv.setText(bean.getName());//设置组名
         isLeader = bean.getLeaderId().equals(ConstantValue.USERID);//身份?
         //0　未加入　　1　申请加入　2　申请拒绝　3　正常　就是　申请通过　4　禁言
@@ -506,6 +508,15 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                 intent.putExtra("refrush", "refrush");
                 setResult(3, intent);
             }
+        }else if (resultCode == 4){//更新小组人数
+            Bundle bundle = data.getExtras();
+            int argsMember = bundle.getInt("argsMember");
+            bean.setJoinNum(bean.getJoinNum()+argsMember);
+            numberTv.setText(bean.getJoinNum());
+            Intent intent = new Intent();
+            intent.putExtra("argsMember", argsMember);
+            intent.putExtra("index", index);
+            setResult(4, intent);
         }
     }
 
@@ -523,4 +534,5 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
             }
         });
     }
+
 }

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,10 +22,11 @@
             tools:src="@drawable/img_default" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -52,6 +54,14 @@
                 android:orientation="horizontal"></LinearLayout>
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/iv_permission"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/find_down_select2x"
+            android:visibility="gone" />
     </LinearLayout>
 
     <TextView
@@ -62,6 +72,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/edit"
         tools:text="创客云" />
+
     <TextView
         android:id="@+id/tv_topic_content"
         android:layout_width="match_parent"
@@ -70,6 +81,7 @@
         android:textColor="@color/edit"
         android:textSize="@dimen/edit3"
         tools:text="创客云" />
+
     <com.laichushu.book.ui.widget.NoScrollGridView
         android:id="@+id/nsgv_imglist"
         android:layout_width="match_parent"
@@ -78,13 +90,15 @@
         android:horizontalSpacing="10dp"
         android:numColumns="3"
         android:verticalSpacing="10dp" />
+
     <LinearLayout
         android:id="@+id/lay_content"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:visibility="gone"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
+
         <LinearLayout
             android:id="@+id/ll_collection"
             android:layout_width="0dp"
@@ -96,7 +110,7 @@
                 android:id="@+id/tv_like"
                 style="@style/new_up"
                 android:drawableLeft="@drawable/icon_like_red"
-                android:text=" 0"/>
+                android:text=" 0" />
         </LinearLayout>
 
 
@@ -111,9 +125,10 @@
                 android:id="@+id/tv_scan"
                 style="@style/new_books"
                 android:drawableLeft="@drawable/my_topdetails2x"
-                android:text="话题详情"/>
+                android:text="话题详情" />
         </LinearLayout>
     </LinearLayout>
-    <include layout="@layout/item_distance"/>
+
+    <include layout="@layout/item_distance" />
 
 </LinearLayout>

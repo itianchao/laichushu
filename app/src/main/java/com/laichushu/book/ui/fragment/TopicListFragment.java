@@ -41,7 +41,7 @@ public class TopicListFragment extends MvpFragment2<MechanismTopicListPresenter>
         topicRyc.setLinearLayout();
         topicRyc.setOnPullLoadMoreListener(this);
         topicRyc.setFooterViewText("加载中");
-        mAdapter = new MechanismTopicListAdapter(mData, mActivity);
+        mAdapter = new MechanismTopicListAdapter(mData, mActivity,1);
         topicRyc.setAdapter(mAdapter);
         return mSuccessView;
     }
