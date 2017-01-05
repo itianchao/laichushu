@@ -281,6 +281,7 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
             int argsMember = bundle.getInt("argsMember");
             int index = bundle.getInt("index");
             mData.get(index).setJoinNum(mData.get(index).getJoinNum()+argsMember);
+            mAdapter.setmData(mData);
         }
     }
 }

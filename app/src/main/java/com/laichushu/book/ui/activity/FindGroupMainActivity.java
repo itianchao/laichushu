@@ -327,6 +327,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
             int argsMember = bundle.getInt("argsMember");
             int index = bundle.getInt("index");
             mGroupListdata.get(index).setJoinNum(mGroupListdata.get(index).getJoinNum()+argsMember);
+            mGroupListAdapter.setmData(mGroupListdata);
         }
     }
 }

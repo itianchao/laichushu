@@ -58,7 +58,7 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
 
     //更新验证码显示
 
-    private int TIME = 60; // 倒计时60s
+    private int TIME = 90; // 倒计时60s
     private static final int CODE_ING = 1;                // 已发送，倒计时
     private static final int CODE_REPEAT = 2;                // 重新发送
     private String content;

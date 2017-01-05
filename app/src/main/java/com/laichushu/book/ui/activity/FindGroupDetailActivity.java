@@ -90,7 +90,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         searchIv = ((ImageView) inflate.findViewById(R.id.iv_title_another));//搜索
         moreIv = ((ImageView) inflate.findViewById(R.id.iv_title_other));//更多
         topicIv = ((ImageView) inflate.findViewById(R.id.iv_title_the));//发话题
-        emptyIv = ((ImageView) inflate.findViewById(R.id.iv_empty));//发话题
+        emptyIv = ((ImageView) inflate.findViewById(R.id.iv_empty));//空页面
         titleTv = ((TextView) inflate.findViewById(R.id.tv_title));//标题
         groupNameTv = ((TextView) inflate.findViewById(R.id.tv_userRealName));//标题
         linemarksTv = ((TextView) inflate.findViewById(R.id.tv_linemarks));//里程碑内容
@@ -119,6 +119,11 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         isLeader = bean.getLeaderId().equals(ConstantValue.USERID);//身份?
         //0　未加入　　1　申请加入　2　申请拒绝　3　正常　就是　申请通过　4　禁言
         isJoin = bean.getJoinStatus().equals("3") || bean.getJoinStatus().equals("4");//是否加入
+        if (isJoin) {
+            topicIv.setVisibility(View.VISIBLE);
+        }else {
+            topicIv.setVisibility(View.INVISIBLE);
+        }
         briefTv.setText(bean.getRemarks());//简介
         createTimeTv.setText(bean.getCreateDate());//创建时间
         linemarksTv.setText(bean.getMarkContent());//里程碑数据
@@ -163,6 +168,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                     } else {
                         emptyIv.setVisibility(View.GONE);
                         mRecyclerView.setVisibility(View.VISIBLE);
+                        mTopicAdapter.setmData(mGroupTopicList);
                     }
 
                 }
@@ -177,6 +183,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                     } else {
                         mRecyclerView.setVisibility(View.VISIBLE);
                         emptyIv.setVisibility(View.GONE);
+                        mTopicAdapter.setmData(mSuggestTopicList);
                     }
                 }
                 break;
@@ -319,6 +326,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
      */
     @Override
     public void getGroupSuggestTopicListSuccess(MechanismTopicListModel model) {
+        UIUtil.postPullLoadMoreCompleted(mRecyclerView);
         if (model.isSuccess()) {
             second = true;
             Message msg = new Message();
@@ -427,7 +435,6 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
     public void getJoinGroupSuccess(RewardResult modle) {
         if (modle.isSuccess()) {
             ToastUtil.showToast("申请加入小组成功");
-            isJoin = true;
         }else {
             ToastUtil.showToast("申请加入小组失败");
         }

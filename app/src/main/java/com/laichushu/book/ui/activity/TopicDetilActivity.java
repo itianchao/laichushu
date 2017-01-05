@@ -71,8 +71,8 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_topicdetail);
         titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
-        moreIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_another);
-        ivShare = (ImageView) mSuccessView.findViewById(R.id.iv_title_other);
+        moreIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_other);
+        ivShare = (ImageView) mSuccessView.findViewById(R.id.iv_title_another);
         ivLike = (ImageView) mSuccessView.findViewById(R.id.iv_title_the);
         finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
         topicUserheadIv = (ImageView) mSuccessView.findViewById(R.id.iv_topic_userhead);
@@ -108,6 +108,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         ivLike.setVisibility(View.VISIBLE);
         ivShare.setVisibility(View.VISIBLE);
         GlideUitl.loadImg(mActivity, R.drawable.icon_share2x, ivShare);
+        GlideUitl.loadImg(mActivity, R.drawable.icon_more, moreIv);
         type = getIntent().getStringExtra("type");
         tag = getIntent().getStringExtra("tag");
         topicType = getIntent().getIntExtra("topicType", 0);
@@ -127,6 +128,11 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             }
         } else {
             bean = getIntent().getParcelableExtra("bean");
+            if (bean.isCollect()) {
+                GlideUitl.loadImg(mActivity, R.drawable.icon_likedwhite2x, ivLike);
+            } else {
+                GlideUitl.loadImg(mActivity, R.drawable.icon_likewhite2x, ivLike);
+            }
             topicId = bean.getId();
             topicNameTv.setText(bean.getTitle());
             topicAuthorTv.setText(bean.getCreatUserName());
@@ -313,7 +319,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             case R.id.iv_title_finish:
                 finish();
                 break;
-            case R.id.iv_title_other:
+            case R.id.iv_title_another:
                 //分享
                 break;
             case R.id.iv_title_the:
@@ -339,7 +345,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                     mvpPresenter.topicDetailCommentSave(sendmsgEv, bean.getId(), ConstantValue.TOPICCOMMENT_TYPE);
                 }
                 break;
-            case R.id.iv_title_another://小组-话题-管理
+            case R.id.iv_title_other://小组-话题-管理
                 showPopWindow(v);
                 break;
         }
