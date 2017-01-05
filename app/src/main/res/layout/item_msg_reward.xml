@@ -21,23 +21,23 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true">
 
             <ImageView
                 android:id="@+id/iv_rewardIcon"
-                android:layout_margin="12dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/msg_rewardme2x" />
 
             <LinearLayout
                 android:id="@+id/ll_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_toLeftOf="@+id/iv_rewardDeleteMsg"
                 android:layout_toRightOf="@+id/iv_rewardIcon"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -99,9 +99,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="6dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginBottom="4dp"
                 android:background="@drawable/shape_rectangle_fill_hint"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
                 android:text="查看钱包"
                 android:textColor="@color/characterLightGray2"
                 android:textSize="@dimen/edit3" />

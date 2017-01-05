@@ -3,17 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:background="@drawable/shape_rectangle_nocolor"
+    android:background="@drawable/shape_rectangle_fill_hint"
     android:orientation="vertical">
 
     <EditText
         android:id="@+id/et_dialogMsg"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
         android:layout_marginTop="12dp"
-        android:background="@drawable/shape_rectangle_nocolor"
+        android:background="@drawable/shape_rectangle_fill_hint"
         android:gravity="top"
         android:hint="点击输入私信内容"
         android:padding="8dp"
@@ -23,7 +23,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="36dp"
         android:layout_marginBottom="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
@@ -33,16 +33,16 @@
 
         <TextView
             android:id="@+id/btn_cancel"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shape_rectangle_nocolor"
+            android:layout_width="50dp"
+            android:layout_height="36dp"
+            android:background="@drawable/shape_rectangle_fill_hint"
             android:gravity="center"
             android:text="取 消"
             android:textColor="@color/global"
             android:textSize="@dimen/edit" />
 
         <View
-            android:layout_width="24dp"
+            android:layout_width="60dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@color/albumTransparent"
@@ -51,9 +51,9 @@
 
         <TextView
             android:id="@+id/btn_ok"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shape_rectangle_nocolor"
+            android:layout_width="50dp"
+            android:layout_height="36dp"
+            android:background="@drawable/shape_rectangle_fill_hint"
             android:gravity="center"
             android:text="确 认"
             android:textColor="@color/global"

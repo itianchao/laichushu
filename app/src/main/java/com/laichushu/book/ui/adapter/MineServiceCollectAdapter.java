@@ -2,6 +2,7 @@ package com.laichushu.book.ui.adapter;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.laichushu.book.ui.activity.FindServerMainPageActivity;
 import com.laichushu.book.ui.activity.FindServicePageActivity;
 import com.laichushu.book.ui.activity.MineServicePageActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;
@@ -67,7 +69,12 @@ public class MineServiceCollectAdapter extends RecyclerView.Adapter<MineServiceC
 //                跳转服务主页
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("userId", dataBeen.get(position).getUserId());
-                UIUtil.openActivity(context, FindServerMainPageActivity.class, bundle);
+                if(!TextUtils.isEmpty(dataBeen.get(position).getUserId())){
+                    UIUtil.openActivity(context, FindServerMainPageActivity.class, bundle);
+                }else{
+                    ToastUtil.showToast("参数错误！");
+                }
+
             }
         });
     }

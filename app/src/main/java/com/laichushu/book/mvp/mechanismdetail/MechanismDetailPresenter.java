@@ -197,7 +197,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
     /**
      * 收藏
      */
-    public void collectSave(String targetId, String type, final String collectType) {
+    public void collectSave(String targetId,final String type, String collectType) {
         mvpView.showLoading();
         Logger.e("收藏");
         CollectSave_Paramet paramet = new CollectSave_Paramet(userId, targetId, collectType, type);
@@ -206,7 +206,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
             @Override
             public void onSuccess(RewardResult model) {
                 boolean collect;
-                if (collectType.equals("0")) {
+                if (type.equals("0")) {
                     collect = true;
                 } else {
                     collect = false;
