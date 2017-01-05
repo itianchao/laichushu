@@ -117,6 +117,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
             } else {
 
             }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
                 refreshPage(LoadingPager.PageState.STATE_ERROR);
                 ToastUtil.showToast(model.getErrMsg());

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.mvp.findfragment.FindPresenter;
-import com.laichushu.book.ui.activity.MainActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -39,7 +38,7 @@ public class GroupRecomAdapter extends RecyclerView.Adapter<GroupRecomAdapter.Vi
 
     @Override
     public void onBindViewHolder(GroupRecomAdapter.ViewHolder holder, int position) {
-        GlideUitl.loadCornersImg(mActivity, 80,dataBeen.get(position).getPhoto(), holder.hot1Iv);
+        GlideUitl.loadCornersImg(mActivity, 60,dataBeen.get(position).getPhoto(), holder.hot1Iv);
         holder.tvNAme.setText(dataBeen.get(position).getName());
     }
     @Override

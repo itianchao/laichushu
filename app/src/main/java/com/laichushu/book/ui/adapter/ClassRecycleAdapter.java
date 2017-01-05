@@ -9,11 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FindCourseCommResult;
-import com.laichushu.book.mvp.bookcast.BookcastPresener;
+import com.laichushu.book.bean.netbean.FindLessonListResult;
 import com.laichushu.book.mvp.findfragment.FindPresenter;
-import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.ui.activity.MyBookCastActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -25,10 +22,10 @@ import java.util.List;
 
 public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapter.ViewHolder> {
     private Activity context;
-    private List<FindCourseCommResult.DataBean> dataBeen;
+    private List<FindLessonListResult.DataBean.LessonListBean> dataBeen;
     private FindPresenter bookcastPresener;
 
-    public ClassRecycleAdapter(Activity context, List<FindCourseCommResult.DataBean> dataBean, FindPresenter bookcastPresener) {
+    public ClassRecycleAdapter(Activity context, List<FindLessonListResult.DataBean.LessonListBean> dataBean, FindPresenter bookcastPresener) {
         this.context = context;
         this.dataBeen = dataBean;
         this.bookcastPresener = bookcastPresener;
@@ -42,9 +39,9 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        GlideUitl.loadImg(context, dataBeen.get(position).getPhoto(), holder.ivImg);
+        GlideUitl.loadImg(context, dataBeen.get(position).getThumbUrl(), holder.ivImg);
         holder.tvItem.setText(dataBeen.get(position).getName());
-//        holder.tvPlayNum.setText(dataBeen.get(position).getJoinNum());
+        holder.tvPlayNum.setText(dataBeen.get(position).getClickNum()+"");
         holder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +61,7 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
         return dataBeen == null ? 0 : dataBeen.size();
     }
 
-    public void refreshAdapter(List<FindCourseCommResult.DataBean> listData) {
+    public void refreshAdapter(List<FindLessonListResult.DataBean.LessonListBean> listData) {
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);

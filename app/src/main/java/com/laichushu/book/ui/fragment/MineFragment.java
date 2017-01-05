@@ -174,6 +174,7 @@ public class MineFragment extends MvpFragment2<MinePresenter> implements View.On
                 break;
             case R.id.rl_service:
                 //我的服务
+//                ToastUtil.showToast("暂未开通，敬请期待！");
                 UIUtil.openActivity(mActivity, MineServicePageActivity.class);
                 break;
             case R.id.rl_GeneralSetting:

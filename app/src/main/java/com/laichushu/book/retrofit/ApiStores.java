@@ -65,7 +65,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL3;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
 
     //登录接口
     @POST("login/do")
@@ -562,6 +562,9 @@ public interface ApiStores {
     @POST("article/updateMaterialPermission")
     Observable<RewardResult> getUpdateMaterialPermissionDetails(@Body UpdateMaterialPermission_Paramet paramet);
 
+    //发现精选课程
+    @POST("lesson/lessonList")
+    Observable<FindLessonListResult> findLessonListDatails(@Body FindLessonList_Paramet paramet);
     //发现小组推荐
     @POST("team/findTopTeam")
     Observable<FindCourseCommResult> findCourseCommendationDatails();

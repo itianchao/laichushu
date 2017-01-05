@@ -8,22 +8,22 @@
 
     <include layout="@layout/item_distance" />
 
-    <HorizontalScrollView
-        android:id="@+id/hs_view"
-        android:layout_width="match_parent"
-        android:layout_height="80dip"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:scrollbars="none">
+    <!--<HorizontalScrollView-->
+        <!--android:id="@+id/hs_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:layout_marginRight="12dp"-->
+        <!--android:scrollbars="none">-->
 
         <LinearLayout
             android:id="@+id/ll_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal" />
 
-    </HorizontalScrollView>
+    <!--</HorizontalScrollView>-->
 
     <include layout="@layout/item_distance" />
 
@@ -67,10 +67,10 @@
                     android:textSize="@dimen/edit4" />
             </RelativeLayout>
 
-            <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-                android:id="@+id/ryv_find"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ryv_find_lesson"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="wrap_content"
                 android:cacheColorHint="@null"
                 android:fadingEdge="none"
                 android:overScrollFooter="@android:color/transparent"
@@ -114,10 +114,10 @@
                     android:textSize="@dimen/edit4" />
             </RelativeLayout>
 
-            <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/ryv_find_course"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:cacheColorHint="@null"
                 android:fadingEdge="none"

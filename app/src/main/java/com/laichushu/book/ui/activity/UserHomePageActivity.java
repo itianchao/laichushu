@@ -288,6 +288,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
 
     @Override
     public void getUserHeadDateSuccess(HomeUserResult result) {
+
         if (result.isSuccess()) {
             userBean = result;
             GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
@@ -332,6 +333,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     public void getUserHomeDyDateSuccess(HomeUseDyrResult result) {
         dyData.clear();
+        tvTips.setVisibility(View.GONE);
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -351,10 +353,14 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             Message msg = new Message();
             mhandler.sendMessage(msg);
         } else {
-            tvTips.setVisibility(View.VISIBLE);
-            tvTips.setText(result.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
-            reLoadDatas();
+            if(PAGE_NO==1){
+                tvTips.setVisibility(View.VISIBLE);
+                tvTips.setText(result.getErrMsg());
+            }
+
+//            refreshPage(LoadingPager.PageState.STATE_ERROR);
+//            reLoadDatas();
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
 
     }
@@ -376,13 +382,16 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 worksAdapter.refreshAdapter(worksData);
                 PAGE_NO++;
             } else {
-
+                tvTips.setVisibility(View.VISIBLE);
+                tvTips.setText(result.getErrMsg());
             }
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
-            tvTips.setVisibility(View.VISIBLE);
-            tvTips.setText(result.getErrMsg());
+            if(PAGE_NO==1){
+                tvTips.setVisibility(View.VISIBLE);
+                tvTips.setText(result.getErrMsg());
+            }
         }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     /**
@@ -410,8 +419,10 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            tvTips.setVisibility(View.VISIBLE);
-            tvTips.setText(result.getErrMsg());
+            if(PAGE_NO==1){
+                tvTips.setVisibility(View.VISIBLE);
+                tvTips.setText(result.getErrMsg());
+            }
         }
         heAdapter.refreshAdapter(focusMeData);
     }
@@ -442,8 +453,10 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         } else {
             beAdapter.refreshAdapter(focusBeData);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            tvTips.setVisibility(View.VISIBLE);
-            tvTips.setText(result.getErrMsg());
+            if(PAGE_NO==1){
+                tvTips.setVisibility(View.VISIBLE);
+                tvTips.setText(result.getErrMsg());
+            };
         }
         beAdapter.refreshAdapter(focusBeData);
     }

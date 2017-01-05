@@ -4,8 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -13,6 +17,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindCourseCommResult;
+import com.laichushu.book.bean.netbean.FindLessonListResult;
 import com.laichushu.book.mvp.findfragment.FindPresenter;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.findfragment.FindView;
@@ -26,11 +31,14 @@ import com.laichushu.book.ui.adapter.ClassRecycleAdapter;
 import com.laichushu.book.ui.adapter.FindTitleViewPagerAdapter;
 import com.laichushu.book.ui.adapter.GroupRecomAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
+import com.laichushu.book.ui.widget.FullyGridLayoutManager;
+import com.laichushu.book.ui.widget.FullyLinearLayoutManager;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 发现
@@ -45,7 +53,8 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private int range;
     private LinearLayout lineLyt;
     private Handler mRefreshWidgetHandler = new Handler();
-    private PullLoadMoreRecyclerView mRecyclerView, mCourseRecyclerView;
+    private RecyclerView mLessonRecyclerView ,mCourseRecyclerView;
+    private GridView gvLesson;
     private Runnable refreshThread = new Runnable() {
 
         public void run() {
@@ -54,14 +63,16 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
         }
     };
     //标签列表
-    private int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x, R.drawable.icon_delete2x, R.drawable.icon_publishl2x, R.drawable.icon_submission2x};
+    private int img[] = {R.drawable.home_course2x, R.drawable.home_group2x, R.drawable.home_server2x, R.drawable.home_agency2x, R.drawable.home_editor2x};
     private String title[] = {"课程", "小组", "服务", "机构", "编辑"};
     //课程
     private ClassRecycleAdapter classAdapter;
     private LinearLayout llContainer;
+    private List<FindLessonListResult.DataBean.LessonListBean> mLessonDate = new ArrayList<>();
     //小组
     private GroupRecomAdapter courseAdapter;
     private ArrayList<FindCourseCommResult.DataBean> mCourseDate = new ArrayList<>();
+    private View mHeadView;
 
     @Override
     public void onAttach(Context context) {
@@ -78,12 +89,13 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public View createSuccessView() {
         View mRootView = UIUtil.inflate(R.layout.fragment_find);
+        mHeadView = UIUtil.inflate(R.layout.item_find_lessonlist);
         findVp = (ViewPager) mRootView.findViewById(R.id.vp_find_title);
         pointIv = (ImageView) mRootView.findViewById(R.id.iv_red_point);
         lineLyt = (LinearLayout) mRootView.findViewById(R.id.ll_container_find);
         llContainer = (LinearLayout) mRootView.findViewById(R.id.ll_tab);
-        mRecyclerView = (PullLoadMoreRecyclerView) mRootView.findViewById(R.id.ryv_find);
-        mCourseRecyclerView = (PullLoadMoreRecyclerView) mRootView.findViewById(R.id.ryv_find_course);
+        mLessonRecyclerView = (RecyclerView) mRootView.findViewById(R.id.ryv_find_lesson);
+        mCourseRecyclerView = (RecyclerView) mRootView.findViewById(R.id.ryv_find_course);
         return mRootView;
     }
 
@@ -137,20 +149,15 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
 
         }
         //初始化精选课程
-        mRecyclerView.setGridLayout(2);
-        mRecyclerView.setPullRefreshEnable(false);
-        mRecyclerView.setFooterViewText("加载中");
-        classAdapter = new ClassRecycleAdapter(getActivity(), mCourseDate, mvpPresenter);
-        mRecyclerView.setAdapter(classAdapter);
-        mRecyclerView.setOnPullLoadMoreListener(this);
+        mLessonRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
+        classAdapter = new ClassRecycleAdapter(getActivity(), mLessonDate, mvpPresenter);
+        mLessonRecyclerView.setAdapter(classAdapter);
         //初始化小组推荐
-        mCourseRecyclerView.setFooterViewText("加载中");
-        mCourseRecyclerView.setGridLayout(4);
-        mCourseRecyclerView.setPullRefreshEnable(false);
+        mCourseRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 4));
         courseAdapter = new GroupRecomAdapter(getActivity(), mCourseDate, mvpPresenter);
         mCourseRecyclerView.setAdapter(courseAdapter);
-        mCourseRecyclerView.setOnPullLoadMoreListener(this);
-
+//        courseAdapter.setHeadView(mHeadView);
+        mvpPresenter.loadFindLessonListCommData();
         mvpPresenter.loadFindCourseCommData();
     }
 
@@ -200,29 +207,47 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     }
 
     /**
-     * 推荐小组
+     * 精选课程
      *
      * @param model
      */
     @Override
-    public void getCourseDataSuccess(FindCourseCommResult model) {
-        UIUtil.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mCourseRecyclerView.setPullLoadMoreCompleted();
-            }
-        }, 300);
+    public void getLessonListDataSuccess(FindLessonListResult model) {
+//        UIUtil.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mRecyclerView.setPullLoadMoreCompleted();
+//            }
+//        }, 300);
         hideLoading();
         if (model.isSuccess()) {
-            mCourseDate = model.getData();
-            courseAdapter.refreshAdapter(mCourseDate);
-            classAdapter.refreshAdapter(mCourseDate);
+            mLessonDate = model.getData().getLessonList();
+            classAdapter.refreshAdapter(mLessonDate);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             ErrorReloadData();
         }
     }
+
+    /**
+     * 推荐小组
+     *
+     * @param model
+     */
+    @Override
+    public void getCourseDataSuccess(FindCourseCommResult model) {
+        hideLoading();
+        if (model.isSuccess()) {
+            mCourseDate = model.getData();
+            courseAdapter.refreshAdapter(mCourseDate);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        } else {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ErrorReloadData();
+        }
+    }
+
 
     @Override
     public void getDataFail(String msg) {

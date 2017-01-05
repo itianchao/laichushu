@@ -244,6 +244,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     @Override
     public void getDyDataSuccess(HomeUseDyrResult model) {
         dyData.clear();
+        tvTips.setVisibility(View.GONE);
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -256,13 +257,16 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 dyAdapter.refreshAdapter(dyData);
                 PAGE_NO++;
             } else {
-                tvTips.setVisibility(View.VISIBLE);
-                tvTips.setText("您还没有添加动态，赶快点击右上角去添加吧！");
+                if (PAGE_NO == 1) {
+                    tvTips.setVisibility(View.VISIBLE);
+                    tvTips.setText("您还没有添加动态，赶快点击右上角去添加吧！");
+                }
             }
             dyLoadState = true;
             Message msg = new Message();
             mhandler.sendMessage(msg);
         } else {
+
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             reLoadDatas();
         }
@@ -543,7 +547,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     public void onEvent(RefrushHomePageEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
-            initData();
+            onRefresh();
         }
     }
 
