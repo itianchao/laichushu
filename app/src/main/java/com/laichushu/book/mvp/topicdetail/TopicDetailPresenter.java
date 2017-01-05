@@ -8,10 +8,13 @@ import com.laichushu.book.anim.ShakeAnim;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AddActPerMsgInfo_Paramet;
 import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
+import com.laichushu.book.bean.netbean.DeleteTopic_Paramet;
 import com.laichushu.book.bean.netbean.ScoreLike_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
+import com.laichushu.book.bean.netbean.UpdateTopicRecommended_Paramet;
+import com.laichushu.book.bean.netbean.UpdateTopicTop_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.TopicDetilActivity;
@@ -150,6 +153,87 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailView> {
             @Override
             public void onFinish() {
 
+            }
+        });
+    }
+
+    /**
+     * 话题置顶
+     * @param id 话题id
+     */
+    public void topicSticky(String id) {
+        mvpView.showLoading();
+        UpdateTopicTop_Paramet paramet = new UpdateTopicTop_Paramet(id,userId);
+        addSubscription(apiStores.updateTopicTop(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.hideLoading();
+                mvpView.getTopicStickySuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.hideLoading();
+                mvpView.getDataFail3("话题置顶:"+"code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 话题推荐
+     * @param id 话题id
+     */
+    public void topicRecommend(String id) {
+        mvpView.showLoading();
+        UpdateTopicRecommended_Paramet paramet = new UpdateTopicRecommended_Paramet(id,userId);
+        addSubscription(apiStores.updateTopicRecommended(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.hideLoading();
+                mvpView.getTopicRecommendSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.hideLoading();
+                mvpView.getDataFail3("话题推荐:"+"code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * 话题删除
+     * @param id 话题id
+     */
+    public void topicDelete(String id) {
+        mvpView.showLoading();
+        DeleteTopic_Paramet paramet = new DeleteTopic_Paramet(id,userId);
+        addSubscription(apiStores.deleteTopic(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.hideLoading();
+                mvpView.getTopicDeleteSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.hideLoading();
+                mvpView.getDataFail3("话题删除:"+"code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
             }
         });
     }

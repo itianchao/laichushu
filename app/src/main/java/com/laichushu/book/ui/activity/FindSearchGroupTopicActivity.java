@@ -54,7 +54,8 @@ public class FindSearchGroupTopicActivity extends MvpActivity2<SearchGroupTopicP
     private Search_HistoryDao dao;
     private List<Search_History> hisList = new ArrayList<>();
     private GroupTopicSearchHistoryAdapter historyAdapter;
-    private String type = ConstantValue.SEARCH_TYPE_GROUP;
+    private String type = ConstantValue.SEARCH_TYPE_TOPIC;
+    private String teamId;
 
     @Override
     protected SearchGroupTopicPresenter createPresenter() {
@@ -88,6 +89,7 @@ public class FindSearchGroupTopicActivity extends MvpActivity2<SearchGroupTopicP
     @Override
     protected void initData() {
         super.initData();
+        teamId = getIntent().getStringExtra("teamId");
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -178,7 +180,7 @@ public class FindSearchGroupTopicActivity extends MvpActivity2<SearchGroupTopicP
             //处理事件
             mData.clear();
             search = searchEt.getText().toString().trim();
-            mvpPresenter.loadSearchResultData(search);
+            mvpPresenter.loadSearchResultData(search,teamId);
             boolean isSearch = true;
             if (hisList.size() != 0) {
                 for (int i = 0; i < hisList.size(); i++) {
@@ -231,7 +233,7 @@ public class FindSearchGroupTopicActivity extends MvpActivity2<SearchGroupTopicP
         mData.clear();
         pageNo = 1;
         mvpPresenter.getParamet().setPageNo(pageNo+"");
-        mvpPresenter.loadSearchResultData(search);//请求网络获取搜索列表
+        mvpPresenter.loadSearchResultData(search,teamId);;//请求网络获取搜索列表
     }
 
     /**
@@ -240,7 +242,7 @@ public class FindSearchGroupTopicActivity extends MvpActivity2<SearchGroupTopicP
     @Override
     public void onLoadMore() {
         mvpPresenter.getParamet().setPageNo(pageNo+"");
-        mvpPresenter.loadSearchResultData(search);//请求网络获取搜索列表
+        mvpPresenter.loadSearchResultData(search,teamId);;//请求网络获取搜索列表
     }
 
     /**

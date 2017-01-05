@@ -288,9 +288,9 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
 
     @Override
     public void finish() {
-        super.finish();
         Intent data = new Intent();
         data.putExtra("argsMember",argsMember);
         setResult(4,data);
+        super.finish();
     }
 }

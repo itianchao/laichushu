@@ -83,12 +83,14 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
         holder.topicContentTv.setText(dataBean.getContent());
         holder.topicTiemTv.setText(dataBean.getCreateDate());
         GlideUitl.loadRandImg(mActivity, dataBean.getCreaterPhoto(), holder.topicUserheadIv);
+        final int finalType = topicType;
         holder.scanIay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean", dataBean);
                 bundle.putString("type", "");
+                bundle.putInt("topicType", finalType);
                 UIUtil.openActivity(mActivity, TopicDetilActivity.class, bundle);
             }
         });
@@ -149,7 +151,6 @@ public class MechanismTopicListAdapter extends RecyclerView.Adapter<MechanismTop
                 });
                 popWindow.setWidth(UIUtil.dip2px(90));
                 popWindow.showAsDropDown(v);
-//                popWindow.showAtLocation(v, Gravity.BOTTOM,0,0);
             }
         });
     }

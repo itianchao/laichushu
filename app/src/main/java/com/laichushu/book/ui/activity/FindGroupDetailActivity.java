@@ -114,7 +114,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         //==============================================设置数据
         titleTv.setText("小组主页");//标题
         bean = getIntent().getParcelableExtra("bean");//小组数据
-        index = getIntent().getIntExtra("bean",-1);//小组数据
+        index = getIntent().getIntExtra("position",-1);//小组数据
         groupNameTv.setText(bean.getName());//设置组名
         isLeader = bean.getLeaderId().equals(ConstantValue.USERID);//身份?
         //0　未加入　　1　申请加入　2　申请拒绝　3　正常　就是　申请通过　4　禁言
@@ -181,7 +181,8 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                 }
                 break;
             case R.id.iv_title_another://搜索：话题
-                UIUtil.openActivity(mActivity,FindSearchGroupTopicActivity.class);
+                bundle.putString("teamId",bean.getId());
+                UIUtil.openActivity(mActivity,FindSearchGroupTopicActivity.class,bundle);
                 break;
             case R.id.iv_title_other://更多
                 TypePopWindow popWindow = null;
@@ -329,7 +330,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
                     }
                 } else {
                     pageNo2++;
-                    mvpPresenter.getParamet2().setPageNo(pageNo1 + "");
+                    mvpPresenter.getParamet2().setPageNo(pageNo2 + "");
                     mSuggestTopicList.addAll(model.getData());
                     mTopicAdapter.setmData(mSuggestTopicList);
                 }
@@ -357,9 +358,9 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
         if (mvpPresenter.getParamet1().getPageNo().equals("1")) {//如果是第一页
             second = false;
             refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ErrorReloadData();
         } else {
             ToastUtil.showToast("获取小组推荐话题列表失败");
-            ErrorReloadData();
         }
         briefRbn.setEnabled(true);
         findRbn.setEnabled(true);
@@ -512,7 +513,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
             Bundle bundle = data.getExtras();
             int argsMember = bundle.getInt("argsMember");
             bean.setJoinNum(bean.getJoinNum()+argsMember);
-            numberTv.setText(bean.getJoinNum());
+            numberTv.setText(bean.getJoinNum()+"");
             Intent intent = new Intent();
             intent.putExtra("argsMember", argsMember);
             intent.putExtra("index", index);

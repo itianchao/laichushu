@@ -34,6 +34,7 @@ public class SearchGroupTopicPresenter extends BasePresenter<SearchGroupTopicVie
 
     public SearchGroupTopicPresenter(SearchGroupTopicView view) {
         mActivity = (FindSearchGroupTopicActivity) view;
+        attachView(view);
     }
 
     /**
@@ -41,10 +42,11 @@ public class SearchGroupTopicPresenter extends BasePresenter<SearchGroupTopicVie
      *
      * @param search 关键字
      */
-    public void loadSearchResultData(String search) {
+    public void loadSearchResultData(String search,String teamId) {
         mActivity.showProgressDialog();
         Logger.e("搜索话题");
         getParamet().setTitle(search);//设置搜索关键字
+        paramet.setTeamId(teamId);
         addSubscription(apiStores.getSearchTopicList(paramet), new ApiCallback<MechanismTopicListModel>() {
             @Override
             public void onSuccess(MechanismTopicListModel model) {
