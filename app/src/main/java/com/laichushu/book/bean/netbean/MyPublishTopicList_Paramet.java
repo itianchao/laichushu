@@ -10,7 +10,7 @@ public class MyPublishTopicList_Paramet {
      * type  1-个人话题，2-小组话题，3-机构话题
      */
 
-    private String userId, type, pageNo, pageSize, teamId,title;
+    private String userId, type, pageNo, pageSize, teamId,title,sourceType;
 
     /**
      * 小组话题 （全部 or 推荐）
@@ -43,6 +43,15 @@ public class MyPublishTopicList_Paramet {
         this.pageNo = pageNo;
         this.pageSize = pageSize;
     }
+
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
+    }
+
     public String getTeamId() {
         return teamId;
     }

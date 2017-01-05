@@ -14,14 +14,65 @@ public class BalanceBean {
 
     private boolean success;
     private String errMsg;
-    private double data;
 
-    public String getErrMsg() {
-        return errMsg;
+    /**
+     * data : {"userId":"175","money":149780.36,"minLimit":1,"maxLimit":100}
+     */
+
+    private DataBean data;
+
+    public DataBean getData() {
+        return data;
     }
 
-    public void setErrMsg(String errMsg) {
-        this.errMsg = errMsg;
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
+    public static class DataBean {
+        /**
+         * userId : 175
+         * money : 149780.36
+         * minLimit : 1.0
+         * maxLimit : 100.0
+         */
+
+        private String userId;
+        private double money;
+        private double minLimit;
+        private double maxLimit;
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+
+        public double getMoney() {
+            return money;
+        }
+
+        public void setMoney(double money) {
+            this.money = money;
+        }
+
+        public double getMinLimit() {
+            return minLimit;
+        }
+
+        public void setMinLimit(double minLimit) {
+            this.minLimit = minLimit;
+        }
+
+        public double getMaxLimit() {
+            return maxLimit;
+        }
+
+        public void setMaxLimit(double maxLimit) {
+            this.maxLimit = maxLimit;
+        }
     }
 
     public boolean isSuccess() {
@@ -32,11 +83,11 @@ public class BalanceBean {
         this.success = success;
     }
 
-    public double getData() {
-        return data;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setData(double data) {
-        this.data = data;
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 }

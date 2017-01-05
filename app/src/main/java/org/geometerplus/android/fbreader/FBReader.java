@@ -523,11 +523,13 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             public void onSuccess(BalanceBean model) {
                 dismissProgressDialog();
                 if (model.isSuccess()) {
-                    double balance = model.getData();
+                    double balance = model.getData().getMoney();
+                    double maxLimit = model.getData().getMaxLimit();
+                    double minLimit = model.getData().getMinLimit();
                     String accepterId = getIntent().getStringExtra("authorId");
                     String articleId = getIntent().getStringExtra("articleId");
                     if (accepterId!=null&&articleId!=null){
-                        openReward(balance + "", accepterId, articleId);
+                        openReward(balance + "", accepterId, articleId,maxLimit,minLimit);
                     }
                 } else {
                     ToastUtil.showToast(model.getErrMsg());
@@ -553,13 +555,16 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
      * @param balance   余额
      * @param accepterId  被打赏者
      * @param articleId  书id
+     * @param maxLimit
+     * @param minLimit
      */
-    private void openReward(String balance, final String accepterId, final String articleId){
+    private void openReward(String balance, final String accepterId, final String articleId, final double maxLimit, final double minLimit){
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
         final View customerView = com.laichushu.book.utils.UIUtil.inflate(R.layout.dialog_reward);
         final EditText payEt = (EditText) customerView.findViewById(R.id.et_pay);
         TextView balanceTv = (TextView) customerView.findViewById(R.id.tv_balance);
         balanceTv.setText(balance);
+        payEt.setHint("只能打赏"+minLimit+"-"+maxLimit+"金额");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -577,7 +582,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                     ToastUtil.showToast("请输入打赏金额");
                 } else {
                     try {
-                        if (Double.parseDouble(pay) > 0 && Double.parseDouble(pay) < 100) {
+                        if (Double.parseDouble(pay) >= minLimit && Double.parseDouble(pay) <= maxLimit) {
                             if (pay.contains(".") && pay.substring(pay.indexOf(".")+1,pay.length()-1).length()>2) {
                                 ToastUtil.showToast("不能超过小数点后两位");
                             } else {
@@ -587,7 +592,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                             }
 
                         } else {
-                            ToastUtil.showToast("只能打赏1-100金额");
+                            ToastUtil.showToast("只能打赏"+minLimit+"-"+maxLimit+"金额");
                         }
                     } catch (NumberFormatException e) {
                         ToastUtil.showToast("请输入正确的价格");

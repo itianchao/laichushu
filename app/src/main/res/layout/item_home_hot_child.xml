@@ -30,8 +30,8 @@
                     android:scaleType="centerCrop"/>
                 <ImageView
                     android:id="@+id/iv_status1"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     tools:src="@drawable/icon_book_statue1"
                     android:scaleType="centerCrop"/>
             </FrameLayout>
@@ -70,8 +70,8 @@
                     android:scaleType="centerCrop"/>
                 <ImageView
                     android:id="@+id/iv_status2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     tools:src="@drawable/icon_book_statue1"
                     android:scaleType="centerCrop"/>
             </FrameLayout>
@@ -110,8 +110,8 @@
                     android:scaleType="centerCrop"/>
                 <ImageView
                     android:id="@+id/iv_status3"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     tools:src="@drawable/icon_book_statue1"
                     android:scaleType="centerCrop"/>
             </FrameLayout>

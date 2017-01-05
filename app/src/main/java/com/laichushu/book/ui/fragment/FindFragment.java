@@ -72,7 +72,6 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     //小组
     private GroupRecomAdapter courseAdapter;
     private ArrayList<FindCourseCommResult.DataBean> mCourseDate = new ArrayList<>();
-    private View mHeadView;
 
     @Override
     public void onAttach(Context context) {
@@ -89,7 +88,6 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public View createSuccessView() {
         View mRootView = UIUtil.inflate(R.layout.fragment_find);
-        mHeadView = UIUtil.inflate(R.layout.item_find_lessonlist);
         findVp = (ViewPager) mRootView.findViewById(R.id.vp_find_title);
         pointIv = (ImageView) mRootView.findViewById(R.id.iv_red_point);
         lineLyt = (LinearLayout) mRootView.findViewById(R.id.ll_container_find);
@@ -314,6 +312,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
             @Override
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.loadFindLessonListCommData();
                 mvpPresenter.loadFindCourseCommData();
             }
         });

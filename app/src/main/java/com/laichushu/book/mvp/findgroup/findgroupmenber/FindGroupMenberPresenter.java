@@ -191,7 +191,7 @@ public class FindGroupMenberPresenter extends BasePresenter<FindGroupMenberView>
      */
     public void deleteGroupMember(String memberId, final int position) {
         mvpView.showProgress();
-        DeleteGroupMember_Paramet paramet = new DeleteGroupMember_Paramet(memberId);
+        DeleteGroupMember_Paramet paramet = new DeleteGroupMember_Paramet(memberId,userId);
         addSubscription(apiStores.deleteGroupMember(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {

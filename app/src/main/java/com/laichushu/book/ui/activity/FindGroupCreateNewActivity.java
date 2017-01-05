@@ -56,6 +56,7 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
     private EditText markContentEt;
     private GroupListModle.DataBean bean;
     private int type;
+    private String teamId;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -98,9 +99,10 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
             titleTv.setText("修改小组资料");
             completeTv.setText("完成");
             bean = getIntent().getParcelableExtra("bean");
+            teamId = bean.getId();
             path = bean.getPhoto();
             GlideUitl.loadRandImg(this, path, headIv);
-            file = new File(path);
+
             nameEt.setText(bean.getName());//组名
             briefEt.setText(bean.getRemarks());//简介
             markContentEt.setText(bean.getMarkContent());//里程碑
@@ -139,7 +141,7 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
                     ToastUtil.showToast("请添加小组里程碑");
                     return;
                 }
-                if (file == null) {
+                if (TextUtils.isEmpty(path)&&file == null) {
                     ToastUtil.showToast("请添加小组头像");
                     return;
                 }
@@ -160,6 +162,10 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
 
         ArrayMap<String, RequestBody> params = new ArrayMap<>();
 
+        if (type == 2){
+            RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"), teamId);
+            params.put("id", requestBody6);
+        }
         RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), name);
         RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), userId);
         RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), brief);
@@ -169,9 +175,13 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
         params.put("leaderId", requestBody3);
         params.put("remarks", requestBody4);
         params.put("markContent", requestBody5);
-
         Observable<RewardResult> newGroup;
-        RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(file));
+        RequestBody requestBody1;
+        if (file != null){
+            requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(file));
+        }else {
+            requestBody1 = null;
+        }
         newGroup = apiStores.createNewGroup(requestBody1, params);
 
         addSubscription(newGroup, new ApiCallback<RewardResult>() {
@@ -179,7 +189,11 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
             public void onSuccess(RewardResult model) {
                 dismissProgressDialog();
                 if (model.isSuccess()) {
-                    ToastUtil.showToast("创建成功");
+                    if (type == 1){
+                        ToastUtil.showToast("创建成功");
+                    }else {
+                        ToastUtil.showToast("修改成功");
+                    }
                     UIUtil.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -190,15 +204,22 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
                         }
                     }, 1700);
                 } else {
-                    ToastUtil.showToast("创建失败");
+                    if (type == 1){
+                        ToastUtil.showToast("创建失败");
+                    }else {
+                        ToastUtil.showToast("修改失败");
+                    }
                 }
-
             }
 
             @Override
             public void onFailure(int code, String msg) {
                 dismissProgressDialog();
-                ToastUtil.showToast("创建失败");
+                if (type == 1){
+                    ToastUtil.showToast("创建失败");
+                }else {
+                    ToastUtil.showToast("修改失败");
+                }
             }
 
             @Override

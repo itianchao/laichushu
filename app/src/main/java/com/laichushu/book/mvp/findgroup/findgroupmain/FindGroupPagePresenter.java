@@ -58,7 +58,7 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
     /**
      * 更多 设置数据
      */
-    private void initData() {
+    public void initData() {
         leaderList.clear();
         leaderList.add("待处理申请");
         leaderList.add("成员管理");
@@ -294,7 +294,7 @@ public class FindGroupPagePresenter extends BasePresenter<FindGroupPageView> {
     public void leaveGroup(String memberId){
         mActivity.showProgressDialog();
         LoggerUtil.e("退出小组");
-        DeleteGroupMember_Paramet paramet = new DeleteGroupMember_Paramet(memberId);
+        DeleteGroupMember_Paramet paramet = new DeleteGroupMember_Paramet(memberId,userId);
         addSubscription(apiStores.deleteGroupMember(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult modle) {
