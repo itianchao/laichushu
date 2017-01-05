@@ -42,7 +42,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
     private PullLoadMoreRecyclerView topicRyv;
     private ArrayList<GroupListModle.DataBean> mGroupListdata = new ArrayList<>();
     private ArrayList<MechanismTopicListModel.DataBean> mTopicData = new ArrayList<>();
-    private ArrayList<FindCourseCommResult.DataBean> mRecommendData = new ArrayList<>();
+    private ArrayList<GroupListModle.DataBean> mRecommendData = new ArrayList<>();
     private FindGroupListAdapter mGroupListAdapter;
     private FindGroupRecommenAdapter mRecommendAdapter;
     private MechanismTopicListAdapter mTopicAdapter;
@@ -326,8 +326,13 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
             Bundle bundle = data.getExtras();
             int argsMember = bundle.getInt("argsMember");
             int index = bundle.getInt("index");
-            mGroupListdata.get(index).setJoinNum(mGroupListdata.get(index).getJoinNum()+argsMember);
-            mGroupListAdapter.setmData(mGroupListdata);
+            if (index>=0){
+                mGroupListdata.get(index).setJoinNum(mGroupListdata.get(index).getJoinNum()+argsMember);
+                mGroupListAdapter.setmData(mGroupListdata);
+            }else if (index<0){
+                mRecommendData.get(-index-1).setJoinNum(mRecommendData.get(index).getJoinNum()+argsMember);
+                mRecommendAdapter.setmData(mRecommendData);
+            }
         }
     }
 }

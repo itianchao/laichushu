@@ -3,6 +3,8 @@ package com.laichushu.book.bean.netbean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  * Created by PCPC on 2016/12/19.
  */
 
-public class FindCourseCommResult implements Parcelable {
+public class FindCourseCommResult {
 
     /**
      * success : true
@@ -18,7 +20,7 @@ public class FindCourseCommResult implements Parcelable {
      */
 
     private boolean success;
-    private ArrayList<DataBean> data;
+    private ArrayList<GroupListModle.DataBean> data;
 
     public String getErrMsg() {
         return errMsg;
@@ -37,125 +39,125 @@ public class FindCourseCommResult implements Parcelable {
         this.success = success;
     }
 
-    public ArrayList<DataBean> getData() {
+    public ArrayList<GroupListModle.DataBean> getData() {
         return data;
     }
 
-    public void setData(ArrayList<DataBean> data) {
+    public void setData(ArrayList<GroupListModle.DataBean> data) {
         this.data = data;
     }
 
-    public static class DataBean implements Parcelable {
-        /**
-         * id : 103
-         * name : 鎰挎棤宀佹湀鍙洖澶�
-         * photo : group1/M00/00/1A/wKiTPlhKmfCAWIm6AAEuwbmelvg817.jpg
-         * joinNum : 1
-         */
-
-        private String id;
-        private String name;
-        private String photo;
-        private int joinNum;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getPhoto() {
-            return photo;
-        }
-
-        public void setPhoto(String photo) {
-            this.photo = photo;
-        }
-
-        public int getJoinNum() {
-            return joinNum;
-        }
-
-        public void setJoinNum(int joinNum) {
-            this.joinNum = joinNum;
-        }
-
-        public DataBean() {
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.id);
-            dest.writeString(this.name);
-            dest.writeString(this.photo);
-            dest.writeInt(this.joinNum);
-        }
-
-        protected DataBean(Parcel in) {
-            this.id = in.readString();
-            this.name = in.readString();
-            this.photo = in.readString();
-            this.joinNum = in.readInt();
-        }
-
-        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
-            @Override
-            public DataBean createFromParcel(Parcel source) {
-                return new DataBean(source);
-            }
-
-            @Override
-            public DataBean[] newArray(int size) {
-                return new DataBean[size];
-            }
-        };
-    }
-
-    public FindCourseCommResult() {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte(this.success ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this.data);
-        dest.writeString(this.errMsg);
-    }
-
-    protected FindCourseCommResult(Parcel in) {
-        this.success = in.readByte() != 0;
-        this.data = in.createTypedArrayList(DataBean.CREATOR);
-        this.errMsg = in.readString();
-    }
-
-    public static final Creator<FindCourseCommResult> CREATOR = new Creator<FindCourseCommResult>() {
-        @Override
-        public FindCourseCommResult createFromParcel(Parcel source) {
-            return new FindCourseCommResult(source);
-        }
-
-        @Override
-        public FindCourseCommResult[] newArray(int size) {
-            return new FindCourseCommResult[size];
-        }
-    };
+//    public static class DataBean implements Parcelable {
+//        /**
+//         * id : 103
+//         * name : 鎰挎棤宀佹湀鍙洖澶�
+//         * photo : group1/M00/00/1A/wKiTPlhKmfCAWIm6AAEuwbmelvg817.jpg
+//         * joinNum : 1
+//         */
+//
+//        private String id;
+//        private String name;
+//        private String photo;
+//        private int joinNum;
+//
+//        public String getId() {
+//            return id;
+//        }
+//
+//        public void setId(String id) {
+//            this.id = id;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public String getPhoto() {
+//            return photo;
+//        }
+//
+//        public void setPhoto(String photo) {
+//            this.photo = photo;
+//        }
+//
+//        public int getJoinNum() {
+//            return joinNum;
+//        }
+//
+//        public void setJoinNum(int joinNum) {
+//            this.joinNum = joinNum;
+//        }
+//
+//        public DataBean() {
+//        }
+//
+//        @Override
+//        public int describeContents() {
+//            return 0;
+//        }
+//
+//        @Override
+//        public void writeToParcel(Parcel dest, int flags) {
+//            dest.writeString(this.id);
+//            dest.writeString(this.name);
+//            dest.writeString(this.photo);
+//            dest.writeInt(this.joinNum);
+//        }
+//
+//        protected DataBean(Parcel in) {
+//            this.id = in.readString();
+//            this.name = in.readString();
+//            this.photo = in.readString();
+//            this.joinNum = in.readInt();
+//        }
+//
+//        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+//            @Override
+//            public DataBean createFromParcel(Parcel source) {
+//                return new DataBean(source);
+//            }
+//
+//            @Override
+//            public DataBean[] newArray(int size) {
+//                return new DataBean[size];
+//            }
+//        };
+//    }
+//
+//    public FindCourseCommResult() {
+//    }
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeByte(this.success ? (byte) 1 : (byte) 0);
+//        dest.writeTypedList(this.data);
+//        dest.writeString(this.errMsg);
+//    }
+//
+//    protected FindCourseCommResult(Parcel in) {
+//        this.success = in.readByte() != 0;
+//        this.data = in.createTypedArrayList(DataBean.CREATOR);
+//        this.errMsg = in.readString();
+//    }
+//
+//    public static final Creator<FindCourseCommResult> CREATOR = new Creator<FindCourseCommResult>() {
+//        @Override
+//        public FindCourseCommResult createFromParcel(Parcel source) {
+//            return new FindCourseCommResult(source);
+//        }
+//
+//        @Override
+//        public FindCourseCommResult[] newArray(int size) {
+//            return new FindCourseCommResult[size];
+//        }
+//    };
 }

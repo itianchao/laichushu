@@ -19,6 +19,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.bean.netbean.FindLessonListResult;
 import com.laichushu.book.mvp.findfragment.FindPresenter;
+import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.findfragment.FindView;
 import com.laichushu.book.ui.activity.FindEditMainPageActivity;
@@ -71,7 +72,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private List<FindLessonListResult.DataBean.LessonListBean> mLessonDate = new ArrayList<>();
     //小组
     private GroupRecomAdapter courseAdapter;
-    private ArrayList<FindCourseCommResult.DataBean> mCourseDate = new ArrayList<>();
+    private ArrayList<GroupListModle.DataBean> mCourseDate = new ArrayList<>();
 
     @Override
     public void onAttach(Context context) {

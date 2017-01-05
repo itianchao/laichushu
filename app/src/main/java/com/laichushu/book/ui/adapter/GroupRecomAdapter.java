@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.mvp.findfragment.FindPresenter;
+import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -21,10 +22,10 @@ import java.util.List;
 
 public class GroupRecomAdapter extends RecyclerView.Adapter<GroupRecomAdapter.ViewHolder> {
     private Activity mActivity;
-    private List<FindCourseCommResult.DataBean> dataBeen;
+    private List<GroupListModle.DataBean> dataBeen;
     private FindPresenter findPresenter;
 
-    public GroupRecomAdapter(Activity mActivity, List<FindCourseCommResult.DataBean> dataBean, FindPresenter findPresenter) {
+    public GroupRecomAdapter(Activity mActivity, List<GroupListModle.DataBean> dataBean, FindPresenter findPresenter) {
         this.mActivity = mActivity;
         this.dataBeen = dataBean;
         this.findPresenter = findPresenter;
@@ -49,7 +50,7 @@ public class GroupRecomAdapter extends RecyclerView.Adapter<GroupRecomAdapter.Vi
     public long getItemId(int position) {
         return position;
     }
-    public void refreshAdapter(List<FindCourseCommResult.DataBean> listData) {
+    public void refreshAdapter(List<GroupListModle.DataBean> listData) {
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);

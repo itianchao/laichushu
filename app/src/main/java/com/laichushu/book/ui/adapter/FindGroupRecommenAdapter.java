@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindCourseCommResult;
+import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
+import com.laichushu.book.ui.activity.FindGroupDetailActivity;
 import com.laichushu.book.ui.activity.FindGroupMainActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -22,9 +25,9 @@ import java.util.ArrayList;
 public class FindGroupRecommenAdapter extends RecyclerView.Adapter<FindGroupRecommenAdapter.FindGroupRecommenViewHolder> {
 
     private FindGroupMainActivity mActivity;
-    private ArrayList<FindCourseCommResult.DataBean> mRecommendData;
+    private ArrayList<GroupListModle.DataBean> mRecommendData;
 
-    public FindGroupRecommenAdapter(ArrayList<FindCourseCommResult.DataBean> mRecommendData, FindGroupMainActivity mActivity) {
+    public FindGroupRecommenAdapter(ArrayList<GroupListModle.DataBean> mRecommendData, FindGroupMainActivity mActivity) {
         this.mActivity = mActivity;
         this.mRecommendData = mRecommendData;
     }
@@ -36,15 +39,29 @@ public class FindGroupRecommenAdapter extends RecyclerView.Adapter<FindGroupReco
     }
 
     @Override
-    public void onBindViewHolder(FindGroupRecommenViewHolder holder, int position) {
-        FindCourseCommResult.DataBean dataBean = mRecommendData.get(position);
+    public void onBindViewHolder(FindGroupRecommenViewHolder holder, final int position) {
+        final GroupListModle.DataBean dataBean = mRecommendData.get(position);
         holder.groupRecommenNameTv.setText(dataBean.getName());
         GlideUitl.loadImg(mActivity, dataBean.getPhoto(), holder.groupRecommenIv);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bean",dataBean);
+                bundle.putInt("position",position);
+                UIUtil.openActivity(mActivity,FindGroupDetailActivity.class,bundle);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mRecommendData.size() > 4 ? 4 : mRecommendData.size();
+    }
+
+    public void setmData(ArrayList<GroupListModle.DataBean> mData) {
+        this.mRecommendData = mData;
+        notifyDataSetChanged();
     }
 
     /**
@@ -61,7 +78,7 @@ public class FindGroupRecommenAdapter extends RecyclerView.Adapter<FindGroupReco
         }
     }
 
-    public void setmRecommendData(ArrayList<FindCourseCommResult.DataBean> mRecommendData) {
+    public void setmRecommendData(ArrayList<GroupListModle.DataBean> mRecommendData) {
         this.mRecommendData = mRecommendData;
         notifyDataSetChanged();
     }
