@@ -76,11 +76,11 @@ public class RegistPresenter extends BasePresenter<RegistView> {
         //
         loadCode(phonenum);//发送验证码
         codeTv.setClickable(false);
-        TIME = 60;
+        TIME = 90;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 60; i > 0; i--) {
+                for (int i = 90; i > 0; i--) {
                     mHandler.sendEmptyMessage(CODE_ING);
                     if (i <= 0) break;
                     try {
