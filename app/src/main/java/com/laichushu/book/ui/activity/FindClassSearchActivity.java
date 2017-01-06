@@ -1,7 +1,5 @@
 package com.laichushu.book.ui.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,15 +14,12 @@ import com.laichushu.book.R;
 import com.laichushu.book.db.Search_History;
 import com.laichushu.book.db.Search_HistoryDao;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
-import com.laichushu.book.mvp.findgroup.groupsearch.FindGroupModle;
-import com.laichushu.book.mvp.findgroup.groupsearch.FindGroupSearchPresenter;
-import com.laichushu.book.mvp.findgroup.groupsearch.FindGroupSearchView;
-import com.laichushu.book.ui.adapter.GroupSearchHistoryAdapter;
-import com.laichushu.book.ui.adapter.GroupSearchListAdapter;
+import com.laichushu.book.mvp.findclass.search.FindClassSearchPresenter;
+import com.laichushu.book.mvp.findclass.search.FindClassSearchView;
+import com.laichushu.book.ui.adapter.ClassSearchHistoryAdapter;
+import com.laichushu.book.ui.adapter.FindClassVideoAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
@@ -33,12 +28,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 发现 - 小组 - 搜索
- * Created by wangtong on 2016/12/27.
+ * 发现 - 课程 - 搜索
+ * Created by wangtong on 2017/1/6.
  */
 
-public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresenter> implements FindGroupSearchView, View.OnClickListener, TextView.OnEditorActionListener, PullLoadMoreRecyclerView.PullLoadMoreListener, AdapterView.OnItemClickListener {
-
+public class FindClassSearchActivity extends MvpActivity2<FindClassSearchPresenter> implements FindClassSearchView, View.OnClickListener, TextView.OnEditorActionListener, PullLoadMoreRecyclerView.PullLoadMoreListener, AdapterView.OnItemClickListener {
     private PullLoadMoreRecyclerView mRecyclerView;
     private ImageView finishIV;
     private EditText searchEt;
@@ -47,21 +41,21 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
     private LinearLayout searchLay;
     private ListView searchLv;
     private ImageView emptyIv;
-    private ArrayList<GroupListModle.DataBean> mData = new ArrayList<>();
+    private ArrayList mData = new ArrayList<>();
     private int pageNo = 1;
-    private GroupSearchListAdapter mAdapter;
+    private FindClassVideoAdapter mAdapter;
     private Search_HistoryDao dao;
     private List<Search_History> hisList = new ArrayList<>();
-    private GroupSearchHistoryAdapter historyAdapter;
-    private String type = ConstantValue.SEARCH_TYPE_GROUP;
+    private ClassSearchHistoryAdapter historyAdapter;
+    private String type;
+    private int searchType;
     /**
      * @return P 控制器
      */
     @Override
-    protected FindGroupSearchPresenter createPresenter() {
-        return new FindGroupSearchPresenter(this);
+    protected FindClassSearchPresenter createPresenter() {
+        return new FindClassSearchPresenter(this);
     }
-
     /**
      * @return 成功页面
      */
@@ -76,7 +70,7 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
         mRecyclerView = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_search);//搜索列表
         emptyIv = (ImageView) mSuccessView.findViewById(R.id.iv_empty);//搜索空结果
         mRecyclerView.setLinearLayout();
-        mAdapter = new GroupSearchListAdapter(this,mData);
+        mAdapter = new FindClassVideoAdapter((MvpActivity2) mActivity,mData);
         mRecyclerView.setAdapter(mAdapter);
         finishIV.setOnClickListener(this);
         searchEt.setOnClickListener(this);
@@ -87,12 +81,17 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
         return mSuccessView;
     }
 
-    /**
-     * 数据初始化
-     */
     @Override
     protected void initData() {
-        super.initData();
+        searchType = getIntent().getIntExtra("type", -1);
+        switch(searchType){
+            case 0://视频
+                type = ConstantValue.SEARCH_TYPE_VIDEO;
+                break;
+            case 1://文档
+                type = ConstantValue.SEARCH_TYPE_DOCUMENT;
+                break;
+        }
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -105,11 +104,10 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
         if (hisList != null) {//将历史记录添加到集合中 并反转顺序
             this.hisList.addAll(hisList);//
             Collections.reverse(this.hisList);
-            historyAdapter = new GroupSearchHistoryAdapter(this.hisList, this);
+            historyAdapter = new ClassSearchHistoryAdapter(this.hisList, this);
             searchLv.setAdapter(historyAdapter);
         }
     }
-
     /**
      * 点击事件
      * @param v 点击按钮
@@ -136,21 +134,20 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
                 break;
         }
     }
-
     /**
-     * 软键盘监听
-     * @param v
-     * @param actionId
-     * @param event
-     * @return
-     */
+    * 软键盘监听
+    * @param v
+    * @param actionId
+    * @param event
+    * @return
+            */
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             //处理事件
             mData.clear();
             search = searchEt.getText().toString().trim();
-            mvpPresenter.loadSearchResultData(search);
+//            mvpPresenter.loadSearchResultData(search);
             boolean isSearch = true;
             if (hisList.size() != 0) {
                 for (int i = 0; i < hisList.size(); i++) {
@@ -202,8 +199,8 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
     public void onRefresh() {
         mData.clear();
         pageNo = 1;
-        mvpPresenter.getParamet().setPageNo(pageNo+"");
-        mvpPresenter.loadSearchResultData(search);//请求网络获取搜索列表
+//        mvpPresenter.getParamet().setPageNo(pageNo+"");
+//        mvpPresenter.loadSearchResultData(search);//请求网络获取搜索列表
     }
 
     /**
@@ -211,8 +208,8 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
      */
     @Override
     public void onLoadMore() {
-        mvpPresenter.getParamet().setPageNo(pageNo+"");
-        mvpPresenter.loadSearchResultData(search);//请求网络获取搜索列表
+//        mvpPresenter.getParamet().setPageNo(pageNo+"");
+//        mvpPresenter.loadSearchResultData(search);//请求网络获取搜索列表
     }
 
     /**
@@ -231,64 +228,10 @@ public class FindGroupSearchActivity extends MvpActivity2<FindGroupSearchPresent
                 break;
         }
     }
-
-    /**
-     * 搜索小组接口返回数据 成功
-     * @param model
-     */
-    @Override
-    public void searchGroupDataSuccess(FindGroupModle model) {
-        UIUtil.postPullLoadMoreCompleted(mRecyclerView);
-        if (model.isSuccess()) {
-            if (!model.getData().getTeamList().isEmpty()) {
-                searchLay.setVisibility(View.GONE);
-                mRecyclerView.setVisibility(View.VISIBLE);
-                mData.addAll(model.getData().getTeamList());
-                mAdapter.setmData(mData);
-                pageNo++;
-            }else {
-                if (mvpPresenter.getParamet().getPageNo().equals("1")){
-                    emptyIv.setVisibility(View.VISIBLE);
-                    searchLay.setVisibility(View.GONE);
-                    mRecyclerView.setVisibility(View.GONE);
-                }else {
-                    ToastUtil.showToast("没有更多数据了");
-                }
-            }
-        } else {
-            ToastUtil.showToast(model.getErrMsg());
-        }
-    }
-
-    /**
-     * 搜索小组接口返回数据 失败
-     * @param msg
-     */
-    @Override
-    public void searchGroupDataFail(String msg) {
-        ToastUtil.showToast("搜索失败");
-    }
-
     /**
      * @return 控制器2
      */
-    public FindGroupSearchPresenter getPresenter() {
+    public FindClassSearchPresenter getPresenter() {
         return mvpPresenter;
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 2) {//创建小组后
-            Bundle bundle = data.getExtras();
-            String str = bundle.getString("back");
-            if (str.equals("updata")) {//刷新小组列表
-                onRefresh();
-            }
-        }else if (resultCode == 4){//更新小组人数
-            Bundle bundle = data.getExtras();
-            int argsMember = bundle.getInt("argsMember");
-            int index = bundle.getInt("index");
-            mData.get(index).setJoinNum(mData.get(index).getJoinNum()+argsMember);
-            mAdapter.setmData(mData);
-        }
     }
 }

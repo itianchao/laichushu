@@ -163,6 +163,13 @@ public class FindSearchGroupTopicActivity extends MvpActivity2<SearchGroupTopicP
                 emptyIv.setVisibility(View.GONE);
                 break;
             case R.id.tv_clear:
+                if (hisList != null) {
+                    for (int i = hisList.size() - 1; i >= 0; i--) {
+                        dao.delete(hisList.get(i));
+                    }
+                    hisList.clear();
+                    historyAdapter.notifyDataSetChanged();
+                }
                 break;
         }
     }

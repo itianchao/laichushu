@@ -14,11 +14,15 @@ import android.widget.RadioButton;
 
 import com.laichushu.book.R;
 import com.laichushu.book.ui.base.BaseActivity;
+import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.fragment.FindFragment;
 import com.laichushu.book.ui.fragment.HomeFragment;
 import com.laichushu.book.ui.fragment.MineFragment;
 import com.laichushu.book.ui.fragment.MsgFragment;
 import com.laichushu.book.ui.fragment.WriteFragment;
+import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;
 
@@ -26,13 +30,18 @@ import java.util.List;
 /**
  * 主页
  */
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends MvpActivity2 implements View.OnClickListener {
     private int position = 0;
     private HomeFragment homeFragment;
     private FindFragment findFragment;
     private WriteFragment writeFragment;
     private MsgFragment msgFragment;
     private MineFragment mineFragment;
+    private RadioButton homeRbn;
+    private RadioButton findRbn;
+    private RadioButton writeRbn;
+    private RadioButton msgRbn;
+    private RadioButton mindRbn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +50,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void initView() {
-        setContentView(R.layout.activity_main);
-        RadioButton homeRbn = (RadioButton) findViewById(R.id.rbn_home);
-        RadioButton findRbn = (RadioButton) findViewById(R.id.rbn_find);
-        RadioButton writeRbn = (RadioButton) findViewById(R.id.rbn_write);
-        RadioButton msgRbn = (RadioButton) findViewById(R.id.rbn_msg);
-        RadioButton mindRbn = (RadioButton) findViewById(R.id.rbn_mind);
+    protected void initData() {
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        },20);
         homeRbn.setOnClickListener(this);
         findRbn.setOnClickListener(this);
         writeRbn.setOnClickListener(this);
         msgRbn.setOnClickListener(this);
         mindRbn.setOnClickListener(this);
         setDefaultFragment();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
+    @Override
+    protected View createSuccessView() {
+        View mSuccessView = UIUtil.inflate(R.layout.activity_main);
+        homeRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_home);
+        findRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_find);
+        writeRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_write);
+        msgRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_msg);
+        mindRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_mind);
+        return mSuccessView;
     }
 
     /**

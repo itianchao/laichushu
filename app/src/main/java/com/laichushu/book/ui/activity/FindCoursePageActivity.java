@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -14,11 +15,12 @@ import com.laichushu.book.ui.fragment.FindClassDocFragment;
 import com.laichushu.book.ui.fragment.FindClassMineFragment;
 import com.laichushu.book.ui.fragment.FindClassVideoFragment;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
 
 public class FindCoursePageActivity extends MvpActivity2 implements View.OnClickListener {
-    private ImageView ivBack;
+    private ImageView ivBack,searchIv;
     private TextView tvTitle;
     private RadioButton videoRbn, docRbn, mineRbn;
     private int position = -1;
@@ -35,6 +37,7 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_find_course_page);
         ivBack = ((ImageView) mSuccessView.findViewById(R.id.iv_title_finish));
+        searchIv = ((ImageView) mSuccessView.findViewById(R.id.iv_title_other));
         tvTitle = ((TextView) mSuccessView.findViewById(R.id.tv_title));
         videoRbn = ((RadioButton) mSuccessView.findViewById(R.id.rb_video));//视频
         docRbn = ((RadioButton) mSuccessView.findViewById(R.id.rb_doc));//文档
@@ -46,10 +49,12 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
     protected void initData() {
         super.initData();
         tvTitle.setText("课程");
+        GlideUitl.loadImg(mActivity,R.drawable.search_icon,searchIv);
         ivBack.setOnClickListener(this);
         videoRbn.setOnClickListener(this);
         docRbn.setOnClickListener(this);
         mineRbn.setOnClickListener(this);
+        searchIv.setOnClickListener(this);
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -68,21 +73,28 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
             case R.id.rb_video://视频呢
                 if (position != 0) {
                     position = 0;
+                    searchIv.setVisibility(View.VISIBLE);
                     setTabSelection(position);
                 }
                 break;
             case R.id.rb_doc://文档
                 if (position != 1) {
                     position = 1;
+                    searchIv.setVisibility(View.VISIBLE);
                     setTabSelection(position);
                 }
                 break;
             case R.id.rb_mine://我的
                 if (position != 2) {
                     position = 2;
+                    searchIv.setVisibility(View.GONE);
                     setTabSelection(position);
                 }
                 break;
+            case R.id.iv_title_other://搜索
+                Bundle bundle = new Bundle();
+                bundle.putInt("type",position);
+                UIUtil.openActivity(mActivity,FindClassSearchActivity.class,bundle);
         }
     }
 

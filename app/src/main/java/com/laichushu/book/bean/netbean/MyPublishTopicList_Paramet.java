@@ -7,7 +7,8 @@ package com.laichushu.book.bean.netbean;
 
 public class MyPublishTopicList_Paramet {
     /***
-     * type  1-个人话题，2-小组话题，3-机构话题
+     * type  1-个人话题,2-小组话题,3-机构话题,4-推荐话题
+     * sourceType   1、图书 2、机构 3、话题 4、收藏服务者 5、收藏课程 6、收藏编辑
      */
 
     private String userId, type, pageNo, pageSize, teamId,title,sourceType;

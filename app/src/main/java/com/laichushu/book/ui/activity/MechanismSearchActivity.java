@@ -124,6 +124,15 @@ public class MechanismSearchActivity extends MvpActivity2<MechanismSearchPresent
                 break;
             case R.id.et_search:
                 break;
+            case R.id.tv_clear:
+//                if (hisList != null) {
+//                    for (int i = hisList.size() - 1; i >= 0; i--) {
+//                        dao.delete(hisList.get(i));
+//                    }
+//                    hisList.clear();
+//                    historyAdapter.notifyDataSetChanged();
+//                }
+                break;
         }
     }
 

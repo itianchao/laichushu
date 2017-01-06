@@ -3,11 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <include layout="@layout/page_categroy" />
-
+    <include layout="@layout/page_categroy2"/>
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-        android:id="@+id/ryv_video"
+        android:id="@+id/ryv_mine"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

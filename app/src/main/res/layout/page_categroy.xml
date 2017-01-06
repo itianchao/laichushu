@@ -3,10 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="@color/bgGrey"
+    android:gravity="center_vertical"
     android:orientation="horizontal">
+
     <TextView
-        android:textColor="@color/global"
-        android:layout_margin="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/tv_ranking"
+        style="@style/global_select"
+        android:text="默认排行" />
+
+    <TextView
+        android:id="@+id/tv_categroy"
+        style="@style/global_select"
+        android:text="分类" />
 </LinearLayout>

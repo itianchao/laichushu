@@ -7,9 +7,7 @@
     <include layout="@layout/page_categroy" />
 
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-        android:id="@+id/ryv_video"
+        android:id="@+id/ryv_doc"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
+        android:layout_height="match_parent"></com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
 </LinearLayout>

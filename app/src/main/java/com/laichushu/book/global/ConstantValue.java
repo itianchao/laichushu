@@ -76,6 +76,8 @@ public class ConstantValue {
     public static String SEARCH_TYPE_GROUP = "2";//小组
     public static String SEARCH_TYPE_TOPIC = "3";//话题
     public static String SEARCH_TYPE_MECHANISM = "4";//机构
+    public static String SEARCH_TYPE_VIDEO = "5";//视频
+    public static String SEARCH_TYPE_DOCUMENT = "6";//文档
     //空字符串
     public static String STRING_NULL = "";
     //baseBook

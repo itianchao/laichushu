@@ -65,7 +65,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL3;
 
     //登录接口
     @POST("login/do")
@@ -653,7 +653,7 @@ public interface ApiStores {
     Observable<MechanismTopicListModel> getMyPublishTopicList(@Body MyPublishTopicList_Paramet paramet);
 
     //我收藏的话题列表
-    @POST("collect/list")
+    @POST("topic/findTopicByCollectId")
     Observable<MechanismTopicListModel> getMyCollectTopicList(@Body MyPublishTopicList_Paramet paramet);
 
     //我回复的话题列表

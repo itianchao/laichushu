@@ -563,7 +563,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         final View customerView = com.laichushu.book.utils.UIUtil.inflate(R.layout.dialog_reward);
         final EditText payEt = (EditText) customerView.findViewById(R.id.et_pay);
         TextView balanceTv = (TextView) customerView.findViewById(R.id.tv_balance);
-        balanceTv.setText(balance);
+        balanceTv.setText("当前余额："+balance);
         payEt.setHint("只能打赏"+minLimit+"-"+maxLimit+"金额");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {

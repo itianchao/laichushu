@@ -70,6 +70,7 @@
         <item name="android:textColor">@drawable/select_login_color</item>
         <item name="android:textSize">@dimen/edit</item>
     </style>
+
     <style name="button_login_style1">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
@@ -80,6 +81,7 @@
         <item name="android:textColor">@drawable/btn_bg_global2white_selector</item>
         <item name="android:textSize">@dimen/edit</item>
     </style>
+
     <style name="button_login_style2">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
@@ -113,7 +115,9 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/edit3</item>
         <item name="android:textColor">@color/edit</item>
-    </style><style name="new_course">
+    </style>
+
+    <style name="new_course">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -121,9 +125,10 @@
         <item name="android:textSize">@dimen/edit2</item>
         <item name="android:textColor">@color/characterGray</item>
     </style>
+
     <style name="new_up">
-        <item name="android:layout_width">wrap_content</item>
         <item name="android:drawablePadding">12dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/edit</item>
@@ -147,6 +152,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/edit2</item>
     </style>
+
     <style name="servanttype_select">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">40dp</item>
@@ -155,6 +161,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/edit2</item>
     </style>
+
     <style name="repot_select">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
@@ -175,6 +182,7 @@
         <item name="android:textColor">@drawable/select_home_color</item>
         <item name="android:layout_height">50dp</item>
     </style>
+
     <style name="find_select">
         <item name="android:gravity">center</item>
         <item name="android:button">@null</item>
@@ -199,6 +207,7 @@
     <style name="FBReader.Transparent" parent="android:Theme.Translucent.NoTitleBar">
         <item name="android:windowBackground">@color/transparent</item>
     </style>
+
     <style name="DialogStyle">
 
         <item name="android:windowBackground">@color/bgGrey</item>
@@ -226,9 +235,36 @@
         <item name="android:minHeight">40dip</item>
         <item name="android:maxHeight">40dip</item>
     </style>
+
     <style name="smallRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ratingbar_home</item>
         <item name="android:minHeight">19dip</item>
         <item name="android:maxHeight">19dip</item>
     </style>
+
+    <style name="global_select">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:background">@drawable/shape_rectangle_global</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:drawableRight">@drawable/find_down_selected2x</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textColor">@color/global</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="find_class_mine_global_select">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/rbn_find_class_mine_select</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@drawable/select_find_class_mine_color</item>
+        <item name="android:textSize">@dimen/edit2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:layout_marginRight">25dp</item>
+    </style>
+
 </resources>
