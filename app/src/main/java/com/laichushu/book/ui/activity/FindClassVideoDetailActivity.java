@@ -22,6 +22,7 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
     @Override
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_findclassvideodetail);
+
         return mSuccessView;
     }
 }
