@@ -453,7 +453,6 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
     }
 
     public void refreshAdapter(List<MessageCommentResult.DataBean> listData) {
-        dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);
             this.notifyDataSetChanged();

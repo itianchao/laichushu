@@ -175,6 +175,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                     GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg, R.drawable.icon_percentre_defhead2x);
                     tvNickName.setText(result.getNickName());
                     if (!TextUtils.isEmpty(result.getLevelType())) {
+                        ivGreadDetail.setClickable(true);
                         ivGreadDetails.setVisibility(View.VISIBLE);
                         switch (result.getLevelType()) {
                             case "1":
@@ -192,6 +193,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                         }
                     } else {
                         ivPerGrade.setVisibility(View.GONE);
+                        ivGreadDetail.setClickable(false);
                         ivGreadDetails.setVisibility(View.GONE);
                         tvAuthorAgree.setText("暂无等级");
                     }

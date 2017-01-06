@@ -41,7 +41,13 @@
 -keep class org.geometerplus.zlibrary.core.view.** { *; }
 -keep class org.geometerplus.zlibrary.core.xml.** { *; }
 -keep class org.geometerplus.zlibrary.text.model.** { *; }
-
+-keep class com.tencent.mm.sdk.openapi.WXMediaMessage {*;}
+-keep class android.net.http.SslError
+-keep class android.webkit.**{*;}
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class m.framework.**{*;}
+-keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
 #FBReader»ìÏý end
 -keepattributes InnerClasses
 -dontoptimize

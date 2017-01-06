@@ -27,6 +27,7 @@
     <string name="fillin">请填写</string>
     <string name="name">昵称</string>
     <string name="sex">性别</string>
+    <string name="address">地址</string>
     <string name="phone">手机号</string>
     <string name="pwd">密码</string>
     <string name="msg">请让我们对您有个初步的了解，以便给您更好的服务</string>

@@ -16,12 +16,14 @@ public class Regist_Paramet {
     private String loginName;
     private String nickName;
     private String sex;
+    private String cityName;
     private String password;
 
-    public Regist_Paramet(String loginName, String nickName, String sex, String password) {
+    public Regist_Paramet(String loginName, String nickName, String sex, String cityName, String password) {
         this.loginName = loginName;
         this.nickName = nickName;
         this.sex = sex;
+        this.cityName = cityName;
         this.password = password;
     }
 
@@ -47,6 +49,14 @@ public class Regist_Paramet {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public String getPassword() {

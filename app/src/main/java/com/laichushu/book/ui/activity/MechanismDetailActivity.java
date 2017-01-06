@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.event.RefurshHomeEvent;
 import com.laichushu.book.event.RefurshWriteFragment;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.campaign.AuthorWorksModle;
@@ -22,9 +21,9 @@ import com.laichushu.book.mvp.mechanismdetail.MechanismDetailPresenter;
 import com.laichushu.book.mvp.mechanismdetail.MechanismDetailView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.fragment.BriefFragment;
-import com.laichushu.book.ui.fragment.FragmentFactory;
 import com.laichushu.book.ui.fragment.NoticeFragment;
 import com.laichushu.book.ui.fragment.TopicListFragment;
+import com.laichushu.book.ui.share.onekeyshare.OnekeyShare;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
@@ -36,6 +35,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * 机构详情页
@@ -117,12 +118,12 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         mechanismTv.setText(bean.getName());
         if (bean.isIsCollect()) {
             collectionTv.setText("已收藏");
-            Drawable drawable =getResources().getDrawable(R.drawable.icon_likedwhite2x);
+            Drawable drawable = getResources().getDrawable(R.drawable.icon_likedwhite2x);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             collectionTv.setCompoundDrawables(drawable, null, null, null);
         } else {
             collectionTv.setText("收藏");
-            Drawable drawable =getResources().getDrawable(R.drawable.icon_likewhite2x);
+            Drawable drawable = getResources().getDrawable(R.drawable.icon_likewhite2x);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             collectionTv.setCompoundDrawables(drawable, null, null, null);
         }
@@ -177,12 +178,12 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
             bean.setIsCollect(collect);
             if (bean.isIsCollect()) {
                 collectionTv.setText("已收藏");
-                Drawable drawable =getResources().getDrawable(R.drawable.icon_likedwhite2x);
+                Drawable drawable = getResources().getDrawable(R.drawable.icon_likedwhite2x);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 collectionTv.setCompoundDrawables(drawable, null, null, null);
             } else {
                 collectionTv.setText("收藏");
-                Drawable drawable =getResources().getDrawable(R.drawable.icon_likewhite2x);
+                Drawable drawable = getResources().getDrawable(R.drawable.icon_likewhite2x);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 collectionTv.setCompoundDrawables(drawable, null, null, null);
             }
@@ -258,7 +259,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 break;
             case R.id.iv_title_another:
                 //分享
-
+                showShare();
                 break;
             case R.id.iv_title_finish:
                 finish();
@@ -320,5 +321,41 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         Fragment fragment = mFragment;
         ft.replace(R.id.fay_space, fragment);
         ft.commit();
+    }
+
+    //share
+    private void showShare() {
+        OnekeyShare oks = null;
+        if (oks == null)
+            oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
+        oks.setTitle("来出书");
+        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
+        oks.setTitleUrl("https://www.baidu.com/");
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(getResources().getString(R.string.app_introduce_details) + "https://www.sina.com");
+        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl("http://www.sharesdk.cn");
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("我是测试评论文本");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite("https://www.sina.com");
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("https://www.sina.com");
+
+// 启动分享GUI
+        oks.show(this);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //停止shareSDK
+        ShareSDK.stopSDK(mActivity);
     }
 }

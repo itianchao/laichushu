@@ -1,15 +1,27 @@
 package com.laichushu.book.ui.activity;
 
+import android.support.v7.app.AlertDialog;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.City_Id;
+import com.laichushu.book.db.City_IdDao;
+import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.login.LoginModel;
 import com.laichushu.book.mvp.login.LoginPresenter;
 import com.laichushu.book.mvp.regist2.RegistModel2;
 import com.laichushu.book.ui.base.MvpActivity;
+import com.laichushu.book.ui.widget.WheelView;
 import com.laichushu.book.utils.DialogUtil;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
@@ -18,6 +30,9 @@ import com.laichushu.book.R;
 import com.laichushu.book.mvp.regist2.RegistPresenter2;
 import com.laichushu.book.mvp.regist2.RegistView2;
 import com.laichushu.book.utils.UIUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 注册页面
@@ -30,10 +45,14 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
     private EditText nameEt;
     private TextView sexTv;
     private TextView phoneTv;
+    private TextView addressTv;
     private EditText pwdEt;
     private EditText repwdEt;
     private Button finishBtn;
-
+    private String curProCode = null;
+    private Cache_JsonDao cache_jsonDao;
+    private City_IdDao city_idDao;
+    private List<City_Id> city_idList;
     @Override
     protected void initView() {
         setContentView(R.layout.activity_regist2);
@@ -41,6 +60,7 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
         finishTv = (ImageView) findViewById(R.id.iv_title_finish);
         nameEt = (EditText) findViewById(R.id.et_name);
         sexTv = (TextView) findViewById(R.id.tv_sex);
+        addressTv = (TextView) findViewById(R.id.tv_address);
         phoneTv = (TextView) findViewById(R.id.tv_phone);
         pwdEt = (EditText) findViewById(R.id.et_pwd);
         repwdEt = (EditText) findViewById(R.id.et_re_pwd);
@@ -50,7 +70,12 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
     @Override
     protected void initData() {
         titleTv.setText("填写信息");
+        DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
+        city_idDao = daoSession.getCity_IdDao();
+        city_idList = city_idDao.queryBuilder().build().list();
+
         sexTv.setOnClickListener(this);
+        addressTv.setOnClickListener(this);
         finishTv.setOnClickListener(this);
         finishBtn.setOnClickListener(this);
         String phone = mActivity.getIntent().getStringExtra("phone");
@@ -153,15 +178,139 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
                 String phonenum = phoneTv.getText().toString().trim();
                 String pwd = pwdEt.getText().toString().trim();
                 String repwd = repwdEt.getText().toString().trim();
-                if (mvpPresenter.check(name, sex, pwd, repwd)) {
+                if (mvpPresenter.check(name, sex, curProCode,pwd, repwd)) {
                     //请求网络
                     showLoading();
-                    mvpPresenter.regist(phonenum, name, sex, pwd);
+                    mvpPresenter.regist(phonenum, name, sex,curProCode, pwd);
                 }
                 break;
             case R.id.tv_sex:
                 mvpPresenter.getSex(sexTv);
                 break;
+            case R.id.tv_address:
+               //选择地址
+                initAreaSelector();
+                break;
         }
+    }
+    //-----------省市选择器---------------
+
+    /**
+     * 获取所有的省份
+     *
+     * @return
+     */
+    private ArrayList<String> getProvonce() {
+        ArrayList<String> proDate = new ArrayList<>();
+        proDate.clear();
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (!proDate.contains(city_idList.get(i).getProvince())) {
+                proDate.add(city_idList.get(i).getProvince());
+            }
+        }
+        return proDate;
+    }
+
+    /**
+     * 通过省份名字获取省份代号
+     *
+     * @param province
+     * @return
+     */
+    private String getProCodeByProvince(String province) {
+        String result = null;
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (province.equals(city_idList.get(i).getProvince())) {
+                result = city_idList.get(i).getProCode();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 通过省份code获取省份名字
+     *
+     * @param proCode
+     * @return
+     */
+    private String getProvinceByProcode(String proCode) {
+        String result = null;
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (proCode.equals(city_idList.get(i).getProCode())) {
+                result = city_idList.get(i).getProvince();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @param proCode
+     * @return 根据proCode查询城市
+     */
+    private ArrayList<String> getCity(String proCode) {
+        ArrayList<String> cityDate = new ArrayList<>();
+        cityDate.clear();
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (proCode.equals(city_idList.get(i).getProCode())) {
+                cityDate.add(city_idList.get(i).getCity());
+            }
+        }
+        return cityDate;
+    }
+    public void initAreaSelector() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
+        final AlertDialog alertDialog = dialogBuilder.create();
+        LayoutInflater inflater = LayoutInflater.from(mActivity);
+        View customerView = inflater.inflate(R.layout.item_pop_myview, null);
+        WheelView wvProvince = ((WheelView) customerView.findViewById(R.id.wv_province));
+        final WheelView wvCity = ((WheelView) customerView.findViewById(R.id.wv_city));
+        TextView tvCancel = ((TextView) customerView.findViewById(R.id.tv_cancel));
+        TextView tvSubmit = ((TextView) customerView.findViewById(R.id.tv_submit));
+        wvProvince.setTextSize(R.dimen.editTop);
+        wvProvince.setSelectTextColor("#969696");
+        wvProvince.setLineColor("#969696");
+        wvCity.setSelectTextColor("#969696");
+        wvCity.setLineColor("#969696");
+        wvCity.setPadd(15);
+        wvCity.setTextSize(R.dimen.editTop);
+        wvProvince.setPadd(15);
+        wvProvince.setOffset(2);
+        wvProvince.setSeletion(0);
+        wvCity.setOffset(2);
+        wvCity.setSeletion(0);
+        wvProvince.setItems(getProvonce());
+        wvCity.setItems(getCity("01"));
+        final String[] curProvince = {"北京市"};
+        wvProvince.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+            @Override
+            public void onSelected(int position, String item) {
+                curProvince[0] = item;
+                wvCity.setItems(getCity(getProCodeByProvince(item)));
+            }
+        });
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //提交数据
+                addressTv.setText(curProvince[0]);
+                curProCode = getProCodeByProvince(curProvince[0]);
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.setView(customerView);
+        alertDialog.show();
+        WindowManager m = getWindowManager();
+        Display display = m.getDefaultDisplay();  //为获取屏幕宽、高
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setLayout(display.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT);
+        alertDialog.getWindow().setWindowAnimations(R.style.timepopwindow_anim_style);
+        alertDialog.show();
+
     }
 }

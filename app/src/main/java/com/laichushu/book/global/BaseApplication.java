@@ -13,6 +13,9 @@ import com.laichushu.book.utils.SharePrefManager;
 
 import org.geometerplus.android.fbreader.FBReaderApplication;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
+
+import cn.sharesdk.framework.ShareSDK;
+
 /**
  * 应用程序入口
  */
@@ -47,7 +50,7 @@ public class BaseApplication extends FBReaderApplication {
         //重写系统的异常处理器
 //        Thread.currentThread().setUncaughtExceptionHandler(new MyExceptionHandler());
         // 初始化分享
-//        ShareSDK.initSDK(this);
+        ShareSDK.initSDK(this);
     }
 
     public static Context getContext() {

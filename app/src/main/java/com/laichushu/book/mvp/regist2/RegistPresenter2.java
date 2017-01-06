@@ -2,6 +2,7 @@ package com.laichushu.book.mvp.regist2;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -33,7 +34,7 @@ public class RegistPresenter2 extends BasePresenter<RegistView2> {
     }
 
     //校验输入项
-    public boolean check(String name, String sex, String pwd, String repwd) {
+    public boolean check(String name, String sex,String curProCode, String pwd, String repwd) {
         boolean isCheck;
         if ("".equals(name)) {
             ToastUtil.showToast("请输入昵称");
@@ -41,6 +42,10 @@ public class RegistPresenter2 extends BasePresenter<RegistView2> {
         }
         if ("".equals(sex)) {
             ToastUtil.showToast("请选择性别");
+            return isCheck = false;
+        }
+        if (TextUtils.isEmpty(curProCode)) {
+            ToastUtil.showToast("请输入您所在城市!");
             return isCheck = false;
         }
         if ("".equals(pwd)) {
@@ -87,13 +92,13 @@ public class RegistPresenter2 extends BasePresenter<RegistView2> {
     }
 
     //注册请求网络
-    public void regist(String phonenum, String name, String sex, String pwd){
+    public void regist(String phonenum, String name, String sex,String curProCode, String pwd){
         if (sex.equals("男")){
             sex = "1";
         }else{
             sex = "2";
         }
-        Regist_Paramet paramet = new Regist_Paramet(phonenum,name,sex,pwd);
+        Regist_Paramet paramet = new Regist_Paramet(phonenum,name,curProCode,sex,pwd);
         addSubscription(apiStores.registData(paramet), new ApiCallback<RegistModel2>() {
             @Override
             public void onSuccess(RegistModel2 model) {

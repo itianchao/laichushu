@@ -206,7 +206,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 //等级说明
                 Bundle bundle = new Bundle();
                 bundle.putString("userID", userId);
-                UIUtil.openActivity(this, HomePageGradeDetailsActivity.class);
+                UIUtil.openActivity(this, HomePageGradeDetailsActivity.class,bundle);
                 break;
             case R.id.btn_userFocus:
                 //关注
@@ -294,6 +294,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
             nickName.setText(result.getNickName());
             if (null != result.getLevelType()) {
+                ivGradeDetail.setClickable(true);
                 ivGradeDetails.setVisibility(View.VISIBLE);
                 switch (result.getLevelType()) {
                     case "1":
@@ -312,6 +313,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             } else {
                 ivGrade.setVisibility(View.GONE);
                 ivGradeDetails.setVisibility(View.GONE);
+                ivGradeDetail.setClickable(false);
                 tvAuthorGrade.setText("暂无等级");
             }
 

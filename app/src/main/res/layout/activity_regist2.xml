@@ -38,6 +38,7 @@
 
     <LinearLayout
         style="@style/edit_ll_style"
+        android:layout_width="352dp"
         android:gravity="center_vertical"
         android:singleLine="true">
 
@@ -50,6 +51,26 @@
 
         <TextView
             android:id="@+id/tv_sex"
+            style="@style/edit_item_style"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
+            android:hint="@string/select" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/edit_ll_style"
+        android:layout_width="352dp"
+        android:gravity="center_vertical"
+        android:singleLine="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/address"
+            android:textColor="@color/edit" />
+
+        <TextView
+            android:id="@+id/tv_address"
             style="@style/edit_item_style"
             android:layout_marginRight="5dp"
             android:gravity="right"
@@ -93,9 +114,9 @@
             android:id="@+id/et_pwd"
             style="@style/edit_item_style"
             android:layout_marginRight="5dp"
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
             android:gravity="right"
             android:hint="@string/fillin"
-            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
             android:maxLength="14"
             android:password="true"
             android:singleLine="true" />
@@ -116,9 +137,9 @@
             android:id="@+id/et_re_pwd"
             style="@style/edit_item_style"
             android:layout_marginRight="5dp"
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
             android:gravity="right"
             android:hint="@string/fillin"
-            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
             android:maxLength="14"
             android:password="true"
             android:singleLine="true" />
