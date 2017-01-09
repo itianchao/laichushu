@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.laichushu.book.bean.netbean.ReSavaComment_Paramet;
 import com.laichushu.book.event.RefurshCommentListEvent;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.R;
 import com.laichushu.book.retrofit.ApiCallback;

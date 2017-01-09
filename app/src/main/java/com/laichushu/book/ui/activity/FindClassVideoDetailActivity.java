@@ -6,8 +6,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.findclass.videodetail.VideoDetailPresenter;
-import com.laichushu.book.mvp.findclass.videodetail.VideoDetailView;
+import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailPresenter;
+import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.utils.UIUtil;
 

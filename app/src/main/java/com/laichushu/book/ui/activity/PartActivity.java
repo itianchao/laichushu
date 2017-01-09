@@ -8,15 +8,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.laichushu.book.mvp.part.PartModel;
-import com.laichushu.book.mvp.part.PartView;
+import com.laichushu.book.mvp.home.part.PartModel;
+import com.laichushu.book.mvp.home.part.PartView;
 import com.laichushu.book.ui.adapter.PartListAdapter;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.part.PartPresenter;
+import com.laichushu.book.mvp.home.part.PartPresenter;
 
 import java.util.ArrayList;
 

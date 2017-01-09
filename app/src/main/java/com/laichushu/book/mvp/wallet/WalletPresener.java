@@ -1,16 +1,12 @@
 package com.laichushu.book.mvp.wallet;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.RechargeAppPay_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
 import com.laichushu.book.bean.netbean.WithdrawalsApplay_Paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.homepage.HomePageView;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
-import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;

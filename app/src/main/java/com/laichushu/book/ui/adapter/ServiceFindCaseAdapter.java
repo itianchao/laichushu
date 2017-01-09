@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.findservicemainpage.FindServiceMainPagePresenter;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.FindServerMainPageActivity;
 import com.laichushu.book.utils.GlideUitl;

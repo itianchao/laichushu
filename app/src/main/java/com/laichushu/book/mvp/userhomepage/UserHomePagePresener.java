@@ -20,7 +20,7 @@ import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.bean.netbean.UserFocusBe_parmet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.ui.base.BasePresenter;

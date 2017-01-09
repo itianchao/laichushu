@@ -4,8 +4,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.findclass.video.FindClassVideoPresenter;
-import com.laichushu.book.mvp.findclass.video.FindClassVideoView;
+import com.laichushu.book.mvp.find.coursera.video.FindClassVideoPresenter;
+import com.laichushu.book.mvp.find.coursera.video.FindClassVideoView;
 import com.laichushu.book.ui.adapter.FindClassVideoAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.base.MvpFragment2;

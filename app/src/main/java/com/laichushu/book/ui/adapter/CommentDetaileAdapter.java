@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.ui.base.BaseActivity;
@@ -15,7 +15,6 @@ import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 import com.laichushu.book.R;
-import com.laichushu.book.ui.activity.CommentDetailActivity;
 
 import java.util.ArrayList;
 

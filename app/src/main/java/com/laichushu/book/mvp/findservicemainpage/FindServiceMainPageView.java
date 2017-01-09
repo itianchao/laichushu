@@ -1,11 +1,10 @@
 package com.laichushu.book.mvp.findservicemainpage;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.FindEditorInfoModel;
 import com.laichushu.book.bean.netbean.FindServerInfoModel;
 import com.laichushu.book.bean.netbean.FindServiceItemListModel;
-import com.laichushu.book.mvp.campaign.AuthorWorksModle;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.campaign.AuthorWorksModle;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 
 /**

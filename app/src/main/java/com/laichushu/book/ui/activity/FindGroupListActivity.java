@@ -7,9 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.findgroup.findgrouplist.FindGroupListPresenter;
-import com.laichushu.book.mvp.findgroup.findgrouplist.FindGroupListView;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.findgrouplist.FindGroupListPresenter;
+import com.laichushu.book.mvp.find.group.findgrouplist.FindGroupListView;
+import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
 import com.laichushu.book.ui.adapter.FindGroupListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;

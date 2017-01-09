@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.findeditmainpage.FindEditMainPagePresenter;
 import com.laichushu.book.ui.activity.CommentDetailActivity;
 import com.laichushu.book.ui.activity.FindEditMainPageActivity;

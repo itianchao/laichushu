@@ -1,7 +1,7 @@
 
 package com.laichushu.book.bean.JsonBean;
 
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 /**
  * 首页轮播图 搜索结果

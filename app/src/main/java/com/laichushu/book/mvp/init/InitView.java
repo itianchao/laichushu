@@ -1,8 +1,8 @@
 package com.laichushu.book.mvp.init;
 
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
-import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.mvp.home.HomeModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeModel;
 
 /**
  * init页面

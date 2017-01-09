@@ -2,7 +2,7 @@ package com.laichushu.book.mvp.write;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.SignStateResult;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 /**
  * 写作

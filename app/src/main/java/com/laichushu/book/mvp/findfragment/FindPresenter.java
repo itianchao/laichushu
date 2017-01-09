@@ -4,7 +4,6 @@ import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.bean.netbean.FindLessonListResult;
 import com.laichushu.book.bean.netbean.FindLessonList_Paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.FindFragment;

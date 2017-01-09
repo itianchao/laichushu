@@ -1,7 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.draftmodle.DraftModle;
-import com.laichushu.book.mvp.draftmodle.DraftModlePresenter;
+import com.laichushu.book.mvp.write.draftmodle.DraftModle;
+import com.laichushu.book.mvp.write.draftmodle.DraftModlePresenter;
 import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.ui.activity.NopublishBookActivity;
 import com.laichushu.book.utils.UIUtil;
-
-import org.geometerplus.android.fbreader.api.MenuNode;
 
 import java.util.ArrayList;
 

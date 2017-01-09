@@ -2,11 +2,9 @@ package com.laichushu.book.mvp.messagecomment;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
-import com.laichushu.book.bean.netbean.BookDetailsResult;
-import com.laichushu.book.bean.netbean.HomeUserResult;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 /**
  * Created by PCPC on 2016/11/28.

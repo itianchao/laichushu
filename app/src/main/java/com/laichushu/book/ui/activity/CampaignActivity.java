@@ -15,13 +15,12 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
-import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
-import com.laichushu.book.mvp.campaign.AuthorWorksModle;
-import com.laichushu.book.mvp.campaign.CampaignJoinModel;
-import com.laichushu.book.mvp.campaign.CampaignModel;
-import com.laichushu.book.mvp.campaign.CampaignPresenter;
-import com.laichushu.book.mvp.campaign.CampaignView;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.campaign.AuthorWorksModle;
+import com.laichushu.book.mvp.home.campaign.CampaignJoinModel;
+import com.laichushu.book.mvp.home.campaign.CampaignModel;
+import com.laichushu.book.mvp.home.campaign.CampaignPresenter;
+import com.laichushu.book.mvp.home.campaign.CampaignView;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.adapter.JoinActivityAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -31,8 +30,6 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 

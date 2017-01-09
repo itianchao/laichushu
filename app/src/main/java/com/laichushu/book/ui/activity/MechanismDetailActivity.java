@@ -15,10 +15,10 @@ import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.event.RefurshWriteFragment;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.campaign.AuthorWorksModle;
-import com.laichushu.book.mvp.mechanismdetail.MechanisDetailModel;
-import com.laichushu.book.mvp.mechanismdetail.MechanismDetailPresenter;
-import com.laichushu.book.mvp.mechanismdetail.MechanismDetailView;
+import com.laichushu.book.mvp.home.campaign.AuthorWorksModle;
+import com.laichushu.book.mvp.find.mechanism.mechanismdetail.MechanisDetailModel;
+import com.laichushu.book.mvp.find.mechanism.mechanismdetail.MechanismDetailPresenter;
+import com.laichushu.book.mvp.find.mechanism.mechanismdetail.MechanismDetailView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.fragment.BriefFragment;
 import com.laichushu.book.ui.fragment.NoticeFragment;
@@ -33,7 +33,6 @@ import com.laichushu.book.utils.UIUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import cn.sharesdk.framework.ShareSDK;

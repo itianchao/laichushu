@@ -10,11 +10,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.laichushu.book.event.RefurshBookCommentListEvent;
-import com.laichushu.book.event.RefurshCommentListEvent;
-import com.laichushu.book.mvp.allcomment.AllCommentPresenter;
-import com.laichushu.book.mvp.allcomment.AllCommentView;
-import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
-import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
+import com.laichushu.book.mvp.home.allcomment.AllCommentPresenter;
+import com.laichushu.book.mvp.home.allcomment.AllCommentView;
+import com.laichushu.book.mvp.home.allcomment.SendCommentMoudle;
+import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;

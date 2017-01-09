@@ -3,9 +3,9 @@ package com.laichushu.book.ui.fragment;
 import android.view.View;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
-import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListPresenter;
-import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListView;
+import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
+import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListPresenter;
+import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListView;
 import com.laichushu.book.ui.activity.MechanismDetailActivity;
 import com.laichushu.book.ui.adapter.MechanismTopicListAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;

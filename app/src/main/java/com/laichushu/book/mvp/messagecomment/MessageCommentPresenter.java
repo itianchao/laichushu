@@ -17,14 +17,12 @@ import com.laichushu.book.bean.netbean.PerInformationDetails_Paramet;
 import com.laichushu.book.bean.netbean.PerInformation_Paramet;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.bean.netbean.SendMsgDetails_Paramet;
-import com.laichushu.book.bean.netbean.TopicDetailCommentSave_Paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
-import com.pickerview.lib.Province;
 
 public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
     private MessageCommentDetailsActivity mActivity;

@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.findgroup.findgroupmenber.FindGroupMenberModle;
-import com.laichushu.book.mvp.findgroup.findgroupmenber.FindGroupMenberPresenter;
+import com.laichushu.book.mvp.find.group.findgroupmenber.FindGroupMenberModle;
+import com.laichushu.book.mvp.find.group.findgroupmenber.FindGroupMenberPresenter;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.ui.base.BaseActivity;

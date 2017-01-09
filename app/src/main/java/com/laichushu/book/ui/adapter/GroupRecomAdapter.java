@@ -8,9 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.mvp.findfragment.FindPresenter;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 

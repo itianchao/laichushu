@@ -9,11 +9,11 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.directories.BookMoudle;
-import com.laichushu.book.mvp.directories.DirectoriesPresenter;
-import com.laichushu.book.mvp.directories.DirectoriesView;
-import com.laichushu.book.mvp.directories.MaterialContentModel;
-import com.laichushu.book.mvp.directories.MaterialListModel;
+import com.laichushu.book.mvp.write.directories.BookMoudle;
+import com.laichushu.book.mvp.write.directories.DirectoriesPresenter;
+import com.laichushu.book.mvp.write.directories.DirectoriesView;
+import com.laichushu.book.mvp.write.directories.MaterialContentModel;
+import com.laichushu.book.mvp.write.directories.MaterialListModel;
 import com.laichushu.book.ui.adapter.BookListAdapter;
 import com.laichushu.book.ui.adapter.DirectoriesAdapter;
 import com.laichushu.book.ui.base.MvpActivity;

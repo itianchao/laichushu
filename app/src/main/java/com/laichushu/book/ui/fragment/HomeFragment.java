@@ -14,12 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.laichushu.book.R;
-import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
-import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.mvp.home.HomeModel;
-import com.laichushu.book.mvp.home.HomePresenter;
-import com.laichushu.book.mvp.home.HomeView;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeModel;
+import com.laichushu.book.mvp.home.homelist.HomePresenter;
+import com.laichushu.book.mvp.home.homelist.HomeView;
 import com.laichushu.book.ui.activity.CategoryActivity;
 import com.laichushu.book.ui.activity.HomeSearchActivity;
 import com.laichushu.book.ui.activity.MainActivity;

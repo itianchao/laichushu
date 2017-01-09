@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.homecategory.CategoryModle;
+import com.laichushu.book.mvp.home.homecategory.CategoryModle;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;

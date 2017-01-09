@@ -7,9 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.topicdetail.TopicDetailPresenter;
-import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;

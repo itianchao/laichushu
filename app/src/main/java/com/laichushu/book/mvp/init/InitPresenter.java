@@ -5,11 +5,10 @@ import com.laichushu.book.bean.netbean.HomeHot_Paramet;
 import com.laichushu.book.bean.netbean.PersonalCentreResult;
 import com.laichushu.book.bean.netbean.PersonalCentre_Parmet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.mvp.home.HomeModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
-import com.laichushu.book.utils.SharePrefManager;
 
 /**
  * init presenter

@@ -7,10 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.mvp.forgetpwd.ForgetPwdCodeModel;
-import com.laichushu.book.mvp.forgetpwd.ForgetPwdModel;
-import com.laichushu.book.mvp.forgetpwd.ForgetPwdPresenter;
-import com.laichushu.book.mvp.forgetpwd.ForgetPwdView;
+import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
+import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdPresenter;
+import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdView;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;

@@ -1,14 +1,11 @@
 package com.laichushu.book.mvp.bookcast;
 
-import com.laichushu.book.bean.netbean.ArticleBookList_Paramet;
 import com.laichushu.book.bean.netbean.AuthorWorksByBookId_Paramet;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
-import com.laichushu.book.bean.netbean.CollectList_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
 import com.laichushu.book.bean.netbean.MyBrowseList_paramet;
-import com.laichushu.book.bean.netbean.MyHomeModel;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
 import com.laichushu.book.ui.base.BasePresenter;

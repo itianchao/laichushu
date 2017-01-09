@@ -9,12 +9,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.ArticleSave_Paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -25,11 +23,8 @@ import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.yanzhenjie.album.Album;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
 import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;

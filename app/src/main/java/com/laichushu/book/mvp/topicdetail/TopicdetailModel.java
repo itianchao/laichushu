@@ -3,7 +3,7 @@ package com.laichushu.book.mvp.topicdetail;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
 
 import java.util.ArrayList;
 

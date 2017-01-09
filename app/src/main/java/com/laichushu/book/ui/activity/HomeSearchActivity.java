@@ -13,12 +13,11 @@ import android.widget.TextView;
 
 import com.laichushu.book.db.Search_History;
 import com.laichushu.book.event.RefrushHomeSearchEvent;
-import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.homesearch.HomeSearchModel;
-import com.laichushu.book.mvp.homesearch.HomeSearchPresenter;
-import com.laichushu.book.mvp.homesearch.HomeSearchView;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homesearch.HomeSearchModel;
+import com.laichushu.book.mvp.home.homesearch.HomeSearchPresenter;
+import com.laichushu.book.mvp.home.homesearch.HomeSearchView;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.adapter.HomeSearchAdapter;
 import com.laichushu.book.ui.adapter.HomeSearchHistoryAdapter;
 import com.laichushu.book.ui.adapter.HomeSearchHotHistoryAdapter;
@@ -40,7 +39,6 @@ import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.dao.query.Query;
-import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * 首页搜索页面

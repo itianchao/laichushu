@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 
-import com.laichushu.book.mvp.campaign.AuthorWorksModle;
+import com.laichushu.book.mvp.home.campaign.AuthorWorksModle;
 import com.laichushu.book.utils.UIUtil;
 import com.laichushu.book.R;
 
