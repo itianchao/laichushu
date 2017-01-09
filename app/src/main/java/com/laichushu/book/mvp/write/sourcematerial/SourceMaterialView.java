@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.sourcematerial;
+package com.laichushu.book.mvp.write.sourcematerial;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 

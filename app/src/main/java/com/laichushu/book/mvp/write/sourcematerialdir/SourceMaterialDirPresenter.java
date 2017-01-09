@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.sourcematerialdir;
+package com.laichushu.book.mvp.write.sourcematerialdir;
 
 import android.app.Activity;
 import android.text.TextUtils;

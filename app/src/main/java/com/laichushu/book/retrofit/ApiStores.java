@@ -41,8 +41,8 @@ import com.laichushu.book.mvp.notice.NoticeModle;
 import com.laichushu.book.mvp.home.part.PartModel;
 import com.laichushu.book.mvp.entry.regist.RegistModel;
 import com.laichushu.book.mvp.entry.regist2.RegistModel2;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
-import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
+import com.laichushu.book.mvp.write.sourcematerial.SourceMaterialModle;
+import com.laichushu.book.mvp.write.sourcematerialdir.SourceMaterialDirModle;
 import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
 
 import java.util.Map;

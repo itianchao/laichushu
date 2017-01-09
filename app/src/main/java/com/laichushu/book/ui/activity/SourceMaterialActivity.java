@@ -9,13 +9,11 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.event.RefurshMaterialDirEvent;
 import com.laichushu.book.event.RefurshMaterialEvent;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialPresenter;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialView;
+import com.laichushu.book.mvp.write.sourcematerial.SourceMaterialModle;
+import com.laichushu.book.mvp.write.sourcematerial.SourceMaterialPresenter;
+import com.laichushu.book.mvp.write.sourcematerial.SourceMaterialView;
 import com.laichushu.book.ui.adapter.MaterialListAdapter;
-import com.laichushu.book.ui.adapter.MaterialListDirAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.LoggerUtil;

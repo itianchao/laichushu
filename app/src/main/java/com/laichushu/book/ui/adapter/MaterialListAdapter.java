@@ -9,13 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialPresenter;
-import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
-import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirPresenter;
+import com.laichushu.book.mvp.write.sourcematerial.SourceMaterialModle;
+import com.laichushu.book.mvp.write.sourcematerial.SourceMaterialPresenter;
 import com.laichushu.book.ui.activity.CreateMaterialActivity;
 import com.laichushu.book.ui.activity.SourceMaterialActivity;
-import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;

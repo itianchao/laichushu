@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.sourcematerial;
+package com.laichushu.book.mvp.write.sourcematerial;
 
 import android.text.TextUtils;
 import android.view.View;
@@ -18,7 +18,6 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.SourceMaterialActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
-import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 /**
