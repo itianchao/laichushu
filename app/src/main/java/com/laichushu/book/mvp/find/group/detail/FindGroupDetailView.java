@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.find.group.findgroupmain;
+package com.laichushu.book.mvp.find.group.detail;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
@@ -8,7 +8,7 @@ import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicLi
  * Created by PCPC on 2016/12/26.
  */
 
-public interface FindGroupPageView {
+public interface FindGroupDetailView {
     void getGroupTopicListDataSuccess(MechanismTopicListModel modle);
 
     void getGroupTopicListDataFail(String msg);

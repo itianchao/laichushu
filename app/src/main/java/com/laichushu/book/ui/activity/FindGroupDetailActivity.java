@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.find.group.findgroupmain.FindGroupPagePresenter;
-import com.laichushu.book.mvp.find.group.findgroupmain.FindGroupPageView;
+import com.laichushu.book.mvp.find.group.detail.FindGroupDetailPresenter;
+import com.laichushu.book.mvp.find.group.detail.FindGroupDetailView;
 import com.laichushu.book.mvp.find.group.GroupListModle;
 import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.ui.adapter.MechanismTopicListAdapter;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/12/26.
  */
 
-public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter> implements FindGroupPageView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
+public class FindGroupDetailActivity extends MvpActivity2<FindGroupDetailPresenter> implements FindGroupDetailView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView backIv, headIv, searchIv, moreIv, topicIv, emptyIv;
     private TextView titleTv, groupNameTv, linemarksTv, briefTv, createTimeTv, numberTv;
     private PullLoadMoreRecyclerView mRecyclerView;
@@ -78,8 +78,8 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupPagePresenter
     }
 
     @Override
-    protected FindGroupPagePresenter createPresenter() {
-        return new FindGroupPagePresenter(this);
+    protected FindGroupDetailPresenter createPresenter() {
+        return new FindGroupDetailPresenter(this);
     }
 
     @Override

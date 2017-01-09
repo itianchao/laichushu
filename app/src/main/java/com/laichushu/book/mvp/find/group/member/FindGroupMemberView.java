@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.find.group.findgroupmenber;
+package com.laichushu.book.mvp.find.group.member;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
@@ -8,9 +8,9 @@ import com.laichushu.book.bean.netbean.HomeFocusResult;
  * Created by wangtong on 2016/12/30.
  */
 
-public interface FindGroupMenberView {
+public interface FindGroupMemberView {
 
-    void getDataSuccess(FindGroupMenberModle modle);//获取成员列表
+    void getDataSuccess(FindGroupMemberModle modle);//获取成员列表
 
     void getDataFali(String msg);
 

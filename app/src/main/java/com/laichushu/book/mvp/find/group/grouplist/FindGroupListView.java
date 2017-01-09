@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.find.group.findgrouplist;
+package com.laichushu.book.mvp.find.group.grouplist;
 
 import com.laichushu.book.mvp.find.group.GroupListModle;
 

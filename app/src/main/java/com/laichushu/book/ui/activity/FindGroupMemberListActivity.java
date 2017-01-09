@@ -14,9 +14,9 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.find.group.findgroupmenber.FindGroupMenberModle;
-import com.laichushu.book.mvp.find.group.findgroupmenber.FindGroupMenberPresenter;
-import com.laichushu.book.mvp.find.group.findgroupmenber.FindGroupMenberView;
+import com.laichushu.book.mvp.find.group.member.FindGroupMemberModle;
+import com.laichushu.book.mvp.find.group.member.FindGroupMemberPresenter;
+import com.laichushu.book.mvp.find.group.member.FindGroupMemberView;
 import com.laichushu.book.ui.adapter.FindGroupMemberAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/12/30.
  */
 
-public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPresenter> implements FindGroupMenberView, View.OnClickListener, TextWatcher {
+public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMemberPresenter> implements FindGroupMemberView, View.OnClickListener, TextWatcher {
 
     private PullLoadMoreRecyclerView mRecyclerView;
     private EditText searchEt;
@@ -40,14 +40,14 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
     private TextView titleTv;
     private String title;
     private FindGroupMemberAdapter mAdapter;
-    private ArrayList<FindGroupMenberModle.DataBean> mData = new ArrayList<>();
+    private ArrayList<FindGroupMemberModle.DataBean> mData = new ArrayList<>();
     private int type;
     private LinearLayout searchLay;
     private String teamId;
     private int argsMember = 0;
     @Override
-    protected FindGroupMenberPresenter createPresenter() {
-        return new FindGroupMenberPresenter(this);
+    protected FindGroupMemberPresenter createPresenter() {
+        return new FindGroupMemberPresenter(this);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
      * @param modle 数据模型
      */
     @Override
-    public void getDataSuccess(FindGroupMenberModle modle) {
+    public void getDataSuccess(FindGroupMemberModle modle) {
         if (modle.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (modle.getData() != null && !modle.getData().isEmpty()) {
@@ -265,11 +265,11 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMenberPre
 
     }
 
-    private ArrayList<FindGroupMenberModle.DataBean> searchData = new ArrayList<>();
+    private ArrayList<FindGroupMemberModle.DataBean> searchData = new ArrayList<>();
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         searchData.clear();
-        for (FindGroupMenberModle.DataBean bean : mData) {
+        for (FindGroupMemberModle.DataBean bean : mData) {
             if (bean.getName().contains(s)) {
                 searchData.add(bean);
             }

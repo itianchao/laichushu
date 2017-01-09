@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.find.group.findtopiclist;
+package com.laichushu.book.mvp.find.group.topiclist;
 
 import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
 

@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.find.group.findgroupmenber;
+package com.laichushu.book.mvp.find.group.member;
 
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +24,12 @@ import com.laichushu.book.utils.UIUtil;
  * Created by wangtong on 2016/12/30.
  */
 
-public class FindGroupMenberPresenter extends BasePresenter<FindGroupMenberView> {
+public class FindGroupMemberPresenter extends BasePresenter<FindGroupMemberView> {
 
     private FindGroupMemberListActivity mActivity;
     private String userId = ConstantValue.USERID;
 
-    public FindGroupMenberPresenter(FindGroupMenberView view) {
+    public FindGroupMemberPresenter(FindGroupMemberView view) {
         attachView(view);
         this.mActivity = (FindGroupMemberListActivity) view;
     }
@@ -39,9 +39,9 @@ public class FindGroupMenberPresenter extends BasePresenter<FindGroupMenberView>
      */
     public void getGroupMemberList(String teamId) {
         GroupApplyMemberList_Paramet paramet = new GroupApplyMemberList_Paramet(teamId, userId);
-        addSubscription(apiStores.getGroupMemberList(paramet), new ApiCallback<FindGroupMenberModle>() {
+        addSubscription(apiStores.getGroupMemberList(paramet), new ApiCallback<FindGroupMemberModle>() {
             @Override
-            public void onSuccess(FindGroupMenberModle model) {
+            public void onSuccess(FindGroupMemberModle model) {
                 mvpView.getDataSuccess(model);
             }
 
@@ -62,9 +62,9 @@ public class FindGroupMenberPresenter extends BasePresenter<FindGroupMenberView>
      */
     public void getGroupApplyMemberList(String teamId) {
         GroupApplyMemberList_Paramet paramet = new GroupApplyMemberList_Paramet(teamId, userId);
-        addSubscription(apiStores.getGroupApplyMemberList(paramet), new ApiCallback<FindGroupMenberModle>() {
+        addSubscription(apiStores.getGroupApplyMemberList(paramet), new ApiCallback<FindGroupMemberModle>() {
             @Override
-            public void onSuccess(FindGroupMenberModle model) {
+            public void onSuccess(FindGroupMemberModle model) {
                 mvpView.getDataSuccess(model);
             }
 
@@ -86,7 +86,7 @@ public class FindGroupMenberPresenter extends BasePresenter<FindGroupMenberView>
      * @param position
      * @param dataBean
      */
-    public void showApplyMemberDialog(final int position, FindGroupMenberModle.DataBean dataBean) {
+    public void showApplyMemberDialog(final int position, FindGroupMemberModle.DataBean dataBean) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_ok);
         TextView msgTitleTv = (TextView) customerView.findViewById(R.id.tv_msg_title);
@@ -126,7 +126,7 @@ public class FindGroupMenberPresenter extends BasePresenter<FindGroupMenberView>
      * 删除成员对话框
      * @param position
      */
-    public void showDeleteMemberDialog(final int position, final FindGroupMenberModle.DataBean dataBean) {
+    public void showDeleteMemberDialog(final int position, final FindGroupMemberModle.DataBean dataBean) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_ok);
         TextView msgTitleTv = (TextView) customerView.findViewById(R.id.tv_msg_title);

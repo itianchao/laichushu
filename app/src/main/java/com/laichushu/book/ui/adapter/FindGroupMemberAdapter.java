@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.find.group.findgroupmenber.FindGroupMenberModle;
-import com.laichushu.book.mvp.find.group.findgroupmenber.FindGroupMenberPresenter;
+import com.laichushu.book.mvp.find.group.member.FindGroupMemberModle;
+import com.laichushu.book.mvp.find.group.member.FindGroupMemberPresenter;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.ui.base.BaseActivity;
@@ -26,12 +26,12 @@ import java.util.ArrayList;
  */
 
 public class FindGroupMemberAdapter extends RecyclerView.Adapter<FindGroupMemberAdapter.FindGroupMemberViewHolder> {
-    private final FindGroupMenberPresenter mvpPresenter;
+    private final FindGroupMemberPresenter mvpPresenter;
     private BaseActivity mActivity;
-    private ArrayList<FindGroupMenberModle.DataBean> mData = new ArrayList<>();
+    private ArrayList<FindGroupMemberModle.DataBean> mData = new ArrayList<>();
     private int type;
 
-    public FindGroupMemberAdapter(BaseActivity mActivity, ArrayList<FindGroupMenberModle.DataBean> mData, int type, FindGroupMenberPresenter mvpPresenter) {
+    public FindGroupMemberAdapter(BaseActivity mActivity, ArrayList<FindGroupMemberModle.DataBean> mData, int type, FindGroupMemberPresenter mvpPresenter) {
         this.mData = mData;
         this.mActivity = mActivity;
         this.type = type;
@@ -47,7 +47,7 @@ public class FindGroupMemberAdapter extends RecyclerView.Adapter<FindGroupMember
     @Override
     public void onBindViewHolder(final FindGroupMemberViewHolder holder, final int position) {
 
-        final FindGroupMenberModle.DataBean dataBean = mData.get(position);
+        final FindGroupMemberModle.DataBean dataBean = mData.get(position);
         switch (type) {
             case 1://关注 已经关注
                 holder.colorTv.setVisibility(View.VISIBLE);
@@ -133,7 +133,7 @@ public class FindGroupMemberAdapter extends RecyclerView.Adapter<FindGroupMember
         return mData == null ? 0 : mData.size();
     }
 
-    public void setmData(ArrayList<FindGroupMenberModle.DataBean> mData) {
+    public void setmData(ArrayList<FindGroupMemberModle.DataBean> mData) {
         this.mData = mData;
         notifyDataSetChanged();
     }

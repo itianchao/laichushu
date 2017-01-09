@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.find.group.findtopiclist;
+package com.laichushu.book.mvp.find.group.topiclist;
 
 import com.laichushu.book.bean.netbean.MyPublishTopicList_Paramet;
 import com.laichushu.book.global.ConstantValue;

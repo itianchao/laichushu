@@ -27,7 +27,7 @@ import com.laichushu.book.mvp.write.directories.MaterialContentModel;
 import com.laichushu.book.mvp.write.directories.MaterialListModel;
 import com.laichushu.book.mvp.write.draftmodle.DraftModle;
 import com.laichushu.book.mvp.find.coursera.video.ClassModle;
-import com.laichushu.book.mvp.find.group.findgroupmenber.FindGroupMenberModle;
+import com.laichushu.book.mvp.find.group.member.FindGroupMemberModle;
 import com.laichushu.book.mvp.find.group.GroupListModle;
 import com.laichushu.book.mvp.find.group.groupsearch.FindGroupModle;
 import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
@@ -682,11 +682,11 @@ public interface ApiStores {
 
     //获取小组成员列表
     @POST("team/memberList")
-    Observable<FindGroupMenberModle> getGroupMemberList(@Body GroupApplyMemberList_Paramet paramet);
+    Observable<FindGroupMemberModle> getGroupMemberList(@Body GroupApplyMemberList_Paramet paramet);
 
     //获取申请成员列表
     @POST("team/todoList")
-    Observable<FindGroupMenberModle> getGroupApplyMemberList(@Body GroupApplyMemberList_Paramet paramet);
+    Observable<FindGroupMemberModle> getGroupApplyMemberList(@Body GroupApplyMemberList_Paramet paramet);
 
     //处理申请成员 同意or拒绝
     @POST("team/approve")
