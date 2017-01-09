@@ -1,6 +1,6 @@
 package com.laichushu.book.bean.netbean;
 
-import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
 
 import java.util.ArrayList;
 

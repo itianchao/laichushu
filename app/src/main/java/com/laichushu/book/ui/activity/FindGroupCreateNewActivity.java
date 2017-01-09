@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;

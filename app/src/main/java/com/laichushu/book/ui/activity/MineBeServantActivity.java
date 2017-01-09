@@ -22,10 +22,9 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.bean.netbean.FindEditorInfoModel;
 import com.laichushu.book.bean.netbean.FindServerInfoModel;
-import com.laichushu.book.mvp.mineservant.MineBeServantPresener;
-import com.laichushu.book.mvp.mineservant.MineBeServantView;
+import com.laichushu.book.mvp.mine.mineservant.MineBeServantPresener;
+import com.laichushu.book.mvp.mine.mineservant.MineBeServantView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
@@ -33,7 +32,6 @@ import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
-import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 import com.yanzhenjie.album.Album;
 
 import java.io.File;

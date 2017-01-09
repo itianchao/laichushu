@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
-import com.laichushu.book.mvp.bookcast.BookcastPresener;
-import com.laichushu.book.mvp.bookcast.BookcastView;
+import com.laichushu.book.mvp.mine.bookcast.BookcastPresener;
+import com.laichushu.book.mvp.mine.bookcast.BookcastView;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.adapter.BookCastCollAdapter;
 import com.laichushu.book.ui.adapter.MyBookCastAdapter;

@@ -2,7 +2,7 @@ package com.laichushu.book.mvp.find.group.findgrouplist;
 
 import com.laichushu.book.bean.netbean.JoinGroupList_Paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindGroupListActivity;
 import com.laichushu.book.ui.base.BasePresenter;

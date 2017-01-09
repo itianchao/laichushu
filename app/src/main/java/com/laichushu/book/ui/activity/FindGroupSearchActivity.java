@@ -16,7 +16,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.db.Search_History;
 import com.laichushu.book.db.Search_HistoryDao;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
 import com.laichushu.book.mvp.find.group.groupsearch.FindGroupModle;
 import com.laichushu.book.mvp.find.group.groupsearch.FindGroupSearchPresenter;
 import com.laichushu.book.mvp.find.group.groupsearch.FindGroupSearchView;

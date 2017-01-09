@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
-import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
+import com.laichushu.book.mvp.msg.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.ui.activity.MessageCommentDetailsActivity;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;

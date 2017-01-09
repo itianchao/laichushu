@@ -3,9 +3,9 @@ package com.laichushu.book.ui.fragment;
 import android.view.View;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.notice.NoticeModle;
-import com.laichushu.book.mvp.notice.NoticePresenter;
-import com.laichushu.book.mvp.notice.NoticeView;
+import com.laichushu.book.mvp.msg.notice.NoticeModle;
+import com.laichushu.book.mvp.msg.notice.NoticePresenter;
+import com.laichushu.book.mvp.msg.notice.NoticeView;
 import com.laichushu.book.ui.activity.MechanismDetailActivity;
 import com.laichushu.book.ui.adapter.NoticeAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;

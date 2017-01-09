@@ -10,9 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FindEditorListModel;
 import com.laichushu.book.bean.netbean.FindServiceInfoModel;
-import com.laichushu.book.mvp.findservicepage.FindServicePagePresenter;
+import com.laichushu.book.mvp.find.service.findservicepage.FindServicePagePresenter;
 import com.laichushu.book.ui.activity.FindServerMainPageActivity;
 import com.laichushu.book.ui.activity.FindServicePageActivity;
 import com.laichushu.book.utils.GlideUitl;

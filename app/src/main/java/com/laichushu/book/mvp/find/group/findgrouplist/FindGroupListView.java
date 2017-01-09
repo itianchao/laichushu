@@ -1,6 +1,6 @@
 package com.laichushu.book.mvp.find.group.findgrouplist;
 
-import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
 
 /**
  * 发现 - 小组列表

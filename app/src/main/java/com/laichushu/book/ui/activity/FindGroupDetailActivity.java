@@ -15,7 +15,7 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.find.group.findgroupmain.FindGroupPagePresenter;
 import com.laichushu.book.mvp.find.group.findgroupmain.FindGroupPageView;
-import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
 import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.ui.adapter.MechanismTopicListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;

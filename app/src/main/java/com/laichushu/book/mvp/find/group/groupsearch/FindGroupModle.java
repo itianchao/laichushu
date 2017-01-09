@@ -1,6 +1,6 @@
 package com.laichushu.book.mvp.find.group.groupsearch;
 
-import com.laichushu.book.mvp.find.group.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
 
 import java.util.ArrayList;
 
