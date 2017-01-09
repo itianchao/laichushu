@@ -63,7 +63,6 @@ public class MainActivity extends MvpActivity2 implements View.OnClickListener {
         msgRbn.setOnClickListener(this);
         mindRbn.setOnClickListener(this);
         setDefaultFragment();
-        findRbn.setClickable(false);
     }
 
     @Override

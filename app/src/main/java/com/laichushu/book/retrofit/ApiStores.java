@@ -26,6 +26,7 @@ import com.laichushu.book.mvp.directories.BookMoudle;
 import com.laichushu.book.mvp.directories.MaterialContentModel;
 import com.laichushu.book.mvp.directories.MaterialListModel;
 import com.laichushu.book.mvp.draftmodle.DraftModle;
+import com.laichushu.book.mvp.findclass.video.ClassModle;
 import com.laichushu.book.mvp.findgroup.findgroupmenber.FindGroupMenberModle;
 import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
 import com.laichushu.book.mvp.findgroup.groupsearch.FindGroupModle;
@@ -65,7 +66,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL3;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
 
     //登录接口
     @POST("login/do")
@@ -474,9 +475,11 @@ public interface ApiStores {
     //我的钱包充值
     @POST("recharge/recharge")
     Observable<RewardResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
+
     //我的服务者列表--合作
     @POST("servicer/findMyServerList")
     Observable<FindServiceCooperateMode> getFindMyServerListDetails(@Body FindMyServerList_Paramet paramet);
+
     //我的服务者--服务内容列表
     @POST("servicerItem/findServerItemList")
     Observable<FindServiceItemListModel> getFindServerItemListDetails(@Body FindServerItemList_Paramet paramet);
@@ -565,6 +568,7 @@ public interface ApiStores {
     //发现精选课程
     @POST("lesson/lessonList")
     Observable<FindLessonListResult> findLessonListDatails(@Body FindLessonList_Paramet paramet);
+
     //发现小组推荐
     @POST("team/findTopTeam")
     Observable<FindCourseCommResult> findCourseCommendationDatails();
@@ -593,6 +597,7 @@ public interface ApiStores {
     //发现编辑--个人主页
     @POST("editor/info")
     Observable<FindEditorInfoModel> getEditorInfoDatails(@Body FindEditorInfo_Paramet paramet);
+
     //发现服务--个人主页
     @POST("servicer/findServerInfo")
     Observable<FindServerInfoModel> getServiceInfoDatails(@Body FindEditorInfo_Paramet paramet);
@@ -600,6 +605,7 @@ public interface ApiStores {
     //编辑界面--编辑评论
     @POST("editor/commentSave")
     Observable<RewardResult> saveEditorComment(@Body EditorSaveComment_Paramet paramet);
+
     //发现编辑--查询所有评论
     @POST("editor/commentList")
     Observable<TopicdetailModel> getEditorCommentList(@Body FindEditorCommentList_Paramet paramet);
@@ -611,19 +617,24 @@ public interface ApiStores {
     //发现编辑--个人主页合作
     @POST("article/vote")
     Observable<RewardResult> getArticleVoteDetails(@Body FindArticleVote_Paramet paramet);
+
     //发现--服务列表
     @POST("servicer/findServerList")
     Observable<FindServiceInfoModel> getFindServerListDetails(@Body FindSertverList_Paramet paramet);
+
     //我的服务--成为服务者
     @Multipart
     @POST("servicer/saveServerInfo")
     Observable<RewardResult> SaveServerInfoDetails(@PartMap Map<String, RequestBody> params, @Part("visitingCardFile\"; filename=\"visiting.jpg") RequestBody file);
+
     //服务--收藏列表
     @POST("collect/list")
     Observable<FindServiceInfoModel> getCollectServiceDateList(@Body MyArticBooklist_paramet paramet);
+
     //服务--添加服务
     @POST("servicerItem/saveServeItem")
     Observable<RewardResult> getSaveServeItem(@Body SaveServeItem_paramet paramet);
+
     /**
      * 小组
      */
@@ -708,5 +719,12 @@ public interface ApiStores {
     //话题设置推荐
     @POST("topic/updateTopicRecommended")
     Observable<RewardResult> updateTopicRecommended(@Body UpdateTopicRecommended_Paramet paramet);
+
+    //课程视频列表接口 or 课程文档列表接口
+    @POST("lesson/lessonList")
+    Observable<ClassModle> getLessonList(LessonList_Paramet paramet);
+
+    //课程详情
+//    @POST("lesson/lessonDetail")
 
 }
