@@ -22,10 +22,6 @@ import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
 import com.laichushu.book.global.BaseApplication;
-import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.mvp.home.HomeModel;
-import com.laichushu.book.mvp.home.HomePresenter;
-import com.laichushu.book.mvp.home.HomeView;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.mvp.home.homelist.HomeModel;
 import com.laichushu.book.mvp.home.homelist.HomePresenter;
@@ -274,7 +270,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
      */
     @Override
     public void getActivityByCityData(HomeHotModel model) {
-        mAdapter.getAllRbn().setEnabled(true);
+        mAdapter.getCityRbn().setEnabled(true);
         hideLoading();
         mCityWildData.clear();
         UIUtil.postDelayed(new Runnable() {
@@ -299,6 +295,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void getDataFail(String msg) {
         mAdapter.getAllRbn().setEnabled(true);
         mAdapter.getActivityRbn().setEnabled(true);
+        mAdapter.getCityRbn().setEnabled(true);
         mRecyclerView.setPullLoadMoreCompleted();
         Logger.e(msg);
     }

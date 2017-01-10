@@ -339,7 +339,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvFocusName.setMovementMethod(LinkMovementMethod.getInstance());
 
                 holder.ivFocusNotice.setVisibility(View.VISIBLE);
-                GlideUitl.loadRandImgLocal(context, R.drawable.msg_subscribe2x, holder.ivFocusNotice);
+                GlideUitl.loadRandImg(context, R.drawable.msg_subscribe2x, holder.ivFocusNotice);
                 holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
 //                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
 //                holder.tvFocusName.setText("您订阅");

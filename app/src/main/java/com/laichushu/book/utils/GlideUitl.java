@@ -111,7 +111,7 @@ public class GlideUitl {
         }
     }
 
-    public static void loadRandImgLocal(Context mContext, int path, ImageView mImageView) {
+    public static void loadRandImg(Context mContext, int path, ImageView mImageView) {
         if (0 != path) {
             Glide.with(mContext).load(path).asBitmap().fitCenter().transform(new GlideCircleTransform(mContext)).error(R.drawable.icon_percentre_defhead2x).into(mImageView);
         } else {

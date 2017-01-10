@@ -31,6 +31,7 @@ import com.laichushu.book.ui.adapter.FindTitleViewPagerAdapter;
 import com.laichushu.book.ui.adapter.GroupRecomAdapter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
@@ -107,7 +108,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
             itemView = UIUtil.inflate(R.layout.item_tab_course, null);
             imageView = (ImageView) itemView.findViewById(R.id.iv_stripIcon);
             textView = (TextView) itemView.findViewById(R.id.tv_stripContent);
-            imageView.setImageResource(img[i]);
+            GlideUitl.loadRandImg(mActivity,img[i],imageView);
             textView.setText(title[i]);
             llContainer.addView(itemView);
             final int finalJ = i;

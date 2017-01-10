@@ -42,6 +42,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private RadioButton rankRbn;
     private RadioButton allRbn;
     private RadioButton activityRbn;
+    private RadioButton cityRbn;
     public HomePresenter mvpPresenter;
     private HomeFragment homeFragment;
     private String cityId;
@@ -393,6 +394,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             rankRbn = rankingRbn;
             HomeRecyclerAdapter.this.allRbn = allRbn;
             HomeRecyclerAdapter.this.activityRbn = activityRbn;
+            HomeRecyclerAdapter.this.cityRbn = cityRbn;
         }
     }
 
@@ -494,10 +496,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 mData.clear();
                 mvpPresenter.setState(STATE);
                 //请求网络
-                //请求网络
                 mvpPresenter.getCity_paramet().setPageNo("1");
                 mvpPresenter.loadActivityByCityData(cityId);
-                activityRbn.setEnabled(false);
+                cityRbn.setEnabled(false);
                 index = 3;
                 break;
 
@@ -543,5 +544,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     public RadioButton getActivityRbn() {
         return activityRbn;
+    }
+
+    public RadioButton getCityRbn() {
+        return cityRbn;
     }
 }
