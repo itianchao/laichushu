@@ -6,4 +6,5 @@ package com.laichushu.book.mvp.find.coursera.video;
  */
 
 public class ClassModle {
+
 }
