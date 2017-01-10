@@ -9,9 +9,21 @@ import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
+import com.laichushu.book.bean.otherbean.NoteListModle;
+import com.laichushu.book.bean.otherbean.ScoreListModle;
+import com.laichushu.book.bean.otherbean.SpeakListModle;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
+import com.laichushu.book.mvp.entry.login.LoginModel;
+import com.laichushu.book.mvp.entry.regist.RegistModel;
+import com.laichushu.book.mvp.entry.regist2.RegistModel2;
+import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
+import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
+import com.laichushu.book.mvp.find.group.groupsearch.FindGroupModle;
+import com.laichushu.book.mvp.find.group.member.FindGroupMemberModle;
+import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.mvp.home.allcomment.SendCommentMoudle;
-import com.laichushu.book.mvp.mine.bookcast.BookCastModle;
 import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
 import com.laichushu.book.mvp.home.bookdetail.AuthorDetailModle;
 import com.laichushu.book.mvp.home.bookdetail.BookDetailModle;
@@ -20,30 +32,23 @@ import com.laichushu.book.mvp.home.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.home.campaign.CampaignJoinModel;
 import com.laichushu.book.mvp.home.campaign.CampaignModel;
 import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.home.homecategory.CategoryModle;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeModel;
+import com.laichushu.book.mvp.home.homesearch.HomeSearchModel;
+import com.laichushu.book.mvp.home.part.PartModel;
+import com.laichushu.book.mvp.mine.bookcast.BookCastModle;
+import com.laichushu.book.mvp.msg.notice.NoticeModle;
+import com.laichushu.book.mvp.msg.topic.topicdetail.TopicdetailModel;
 import com.laichushu.book.mvp.write.coverdir.CoverDirModle;
 import com.laichushu.book.mvp.write.creatnewdraft.CreateNewDraftModle;
 import com.laichushu.book.mvp.write.directories.BookMoudle;
 import com.laichushu.book.mvp.write.directories.MaterialContentModel;
 import com.laichushu.book.mvp.write.directories.MaterialListModel;
 import com.laichushu.book.mvp.write.draftmodle.DraftModle;
-import com.laichushu.book.mvp.find.coursera.video.ClassModle;
-import com.laichushu.book.mvp.find.group.member.FindGroupMemberModle;
-import com.laichushu.book.mvp.find.group.GroupListModle;
-import com.laichushu.book.mvp.find.group.groupsearch.FindGroupModle;
-import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
-import com.laichushu.book.mvp.home.homelist.HomeHotModel;
-import com.laichushu.book.mvp.home.homelist.HomeModel;
-import com.laichushu.book.mvp.home.homecategory.CategoryModle;
-import com.laichushu.book.mvp.home.homesearch.HomeSearchModel;
-import com.laichushu.book.mvp.entry.login.LoginModel;
-import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
-import com.laichushu.book.mvp.msg.notice.NoticeModle;
-import com.laichushu.book.mvp.home.part.PartModel;
-import com.laichushu.book.mvp.entry.regist.RegistModel;
-import com.laichushu.book.mvp.entry.regist2.RegistModel2;
 import com.laichushu.book.mvp.write.sourcematerial.SourceMaterialModle;
 import com.laichushu.book.mvp.write.sourcematerialdir.SourceMaterialDirModle;
-import com.laichushu.book.mvp.msg.topic.topicdetail.TopicdetailModel;
+import com.laichushu.book.ui.activity.MineCourseList_Paramet;
 
 import java.util.Map;
 
@@ -639,7 +644,7 @@ public interface ApiStores {
     Observable<RewardResult> getSaveServeItem(@Body SaveServeItem_paramet paramet);
 
     /**
-     * 小组
+     * 发现 - 小组
      */
     //已加入的小组列表
     @POST("team/myJoin")
@@ -723,11 +728,47 @@ public interface ApiStores {
     @POST("topic/updateTopicRecommended")
     Observable<RewardResult> updateTopicRecommended(@Body UpdateTopicRecommended_Paramet paramet);
 
+    /***
+     *  发现 - 课程
+     */
+
     //课程视频列表接口 or 课程文档列表接口
     @POST("lesson/lessonList")
-    Observable<ClassModle> getLessonList(LessonList_Paramet paramet);
+    Observable<CourseraModle> getLessonList(@Body LessonList_Paramet paramet);
 
     //课程详情
-//    @POST("lesson/lessonDetail")
+    @POST("lesson/lessonDetail")
+    Observable<VideoDetailModle> getLessonDetail(@Body LessonDetail_Paramet paramet);
 
+    //课程笔记列表
+    @POST("lessonNote/list")
+    Observable<NoteListModle> getLessonNoteList(@Body NoteList_Paramet paramet);
+
+    //保存笔记 or 修改笔记
+    @POST("lessonNote/save")
+    Observable<RewardResult> getLessonNoteSave(@Body NoteSave_Paramet paramet);
+
+    //删除笔记
+    @POST("lessonNote/delete")
+    Observable<RewardResult> getLessonNoteDelete(@Body NoteDelete_Paramet paramet);
+
+    //课程讲义详情接口
+    @POST("handOuts/handOutsList")
+    Observable<SpeakListModle> getSpeakpdfList(@Body SpeakpdfDetail_Paramet paramet);
+
+    //课程评分
+    @POST("score/list")
+    Observable<ScoreListModle> getCourseScoreList(@Body CourseScoreList_Paramet paramet);
+
+    //课程评分保存
+    @POST("score/save")
+    Observable<RewardResult> courseScoreSave(@Body CourseScoreSave_Paramet paramet);
+
+    //课程相关
+    @POST("lesson/lessonAbout")
+    Observable<CourseraModle> getLessonAboutList(@Body LessonAbout_Paramet paramet);
+
+    //我的收藏、我的下载、我的浏览
+    @POST("lesson/findMyLessonList")
+    Observable<CourseraModle> getMineCourseList(@Body MineCourseList_Paramet paramet);
 }

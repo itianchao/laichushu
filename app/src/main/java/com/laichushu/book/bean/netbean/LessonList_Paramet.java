@@ -11,6 +11,7 @@ public class LessonList_Paramet {
     private String sortWay;//1：按点击量排序2：按下载量排序3：按收藏量排序
     private String pageNo;
     private String pageSize;
+    private String lessonName;
     /**
      * @param lessonType 课程类型1：点播2：直播
      * @param fileType 1：视频2：文档
@@ -38,6 +39,7 @@ public class LessonList_Paramet {
         this.pageNo = pageNo;
         this.pageSize = pageSize;
     }
+
 
     public String getLessonType() {
         return lessonType;
@@ -77,5 +79,13 @@ public class LessonList_Paramet {
 
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
     }
 }

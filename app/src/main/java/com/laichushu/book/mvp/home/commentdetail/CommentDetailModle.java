@@ -21,10 +21,10 @@ public class CommentDetailModle {
      * scoreId : 3
      * userId : 105
      * articleId : 74
-     * content : 杩欐湰涔︿笉閿欑殑鏍峰瓙
+     * content : 哈哈哈哈
      * replyNum : 100
      * likeNum : 123
-     * nickName : 澶у啺
+     * nickName : 大酒神
      * photo : http://192.168.147.62/group1/M00/00/01/wKiTPlgYWiWAAJ8oAALeCroPT5I540.jpg
      * createDate : 2016-10-31 15:38:42
      * isLike : false
