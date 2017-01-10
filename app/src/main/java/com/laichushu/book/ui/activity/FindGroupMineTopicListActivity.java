@@ -5,9 +5,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.findgroup.findtopiclist.FindGroupMineTopicPresenter;
-import com.laichushu.book.mvp.findgroup.findtopiclist.FindGroupMineTopicView;
-import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
+import com.laichushu.book.mvp.find.group.topiclist.FindGroupMineTopicPresenter;
+import com.laichushu.book.mvp.find.group.topiclist.FindGroupMineTopicView;
+import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.ui.adapter.MechanismTopicListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;

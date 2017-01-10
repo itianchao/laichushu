@@ -1,7 +1,6 @@
 package com.laichushu.book.ui.activity;
 
 import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -16,10 +15,9 @@ import com.laichushu.book.db.City_Id;
 import com.laichushu.book.db.City_IdDao;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.global.BaseApplication;
-import com.laichushu.book.mvp.findeditpage.FindEditPagePresenter;
-import com.laichushu.book.mvp.findeditpage.FindEditPageView;
+import com.laichushu.book.mvp.find.eidt.findeditpage.FindEditPagePresenter;
+import com.laichushu.book.mvp.find.eidt.findeditpage.FindEditPageView;
 import com.laichushu.book.ui.adapter.TotalRanKingAdapter;
-import com.laichushu.book.ui.adapter.UserDynamicAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.WheelView;

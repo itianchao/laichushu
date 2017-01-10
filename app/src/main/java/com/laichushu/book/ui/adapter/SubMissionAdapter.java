@@ -1,7 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
-import com.laichushu.book.mvp.messagecomment.MessageCommentPresenter;
-import com.laichushu.book.ui.activity.PersonalHomePageActivity;
-import com.laichushu.book.ui.activity.UserHomePageActivity;
+import com.laichushu.book.mvp.msg.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.utils.GlideUitl;
-import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;

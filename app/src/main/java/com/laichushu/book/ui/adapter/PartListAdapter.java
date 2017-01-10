@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.part.PartModel;
+import com.laichushu.book.mvp.home.part.PartModel;
 import com.laichushu.book.ui.activity.PartActivity;
 import com.laichushu.book.utils.UIUtil;
 

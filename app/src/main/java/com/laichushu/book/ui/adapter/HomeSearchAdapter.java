@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;

@@ -11,11 +11,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FindCourseCommResult;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupMainPresenter;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupMainView;
-import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
+import com.laichushu.book.mvp.find.group.GroupListModle;
+import com.laichushu.book.mvp.find.group.GroupMainPresenter;
+import com.laichushu.book.mvp.find.group.GroupMainView;
+import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
 import com.laichushu.book.ui.adapter.FindGroupListAdapter;
 import com.laichushu.book.ui.adapter.FindGroupRecommenAdapter;
 import com.laichushu.book.ui.adapter.MechanismTopicListAdapter;

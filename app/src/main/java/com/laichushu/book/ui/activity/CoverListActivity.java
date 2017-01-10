@@ -5,14 +5,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gitonway.lee.niftymodaldialogeffects.lib.effects.NewsPaper;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.PreviewCoverBean;
-import com.laichushu.book.mvp.coverdir.CoverDirModle;
-import com.laichushu.book.mvp.coverdir.CoverDirPresenter;
-import com.laichushu.book.mvp.coverdir.CoverDirView;
+import com.laichushu.book.mvp.write.coverdir.CoverDirModle;
+import com.laichushu.book.mvp.write.coverdir.CoverDirPresenter;
+import com.laichushu.book.mvp.write.coverdir.CoverDirView;
 import com.laichushu.book.ui.adapter.CoverListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;

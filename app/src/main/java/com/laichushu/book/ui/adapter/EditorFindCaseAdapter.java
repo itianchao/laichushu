@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.findeditmainpage.FindEditMainPagePresenter;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.find.eidt.findeditmainpage.FindEditMainPagePresenter;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.FindEditMainPageActivity;
 import com.laichushu.book.utils.GlideUitl;

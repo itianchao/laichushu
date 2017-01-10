@@ -26,7 +26,7 @@ import com.laichushu.book.event.RefrushMineEvent;
 import com.laichushu.book.event.RefrushWriteFragmentEvent;
 import com.laichushu.book.event.RefurshWriteFragmentEvent;
 import com.laichushu.book.global.BaseApplication;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.mvp.write.WritePresenter;
 import com.laichushu.book.mvp.write.WriteView;
 import com.laichushu.book.ui.adapter.WriteBookAdapter;

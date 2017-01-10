@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.ui.activity.DirectoriesActivity;
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.directories.BookMoudle;
+import com.laichushu.book.mvp.write.directories.BookMoudle;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;

@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/tv_brief"
-        tools:text="  个人简介，是当事人全面而简洁地介绍自身情况的一种书面表达方式。求职过程中撰写的个人简介是求职者向欲供职单位全面、简洁、条理清晰地自我介绍、自我推荐的文书。简介是应用写作学研究的一种日常应用文体。"
+        tools:text="  个人简介。求职过程中撰写的个人简介是求职者向欲供职单位全面、简洁、条理清晰地自我介绍、自我推荐的文书。简介是应用写作学研究的一种日常应用文体。"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="5dp"

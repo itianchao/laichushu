@@ -10,14 +10,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FindEditorListModel;
 import com.laichushu.book.bean.netbean.FindServiceInfoModel;
 import com.laichushu.book.db.City_Id;
 import com.laichushu.book.db.City_IdDao;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.global.BaseApplication;
-import com.laichushu.book.mvp.findservicepage.FindServicePagePresenter;
-import com.laichushu.book.mvp.findservicepage.FindServicePageView;
+import com.laichushu.book.mvp.find.service.findservicepage.FindServicePagePresenter;
+import com.laichushu.book.mvp.find.service.findservicepage.FindServicePageView;
 import com.laichushu.book.ui.adapter.FindServicePageAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;

@@ -7,16 +7,14 @@ import android.widget.TextView;
 
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
 import com.laichushu.book.event.RefrushHomeCategroyEvent;
-import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.adapter.CaregoryListAdapter;
 import com.laichushu.book.ui.base.BaseActivity;
-import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 

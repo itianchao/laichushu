@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.annmanage.AnnManagerPresenter;
-import com.laichushu.book.mvp.notice.NoticeModle;
+import com.laichushu.book.mvp.msg.annmanage.AnnManagerPresenter;
+import com.laichushu.book.mvp.msg.notice.NoticeModle;
 import com.laichushu.book.ui.activity.AnnounMangeActivity;
 import com.laichushu.book.utils.UIUtil;
 

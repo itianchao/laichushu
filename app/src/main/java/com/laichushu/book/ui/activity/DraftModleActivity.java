@@ -1,7 +1,6 @@
 package com.laichushu.book.ui.activity;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,10 +8,9 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.event.RefurshDraftEvent;
-import com.laichushu.book.mvp.draftmodle.DraftModle;
-import com.laichushu.book.mvp.draftmodle.DraftModlePresenter;
-import com.laichushu.book.mvp.draftmodle.DraftModleView;
+import com.laichushu.book.mvp.write.draftmodle.DraftModle;
+import com.laichushu.book.mvp.write.draftmodle.DraftModlePresenter;
+import com.laichushu.book.mvp.write.draftmodle.DraftModleView;
 import com.laichushu.book.ui.adapter.DraftListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -20,10 +18,6 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 

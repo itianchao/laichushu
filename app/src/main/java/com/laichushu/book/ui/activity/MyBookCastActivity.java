@@ -9,11 +9,9 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
-import com.laichushu.book.bean.netbean.MyHomeModel;
-import com.laichushu.book.mvp.bookcast.BookCastModle;
-import com.laichushu.book.mvp.bookcast.BookcastPresener;
-import com.laichushu.book.mvp.bookcast.BookcastView;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.mine.bookcast.BookcastPresener;
+import com.laichushu.book.mvp.mine.bookcast.BookcastView;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.adapter.BookCastCollAdapter;
 import com.laichushu.book.ui.adapter.MyBookCastAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -23,8 +21,6 @@ import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
-
-import org.geometerplus.android.fbreader.network.action.TopupAction;
 
 import java.util.ArrayList;
 import java.util.List;

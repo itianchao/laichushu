@@ -1,6 +1,6 @@
 package com.laichushu.book.event;
 
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 /**
  * 刷新首页分类

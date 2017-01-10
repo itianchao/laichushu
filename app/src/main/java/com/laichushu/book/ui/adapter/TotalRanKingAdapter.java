@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindEditorListModel;
-import com.laichushu.book.mvp.findeditpage.FindEditPagePresenter;
+import com.laichushu.book.mvp.find.eidt.findeditpage.FindEditPagePresenter;
 import com.laichushu.book.ui.activity.FindEditMainPageActivity;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.utils.GlideUitl;

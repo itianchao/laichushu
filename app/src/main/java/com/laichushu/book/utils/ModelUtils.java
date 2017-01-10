@@ -4,10 +4,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
-import com.laichushu.book.bean.netbean.BookDetailsResult;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 

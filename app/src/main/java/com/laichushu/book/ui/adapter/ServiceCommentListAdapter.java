@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
-import com.laichushu.book.mvp.findservicemainpage.FindServiceMainPagePresenter;
+import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.find.service.findservicemainpage.FindServiceMainPagePresenter;
 import com.laichushu.book.ui.activity.CommentDetailActivity;
 import com.laichushu.book.ui.activity.FindServerMainPageActivity;
 import com.laichushu.book.utils.GlideUitl;

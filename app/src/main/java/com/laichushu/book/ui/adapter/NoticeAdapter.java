@@ -5,12 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.notice.NoticeModle;
-import com.laichushu.book.ui.fragment.NoticeFragment;
+import com.laichushu.book.mvp.msg.notice.NoticeModle;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;

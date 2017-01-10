@@ -8,9 +8,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.laichushu.book.mvp.homecategory.CategoryModle;
-import com.laichushu.book.mvp.homecategory.CategoryPresenter;
-import com.laichushu.book.mvp.homecategory.CategoryView;
+import com.laichushu.book.mvp.home.homecategory.CategoryModle;
+import com.laichushu.book.mvp.home.homecategory.CategoryPresenter;
+import com.laichushu.book.mvp.home.homecategory.CategoryView;
 import com.laichushu.book.ui.adapter.CategoryChildAdapter;
 import com.laichushu.book.ui.adapter.CategoryParentAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;

@@ -7,14 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.db.Search_History;
-import com.laichushu.book.db.Search_HistoryDao;
-import com.laichushu.book.mvp.homesearch.HomeSearchModel;
+import com.laichushu.book.mvp.home.homesearch.HomeSearchModel;
 import com.laichushu.book.ui.activity.HomeSearchActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

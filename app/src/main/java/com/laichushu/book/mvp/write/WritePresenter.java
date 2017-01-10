@@ -18,7 +18,7 @@ import com.laichushu.book.bean.netbean.PublishNewBook_Paramet;
 import com.laichushu.book.bean.netbean.SignStateResult;
 import com.laichushu.book.bean.netbean.UpdateBookPermission_Paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.home.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;

@@ -4,8 +4,8 @@ import android.view.View;
 import android.widget.RadioButton;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.findclass.mine.FindClassMinePresenter;
-import com.laichushu.book.mvp.findclass.mine.FindClassMineView;
+import com.laichushu.book.mvp.find.coursera.mine.FindClassMinePresenter;
+import com.laichushu.book.mvp.find.coursera.mine.FindClassMineView;
 import com.laichushu.book.ui.adapter.FindClassVideoAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.base.MvpFragment2;

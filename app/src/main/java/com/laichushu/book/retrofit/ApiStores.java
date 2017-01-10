@@ -10,39 +10,40 @@ import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.allcomment.SendCommentMoudle;
-import com.laichushu.book.mvp.bookcast.BookCastModle;
-import com.laichushu.book.mvp.bookdetail.ArticleCommentModle;
-import com.laichushu.book.mvp.bookdetail.AuthorDetailModle;
-import com.laichushu.book.mvp.bookdetail.BookDetailModle;
-import com.laichushu.book.mvp.bookdetail.SubscribeArticleModle;
-import com.laichushu.book.mvp.campaign.AuthorWorksModle;
-import com.laichushu.book.mvp.campaign.CampaignJoinModel;
-import com.laichushu.book.mvp.campaign.CampaignModel;
-import com.laichushu.book.mvp.commentdetail.CommentDetailModle;
-import com.laichushu.book.mvp.coverdir.CoverDirModle;
-import com.laichushu.book.mvp.creatnewdraft.CreateNewDraftModle;
-import com.laichushu.book.mvp.directories.BookMoudle;
-import com.laichushu.book.mvp.directories.MaterialContentModel;
-import com.laichushu.book.mvp.directories.MaterialListModel;
-import com.laichushu.book.mvp.draftmodle.DraftModle;
-import com.laichushu.book.mvp.findgroup.findgroupmenber.FindGroupMenberModle;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
-import com.laichushu.book.mvp.findgroup.groupsearch.FindGroupModle;
-import com.laichushu.book.mvp.forgetpwd.ForgetPwdModel;
-import com.laichushu.book.mvp.home.HomeHotModel;
-import com.laichushu.book.mvp.home.HomeModel;
-import com.laichushu.book.mvp.homecategory.CategoryModle;
-import com.laichushu.book.mvp.homesearch.HomeSearchModel;
-import com.laichushu.book.mvp.login.LoginModel;
-import com.laichushu.book.mvp.mechanismtopiclist.MechanismTopicListModel;
-import com.laichushu.book.mvp.notice.NoticeModle;
-import com.laichushu.book.mvp.part.PartModel;
-import com.laichushu.book.mvp.regist.RegistModel;
-import com.laichushu.book.mvp.regist2.RegistModel2;
-import com.laichushu.book.mvp.sourcematerial.SourceMaterialModle;
-import com.laichushu.book.mvp.sourcematerialdir.SourceMaterialDirModle;
-import com.laichushu.book.mvp.topicdetail.TopicdetailModel;
+import com.laichushu.book.mvp.home.allcomment.SendCommentMoudle;
+import com.laichushu.book.mvp.mine.bookcast.BookCastModle;
+import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
+import com.laichushu.book.mvp.home.bookdetail.AuthorDetailModle;
+import com.laichushu.book.mvp.home.bookdetail.BookDetailModle;
+import com.laichushu.book.mvp.home.bookdetail.SubscribeArticleModle;
+import com.laichushu.book.mvp.home.campaign.AuthorWorksModle;
+import com.laichushu.book.mvp.home.campaign.CampaignJoinModel;
+import com.laichushu.book.mvp.home.campaign.CampaignModel;
+import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
+import com.laichushu.book.mvp.write.coverdir.CoverDirModle;
+import com.laichushu.book.mvp.write.creatnewdraft.CreateNewDraftModle;
+import com.laichushu.book.mvp.write.directories.BookMoudle;
+import com.laichushu.book.mvp.write.directories.MaterialContentModel;
+import com.laichushu.book.mvp.write.directories.MaterialListModel;
+import com.laichushu.book.mvp.write.draftmodle.DraftModle;
+import com.laichushu.book.mvp.find.coursera.video.ClassModle;
+import com.laichushu.book.mvp.find.group.member.FindGroupMemberModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
+import com.laichushu.book.mvp.find.group.groupsearch.FindGroupModle;
+import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
+import com.laichushu.book.mvp.home.homelist.HomeHotModel;
+import com.laichushu.book.mvp.home.homelist.HomeModel;
+import com.laichushu.book.mvp.home.homecategory.CategoryModle;
+import com.laichushu.book.mvp.home.homesearch.HomeSearchModel;
+import com.laichushu.book.mvp.entry.login.LoginModel;
+import com.laichushu.book.mvp.find.mechanism.mechanismtopiclist.MechanismTopicListModel;
+import com.laichushu.book.mvp.msg.notice.NoticeModle;
+import com.laichushu.book.mvp.home.part.PartModel;
+import com.laichushu.book.mvp.entry.regist.RegistModel;
+import com.laichushu.book.mvp.entry.regist2.RegistModel2;
+import com.laichushu.book.mvp.write.sourcematerial.SourceMaterialModle;
+import com.laichushu.book.mvp.write.sourcematerialdir.SourceMaterialDirModle;
+import com.laichushu.book.mvp.msg.topic.topicdetail.TopicdetailModel;
 
 import java.util.Map;
 
@@ -65,7 +66,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL3;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
 
     //登录接口
     @POST("login/do")
@@ -477,9 +478,11 @@ public interface ApiStores {
     //我的钱包充值
     @POST("recharge/recharge")
     Observable<RewardResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
+
     //我的服务者列表--合作
     @POST("servicer/findMyServerList")
     Observable<FindServiceCooperateMode> getFindMyServerListDetails(@Body FindMyServerList_Paramet paramet);
+
     //我的服务者--服务内容列表
     @POST("servicerItem/findServerItemList")
     Observable<FindServiceItemListModel> getFindServerItemListDetails(@Body FindServerItemList_Paramet paramet);
@@ -568,6 +571,7 @@ public interface ApiStores {
     //发现精选课程
     @POST("lesson/lessonList")
     Observable<FindLessonListResult> findLessonListDatails(@Body FindLessonList_Paramet paramet);
+
     //发现小组推荐
     @POST("team/findTopTeam")
     Observable<FindCourseCommResult> findCourseCommendationDatails();
@@ -596,6 +600,7 @@ public interface ApiStores {
     //发现编辑--个人主页
     @POST("editor/info")
     Observable<FindEditorInfoModel> getEditorInfoDatails(@Body FindEditorInfo_Paramet paramet);
+
     //发现服务--个人主页
     @POST("servicer/findServerInfo")
     Observable<FindServerInfoModel> getServiceInfoDatails(@Body FindEditorInfo_Paramet paramet);
@@ -603,6 +608,7 @@ public interface ApiStores {
     //编辑界面--编辑评论
     @POST("editor/commentSave")
     Observable<RewardResult> saveEditorComment(@Body EditorSaveComment_Paramet paramet);
+
     //发现编辑--查询所有评论
     @POST("editor/commentList")
     Observable<TopicdetailModel> getEditorCommentList(@Body FindEditorCommentList_Paramet paramet);
@@ -614,19 +620,24 @@ public interface ApiStores {
     //发现编辑--个人主页合作
     @POST("article/vote")
     Observable<RewardResult> getArticleVoteDetails(@Body FindArticleVote_Paramet paramet);
+
     //发现--服务列表
     @POST("servicer/findServerList")
     Observable<FindServiceInfoModel> getFindServerListDetails(@Body FindSertverList_Paramet paramet);
+
     //我的服务--成为服务者
     @Multipart
     @POST("servicer/saveServerInfo")
     Observable<RewardResult> SaveServerInfoDetails(@PartMap Map<String, RequestBody> params, @Part("visitingCardFile\"; filename=\"visiting.jpg") RequestBody file);
+
     //服务--收藏列表
     @POST("collect/list")
     Observable<FindServiceInfoModel> getCollectServiceDateList(@Body MyArticBooklist_paramet paramet);
+
     //服务--添加服务
     @POST("servicerItem/saveServeItem")
     Observable<RewardResult> getSaveServeItem(@Body SaveServeItem_paramet paramet);
+
     /**
      * 小组
      */
@@ -674,11 +685,11 @@ public interface ApiStores {
 
     //获取小组成员列表
     @POST("team/memberList")
-    Observable<FindGroupMenberModle> getGroupMemberList(@Body GroupApplyMemberList_Paramet paramet);
+    Observable<FindGroupMemberModle> getGroupMemberList(@Body GroupApplyMemberList_Paramet paramet);
 
     //获取申请成员列表
     @POST("team/todoList")
-    Observable<FindGroupMenberModle> getGroupApplyMemberList(@Body GroupApplyMemberList_Paramet paramet);
+    Observable<FindGroupMemberModle> getGroupApplyMemberList(@Body GroupApplyMemberList_Paramet paramet);
 
     //处理申请成员 同意or拒绝
     @POST("team/approve")
@@ -711,5 +722,12 @@ public interface ApiStores {
     //话题设置推荐
     @POST("topic/updateTopicRecommended")
     Observable<RewardResult> updateTopicRecommended(@Body UpdateTopicRecommended_Paramet paramet);
+
+    //课程视频列表接口 or 课程文档列表接口
+    @POST("lesson/lessonList")
+    Observable<ClassModle> getLessonList(LessonList_Paramet paramet);
+
+    //课程详情
+//    @POST("lesson/lessonDetail")
 
 }

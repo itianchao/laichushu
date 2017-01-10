@@ -9,10 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
-import com.laichushu.book.ui.activity.FindGroupCreateNewActivity;
+import com.laichushu.book.mvp.find.group.GroupListModle;
 import com.laichushu.book.ui.activity.FindGroupDetailActivity;
-import com.laichushu.book.ui.activity.FindGroupMainActivity;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;

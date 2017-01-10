@@ -1,12 +1,8 @@
 package com.laichushu.book.bean.netbean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.laichushu.book.mvp.findgroup.groupmain.GroupListModle;
+import com.laichushu.book.mvp.find.group.GroupListModle;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by PCPC on 2016/12/19.

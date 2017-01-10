@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.mvp.coverdir.CoverDirModle;
-import com.laichushu.book.mvp.coverdir.CoverDirPresenter;
+import com.laichushu.book.mvp.write.coverdir.CoverDirModle;
+import com.laichushu.book.mvp.write.coverdir.CoverDirPresenter;
 import com.laichushu.book.ui.activity.CoverListActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;

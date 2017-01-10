@@ -9,9 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FindEditorListModel;
 import com.laichushu.book.bean.netbean.FindServiceCooperateMode;
-import com.laichushu.book.mvp.mineservice.MineServicePresenter;
+import com.laichushu.book.mvp.mine.mineservice.MineServicePresenter;
 import com.laichushu.book.ui.activity.FindServerMainPageActivity;
 import com.laichushu.book.ui.activity.MineServicePageActivity;
 import com.laichushu.book.utils.GlideUitl;

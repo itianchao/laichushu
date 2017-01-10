@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.mvp.userhomepage.UserHomePagePresener;
+import com.laichushu.book.mvp.mine.userhomepage.UserHomePagePresener;
 import com.laichushu.book.ui.activity.TopicDetilActivity;
 import com.laichushu.book.ui.activity.UserHomePageActivity;
 import com.laichushu.book.utils.GlideUitl;

@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.laichushu.book.mvp.home.HomeModel;
-import com.laichushu.book.mvp.home.HomePresenter;
+import com.laichushu.book.mvp.home.homelist.HomeModel;
+import com.laichushu.book.mvp.home.homelist.HomePresenter;
 
 import java.util.ArrayList;
 

@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
-import com.laichushu.book.mvp.regist.RegistModel;
-import com.laichushu.book.mvp.regist.RegistPresenter;
-import com.laichushu.book.mvp.regist.RegistView;
+import com.laichushu.book.mvp.entry.regist.RegistModel;
+import com.laichushu.book.mvp.entry.regist.RegistPresenter;
+import com.laichushu.book.mvp.entry.regist.RegistView;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.AMUtils;
 import com.laichushu.book.utils.ToastUtil;
