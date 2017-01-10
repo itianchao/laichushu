@@ -45,11 +45,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private RadioButton activityRbn;
     public HomePresenter mvpPresenter;
     private HomeFragment homeFragment;
+    private String cityId;
 
-    public HomeRecyclerAdapter(ArrayList<HomeHotModel.DataBean> mData, MainActivity mActivity, ArrayList<HomeHotModel.DataBean> mHotData, HomePresenter mvpPresenter, HomeFragment homeFragment) {
+    public HomeRecyclerAdapter(ArrayList<HomeHotModel.DataBean> mData, MainActivity mActivity, ArrayList<HomeHotModel.DataBean> mHotData, String cityId,HomePresenter mvpPresenter, HomeFragment homeFragment) {
         this.mActivity = mActivity;
         this.mData = mData;
         this.mHotData = mHotData;//最热
+        this.cityId=cityId;
         this.mvpPresenter = mvpPresenter;
         this.homeFragment = homeFragment;
         rankingList.add("评分最高");//1
@@ -302,8 +304,40 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     }
                     break;
                 case STATE3://同城
-                    ((ViewHolder3) holder).fristFay.setVisibility(View.GONE);
+                    ((ViewHolder3) holder).fristFay.setVisibility(View.VISIBLE);
                     ((ViewHolder3) holder).secondFay.setVisibility(View.GONE);
+                    final HomeHotModel.DataBean cityBean = mData.get(position - 2);
+                    GlideUitl.loadImg(mActivity, cityBean.getCoverUrl(), ((ViewHolder3) holder).bookIv);
+                    ((ViewHolder3) holder).fristFay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //跳转图书详情页
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("bean", cityBean);
+                            bundle.putString("pageMsg", "首页");
+                            UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
+                        }
+                    });
+                    ((ViewHolder3) holder).titleTv.setText(cityBean.getArticleName());
+                    ((ViewHolder3) holder).typeTv.setText(cityBean.getTopCategoryName());
+                    ((ViewHolder3) holder).authorTv.setText(cityBean.getAuthorName());
+                    ((ViewHolder3) holder).numRb.setRating(cityBean.getLevel());
+                    ((ViewHolder3) holder).commentTv.setText("(" + cityBean.getCommentNum() + "评论)");
+                    ((ViewHolder3) holder).wordTv.setText("约" + cityBean.getWordNum());
+                    ((ViewHolder3) holder).moneyTv.setText(cityBean.getAwardMoney() + "元");
+                    ((ViewHolder3) holder).rewardTv.setText("(" + cityBean.getAwardNum() + "人打赏)");
+                    ((ViewHolder3) holder).markTv.setText(cityBean.getScore() + "分");
+                    switch (cityBean.getStatus()) {
+                        case "1":
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue2, ((ViewHolder3) holder).bookStatueIv);
+                            break;
+                        case "2":
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3, ((ViewHolder3) holder).bookStatueIv);
+                            break;
+                        default:
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1, ((ViewHolder3) holder).bookStatueIv);
+                            break;
+                    }
                     break;
                 case STATE4://排行
                     ((ViewHolder3) holder).fristFay.setVisibility(View.GONE);
@@ -459,9 +493,16 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 }
                 STATE = STATE3;
                 mData.clear();
+                mvpPresenter.setState(STATE);
                 //请求网络
+                //请求网络
+                mvpPresenter.getCity_paramet().setPageNo("1");
+                mvpPresenter.loadActivityByCityData(cityId);
+                activityRbn.setEnabled(false);
                 index = 3;
                 break;
+
+
             case R.id.rbn_ranking:
                 //请求网络
                 index = 4;

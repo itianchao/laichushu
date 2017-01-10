@@ -9,12 +9,15 @@ public class SharePrefManager {
      */
     public static void setCharacterNum(String characterNum) {
         CacheUtil.setString(UIUtil.getContext(), "characterNum", characterNum);
-    } /**
+    }
+
+    /**
      * 保存消息推送状态
      */
     public static void setMsgState(String msgState) {
         CacheUtil.setString(UIUtil.getContext(), "msgState", msgState);
     }
+
     /**
      * 初始化是否完成
      */
@@ -83,7 +86,9 @@ public class SharePrefManager {
      */
     public static String getNickName() {
         return CacheUtil.getString(UIUtil.getContext(), "nickName", "");
-    } /**
+    }
+
+    /**
      * 保存username
      */
     public static void setUserName(String username) {
@@ -150,54 +155,89 @@ public class SharePrefManager {
      * 获取TextSize
      */
     public static int getTextSize() {
-        return CacheUtil.getInt(UIUtil.getContext(), "textSize",30);
+        return CacheUtil.getInt(UIUtil.getContext(), "textSize", 30);
     }
 
     /**
-     *  阅读设置是否显示toast
+     * 阅读设置是否显示toast
      */
     public static void setIsShowToast(boolean isShowToast) {
         CacheUtil.setBoolean(UIUtil.getContext(), "isShowToast", isShowToast);
     }
+
     /**
-     *  阅读是否显示toast
+     * 阅读是否显示toast
      */
     public static boolean getIsShowToast() {
         return CacheUtil.getBoolean(UIUtil.getContext(), "isShowToast", true);
     }
+
     /**
-     *  设置阅读样式
+     * 设置阅读样式
      */
     public static void setReadMoudle(int readMoudle) {
         CacheUtil.setInt(UIUtil.getContext(), "readMoudle", readMoudle);
     }
+
     /**
-     *  阅读样式
+     * 阅读样式
      */
     public static int getReadMoudle() {
         return CacheUtil.getInt(UIUtil.getContext(), "readMoudle", R.drawable.reading__reading_themes_vine_white);
     }
+
     /**
-     *  设置日间模式
+     * 设置日间模式
      */
     public static void setReadState(int readState) {
         CacheUtil.setInt(UIUtil.getContext(), "readState", readState);
     }
+
     /**
-     *  设置日间模式
+     * 设置日间模式
      */
     public static int getReadState() {
         return CacheUtil.getInt(UIUtil.getContext(), "readState", getReadMoudle());
-    }/**
-     *  设置日间模式
+    }
+
+    /**
+     * 设置日间模式
      */
     public static void setType(String type) {
-        CacheUtil.setString(UIUtil.getContext(), "type",type);
+        CacheUtil.setString(UIUtil.getContext(), "type", type);
     }
+
     /**
-     *  设置日间模式
+     * 设置日间模式
      */
     public static String getType() {
         return CacheUtil.getString(UIUtil.getContext(), "type");
+    }
+
+    /**
+     * 保存离线定位地址信息
+     */
+    public static void setAddressProvince(String address) {
+        CacheUtil.setString(UIUtil.getContext(), "province", address);
+    }
+
+    public static String getAddressProvince() {
+        return CacheUtil.getString(UIUtil.getContext(), "province", "北京市");
+    }
+
+    public static void setAddressCity(String address) {
+        CacheUtil.setString(UIUtil.getContext(), "city", address);
+    }
+
+    public static String getAddressCity() {
+        return CacheUtil.getString(UIUtil.getContext(), "city", "0101");
+    }
+
+    public static void setCityId(String cityId) {
+        CacheUtil.setString(UIUtil.getContext(), "cityId", cityId);
+    }
+
+    public static String getCityId() {
+        return CacheUtil.getString(UIUtil.getContext(), "cityId", "0101");
     }
 }

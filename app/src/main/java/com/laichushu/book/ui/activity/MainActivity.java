@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
 import com.laichushu.book.R;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.ui.base.BasePresenter;
@@ -42,7 +44,6 @@ public class MainActivity extends MvpActivity2 implements View.OnClickListener {
     private RadioButton writeRbn;
     private RadioButton msgRbn;
     private RadioButton mindRbn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

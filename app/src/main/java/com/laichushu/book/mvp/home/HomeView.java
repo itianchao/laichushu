@@ -12,4 +12,5 @@ public interface HomeView {
     void showLoading();
     void hideLoading();
     void getActivityData(HomeHotModel model);
+    void getActivityByCityData(HomeHotModel model);
 }

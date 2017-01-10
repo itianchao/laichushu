@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.home;
 import android.os.Bundle;
 
 import com.google.gson.Gson;
+import com.laichushu.book.bean.netbean.ActivityListByCity_Paramet;
 import com.laichushu.book.bean.netbean.ActivityList_Paramet;
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
@@ -26,7 +27,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
     private String userId = ConstantValue.USERID;
     private HomeAllBook_Paramet paramet = paramet = new HomeAllBook_Paramet("1", pageSize, pageNo, userId);
     private ActivityList_Paramet activityListParamet = new ActivityList_Paramet(pageNo2, pageSize, userId);
-    ;
+   private  ActivityListByCity_Paramet city_paramet=new ActivityListByCity_Paramet(userId,"",pageNo,pageSize);
+
     private int state = 1;
     private HomeFragment homeFragment;
 
@@ -174,5 +176,35 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public ActivityListByCity_Paramet getCity_paramet() {
+        return city_paramet;
+    }
+
+    public void setCity_paramet(ActivityListByCity_Paramet city_paramet) {
+        this.city_paramet = city_paramet;
+    }
+
+    //同城searchArticle/findArticleByCity
+    public void loadActivityByCityData(String cityId) {
+        mvpView.showLoading();
+        getCity_paramet().setCityId(cityId);
+        addSubscription(apiStores.getActivityListByCity(city_paramet), new ApiCallback<HomeHotModel>() {
+            @Override
+            public void onSuccess(HomeHotModel model) {
+                mvpView.getActivityByCityData(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
     }
 }

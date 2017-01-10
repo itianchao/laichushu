@@ -21,7 +21,6 @@
             android:layout_marginRight="1dp"
             style="@style/radiubutton_home" />
         <RadioButton
-            android:visibility="gone"
             android:id="@+id/rbn_citywide"
             android:text="@string/citywide"
             android:layout_marginRight="1dp"

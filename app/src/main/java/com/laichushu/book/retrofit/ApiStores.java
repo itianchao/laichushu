@@ -142,6 +142,9 @@ public interface ApiStores {
     //活动列表接口
     @POST("activity/list")
     Observable<HomeHotModel> activityList(@Body ActivityList_Paramet paramet);
+    //活动列表接口--同城
+    @POST("searchArticle/findArticleByCity")
+    Observable<HomeHotModel> getActivityListByCity(@Body ActivityListByCity_Paramet paramet);
 
     //活动结果接口
     @POST("activity/getActivityResult")

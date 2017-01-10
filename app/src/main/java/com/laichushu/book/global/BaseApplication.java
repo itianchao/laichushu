@@ -6,13 +6,21 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.Poi;
 import com.laichushu.book.db.DaoMaster;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.utils.SharePrefManager;
 
 import org.geometerplus.android.fbreader.FBReaderApplication;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
+
+import java.util.List;
 
 import cn.sharesdk.framework.ShareSDK;
 
@@ -27,6 +35,12 @@ public class BaseApplication extends FBReaderApplication {
     private static Looper mMainThreadLooper;
     private static DaoMaster daoMaster;
     private static DaoSession daoSession;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {
@@ -51,6 +65,7 @@ public class BaseApplication extends FBReaderApplication {
 //        Thread.currentThread().setUncaughtExceptionHandler(new MyExceptionHandler());
         // 初始化分享
         ShareSDK.initSDK(this);
+
     }
 
     public static Context getContext() {
@@ -146,4 +161,6 @@ public class BaseApplication extends FBReaderApplication {
 //    //        // 获取Session
 //    DaoSession daoSession = daoMaster.newSession();
 //        // 获取对应的表的DAO对象
+
+
 }

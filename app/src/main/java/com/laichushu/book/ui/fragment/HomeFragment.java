@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.laichushu.book.R;
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.City_Id;
+import com.laichushu.book.db.City_IdDao;
+import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.home.HomeHotModel;
 import com.laichushu.book.mvp.home.HomeModel;
 import com.laichushu.book.mvp.home.HomePresenter;
@@ -26,9 +32,11 @@ import com.laichushu.book.ui.activity.MainActivity;
 import com.laichushu.book.ui.adapter.HomeRecyclerAdapter;
 import com.laichushu.book.ui.adapter.HomeTitleViewPagerAdapter;
 import com.laichushu.book.ui.base.MvpFragment;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
+import com.pickerview.lib.Province;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,6 +44,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 首页
@@ -52,6 +61,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private ArrayList<HomeHotModel.DataBean> mAllData = new ArrayList<>();
     private ArrayList<HomeHotModel.DataBean> mHotData = new ArrayList<>();
+    private ArrayList<HomeHotModel.DataBean> mCityWildData = new ArrayList<>();
     private HomeTitleViewPagerAdapter adapter;
     private HomeRecyclerAdapter mAdapter;
     private int item;
@@ -66,23 +76,27 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private String pageNo = "2";//全部不加在
     private String type = "1";//类型
     private String pageNo2 = "1";//活动加载1次
+    private String pageNo3 = "1";//同城加载1次
     private ImageView categoryIv;
     private HomeHotModel model;
+
+    //获取对应的城市code
+    private String cityId = null;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Bundle bundle = getArguments();
-        if (bundle!=null){
+        if (bundle != null) {
             if (mTitleData.size() == 0) {
                 HomeModel homeModel = bundle.getParcelable("homeModel");
                 mTitleData = homeModel.getData();
             }
-            if (mHotData.size() == 0){
+            if (mHotData.size() == 0) {
                 HomeHotModel homeHotModel = bundle.getParcelable("homeHotModel");
                 mHotData = homeHotModel.getData();
             }
-            if (mData.size() == 0){
+            if (mData.size() == 0) {
                 HomeHotModel homeAllModel = bundle.getParcelable("homeAllModel");
                 mData = homeAllModel.getData();
             }
@@ -112,9 +126,11 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        cityId = SharePrefManager.getCityId();
         initRecycler();
         titleViewPager();
     }
+
 
     /**
      * PullLoadMoreRecyclerView 的初始化
@@ -122,7 +138,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private void initRecycler() {
         mRecyclerView.setLinearLayout();
         mRecyclerView.setFooterViewText("加载中");
-        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter, this);
+        mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, cityId, mvpPresenter, this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
     }
@@ -183,7 +199,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         if (model.isSuccess()) {
             this.model = model;
             mHotData = model.getData();
-            mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, mvpPresenter, this);
+            mAdapter = new HomeRecyclerAdapter(mData, (MainActivity) getActivity(), mHotData, cityId, mvpPresenter, this);
             mRecyclerView.setAdapter(mAdapter);
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -240,6 +256,34 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             if (mAllData.size() != 0) {
                 pageNo2 = Integer.parseInt(pageNo2) + 1 + "";
                 mData.addAll(mAllData);
+                mAdapter.notifyDataSetChanged();
+            }
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+        }
+    }
+
+    /**
+     * 同城
+     *
+     * @param model
+     */
+    @Override
+    public void getActivityByCityData(HomeHotModel model) {
+        mAdapter.getAllRbn().setEnabled(true);
+        hideLoading();
+        mCityWildData.clear();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        if (model.isSuccess()) {
+            mCityWildData = model.getData();
+            if (mCityWildData.size() != 0) {
+                pageNo3 = Integer.parseInt(pageNo3) + 1 + "";
+                mData.addAll(mCityWildData);
                 mAdapter.notifyDataSetChanged();
             }
         } else {
@@ -305,6 +349,11 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             mvpPresenter.getActivityListParamet().setPageNo(pageNo2);
             mvpPresenter.loadHomeHotData();//请求网络获取热门
             mvpPresenter.loadActivityData();//请求活动
+        } else if (state == 3) {
+            pageNo3 = "1";
+            mvpPresenter.getCity_paramet().setPageNo(pageNo3);
+            mvpPresenter.loadHomeHotData();//请求网络获取热门
+            mvpPresenter.loadActivityByCityData(cityId);//请求同城
         }
     }
 
@@ -320,6 +369,9 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
         } else if (state == 2) {
             mvpPresenter.getActivityListParamet().setPageNo(pageNo2);
             mvpPresenter.loadActivityData();
+        } else if (state == 3) {
+            mvpPresenter.getCity_paramet().setPageNo(pageNo3);
+            mvpPresenter.loadActivityByCityData(cityId);//请求同城
         }
     }
 
@@ -380,4 +432,5 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             }
         }
     }
+
 }
