@@ -92,7 +92,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
 
         //初始化mRecyclerView 投稿
         mRecyclerView.setGridLayout(1);
-        subAdapter = new SubMissionAdapter(getActivity(), subData,mvpPresenter);
+        subAdapter = new SubMissionAdapter(getActivity(), subData, mvpPresenter);
         mRecyclerView.setAdapter(subAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
 
@@ -101,7 +101,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
             public void run() {
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             }
-        },10);
+        }, 10);
     }
 
     @Override
@@ -216,8 +216,8 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
         }, 300);
         if (model.isSuccess()) {
             subData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!subData.isEmpty()) {
+                subAdapter.refreshAdapter(subData);
                 PAGE_NO++;
             } else {
 
@@ -225,18 +225,20 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
         } else {
 
         }
-        subAdapter.refreshAdapter(subData);
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
+
     @Override
     public void messageDeleteCommentSuccess(RewardResult model, int position) {
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功");
             subData.remove(position);
             subAdapter.refreshAdapter(subData);
-        }else {
+        } else {
             ToastUtil.showToast("删除失败");
         }
     }
+
     @Override
     public void getBookDetailsDateSuccess(HomeHotModel model, int position) {
 

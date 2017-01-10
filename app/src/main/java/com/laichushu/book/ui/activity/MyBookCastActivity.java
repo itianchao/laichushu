@@ -190,8 +190,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             }
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
-            ErrorReloadData();
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+//            ErrorReloadData();
         }
     }
 

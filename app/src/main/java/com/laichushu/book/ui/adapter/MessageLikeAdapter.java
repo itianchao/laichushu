@@ -74,8 +74,10 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
         switch (type) {
             case "1":
                 //喜欢
+                SpannableStringBuilder msgSpan = new SpannableStringBuilder();
+                String bookName="",msg;
+                ClickableSpan nameSpan,bookNameSpan;
                 holder.tvTime.setText(dataBeen.get(position).getSendTime());
-                holder.tvReaderName.setText(dataBeen.get(position).getSenderName());
                 holder.ivDeleteMsg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -89,48 +91,143 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 switch (dataBeen.get(position).getSourceType()) {
                     case "1":
                     case "2":
-                        //
-                        holder.tvType.setText("收藏了你的书");
+
                         holder.tvContent.setVisibility(View.GONE);
                         holder.tvContent.setText(dataBeen.get(position).getContent());
                         if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
-                            holder.tvBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
+                            bookName="《" + dataBeen.get(position).getSourceName() + "》";
                         }
-                        holder.tvBookName.setOnClickListener(new View.OnClickListener() {
+                       msg=dataBeen.get(position).getSenderName()+" 收藏了你的书"+bookName;
+                        msgSpan.append(msg);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), 0, dataBeen.get(position).getSenderName().length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterLightGray2)), dataBeen.get(position).getSenderName().length(),msg.length()-bookName.length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), msg.length()-bookName.length(), msg.length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                         nameSpan = new ClickableSpan() {
                             @Override
-                            public void onClick(View v) {
+                            public void onClick(View view) {
+                                //跳转用户主页
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                                if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                                } else {
+                                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                                }
+                            }
+                        };
+                         bookNameSpan = new ClickableSpan() {
+                            @Override
+                            public void onClick(View view) {
                                 messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
                             }
-                        });
+                        };
+                        msgSpan.setSpan(nameSpan, 0, dataBeen.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        msgSpan.setSpan(bookNameSpan, msg.length()-bookName.length(), msg.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        holder.tvReaderName.setText(msgSpan);
+                        holder.tvReaderName.setMovementMethod(LinkMovementMethod.getInstance());
+
                         break;
                     case "3":
                         //话题
-                        holder.tvContent.setVisibility(View.VISIBLE);
-                        holder.tvType.setText("收藏了你的话题");
-                        holder.tvContent.setText(dataBeen.get(position).getContent());
+                        holder.tvContent.setVisibility(View.GONE);
                         if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
-                            holder.tvBookName.setText("#" + dataBeen.get(position).getSourceName() + "#");
-                        } else {
-                            holder.tvContent.setVisibility(View.GONE);
+                            bookName="#" + dataBeen.get(position).getSourceName() + "#";
                         }
+                        msg=dataBeen.get(position).getSenderName()+" 收藏了你的话题"+bookName;
+                        msgSpan.append(msg);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), 0, dataBeen.get(position).getSenderName().length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterLightGray2)), dataBeen.get(position).getSenderName().length(),msg.length()-bookName.length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), msg.length()-bookName.length(), msg.length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        nameSpan = new ClickableSpan() {
+                            @Override
+                            public void onClick(View view) {
+                                //跳转用户主页
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                                if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                                } else {
+                                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                                }
+                            }
+                        };
+                        msgSpan.setSpan(nameSpan, 0, dataBeen.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        holder.tvReaderName.setText(msgSpan);
+                        holder.tvReaderName.setMovementMethod(LinkMovementMethod.getInstance());
                         break;
                     case "4":
                     case "6":
                         //服务+编辑
-                        holder.tvType.setText("收藏了你");
                         holder.tvContent.setVisibility(View.GONE);
+                        msg=dataBeen.get(position).getSenderName()+" 收藏了你";
+                        msgSpan.append(msg);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), 0, dataBeen.get(position).getSenderName().length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterLightGray2)), dataBeen.get(position).getSenderName().length(),msg.length()-bookName.length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        nameSpan = new ClickableSpan() {
+                            @Override
+                            public void onClick(View view) {
+                                //跳转用户主页
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                                if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                                } else {
+                                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                                }
+                            }
+                        };
+                        msgSpan.setSpan(nameSpan, 0, dataBeen.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        holder.tvReaderName.setText(msgSpan);
+                        holder.tvReaderName.setMovementMethod(LinkMovementMethod.getInstance());
                         break;
                     case "8":
                         //评论
                         holder.tvContent.setVisibility(View.VISIBLE);
-                        holder.tvType.setText("点赞了你的评论");
                         if (!TextUtils.isEmpty(dataBeen.get(position).getContent())) {
                             holder.tvContent.setText(dataBeen.get(position).getContent());
                         } else {
                             holder.tvContent.setVisibility(View.GONE);
                         }
-                        break;
 
+
+                        if (!TextUtils.isEmpty(dataBeen.get(position).getSourceName())) {
+                            bookName="#" + dataBeen.get(position).getSourceName() + "#";
+                        }
+                        msg=dataBeen.get(position).getSenderName()+" 点赞了你的评论"+bookName;
+                        msgSpan.append(msg);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), 0, dataBeen.get(position).getSenderName().length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.characterLightGray2)), dataBeen.get(position).getSenderName().length(),msg.length()-bookName.length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), msg.length()-bookName.length(), msg.length(),
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        nameSpan = new ClickableSpan() {
+                            @Override
+                            public void onClick(View view) {
+                                //跳转用户主页
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
+                                if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
+                                    UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
+                                } else {
+                                    UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
+                                }
+                            }
+                        };
+                        msgSpan.setSpan(nameSpan, 0, dataBeen.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        holder.tvReaderName.setText(msgSpan);
+                        holder.tvReaderName.setMovementMethod(LinkMovementMethod.getInstance());
+                        break;
                 }
                 holder.tvReaderName.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -149,8 +246,8 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 break;
             case "2":
                 //打赏
-                String msg = dataBeen.get(position).getSenderName() + "  打赏了你的书  " + "《" + dataBeen.get(position).getSourceName() + "》";
-                SpannableStringBuilder msgSpan = new SpannableStringBuilder();
+                 msg = dataBeen.get(position).getSenderName() + "  打赏了你的书  " + "《" + dataBeen.get(position).getSourceName() + "》";
+                msgSpan = new SpannableStringBuilder();
                 msgSpan.append(msg);
                 //setSpan时需要指定的 flag,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE(前后都不包括).
                 msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), 0, dataBeen.get(position).getSenderName().length(),
@@ -159,7 +256,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 msgSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.auditing)), msg.length() - ("《" + dataBeen.get(position).getSourceName() + "》").length(), msg.length(),
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                ClickableSpan nameSpan = new ClickableSpan() {
+                 nameSpan = new ClickableSpan() {
                     @Override
                     public void onClick(View view) {
                         //跳转用户主页
@@ -172,7 +269,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         }
                     }
                 };
-                ClickableSpan bookNameSpan = new ClickableSpan() {
+                 bookNameSpan = new ClickableSpan() {
                     @Override
                     public void onClick(View view) {
                         messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
@@ -183,34 +280,13 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvReward.setText(msgSpan);
                 holder.tvReward.setMovementMethod(LinkMovementMethod.getInstance());
 
-//                holder.tvReward.setText(dataBeen.get(position).getSenderName());
                 holder.tvRewardTime.setText(dataBeen.get(position).getSendTime());
-//                holder.tvRewardBookName.setText("《" + dataBeen.get(position).getSourceName() + "》");
                 holder.btnWallet.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         UIUtil.openActivity(context, MyWalletDetailsActivity.class);
                     }
                 });
-//                holder.tvReward.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //跳转用户主页
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
-//                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
-//                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
-//                        } else {
-//                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
-//                        }
-//                    }
-//                });
-//                holder.tvRewardBookName.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
-//                    }
-//                });
                 holder.ivRewardDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -454,6 +530,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
 
     public void refreshAdapter(List<MessageCommentResult.DataBean> listData) {
         if (listData.size() > 0) {
+            dataBeen.clear();
             dataBeen.addAll(listData);
             this.notifyDataSetChanged();
         }
