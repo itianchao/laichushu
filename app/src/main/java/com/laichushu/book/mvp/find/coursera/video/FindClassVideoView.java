@@ -6,4 +6,7 @@ package com.laichushu.book.mvp.find.coursera.video;
  */
 
 public interface FindClassVideoView {
+    void getVideoListDataSuccess(CourseraModle modle);
+
+    void getVideoListDataFail(String s);
 }

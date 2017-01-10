@@ -14,5 +14,6 @@
     <TextView
         android:id="@+id/tv_categroy"
         style="@style/global_select"
-        android:text="分类" />
+        android:text="默认分类" />
+
 </LinearLayout>

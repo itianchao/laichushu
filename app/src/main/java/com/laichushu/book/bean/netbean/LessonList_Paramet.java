@@ -12,6 +12,7 @@ public class LessonList_Paramet {
     private String pageNo;
     private String pageSize;
     private String lessonName;
+    private String lessonCategoryId;//分类是传id
     /**
      * @param lessonType 课程类型1：点播2：直播
      * @param fileType 1：视频2：文档
@@ -87,5 +88,13 @@ public class LessonList_Paramet {
 
     public void setLessonName(String lessonName) {
         this.lessonName = lessonName;
+    }
+
+    public String getLessonCategoryId() {
+        return lessonCategoryId;
+    }
+
+    public void setLessonCategoryId(String lessonCategoryId) {
+        this.lessonCategoryId = lessonCategoryId;
     }
 }

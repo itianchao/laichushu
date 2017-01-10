@@ -6,7 +6,7 @@ package com.laichushu.book.ui.activity;
  */
 
 public class MineCourseList_Paramet {
-    //1：我的下载2：我的浏览3：我的收藏
+    //1：我的收藏3我的浏览2：我的下载
     private String userId,operateType,pageNo,pageSize;
 
     public MineCourseList_Paramet(String userId, String operateType, String pageNo, String pageSize) {

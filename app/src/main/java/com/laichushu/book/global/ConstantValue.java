@@ -78,8 +78,19 @@ public class ConstantValue {
     public static String SEARCH_TYPE_MECHANISM = "4";//机构
     public static String SEARCH_TYPE_VIDEO = "5";//视频
     public static String SEARCH_TYPE_DOCUMENT = "6";//文档
+
+    //发现 - 课程
+    public static String VIDEO_PLAY_ON_DEMAND = "1";//点播
+    public static String VIDEO_PLAY_LIVE_DEMAND = "2";//直播
+    public static String FILETYPE_VIDEO = "1";//视频
+    public static String FILETYPE_DOCUMENT = "2";//文档
+    public static String SORTWAY_CLICK = "1";//1：按点击量排序
+    public static String SORTWAY_DOWNLOAD = "2";//2：按下载量排序
+    public static String SORTWAY_COLLCETION = "3";//3：按收藏量排序
+
     //空字符串
     public static String STRING_NULL = "";
+
     //baseBook
     public static final String BASEBOOK = "basebook";
 
