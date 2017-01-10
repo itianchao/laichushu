@@ -116,6 +116,7 @@ public class ConstantValue {
     public static String API_SERVER_URL1 = "http://192.168.1.103:8082/book-app/";//张峰
     public static String API_SERVER_URL2 = "http://192.168.1.150:8082/book-app/";//施大勇5
     public static String API_SERVER_URL3 = "http://test2.laichushu.com/book-app-web/";
+    public static String API_SERVER_URL4 = "http://192.168.1.138:8082/book-app/";//胡体勇
     //    public static String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    public static String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    public static String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";
@@ -137,4 +138,21 @@ public class ConstantValue {
     public static void setApiServerUrl(String apiServerUrl) {
         API_SERVER_URL = apiServerUrl;
     }
+
+    //支付回调
+    public static final String ALIPAY_CALLBACK_URL = "";
+    //微信ID
+    public static final String WECHAT_APPID = "wx4c34cc3d9bc5a38b";
+
+    // 商户PID
+//    public static final String PARTNER = "2088221508305679";//品维会
+//    public static final String PARTNER = "2088421691773363";//第二教室
+    public static final String PARTNER = "";//来出书
+    // 商户收款账号
+//    public static final String SELLER = "pwdzsw@163.com";//品维会
+//    public static final String SELLER = "zhongshuku@163.com";//第二教室
+    public static final String SELLER = "";//来出书
+    // 商户私钥，pkcs8格式
+//    public static final String RSA_PRIVATE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCS5eAva1/yAuQD7WVMWPkEMwlCuvS9Bm0CeYZOFfwIyuLDtNKqwvT5AmleGH962nKo8KMGf21jdRI1ZHl+vc1WVZ3fBDDi2ya93dOjhtDs+1YUDluoMC1IIGutO9uFuQaODyNrcmIA7fGLk6X1MlxvTzmIBQQMAWLFbSqHiluxQIDAQAB";
+    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMJLl4C9rX/IC5APtZUxY+QQzCUK69L0GbQJ5hk4V/AjK4sO00qrC9PkCaV4Yf3racqjwowZ/bWN1EjVkeX69zVZVnd8EMOLbJr3d06OG0Oz7VhQOW6gwLUgga60724W5Bo4PI2tyYgDt8YuTpfUyXG9POYgFBAwBYsVtKoeKW7FAgMBAAECgYA6+qNUyz89iMYpxvsB/OorswWlQPlxIfQjeNXGVhorpSF0pt1wzxdaDOD4v+BPKgUFJEzMJp+jWxhTu7D8NQCRQpXOCrHOkjbqa6B3A4Vux7+NGSXhq6h+M0Q8GoEJJLZPlq3EmymFXMrH8XoFO46HCWaTQ26rxbpWuuD6+UEYAQJBAP9i1mSKKfObbw7TVIzCg+RjhfdzNXPtiyq21OYbgw5F2z2lxEwrlhiDUX1n2h2Msqd02RyBtVjVT8cLVRF0yQECQQDCwyjYUbIEQEsK9iUJZXwiblmbulKVNaiwc/J0Mf07iCJzP+JO0+hQp+z0M9aVI7+tjdOYj4Iiiwyu15UawcHFAkEAlCo9hBr8d87nwcwts3RunKR45rU6f8WDBgcIwW+Yu0EgD0YK+r4W2KXnM0B7NMWaKLkL9RPzqFQpcqtKcVQ2AQJABjeMmjshX5ldy9/HluEycTbsjVgJQtIPrHJHDwZ5eukBkIQ9iR6ij9CMc88jzmbxu2yHkJskIE4n/XzMOaptsQJAUO+eZ0URvyCHAQOBjs3E749l1FJMj1LmDV1EiDDd8yDjLpDUbPFfhshLUWNjr/EqQtJgElfeZn8LsrxwhHo1Ng==";
 }

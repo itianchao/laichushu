@@ -92,8 +92,10 @@ dependencies {
     compile 'de.greenrobot:greendao-generator:2.1.0'
     compile 'jp.wasabeef:richeditor-android:1.2.1'
     compile 'com.alanapi.wheelview:alanapi-wheelview:0.0.9'
-    compile(name: 'notify-dialog-library', ext: 'aar')//自定义对话框
-    compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'//PDF
+    compile(name: 'notify-dialog-library', ext: 'aar')
+    //自定义对话框
+    compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
+    //PDF
     compile 'com.lovedise:permissiongen:0.0.6'
     compile 'com.android.support:multidex:1.0.1'
     compile project(':pickerView')
@@ -117,4 +119,5 @@ dependencies {
         exclude module: 'support-v4'
     }
     compile files('libs/BaiduLBS_Android.jar')
+    compile files('libs/libammsdk.jar')
 }
