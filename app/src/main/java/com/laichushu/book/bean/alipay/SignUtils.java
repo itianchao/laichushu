@@ -1,4 +1,4 @@
-package com.laichushu.book.utils.alipay;
+package com.laichushu.book.bean.alipay;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;

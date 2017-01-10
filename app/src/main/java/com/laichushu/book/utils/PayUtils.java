@@ -9,10 +9,9 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.utils.alipay.PayResult;
-import com.laichushu.book.utils.alipay.SignUtils;
-import com.laichushu.book.utils.wechatpay.WechatConst;
-import com.laichushu.book.utils.wechatpay.WxInfo;
+import com.laichushu.book.bean.alipay.PayResult;
+import com.laichushu.book.bean.alipay.SignUtils;
+import com.laichushu.book.bean.wechatpay.WxInfo;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -28,14 +27,11 @@ import java.net.URLEncoder;
 public class PayUtils {
     private Context mContext;
     // 商户PID
-//    public static final String PARTNER = "2088221508305679";//品维会
-    public static final String PARTNER = "2088421691773363";
+    public static final String PARTNER = ConstantValue.PARTNER;
     // 商户收款账号
-//    public static final String SELLER = "pwdzsw@163.com";//品维会
-    public static final String SELLER = "zhongshuku@163.com";
+    public static final String SELLER = ConstantValue.SELLER;
     // 商户私钥，pkcs8格式
-//    public static final String RSA_PRIVATE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCS5eAva1/yAuQD7WVMWPkEMwlCuvS9Bm0CeYZOFfwIyuLDtNKqwvT5AmleGH962nKo8KMGf21jdRI1ZHl+vc1WVZ3fBDDi2ya93dOjhtDs+1YUDluoMC1IIGutO9uFuQaODyNrcmIA7fGLk6X1MlxvTzmIBQQMAWLFbSqHiluxQIDAQAB";
-    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMJLl4C9rX/IC5APtZUxY+QQzCUK69L0GbQJ5hk4V/AjK4sO00qrC9PkCaV4Yf3racqjwowZ/bWN1EjVkeX69zVZVnd8EMOLbJr3d06OG0Oz7VhQOW6gwLUgga60724W5Bo4PI2tyYgDt8YuTpfUyXG9POYgFBAwBYsVtKoeKW7FAgMBAAECgYA6+qNUyz89iMYpxvsB/OorswWlQPlxIfQjeNXGVhorpSF0pt1wzxdaDOD4v+BPKgUFJEzMJp+jWxhTu7D8NQCRQpXOCrHOkjbqa6B3A4Vux7+NGSXhq6h+M0Q8GoEJJLZPlq3EmymFXMrH8XoFO46HCWaTQ26rxbpWuuD6+UEYAQJBAP9i1mSKKfObbw7TVIzCg+RjhfdzNXPtiyq21OYbgw5F2z2lxEwrlhiDUX1n2h2Msqd02RyBtVjVT8cLVRF0yQECQQDCwyjYUbIEQEsK9iUJZXwiblmbulKVNaiwc/J0Mf07iCJzP+JO0+hQp+z0M9aVI7+tjdOYj4Iiiwyu15UawcHFAkEAlCo9hBr8d87nwcwts3RunKR45rU6f8WDBgcIwW+Yu0EgD0YK+r4W2KXnM0B7NMWaKLkL9RPzqFQpcqtKcVQ2AQJABjeMmjshX5ldy9/HluEycTbsjVgJQtIPrHJHDwZ5eukBkIQ9iR6ij9CMc88jzmbxu2yHkJskIE4n/XzMOaptsQJAUO+eZ0URvyCHAQOBjs3E749l1FJMj1LmDV1EiDDd8yDjLpDUbPFfhshLUWNjr/EqQtJgElfeZn8LsrxwhHo1Ng==";
+    public static final String RSA_PRIVATE = ConstantValue.RSA_PRIVATE;
 
     private static final int SDK_PAY_FLAG = 1;
 
@@ -46,9 +42,9 @@ public class PayUtils {
 
     private PayUtils(Context context) {
         this.mContext = context;
-        mWxApi = WXAPIFactory.createWXAPI(mContext, WechatConst.WECHAT_APPID);
+        mWxApi = WXAPIFactory.createWXAPI(mContext, ConstantValue.WECHAT_APPID);
         // 将该app注册到微信
-        mWxApi.registerApp(WechatConst.WECHAT_APPID);
+        mWxApi.registerApp(ConstantValue.WECHAT_APPID);
     }
 
     public static PayUtils getInstance(Context context){
@@ -191,7 +187,7 @@ public class PayUtils {
      */
     public void wechatPay(WxInfo info) {
         PayReq req = new PayReq();
-        req.appId = WechatConst.WECHAT_APPID;
+        req.appId = ConstantValue.WECHAT_APPID;
         req.partnerId = info.getData().getPartnerId();
         req.prepayId = info.getData().getPrepayId();
         req.nonceStr = info.getData().getNonceStr();

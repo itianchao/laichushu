@@ -1,4 +1,4 @@
-package com.laichushu.book.utils.alipay;
+package com.laichushu.book.bean.alipay;
 
 public final class Base64 {
 

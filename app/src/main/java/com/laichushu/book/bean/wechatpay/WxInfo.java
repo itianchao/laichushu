@@ -1,4 +1,4 @@
-package com.laichushu.book.utils.wechatpay;
+package com.laichushu.book.bean.wechatpay;
 
 public class WxInfo
 {
