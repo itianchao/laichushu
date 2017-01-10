@@ -15,6 +15,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.CampaignDetailsModel;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.campaign.AuthorWorksModle;
 import com.laichushu.book.mvp.home.campaign.CampaignJoinModel;
 import com.laichushu.book.mvp.home.campaign.CampaignModel;
@@ -24,9 +25,11 @@ import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.adapter.JoinActivityAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -130,6 +133,9 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
                 finish();
                 break;
             case R.id.iv_title_other://分享
+                //分享
+                String linkUrl= Base64Utils.getStringUrl(activityId, ConstantValue.SHARE_TYPR_ACTIVITY);
+                ShareUtil.showShare(mActivity, linkUrl,linkUrl,bean.getCoverUrl(),bean.getIntroduce(),bean.getName());
                 break;
             case R.id.iv_title_another://评论
                 //打开参加活动的图书

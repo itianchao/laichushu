@@ -8,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.msg.notice.NoticeModle;
+import com.laichushu.book.utils.Base64Utils;
+import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -35,7 +38,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
 
     @Override
     public void onBindViewHolder(NoticeViewHolder holder, int position) {
-        NoticeModle.DataBean dataBean = mData.get(position);
+        final NoticeModle.DataBean dataBean = mData.get(position);
         holder.itemView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(
                 android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
                 android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -45,6 +48,10 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
             @Override
             public void onClick(View v) {
                 // TODO: 2016/11/26  分享
+                //分享
+                String linkUrl= Base64Utils.getStringUrl(dataBean.getId(), ConstantValue.SHARE_TYPR_NOTIC);
+                ShareUtil.showShare(mActivity, linkUrl,linkUrl,"",dataBean.getContent(),dataBean.getPartyName());
+
             }
         });
     }

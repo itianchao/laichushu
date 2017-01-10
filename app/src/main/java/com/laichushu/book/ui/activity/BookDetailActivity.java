@@ -27,9 +27,11 @@ import com.laichushu.book.mvp.home.bookdetail.SubscribeArticleModle;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -204,7 +206,9 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 finish();
                 break;
             case R.id.iv_title_other://分享
-//                ShareSdkUtils.showShare(mActivity);
+                //分享
+                String linkUrl= Base64Utils.getStringUrl(articleId,ConstantValue.SHARE_TYPR_BOOK);
+                ShareUtil.showShare(mActivity, linkUrl,linkUrl,bean.getCoverUrl(),bean.getIntroduce(),bean.getName());
                 break;
             case R.id.iv_title_another://收藏
                 mvpPresenter.collectSave(articleId, collectType, ConstantValue.BOOKCOMMENTTYPE);
