@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.mine.personpage.HomePagePresener;
 import com.laichushu.book.mvp.mine.homepage.HomePagePresener;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.activity.TopicDetilActivity;

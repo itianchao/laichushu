@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.mine.homepage;
+package com.laichushu.book.mvp.mine.personpage;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
