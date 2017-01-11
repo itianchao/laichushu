@@ -4,12 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
 import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
 import com.laichushu.book.ui.base.MvpActivity2;
-import com.laichushu.book.ui.base.MvpFragment2;
+import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -21,8 +23,9 @@ import java.util.ArrayList;
 
 public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAdapter.ViewHolder> {
     private MvpActivity2 mActivity;
-    private ArrayList mData = new ArrayList<>();
-    public FindClassVideoAdapter(MvpActivity2 mActivity,ArrayList mData) {
+    private ArrayList<CourseraModle.DataBean.LessonListBean> mData = new ArrayList<>();
+
+    public FindClassVideoAdapter(MvpActivity2 mActivity, ArrayList mData) {
         this.mActivity = mActivity;
         this.mData = mData;
     }
@@ -35,17 +38,26 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        holder.itemView.setLayoutParams(params);
         holder.photoIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtil.openActivity(mActivity,FindClassVideoDetailActivity.class);
+                UIUtil.openActivity(mActivity, FindClassVideoDetailActivity.class);
             }
         });
+        CourseraModle.DataBean.LessonListBean bean = mData.get(position);
+        holder.nameTv.setText(bean.getName());
+        holder.briefTv.setText(bean.getRemarks());
+        holder.lookTv.setText(bean.getClickNum()+"");
+        holder.downloadTv.setText(bean.getDownloadNum()+"");
+        holder.likeTv.setText(bean.getCollectionNum()+"");
+        GlideUitl.loadImg(mActivity,bean.getThumbUrl(),holder.photoIv);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,6 +78,10 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
             downloadTv = (TextView) itemView.findViewById(R.id.tv_download);
             likeTv = (TextView) itemView.findViewById(R.id.tv_like);
         }
+    }
 
+    public void setmData(ArrayList<CourseraModle.DataBean.LessonListBean> data) {
+        this.mData = data;
+        notifyDataSetChanged();
     }
 }

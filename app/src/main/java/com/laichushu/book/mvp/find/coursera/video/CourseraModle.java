@@ -105,6 +105,24 @@ public class CourseraModle {
             private String speakerName;
             private String remarks;
             private String ccVideoId;
+            private int downloadNum;
+            private int collectionNum;
+
+            public int getDownloadNum() {
+                return downloadNum;
+            }
+
+            public void setDownloadNum(int downloadNum) {
+                this.downloadNum = downloadNum;
+            }
+
+            public int getCollectionNum() {
+                return collectionNum;
+            }
+
+            public void setCollectionNum(int collectionNum) {
+                this.collectionNum = collectionNum;
+            }
 
             public String getId() {
                 return id;

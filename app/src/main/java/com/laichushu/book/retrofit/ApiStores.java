@@ -71,7 +71,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL3;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL4;
 
     //登录接口
     @POST("login/do")
@@ -148,6 +148,7 @@ public interface ApiStores {
     //活动列表接口
     @POST("activity/list")
     Observable<HomeHotModel> activityList(@Body ActivityList_Paramet paramet);
+
     //活动列表接口--同城
     @POST("searchArticle/findArticleByCity")
     Observable<HomeHotModel> getActivityListByCity(@Body ActivityListByCity_Paramet paramet);
@@ -729,12 +730,16 @@ public interface ApiStores {
     Observable<RewardResult> updateTopicRecommended(@Body UpdateTopicRecommended_Paramet paramet);
 
     /***
-     *  发现 - 课程
+     * 发现 - 课程
      */
 
     //课程视频列表接口 or 课程文档列表接口
     @POST("lesson/lessonList")
     Observable<CourseraModle> getLessonList(@Body LessonList_Paramet paramet);
+
+    //我的收藏、我的下载、我的浏览
+    @POST("lesson/findMyLessonList")
+    Observable<CourseraModle> getMineCourseList(@Body MineCourseList_Paramet paramet);
 
     //课程详情
     @POST("lesson/lessonDetail")
@@ -768,7 +773,4 @@ public interface ApiStores {
     @POST("lesson/lessonAbout")
     Observable<CourseraModle> getLessonAboutList(@Body LessonAbout_Paramet paramet);
 
-    //我的收藏、我的下载、我的浏览
-    @POST("lesson/findMyLessonList")
-    Observable<CourseraModle> getMineCourseList(@Body MineCourseList_Paramet paramet);
 }
