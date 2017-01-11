@@ -6,4 +6,7 @@ package com.laichushu.book.mvp.find.coursera.videodetail;
  */
 
 public interface VideoDetailView {
+    void loadVideoDetailDataSuccess(VideoDetailModle model);
+
+    void loadVideoDetailDataFail(String msg);
 }

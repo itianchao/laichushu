@@ -442,7 +442,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      *
      * @param articleId
      */
-    public void getDownloadUrl(final String articleId, final String author) {
+    public void getDownloadUrl(final String articleId, final String author, final String photo, final String brife) {
         mvpView.showLoading();
         DownloadEpubFilePermission_Paramet paramet = new DownloadEpubFilePermission_Paramet(articleId);
         addSubscription(apiStores.downloadEpubFile(paramet), new ApiCallback<UrlResult>() {
@@ -455,9 +455,9 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                         mvpView.hideLoading();
                         BaseBookEntity baseBookEntity = new BaseBookEntity();
                         baseBookEntity.setBook_path(path);
-                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author);
+                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author,photo,brife);
                     } else {
-                        downloadEpub(url, articleId, author);
+                        downloadEpub(url, articleId, author,photo,brife);
                     }
 
                 } else {
@@ -487,20 +487,20 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      * @param articleId
      * @param author
      */
-    public void downloadEpub(final String url, final String articleId, final String author) {
+    public void downloadEpub(final String url, final String articleId, final String author,final String photo, final String brife) {
 
         Call<ResponseBody> call = apiStores.downloadFile(url);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    boolean writtenToDisk = writeResponseBodyToDisk(response.body(), articleId);
+                    boolean writtenToDisk = writeResponseBodyToDisk(response.body(), articleId,"epub");
                     if (writtenToDisk) {
                         mvpView.hideLoading();
                         String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
                         BaseBookEntity baseBookEntity = new BaseBookEntity();
                         baseBookEntity.setBook_path(path);
-                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author);
+                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author,photo,brife);
                     } else {
                         ToastUtil.showToast("请检查网络");
                     }
@@ -525,10 +525,10 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      * @param articleId
      * @return
      */
-    private boolean writeResponseBodyToDisk(ResponseBody body, String articleId) {
+    private boolean writeResponseBodyToDisk(ResponseBody body, String articleId,String suffix) {
         try {
             // todo change the file location/name according to your needs
-            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
+            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + "."+suffix;
 
             File futureStudioIconFile = new File(path);
 
@@ -576,7 +576,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             }
         } catch (IOException e) {
             mvpView.hideLoading();
-            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
+            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + "."+suffix;
             File futureStudioIconFile = new File(path);
             futureStudioIconFile.delete();
             return false;

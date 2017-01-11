@@ -80,6 +80,15 @@ public class SpeakListModle {
             private String name;
             private String lessonId;
             private String url;
+            private boolean isSelect;
+
+            public boolean isSelect() {
+                return isSelect;
+            }
+
+            public void setSelect(boolean select) {
+                isSelect = select;
+            }
 
             public String getHandOutsId() {
                 return handOutsId;
