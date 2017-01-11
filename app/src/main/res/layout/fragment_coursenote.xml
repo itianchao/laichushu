@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -14,7 +15,8 @@
         android:padding="5dp"
         android:text="添加新的笔记"
         android:textColor="@color/global"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/ryv_note"
@@ -23,4 +25,60 @@
 
     </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
 
+    <RelativeLayout
+        android:id="@+id/ray_note"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/global"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/global"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/btn_ok"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_rectangle_global"
+            android:hint="请输入标题"
+            android:lines="1"
+            android:maxLength="25"
+            android:textColor="@color/global"
+            android:textSize="16sp"
+            tools:text="hahhahahhashfhsadhfa阿方索短发散发萨芬sdfsdfafdsaf" />
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/et_title"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_rectangle_global"
+            android:gravity="top"
+            android:hint="请输入内容"
+            android:textColor="@color/global"
+            android:textSize="16sp"
+            tools:text="hahhahahhashfhsadhfa阿方索短发散发萨芬sdfsdfafdsaf" />
+    </RelativeLayout>
 </LinearLayout>

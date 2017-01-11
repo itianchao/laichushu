@@ -87,6 +87,8 @@ public class ConstantValue {
     public static String SORTWAY_CLICK = "1";//1：按点击量排序
     public static String SORTWAY_DOWNLOAD = "2";//2：按下载量排序
     public static String SORTWAY_COLLCETION = "3";//3：按收藏量排序
+    public static String OPERATE_TYPE1 = "1";//下载
+    public static String OPERATE_TYPE2 = "2";//查询
 
     //空字符串
     public static String STRING_NULL = "";

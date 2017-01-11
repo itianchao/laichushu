@@ -7,28 +7,61 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.otherbean.NoteListModle;
+import com.laichushu.book.ui.base.BaseActivity;
+import com.laichushu.book.ui.fragment.CourseNoteFragment;
+import com.laichushu.book.utils.StringUtil;
 import com.laichushu.book.utils.UIUtil;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * 发现 - 课程 - 笔记
  * Created by wangtong on 2017/1/9.
  */
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
+    private ArrayList<NoteListModle.DataBean.LessonNoteListBean> mData;
+    private BaseActivity mActivity;
+    private CourseNoteFragment mFragment;
+
+    public NoteAdapter(CourseNoteFragment mFragment, ArrayList<NoteListModle.DataBean.LessonNoteListBean> mData) {
+        this.mData = mData;
+        this.mFragment = mFragment;
+        this.mActivity = (BaseActivity) mFragment.getActivity();
+    }
+
     @Override
     public NoteAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = UIUtil.inflate(R.layout.item_find_class_note);
         return new NoteAdapter.ViewHolder(itemView);
     }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        NoteListModle.DataBean.LessonNoteListBean bean = mData.get(position);
+        holder.timeTv.setText(StringUtil.formatLongTime(bean.getUpdateDate()));
+        holder.titleTv.setText(bean.getName());
+        holder.contentTv.setText(bean.getRemarks());
+        holder.editIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
+    }
+
+    public void setmData(ArrayList<NoteListModle.DataBean.LessonNoteListBean> mData) {
+        this.mData = mData;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

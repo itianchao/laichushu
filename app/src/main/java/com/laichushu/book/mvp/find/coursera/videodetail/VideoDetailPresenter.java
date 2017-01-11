@@ -5,13 +5,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.LessonDetail_Paramet;
+import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.fragment.CourseAboutFragment;
 import com.laichushu.book.ui.fragment.CourseAppraiseFragment;
 import com.laichushu.book.ui.fragment.CourseIntroFragment;
 import com.laichushu.book.ui.fragment.CourseNoteFragment;
 import com.laichushu.book.ui.fragment.CourseSpeakFragment;
-import com.laichushu.book.ui.fragment.CourseAboutFragment;
+import com.laichushu.book.utils.LoggerUtil;
 
 /**
  * 发现 - 课程 - 视频详情 Presenter
@@ -25,12 +29,19 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
     private CourseNoteFragment courseNote;
     private CourseAppraiseFragment courseAppraise;
     private CourseAboutFragment courseAbout;
+    private String userId = ConstantValue.USERID;
+    private String operateType = ConstantValue.OPERATE_TYPE2;
 
     public VideoDetailPresenter(VideoDetailView view) {
         attachView(view);
         mActivity = (FindClassVideoDetailActivity) view;
     }
 
+    /**
+     * 切换 fragment
+     *
+     * @param position
+     */
     public void setTabSelection(int position) {
         //记录position
         mActivity.index = position;
@@ -43,7 +54,7 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             case 0:
                 if (courseIntro == null) {
                     courseIntro = new CourseIntroFragment();
-                    bundle.putString("brief","abcdefg");
+                    bundle.putString("brief", mActivity.getMdata().getRemarks() == null ? "" : mActivity.getMdata().getRemarks());
                     courseIntro.setArguments(bundle);
                     transaction.add(R.id.fay_content, courseIntro);
                 } else {
@@ -53,7 +64,9 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             case 1:
                 if (courseSpeak == null) {
                     courseSpeak = new CourseSpeakFragment();
-                    transaction.add(R.id.layFrame, courseSpeak);
+                    bundle.putString("lessonId", mActivity.getMdata().getId());
+                    courseIntro.setArguments(bundle);
+                    transaction.add(R.id.fay_content, courseSpeak);
                 } else {
                     transaction.show(courseSpeak);
                 }
@@ -61,7 +74,7 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             case 2:
                 if (courseNote == null) {
                     courseNote = new CourseNoteFragment();
-                    transaction.add(R.id.layFrame, courseNote);
+                    transaction.add(R.id.fay_content, courseNote);
                 } else {
                     transaction.show(courseNote);
                 }
@@ -69,7 +82,7 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             case 3:
                 if (courseAppraise == null) {
                     courseAppraise = new CourseAppraiseFragment();
-                    transaction.add(R.id.layFrame, courseAppraise);
+                    transaction.add(R.id.fay_content, courseAppraise);
                 } else {
                     transaction.show(courseNote);
                 }
@@ -77,7 +90,7 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             case 4:
                 if (courseAbout == null) {
                     courseAbout = new CourseAboutFragment();
-                    transaction.add(R.id.layFrame, courseAbout);
+                    transaction.add(R.id.fay_content, courseAbout);
                 } else {
                     transaction.show(courseAbout);
                 }
@@ -86,11 +99,42 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
         transaction.commitAllowingStateLoss();
     }
 
+    /**
+     * 隐藏fragment
+     *
+     * @param transaction
+     */
     private void hideFragments(FragmentTransaction transaction) {
         if (courseIntro != null) transaction.hide(courseIntro);
         if (courseSpeak != null) transaction.hide(courseSpeak);
         if (courseNote != null) transaction.hide(courseNote);
         if (courseAppraise != null) transaction.hide(courseAppraise);
         if (courseAbout != null) transaction.hide(courseAbout);
+    }
+
+    /**
+     * 加载视频详情页接口 数据
+     *
+     * @param lessonId
+     */
+    public void loadVideoDetailData(String lessonId) {
+        LoggerUtil.e("视频详情页");
+        LessonDetail_Paramet paramet = new LessonDetail_Paramet(lessonId, userId, operateType);
+        addSubscription(apiStores.getLessonDetail(paramet), new ApiCallback<VideoDetailModle>() {
+            @Override
+            public void onSuccess(VideoDetailModle model) {
+                mvpView.loadVideoDetailDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.loadVideoDetailDataFail(code + "|" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 }

@@ -164,6 +164,17 @@ public class StringUtil {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 		return format.format(new Date());
 	}
+	/**
+	 * 格式化当前时间
+	 * @param l    long 时间
+	 * @return
+	 */
+	public static String formatLongTime(Long l){
+		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		java.util.Date date = new Date(l);
+		String time = sdf.format(date);
+		return time;
+	}
 
 	/**
 	 * 去掉音乐名称的后缀名

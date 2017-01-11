@@ -16,6 +16,14 @@ public class VideoDetailModle {
     private DataBean data;
     private String errMsg;
 
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
+    }
+
     /**
      * data : {"id":"15","name":"璇剧▼娴嬭瘯4","lessonType":"1","fileType":"1","status":"1","baseUrl":"http://101.254.183.67:9980/group1/M00/00/2C/wKiTPlhiG1eAQXWHAAHtis6W7XE71.docx","baseName":"QQ鐭棰�20161214144041.mp4","thumbUrl":"http://101.254.183.67:9980/group1/M00/00/2C/wKiTPlhiGDKAZjLkAAwhqcZFfLs334.jpg","thumbName":"star (6).jpg","downNum":2,"collectNum":2,"clickNum":149,"remarks":"qq鐭浜嬪疄涓婂北涓滅渷鏂规硶浣嗘槸绉戞妧鐣岀鎶�绉戞妧蹇揩鍔犲揩鍔犲揩鍊熻鍗℃枻鏂よ杈� 棰戙�傘�傘�傘�傘�傘�傘�傘�傘�傘�傘�傘�傘�傘�傘�傘�傘��","ccVideoId":"33FDDB28A2EE0CA29C33DC5901307461","isCollect":"2"}
      */

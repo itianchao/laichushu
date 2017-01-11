@@ -6,9 +6,13 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailModle;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailPresenter;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailView;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.UIUtil;
 
 /**
@@ -23,6 +27,8 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
     private ImageView downloadIv, collectionIv, shareIv;
     private RadioButton briefRbn, pdfRbn, noteRbn, commentRbn, aboutRbn;
     public int index = -1;
+    private String lessonId;
+    private VideoDetailModle.DataBean mdata;
 
     @Override
     protected VideoDetailPresenter createPresenter() {
@@ -56,6 +62,8 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
         noteRbn.setOnClickListener(this);
         commentRbn.setOnClickListener(this);
         aboutRbn.setOnClickListener(this);
+        lessonId = getIntent().getStringExtra("lessonId");
+        mvpPresenter.loadVideoDetailData(lessonId);
         onClick(briefRbn);
     }
 
@@ -102,5 +110,42 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
                 }
                 break;
         }
+    }
+
+    @Override
+    public void loadVideoDetailDataSuccess(VideoDetailModle model) {
+        if (model.isSuccess()) {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            mdata = model.getData();
+            titleTv.setText(mdata.getName());
+            if (mdata.getIsCollect().equals("1")) {//收藏
+                GlideUitl.loadImg(mActivity,R.drawable.icon_praise_yes2x,collectionIv);
+            }else {//未收藏
+                GlideUitl.loadImg(mActivity,R.drawable.icon_praise_no,collectionIv);
+            }
+
+        }else {
+            reloadErrorBtn();
+            LoggerUtil.e(model.getErrMsg());
+        }
+    }
+
+    @Override
+    public void loadVideoDetailDataFail(String msg) {
+        reloadErrorBtn();
+        LoggerUtil.e(msg);
+    }
+    public void reloadErrorBtn(){
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                mvpPresenter.loadVideoDetailData(lessonId);
+            }
+        });
+    }
+
+    public VideoDetailModle.DataBean getMdata() {
+        return mdata;
     }
 }

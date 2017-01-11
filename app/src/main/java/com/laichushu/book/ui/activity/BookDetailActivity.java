@@ -224,11 +224,11 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                     if (!articleData.isAward()) {
                         ToastUtil.showToast("请打赏后阅读");
                     } else {
-                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId());//获取下载url
+                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(),articleData.getCoverUrl(),articleData.getIntroduce());//获取下载url
                     }
                 } else if (articleData.getStatus().equals("4")) {//已出版购买后才能阅读
                     if (articleData.isPurchase()) {//购买
-                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId());//获取下载url
+                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(),articleData.getCoverUrl(),articleData.getIntroduce());//获取下载url
                     } else {//未购买
                         ToastUtil.showToast("请购买后阅读");
                     }

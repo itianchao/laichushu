@@ -20,6 +20,13 @@ public class NoteList_Paramet {
     private String pageNo;
     private String pageSize;
 
+    public NoteList_Paramet(String lessonId, String userId, String pageNo, String pageSize) {
+        this.lessonId = lessonId;
+        this.userId = userId;
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+    }
+
     public String getLessonId() {
         return lessonId;
     }

@@ -14,16 +14,18 @@
 
         <RadioButton
             android:id="@+id/rbn_01"
+            style="@style/find_class_mine_global_select"
             android:checked="true"
-            tools:text="收藏"
-            style="@style/find_class_mine_global_select"/>
+            android:text="收藏" />
+
         <RadioButton
             android:id="@+id/rbn_02"
-            tools:text="历史"
-            style="@style/find_class_mine_global_select"/>
+            style="@style/find_class_mine_global_select"
+            android:text="历史" />
+
         <RadioButton
             android:id="@+id/rbn_03"
-            tools:text="下载"
-            style="@style/find_class_mine_global_select"/>
+            style="@style/find_class_mine_global_select"
+            android:text="下载" />
     </RadioGroup>
 </LinearLayout>

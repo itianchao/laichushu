@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,19 +41,26 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         holder.itemView.setLayoutParams(params);
+        final CourseraModle.DataBean.LessonListBean bean = mData.get(position);
         holder.photoIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtil.openActivity(mActivity, FindClassVideoDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("lessonId",bean.getId());
+                UIUtil.openActivity(mActivity, FindClassVideoDetailActivity.class,bundle);
             }
         });
-        CourseraModle.DataBean.LessonListBean bean = mData.get(position);
         holder.nameTv.setText(bean.getName());
         holder.briefTv.setText(bean.getRemarks());
-        holder.lookTv.setText(bean.getClickNum()+"");
-        holder.downloadTv.setText(bean.getDownloadNum()+"");
-        holder.likeTv.setText(bean.getCollectionNum()+"");
-        GlideUitl.loadImg(mActivity,bean.getThumbUrl(),holder.photoIv);
+        holder.lookTv.setText(bean.getClickNum() + "");
+        holder.downloadTv.setText(bean.getDownloadNum() + "");
+        holder.likeTv.setText(bean.getCollectionNum() + "");
+        GlideUitl.loadImg(mActivity, bean.getThumbUrl(), holder.photoIv);
+        if (bean.getFileType().equals("1")) {
+            GlideUitl.loadImg(mActivity, R.drawable.icon_video, holder.typeIv);
+        } else {
+            GlideUitl.loadImg(mActivity, R.drawable.icon_doc, holder.typeIv);
+        }
     }
 
     @Override
@@ -63,6 +71,7 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView photoIv;//图片
+        private ImageView typeIv;//类型
         private TextView nameTv;//标题
         private TextView briefTv;//简介
         private TextView lookTv;//浏览数
@@ -72,6 +81,7 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
         public ViewHolder(View itemView) {
             super(itemView);
             photoIv = (ImageView) itemView.findViewById(R.id.iv_photo);
+            typeIv = (ImageView) itemView.findViewById(R.id.iv_type);
             nameTv = (TextView) itemView.findViewById(R.id.tv_name);
             briefTv = (TextView) itemView.findViewById(R.id.tv_brief);
             lookTv = (TextView) itemView.findViewById(R.id.tv_look);

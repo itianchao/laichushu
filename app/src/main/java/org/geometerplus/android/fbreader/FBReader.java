@@ -66,8 +66,10 @@ import com.laichushu.book.retrofit.AppClient;
 import com.laichushu.book.ui.activity.ReportActivity;
 import com.laichushu.book.ui.widget.LoadDialog;
 import com.laichushu.book.ui.widget.TypeBookSelectWindow;
+import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 
@@ -320,7 +322,8 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         //弹窗
         list.clear();
         list.add(new BookSelectOptionBean("举报", R.drawable.icon_report));
-        list.add(new BookSelectOptionBean("书签", R.drawable.icon_share));
+        list.add(new BookSelectOptionBean("书签", R.drawable.bookdetail_read));
+        list.add(new BookSelectOptionBean("分享", R.drawable.icon_share));
         selectIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -477,7 +480,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                         com.laichushu.book.utils.UIUtil.openActivity(FBReader.this, ReportActivity.class,bundle);
                     }
 
-                } else {//书签
+                } else if((position == 1)){//书签
                     BookCollectionShadow myCollection = getCollection();
                     Bookmark bookmark = myFBReaderApp.createBookmark(30, true);
                     bookmark.setStyleId(5);
@@ -500,6 +503,12 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                         }
                     }
 
+                }else {
+                    String articleId = getIntent().getStringExtra("articleId");
+                    String photo = getIntent().getStringExtra("photo");
+                    String brife = getIntent().getStringExtra("brife");
+                    String linkUrl= Base64Utils.getStringUrl(articleId,ConstantValue.SHARE_TYPR_BOOK);
+                    ShareUtil.showShare(FBReader.this, linkUrl,linkUrl,photo,brife,titleTv.getText().toString());
                 }
             }
         });
