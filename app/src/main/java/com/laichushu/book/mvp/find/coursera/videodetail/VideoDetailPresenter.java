@@ -74,6 +74,8 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             case 2:
                 if (courseNote == null) {
                     courseNote = new CourseNoteFragment();
+                    bundle.putString("lessonId", mActivity.getMdata().getId());
+                    courseIntro.setArguments(bundle);
                     transaction.add(R.id.fay_content, courseNote);
                 } else {
                     transaction.show(courseNote);
@@ -82,6 +84,8 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             case 3:
                 if (courseAppraise == null) {
                     courseAppraise = new CourseAppraiseFragment();
+                    bundle.putString("lessonId", mActivity.getMdata().getId());
+                    courseIntro.setArguments(bundle);
                     transaction.add(R.id.fay_content, courseAppraise);
                 } else {
                     transaction.show(courseNote);
@@ -90,6 +94,8 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             case 4:
                 if (courseAbout == null) {
                     courseAbout = new CourseAboutFragment();
+                    bundle.putString("lessonId", mActivity.getMdata().getId());
+                    courseIntro.setArguments(bundle);
                     transaction.add(R.id.fay_content, courseAbout);
                 } else {
                     transaction.show(courseAbout);

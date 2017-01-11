@@ -1,6 +1,7 @@
 package com.laichushu.book.mvp.find.coursera.note;
 
 import android.text.TextUtils;
+import android.view.View;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.NoteDelete_Paramet;
@@ -12,6 +13,7 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.CourseNoteFragment;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ToastUtil;
 
 /**
  * 发现 - 课程 - 视频 - 笔记
@@ -118,5 +120,41 @@ public class NotePresenter extends BasePresenter<NoteView> {
 
             }
         });
+    }
+
+    /**
+     * 校验输入框
+     */
+    public void preEdit(String lessonId,String noteId) {
+        String title = mFragment.titleEt.getText().toString().trim();
+        String content = mFragment.contentEt.getText().toString().trim();
+        if (TextUtils.isEmpty(title)){
+            ToastUtil.showToast("请输入笔记标题");
+            return;
+        }
+        if (TextUtils.isEmpty(content)){
+            ToastUtil.showToast("请输入笔记内容");
+            return;
+        }
+        if (TextUtils.isEmpty(noteId)){//创建
+            saveNote("",lessonId,title,content);
+        }else {//修改
+            saveNote(noteId,lessonId,title,content);
+        }
+    }
+
+    /**
+     * 修改笔记
+     * @param noteId    笔记id
+     * @param name      标题
+     * @param remarks   内容
+     */
+    public void preEditNote(String noteId, String name, String remarks) {
+        mFragment.noteRay.setVisibility(View.GONE);
+        mFragment.mRecyclerView.setVisibility(View.VISIBLE);
+        mFragment.createNoteTv.setVisibility(View.VISIBLE);
+        mFragment.setNoteId(noteId);
+        mFragment.titleEt.setText(name);
+        mFragment.contentEt.setText(remarks);
     }
 }
