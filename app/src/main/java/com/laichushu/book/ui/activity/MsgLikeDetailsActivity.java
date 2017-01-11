@@ -179,7 +179,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
 
     @Override
     public void dismissDialog() {
-dismissProgressDialog();
+        dismissProgressDialog();
     }
 
 
@@ -187,20 +187,23 @@ dismissProgressDialog();
     public void onRefresh() {
         PAGE_NO = 1;
         likeData.clear();
-        mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
         if (type.equals("4")) {
+            mvpPresenter.getInfoParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadPerInfoDetailsData();//请求网络获取搜索列表
         } else {
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
         }
     }
 
     @Override
     public void onLoadMore() {
-        mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+
         if (type.equals("4")) {
+            mvpPresenter.getInfoParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadPerInfoDetailsData();//请求网络获取搜索列表
         } else {
+            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoaCommentdData();//请求网络获取搜索列表
         }
     }
@@ -223,7 +226,6 @@ dismissProgressDialog();
     @Override
     public void getPerInfoListDateSuccess(MessageCommentResult model) {
         LoggerUtil.toJson(model);
-        likeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -231,14 +233,14 @@ dismissProgressDialog();
             }
         }, 300);
         if (model.isSuccess()) {
-            likeData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!likeData.isEmpty()) {
+            if (!model.getData().isEmpty()) {
+                likeData.clear();
+                likeData = model.getData();
                 msgAdapter.refreshAdapter(likeData);
                 PAGE_NO++;
             } else {
-
             }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             if (model.getData().size() == 0) {
                 ToastUtil.showToast("没有更多信息！");
@@ -300,7 +302,7 @@ dismissProgressDialog();
             ToastUtil.showToast("删除成功");
             likeData.remove(position);
             msgAdapter.refreshAdapter(likeData);
-        }else {
+        } else {
             ToastUtil.showToast("删除失败");
         }
     }

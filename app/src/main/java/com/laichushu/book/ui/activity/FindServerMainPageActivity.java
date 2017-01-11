@@ -29,8 +29,10 @@ import com.laichushu.book.ui.adapter.ServiceFindCaseAdapter;
 import com.laichushu.book.ui.adapter.ServiceFindServiceAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -45,7 +47,7 @@ import java.util.List;
  */
 
 public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPagePresenter> implements FindServiceMainPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
-    private ImageView ivBack, ivHeadImg, ivCollect;
+    private ImageView ivBack, ivHeadImg, ivCollect,ivShare;
     private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum;
     private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView, mServiceRecyclerView;
     private LinearLayout llFindMsg, llTeamwork, llCommentList;
@@ -86,6 +88,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         ivHeadImg = ((ImageView) inflate.findViewById(R.id.iv_userHeadImg));
         ivCollect = ((ImageView) inflate.findViewById(R.id.iv_title_another));
+        ivShare = ((ImageView) inflate.findViewById(R.id.iv_title_other));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvRealName = ((TextView) inflate.findViewById(R.id.tv_userRealName));
         tvTeamNum = ((TextView) inflate.findViewById(R.id.tv_teamworkNum));
@@ -110,10 +113,12 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         tvTitle.setText("个人主页");
         userId = getIntent().getStringExtra("userId");
         ivCollect.setVisibility(View.VISIBLE);
+        ivShare.setImageResource(R.drawable.activity_share);
 
         ivBack.setOnClickListener(this);
         ivCollect.setOnClickListener(this);
         llFindMsg.setOnClickListener(this);
+        ivShare.setOnClickListener(this);
         llTeamwork.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         commentEt.setOnEditorActionListener(this);
@@ -152,6 +157,11 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         switch (v.getId()) {
             case R.id.iv_title_finish:
                 this.finish();
+                break;
+            case R.id.iv_title_other:
+                //分享
+                String linkUrl= Base64Utils.getStringUrl(userId,ConstantValue.SHARE_TYPR_SERVICE);
+                ShareUtil.showShare(mActivity, linkUrl,linkUrl,dataBean.getPhoto(),dataBean.getServiceIntroduce(),dataBean.getNickName());
                 break;
             case R.id.iv_title_another:
                 //收藏

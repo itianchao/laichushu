@@ -22,8 +22,10 @@ import com.laichushu.book.ui.adapter.TopicCommentDetaileAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.TypePopWindow;
+import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -107,8 +109,9 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         titleTv.setText("话题详情");
         ivLike.setVisibility(View.VISIBLE);
         ivShare.setVisibility(View.VISIBLE);
-        GlideUitl.loadImg(mActivity, R.drawable.icon_share2x, ivShare);
-        GlideUitl.loadImg(mActivity, R.drawable.icon_more, moreIv);
+        ivShare.setImageResource(R.drawable.activity_share);
+        moreIv.setImageResource(R.drawable.icon_more);
+
         type = getIntent().getStringExtra("type");
         tag = getIntent().getStringExtra("tag");
         topicType = getIntent().getIntExtra("topicType", 0);
@@ -321,6 +324,9 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 break;
             case R.id.iv_title_another:
                 //分享
+                //分享
+                String linkUrl= Base64Utils.getStringUrl(topicId,ConstantValue.SHARE_TYPR_TOPIC);
+                ShareUtil.showShare(mActivity, linkUrl,linkUrl,bean.getCreaterPhoto(),bean.getContent(),bean.getTitle());
                 break;
             case R.id.iv_title_the:
                 //收藏

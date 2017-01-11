@@ -23,7 +23,7 @@ public class ConstantValue {
     public static String PAGESIZE4 = "9";//pageSize
     public static String PAGESIZE2 = "20";//pageSize
     public static String PAGESIZE3 = "30";//pageSize
-    public static String PAGESIZE5= "4";//pageSize
+    public static String PAGESIZE5 = "4";//pageSize
 //    public static String PHOTO_SEVERCE_PATH = "http://101.254.183.67:9980/";//图片服务器路径
 
     public static int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
@@ -93,7 +93,16 @@ public class ConstantValue {
 
     //baseBook
     public static final String BASEBOOK = "basebook";
-
+//type
+    public static String SHARE_TYPR_BOOK="1";//图书
+    public static String SHARE_TYPR_ACTIVITY="2";//活动
+    public static String SHARE_TYPR_EDITOR="3";//编辑者
+    public static String SHARE_TYPR_SERVICE="4";//服务
+    public static String SHARE_TYPR_COURSE="5";//课程
+    public static String SHARE_TYPR_MECHMIA="6";//机构
+    public static String SHARE_TYPR_NOTIC="7";//机构公告
+    public static String SHARE_TYPR_TOPIC="8";//话题
+    public static String SHARE_TYPR_GROUP="9";//小组
     public static class FB_READER {
 
         // 打开非本地书籍
@@ -124,6 +133,8 @@ public class ConstantValue {
     }
 
     //baseUrl
+    public static String API_LAICHUSHU_URL = "http://http://www.laichushu.com/";//张峰
+    public static String API_HYPERLINK_URL = "http://192.168.1.103:8090/book/a/share";//张峰
     public static String API_SERVER_URL1 = "http://192.168.1.103:8082/book-app/";//张峰
     public static String API_SERVER_URL2 = "http://192.168.1.150:8082/book-app/";//施大勇5
     public static String API_SERVER_URL3 = "http://test2.laichushu.com/book-app-web/";

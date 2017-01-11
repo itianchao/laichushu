@@ -29,11 +29,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="24dp"
+                android:layout_marginLeft="12dp"
                 android:layout_toRightOf="@+id/iv_commentHead"
                 android:textColor="@color/characterGray"
-                android:textSize="@dimen/edit2"
-                />
+                android:textSize="@dimen/edit2" />
 
             <ImageView
                 android:id="@+id/iv_replayMsg"
@@ -42,22 +41,21 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/icon_delete2x"/>
+                android:background="@drawable/icon_delete2x" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_appendName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="24dp"
-                android:textColor="@color/characterLightGray2"
-                android:textSize="@dimen/edit2"
-                />
+                android:textColor="@color/auditing"
+                android:paddingRight="12dp"
+                android:textSize="@dimen/edit2" />
 
             <TextView
                 android:id="@+id/tv_bookName"
@@ -66,17 +64,18 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@+id/tv_appendName"
+                android:singleLine="true"
                 android:textColor="@color/auditing"
-                android:textSize="@dimen/edit2"
-                />
+                android:textSize="@dimen/edit2" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_marginRight="24dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/white"
             android:paddingTop="12dp">
 
             <TextView
@@ -86,8 +85,7 @@
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:textColor="@color/characterLightGray2"
-                android:textSize="@dimen/edit2"
-                />
+                android:textSize="@dimen/edit2" />
 
             <TextView
                 android:id="@+id/tv_commentDate"
@@ -98,9 +96,9 @@
                 android:layout_marginRight="12dp"
                 android:gravity="right"
                 android:textColor="@color/characterLightGray2"
-                android:textSize="@dimen/edit2"
-                 />
+                android:textSize="@dimen/edit2" />
         </RelativeLayout>
     </LinearLayout>
-    <include layout="@layout/line"/>
+
+    <include layout="@layout/line" />
 </LinearLayout>
