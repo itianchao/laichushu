@@ -2,8 +2,10 @@ package com.laichushu.book.ui.activity;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -149,7 +151,9 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             moreIv.setVisibility(View.VISIBLE);
             moreIv.setOnClickListener(this);
         } else {
-            moreIv.setVisibility(View.GONE);
+            moreIv.setVisibility(View.INVISIBLE);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0,0);
+            moreIv.setLayoutParams(params);
         }
     }
 
