@@ -51,7 +51,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private int range;
     private LinearLayout lineLyt;
     private Handler mRefreshWidgetHandler = new Handler();
-    private RecyclerView mLessonRecyclerView ,mCourseRecyclerView;
+    private RecyclerView mLessonRecyclerView, mCourseRecyclerView;
     private GridView gvLesson;
     private Runnable refreshThread = new Runnable() {
 
@@ -103,13 +103,20 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
         View itemView;
         ImageView imageView;
         TextView textView;
+        LinearLayout llItem;
+        LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
+                UIUtil.getScreenWidth() / img.length,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
         llContainer.removeAllViews();
         for (int i = 0; i < img.length; i++) {
             itemView = UIUtil.inflate(R.layout.item_tab_course, null);
+            llItem = (LinearLayout) itemView.findViewById(R.id.ll_itemHead);
             imageView = (ImageView) itemView.findViewById(R.id.iv_stripIcon);
             textView = (TextView) itemView.findViewById(R.id.tv_stripContent);
-            GlideUitl.loadRandImg(mActivity,img[i],imageView);
+            GlideUitl.loadRandImg(mActivity, img[i], imageView);
             textView.setText(title[i]);
+            llItem.setLayoutParams(linearParams);
             llContainer.addView(itemView);
             final int finalJ = i;
             itemView.setOnClickListener(new View.OnClickListener() {
