@@ -122,8 +122,8 @@ public class ConstantValue {
     }
 
     //baseUrl
-    public static String API_LAICHUSHU_URL = "http://http://www.laichushu.com/";//张峰
-    public static String API_HYPERLINK_URL = "http://192.168.1.103:8090/book/a/share";//张峰
+    public static String API_LAICHUSHU_URL = "http://http://www.laichushu.com/";//来出书网站主页
+    public static String API_HYPERLINK_URL = "http://192.168.1.103:8090/book/a/share";//分享接口地址
     public static String API_SERVER_URL1 = "http://192.168.1.103:8082/book-app/";//张峰
     public static String API_SERVER_URL2 = "http://192.168.1.150:8082/book-app/";//施大勇5
     public static String API_SERVER_URL3 = "http://test2.laichushu.com/book-app-web/";

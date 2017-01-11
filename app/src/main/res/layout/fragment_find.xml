@@ -7,24 +7,12 @@
     <include layout="@layout/page_title_find" />
 
     <include layout="@layout/item_distance" />
-
-    <!--<HorizontalScrollView-->
-        <!--android:id="@+id/hs_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="12dp"-->
-        <!--android:layout_marginRight="12dp"-->
-        <!--android:scrollbars="none">-->
-
         <LinearLayout
             android:id="@+id/ll_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal" />
-
-    <!--</HorizontalScrollView>-->
-
     <include layout="@layout/item_distance" />
 
     <ScrollView
