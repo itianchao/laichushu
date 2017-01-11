@@ -32,7 +32,7 @@ public class FindClassDocFragment extends MvpFragment2<FindClassDocPresenter> im
     private TextView rankingTv;
     private TextView categroyTv;
     private FindClassVideoAdapter mAdapter;
-    private int pageNo = 1;
+    public int pageNo = 1;
     private ArrayList<CourseraModle.DataBean.LessonListBean> mData = new ArrayList<>();
     private ArrayList<CourseraModle.DataBean.LessonCategoryListBean> mCategoryList = new ArrayList<>();
     private ImageView emptyIv;
@@ -91,6 +91,7 @@ public class FindClassDocFragment extends MvpFragment2<FindClassDocPresenter> im
      */
     @Override
     public void getVideoListDataSuccess(CourseraModle modle) {
+        UIUtil.postPullLoadMoreCompleted(mRecyclerView);
         if (modle.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (modle.getData().getLessonList().isEmpty()) {//空
@@ -126,6 +127,7 @@ public class FindClassDocFragment extends MvpFragment2<FindClassDocPresenter> im
      */
     @Override
     public void getVideoListDataFail(String msg) {
+        UIUtil.postPullLoadMoreCompleted(mRecyclerView);
         if (mvpPresenter.getParamet().getPageNo().equals("1")){
             reloadErrorBtn();
         }else {

@@ -117,7 +117,7 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
             case 1:
                 if (docFragment == null) {
                     docFragment = new FindClassDocFragment();
-                    transaction.add(R.id.layFrame, docFragment);
+                    transaction.add(R.id.fay_content, docFragment);
                 } else {
                     transaction.show(docFragment);
                 }
@@ -125,7 +125,7 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
             case 2:
                 if (mineFragment == null) {
                     mineFragment = new FindClassMineFragment();
-                    transaction.add(R.id.layFrame, mineFragment);
+                    transaction.add(R.id.fay_content, mineFragment);
                 } else {
                     transaction.show(mineFragment);
                 }

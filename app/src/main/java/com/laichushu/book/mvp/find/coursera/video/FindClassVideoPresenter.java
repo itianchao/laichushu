@@ -65,6 +65,7 @@ public class FindClassVideoPresenter extends BasePresenter<FindClassVideoView> {
     public void loadVideoList(int position) {
         getParamet().setLessonCategoryId("");
         getParamet().setPageNo("1");
+        mFragment.pageNo = 1;
         switch (position) {
             case 0:
                 getParamet().setSortWay("");
@@ -90,6 +91,7 @@ public class FindClassVideoPresenter extends BasePresenter<FindClassVideoView> {
     public void loadVideoList(String lessonCategoryId) {
         getParamet().setSortWay("");
         getParamet().setPageNo("1");
+        mFragment.pageNo = 1;
         if (lessonCategoryId.equals("默认分类")) {
             getParamet().setLessonCategoryId("");
         } else {

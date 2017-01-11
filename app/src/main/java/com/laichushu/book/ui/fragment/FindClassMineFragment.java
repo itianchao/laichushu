@@ -159,6 +159,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
      */
     @Override
     public void getMineListDataSuccess(CourseraModle modle) {
+        UIUtil.postPullLoadMoreCompleted(mRecyclerView);
         if (modle.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!modle.getData().getLessonList().isEmpty()){
@@ -207,6 +208,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
      */
     @Override
     public void getMineListDataFail(String msg) {
+        UIUtil.postPullLoadMoreCompleted(mRecyclerView);
         if (mvpPresenter.getParamet().getPageNo().equals("1")){
             reloadErrorBtn();
         }else {
