@@ -142,12 +142,15 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
         switch(parent.getId()){
             case R.id.lv_book:
                 // TODO: 2016/11/8  跳转书籍
+                BookMoudle.DataBean dataBean1 = mBookdata.get(position);
                 Bundle bundle = new Bundle();
                 String path = mBookdata.get(position).getContentUrlApp();
                 String name = mBookdata.get(position).getName();
                 String parentId = mBookdata.get(position).getId();
                 bundle.putString("path", path);
                 bundle.putString("title", name);
+                bundle.putString("name", name);
+                bundle.putString("content",  mBookdata.get(position).getContent());
                 bundle.putString("parentId", parentId);
                 bundle.putString("type", "1");
                 bundle.putString("articleId", articleId);
@@ -165,6 +168,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 bundle2.putString("title", dataBean.getName());
                 bundle2.putString("path", dataBean.getContentUrlApp());
                 bundle2.putString("parentId", dataBean.getId());
+                bundle2.putString("name",dataBean.getName());
                 bundle2.putString("type", "2");
                 bundle2.putString("articleId", articleId);
                 if (mData.get(position).isIsSection()) {

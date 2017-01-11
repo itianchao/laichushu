@@ -56,8 +56,7 @@
 
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <SinaWeibo AppKey="178903189" AppSecret="f2224bab55a604995d897ac76159ba94" Enable="true" Id="1"
-        RedirectUrl=" https://api.weibo.com/oauth2/default.html" ShareByAppClient="false"
-        SortId="1" />
+        RedirectUrl="http://sharesdk.cn" ShareByAppClient="false" SortId="1" />
 
     <TencentWeibo AppKey="178903189" AppSecret="f2224bab55a604995d897ac76159ba94" Enable="false"
         Id="2" RedirectUri="http://sharesdk.cn" SortId="2" />

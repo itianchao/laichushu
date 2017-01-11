@@ -153,8 +153,14 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="12dp"
                     android:background="@color/frenchGrey" />
+                <LinearLayout
+                    android:id="@+id/lay_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

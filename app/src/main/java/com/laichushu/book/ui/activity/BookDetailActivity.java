@@ -579,13 +579,14 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                     }
                 }
             });
-            inIv.setOnClickListener(new View.OnClickListener() {
+            commentItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // TODO: 2016/11/4  去评论详情
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("bean", dataBean);
                     bundle.putString("type", type);
+                    bundle.putString("tag","replay");
                     UIUtil.openActivity(mActivity, CommentDetailActivity.class, bundle);
                 }
             });
@@ -731,7 +732,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             } else {
                 comentIv.setImageResource(R.drawable.activity_keep);
                 collectType = "0";
-                ToastUtil.showToast("取消成功");
+                ToastUtil.showToast("已取消收藏");
                 articleData.setCollect(false);
                 bean.setCollect(false);
             }

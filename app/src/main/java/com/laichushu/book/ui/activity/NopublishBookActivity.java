@@ -26,8 +26,10 @@ import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.ui.widget.LoadDialog;
+import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 
@@ -51,7 +53,9 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
     private LoadDialog mLoadDialog;
     private ImageView selectIv;
     private ImageView rewardMoneyIv;
+    private ImageView shareIv;
     private String articleId;
+    private String name, content, logo;
 
     @Override
     protected void initView() {
@@ -66,8 +70,9 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
         error_btn_retry = (Button) findViewById(R.id.error_btn_retry);
         mWebView = (WebView) findViewById(R.id.webadd);
         //打赏举报
-        selectIv = (ImageView) findViewById(R.id.iv_title_other);//选择弹窗 举报or书签
+        selectIv = (ImageView) findViewById(R.id.iv_title_other);//选择弹窗 举报or书签分享
         rewardMoneyIv = (ImageView) findViewById(R.id.iv_title_another);//打赏
+        shareIv = (ImageView) findViewById(R.id.iv_title_the);//分享
         selectIv.setScaleType(ImageView.ScaleType.CENTER);
         rewardMoneyIv.setScaleType(ImageView.ScaleType.CENTER);
         GlideUitl.loadImg2(this, R.drawable.icon_report, selectIv);
@@ -77,6 +82,7 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
         rewardMoneyIv.setOnClickListener(this);
         error_btn_retry.setOnClickListener(this);
         finishIv.setOnClickListener(this);
+        shareIv.setOnClickListener(this);
     }
 
     @Override
@@ -84,6 +90,9 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
         String title = getIntent().getStringExtra("title");
         titleTv.setText(title);
         url = getIntent().getStringExtra("path");
+        name = getIntent().getStringExtra("name");
+        logo = getIntent().getStringExtra("logo");
+        content = getIntent().getStringExtra("content");
         articleId = getIntent().getStringExtra("articleId");
         // 设置可以访问文件
         mWebView.getSettings().setAllowFileAccess(true);
@@ -108,8 +117,7 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.error_btn_retry:
-                if (mErrorUrl != null)
-                {
+                if (mErrorUrl != null) {
                     ll_error_pager.setVisibility(View.GONE);
                     rl_loading.setVisibility(View.VISIBLE);
                     mWebView.loadUrl(mErrorUrl);
@@ -117,11 +125,20 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.iv_title_other://举报
                 Bundle bundle = new Bundle();
-                bundle.putString("articleId",articleId);
-                com.laichushu.book.utils.UIUtil.openActivity(this, ReportActivity.class,bundle);
+                bundle.putString("articleId", articleId);
+                com.laichushu.book.utils.UIUtil.openActivity(this, ReportActivity.class, bundle);
                 break;
             case R.id.iv_title_another://打赏
                 getBalace();
+                break;
+            case R.id.iv_title_the:
+                if (null == content)
+                    content = mActivity.getResources().getString(R.string.app_introduce_details);
+                if (null == name)
+                    name = mActivity.getResources().getString(R.string.app_name);
+
+                String linkUrl = Base64Utils.getStringUrl(articleId, ConstantValue.SHARE_TYPR_BOOK);
+                ShareUtil.showShare(mActivity, linkUrl, linkUrl, logo, content, name);
                 break;
         }
     }
@@ -160,12 +177,14 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
             System.out.println("failingUrl = " + failingUrl);
             mErrorUrl = failingUrl;
         }
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
         }
     };
+
     /**
      * 查询余额
      */
@@ -184,7 +203,7 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
                     double minLimit = model.getData().getMinLimit();
                     String accepterId = getIntent().getStringExtra("authorId");
                     String articleId = getIntent().getStringExtra("articleId");
-                    openReward(balance + "", accepterId, articleId,maxLimit,minLimit);
+                    openReward(balance + "", accepterId, articleId, maxLimit, minLimit);
                 } else {
                     ToastUtil.showToast(model.getErrMsg());
                 }
@@ -206,19 +225,20 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
 
     /**
      * 打赏对话框
-     * @param balance   余额
-     * @param accepterId  被打赏者
+     *
+     * @param balance    余额
+     * @param accepterId 被打赏者
      * @param articleId  书id
      * @param maxLimit
      * @param minLimit
      */
-    private void openReward(String balance, final String accepterId, final String articleId, final double maxLimit, final double minLimit){
+    private void openReward(String balance, final String accepterId, final String articleId, final double maxLimit, final double minLimit) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
         final View customerView = com.laichushu.book.utils.UIUtil.inflate(R.layout.dialog_reward);
         final EditText payEt = (EditText) customerView.findViewById(R.id.et_pay);
         TextView balanceTv = (TextView) customerView.findViewById(R.id.tv_balance);
-        balanceTv.setText("当前余额："+balance);
-        payEt.setHint("只能打赏"+minLimit+"-"+maxLimit+"金额");
+        balanceTv.setText("当前余额：" + balance);
+        payEt.setHint("只能打赏" + minLimit + "-" + maxLimit + "金额");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,7 +260,7 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
                         rewardMoney(ConstantValue.USERID, accepterId, articleId, pay);
                         dialogBuilder.dismiss();
                     } else {
-                        ToastUtil.showToast("只能打赏"+minLimit+"-"+maxLimit+"金额");
+                        ToastUtil.showToast("只能打赏" + minLimit + "-" + maxLimit + "金额");
                     }
                 }
             }

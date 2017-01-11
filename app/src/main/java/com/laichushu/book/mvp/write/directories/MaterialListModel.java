@@ -1,5 +1,8 @@
 package com.laichushu.book.mvp.write.directories;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -57,7 +60,7 @@ public class MaterialListModel {
     }
 
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         private String id;
         private String name;
         private String count;
@@ -216,5 +219,47 @@ public class MaterialListModel {
                 this.parentId = parentId;
             }
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.name);
+            dest.writeString(this.count);
+            dest.writeString(this.contentUrlPc);
+            dest.writeString(this.contentUrlApp);
+            dest.writeList(this.data);
+            dest.writeByte(this.isSection ? (byte) 1 : (byte) 0);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.id = in.readString();
+            this.name = in.readString();
+            this.count = in.readString();
+            this.contentUrlPc = in.readString();
+            this.contentUrlApp = in.readString();
+            this.data = new ArrayList<InDataBean>();
+            in.readList(this.data, InDataBean.class.getClassLoader());
+            this.isSection = in.readByte() != 0;
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
 }

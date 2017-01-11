@@ -29,7 +29,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="4dp"
             android:layout_toRightOf="@+id/iv_dyHead"
-            android:textColor="@color/black"
+            android:textColor="@color/edit"
             android:textSize="@dimen/edit3"
             android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="36dp"
-        android:textColor="@color/black"
+        android:textColor="@color/edit"
         android:textSize="@dimen/edit3"
         android:textStyle="bold" />
 

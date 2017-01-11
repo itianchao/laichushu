@@ -2,7 +2,9 @@ package com.laichushu.book.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -42,12 +44,14 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     private TextView likeTv;
     private TextView numberTv;
     private ImageView inIv;
+    private EditText edComment;
+    private RelativeLayout rlComment;
     private ArrayList<CommentDetailModle.DataBean> mData = new ArrayList<>();
     private CommentDetaileAdapter mAdapter;
     private PullLoadMoreRecyclerView commentRyv;
     private String commentId;
     private ArticleCommentModle.DataBean dataBean;
-    private String type;
+    private String type,tag;
     private ImageView commentIv;
 
     @Override
@@ -59,7 +63,6 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     @Override
     protected void initView() {
         setContentView(R.layout.activity_commentdetail);
-        initTitleBar("详情");
         commentRyv = (PullLoadMoreRecyclerView) findViewById(R.id.ryv_comment);
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
@@ -73,6 +76,8 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         numberTv = (TextView) findViewById(R.id.tv_comment_number);
         inIv = (ImageView) findViewById(R.id.iv_comment_in);
         commentIv = (ImageView) findViewById(R.id.iv_comment);
+        rlComment = (RelativeLayout) findViewById(R.id.rl_commentItem);
+        edComment=(EditText)findViewById(R.id.et_comment);
         mAdapter = new CommentDetaileAdapter(this, mData);
         commentRyv.setAdapter(mAdapter);
         headIv.setOnClickListener(this);
@@ -94,7 +99,12 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     protected void initData() {
         dataBean = getIntent().getParcelableExtra("bean");
         type = getIntent().getStringExtra("type");
+        tag = getIntent().getStringExtra("tag");
         commentId = dataBean.getSourceId();
+        if(null==tag){initTitleBar("评论详情");}else if(tag.equals("replay")){
+            initTitleBar("回复评论");
+        }
+
         onRefresh();
         GlideUitl.loadRandImg(this, dataBean.getPhoto(), headIv);//头像
         nameTv.setText(dataBean.getNickName());//用户名
@@ -102,7 +112,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         timeTv.setText(dataBean.getCommentTime());//创建时间
         likeTv.setText(dataBean.getLikeNum() + "");//喜欢人数
         numberTv.setText(dataBean.getReplyNum() + "");//回复人数
-        commentIv.setOnClickListener(new View.OnClickListener() {
+        rlComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();

@@ -49,7 +49,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
     private TextView activityNameTv;
     private ImageView activityImgIv;
     private TextView detailsTv;
-    private LinearLayout parentLay;
+    private LinearLayout parentLay,parentLayContainer;
     private ImageView stateIv;
     private ImageView comentIv;
     private HomeHotModel.DataBean bean;
@@ -109,6 +109,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
         joinTv = (TextView) mSuccessView.findViewById(R.id.tv_join);
         detailsTv = (TextView) mSuccessView.findViewById(R.id.tv_details);
         parentLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_result);
+        parentLayContainer = (LinearLayout) mSuccessView.findViewById(R.id.lay_container);
         joinTv.setOnClickListener(this);
     }
 
@@ -443,7 +444,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
      * @param resultData 结果集合
      */
     public void getResultData(ArrayList<CampaignModel.DataBean.ResultBean> resultData) {
-        parentLay.removeAllViews();
+        parentLayContainer.removeAllViews();
         for (int i = 1; i <= resultData.size(); i++) {
             View itemView = UIUtil.inflate(R.layout.item_home_activity_details);
             TextView bonusTv = (TextView) itemView.findViewById(R.id.tv_bonus);
@@ -471,7 +472,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
                     }
                 }
             });
-            parentLay.addView(itemView);
+            parentLayContainer.addView(itemView);
         }
     }
 

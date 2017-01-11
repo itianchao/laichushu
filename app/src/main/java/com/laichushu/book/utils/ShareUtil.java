@@ -34,7 +34,7 @@ public class ShareUtil {
         // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
         oks.setTitleUrl(linkUrl);
         // text是分享文本，所有平台都需要这个字段
-        oks.setText(context.getResources().getString(R.string.app_introduce_details) + bookDetailUrl);
+        oks.setText(qqContent + bookDetailUrl);
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
         oks.setImageUrl(imgUrl);
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数

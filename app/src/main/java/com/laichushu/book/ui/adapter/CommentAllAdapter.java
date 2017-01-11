@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.mvp.home.allcomment.AllCommentPresenter;
@@ -83,7 +84,7 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
                 notifyDataSetChanged();
             }
         });
-        holder.inIv.setOnClickListener(new View.OnClickListener() {
+        holder.rlReplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: 2016/11/4  去评论详情
@@ -114,10 +115,12 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
         public ImageView inIv;
         public View commentItemView;
         public ImageView commentIv;
+        public RelativeLayout rlReplay;
         public CommentViewHolder(View commentItemView) {
             super(commentItemView);
             this.commentItemView = commentItemView;
             headIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_head);
+            rlReplay = (RelativeLayout) commentItemView.findViewById(R.id.rl_commentItem);
             nameTv = (TextView) commentItemView.findViewById(R.id.tv_comment_name);
             contentTv = (TextView) commentItemView.findViewById(R.id.tv_comment_content);
             timeTv = (TextView) commentItemView.findViewById(R.id.tv_comment_time);

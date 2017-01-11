@@ -250,7 +250,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder3) holder).authorTv.setText(dataBean.getAuthorName());
                     ((ViewHolder3) holder).numRb.setRating(dataBean.getLevel());
                     ((ViewHolder3) holder).commentTv.setText("(" + dataBean.getCommentNum() + "评论)");
-                    ((ViewHolder3) holder).wordTv.setText("约" + dataBean.getWordNum());
+                    ((ViewHolder3) holder).wordTv.setText("约" + dataBean.getWordNum()+"字");
                     ((ViewHolder3) holder).moneyTv.setText(dataBean.getAwardMoney() + "元");
                     ((ViewHolder3) holder).rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
                     ((ViewHolder3) holder).markTv.setText(dataBean.getScore() + "分");
@@ -323,7 +323,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((ViewHolder3) holder).authorTv.setText(cityBean.getAuthorName());
                     ((ViewHolder3) holder).numRb.setRating(cityBean.getLevel());
                     ((ViewHolder3) holder).commentTv.setText("(" + cityBean.getCommentNum() + "评论)");
-                    ((ViewHolder3) holder).wordTv.setText("约" + cityBean.getWordNum());
+                    ((ViewHolder3) holder).wordTv.setText("约" + cityBean.getWordNum()+"字");
                     ((ViewHolder3) holder).moneyTv.setText(cityBean.getAwardMoney() + "元");
                     ((ViewHolder3) holder).rewardTv.setText("(" + cityBean.getAwardNum() + "人打赏)");
                     ((ViewHolder3) holder).markTv.setText(cityBean.getScore() + "分");
