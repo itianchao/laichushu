@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
+import com.laichushu.book.ui.activity.FindClassDocDetailActivity;
 import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.utils.GlideUitl;
@@ -18,7 +20,7 @@ import com.laichushu.book.utils.UIUtil;
 import java.util.ArrayList;
 
 /**
- * 发现 - 课程 - 视频 适配器
+ * 发现 - 课程 - 视频文档 适配器
  * Created by wangtong on 2017/1/6.
  */
 
@@ -45,9 +47,16 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
         holder.photoIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("lessonId",bean.getId());
-                UIUtil.openActivity(mActivity, FindClassVideoDetailActivity.class,bundle);
+                if (bean.getFileType().equals("1")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("lessonId",bean.getId());
+                    UIUtil.openActivity(mActivity, FindClassVideoDetailActivity.class,bundle);
+                }else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("lessonId",bean.getId());
+                    UIUtil.openActivity(mActivity, FindClassDocDetailActivity.class,bundle);
+                }
+
             }
         });
         holder.nameTv.setText(bean.getName());
@@ -61,6 +70,8 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
         } else {
             GlideUitl.loadImg(mActivity, R.drawable.icon_doc, holder.typeIv);
         }
+        holder.markTv.setText(bean.getAverageStar()+"分");
+        holder.mRatingBar.setRating((float) bean.getAverageStar());
     }
 
     @Override
@@ -77,6 +88,8 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
         private TextView lookTv;//浏览数
         private TextView downloadTv;//下载数
         private TextView likeTv;//收藏
+        private RatingBar mRatingBar;//星
+        private TextView markTv;//评分
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -87,6 +100,8 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
             lookTv = (TextView) itemView.findViewById(R.id.tv_look);
             downloadTv = (TextView) itemView.findViewById(R.id.tv_download);
             likeTv = (TextView) itemView.findViewById(R.id.tv_like);
+            markTv = (TextView) itemView.findViewById(R.id.tv_mark);
+            mRatingBar = (RatingBar) itemView.findViewById(R.id.ratbar_num);
         }
     }
 

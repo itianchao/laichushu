@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.provider.Contacts;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
 import com.laichushu.book.R;
+import com.laichushu.book.bean.netbean.NewTopicList_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -63,9 +65,9 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
         titleTv.setText(title);
         String url = ConstantValue.LOCAL_PATH.SD_PATH + name + ".pdf";
         if (new File(url).exists()) {
-            display(path, false);
+            display(url, false);
         } else {
-            downloadPdf(path, name);
+            downloadPdf(url, name);
         }
 
     }
@@ -108,6 +110,7 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
      * @param jumpToFirstPage
      */
     private void display(String path, boolean jumpToFirstPage) {
+
         if (jumpToFirstPage) pageNumber = 1;
         File file = new File(path);
         mPdfView.fromFile(file)
@@ -116,6 +119,12 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
                 .swipeVertical(true) //pdf文档翻页是否是垂直翻页，默认是左右滑动翻页
                 .enableSwipe(true)   //是否允许翻页，默认是允许翻页
                 .load();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        },30);
     }
 
     /**

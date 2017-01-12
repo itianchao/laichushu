@@ -88,12 +88,7 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
     @Override
     public void getDataSuccess(ArticleCommentModle model) {
         hideLoading();
-        UIUtil.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                commentRyv.setPullLoadMoreCompleted();
-            }
-        }, 300);
+        UIUtil.postPullLoadMoreCompleted(commentRyv);
         if (model.isSuccess()) {
             if (model.getData().size()!=0){
                 pageNo = Integer.parseInt(pageNo) + 1 + "";
@@ -142,7 +137,7 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
     @Override
     public void getDataFail(String msg) {
         ToastUtil.showToast("请检查网络");
-        commentRyv.setPullLoadMoreCompleted();
+        UIUtil.postPullLoadMoreCompleted(commentRyv);
         Logger.e(msg);
     }
 

@@ -6,7 +6,23 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class CourseScoreList_Paramet {
-    private String sourceId,sourceType,pageNo,pageSize,userId;
+    private String sourceId, sourceType, pageNo, pageSize, userId;
+
+    public CourseScoreList_Paramet(String sourceId, String sourceType, String pageNo, String pageSize, String userId) {
+        this.sourceId = sourceId;
+        this.sourceType = sourceType;
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getSourceId() {
         return sourceId;

@@ -60,6 +60,8 @@ public class VideoDetailModle {
          * clickNum : 3
          * remarks :
          * isCollect : 2
+         * averageStar :"0"
+         * isComment :
          */
 
         private String id;
@@ -76,6 +78,16 @@ public class VideoDetailModle {
         private int clickNum;
         private String remarks;
         private String isCollect;//1、收藏 2、已收藏
+        private boolean isComment;
+        private String createDate;
+
+        public String getCreateDate() {
+            return createDate;
+        }
+
+        public void setCreateDate(String createDate) {
+            this.createDate = createDate;
+        }
 
         public String getId() {
             return id;
@@ -187,6 +199,14 @@ public class VideoDetailModle {
 
         public void setIsCollect(String isCollect) {
             this.isCollect = isCollect;
+        }
+
+        public boolean isComment() {
+            return isComment;
+        }
+
+        public void setComment(boolean comment) {
+            isComment = comment;
         }
     }
 }

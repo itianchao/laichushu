@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.laichushu.book.mvp.home.allcomment.AllCommentPresenter;
 import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
 import com.laichushu.book.ui.activity.AllCommentActivity;
+import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 import com.laichushu.book.R;
@@ -23,10 +24,10 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/11/4.
  */
 public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.CommentViewHolder> {
-    private AllCommentActivity mActivity;
+    private BaseActivity mActivity;
     private ArrayList<ArticleCommentModle.DataBean> mData;
     private AllCommentPresenter mvpPresenter;
-    public CommentAllAdapter(AllCommentActivity mActivity, ArrayList<ArticleCommentModle.DataBean> mData, AllCommentPresenter mvpPresenter) {
+    public CommentAllAdapter(BaseActivity mActivity, ArrayList<ArticleCommentModle.DataBean> mData, AllCommentPresenter mvpPresenter) {
         this.mActivity = mActivity;
         this.mData = mData;
         this.mvpPresenter = mvpPresenter;

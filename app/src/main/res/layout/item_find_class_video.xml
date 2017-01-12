@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="120dp"
     android:orientation="horizontal">
 
     <FrameLayout
         android:layout_width="130dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
@@ -16,14 +16,14 @@
         <ImageView
             android:id="@+id/iv_photo"
             android:layout_width="130dp"
-            android:layout_height="@dimen/album_dp_80"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             tools:src="@drawable/img_default" />
 
         <ImageView
             android:id="@+id/iv_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             tools:src="@drawable/icon_doc" />
 
@@ -43,7 +43,32 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             tools:text="adsfasdfasadfsadfsad阿斯蒂芬三大发送到范德萨范德萨f" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <RatingBar
+                android:id="@+id/ratbar_num"
+                android:layout_width="wrap_content"
+                android:layout_height="9.5dp"
+                android:layout_marginTop="3dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                style="?android:attr/ratingBarStyleSmall"
+                android:progressDrawable="@drawable/ratingbar_home"
+                android:rating="3"
+                android:stepSize="1" />
+
+            <TextView
+                android:id="@+id/tv_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/edit2"
+                android:textSize="12sp"
+                tools:text="3.0分" />
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_brief"
             android:layout_width="match_parent"

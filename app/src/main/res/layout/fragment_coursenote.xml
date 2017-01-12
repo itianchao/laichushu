@@ -15,8 +15,7 @@
         android:padding="5dp"
         android:text="添加新的笔记"
         android:textColor="@color/global"
-        android:textSize="16sp"
-        android:visibility="gone" />
+        android:textSize="16sp" />
 
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/ryv_note"
@@ -32,7 +31,7 @@
         android:visibility="gone">
 
         <Button
-            android:id="@+id/btn_ok"
+            android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:layout_marginLeft="30dp"
@@ -43,7 +42,7 @@
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_ok"
             android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:layout_alignParentRight="true"

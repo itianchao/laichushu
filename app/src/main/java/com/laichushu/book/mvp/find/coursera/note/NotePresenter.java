@@ -1,6 +1,7 @@
 package com.laichushu.book.mvp.find.coursera.note;
 
 import android.text.TextUtils;
+import android.view.View;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.NoteDelete_Paramet;
@@ -12,6 +13,7 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.CourseNoteFragment;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ToastUtil;
 
 /**
  * 发现 - 课程 - 视频 - 笔记
@@ -64,6 +66,7 @@ public class NotePresenter extends BasePresenter<NoteView> {
      * @param remarks
      */
     public void saveNote(String noteId, String lessonId, String name, String remarks) {
+        mFragment.showProgressDialog();
         LoggerUtil.e("保存笔记");
         NoteSave_Paramet paramet;
         int type;//0创建 1 修改
@@ -78,17 +81,19 @@ public class NotePresenter extends BasePresenter<NoteView> {
         addSubscription(apiStores.getLessonNoteSave(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
+                mFragment.dismissProgressDialog();
                 mvpView.loadSaveNoteSuccess(model,finalType);
             }
 
             @Override
             public void onFailure(int code, String msg) {
+                mFragment.dismissProgressDialog();
                 mvpView.loadSaveNoteDataFail(code + "|" + msg,finalType);
             }
 
             @Override
             public void onFinish() {
-
+                mFragment.dismissProgressDialog();
             }
         });
     }
@@ -100,23 +105,61 @@ public class NotePresenter extends BasePresenter<NoteView> {
      */
     public void deleteNote(String noteId) {
         LoggerUtil.e("删除笔记");
-
+        mFragment.showProgressDialog();
         NoteDelete_Paramet paramet = new NoteDelete_Paramet(noteId);
         addSubscription(apiStores.getLessonNoteDelete(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
+                mFragment.dismissProgressDialog();
                 mvpView.loadDeleteNoteDataSuccess(model);
             }
 
             @Override
             public void onFailure(int code, String msg) {
+                mFragment.dismissProgressDialog();
                 mvpView.loadDeleteNoteDataFail(code + "|" + msg);
             }
 
             @Override
             public void onFinish() {
-
+                mFragment.dismissProgressDialog();
             }
         });
+    }
+
+    /**
+     * 校验输入框
+     */
+    public void preEdit(String lessonId,String noteId) {
+        String title = mFragment.titleEt.getText().toString().trim();
+        String content = mFragment.contentEt.getText().toString().trim();
+        if (TextUtils.isEmpty(title)){
+            ToastUtil.showToast("请输入笔记标题");
+            return;
+        }
+        if (TextUtils.isEmpty(content)){
+            ToastUtil.showToast("请输入笔记内容");
+            return;
+        }
+        if (TextUtils.isEmpty(noteId)){//创建
+            saveNote("",lessonId,title,content);
+        }else {//修改
+            saveNote(noteId,lessonId,title,content);
+        }
+    }
+
+    /**
+     * 修改笔记
+     * @param noteId    笔记id
+     * @param name      标题
+     * @param remarks   内容
+     */
+    public void preEditNote(String noteId, String name, String remarks) {
+        mFragment.noteRay.setVisibility(View.VISIBLE);
+        mFragment.mRecyclerView.setVisibility(View.GONE);
+        mFragment.createNoteTv.setVisibility(View.GONE);
+        mFragment.setNoteId(noteId);
+        mFragment.titleEt.setText(name);
+        mFragment.contentEt.setText(remarks);
     }
 }

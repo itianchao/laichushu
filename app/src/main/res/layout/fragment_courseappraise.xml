@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/item_distance" />
+    <LinearLayout
+        android:id="@+id/lay_comment"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/marking"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit2" />
+
+            <RatingBar
+                android:id="@+id/ratbar_num"
+                style="@style/foodRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="3dp"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:rating="3"
+                android:stepSize="1" />
+        </LinearLayout>
+
+        <include layout="@layout/item_distance" />
+
+        <EditText
+            android:id="@+id/et_comment"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:background="@null"
+            android:cursorVisible="true"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:hint="@string/comment_hint"
+            android:textColor="@color/edit2"
+            android:textColorHint="@color/hint" />
+
+        <include layout="@layout/item_distance" />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="全部评论"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit2" />
+
+    <include layout="@layout/line" />
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/ryv_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

@@ -28,6 +28,7 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
     private RadioButton briefRbn, pdfRbn, noteRbn, commentRbn, aboutRbn;
     public int index = -1;
     private String lessonId;
+    private boolean isFrist = true;
     private VideoDetailModle.DataBean mdata;
 
     @Override
@@ -64,7 +65,6 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
         aboutRbn.setOnClickListener(this);
         lessonId = getIntent().getStringExtra("lessonId");
         mvpPresenter.loadVideoDetailData(lessonId);
-        onClick(briefRbn);
     }
 
     @Override
@@ -123,7 +123,10 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
             }else {//未收藏
                 GlideUitl.loadImg(mActivity,R.drawable.icon_praise_no,collectionIv);
             }
-
+            if (isFrist){
+                onClick(briefRbn);
+                isFrist = false;
+            }
         }else {
             reloadErrorBtn();
             LoggerUtil.e(model.getErrMsg());
