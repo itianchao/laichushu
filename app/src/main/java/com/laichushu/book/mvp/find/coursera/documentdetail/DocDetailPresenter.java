@@ -1,4 +1,4 @@
-package com.laichushu.book.mvp.find.coursera.videodetail;
+package com.laichushu.book.mvp.find.coursera.documentdetail;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -7,34 +7,29 @@ import android.support.v4.app.FragmentTransaction;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.LessonDetail_Paramet;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailModle;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
+import com.laichushu.book.ui.activity.FindClassDocDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
-import com.laichushu.book.ui.fragment.CourseAboutFragment;
 import com.laichushu.book.ui.fragment.CourseAppraiseFragment;
 import com.laichushu.book.ui.fragment.CourseIntroFragment;
-import com.laichushu.book.ui.fragment.CourseNoteFragment;
-import com.laichushu.book.ui.fragment.CourseSpeakFragment;
 import com.laichushu.book.utils.LoggerUtil;
 
 /**
- * 发现 - 课程 - 视频详情 Presenter
+ * 发现 - 课程 - 文档详情 Presenter
  * Created by wangtong on 2017/1/6.
  */
 
-public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
-    private FindClassVideoDetailActivity mActivity;
+public class DocDetailPresenter extends BasePresenter<DocDetailView> {
+    private FindClassDocDetailActivity mActivity;
     private CourseIntroFragment courseIntro;
-    private CourseSpeakFragment courseSpeak;
-    private CourseNoteFragment courseNote;
     private CourseAppraiseFragment courseAppraise;
-    private CourseAboutFragment courseAbout;
     private String userId = ConstantValue.USERID;
     private String operateType = ConstantValue.OPERATE_TYPE2;
 
-    public VideoDetailPresenter(VideoDetailView view) {
+    public DocDetailPresenter(DocDetailView view) {
         attachView(view);
-        mActivity = (FindClassVideoDetailActivity) view;
+        mActivity = (FindClassDocDetailActivity) view;
     }
 
     /**
@@ -62,44 +57,14 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
                 }
                 break;
             case 1:
-                if (courseSpeak == null) {
-                    courseSpeak = new CourseSpeakFragment();
-                    bundle.putString("lessonId", mActivity.getMdata().getId());
-                    courseSpeak.setArguments(bundle);
-                    transaction.add(R.id.fay_content, courseSpeak);
-                } else {
-                    transaction.show(courseSpeak);
-                }
-                break;
-            case 2:
-                if (courseNote == null) {
-                    courseNote = new CourseNoteFragment();
-                    bundle.putString("lessonId", mActivity.getMdata().getId());
-                    courseNote.setArguments(bundle);
-                    transaction.add(R.id.fay_content, courseNote);
-                } else {
-                    transaction.show(courseNote);
-                }
-                break;
-            case 3:
                 if (courseAppraise == null) {
                     courseAppraise = new CourseAppraiseFragment();
                     bundle.putInt("lessonId", Integer.parseInt(mActivity.getMdata().getId()));
-                    bundle.putBoolean("isComment",mActivity.getMdata().isComment());
+                    bundle.putBoolean("isComment", mActivity.getMdata().isComment());
                     courseAppraise.setArguments(bundle);
                     transaction.add(R.id.fay_content, courseAppraise);
                 } else {
                     transaction.show(courseAppraise);
-                }
-                break;
-            case 4:
-                if (courseAbout == null) {
-                    courseAbout = new CourseAboutFragment();
-                    bundle.putString("lessonId", mActivity.getMdata().getId());
-                    courseAbout.setArguments(bundle);
-                    transaction.add(R.id.fay_content, courseAbout);
-                } else {
-                    transaction.show(courseAbout);
                 }
                 break;
         }
@@ -113,29 +78,26 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
      */
     private void hideFragments(FragmentTransaction transaction) {
         if (courseIntro != null) transaction.hide(courseIntro);
-        if (courseSpeak != null) transaction.hide(courseSpeak);
-        if (courseNote != null) transaction.hide(courseNote);
         if (courseAppraise != null) transaction.hide(courseAppraise);
-        if (courseAbout != null) transaction.hide(courseAbout);
     }
 
     /**
-     * 加载视频详情页接口 数据
+     * 加载文档详情页接口 数据
      *
      * @param lessonId
      */
     public void loadVideoDetailData(String lessonId) {
-        LoggerUtil.e("视频详情页");
+        LoggerUtil.e("文档详情页");
         LessonDetail_Paramet paramet = new LessonDetail_Paramet(lessonId, userId, operateType);
         addSubscription(apiStores.getLessonDetail(paramet), new ApiCallback<VideoDetailModle>() {
             @Override
             public void onSuccess(VideoDetailModle model) {
-                mvpView.loadVideoDetailDataSuccess(model);
+                mvpView.loadDocDetailDataSuccess(model);
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.loadVideoDetailDataFail(code + "|" + msg);
+                mvpView.loadDocDetailDataFail(code + "|" + msg);
             }
 
             @Override

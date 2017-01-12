@@ -75,7 +75,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
             case R.id.rbn_01:
                 if (position != 1) {
                     position = 1;
-                    loadData(position);;
+                    loadData(position);
                 }
                 break;
             case R.id.rbn_02:
@@ -104,6 +104,8 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
                     mvpPresenter.loadVideoList(position+"",false);
                 }else {
                     mAdapter.setmData(mData1);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    emptyIv.setVisibility(View.GONE);
                 }
                 break;
             case 2:
@@ -111,6 +113,8 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
                     mvpPresenter.loadVideoList(position+"",false);
                 }else {
                     mAdapter.setmData(mData2);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    emptyIv.setVisibility(View.GONE);
                 }
                 break;
             case 3:
@@ -118,6 +122,8 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
                     mvpPresenter.loadVideoList(position+"",false);
                 }else {
                     mAdapter.setmData(mData3);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    emptyIv.setVisibility(View.GONE);
                 }
                 break;
         }
@@ -189,6 +195,8 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
                     emptyIv.setVisibility(View.VISIBLE);
                 }else {
                     ToastUtil.showToast("没有更多数据了！");
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    emptyIv.setVisibility(View.GONE);
                 }
             }
 
@@ -218,6 +226,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
     }
 
     public void reloadErrorBtn(){
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {

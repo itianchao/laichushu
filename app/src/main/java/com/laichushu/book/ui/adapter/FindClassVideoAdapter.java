@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
+import com.laichushu.book.ui.activity.FindClassDocDetailActivity;
 import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.utils.GlideUitl;
@@ -51,7 +52,9 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
                     bundle.putString("lessonId",bean.getId());
                     UIUtil.openActivity(mActivity, FindClassVideoDetailActivity.class,bundle);
                 }else {
-
+                    Bundle bundle = new Bundle();
+                    bundle.putString("lessonId",bean.getId());
+                    UIUtil.openActivity(mActivity, FindClassDocDetailActivity.class,bundle);
                 }
 
             }
@@ -67,6 +70,8 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
         } else {
             GlideUitl.loadImg(mActivity, R.drawable.icon_doc, holder.typeIv);
         }
+        holder.markTv.setText(bean.getAverageStar()+"分");
+        holder.mRatingBar.setRating((float) bean.getAverageStar());
     }
 
     @Override

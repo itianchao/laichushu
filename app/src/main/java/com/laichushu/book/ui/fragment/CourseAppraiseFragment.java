@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.laichushu.book.mvp.home.allcomment.AllCommentPresenter;
 import com.laichushu.book.mvp.home.allcomment.AllCommentView;
 import com.laichushu.book.mvp.home.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
+import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
 import com.laichushu.book.ui.adapter.CommentAllAdapter;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpFragment2;
@@ -40,6 +42,8 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
     private CommentAllAdapter mAdapter;
     private int pageNo = 1;
     private ArrayList<ArticleCommentModle.DataBean> mData = new ArrayList<>();
+    private boolean isComment;
+    private LinearLayout commentLay;
 
     @Override
     protected AllCommentPresenter createPresenter() {
@@ -50,6 +54,7 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
     public View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.fragment_courseappraise);
         commentRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_comment);
+        commentLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_comment);
         commentEt = (EditText) mSuccessView.findViewById(R.id.et_comment);
         numRb = (RatingBar) mSuccessView.findViewById(R.id.ratbar_num);
         commentRyv.setLinearLayout();
@@ -63,6 +68,12 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
     @Override
     protected void initData() {
         lessonId = getArguments().getInt("lessonId");
+        isComment = getArguments().getBoolean("isComment");
+        if(isComment){
+            commentLay.setVisibility(View.GONE);
+        }else {
+            commentLay.setVisibility(View.VISIBLE);
+        }
         mvpPresenter.loadAllCommentData(lessonId);
     }
 
@@ -117,6 +128,9 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
         if (model.isSuccess()) {
             ToastUtil.showToast("发送成功");
             onRefresh();
+            isComment = true;
+            ((FindClassVideoDetailActivity)getActivity()).getMdata().setComment(true);
+            commentLay.setVisibility(View.GONE);
         } else {
             String errorMsg = model.getErrMsg();
             if (errorMsg.contains("该用户已经评分了")) {

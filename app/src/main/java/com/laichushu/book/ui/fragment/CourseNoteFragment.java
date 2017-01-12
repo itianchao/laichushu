@@ -110,9 +110,9 @@ public class CourseNoteFragment extends MvpFragment2<NotePresenter> implements N
             }else {
                 ToastUtil.showToast("笔记修改成功");
             }
-            noteRay.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(View.GONE);
-            createNoteTv.setVisibility(View.GONE);
+            noteRay.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            createNoteTv.setVisibility(View.VISIBLE);
             initData();
         }else {
             if (finalType ==0){

@@ -107,6 +107,15 @@ public class CourseraModle {
             private String ccVideoId;
             private int downloadNum;
             private int collectionNum;
+            private double averageStar;
+
+            public double getAverageStar() {
+                return averageStar;
+            }
+
+            public void setAverageStar(double averageStar) {
+                this.averageStar = averageStar;
+            }
 
             public int getDownloadNum() {
                 return downloadNum;
