@@ -150,9 +150,9 @@ public class NotePresenter extends BasePresenter<NoteView> {
      * @param remarks   内容
      */
     public void preEditNote(String noteId, String name, String remarks) {
-        mFragment.noteRay.setVisibility(View.GONE);
-        mFragment.mRecyclerView.setVisibility(View.VISIBLE);
-        mFragment.createNoteTv.setVisibility(View.VISIBLE);
+        mFragment.noteRay.setVisibility(View.VISIBLE);
+        mFragment.mRecyclerView.setVisibility(View.GONE);
+        mFragment.createNoteTv.setVisibility(View.GONE);
         mFragment.setNoteId(noteId);
         mFragment.titleEt.setText(name);
         mFragment.contentEt.setText(remarks);

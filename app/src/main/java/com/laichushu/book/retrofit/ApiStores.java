@@ -71,7 +71,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL3;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL4;
 
     //登录接口
     @POST("login/do")
@@ -763,11 +763,11 @@ public interface ApiStores {
 
     //课程评分
     @POST("score/list")
-    Observable<ScoreListModle> getCourseScoreList(@Body CourseScoreList_Paramet paramet);
+    Observable<ArticleCommentModle> getCourseScoreList(@Body CourseScoreList_Paramet paramet);
 
     //课程评分保存
     @POST("score/save")
-    Observable<RewardResult> courseScoreSave(@Body CourseScoreSave_Paramet paramet);
+    Observable<SendCommentMoudle> courseScoreSave(@Body CourseScoreSave_Paramet paramet);
 
     //课程相关
     @POST("lesson/lessonAbout")

@@ -65,7 +65,7 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
                 if (courseSpeak == null) {
                     courseSpeak = new CourseSpeakFragment();
                     bundle.putString("lessonId", mActivity.getMdata().getId());
-                    courseIntro.setArguments(bundle);
+                    courseSpeak.setArguments(bundle);
                     transaction.add(R.id.fay_content, courseSpeak);
                 } else {
                     transaction.show(courseSpeak);
@@ -75,7 +75,7 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
                 if (courseNote == null) {
                     courseNote = new CourseNoteFragment();
                     bundle.putString("lessonId", mActivity.getMdata().getId());
-                    courseIntro.setArguments(bundle);
+                    courseNote.setArguments(bundle);
                     transaction.add(R.id.fay_content, courseNote);
                 } else {
                     transaction.show(courseNote);
@@ -84,18 +84,18 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             case 3:
                 if (courseAppraise == null) {
                     courseAppraise = new CourseAppraiseFragment();
-                    bundle.putString("lessonId", mActivity.getMdata().getId());
-                    courseIntro.setArguments(bundle);
+                    bundle.putInt("lessonId", Integer.parseInt(mActivity.getMdata().getId()));
+                    courseAppraise.setArguments(bundle);
                     transaction.add(R.id.fay_content, courseAppraise);
                 } else {
-                    transaction.show(courseNote);
+                    transaction.show(courseAppraise);
                 }
                 break;
             case 4:
                 if (courseAbout == null) {
                     courseAbout = new CourseAboutFragment();
                     bundle.putString("lessonId", mActivity.getMdata().getId());
-                    courseIntro.setArguments(bundle);
+                    courseAbout.setArguments(bundle);
                     transaction.add(R.id.fay_content, courseAbout);
                 } else {
                     transaction.show(courseAbout);

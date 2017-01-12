@@ -42,7 +42,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final NoteListModle.DataBean.LessonNoteListBean bean = mData.get(position);
-        holder.timeTv.setText(StringUtil.formatLongTime(bean.getUpdateDate()));
+        holder.timeTv.setText(bean.getUpdateDate());
         holder.titleTv.setText(bean.getName());
         holder.contentTv.setText(bean.getRemarks());
         holder.editIv.setOnClickListener(new View.OnClickListener() {

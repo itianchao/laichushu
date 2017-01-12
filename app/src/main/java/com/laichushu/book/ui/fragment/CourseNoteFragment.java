@@ -58,11 +58,14 @@ public class CourseNoteFragment extends MvpFragment2<NotePresenter> implements N
         mRecyclerView.setLinearLayout();
         mAdapter = new NoteAdapter(this,mData);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setPullRefreshEnable(false);
+        mRecyclerView.setPushRefreshEnable(false);
         return mSuccessView;
     }
 
     @Override
     protected void initData() {
+        refreshPage(LoadingPager.PageState.STATE_LOADING);
         lessonId = getArguments().getString("lessonId");
         mvpPresenter.loadNoteData(lessonId);
         createNoteTv.setOnClickListener(this);
@@ -77,6 +80,7 @@ public class CourseNoteFragment extends MvpFragment2<NotePresenter> implements N
     @Override
     public void loadNoteListDataSuccess(NoteListModle model) {
         if (model.isSuccess()) {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             mData = model.getData().getLessonNoteList();
             mAdapter.setmData(mData);
         }else {
@@ -106,6 +110,10 @@ public class CourseNoteFragment extends MvpFragment2<NotePresenter> implements N
             }else {
                 ToastUtil.showToast("笔记修改成功");
             }
+            noteRay.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+            createNoteTv.setVisibility(View.GONE);
+            initData();
         }else {
             if (finalType ==0){
                 ToastUtil.showToast("笔记创建失败");

@@ -83,8 +83,8 @@ public class NoteListModle {
             private String userId;
             private String name;
             private String remarks;
-            private long createDate;
-            private long updateDate;
+            private String createDate;
+            private String updateDate;
 
             public String getNoteId() {
                 return noteId;
@@ -126,19 +126,19 @@ public class NoteListModle {
                 this.remarks = remarks;
             }
 
-            public long getCreateDate() {
+            public String getCreateDate() {
                 return createDate;
             }
 
-            public void setCreateDate(long createDate) {
+            public void setCreateDate(String createDate) {
                 this.createDate = createDate;
             }
 
-            public long getUpdateDate() {
+            public String getUpdateDate() {
                 return updateDate;
             }
 
-            public void setUpdateDate(long updateDate) {
+            public void setUpdateDate(String updateDate) {
                 this.updateDate = updateDate;
             }
         }
