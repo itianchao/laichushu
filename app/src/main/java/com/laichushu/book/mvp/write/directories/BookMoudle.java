@@ -1,5 +1,8 @@
 package com.laichushu.book.mvp.write.directories;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -46,7 +49,7 @@ public class BookMoudle {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         private String id;
         private String name;
         private boolean isSection;
@@ -109,5 +112,44 @@ public class BookMoudle {
         public void setIsSection(boolean isSection) {
             this.isSection = isSection;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.name);
+            dest.writeByte(this.isSection ? (byte) 1 : (byte) 0);
+            dest.writeString(this.content);
+            dest.writeString(this.contentUrlPc);
+            dest.writeString(this.contentUrlApp);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.id = in.readString();
+            this.name = in.readString();
+            this.isSection = in.readByte() != 0;
+            this.content = in.readString();
+            this.contentUrlPc = in.readString();
+            this.contentUrlApp = in.readString();
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
 }

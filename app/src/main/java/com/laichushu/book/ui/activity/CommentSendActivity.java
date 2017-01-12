@@ -30,19 +30,20 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
     private String userId = ConstantValue.USERID;
     private String commentId;
     private String sourceType = ConstantValue.COMMENTBOOK_TYPE;
-
+    private TextView tvSend;
     @Override
     protected void initView() {
         setContentView(R.layout.activity_commentsend);
         initTitleBar("发布评论");
-        commentEt = (EditText)findViewById(R.id.et_comment);
-        commentEt.setOnEditorActionListener(this);
+        commentEt = (EditText) findViewById(R.id.et_comment);
+//        commentEt.setOnEditorActionListener(this);
     }
 
     @Override
     protected void initData() {
         commentId = getIntent().getStringExtra("commentId");
     }
+
     /**
      * 初始化标题
      *
@@ -51,15 +52,21 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
     private void initTitleBar(String title) {
         TextView titleTv = (TextView) findViewById(R.id.tv_title);
         ImageView finishIv = (ImageView) findViewById(R.id.iv_title_finish);
+        tvSend = (TextView) findViewById(R.id.tv_title_right);
         titleTv.setText(title);
+        tvSend.setText("发表");
         finishIv.setOnClickListener(this);
+        tvSend.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.iv_title_finish:
                 finish();
+                break;
+            case R.id.tv_title_right:
+                senComment();
                 break;
         }
     }
@@ -68,8 +75,8 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEND) {
             String conent = commentEt.getText().toString();
-            if (!TextUtils.isEmpty(conent)){
-                ReSavaComment_Paramet paramet = new ReSavaComment_Paramet(commentId,userId,conent,sourceType);
+            if (!TextUtils.isEmpty(conent)) {
+                ReSavaComment_Paramet paramet = new ReSavaComment_Paramet(commentId, userId, conent, sourceType);
                 showProgressDialog();
                 addSubscription(apiStores.saveComment(paramet), new ApiCallback<CommentDetailModle>() {
                     @Override
@@ -83,12 +90,12 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
                                     finish();
                                     EventBus.getDefault().postSticky(new RefurshCommentListEvent(true, -1));
                                 }
-                            },1700);
-                        }else {
+                            }, 1700);
+                        } else {
                             String errorMsg = model.getErrMsg();
-                            if (errorMsg.contains("该用户已经评分了")){
+                            if (errorMsg.contains("该用户已经评分了")) {
                                 ToastUtil.showToast(errorMsg);
-                            }else {
+                            } else {
                                 ToastUtil.showToast("发送失败");
                             }
                         }
@@ -106,18 +113,56 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
                 });
                 commentEt.setText("");
                 UIUtil.hideKeyboard(commentEt);
-            }else {
+            } else {
                 ToastUtil.showToast("请输入评论内容");
             }
         }
         return false;
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK){
-//            EventBus.getDefault().postSticky(new RefurshCommentListEvent(true, -1));
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
+    private void senComment() {
+
+        String conent = commentEt.getText().toString();
+        if (!TextUtils.isEmpty(conent)) {
+            ReSavaComment_Paramet paramet = new ReSavaComment_Paramet(commentId, userId, conent, sourceType);
+            showProgressDialog();
+            addSubscription(apiStores.saveComment(paramet), new ApiCallback<CommentDetailModle>() {
+                @Override
+                public void onSuccess(CommentDetailModle model) {
+                    dismissProgressDialog();
+                    if (model.isSuccess()) {
+                        ToastUtil.showToast("发送成功");
+                        UIUtil.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                                EventBus.getDefault().postSticky(new RefurshCommentListEvent(true, -1));
+                            }
+                        }, 1700);
+                    } else {
+                        String errorMsg = model.getErrMsg();
+                        if (errorMsg.contains("该用户已经评分了")) {
+                            ToastUtil.showToast(errorMsg);
+                        } else {
+                            ToastUtil.showToast("发送失败");
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(int code, String msg) {
+                    ToastUtil.showToast("请检查网络");
+                }
+
+                @Override
+                public void onFinish() {
+                    dismissProgressDialog();
+                }
+            });
+            commentEt.setText("");
+            UIUtil.hideKeyboard(commentEt);
+        } else {
+            ToastUtil.showToast("请输入评论内容");
+        }
+    }
 }

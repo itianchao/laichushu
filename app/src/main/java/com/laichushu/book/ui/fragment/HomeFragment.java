@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.laichushu.book.R;
-import com.laichushu.book.db.Cache_JsonDao;
-import com.laichushu.book.db.City_Id;
-import com.laichushu.book.db.City_IdDao;
-import com.laichushu.book.db.DaoSession;
-import com.laichushu.book.event.RefurshBookDetaileCommentEvent;
 import com.laichushu.book.event.RefurshHomeEvent;
-import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.mvp.home.homelist.HomeModel;
 import com.laichushu.book.mvp.home.homelist.HomePresenter;
@@ -36,7 +29,6 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
-import com.pickerview.lib.Province;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +36,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 首页

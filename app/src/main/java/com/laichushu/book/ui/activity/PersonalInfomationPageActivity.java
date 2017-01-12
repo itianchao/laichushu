@@ -1,6 +1,8 @@
 package com.laichushu.book.ui.activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +15,7 @@ import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.event.RefrushPerInfoEvent;
+import com.laichushu.book.event.RefrushWalletEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.mvp.msg.messagecomment.MessageCommentPresenter;
@@ -42,7 +45,15 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
     private int PAGE_NO = 1;
     private MessageCommentResult.DataBean dataBean;
     private String sendId, msgId;
-
+    private Handler handler =new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==1){
+                finish();
+            }
+        }
+    };
     @Override
     protected MessageCommentPresenter createPresenter() {
         return new MessageCommentPresenter(this);
@@ -179,11 +190,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
     public void getDelPerIdfoDataSuccess(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功！");
-            mActivity.finish();
-            //发广播
-            Intent intent = new Intent(ConstantValue.ACTION_UPDATE_DATA_PERINFO);
-            intent.addCategory(mActivity.getPackageName());
-            mActivity.sendBroadcast(intent);
+            handler.sendEmptyMessageDelayed(1,1700);
         } else {
             ToastUtil.showToast("删除失败");
             LoggerUtil.e(model.getErrMsg());
@@ -237,6 +244,5 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
     public void dismissDialog() {
         dismissProgressDialog();
     }
-
 
 }
