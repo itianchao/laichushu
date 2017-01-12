@@ -1,12 +1,11 @@
 package com.laichushu.book.bean.netbean;
 
-import java.io.Serializable;
 
 /**
  * Created by PCPC on 2016/11/22.
  */
 
-public class HomeUserResult implements Serializable {
+public class HomeUserResult {
 
     /**
      * photo :
@@ -22,8 +21,10 @@ public class HomeUserResult implements Serializable {
     private boolean success;
     private boolean beFocused;
     private String levelType;
+    private String type;
+    private String introduce;
 
-    public HomeUserResult(String photo, String nickName, String userId, String grade, boolean status, boolean success, boolean beFocused, String levelType) {
+    public HomeUserResult(String photo, String nickName, String userId, String grade, boolean status, boolean success, boolean beFocused, String levelType, String type, String introduce) {
         this.photo = photo;
         this.nickName = nickName;
         this.userId = userId;
@@ -32,6 +33,8 @@ public class HomeUserResult implements Serializable {
         this.success = success;
         this.beFocused = beFocused;
         this.levelType = levelType;
+        this.type = type;
+        this.introduce = introduce;
     }
 
     public String getPhoto() {
@@ -96,5 +99,21 @@ public class HomeUserResult implements Serializable {
 
     public void setLevelType(String levelType) {
         this.levelType = levelType;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
     }
 }

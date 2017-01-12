@@ -550,6 +550,8 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             final ArticleCommentModle.DataBean dataBean = scoreReaderData.get(i);
             View commentItemView = UIUtil.inflate(R.layout.item_comment_connet);
             ImageView headIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_head);
+            ImageView gradeDetailsIv = (ImageView) commentItemView.findViewById(R.id.iv_gradeDetail);
+            TextView gradeNameTv = (TextView) commentItemView.findViewById(R.id.tv_gradeName);
             TextView nameTv = (TextView) commentItemView.findViewById(R.id.tv_comment_name);
             TextView contentTv = (TextView) commentItemView.findViewById(R.id.tv_comment_content);
             TextView timeTv = (TextView) commentItemView.findViewById(R.id.tv_comment_time);
@@ -564,6 +566,30 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             likeTv.setText(dataBean.getLikeNum() + "");//喜欢人数
             numberTv.setText(dataBean.getReplyNum() + "");//回复人数
             likeIv.setTag(R.id.image_tag, i);
+            //评论者等级
+            if (null != dataBean.getLevelType()) {
+                gradeDetailsIv.setVisibility(View.VISIBLE);
+                gradeNameTv.setVisibility(View.VISIBLE);
+                switch (dataBean.getLevelType()) {
+                    case "1":
+                        gradeNameTv.setText("金牌作家");
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, gradeDetailsIv);
+                        break;
+                    case "2":
+                        gradeNameTv.setText("银牌作家");
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, gradeDetailsIv);
+                        break;
+                    case "3":
+                        gradeNameTv.setText("铜牌作家");
+                        GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, gradeDetailsIv);
+                        break;
+                }
+            } else {
+                gradeDetailsIv.setVisibility(View.GONE);
+                gradeNameTv.setText("暂无等级");
+
+            }
+
             if (dataBean.isIsLike()) {
                 GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
             } else {

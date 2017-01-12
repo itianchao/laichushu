@@ -56,11 +56,34 @@ public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAd
         holder.likeTv.setVisibility(View.INVISIBLE);
         holder.likeIv.setVisibility(View.INVISIBLE);
         holder.inIv.setVisibility(View.INVISIBLE);
+        //评论者等级
+        if (null != dataBean.getLevelType()) {
+            holder.gradeDetailsIv.setVisibility(View.VISIBLE);
+            holder.gradeNameTv.setVisibility(View.VISIBLE);
+            switch (dataBean.getLevelType()) {
+                case "1":
+                    holder.gradeNameTv.setText("金牌作家");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, holder.gradeDetailsIv);
+                    break;
+                case "2":
+                    holder.gradeNameTv.setText("银牌作家");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, holder.gradeDetailsIv);
+                    break;
+                case "3":
+                    holder.gradeNameTv.setText("铜牌作家");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, holder.gradeDetailsIv);
+                    break;
+            }
+        } else {
+            holder.gradeDetailsIv.setVisibility(View.GONE);
+            holder.gradeNameTv.setText("暂无等级");
+
+        }
         holder.headIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("userId",dataBean.getUserId());
+                bundle.putSerializable("userId", dataBean.getUserId());
                 if (SharePrefManager.getUserId().equals(dataBean.getNickName())) {
                     UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
                 } else {
@@ -121,6 +144,8 @@ public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAd
         public TextView numberTv;
         public ImageView inIv;
         public View commentItemView;
+        private TextView gradeNameTv;
+        private ImageView gradeDetailsIv;
 
         public CommentViewHolder(View commentItemView) {
             super(commentItemView);
@@ -134,6 +159,8 @@ public class CommentDetaileAdapter extends RecyclerView.Adapter<CommentDetaileAd
             numberTv = (TextView) commentItemView.findViewById(R.id.tv_comment_number);
             inIv = (ImageView) commentItemView.findViewById(R.id.iv_comment_in);
             commentIv = (ImageView) commentItemView.findViewById(R.id.iv_comment);
+            gradeDetailsIv = (ImageView) commentItemView.findViewById(R.id.iv_gradeDetail);
+            gradeNameTv = (TextView) commentItemView.findViewById(R.id.tv_gradeName);
         }
     }
 }

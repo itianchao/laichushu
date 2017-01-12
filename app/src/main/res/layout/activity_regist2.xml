@@ -6,147 +6,161 @@
 
     <include layout="@layout/page_title" />
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/msg"
-        android:textColor="@color/edit"
-        android:textSize="@dimen/edit2" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <LinearLayout
-        style="@style/edit_ll_style"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/name"
-            android:textColor="@color/edit" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_name"
-            style="@style/edit_item_style"
-            android:layout_marginRight="5dp"
-            android:gravity="right"
-            android:hint="@string/fillin"
-            android:singleLine="true" />
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
 
-    <LinearLayout
-        style="@style/edit_ll_style"
-        android:layout_width="352dp"
-        android:gravity="center_vertical"
-        android:singleLine="true">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/ic_launcher_transparent" />
+            </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/sex"
-            android:textColor="@color/edit" />
+            <LinearLayout
+                style="@style/edit_ll_style"
+                android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/tv_sex"
-            style="@style/edit_item_style"
-            android:layout_marginRight="5dp"
-            android:gravity="right"
-            android:hint="@string/select" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/edit_ll_style"
-        android:layout_width="352dp"
-        android:gravity="center_vertical"
-        android:singleLine="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/name"
+                    android:textColor="@color/edit" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/address"
-            android:textColor="@color/edit" />
+                <EditText
+                    android:id="@+id/et_name"
+                    style="@style/edit_item_style"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:hint="@string/fillin"
+                    android:singleLine="true" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_address"
-            style="@style/edit_item_style"
-            android:layout_marginRight="5dp"
-            android:gravity="right"
-            android:hint="@string/select" />
-    </LinearLayout>
+            <LinearLayout
+                style="@style/edit_ll_style"
+                android:layout_width="352dp"
+                android:gravity="center_vertical"
+                android:singleLine="true">
 
-    <LinearLayout
-        style="@style/edit_ll_style"
-        android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/sex"
+                    android:textColor="@color/edit" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:inputType="numberDecimal"
-            android:maxLength="11"
-            android:text="@string/phone"
-            android:textColor="@color/edit" />
+                <TextView
+                    android:id="@+id/tv_sex"
+                    style="@style/edit_item_style"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:hint="@string/select" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_phone"
-            style="@style/edit_item_style"
-            android:layout_marginRight="5dp"
-            android:gravity="right"
-            android:hint="@string/fillin"
-            android:singleLine="true" />
-    </LinearLayout>
+            <LinearLayout
+                style="@style/edit_ll_style"
+                android:layout_width="352dp"
+                android:gravity="center_vertical"
+                android:singleLine="true">
 
-    <LinearLayout
-        style="@style/edit_ll_style"
-        android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/address"
+                    android:textColor="@color/edit" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/pwd"
-            android:textColor="@color/edit" />
+                <TextView
+                    android:id="@+id/tv_address"
+                    style="@style/edit_item_style"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:hint="@string/select" />
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/et_pwd"
-            style="@style/edit_item_style"
-            android:layout_marginRight="5dp"
-            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
-            android:gravity="right"
-            android:hint="@string/fillin"
-            android:maxLength="14"
-            android:password="true"
-            android:singleLine="true" />
-    </LinearLayout>
+            <LinearLayout
+                style="@style/edit_ll_style"
+                android:gravity="center_vertical">
 
-    <LinearLayout
-        style="@style/edit_ll_style"
-        android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:inputType="numberDecimal"
+                    android:maxLength="11"
+                    android:text="@string/phone"
+                    android:textColor="@color/edit" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/repwd"
-            android:textColor="@color/edit" />
+                <TextView
+                    android:id="@+id/tv_phone"
+                    style="@style/edit_item_style"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:hint="@string/fillin"
+                    android:singleLine="true" />
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/et_re_pwd"
-            style="@style/edit_item_style"
-            android:layout_marginRight="5dp"
-            android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
-            android:gravity="right"
-            android:hint="@string/fillin"
-            android:maxLength="14"
-            android:password="true"
-            android:singleLine="true" />
-    </LinearLayout>
+            <LinearLayout
+                style="@style/edit_ll_style"
+                android:gravity="center_vertical">
 
-    <Button
-        android:id="@+id/bt_finish"
-        style="@style/button_login_style"
-        android:text="@string/finish" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/pwd"
+                    android:textColor="@color/edit" />
+
+                <EditText
+                    android:id="@+id/et_pwd"
+                    style="@style/edit_item_style"
+                    android:layout_marginRight="5dp"
+                    android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
+                    android:gravity="right"
+                    android:hint="@string/fillin"
+                    android:maxLength="14"
+                    android:password="true"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/edit_ll_style"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/repwd"
+                    android:textColor="@color/edit" />
+
+                <EditText
+                    android:id="@+id/et_re_pwd"
+                    style="@style/edit_item_style"
+                    android:layout_marginRight="5dp"
+                    android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
+                    android:gravity="right"
+                    android:hint="@string/fillin"
+                    android:maxLength="14"
+                    android:password="true"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_finish"
+                style="@style/button_login_style"
+                android:text="@string/finish" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

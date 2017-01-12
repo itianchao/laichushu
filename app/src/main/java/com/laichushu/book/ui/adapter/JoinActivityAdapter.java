@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 
+import com.laichushu.book.mvp.find.mechanism.mechanismdetail.MechanismDetailPresenter;
 import com.laichushu.book.mvp.home.campaign.AuthorWorksModle;
 import com.laichushu.book.utils.UIUtil;
 import com.laichushu.book.R;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class JoinActivityAdapter extends BaseAdapter {
     private ArrayList<AuthorWorksModle.DataBean> mData;
     private int position;
+    private MechanismDetailPresenter presenter;
 
     public int getPosition() {
         return position;
@@ -27,14 +29,15 @@ public class JoinActivityAdapter extends BaseAdapter {
         this.position = position;
     }
 
-    public JoinActivityAdapter(ArrayList<AuthorWorksModle.DataBean> mData,int position) {
+    public JoinActivityAdapter(ArrayList<AuthorWorksModle.DataBean> mData, int position, MechanismDetailPresenter presenter) {
         this.mData = mData;
         this.position = position;
+        this.presenter = presenter;
     }
 
     @Override
     public int getCount() {
-        return mData == null?0:mData.size();
+        return mData == null ? 0 : mData.size();
     }
 
     @Override
@@ -54,33 +57,42 @@ public class JoinActivityAdapter extends BaseAdapter {
             convertView = UIUtil.inflate(R.layout.item_join);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-        }else {
-            holder = (ViewHolder)convertView.getTag();
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
         AuthorWorksModle.DataBean bean = mData.get(position);
         holder.nameRbn.setText(bean.getArticleName());
-        if (bean.isIscheck()){
+        if(null!=presenter){
+            holder.nameRbn.setBackgroundResource(R.color.transparent);
+        }
+        if (bean.isIscheck()) {
             holder.nameRbn.setChecked(true);
-        }else {
+        } else {
             holder.nameRbn.setChecked(false);
         }
         holder.nameRbn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < mData.size(); i++) {
-                    if (i==position){
+                    if (i == position) {
                         mData.get(i).setIscheck(true);
                         setPosition(position);
-                    }else {
+                    } else {
                         mData.get(i).setIscheck(false);
                     }
                 }
                 notifyDataSetChanged();
+                // TODO: 2016/11/25 投稿
+                if(null!=presenter){
+                    presenter.voteBook(mData.get(position).getArticleId(), position+"");
+                }
+
             }
         });
         return convertView;
     }
-    private static class ViewHolder{
+
+    private static class ViewHolder {
         RadioButton nameRbn;
 
         public ViewHolder(View convertView) {

@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bgGrey">
+    android:background="@color/bgGrey"
+    android:orientation="vertical">
+
     <include layout="@layout/page_title" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -45,10 +48,8 @@
 
                         <TextView
                             android:id="@+id/tv_mineNickName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/characterGray"
-                            android:textSize="@dimen/edit" />
+                            style="@style/new_up"
+                            android:drawableRight="@drawable/bookdetail_write" />
 
                         <ImageView
                             android:id="@+id/iv_mineHeadInto"

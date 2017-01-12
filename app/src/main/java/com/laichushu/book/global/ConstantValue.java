@@ -50,7 +50,7 @@ public class ConstantValue {
     public static String COLLECTSERVICE_TYPE = "4";//服务
     public static String COLLECTCOURSE_TYPE = "5";//课程
     public static String COLLECTEDITOR_TYPE = "6";//编辑
-    //用户类型  作者:1  服务者:3  读者:4
+    //用户类型  作者:1  编辑者: 2 服务者:3  读者:4
     public static String AUTHOR = "1";
     public static String EDITOR = "2";
     public static String SERVICER = "3";
@@ -95,16 +95,17 @@ public class ConstantValue {
 
     //baseBook
     public static final String BASEBOOK = "basebook";
-//type
-    public static String SHARE_TYPR_BOOK="1";//图书
-    public static String SHARE_TYPR_ACTIVITY="2";//活动
-    public static String SHARE_TYPR_EDITOR="3";//编辑者
-    public static String SHARE_TYPR_SERVICE="4";//服务
-    public static String SHARE_TYPR_COURSE="5";//课程
-    public static String SHARE_TYPR_MECHMIA="6";//机构
-    public static String SHARE_TYPR_NOTIC="7";//机构公告
-    public static String SHARE_TYPR_TOPIC="8";//话题
-    public static String SHARE_TYPR_GROUP="9";//小组
+    //type
+    public static String SHARE_TYPR_BOOK = "1";//图书
+    public static String SHARE_TYPR_ACTIVITY = "2";//活动
+    public static String SHARE_TYPR_EDITOR = "3";//用户（服务者除外）
+    public static String SHARE_TYPR_SERVICE = "4";//服务
+    public static String SHARE_TYPR_COURSE = "5";//课程
+    public static String SHARE_TYPR_MECHMIA = "6";//机构
+    public static String SHARE_TYPR_NOTIC = "7";//机构公告
+    public static String SHARE_TYPR_TOPIC = "8";//话题
+    public static String SHARE_TYPR_GROUP = "9";//小组
+
     public static class FB_READER {
 
         // 打开非本地书籍
@@ -136,7 +137,8 @@ public class ConstantValue {
 
     //baseUrl
     public static String API_LAICHUSHU_URL = "http://http://www.laichushu.com/";//来出书网站主页
-    public static String API_HYPERLINK_URL = "http://192.168.1.103:8090/book/a/share";//分享接口地址
+//    public static String API_HYPERLINK_URL = "http://192.168.1.103:8090/book/a/share";//张峰分享接口地址
+        public static String API_HYPERLINK_URL = "http://test1.laichushu.com/book-web/a/share";//web分享接口地址
     public static String API_SERVER_URL1 = "http://192.168.1.103:8082/book-app/";//张峰
     public static String API_SERVER_URL2 = "http://192.168.1.150:8082/book-app/";//施大勇5
     public static String API_SERVER_URL3 = "http://test2.laichushu.com/book-app-web/";

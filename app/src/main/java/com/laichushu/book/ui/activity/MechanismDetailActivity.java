@@ -91,7 +91,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         collectionCountTv = (TextView) mSuccessView.findViewById(R.id.tv_collection_count);//收藏数
 
         shareIv.setImageResource(R.drawable.activity_share);
-        moreIv.setBackgroundResource(R.drawable.icon_sort2x);
+        moreIv.setImageResource(R.drawable.icon_more2x);
         shareIv.setVisibility(View.VISIBLE);
         finishIv.setOnClickListener(this);
         shareIv.setOnClickListener(this);
@@ -131,13 +131,23 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         }
         collectionCountTv.setText("收藏:" + bean.getCollectCount() + "人");
         position = 0;
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
         onClick(firstRbn);
     }
 
     @Override
     public void getDataSuccess(MechanisDetailModel model) {
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
 
     @Override

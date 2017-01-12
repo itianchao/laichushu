@@ -165,7 +165,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
         final View customerView = UIUtil.inflate(R.layout.dialog_join);
         ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
-        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0);
+        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0,null);
         joinLv.setAdapter(joinAdapter);
 
         //取消
@@ -337,7 +337,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_join);
         ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
-        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0);
+        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0,null);
         joinLv.setAdapter(joinAdapter);
 
         //取消

@@ -72,7 +72,7 @@ public class TopicManageAdapter extends RecyclerView.Adapter<TopicManageAdapter.
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
-                    topicPagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type,dataBeen,position);
+                    topicPagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type, dataBeen, position);
 //                    holder.tvCollect.setText("已收藏(" + currentNum + ")");
 //                    dataBeen.get(position).setCollect(true);
                 } else {
@@ -82,7 +82,7 @@ public class TopicManageAdapter extends RecyclerView.Adapter<TopicManageAdapter.
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
-                    topicPagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type,dataBeen,position);
+                    topicPagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type, dataBeen, position);
 //                    holder.tvCollect.setText("收藏(" + currentNum + ")");
 //                    dataBeen.get(position).setCollect(false);
                 }

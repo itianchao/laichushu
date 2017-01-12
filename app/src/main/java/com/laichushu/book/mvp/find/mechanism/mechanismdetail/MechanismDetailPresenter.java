@@ -46,6 +46,7 @@ import java.util.List;
 public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView> {
     private MechanismDetailActivity mActivity;
     private String userId = ConstantValue.USERID;
+    private NiftyDialogBuilder dialogBuilder;
 
     //初始化构造
     public MechanismDetailPresenter(MechanismDetailView view) {
@@ -118,6 +119,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
                 .show();
 
     }
+
     /**
      * 投稿对话框
      *
@@ -128,15 +130,17 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
         for (int i = 0; i < mArticleData.size(); i++) {
             AuthorWorksModle.DataBean bean = mArticleData.get(i);
             if (i == 0) {
-                bean.setIscheck(true);
+//                bean.setIscheck(true);
             } else {
                 bean.setIscheck(false);
             }
         }
-        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
+        dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_join);
         ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
-        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0);
+        LinearLayout llView = (LinearLayout) customerView.findViewById(R.id.ll_bottom);
+        llView.setVisibility(View.GONE);
+        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0, MechanismDetailPresenter.this);
         joinLv.setAdapter(joinAdapter);
 
         //取消
@@ -174,6 +178,8 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
      */
     public void voteBook(String articleId, String pressId) {
         mvpView.showLoading();
+        if (null != dialogBuilder && dialogBuilder.isShowing())
+            dialogBuilder.dismiss();
         LoggerUtil.e("投稿");
         ArticleVote_Paramet paramet = new ArticleVote_Paramet(articleId, ConstantValue.USERID, pressId);
         addSubscription(apiStores.articleVote(paramet), new ApiCallback<RewardResult>() {
@@ -197,7 +203,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
     /**
      * 收藏
      */
-    public void collectSave(String targetId,final String type, String collectType) {
+    public void collectSave(String targetId, final String type, String collectType) {
         mvpView.showLoading();
         Logger.e("收藏");
         CollectSave_Paramet paramet = new CollectSave_Paramet(userId, targetId, collectType, type);
@@ -316,7 +322,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
                 - popupWindow.getWidth() / 2;
         int[] location = new int[2];
         v.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(v,xPos-100,40);
+        popupWindow.showAsDropDown(v, xPos - 100, 40);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -339,7 +345,7 @@ public class MechanismDetailPresenter extends BasePresenter<MechanismDetailView>
                         //修改机构资料
                         Bundle modifyBundle = new Bundle();
                         modifyBundle.putString("partyId", partyId);
-                        modifyBundle.putParcelable("bean",bean);
+                        modifyBundle.putParcelable("bean", bean);
                         UIUtil.openActivity(mActicity, ModifyMechanismInfoActivity.class, modifyBundle);
                         break;
                 }

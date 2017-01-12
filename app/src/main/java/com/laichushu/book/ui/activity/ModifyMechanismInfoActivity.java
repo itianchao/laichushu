@@ -20,6 +20,7 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -38,7 +39,7 @@ import okhttp3.RequestBody;
  * 修改机构资料
  */
 public class ModifyMechanismInfoActivity extends MvpActivity2 implements View.OnClickListener {
-    private ImageView finishIv;
+    private ImageView finishIv, editorIv;
     private TextView titleTv, tvRight;
     private RelativeLayout rlUpdate;
     private EditText edMechName, edMechaAddress, edModifyIntro;
@@ -71,6 +72,7 @@ public class ModifyMechanismInfoActivity extends MvpActivity2 implements View.On
         edMechaAddress = ((EditText) mSuccessView.findViewById(R.id.ed_mechanismAddress));
         edModifyIntro = ((EditText) mSuccessView.findViewById(R.id.ed_modifyIntroduce));
         finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
+        editorIv = (ImageView) mSuccessView.findViewById(R.id.iv_editHead);
         rlUpdate = (RelativeLayout) mSuccessView.findViewById(R.id.rl_updateHeadImg);
 
         return mSuccessView;
@@ -89,7 +91,13 @@ public class ModifyMechanismInfoActivity extends MvpActivity2 implements View.On
         tvRight.setOnClickListener(this);
         finishIv.setOnClickListener(this);
         rlUpdate.setOnClickListener(this);
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
 
     /**
@@ -100,6 +108,7 @@ public class ModifyMechanismInfoActivity extends MvpActivity2 implements View.On
 
             if (!TextUtils.isEmpty(bean.getLogoUrl())) {
                 logoUrl = bean.getLogoUrl();
+                GlideUitl.loadRandImg(mActivity, bean.getLogoUrl(), editorIv);
             }
             if (!TextUtils.isEmpty(bean.getName())) {
                 name = bean.getName();
@@ -160,7 +169,7 @@ public class ModifyMechanismInfoActivity extends MvpActivity2 implements View.On
                     RequestBody requestBody2 = RequestBody.create(MediaType.parse("multipart/form-data"), edMechName.getText().toString().trim());
                     RequestBody requestBody3 = RequestBody.create(MediaType.parse("multipart/form-data"), edMechaAddress.getText().toString().trim());
                     RequestBody requestBody4 = RequestBody.create(MediaType.parse("multipart/form-data"), edModifyIntro.getText().toString().trim());
-                    RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"),logoUrl);
+                    RequestBody requestBody6 = RequestBody.create(MediaType.parse("multipart/form-data"), logoUrl);
                     RequestBody requestBody5 = null;
                     if (photoFile != null) {
                         requestBody5 = RequestBody.create(MediaType.parse("multipart/form-data"), Compressor.getDefault(mActivity).compressToFile(photoFile));
@@ -226,6 +235,7 @@ public class ModifyMechanismInfoActivity extends MvpActivity2 implements View.On
             List<String> imagesPath = Album.parseResult(data);
             if (imagesPath != null && imagesPath.size() > 0) {
                 String path = imagesPath.get(0);
+                GlideUitl.loadRandImg(mActivity, path, editorIv);
                 //压缩图片
                 photoFile = new File(path);
             }

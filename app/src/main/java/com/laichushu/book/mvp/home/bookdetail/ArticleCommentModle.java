@@ -68,6 +68,15 @@ public class ArticleCommentModle {
         private String photo;
         private String commentTime;
         private boolean isLike;
+        private String levelType;
+
+        public String getLevelType() {
+            return levelType;
+        }
+
+        public void setLevelType(String levelType) {
+            this.levelType = levelType;
+        }
 
         public String getCommentTime() {
             return commentTime;
@@ -179,6 +188,7 @@ public class ArticleCommentModle {
             dest.writeString(this.photo);
             dest.writeString(this.commentTime);
             dest.writeByte(this.isLike ? (byte) 1 : (byte) 0);
+            dest.writeString(this.levelType);
         }
 
         protected DataBean(Parcel in) {
@@ -192,9 +202,10 @@ public class ArticleCommentModle {
             this.photo = in.readString();
             this.commentTime = in.readString();
             this.isLike = in.readByte() != 0;
+            this.levelType = in.readString();
         }
 
-        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);

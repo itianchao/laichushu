@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/rl_commentItem"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/iv_comment_head"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="18dp"
         tools:src="@drawable/img_default" />
 
     <TextView
@@ -19,10 +22,31 @@
         android:layout_marginTop="13dp"
         android:layout_toRightOf="@id/iv_comment_head"
         android:singleLine="true"
-        android:textColor="@color/black"
+        android:textColor="@color/characterGray"
         android:textSize="@dimen/edit2"
         tools:text="隐晓月" />
+    <ImageView
+        android:id="@+id/iv_gradeDetail"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_alignBottom="@+id/tv_comment_name"
+        android:layout_toRightOf="@+id/tv_comment_name"
+        android:layout_marginLeft="12dp"
+        android:visibility="invisible"
+        android:background="@drawable/icon_silver_medal2x" />
 
+    <TextView
+        android:id="@+id/tv_gradeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_comment_name"
+        android:layout_toRightOf="@+id/iv_gradeDetail"
+        android:singleLine="true"
+        android:layout_marginLeft="8dp"
+        android:textColor="@color/characterLightGray2"
+        android:textSize="@dimen/edit4"
+        android:visibility="invisible"
+        tools:text="金牌作家" />
     <TextView
         android:id="@+id/tv_comment_content"
         android:layout_width="match_parent"
@@ -61,45 +85,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_comment_content"
-        android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_toLeftOf="@+id/iv_comment_in"
         android:textColor="@color/main_text_color"
         tools:text="212" />
+
     <ImageView
         android:id="@+id/iv_comment"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_toLeftOf="@+id/tv_comment_number"
         android:layout_below="@+id/tv_comment_content"
         android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/tv_comment_number"
         android:src="@drawable/icon_book_comment" />
 
     <ImageView
         android:id="@+id/iv_comment_like"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_toLeftOf="@+id/tv_comment_like"
         android:layout_below="@+id/tv_comment_content"
         android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/tv_comment_like"
         android:src="@drawable/icon_up_small_red" />
+
     <View
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/tv_comment_time"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:layout_below="@id/tv_comment_time"
+        android:layout_marginTop="5dp"
         android:background="@color/hint" />
 
     <TextView
         android:id="@+id/tv_comment_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="11dp"
-        tools:text="115"
-        android:textColor="@color/main_text_color"
         android:layout_alignTop="@+id/iv_comment_like"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
         android:layout_toLeftOf="@+id/iv_comment"
         android:layout_toStartOf="@+id/iv_comment"
-        android:layout_marginEnd="11dp" />
+        android:textColor="@color/main_text_color"
+        tools:text="115" />
 </RelativeLayout>

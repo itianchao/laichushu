@@ -53,7 +53,12 @@ public class NoticeFragment extends MvpFragment2<NoticePresenter> implements Not
         if (mData.isEmpty()) {
             mvpPresenter.loadNoticeListData(id);
         }else {
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            UIUtil.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                }
+            }, 30);
         }
     }
 

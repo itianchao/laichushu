@@ -47,8 +47,8 @@
 
         <ImageView
             android:id="@+id/iv_userGradeDetails"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_alignTop="@+id/tv_userNickName"
             android:layout_marginLeft="6dp"
             android:visibility="invisible"

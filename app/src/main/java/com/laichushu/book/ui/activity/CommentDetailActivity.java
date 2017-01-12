@@ -43,7 +43,9 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     private ImageView likeIv;
     private TextView likeTv;
     private TextView numberTv;
+    private TextView gradeNameTv;
     private ImageView inIv;
+    private ImageView gradeDetailsIv;
     private EditText edComment;
     private RelativeLayout rlComment;
     private ArrayList<CommentDetailModle.DataBean> mData = new ArrayList<>();
@@ -51,7 +53,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     private PullLoadMoreRecyclerView commentRyv;
     private String commentId;
     private ArticleCommentModle.DataBean dataBean;
-    private String type,tag;
+    private String type, tag;
     private ImageView commentIv;
 
     @Override
@@ -67,6 +69,8 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
+        gradeDetailsIv = (ImageView) findViewById(R.id.iv_gradeDetail);
+        gradeNameTv = (TextView) findViewById(R.id.tv_gradeName);
         headIv = (ImageView) findViewById(R.id.iv_comment_head);
         nameTv = (TextView) findViewById(R.id.tv_comment_name);
         contentTv = (TextView) findViewById(R.id.tv_comment_content);
@@ -77,7 +81,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         inIv = (ImageView) findViewById(R.id.iv_comment_in);
         commentIv = (ImageView) findViewById(R.id.iv_comment);
         rlComment = (RelativeLayout) findViewById(R.id.rl_commentItem);
-        edComment=(EditText)findViewById(R.id.et_comment);
+        edComment = (EditText) findViewById(R.id.et_comment);
         mAdapter = new CommentDetaileAdapter(this, mData);
         commentRyv.setAdapter(mAdapter);
         headIv.setOnClickListener(this);
@@ -101,8 +105,33 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         type = getIntent().getStringExtra("type");
         tag = getIntent().getStringExtra("tag");
         commentId = dataBean.getSourceId();
-        if(null==tag){initTitleBar("评论详情");}else if(tag.equals("replay")){
+        if (null == tag) {
+            initTitleBar("评论详情");
+        } else if (tag.equals("replay")) {
             initTitleBar("回复评论");
+        }
+        //评论者等级
+        if (null != dataBean.getLevelType()) {
+            gradeDetailsIv.setVisibility(View.VISIBLE);
+            gradeNameTv.setVisibility(View.VISIBLE);
+            switch (dataBean.getLevelType()) {
+                case "1":
+                    gradeNameTv.setText("金牌作家");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, gradeDetailsIv);
+                    break;
+                case "2":
+                    gradeNameTv.setText("银牌作家");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, gradeDetailsIv);
+                    break;
+                case "3":
+                    gradeNameTv.setText("铜牌作家");
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, gradeDetailsIv);
+                    break;
+            }
+        } else {
+            gradeDetailsIv.setVisibility(View.GONE);
+            gradeNameTv.setVisibility(View.GONE);
+
         }
 
         onRefresh();
@@ -117,7 +146,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("commentId", commentId);
-                UIUtil.openActivity(CommentDetailActivity.this,CommentSendActivity.class,bundle);
+                UIUtil.openActivity(CommentDetailActivity.this, CommentSendActivity.class, bundle);
             }
         });
         inIv.setVisibility(View.INVISIBLE);
@@ -130,9 +159,9 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
             @Override
             public void onClick(View v) {
                 if (dataBean.isIsLike()) {
-                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"1");
+                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "1");
                 } else {
-                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"0");
+                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(), "0");
                 }
             }
         });
@@ -171,20 +200,20 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     @Override
     public void SaveScoreLikeData(RewardResult model, String type) {
         if (model.isSuccess()) {
-            if (type.equals("0")){//点赞
+            if (type.equals("0")) {//点赞
                 Logger.e("点赞");
                 GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, likeIv);
                 dataBean.setIsLike(true);
-                dataBean.setLikeNum(dataBean.getLikeNum()+1);
+                dataBean.setLikeNum(dataBean.getLikeNum() + 1);
                 likeTv.setText(dataBean.getLikeNum() + "");
-            }else {//取消赞
+            } else {//取消赞
                 Logger.e("取消赞");
                 GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, likeIv);
                 dataBean.setIsLike(false);
-                dataBean.setLikeNum(dataBean.getLikeNum()-1);
+                dataBean.setLikeNum(dataBean.getLikeNum() - 1);
                 likeTv.setText(dataBean.getLikeNum() + "");
             }
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -225,14 +254,14 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.iv_title_finish:
                 finish();
                 break;
             case R.id.iv_comment_head:
                 //跳转用户主页
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("userId",dataBean.getUserId());
+                bundle.putSerializable("userId", dataBean.getUserId());
                 if (SharePrefManager.getUserId().equals(dataBean.getNickName())) {
                     UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, bundle);
                 } else {
@@ -241,6 +270,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
                 break;
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -256,14 +286,15 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
 
     /**
      * 发送评论刷新
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefurshCommentListEvent event){
+    public void onEvent(RefurshCommentListEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh) {
             onRefresh();
-            dataBean.setReplyNum(Integer.parseInt(numberTv.getText().toString())+1);
+            dataBean.setReplyNum(Integer.parseInt(numberTv.getText().toString()) + 1);
             numberTv.setText(dataBean.getReplyNum() + "");//回复人数
         }
     }

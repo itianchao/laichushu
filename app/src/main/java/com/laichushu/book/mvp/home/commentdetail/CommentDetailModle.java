@@ -69,6 +69,15 @@ public class CommentDetailModle {
         private String photo;
         private String commentTime;
         private boolean isLike;
+        private String levelType;
+
+        public String getLevelType() {
+            return levelType;
+        }
+
+        public void setLevelType(String levelType) {
+            this.levelType = levelType;
+        }
 
         public String getId() {
             return id;

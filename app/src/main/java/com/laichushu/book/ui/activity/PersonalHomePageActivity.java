@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.HomeFocusResult;
@@ -17,7 +18,12 @@ import com.laichushu.book.bean.netbean.HomeInfo_paramet;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
+import com.laichushu.book.bean.netbean.PersonalCentreResult;
+import com.laichushu.book.db.Cache_Json;
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.event.RefrushHomePageEvent;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.mvp.mine.personpage.HomePagePresener;
 import com.laichushu.book.mvp.mine.personpage.HomePageView;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -48,7 +54,7 @@ import java.util.List;
  */
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade, ivGreadDetails, ivGreadDetail, ivAnother;
-    private TextView tvTitle, tvNickName, tvAuthorAgree, tvTips;
+    private TextView tvTitle, tvNickName, tvAuthorAgree, tvTips, tvEditInfo;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
     private RadioButton rbDy;
@@ -62,6 +68,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     private boolean dibbleDy = false, dibbleFoMe = false, dibbleFo = false;
     private List<View> pulls = new ArrayList<>();
     private boolean headLoadState, dyLoadState;
+    private PersonalCentreResult result = new PersonalCentreResult();
+    private Cache_JsonDao cache_jsonDao;
     /**
      * handler
      */
@@ -108,6 +116,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perRealName));
         tvTips = ((TextView) inflate.findViewById(R.id.tv_empTips));
         rbDy = ((RadioButton) inflate.findViewById(R.id.rb_dynamic));
+        tvEditInfo = ((TextView) inflate.findViewById(R.id.tv_editInfo));
 
         rgHomeList = ((RadioGroup) inflate.findViewById(R.id.rg_homeList));
         mDyRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_dynamic);
@@ -128,15 +137,22 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
         tvTitle.setText("个人主页");
         tvTitle.setVisibility(View.VISIBLE);
-        GlideUitl.loadImg(mActivity, R.drawable.my_reset2x, ivAnother);
+        GlideUitl.loadImg(mActivity, R.drawable.activity_comment, ivAnother);
         GlideUitl.loadImg(mActivity, R.drawable.icon_geade_details2x, ivGreadDetails);
+
+        DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
+        cache_jsonDao = daoSession.getCache_JsonDao();
+        List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder().
+                where(Cache_JsonDao.Properties.Inter.eq("PersonalDetails")).build().list();
+        result = new Gson().fromJson(cache_jsons.get(0).getJson(), PersonalCentreResult.class);
+
         ivAnother.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
         ivGreadDetail.setOnClickListener(this);
         ivAnother.setOnClickListener(this);
         rgHomeList.setOnCheckedChangeListener(this);
-        initHeadInfo();
+        tvEditInfo.setOnClickListener(this);
         //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
         mDyRecyclerView.setFooterViewText("加载中");
@@ -155,7 +171,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         fbAdapter = new HomePageFocusBeAdapter(this, focusBeData, mvpPresenter, 3);
         mFocuRecyclerView.setAdapter(fbAdapter);
         mFocuRecyclerView.setOnPullLoadMoreListener(this);
-        //初始化动态
+
+        initHeadInfo();
         mvpPresenter.LoadData();
         selectLine(0);
     }
@@ -230,13 +247,18 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 break;
             case R.id.iv_title_other:
                 //编辑
-
                 break;
             case R.id.iv_perGradeDetail:
                 //作者等级说明
                 Bundle bundle = new Bundle();
                 bundle.putString("userID", SharePrefManager.getUserId());
                 UIUtil.openActivity(this, HomePageGradeDetailsActivity.class, bundle);
+                break;
+            case R.id.tv_editInfo:
+                //编辑个人信息
+                Bundle bundleInfo = new Bundle();
+                bundleInfo.putSerializable("result", result);
+                UIUtil.openActivity(this, EditMyselfeInforActivity.class, bundleInfo);
                 break;
         }
     }

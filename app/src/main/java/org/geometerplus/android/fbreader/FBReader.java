@@ -316,7 +316,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         rewardMoneyIv = (ImageView) findViewById(R.id.iv_title_another);//打赏
         selectIv.setScaleType(ImageView.ScaleType.CENTER);
         rewardMoneyIv.setScaleType(ImageView.ScaleType.CENTER);
-        GlideUitl.loadImg2(this, R.drawable.icon_more, selectIv);
+        GlideUitl.loadImg2(this, R.drawable.icon_more2x, selectIv);
         GlideUitl.loadImg2(this, R.drawable.reward, rewardMoneyIv);
 
         //弹窗

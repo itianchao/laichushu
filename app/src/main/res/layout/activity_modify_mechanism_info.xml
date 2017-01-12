@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/bgGrey">
 
     <include
         android:id="@+id/mine_top"
@@ -19,7 +19,7 @@
         <RelativeLayout
             android:id="@+id/rl_updateHeadImg"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="72dp"
             android:layout_marginTop="8dp"
             android:background="@color/white">
 
@@ -31,7 +31,13 @@
                 android:text="更换头像"
                 android:textColor="@color/characterLightGray2"
                 android:textSize="@dimen/edit" />
-
+            <ImageView
+                android:id="@+id/iv_editHead"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/iv_updateHeadImg" />
             <ImageView
                 android:id="@+id/iv_updateHeadImg"
                 android:layout_width="16dp"
@@ -46,7 +52,7 @@
             android:id="@+id/rl_mechanismName"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:background="@color/white">
 
             <TextView
@@ -79,8 +85,8 @@
             android:id="@+id/rl_mechanismAddress"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
             android:background="@color/white">
 
             <TextView
@@ -99,6 +105,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
+
+                android:layout_marginTop="4dp"
                 android:background="@null"
                 android:gravity="center_vertical|right"
                 android:hint="北京文艺出版社"
@@ -110,20 +118,27 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/ed_modifyIntroduce"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="180dp"
         android:layout_below="@+id/ll_item"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:background="@drawable/shape_rectangle_fill_hint"
-        android:gravity="top"
-        android:hint="小组简介"
-        android:paddingLeft="12dp"
-        android:paddingRight="10dp"
-        android:paddingTop="8dp"
-        android:textColor="@color/edit2"
-        android:textColorHint="@color/characterLightGray2"
-        android:textSize="@dimen/edit2" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/ed_modifyIntroduce"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           android:layout_margin="12dp"
+            android:background="@drawable/shape_rectangle_fill_hint"
+            android:gravity="top"
+            android:hint="小组简介"
+            android:paddingLeft="12dp"
+            android:paddingRight="10dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/edit2"
+            android:textColorHint="@color/characterLightGray2"
+            android:textSize="@dimen/edit2" />
+    </RelativeLayout>
 </RelativeLayout>

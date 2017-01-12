@@ -4,22 +4,25 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
-    <include layout="@layout/page_title"/>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp">
+        android:layout_height="180dp">
         <ImageView
             tools:src="@drawable/img_default"
             android:id="@+id/iv_mechanism"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="240dp" />
+
         <LinearLayout
             android:background="@android:color/transparent"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <include
+                android:id="@+id/edit_top"
+                layout="@layout/page_title_trans"
+                android:background="#9000" />
             <TextView
                 android:id="@+id/tv_mechanism"
                 android:gravity="center"

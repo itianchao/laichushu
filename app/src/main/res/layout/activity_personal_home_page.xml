@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/rl_editHeadImg"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="240dp"
         android:background="@drawable/mine_bg">
 
         <include
@@ -46,12 +46,12 @@
 
         <ImageView
             android:id="@+id/iv_perGradeDetails"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="6dp"
-            android:visibility="invisible"
-            android:layout_toRightOf="@+id/iv_perGrade" />
+            android:layout_toRightOf="@+id/iv_perGrade"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/iv_perGradeDetail"
@@ -73,13 +73,18 @@
             android:textSize="@dimen/edit" />
 
         <TextView
-            android:id="@+id/tv_perAuthorAgree"
+            android:id="@+id/tv_editInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_PerNickName"
-            android:layout_marginLeft="4dp"
+            android:layout_below="@+id/tv_perRealName"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
-            android:layout_toRightOf="@+id/tv_PerNickName"
+            android:layout_marginBottom="12dp"
+            android:drawableLeft="@drawable/bookdetail_write"
+            android:drawablePadding="8dp"
+            android:background="@color/global"
+            android:padding="8dp"
+            android:text="编辑个人资料"
             android:textColor="@color/white"
             android:textSize="@dimen/edit" />
     </RelativeLayout>
@@ -130,8 +135,8 @@
             android:layout_marginTop="120dp"
             android:gravity="center_horizontal"
             android:textColor="@color/characterGray"
-            android:visibility="gone"
-            android:textSize="@dimen/edit2" />
+            android:textSize="@dimen/edit2"
+            android:visibility="gone" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_dynamic"

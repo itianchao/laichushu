@@ -7,12 +7,21 @@ import java.io.Serializable;
  */
 
 public class NoticesSave_Paramet implements Serializable {
-    private String partyId, title, content;
+    private String userId,partyId, title, content;
 
-    public NoticesSave_Paramet(String partyId, String title, String content) {
+    public NoticesSave_Paramet(String userId, String partyId, String title, String content) {
+        this.userId = userId;
         this.partyId = partyId;
         this.title = title;
         this.content = content;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getPartyId() {

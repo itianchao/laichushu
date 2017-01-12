@@ -112,7 +112,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
         ivLike.setVisibility(View.VISIBLE);
         ivShare.setVisibility(View.VISIBLE);
         ivShare.setImageResource(R.drawable.activity_share);
-        moreIv.setImageResource(R.drawable.icon_more);
+        moreIv.setImageResource(R.drawable.icon_more2x);
 
         type = getIntent().getStringExtra("type");
         tag = getIntent().getStringExtra("tag");
@@ -152,7 +152,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             moreIv.setOnClickListener(this);
         } else {
             moreIv.setVisibility(View.INVISIBLE);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0,0);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0, 0);
             moreIv.setLayoutParams(params);
         }
     }
@@ -328,8 +328,8 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
                 break;
             case R.id.iv_title_another:
                 //分享
-                String linkUrl= Base64Utils.getStringUrl(topicId,ConstantValue.SHARE_TYPR_TOPIC);
-                ShareUtil.showShare(mActivity, linkUrl,linkUrl,bean.getCreaterPhoto(),bean.getContent(),bean.getTitle());
+                String linkUrl = Base64Utils.getStringUrl(topicId, ConstantValue.SHARE_TYPR_TOPIC);
+                ShareUtil.showShare(mActivity, linkUrl, linkUrl, bean.getCreaterPhoto(), bean.getContent(), bean.getTitle());
                 break;
             case R.id.iv_title_the:
                 //收藏

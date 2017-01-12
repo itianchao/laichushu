@@ -130,7 +130,7 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupDetailPresent
         numberTv.setText(bean.getJoinNum() + "人");//人数
         GlideUitl.loadImg(mActivity, bean.getPhoto(), headIv);//头像
         GlideUitl.loadImg(mActivity, R.drawable.search_icon,searchIv);//搜索
-        GlideUitl.loadImg2(mActivity, R.drawable.icon_more, moreIv);//更多
+        GlideUitl.loadImg2(mActivity, R.drawable.icon_more2x, moreIv);//更多
         GlideUitl.loadImg(mActivity, R.drawable.icon_comment,topicIv);//发话题
         //==============================================点击事件
         backIv.setOnClickListener(this);

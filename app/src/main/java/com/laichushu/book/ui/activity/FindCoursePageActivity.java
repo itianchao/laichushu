@@ -19,8 +19,12 @@ import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
 
+/**
+ * 发现课程
+ * 2017年1月12日18:01:51
+ */
 public class FindCoursePageActivity extends MvpActivity2 implements View.OnClickListener {
-    private ImageView ivBack,searchIv;
+    private ImageView ivBack, searchIv;
     private TextView tvTitle;
     private RadioButton videoRbn, docRbn, mineRbn;
     private int position = -1;
@@ -49,7 +53,7 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
     protected void initData() {
         super.initData();
         tvTitle.setText("课程");
-        GlideUitl.loadImg(mActivity,R.drawable.search_icon,searchIv);
+        GlideUitl.loadImg(mActivity, R.drawable.search_icon, searchIv);
         ivBack.setOnClickListener(this);
         videoRbn.setOnClickListener(this);
         docRbn.setOnClickListener(this);
@@ -93,8 +97,8 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
                 break;
             case R.id.iv_title_other://搜索
                 Bundle bundle = new Bundle();
-                bundle.putInt("type",position);
-                UIUtil.openActivity(mActivity,FindClassSearchActivity.class,bundle);
+                bundle.putInt("type", position);
+                UIUtil.openActivity(mActivity, FindClassSearchActivity.class, bundle);
         }
     }
 

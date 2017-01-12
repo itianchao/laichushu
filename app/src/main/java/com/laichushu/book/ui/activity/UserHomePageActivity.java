@@ -3,6 +3,7 @@ package com.laichushu.book.ui.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
@@ -19,8 +21,14 @@ import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
+import com.laichushu.book.bean.netbean.PersonalCentreResult;
+import com.laichushu.book.db.Cache_Json;
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.event.RefrushHomePageEvent;
 import com.laichushu.book.event.RefrushUserPageEvent;
+import com.laichushu.book.global.BaseApplication;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.mvp.mine.userhomepage.UserHomePagePresener;
 import com.laichushu.book.mvp.mine.userhomepage.UserHomePageView;
@@ -30,9 +38,11 @@ import com.laichushu.book.ui.adapter.UserHeFoucsAdapter;
 import com.laichushu.book.ui.adapter.UserWorksListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ModelUtils;
+import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -52,7 +62,7 @@ import java.util.List;
  */
 public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> implements UserHomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack, ivAnthor, ivOther, ivHead, ivGrade, ivGradeDetails, ivGradeDetail;
-    private TextView tvTitle, nickName, tvAuthorGrade, tvTips;
+    private TextView tvTitle, nickName, tvAuthorGrade, tvTips, tvEditInfo;
     private HomePersonFocusResult.DataBean dataBean;
     private TextView btnFocus;
     private PullLoadMoreRecyclerView mDyRecyclerView, mWorksRecyclerView, mHeFocusRecyclerView, mFocusHeRecyclerView;
@@ -71,6 +81,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private String userId;
     private HomeUserResult userBean;
     private boolean headLoadState, dyLoadState;
+    private String userType;
+    private SwipeRefreshLayout dataSwipe;
     /**
      * 1 关注我的 2 我关注的
      */
@@ -122,6 +134,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         ivGradeDetail = ((ImageView) inflate.findViewById(R.id.iv_userGradeDetail));
         btnFocus = ((TextView) inflate.findViewById(R.id.btn_userFocus));
         tvTips = ((TextView) inflate.findViewById(R.id.tv_empTips));
+        tvEditInfo = ((TextView) inflate.findViewById(R.id.tv_editInfo));
 
         radioGroup = (RadioGroup) inflate.findViewById(R.id.rg_userList);
         mDyRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_userDynamic);
@@ -146,7 +159,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         ivAnthor.setVisibility(View.VISIBLE);
         ivOther.setVisibility(View.VISIBLE);
         GlideUitl.loadImg(mActivity, R.drawable.icon_book_comment, ivAnthor);
-        GlideUitl.loadImg(mActivity, R.drawable.icon_share, ivOther);
+        ivOther.setImageResource(R.drawable.icon_more2x);
         GlideUitl.loadImg(mActivity, R.drawable.icon_geade_details2x, ivGradeDetails);
 
         ivBack.setOnClickListener(this);
@@ -154,6 +167,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         btnFocus.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         ivAnthor.setOnClickListener(this);
+        ivOther.setOnClickListener(this);
 
         //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
@@ -205,7 +219,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 //等级说明
                 Bundle bundle = new Bundle();
                 bundle.putString("userID", userId);
-                UIUtil.openActivity(this, HomePageGradeDetailsActivity.class,bundle);
+                UIUtil.openActivity(this, HomePageGradeDetailsActivity.class, bundle);
                 break;
             case R.id.btn_userFocus:
                 //关注
@@ -218,6 +232,12 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             case R.id.iv_title_another:
                 //打开私信弹框
                 openSendPerMsgDialog();
+                break;
+            case R.id.iv_title_other:
+                //分享 TODO 当前用户类型是否是服务者
+
+                String linkUrl = Base64Utils.getStringUrl(userId, userType);
+                ShareUtil.showShare(mActivity, linkUrl, linkUrl, userBean.getPhoto(), userBean.getIntroduce(), userBean.getNickName());
                 break;
         }
     }
@@ -321,6 +341,14 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             } else {
                 btnFocus.setText("关注");
             }
+            //判断当前用户类型
+            if (null != result.getType()) {
+                if (result.getType().equals(ConstantValue.SERVICER)) {
+                    userType = ConstantValue.SHARE_TYPR_SERVICE;
+                } else {
+                    userType = ConstantValue.SHARE_TYPR_EDITOR;
+                }
+            }
             headLoadState = true;
             Message msg = new Message();
             mhandler.sendMessage(msg);
@@ -354,7 +382,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             Message msg = new Message();
             mhandler.sendMessage(msg);
         } else {
-            if(PAGE_NO==1){
+            if (PAGE_NO == 1) {
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText(result.getErrMsg());
             }
@@ -387,7 +415,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 tvTips.setText(result.getErrMsg());
             }
         } else {
-            if(PAGE_NO==1){
+            if (PAGE_NO == 1) {
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText(result.getErrMsg());
             }
@@ -420,7 +448,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if(PAGE_NO==1){
+            if (PAGE_NO == 1) {
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText(result.getErrMsg());
             }
@@ -454,10 +482,11 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         } else {
             beAdapter.refreshAdapter(focusBeData);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if(PAGE_NO==1){
+            if (PAGE_NO == 1) {
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText(result.getErrMsg());
-            };
+            }
+            ;
         }
         beAdapter.refreshAdapter(focusBeData);
     }

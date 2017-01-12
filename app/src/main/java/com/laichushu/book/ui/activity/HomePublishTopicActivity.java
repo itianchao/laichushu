@@ -210,7 +210,7 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
      */
     public void sendPartyMsg() {
         showProgressDialog();
-        NoticesSave_Paramet saveParamet = new NoticesSave_Paramet(partyId, edAddTitle.getText().toString(), edAddContent.getText().toString());
+        NoticesSave_Paramet saveParamet = new NoticesSave_Paramet(SharePrefManager.getUserId(),partyId, edAddTitle.getText().toString(), edAddContent.getText().toString());
         addSubscription(apiStores.getNoticesSaveList(saveParamet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult result) {
