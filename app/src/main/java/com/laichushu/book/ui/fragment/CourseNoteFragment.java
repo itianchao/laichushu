@@ -185,6 +185,8 @@ public class CourseNoteFragment extends MvpFragment2<NotePresenter> implements N
                 mRecyclerView.setVisibility(View.GONE);
                 createNoteTv.setVisibility(View.GONE);
                 noteId = "";
+                titleEt.setText("");
+                contentEt.setText("");
                 break;
             case R.id.btn_ok:
                 mvpPresenter.preEdit(lessonId, noteId);//空串创建 非空修改

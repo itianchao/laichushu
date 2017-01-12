@@ -44,6 +44,7 @@
         android:imeOptions="actionSend"
         android:inputType="text"
         android:hint="@string/comment_hint"
+        android:textColor="@color/edit2"
         android:textColorHint="@color/hint" />
 
     <include layout="@layout/item_distance" />

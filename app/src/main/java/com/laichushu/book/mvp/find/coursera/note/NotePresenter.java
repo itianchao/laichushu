@@ -66,6 +66,7 @@ public class NotePresenter extends BasePresenter<NoteView> {
      * @param remarks
      */
     public void saveNote(String noteId, String lessonId, String name, String remarks) {
+        mFragment.showProgressDialog();
         LoggerUtil.e("保存笔记");
         NoteSave_Paramet paramet;
         int type;//0创建 1 修改
@@ -80,17 +81,19 @@ public class NotePresenter extends BasePresenter<NoteView> {
         addSubscription(apiStores.getLessonNoteSave(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
+                mFragment.dismissProgressDialog();
                 mvpView.loadSaveNoteSuccess(model,finalType);
             }
 
             @Override
             public void onFailure(int code, String msg) {
+                mFragment.dismissProgressDialog();
                 mvpView.loadSaveNoteDataFail(code + "|" + msg,finalType);
             }
 
             @Override
             public void onFinish() {
-
+                mFragment.dismissProgressDialog();
             }
         });
     }
@@ -102,22 +105,24 @@ public class NotePresenter extends BasePresenter<NoteView> {
      */
     public void deleteNote(String noteId) {
         LoggerUtil.e("删除笔记");
-
+        mFragment.showProgressDialog();
         NoteDelete_Paramet paramet = new NoteDelete_Paramet(noteId);
         addSubscription(apiStores.getLessonNoteDelete(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
+                mFragment.dismissProgressDialog();
                 mvpView.loadDeleteNoteDataSuccess(model);
             }
 
             @Override
             public void onFailure(int code, String msg) {
+                mFragment.dismissProgressDialog();
                 mvpView.loadDeleteNoteDataFail(code + "|" + msg);
             }
 
             @Override
             public void onFinish() {
-
+                mFragment.dismissProgressDialog();
             }
         });
     }
