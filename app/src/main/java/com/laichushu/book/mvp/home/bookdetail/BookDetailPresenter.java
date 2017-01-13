@@ -25,6 +25,7 @@ import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
+import com.laichushu.book.retrofit.ApiDownBack;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.ToastUtil;
@@ -32,10 +33,6 @@ import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -273,8 +270,8 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
         final View customerView = UIUtil.inflate(R.layout.dialog_reward);
         final EditText payEt = (EditText) customerView.findViewById(R.id.et_pay);
         TextView balanceTv = (TextView) customerView.findViewById(R.id.tv_balance);
-        payEt.setHint("只能打赏"+minLimit+"-"+maxLimit+"金额");
-        balanceTv.setText("当前余额："+balance);
+        payEt.setHint("只能打赏" + minLimit + "-" + maxLimit + "金额");
+        balanceTv.setText("当前余额：" + balance);
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,7 +290,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                 } else {
                     try {
                         if (Double.parseDouble(pay) >= minLimit && Double.parseDouble(pay) <= maxLimit) {
-                            if (pay.contains(".") && pay.substring(pay.indexOf(".")+1,pay.length()).length()>2) {
+                            if (pay.contains(".") && pay.substring(pay.indexOf(".") + 1, pay.length()).length() > 2) {
                                 ToastUtil.showToast("不能超过小数点后两位");
                             } else {
                                 // TODO: 2016/11/8 请求打赏
@@ -304,7 +301,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                             }
 
                         } else {
-                            ToastUtil.showToast("只能打赏"+minLimit+"-"+maxLimit+"金额");
+                            ToastUtil.showToast("只能打赏" + minLimit + "-" + maxLimit + "金额");
                         }
                     } catch (NumberFormatException e) {
                         ToastUtil.showToast("请输入正确的价格");
@@ -455,9 +452,9 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                         mvpView.hideLoading();
                         BaseBookEntity baseBookEntity = new BaseBookEntity();
                         baseBookEntity.setBook_path(path);
-                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author,photo,brife);
+                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author, photo, brife);
                     } else {
-                        downloadEpub(url, articleId, author,photo,brife);
+                        downloadEpub(url, articleId, author, photo, brife);
                     }
 
                 } else {
@@ -487,20 +484,20 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      * @param articleId
      * @param author
      */
-    public void downloadEpub(final String url, final String articleId, final String author,final String photo, final String brife) {
+    public void downloadEpub(final String url, final String articleId, final String author, final String photo, final String brife) {
 
         Call<ResponseBody> call = apiStores.downloadFile(url);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    boolean writtenToDisk = writeResponseBodyToDisk(response.body(), articleId,"epub");
+                    boolean writtenToDisk = ApiDownBack.writeResponseBodyToDisk(response.body(), articleId, "epub");
                     if (writtenToDisk) {
                         mvpView.hideLoading();
                         String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
                         BaseBookEntity baseBookEntity = new BaseBookEntity();
                         baseBookEntity.setBook_path(path);
-                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author,photo,brife);
+                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author, photo, brife);
                     } else {
                         ToastUtil.showToast("请检查网络");
                     }
@@ -516,71 +513,6 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                 ToastUtil.showToast("请检查网络");
             }
         });
-    }
-
-    /**
-     * 写入文件
-     *
-     * @param body
-     * @param articleId
-     * @return
-     */
-    private boolean writeResponseBodyToDisk(ResponseBody body, String articleId,String suffix) {
-        try {
-            // todo change the file location/name according to your needs
-            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + "."+suffix;
-
-            File futureStudioIconFile = new File(path);
-
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-
-            try {
-                byte[] fileReader = new byte[4096];
-
-                long fileSize = body.contentLength();
-                long fileSizeDownloaded = 0;
-
-                inputStream = body.byteStream();
-                outputStream = new FileOutputStream(futureStudioIconFile);
-
-                while (true) {
-                    int read = inputStream.read(fileReader);
-
-                    if (read == -1) {
-                        break;
-                    }
-
-                    outputStream.write(fileReader, 0, read);
-
-                    fileSizeDownloaded += read;
-
-                }
-
-                outputStream.flush();
-
-                return true;
-            } catch (IOException e) {
-                mvpView.hideLoading();
-                futureStudioIconFile.delete();
-                return false;
-            } finally {
-                mvpView.hideLoading();
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-
-                if (outputStream != null) {
-                    outputStream.close();
-                }
-            }
-        } catch (IOException e) {
-            mvpView.hideLoading();
-            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + "."+suffix;
-            File futureStudioIconFile = new File(path);
-            futureStudioIconFile.delete();
-            return false;
-        }
     }
 }
 

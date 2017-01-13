@@ -161,8 +161,9 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
      * 点赞 取消赞
      * @param sourceId
      * @param type
+     * @param position
      */
-    public void saveScoreLikeData(String sourceId, final String type){
+    public void saveScoreLikeData(String sourceId, final String type, final int position){
         mvpView.showLoading();
         String sourceType = "1";
         TopicDyLike_Paramet paramet = new TopicDyLike_Paramet(userId,sourceId,sourceType,type);
@@ -171,11 +172,13 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
         addSubscription(apiStores.saveScoreLike(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.SaveScoreLikeData(model,type);
+                mvpView.hideLoading();
+                mvpView.SaveScoreLikeData(model,type,position);
             }
 
             @Override
             public void onFailure(int code, String msg) {
+                mvpView.hideLoading();
                 mvpView.getDataFail("点赞"+"code+" + code + "/msg:" + msg);
             }
 

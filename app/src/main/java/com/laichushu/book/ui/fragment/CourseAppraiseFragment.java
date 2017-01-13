@@ -58,8 +58,6 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
         commentEt = (EditText) mSuccessView.findViewById(R.id.et_comment);
         numRb = (RatingBar) mSuccessView.findViewById(R.id.ratbar_num);
         commentRyv.setLinearLayout();
-        mAdapter = new CommentAllAdapter(mActivity, mData, mvpPresenter);
-        commentRyv.setAdapter(mAdapter);
         commentRyv.setOnPullLoadMoreListener(this);
         commentEt.setOnEditorActionListener(this);
         return mSuccessView;
@@ -67,9 +65,11 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
 
     @Override
     protected void initData() {
+        mAdapter = new CommentAllAdapter(mActivity, mData, mvpPresenter);
+        commentRyv.setAdapter(mAdapter);
         lessonId = getArguments().getInt("lessonId");
         isComment = getArguments().getBoolean("isComment");
-        if(isComment){
+        if(!isComment){
             commentLay.setVisibility(View.GONE);
         }else {
             commentLay.setVisibility(View.VISIBLE);
@@ -128,7 +128,7 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
         if (model.isSuccess()) {
             ToastUtil.showToast("发送成功");
             onRefresh();
-            isComment = true;
+            isComment = false;//能不能评论 false不能评论
             ((FindClassVideoDetailActivity)getActivity()).getMdata().setComment(true);
             commentLay.setVisibility(View.GONE);
         } else {
@@ -142,13 +142,18 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
     }
 
     @Override
-    public void SaveScoreLikeData(RewardResult model, String type) {
+    public void SaveScoreLikeData(RewardResult model, String type,int position) {
         if (model.isSuccess()) {
             if (type.equals("0")) {//点赞
                 Logger.e("点赞");
+                mData.get(position).setIsLike(true);
+                mData.get(position).setLikeNum(mData.get(position).getLikeNum()+1);
             } else {//取消赞
                 Logger.e("取消赞");
+                mData.get(position).setIsLike(false);
+                mData.get(position).setLikeNum(mData.get(position).getLikeNum()-1);
             }
+            mAdapter.setmData(mData);
         } else {
             reloadErrorBtn(model.getErrMsg());
         }

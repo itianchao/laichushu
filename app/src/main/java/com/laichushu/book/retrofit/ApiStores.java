@@ -10,7 +10,6 @@ import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.bean.otherbean.NoteListModle;
-import com.laichushu.book.bean.otherbean.ScoreListModle;
 import com.laichushu.book.bean.otherbean.SpeakListModle;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
@@ -71,7 +70,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL3;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL4;
 
     //登录接口
     @POST("login/do")

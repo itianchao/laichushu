@@ -10,7 +10,7 @@ import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
 public interface AllCommentView {
     void getDataSuccess(ArticleCommentModle model);
     void getSendDataSuccess(SendCommentMoudle model);
-    void SaveScoreLikeData(RewardResult model, String type);
+    void SaveScoreLikeData(RewardResult model, String type, int position);
     void getDataFail(String msg);
     void showLoading();
     void hideLoading();

@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.LessonDetail_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
@@ -31,6 +33,7 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
     private CourseAboutFragment courseAbout;
     private String userId = ConstantValue.USERID;
     private String operateType = ConstantValue.OPERATE_TYPE2;
+    private String sourceType = ConstantValue.COLLECTCOURSE_TYPE;
 
     public VideoDetailPresenter(VideoDetailView view) {
         attachView(view);
@@ -141,6 +144,32 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
             @Override
             public void onFinish() {
 
+            }
+        });
+    }
+    /**
+     * 收藏
+     */
+    public void collectSave(String sourceId, final String type){
+        mActivity.showProgressDialog();
+        LoggerUtil.e("收藏");
+        CollectSave_Paramet paramet = new CollectSave_Paramet(userId,sourceId, sourceType,type);
+        addSubscription(apiStores.collectSave(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mActivity.dismissProgressDialog();
+                mvpView.loadCollectDataSuccess(model,type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mActivity.dismissProgressDialog();
+                mvpView.loadCollectDataFail(code + "|" + msg,type);
+            }
+
+            @Override
+            public void onFinish() {
+                mActivity.dismissProgressDialog();
             }
         });
     }

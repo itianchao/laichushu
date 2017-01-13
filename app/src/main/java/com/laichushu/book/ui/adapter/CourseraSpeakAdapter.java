@@ -8,10 +8,13 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.otherbean.SpeakListModle;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.activity.PDFActivity;
 import com.laichushu.book.ui.base.BaseActivity;
+import com.laichushu.book.ui.fragment.CourseSpeakFragment;
 import com.laichushu.book.utils.UIUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -22,10 +25,12 @@ import java.util.ArrayList;
 public class CourseraSpeakAdapter extends RecyclerView.Adapter<CourseraSpeakAdapter.ViewHolder> {
     private ArrayList<SpeakListModle.DataBean.HandOutsListBean> mData;
     private BaseActivity mActivity;
+    private CourseSpeakFragment mFragment;
 
-    public CourseraSpeakAdapter(BaseActivity mActivity, ArrayList<SpeakListModle.DataBean.HandOutsListBean> mData) {
+    public CourseraSpeakAdapter(CourseSpeakFragment mFragment, BaseActivity mActivity, ArrayList<SpeakListModle.DataBean.HandOutsListBean> mData) {
         this.mData = mData;
         this.mActivity = mActivity;
+        this.mFragment = mFragment;
     }
 
     @Override
@@ -54,11 +59,20 @@ public class CourseraSpeakAdapter extends RecyclerView.Adapter<CourseraSpeakAdap
                         mData.get(i).setSelect(false);
                     }
                 }
-                Bundle bundle = new Bundle();
-                bundle.putString("path", bean.getUrl());
-                bundle.putString("name", bean.getHandOutsId());
-                bundle.putString("title", bean.getName());
-                UIUtil.openActivity(mActivity, PDFActivity.class, bundle);
+                mFragment.emptyIv.setVisibility(View.GONE);
+                mFragment.mRecyclerView.setVisibility(View.GONE);
+                mFragment.contentFay.setVisibility(View.VISIBLE);
+
+                String path = bean.getUrl();
+                String name = bean.getHandOutsId();
+                String title = bean.getName();
+
+                String url = ConstantValue.LOCAL_PATH.SD_PATH +title + name + ".pdf";
+                if (new File(url).exists()) {
+                    mFragment.display(url, false);
+                } else {
+                    mFragment.downloadPdf(path, title + name);
+                }
             }
         });
     }
