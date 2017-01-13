@@ -10,7 +10,6 @@ import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.bean.otherbean.NoteListModle;
-import com.laichushu.book.bean.otherbean.ScoreListModle;
 import com.laichushu.book.bean.otherbean.SpeakListModle;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
@@ -71,6 +70,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL4;
     String API_SERVER_URL = ConstantValue.API_SERVER_URL2;
 
     //登录接口
@@ -582,7 +582,7 @@ public interface ApiStores {
 
     //发现精选课程
     @POST("lesson/lessonList")
-    Observable<FindLessonListResult> findLessonListDatails(@Body FindLessonList_Paramet paramet);
+    Observable<CourseraModle> findLessonListDatails(@Body FindLessonList_Paramet paramet);
 
     //发现小组推荐
     @POST("team/findTopTeam")

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.laichushu.book.mvp.home.allcomment.AllCommentPresenter;
 import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
-import com.laichushu.book.ui.activity.AllCommentActivity;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -45,7 +44,7 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
     }
 
     @Override
-    public void onBindViewHolder(final CommentViewHolder holder, int position) {
+    public void onBindViewHolder(final CommentViewHolder holder, final int position) {
         final ArticleCommentModle.DataBean dataBean = mData.get(position);
         GlideUitl.loadRandImg(mActivity, dataBean.getPhoto(), holder.headIv);//头像
         holder.nameTv.setText(dataBean.getNickName());//用户名
@@ -70,17 +69,17 @@ public class CommentAllAdapter extends RecyclerView.Adapter<CommentAllAdapter.Co
             @Override
             public void onClick(View v) {
                 if (dataBean.isIsLike()) {
-                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"1");
+                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"1",position);
 //                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_normal, holder.likeIv);
-                    dataBean.setIsLike(false);
-                    dataBean.setLikeNum(dataBean.getLikeNum()-1);
-                    holder.likeTv.setText(dataBean.getLikeNum() + "");
+//                    dataBean.setIsLike(false);
+//                    dataBean.setLikeNum(dataBean.getLikeNum()-1);
+//                    holder.likeTv.setText(dataBean.getLikeNum() + "");
                 } else {
-                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"0");
+                    mvpPresenter.saveScoreLikeData(dataBean.getSourceId(),"0", position);
 //                    GlideUitl.loadImg(mActivity, R.drawable.icon_like_red, holder.likeIv);
-                    dataBean.setIsLike(true);
-                    dataBean.setLikeNum(dataBean.getLikeNum()+1);
-                    holder.likeTv.setText(dataBean.getLikeNum() + "");
+//                    dataBean.setIsLike(true);
+//                    dataBean.setLikeNum(dataBean.getLikeNum()+1);
+//                    holder.likeTv.setText(dataBean.getLikeNum() + "");
                 }
                 notifyDataSetChanged();
             }

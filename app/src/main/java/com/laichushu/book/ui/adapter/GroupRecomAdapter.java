@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.adapter;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.find.FindPresenter;
 import com.laichushu.book.mvp.find.group.GroupListModle;
+import com.laichushu.book.ui.activity.FindGroupDetailActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -37,9 +39,19 @@ public class GroupRecomAdapter extends RecyclerView.Adapter<GroupRecomAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(GroupRecomAdapter.ViewHolder holder, int position) {
-        GlideUitl.loadCornersImg(mActivity, 60,dataBeen.get(position).getPhoto(), holder.hot1Iv);
-        holder.tvNAme.setText(dataBeen.get(position).getName());
+    public void onBindViewHolder(GroupRecomAdapter.ViewHolder holder, final int position) {
+        final GroupListModle.DataBean dataBean = dataBeen.get(position);
+        GlideUitl.loadCornersImg(mActivity, 60, dataBean.getPhoto(), holder.hot1Iv);
+        holder.tvNAme.setText(dataBean.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bean",dataBean);
+                bundle.putInt("position",position);
+                UIUtil.openActivity(mActivity,FindGroupDetailActivity.class,bundle);
+            }
+        });
     }
     @Override
     public int getItemCount() {

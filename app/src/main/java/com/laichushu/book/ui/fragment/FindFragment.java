@@ -18,6 +18,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.bean.netbean.FindLessonListResult;
 import com.laichushu.book.mvp.find.FindPresenter;
+import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
 import com.laichushu.book.mvp.find.group.GroupListModle;
 import com.laichushu.book.mvp.home.homelist.HomeModel;
 import com.laichushu.book.mvp.find.FindView;
@@ -66,7 +67,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     //课程
     private ClassRecycleAdapter classAdapter;
     private LinearLayout llContainer;
-    private List<FindLessonListResult.DataBean.LessonListBean> mLessonDate = new ArrayList<>();
+    private ArrayList<CourseraModle.DataBean.LessonListBean> mLessonDate = new ArrayList<>();
     //小组
     private GroupRecomAdapter courseAdapter;
     private ArrayList<GroupListModle.DataBean> mCourseDate = new ArrayList<>();
@@ -215,7 +216,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
      * @param model
      */
     @Override
-    public void getLessonListDataSuccess(FindLessonListResult model) {
+    public void getLessonListDataSuccess(CourseraModle model) {
 //        UIUtil.postDelayed(new Runnable() {
 //            @Override
 //            public void run() {

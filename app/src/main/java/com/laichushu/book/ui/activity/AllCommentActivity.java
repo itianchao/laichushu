@@ -120,15 +120,21 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
      * 点赞
      * @param model
      * @param type
+     * @param position
      */
     @Override
-    public void SaveScoreLikeData(RewardResult model, String type) {
+    public void SaveScoreLikeData(RewardResult model, String type, int position) {
         if (model.isSuccess()) {
-            if (type.equals("0")){//点赞
+            if (type.equals("0")) {//点赞
                 Logger.e("点赞");
-            }else {//取消赞
+                mData.get(position).setIsLike(true);
+                mData.get(position).setLikeNum(mData.get(position).getLikeNum()+1);
+            } else {//取消赞
                 Logger.e("取消赞");
+                mData.get(position).setIsLike(false);
+                mData.get(position).setLikeNum(mData.get(position).getLikeNum()-1);
             }
+            mAdapter.setmData(mData);
         }else {
             ToastUtil.showToast(model.getErrMsg());
         }

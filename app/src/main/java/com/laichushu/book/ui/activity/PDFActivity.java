@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.activity;
 
-import android.provider.Contacts;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,18 +7,14 @@ import android.widget.TextView;
 import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.NewTopicList_Paramet;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.retrofit.ApiDownBack;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.UIUtil;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -63,13 +58,12 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
             }
         });
         titleTv.setText(title);
-        String url = ConstantValue.LOCAL_PATH.SD_PATH + name + ".pdf";
+        String url = ConstantValue.LOCAL_PATH.SD_PATH +title + name + ".pdf";
         if (new File(url).exists()) {
             display(url, false);
         } else {
-            downloadPdf(url, name);
+            downloadPdf(path, title + name);
         }
-
     }
 
     /**
@@ -78,13 +72,13 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
      * @param path
      * @param name
      */
-    private void downloadPdf(String path, final String name) {
+    public void downloadPdf(String path, final String name) {
         Call<ResponseBody> call = apiStores.downloadFile(path);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    boolean writtenToDisk = writeResponseBodyToDisk(response.body(), name, "pdf");
+                    boolean writtenToDisk = ApiDownBack.writeResponseBodyToDisk(response.body(), name, "pdf");
                     if (writtenToDisk) {
                         String path = ConstantValue.LOCAL_PATH.SD_PATH + name + ".pdf";
                         //下载成功
@@ -106,6 +100,7 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
 
     /**
      * 打开pdf
+     *
      * @param path
      * @param jumpToFirstPage
      */
@@ -124,7 +119,7 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
             public void run() {
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             }
-        },30);
+        }, 30);
     }
 
     /**
@@ -151,70 +146,5 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
                 initData();
             }
         });
-    }
-
-    /**
-     * 写入文件
-     *
-     * @param body
-     * @param articleId
-     * @return
-     */
-    private boolean writeResponseBodyToDisk(ResponseBody body, String articleId, String suffix) {
-        try {
-            // todo change the file location/name according to your needs
-            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + "." + suffix;
-
-            File futureStudioIconFile = new File(path);
-
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-
-            try {
-                byte[] fileReader = new byte[4096];
-
-                long fileSize = body.contentLength();
-                long fileSizeDownloaded = 0;
-
-                inputStream = body.byteStream();
-                outputStream = new FileOutputStream(futureStudioIconFile);
-
-                while (true) {
-                    int read = inputStream.read(fileReader);
-
-                    if (read == -1) {
-                        break;
-                    }
-
-                    outputStream.write(fileReader, 0, read);
-
-                    fileSizeDownloaded += read;
-
-                }
-
-                outputStream.flush();
-
-                return true;
-            } catch (IOException e) {
-                reloadErrorBtn();
-                futureStudioIconFile.delete();
-                return false;
-            } finally {
-                reloadErrorBtn();
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-
-                if (outputStream != null) {
-                    outputStream.close();
-                }
-            }
-        } catch (IOException e) {
-            reloadErrorBtn();
-            String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + "." + suffix;
-            File futureStudioIconFile = new File(path);
-            futureStudioIconFile.delete();
-            return false;
-        }
     }
 }

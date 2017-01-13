@@ -40,6 +40,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
     private ArrayList<CourseraModle.DataBean.LessonListBean> mData2 = new ArrayList<>();
     private ArrayList<CourseraModle.DataBean.LessonListBean> mData3 = new ArrayList<>();
     private ImageView emptyIv;
+    private boolean isLoadMore;
 
     @Override
     protected FindClassMinePresenter createPresenter() {
@@ -75,17 +76,23 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
             case R.id.rbn_01:
                 if (position != 1) {
                     position = 1;
+                    historyRbn.setEnabled(false);
+                    downloadRbn.setEnabled(false);
                     loadData(position);
                 }
                 break;
             case R.id.rbn_02:
                 if (position != 2) {
                     position = 2;
+                    collectionRbn.setEnabled(false);
+                    downloadRbn.setEnabled(false);
                     loadData(position);
                 }
                 break;
             case R.id.rbn_03:
                 if (position != 3) {
+                    collectionRbn.setEnabled(false);
+                    historyRbn.setEnabled(false);
                     position = 3;
                     loadData(position);
                 }
@@ -103,6 +110,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
                 if (mData1.isEmpty()){
                     mvpPresenter.loadVideoList(position+"",false);
                 }else {
+                    doMore();
                     mAdapter.setmData(mData1);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     emptyIv.setVisibility(View.GONE);
@@ -112,6 +120,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
                 if (mData2.isEmpty()){
                     mvpPresenter.loadVideoList(position+"",false);
                 }else {
+                    doMore();
                     mAdapter.setmData(mData2);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     emptyIv.setVisibility(View.GONE);
@@ -121,6 +130,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
                 if (mData3.isEmpty()){
                     mvpPresenter.loadVideoList(position+"",false);
                 }else {
+                    doMore();
                     mAdapter.setmData(mData3);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     emptyIv.setVisibility(View.GONE);
@@ -138,14 +148,17 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
             case 1:
                 pageNo1 = 1;
                 mvpPresenter.getParamet().setPageNo(pageNo1+"");
+                mData1.clear();
                 break;
             case 2:
                 pageNo2 = 1;
                 mvpPresenter.getParamet().setPageNo(pageNo2+"");
+                mData2.clear();
                 break;
             case 3:
                 pageNo3 = 1;
                 mvpPresenter.getParamet().setPageNo(pageNo3+"");
+                mData3.clear();
                 break;
         }
         mvpPresenter.loadVideoList(position+"",true);
@@ -156,6 +169,21 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
      */
     @Override
     public void onLoadMore() {
+        switch(position){
+            case 1:
+                pageNo1++;
+                mvpPresenter.getParamet().setPageNo(pageNo1+"");
+                break;
+            case 2:
+                pageNo2++;
+                mvpPresenter.getParamet().setPageNo(pageNo2+"");
+                break;
+            case 3:
+                pageNo3++;
+                mvpPresenter.getParamet().setPageNo(pageNo3+"");
+                break;
+        }
+        isLoadMore = true;
         mvpPresenter.loadVideoList(position+"",true);
     }
 
@@ -165,7 +193,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
      */
     @Override
     public void getMineListDataSuccess(CourseraModle modle) {
-        UIUtil.postPullLoadMoreCompleted(mRecyclerView);
+        doMore();
         if (modle.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!modle.getData().getLessonList().isEmpty()){
@@ -173,19 +201,16 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
                 emptyIv.setVisibility(View.GONE);
                 switch(position){
                     case 1:
-                        pageNo1++;
-                        mvpPresenter.getParamet().setPageNo(pageNo1+"");
                         mData1.addAll(modle.getData().getLessonList());
+                        mAdapter.setmData(mData1);
                         break;
                     case 2:
-                        pageNo2++;
-                        mvpPresenter.getParamet().setPageNo(pageNo2+"");
                         mData2.addAll(modle.getData().getLessonList());
+                        mAdapter.setmData(mData2);
                         break;
                     case 3:
-                        pageNo3++;
-                        mvpPresenter.getParamet().setPageNo(pageNo3+"");
                         mData3.addAll(modle.getData().getLessonList());
+                        mAdapter.setmData(mData3);
                         break;
                 }
 
@@ -194,13 +219,28 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
                     mRecyclerView.setVisibility(View.GONE);
                     emptyIv.setVisibility(View.VISIBLE);
                 }else {
-                    ToastUtil.showToast("没有更多数据了！");
+                    if (isLoadMore){
+                        ToastUtil.showToast("没有更多数据了！");
+                        isLoadMore = false;
+                    }
                     mRecyclerView.setVisibility(View.VISIBLE);
                     emptyIv.setVisibility(View.GONE);
+                    switch(position){
+                        case 1:
+                            mAdapter.setmData(mData1);
+                            break;
+                        case 2:
+                            mAdapter.setmData(mData2);
+                            break;
+                        case 3:
+                            mAdapter.setmData(mData3);
+                            break;
+                    }
                 }
             }
 
         }else {
+            isLoadMore = false;
             if (mvpPresenter.getParamet().getPageNo().equals("1")){
                 reloadErrorBtn();
             }else {
@@ -216,7 +256,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
      */
     @Override
     public void getMineListDataFail(String msg) {
-        UIUtil.postPullLoadMoreCompleted(mRecyclerView);
+        doMore();
         if (mvpPresenter.getParamet().getPageNo().equals("1")){
             reloadErrorBtn();
         }else {
@@ -225,6 +265,19 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
         LoggerUtil.e(msg);
     }
 
+    /**
+     * 处理按钮
+     */
+    private void doMore() {
+        UIUtil.postPullLoadMoreCompleted(mRecyclerView);
+        collectionRbn.setEnabled(true);
+        historyRbn.setEnabled(true);
+        downloadRbn.setEnabled(true);
+    }
+
+    /**
+     * 重新加载按钮
+     */
     public void reloadErrorBtn(){
         refreshPage(LoadingPager.PageState.STATE_ERROR);
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {

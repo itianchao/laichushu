@@ -4,6 +4,7 @@ import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.bean.netbean.FindLessonListResult;
 import com.laichushu.book.bean.netbean.FindLessonList_Paramet;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.FindFragment;
@@ -30,9 +31,9 @@ public class FindPresenter extends BasePresenter<FindView> {
 
     public void loadFindLessonListCommData() {
         addSubscription(apiStores.findLessonListDatails(paramet),
-                new ApiCallback<FindLessonListResult>() {
+                new ApiCallback<CourseraModle>() {
                     @Override
-                    public void onSuccess(FindLessonListResult model) {
+                    public void onSuccess(CourseraModle model) {
                         mvpView.getLessonListDataSuccess(model);
                     }
 

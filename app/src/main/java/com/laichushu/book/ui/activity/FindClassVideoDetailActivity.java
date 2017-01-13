@@ -6,14 +6,21 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailModle;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailPresenter;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ShareUtil;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
+
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * 发现 - 课程 - 视频详情
@@ -30,6 +37,9 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
     private String lessonId;
     private boolean isFrist = true;
     private VideoDetailModle.DataBean mdata;
+    private String logoUrl;
+    private String introduce;
+    private String title;
 
     @Override
     protected VideoDetailPresenter createPresenter() {
@@ -76,8 +86,17 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
             case R.id.iv_download://下载
                 break;
             case R.id.iv_collection://收藏
+                String type;
+                if (mdata.getIsCollect().equals("1")) {//未收藏
+                    type = "0";
+                }else {
+                    type = "1";
+                }
+                mvpPresenter.collectSave(lessonId,type);
                 break;
             case R.id.iv_share://分享
+                String linkUrl= Base64Utils.getStringUrl(lessonId, ConstantValue.SHARE_TYPR_COURSE);
+                ShareUtil.showShare(mActivity, linkUrl,linkUrl,logoUrl,introduce,title);
                 break;
             case R.id.rbn_brief://简介
                 if (index != 0) {
@@ -118,15 +137,18 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             mdata = model.getData();
             titleTv.setText(mdata.getName());
-            if (mdata.getIsCollect().equals("1")) {//收藏
-                GlideUitl.loadImg(mActivity,R.drawable.icon_praise_yes2x,collectionIv);
-            }else {//未收藏
+            if (mdata.getIsCollect().equals("2")) {//未收藏
                 GlideUitl.loadImg(mActivity,R.drawable.icon_praise_no,collectionIv);
+            }else {//已收藏
+                GlideUitl.loadImg(mActivity,R.drawable.icon_praise_yes2x,collectionIv);
             }
             if (isFrist){
                 onClick(briefRbn);
                 isFrist = false;
             }
+            logoUrl = mdata.getThumbUrl();
+            introduce = mdata.getRemarks();
+            title = mdata.getName();
         }else {
             reloadErrorBtn();
             LoggerUtil.e(model.getErrMsg());
@@ -138,6 +160,49 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
         reloadErrorBtn();
         LoggerUtil.e(msg);
     }
+    /**
+     * 收藏 or 取消收藏 成功
+     * @param model
+     * @param type 0 收藏 1 取消
+     */
+    @Override
+    public void loadCollectDataSuccess(RewardResult model, String type) {
+        if (model.isSuccess()) {
+            if (type.equals("0")) {//收藏
+                ToastUtil.showToast("收藏成功");
+                mdata.setIsCollect("1");
+                GlideUitl.loadImg(mActivity, R.drawable.icon_praise_yes2x, collectionIv);
+            }else {//取消
+                ToastUtil.showToast("取消收藏成功");
+                mdata.setIsCollect("2");
+                GlideUitl.loadImg(mActivity, R.drawable.icon_praise_no, collectionIv);
+            }
+        }else {
+            if (type.equals("0")) {//收藏
+                ToastUtil.showToast("收藏失败");
+            }else {//取消
+                ToastUtil.showToast("取消收藏失败");
+            }
+        }
+    }
+
+    /**
+     * 收藏 or 取消收藏 失败
+     * @param msg
+     * @param type 0 收藏 1 取消
+     */
+    @Override
+    public void loadCollectDataFail(String msg, String type) {
+        if (type.equals("0")) {//收藏
+            ToastUtil.showToast("收藏失败");
+        }else {//取消
+            ToastUtil.showToast("取消收藏失败");
+        }
+    }
+
+    /**
+     * 重新加载按钮
+     */
     public void reloadErrorBtn(){
         refreshPage(LoadingPager.PageState.STATE_ERROR);
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
@@ -150,5 +215,11 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
 
     public VideoDetailModle.DataBean getMdata() {
         return mdata;
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //停止shareSDK
+        ShareSDK.stopSDK(mActivity);
     }
 }

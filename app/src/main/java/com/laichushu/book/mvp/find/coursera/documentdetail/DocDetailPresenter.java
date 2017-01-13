@@ -5,15 +5,26 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.laichushu.book.R;
+import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.LessonDetail_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailModle;
 import com.laichushu.book.retrofit.ApiCallback;
+import com.laichushu.book.retrofit.ApiDownBack;
 import com.laichushu.book.ui.activity.FindClassDocDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.CourseAppraiseFragment;
 import com.laichushu.book.ui.fragment.CourseIntroFragment;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ToastUtil;
+
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 发现 - 课程 - 文档详情 Presenter
@@ -26,6 +37,7 @@ public class DocDetailPresenter extends BasePresenter<DocDetailView> {
     private CourseAppraiseFragment courseAppraise;
     private String userId = ConstantValue.USERID;
     private String operateType = ConstantValue.OPERATE_TYPE2;
+    private String sourceType = ConstantValue.COLLECTCOURSE_TYPE;
 
     public DocDetailPresenter(DocDetailView view) {
         attachView(view);
@@ -103,6 +115,70 @@ public class DocDetailPresenter extends BasePresenter<DocDetailView> {
             @Override
             public void onFinish() {
 
+            }
+        });
+    }
+
+    /**
+     * 收藏
+     */
+    public void collectSave(String sourceId, final String type) {
+        mActivity.showProgressDialog();
+        LoggerUtil.e("收藏");
+        CollectSave_Paramet paramet = new CollectSave_Paramet(userId, sourceId, sourceType, type);
+        addSubscription(apiStores.collectSave(paramet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mActivity.dismissProgressDialog();
+                mvpView.loadCollectDataSuccess(model, type);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mActivity.dismissProgressDialog();
+                mvpView.loadCollectDataFail(code + "|" + msg, type);
+            }
+
+            @Override
+            public void onFinish() {
+                mActivity.dismissProgressDialog();
+            }
+        });
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param path
+     * @param name
+     */
+    public void downloadPdf(String path, final String name) {
+        mActivity.showProgressDialog("下载中...");
+        Call<ResponseBody> call = apiStores.downloadFile(path);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    boolean writtenToDisk = ApiDownBack.writeResponseBodyToDisk(response.body(), name, "pdf");
+                    if (writtenToDisk) {
+                        mActivity.dismissProgressDialog();
+                        String path = ConstantValue.LOCAL_PATH.SD_PATH + name + ".pdf";
+                        //下载成功
+                        ToastUtil.showToast("下载成功");
+                        mActivity.downloadTv.setText("观看");
+                    } else {
+                        mActivity.dismissProgressDialog();
+                        ToastUtil.showToast("下载失败");
+                    }
+                } else {
+                    mActivity.dismissProgressDialog();
+                    ToastUtil.showToast("下载失败");
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                mActivity.dismissProgressDialog();
+                ToastUtil.showToast("下载失败");
             }
         });
     }
