@@ -56,7 +56,7 @@
 
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <SinaWeibo AppKey="178903189" AppSecret="f2224bab55a604995d897ac76159ba94" Enable="true" Id="1"
-        RedirectUrl="http://sharesdk.cn" ShareByAppClient="false" SortId="1" />
+        RedirectUrl="http://sharesdk.cn" ShareByAppClient="true" SortId="1" />
 
     <TencentWeibo AppKey="178903189" AppSecret="f2224bab55a604995d897ac76159ba94" Enable="false"
         Id="2" RedirectUri="http://sharesdk.cn" SortId="2" />
@@ -86,7 +86,7 @@
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <QQ AppId="1105805690" AppKey="44gOcERPbMx0TMmh" Enable="true" Id="7" ShareByAppClient="true"
         SortId="7" />
-    <QZone AppId="1105805690" AppKey="44gOcERPbMx0TMmh" Enable="true" Id="3" SortId="3" />
+    <QZone AppId="1105805690" AppKey="44gOcERPbMx0TMmh" Enable="false" Id="3" SortId="3" />
     <Facebook ConsumerKey="107704292745179" ConsumerSecret="38053202e1a5fe26c80c753071f0b573"
         Enable="false" Id="8" RedirectUrl="http://mob.com" SortId="8" />
 

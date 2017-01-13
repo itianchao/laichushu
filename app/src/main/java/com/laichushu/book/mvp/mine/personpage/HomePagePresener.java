@@ -1,5 +1,23 @@
 package com.laichushu.book.mvp.mine.personpage;
 
+import android.app.Activity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.ChangeFocusState_Paramet;
 import com.laichushu.book.bean.netbean.CollectSaveDate_Paramet;
@@ -13,7 +31,13 @@ import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.PersonalHomePageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ToastUtil;
+import com.laichushu.book.utils.UIUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by PCPC on 2016/11/22.
