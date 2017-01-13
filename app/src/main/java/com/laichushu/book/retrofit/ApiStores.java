@@ -575,7 +575,7 @@ public interface ApiStores {
 
     //发现精选课程
     @POST("lesson/lessonList")
-    Observable<FindLessonListResult> findLessonListDatails(@Body FindLessonList_Paramet paramet);
+    Observable<CourseraModle> findLessonListDatails(@Body FindLessonList_Paramet paramet);
 
     //发现小组推荐
     @POST("team/findTopTeam")

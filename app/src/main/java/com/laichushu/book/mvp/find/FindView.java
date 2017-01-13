@@ -1,7 +1,7 @@
 package com.laichushu.book.mvp.find;
 
 import com.laichushu.book.bean.netbean.FindCourseCommResult;
-import com.laichushu.book.bean.netbean.FindLessonListResult;
+import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
 
 /**
  * 发现 - fragment - View
@@ -10,8 +10,12 @@ import com.laichushu.book.bean.netbean.FindLessonListResult;
 
 public interface FindView {
     void getCourseDataSuccess(FindCourseCommResult model);
-    void getLessonListDataSuccess(FindLessonListResult model);
+
+    void getLessonListDataSuccess(CourseraModle model);
+
     void getDataFail(String msg);
+
     void showLoading();
+
     void hideLoading();
 }

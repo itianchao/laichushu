@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.adapter;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,23 +10,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FindLessonListResult;
 import com.laichushu.book.mvp.find.FindPresenter;
+import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
+import com.laichushu.book.ui.activity.FindClassDocDetailActivity;
+import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 精品课
  * Created by PCPC on 2016/12/19.
  */
 
 public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapter.ViewHolder> {
     private Activity context;
-    private List<FindLessonListResult.DataBean.LessonListBean> dataBeen;
+    private List<CourseraModle.DataBean.LessonListBean> dataBeen;
     private FindPresenter bookcastPresener;
 
-    public ClassRecycleAdapter(Activity context, List<FindLessonListResult.DataBean.LessonListBean> dataBean, FindPresenter bookcastPresener) {
+    public ClassRecycleAdapter(Activity context, List<CourseraModle.DataBean.LessonListBean> dataBean, FindPresenter bookcastPresener) {
         this.context = context;
         this.dataBeen = dataBean;
         this.bookcastPresener = bookcastPresener;
@@ -39,14 +44,23 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        GlideUitl.loadImg(context, dataBeen.get(position).getThumbUrl(), holder.ivImg);
-        holder.tvItem.setText(dataBeen.get(position).getName());
-        holder.tvPlayNum.setText(dataBeen.get(position).getClickNum()+"");
+        final CourseraModle.DataBean.LessonListBean bean = dataBeen.get(position);
+        GlideUitl.loadImg(context, bean.getThumbUrl(), holder.ivImg);
+        holder.tvItem.setText(bean.getName());
+        holder.tvPlayNum.setText(bean.getClickNum()+"");
         holder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                跳转图书详情页
-//                bookcastPresener.loadBookDetailsByid(dataBeen.get(position).getArticleId());
+                if (bean.getFileType().equals("1")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("lessonId",bean.getId());
+                    UIUtil.openActivity(context, FindClassVideoDetailActivity.class,bundle);
+                }else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("lessonId",bean.getId());
+                    UIUtil.openActivity(context, FindClassDocDetailActivity.class,bundle);
+                }
+
             }
         });
     }
@@ -61,7 +75,7 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
         return dataBeen == null ? 0 : dataBeen.size();
     }
 
-    public void refreshAdapter(List<FindLessonListResult.DataBean.LessonListBean> listData) {
+    public void refreshAdapter(ArrayList<CourseraModle.DataBean.LessonListBean> listData) {
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);
