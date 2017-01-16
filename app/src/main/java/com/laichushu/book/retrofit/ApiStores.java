@@ -71,6 +71,7 @@ import rx.Observable;
 public interface ApiStores {
     //baseUrl
     String API_SERVER_URL = ConstantValue.API_SERVER_URL2;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
 
     //登录接口
     @POST("login/do")
@@ -175,10 +176,12 @@ public interface ApiStores {
     //获取作者作品 通过图书id查询图书详情
     @POST("searchArticle/findArticleByBookId")
     Observable<BookDetailsModle> getAuthorWorksByBookId(@Body AuthorWorksByBookId_Paramet paramet);
-  //删除图书收藏
+
+    //删除图书收藏
     @POST("collect/delete")
     Observable<RewardResult> getDeleteCollectBookByBookId(@Body DeleteBookByBookId_Paramet paramet);
-  //删除图书浏览
+
+    //删除图书浏览
     @POST("browse/delete")
     Observable<RewardResult> getDeleteBrowseBookByBookId(@Body DeleteBookByBookId_Paramet paramet);
 
@@ -585,7 +588,7 @@ public interface ApiStores {
 
     //发现小组推荐
     @POST("team/findTopTeam")
-    Observable<FindCourseCommResult> findCourseCommendationDatails();
+    Observable<FindCourseCommResult> findCourseCommendationDatails(@Body CourseCommendation_Paramet paramet);
 
     //热门搜索历史
     @POST("searchArticle/findHotArticle")

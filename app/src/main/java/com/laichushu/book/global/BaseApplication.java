@@ -6,21 +6,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
 import com.laichushu.book.db.DaoMaster;
 import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.ui.cc.DataSet;
 import com.laichushu.book.utils.SharePrefManager;
 
 import org.geometerplus.android.fbreader.FBReaderApplication;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
-
-import java.util.List;
 
 import cn.sharesdk.framework.ShareSDK;
 
@@ -65,7 +58,8 @@ public class BaseApplication extends FBReaderApplication {
 //        Thread.currentThread().setUncaughtExceptionHandler(new MyExceptionHandler());
         // 初始化分享
         ShareSDK.initSDK(this);
-
+        //CC数据库初始化
+        DataSet.init(this);
     }
 
     public static Context getContext() {

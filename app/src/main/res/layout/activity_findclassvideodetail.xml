@@ -8,7 +8,12 @@
         android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="250dp">
+        <FrameLayout
+            android:id="@+id/fl_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+        </FrameLayout>
         <ImageView
             android:id="@+id/iv_back"
             android:layout_marginLeft="20dp"
@@ -18,82 +23,88 @@
             android:layout_height="25dp" />
 
     </FrameLayout>
-    <include layout="@layout/item_distance"/>
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_marginLeft="10dp"
-            tools:text="马化腾的创业坎坷之路"
-            android:textColor="@color/edit2"
-            android:textSize="16sp"
-            android:layout_width="0dp"
-            android:layout_weight="6"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/iv_download"
-            android:src="@drawable/icon_download"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_collection"
-            android:src="@drawable/icon_praise_no"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_share"
-            android:src="@drawable/icon_share2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <include layout="@layout/item_distance"/>
-
-    <RadioGroup
-        android:id="@+id/rg_bookList"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rbn_brief"
-            style="@style/mechanism_select"
-            android:checked="true"
-            android:text="简介" />
-
-        <RadioButton
-            android:id="@+id/rbn_pdf"
-            style="@style/mechanism_select"
-            android:text="讲义" />
-
-        <RadioButton
-            android:id="@+id/rbn_note"
-            style="@style/mechanism_select"
-            android:text="笔记" />
-
-        <RadioButton
-            android:id="@+id/rbn_comment"
-            style="@style/mechanism_select"
-            android:text="评论" />
-
-        <RadioButton
-            android:id="@+id/rbn_about"
-            style="@style/mechanism_select"
-            android:text="相关" />
-    </RadioGroup>
-
-    <include layout="@layout/item_distance"/>
-    <FrameLayout
-        android:id="@+id/fay_content"
+        android:id="@+id/lay_content"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </FrameLayout>
+        <include layout="@layout/item_distance"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_marginLeft="10dp"
+                tools:text="马化腾的创业坎坷之路"
+                android:textColor="@color/edit2"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_download"
+                android:src="@drawable/icon_download"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/iv_collection"
+                android:src="@drawable/icon_praise_no"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/iv_share"
+                android:src="@drawable/icon_share2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <include layout="@layout/item_distance"/>
+
+        <RadioGroup
+            android:id="@+id/rg_bookList"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbn_brief"
+                style="@style/mechanism_select"
+                android:checked="true"
+                android:text="简介" />
+
+            <RadioButton
+                android:id="@+id/rbn_pdf"
+                style="@style/mechanism_select"
+                android:text="讲义" />
+
+            <RadioButton
+                android:id="@+id/rbn_note"
+                style="@style/mechanism_select"
+                android:text="笔记" />
+
+            <RadioButton
+                android:id="@+id/rbn_comment"
+                style="@style/mechanism_select"
+                android:text="评论" />
+
+            <RadioButton
+                android:id="@+id/rbn_about"
+                style="@style/mechanism_select"
+                android:text="相关" />
+        </RadioGroup>
+
+        <include layout="@layout/item_distance"/>
+        <FrameLayout
+            android:id="@+id/fay_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+    </LinearLayout>
 </LinearLayout>

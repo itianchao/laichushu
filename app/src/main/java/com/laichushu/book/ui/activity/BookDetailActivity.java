@@ -327,6 +327,10 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             payTv.setText("已购买");
             articleData.setIsPurchase(true);
             bean.setIsPurchase(true);
+            articleData.setPurchase(true);
+            if (articleData.isPurchase()){//电子书
+                probationTv.setVisibility(View.INVISIBLE);
+            }
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
@@ -432,7 +436,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             publishLay.setVisibility(View.VISIBLE);
             String price = "￥ " + articleData.getPrice();
             priceTv.setText(price);//价格
-            if (articleData.getStatus().equals("2")){//电子书
+            if (articleData.getStatus().equals("2")||articleData.isPurchase()){//电子书
                 probationTv.setVisibility(View.INVISIBLE);
             }else {
                 probationTv.setVisibility(View.VISIBLE);
