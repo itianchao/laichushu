@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.res.Configuration;
 import android.support.v7.app.AlertDialog;
 import android.view.Display;
 import android.view.Gravity;
@@ -52,6 +53,11 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
     private Cache_JsonDao cache_jsonDao;
     private City_IdDao city_idDao;
     private List<City_Id> city_idList;
+    //屏幕高度
+    private int screenHeight = 0;
+    //软件盘弹起后所占高度阀值
+    private int keyHeight = 0;
+
     @Override
     protected void initView() {
         setContentView(R.layout.activity_regist2);
@@ -72,6 +78,11 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         city_idDao = daoSession.getCity_IdDao();
         city_idList = city_idDao.queryBuilder().build().list();
+
+        //获取屏幕高度
+        screenHeight = UIUtil.getScreenHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight / 3;
 
         sexTv.setOnClickListener(this);
         addressTv.setOnClickListener(this);
@@ -98,10 +109,10 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
                     showProgressDialog("登陆中...");
                     String phone = phoneTv.getText().toString().trim();
                     String pwd = pwdEt.getText().toString().trim();
-                    mvpPresenter.loginData(phone,pwd);
+                    mvpPresenter.loginData(phone, pwd);
                 }
             }, 1710);
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
             LoggerUtil.e(model.getErrMsg());
         }
@@ -125,6 +136,7 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
 
     /**
      * 登录接口成功
+     *
      * @param model
      */
     @Override
@@ -156,6 +168,7 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
 
     /**
      * 登录接口失败
+     *
      * @param msg
      */
     @Override
@@ -177,17 +190,17 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
                 String phonenum = phoneTv.getText().toString().trim();
                 String pwd = pwdEt.getText().toString().trim();
                 String repwd = repwdEt.getText().toString().trim();
-                if (mvpPresenter.check(name, sex, curProCode,pwd, repwd)) {
+                if (mvpPresenter.check(name, sex, curProCode, pwd, repwd)) {
                     //请求网络
                     showLoading();
-                    mvpPresenter.regist(phonenum, name, sex,curProCode, pwd);
+                    mvpPresenter.regist(phonenum, name, sex, curProCode, pwd);
                 }
                 break;
             case R.id.tv_sex:
                 mvpPresenter.getSex(sexTv);
                 break;
             case R.id.tv_address:
-               //选择地址
+                //选择地址
                 initAreaSelector();
                 break;
         }
@@ -256,6 +269,7 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
         }
         return cityDate;
     }
+
     public void initAreaSelector() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
         final AlertDialog alertDialog = dialogBuilder.create();
@@ -310,6 +324,20 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
         alertDialog.getWindow().setLayout(display.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT);
         alertDialog.getWindow().setWindowAnimations(R.style.timepopwindow_anim_style);
         alertDialog.show();
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks whether a hardware keyboard is available
+        if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
+                ToastUtil.showToast("软键盘弹起");
+            } else if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
+                ToastUtil.showToast("软键盘关闭");
+                pwdEt.clearFocus();
+                repwdEt.clearFocus();
+            }
 
     }
 }

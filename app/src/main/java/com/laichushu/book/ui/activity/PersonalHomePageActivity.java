@@ -53,7 +53,7 @@ import java.util.List;
  * 2016年12月21日14:34:31
  */
 public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> implements HomePageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
-    private ImageView ivBack, ivEdit, iv_headImg, ivPerGrade, ivGreadDetails, ivGreadDetail, ivAnother;
+    private ImageView ivBack, ivEdit, ivHeadImg, ivPerGrade, ivGreadDetails, ivGreadDetail, ivAnother;
     private TextView tvTitle, tvNickName, tvAuthorAgree, tvTips, tvEditInfo;
     private PullLoadMoreRecyclerView mDyRecyclerView, mFocuMeRecyclerView, mFocuRecyclerView;
     private RadioGroup rgHomeList;
@@ -70,6 +70,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     private boolean headLoadState, dyLoadState;
     private PersonalCentreResult result = new PersonalCentreResult();
     private Cache_JsonDao cache_jsonDao;
+    private HomeUserResult headResult;
     /**
      * handler
      */
@@ -109,7 +110,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         ivPerGrade = ((ImageView) inflate.findViewById(R.id.iv_perGrade));
         ivGreadDetails = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetails));
         ivGreadDetail = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetail));
-        iv_headImg = ((ImageView) inflate.findViewById(R.id.iv_PerHeadImg));
+        ivHeadImg = ((ImageView) inflate.findViewById(R.id.iv_PerHeadImg));
         ivAnother = (ImageView) inflate.findViewById(R.id.iv_title_another);
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_middleLeft));
         tvNickName = ((TextView) inflate.findViewById(R.id.tv_PerNickName));
@@ -152,6 +153,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         ivGreadDetail.setOnClickListener(this);
         ivAnother.setOnClickListener(this);
         rgHomeList.setOnCheckedChangeListener(this);
+        ivHeadImg.setOnClickListener(this);
         tvEditInfo.setOnClickListener(this);
         //初始化mRecyclerView 动态
         mDyRecyclerView.setGridLayout(1);
@@ -187,7 +189,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             public void onSuccess(HomeUserResult result) {
                 if (result.isSuccess()) {
                     //初始化个人信息
-                    GlideUitl.loadRandImg(mActivity, result.getPhoto(), iv_headImg, R.drawable.icon_percentre_defhead2x);
+                    headResult=result;
+                    GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHeadImg, R.drawable.icon_percentre_defhead2x);
                     tvNickName.setText(result.getNickName());
                     if (!TextUtils.isEmpty(result.getLevelType())) {
                         ivGreadDetail.setClickable(true);
@@ -259,6 +262,12 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 Bundle bundleInfo = new Bundle();
                 bundleInfo.putSerializable("result", result);
                 UIUtil.openActivity(this, EditMyselfeInforActivity.class, bundleInfo);
+                break;
+            case R.id.iv_PerHeadImg:
+                //展示头像
+                Bundle showHead = new Bundle();
+                showHead.putSerializable("path", result.getPhoto());
+                UIUtil.openActivity(this, ImageShowerActivity.class, showHead);
                 break;
         }
     }

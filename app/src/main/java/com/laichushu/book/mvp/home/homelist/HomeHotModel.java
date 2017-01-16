@@ -258,6 +258,33 @@ public class HomeHotModel implements Parcelable {
         private String detail;
         private String creator;
         private int applyAmount;
+        private String sourceType;
+        private String collectId;
+        private String borwseId;
+
+        public String getBorwseId() {
+            return borwseId;
+        }
+
+        public void setBorwseId(String borwseId) {
+            this.borwseId = borwseId;
+        }
+
+        public String getSourceType() {
+            return sourceType;
+        }
+
+        public void setSourceType(String sourceType) {
+            this.sourceType = sourceType;
+        }
+
+        public String getCollectId() {
+            return collectId;
+        }
+
+        public void setCollectId(String collectId) {
+            this.collectId = collectId;
+        }
 
         public String getCreator() {
             return creator;
@@ -556,6 +583,9 @@ public class HomeHotModel implements Parcelable {
             dest.writeString(this.status);
             dest.writeValue(this.isEdit);
             dest.writeString(this.sourceId);
+            dest.writeString(this.sourceType);
+            dest.writeString(this.collectId);
+            dest.writeString(this.borwseId);
             dest.writeString(this.type);
             dest.writeString(this.name);
             dest.writeByte(this.isDelete ? (byte) 1 : (byte) 0);
@@ -605,6 +635,9 @@ public class HomeHotModel implements Parcelable {
             this.status = in.readString();
             this.isEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
             this.sourceId = in.readString();
+            this.collectId = in.readString();
+            this.borwseId = in.readString();
+            this.sourceType = in.readString();
             this.type = in.readString();
             this.name = in.readString();
             this.isDelete = in.readByte() != 0;

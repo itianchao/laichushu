@@ -255,6 +255,7 @@
         <item name="android:textColor">@color/global</item>
         <item name="android:textSize">16sp</item>
     </style>
+
     <style name="find_class_mine_global_select">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -269,4 +270,26 @@
         <item name="android:layout_marginRight">25dp</item>
     </style>
 
+    <style name="ImageScale" parent="android:Theme.Black.NoTitleBar">
+        <item name="android:windowAnimationStyle">@style/AnimHead</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowFullscreen">true</item>
+        <!-- 设置全屏显示 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">false</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 模糊 -->
+    </style>
+    <!--其中的AnimHead也是样式-->
+
+    <style name="AnimHead" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/showhead_in</item>
+        <item name="android:windowExitAnimation">@anim/showhead_out</item>
+    </style>
 </resources>

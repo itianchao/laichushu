@@ -176,6 +176,14 @@ public interface ApiStores {
     @POST("searchArticle/findArticleByBookId")
     Observable<BookDetailsModle> getAuthorWorksByBookId(@Body AuthorWorksByBookId_Paramet paramet);
 
+    //删除图书收藏
+    @POST("collect/delete")
+    Observable<RewardResult> getDeleteCollectBookByBookId(@Body DeleteBookByBookId_Paramet paramet);
+
+    //删除图书浏览
+    @POST("browse/delete")
+    Observable<RewardResult> getDeleteBrowseBookByBookId(@Body DeleteBookByBookId_Paramet paramet);
+
     //获取作者作品 通过图书id查询图书详情
     @POST("searchArticle/findArticleByBookId")
     Observable<HomeTitleBean> getBookById(@Body AuthorWorksByBookId_Paramet paramet);

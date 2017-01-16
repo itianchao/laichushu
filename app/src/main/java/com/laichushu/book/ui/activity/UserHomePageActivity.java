@@ -167,6 +167,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         btnFocus.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         ivAnthor.setOnClickListener(this);
+        ivHead.setOnClickListener(this);
         ivOther.setOnClickListener(this);
 
         //初始化mRecyclerView 动态
@@ -238,6 +239,12 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
 
                 String linkUrl = Base64Utils.getStringUrl(userId, userType);
                 ShareUtil.showShare(mActivity, linkUrl, linkUrl, userBean.getPhoto(), userBean.getIntroduce(), userBean.getNickName());
+                break;
+            case R.id.iv_userHeadImg:
+                //展示头像
+                Bundle showHead = new Bundle();
+                showHead.putSerializable("path", userBean.getPhoto());
+                UIUtil.openActivity(this, ImageShowerActivity.class, showHead);
                 break;
         }
     }

@@ -1,7 +1,9 @@
 package com.laichushu.book.mvp.mine.bookcast;
 
+import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AuthorWorksByBookId_Paramet;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
+import com.laichushu.book.bean.netbean.DeleteBookByBookId_Paramet;
 import com.laichushu.book.bean.netbean.MyArticBooklist_paramet;
 import com.laichushu.book.bean.netbean.MyBrowseList_paramet;
 import com.laichushu.book.global.ConstantValue;
@@ -10,6 +12,8 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.utils.LoggerUtil;
+
+import java.util.List;
 
 /**
  * Created by PCPC on 2016/11/21.
@@ -119,6 +123,55 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
             @Override
             public void onSuccess(BookDetailsModle model) {
                 mvpView.getBookDetailsByIdDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code" + code + "msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }
+ /**
+     * 删除收藏图书
+     * @param collectId
+     */
+    public void loadDeleteCollectBookById(String collectId, final int position) {
+        mvpView.showDialog();
+        DeleteBookByBookId_Paramet deleteParamet = new DeleteBookByBookId_Paramet(collectId,null);
+        LoggerUtil.e("获取图书详情");
+        addSubscription(apiStores.getDeleteCollectBookByBookId(deleteParamet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getDeleteBookByIdDataSuccess(model,position);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code" + code + "msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.dismissDialog();
+            }
+        });
+    }/**
+     * 删除浏览图书
+     * @param browseId
+     */
+    public void loadDeleteBrowseBookById(String browseId, final int position) {
+        mvpView.showDialog();
+        DeleteBookByBookId_Paramet deleteParamet = new DeleteBookByBookId_Paramet(null,browseId);
+        LoggerUtil.e("获取图书详情");
+        addSubscription(apiStores.getDeleteBrowseBookByBookId(deleteParamet), new ApiCallback<RewardResult>() {
+            @Override
+            public void onSuccess(RewardResult model) {
+                mvpView.getDeleteBookByIdDataSuccess(model,position);
             }
 
             @Override

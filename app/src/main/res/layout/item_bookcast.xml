@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_item"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:orientation="vertical"
-    android:paddingRight="5dp">
+    android:layout_weight="1">
 
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_height="100dp"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/default_shape"
-        android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/tv_item"
+    <LinearLayout
+        android:id="@+id/ll_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/edit"
-        android:textColor="@color/characterGray"
-        android:paddingTop="3dp"
-        android:layout_marginBottom="15dp"
-        android:layout_gravity="center_horizontal"/>
+        android:orientation="vertical"
+        android:paddingRight="5dp">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/default_shape"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:paddingTop="3dp"
+            android:scaleType="fitCenter"
+            android:textColor="@color/characterGray"
+            android:textSize="@dimen/edit" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_deleteBook"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/icon_delete"
+        android:scaleType="fitCenter"
+        android:visibility="gone" />
+</RelativeLayout>
