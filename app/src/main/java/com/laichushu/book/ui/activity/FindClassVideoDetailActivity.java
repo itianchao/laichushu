@@ -1,7 +1,10 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.res.Configuration;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -19,6 +22,8 @@ import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
+
+import java.util.ArrayList;
 
 import cn.sharesdk.framework.ShareSDK;
 
@@ -40,6 +45,12 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
     private String logoUrl;
     private String introduce;
     private String title;
+    private LinearLayout contentLay;
+    private String ccVideoId;
+
+    public LinearLayout getContentLay() {
+        return contentLay;
+    }
 
     @Override
     protected VideoDetailPresenter createPresenter() {
@@ -49,6 +60,7 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
     @Override
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_findclassvideodetail);
+        contentLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_content);//返回按钮
         backIv = (ImageView) mSuccessView.findViewById(R.id.iv_back);//返回按钮
         titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);//标题
         downloadIv = (ImageView) mSuccessView.findViewById(R.id.iv_download);//下载按钮
@@ -149,6 +161,8 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
             logoUrl = mdata.getThumbUrl();
             introduce = mdata.getRemarks();
             title = mdata.getName();
+            ccVideoId = mdata.getCcVideoId();
+            mvpPresenter.replaceFrameLayout(ccVideoId,false);//替换视频播放器
         }else {
             reloadErrorBtn();
             LoggerUtil.e(model.getErrMsg());
@@ -222,4 +236,75 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
         //停止shareSDK
         ShareSDK.stopSDK(mActivity);
     }
+    /**
+     * 接口回调
+     */
+    public interface MyListener {
+        void onTouchEvent(KeyEvent event);
+
+        void onBackPressed();
+    }
+
+    /**
+     * 保存MyTouchListener接口的列表
+     */
+    public ArrayList<MyListener> myTouchListeners = new ArrayList<>();
+    public ArrayList<MyListener> myBackListeners = new ArrayList<>();
+
+    /**
+     * 提供给Fragment通过getActivity()方法来注册自己的方法
+     *
+     * @param listener
+     */
+    public void registerMyTouchListener(MyListener listener) {
+        myTouchListeners.add(listener);
+    }
+
+    public void registerMyBackListener(MyListener listener) {
+        myBackListeners.add(listener);
+    }
+
+    /**
+     * 提供给Fragment通过getActivity()方法来取消注册自己的方法
+     *
+     * @param listener
+     */
+    public void unRegisterMyTouchListener(MyListener listener) {
+        myTouchListeners.remove(listener);
+    }
+
+    public void unRegisterMyBackListener(MyListener listener) {
+        myBackListeners.remove(listener);
+    }
+
+    /**
+     * 分发触摸事件给所有注册了MyTouchListener的接口
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent ev) {
+        for (MyListener listener : myTouchListeners) {
+            listener.onTouchEvent(ev);
+        }
+        return super.dispatchKeyEvent(ev);
+    }
+    // 获得当前屏幕的方向
+    private boolean isPortrait() {
+        int mOrientation = this.getResources().getConfiguration().orientation;
+        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        if (isPortrait()) {
+            super.onBackPressed();
+        } else {
+            for (MyListener listener : myBackListeners) {
+                listener.onBackPressed();
+            }
+        }
+    }
+
 }

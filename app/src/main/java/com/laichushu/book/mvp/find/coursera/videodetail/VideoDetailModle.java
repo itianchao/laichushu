@@ -62,6 +62,7 @@ public class VideoDetailModle {
          * isCollect : 2
          * averageStar :"0"
          * isComment :
+         * ccVideoId
          */
 
         private String id;
@@ -80,6 +81,15 @@ public class VideoDetailModle {
         private String isCollect;//1、收藏 2、已收藏
         private boolean isComment;
         private String createDate;
+        private String ccVideoId;
+
+        public String getCcVideoId() {
+            return ccVideoId;
+        }
+
+        public void setCcVideoId(String ccVideoId) {
+            this.ccVideoId = ccVideoId;
+        }
 
         public String getCreateDate() {
             return createDate;

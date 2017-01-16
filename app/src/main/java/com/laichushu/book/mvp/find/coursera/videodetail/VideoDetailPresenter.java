@@ -12,6 +12,7 @@ import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.cc.MediaPlayFragment;
 import com.laichushu.book.ui.fragment.CourseAboutFragment;
 import com.laichushu.book.ui.fragment.CourseAppraiseFragment;
 import com.laichushu.book.ui.fragment.CourseIntroFragment;
@@ -172,5 +173,25 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
                 mActivity.dismissProgressDialog();
             }
         });
+    }
+
+    /**
+     * 替换视频播放器
+     * @param ccVideoId
+     */
+    public void replaceFrameLayout(String ccVideoId,boolean isLocalPlay) {
+        MediaPlayFragment fragment = new MediaPlayFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("videoId", ccVideoId);//
+        bundle.putBoolean("isLocalPlay", isLocalPlay);
+        fragment.setArguments(bundle);
+        //获取Fragment管理器
+        FragmentManager fm = mActivity.getSupportFragmentManager();
+        //开启事务
+        FragmentTransaction ft = fm.beginTransaction();
+        //将界面上的一块布局替换为Fragment
+        ft.replace(R.id.fl_video, fragment);
+        //提交事物
+        ft.commit();
     }
 }
