@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -8,9 +9,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.MechanismListBean;
 import com.laichushu.book.bean.netbean.MechanismList_Paramet;
-import com.laichushu.book.event.RefrushHomePageEvent;
 import com.laichushu.book.event.RefrushMechanismListEvent;
-import com.laichushu.book.event.RefrushUserPageEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.adapter.MechanismListAdapter;
@@ -69,7 +68,8 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
         EventBus.getDefault().register(this);
         TextView titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
         ImageView finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
-        ImageView searchIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_other);
+        ImageView searchIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_another);
+        ImageView collectListIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_other);
         RadioButton fristRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_01);
         RadioButton scondRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_02);
         RadioButton thridRbn = (RadioButton) mSuccessView.findViewById(R.id.rbn_03);
@@ -84,7 +84,9 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
         thridRbn.setOnClickListener(this);
         finishIv.setOnClickListener(this);
         searchIv.setOnClickListener(this);
+        collectListIv.setOnClickListener(this);
         GlideUitl.loadImg2(this, R.drawable.search_icon, searchIv);
+        GlideUitl.loadImg2(this, R.drawable.login_user, collectListIv);
         titleTv.setText("机构");
         return mSuccessView;
     }
@@ -103,8 +105,13 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
             case R.id.iv_title_finish://关闭
                 finish();
                 break;
-            case R.id.iv_title_other://搜索
+            case R.id.iv_title_another://搜索
                 UIUtil.openActivity(this, MechanismSearchActivity.class);
+                break;
+            case R.id.iv_title_other://我的机构收藏
+                Bundle collBundle = new Bundle();
+                collBundle.putString("articleId", articleId);
+                UIUtil.openActivity(this, MechanismCollectActivity.class, collBundle);
                 break;
             case R.id.rbn_01:
                 if (position != 1) {

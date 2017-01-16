@@ -1111,7 +1111,8 @@
         <activity android:name=".ui.activity.MineServicePageActivity" />
         <activity android:name=".ui.activity.MineBeServantActivity" />
         <activity android:name=".ui.activity.MineAddServantActivity" />
-        <activity android:name=".ui.activity.ImageShowerActivity"></activity>
+        <activity android:name=".ui.activity.ImageShowerActivity" />
+        <activity android:name=".ui.activity.MechanismCollectActivity"></activity>
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@ import com.laichushu.book.bean.netbean.FindEditorListModel;
 
 public interface FindEditPageView {
 
-    void getEditorListDataSuccess(FindEditorListModel model,String orderBy);
+    void getEditorListDataSuccess(FindEditorListModel model,String cityId,String orderBy);
     void showDialog();
 
     void getDataFail(String msg);

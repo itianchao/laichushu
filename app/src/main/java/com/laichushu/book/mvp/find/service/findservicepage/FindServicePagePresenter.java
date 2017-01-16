@@ -1,24 +1,15 @@
 package com.laichushu.book.mvp.find.service.findservicepage;
 
 import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-
 import com.google.gson.Gson;
-import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindSertverList_Paramet;
 import com.laichushu.book.bean.netbean.FindServiceInfoModel;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindServicePageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.widget.TypePopWindow;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
@@ -48,36 +39,21 @@ public class FindServicePagePresenter extends BasePresenter<FindServicePageView>
      * @param v
      */
     public void showRankingDialog(final Activity mActicity, CheckBox v, final String curProCode, final String serviceType) {
-        View customerView = UIUtil.inflate(R.layout.dialog_mechanis_manage_item);
-        final PopupWindow popupWindow = new PopupWindow(customerView,
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        ListView listView = (ListView) customerView.findViewById(R.id.lv_item);
-        List<String> data = new ArrayList<>();
-        data.clear();
-        data.add("综合排行");
-        data.add("合作最多");
-        data.add("评分最高");
-        ArrayAdapter adapter = new ArrayAdapter(mActicity, R.layout.spiner_item_layout, data);
-        listView.setAdapter(adapter);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int xPos = mActicity.getWindowManager().getDefaultDisplay().getWidth() / 2
-               -popupWindow.getWidth()/2;
-        int[] location = new int[2];
-        v.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(v, Gravity.CENTER_HORIZONTAL, 0);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        List<String> mlist = new ArrayList<>();
+        mlist.clear();
+        mlist.add("综合排行");
+        mlist.add("合作最多");
+        mlist.add("评分最高");
+        TypePopWindow popWindow = new TypePopWindow(mActivity, mlist);
+        popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                loadServerListData(curProCode,serviceType,(position+1)+"");
-                if (null != popupWindow)
-                    popupWindow.dismiss();
+            public void clickItem(int position) {
+                loadServerListData(curProCode, serviceType, (position + 1) + "");
             }
         });
-
+        popWindow.setWidth(v.getWidth());
+        popWindow.setHeight(UIUtil.dip2px(40) * mlist.size());
+        popWindow.showAsDropDown(v);
     }
 
     /**
@@ -87,37 +63,20 @@ public class FindServicePagePresenter extends BasePresenter<FindServicePageView>
      * @param v
      */
     public void showServiceTypeDialog(final Activity mActicity, CheckBox v, final String curProCode, final String orderBy) {
-        View customerView = UIUtil.inflate(R.layout.dialog_mechanis_manage_item);
-        final PopupWindow popupWindow = new PopupWindow(customerView,
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        ListView listView = (ListView) customerView.findViewById(R.id.lv_item);
-        List<String> data = new ArrayList<>();
-        data.clear();
-        data.add("代笔");
-        data.add("设计");
-        ArrayAdapter adapter = new ArrayAdapter(mActicity, R.layout.spiner_item_layout, data);
-        listView.setAdapter(adapter);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int xPos = mActicity.getWindowManager().getDefaultDisplay().getWidth() / 4
-                - v.getWidth() / 4;
-        int[] location = new int[2];
-        v.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(v,Gravity.CENTER_HORIZONTAL,0);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        List<String> mlist = new ArrayList<>();
+        mlist.clear();
+        mlist.add("代笔");
+        mlist.add("设计");
+        TypePopWindow popWindow = new TypePopWindow(mActivity, mlist);
+        popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                loadServerListData(curProCode,(position+1)+"",orderBy);
-                if (null != popupWindow) {
-                    popupWindow.dismiss();
-                }
-
+            public void clickItem(int position) {
+                loadServerListData(curProCode, (position + 1) + "", orderBy);
             }
         });
-
+        popWindow.setWidth(v.getWidth());
+        popWindow.setHeight(UIUtil.dip2px(40) * mlist.size());
+        popWindow.showAsDropDown(v);
     }
 
     public FindSertverList_Paramet getSertverList_paramet() {
@@ -140,7 +99,7 @@ public class FindServicePagePresenter extends BasePresenter<FindServicePageView>
         addSubscription(apiStores.getFindServerListDetails(sertverList_paramet), new ApiCallback<FindServiceInfoModel>() {
             @Override
             public void onSuccess(FindServiceInfoModel model) {
-                mvpView.getServercerListDataSuccess(model,serviceType, orderBy);
+                mvpView.getServercerListDataSuccess(model, serviceType, orderBy);
             }
 
             @Override

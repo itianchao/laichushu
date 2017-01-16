@@ -61,7 +61,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         loginBtn.setOnClickListener(this);
         registerTv.setOnClickListener(this);
         forgetTv.setOnClickListener(this);
-        logo.setOnClickListener(this);
+//        logo.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         mvpPresenter.preLogin();
         usernameEt.setInputType(InputType.TYPE_CLASS_PHONE);

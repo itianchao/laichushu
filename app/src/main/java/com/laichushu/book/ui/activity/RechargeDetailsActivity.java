@@ -80,10 +80,6 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                     rbAlipay.setChecked(true);
                     rbWechat.setChecked(false);
                     payPlate = "1";
-                } else {
-//                    rbAlipay.setChecked(false);
-//                    rbWechat.setChecked(true);
-//                    payPlate = "2";
                 }
 
             }
@@ -96,10 +92,6 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                     rbAlipay.setChecked(false);
                     rbWechat.setChecked(true);
                     payPlate = "2";
-                } else {
-//                    rbAlipay.setChecked(true);
-//                    rbWechat.setChecked(false);
-//                    payPlate = "1";
                 }
 
             }

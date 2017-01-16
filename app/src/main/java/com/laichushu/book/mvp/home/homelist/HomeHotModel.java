@@ -262,6 +262,61 @@ public class HomeHotModel implements Parcelable {
         private String collectId;
         private String borwseId;
 
+        /**   "collectId": "977",
+            "sourceId": "9",
+            "sourceType": "2",
+            "partyName": "河北工业出版社",
+            "partyId": "9",
+            "logoUrl": "http://101.254.183.67:9980/group1/M00/00/2E/wKiTPlhmM7aABFoXAADFxjp_Trw855.jpg",
+            "address": "清华大学西门",
+            "grade": "1"*/
+
+       private String partyName;
+       private String partyId;
+       private String logoUrl;
+       private String address;
+       private String grade;
+
+        public String getPartyName() {
+            return partyName;
+        }
+
+        public void setPartyName(String partyName) {
+            this.partyName = partyName;
+        }
+
+        public String getPartyId() {
+            return partyId;
+        }
+
+        public void setPartyId(String partyId) {
+            this.partyId = partyId;
+        }
+
+        public String getLogoUrl() {
+            return logoUrl;
+        }
+
+        public void setLogoUrl(String logoUrl) {
+            this.logoUrl = logoUrl;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+
         public String getBorwseId() {
             return borwseId;
         }
@@ -585,6 +640,12 @@ public class HomeHotModel implements Parcelable {
             dest.writeString(this.sourceId);
             dest.writeString(this.sourceType);
             dest.writeString(this.collectId);
+            dest.writeString(this.partyName);
+            dest.writeString(this.partyId);
+            dest.writeString(this.logoUrl);
+            dest.writeString(this.address);
+            dest.writeString(this.grade);
+
             dest.writeString(this.borwseId);
             dest.writeString(this.type);
             dest.writeString(this.name);
@@ -636,6 +697,11 @@ public class HomeHotModel implements Parcelable {
             this.isEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
             this.sourceId = in.readString();
             this.collectId = in.readString();
+            this.partyName = in.readString();
+            this.partyId = in.readString();
+            this.logoUrl = in.readString();
+            this.address = in.readString();
+            this.grade = in.readString();
             this.borwseId = in.readString();
             this.sourceType = in.readString();
             this.type = in.readString();
