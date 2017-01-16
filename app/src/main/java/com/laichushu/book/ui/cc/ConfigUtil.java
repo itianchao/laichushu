@@ -8,7 +8,7 @@ public class ConfigUtil {
 
 	// 配置帐户ID
 //	public final static String USERID = "B934DEE18E58D275";
-	public final static String USERID = "laichushu@cnipr.com";
+	public final static String USERID = "B53E1087229317CA";
 
 	// 配置下载文件路径
 	public final static String DOWNLOAD_DIR = "CCDownload";

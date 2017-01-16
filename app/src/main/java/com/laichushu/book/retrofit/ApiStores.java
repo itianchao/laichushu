@@ -587,7 +587,7 @@ public interface ApiStores {
 
     //发现小组推荐
     @POST("team/findTopTeam")
-    Observable<FindCourseCommResult> findCourseCommendationDatails();
+    Observable<FindCourseCommResult> findCourseCommendationDatails(@Body CourseCommendation_Paramet paramet);
 
     //热门搜索历史
     @POST("searchArticle/findHotArticle")

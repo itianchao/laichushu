@@ -29,9 +29,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import com.laichushu.book.utils.LoggerUtil;
+
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
@@ -170,6 +171,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 					// 若为previous -> current->next,previous->current
 					myBitmapManager.shift(index == ZLView.PageIndex.next);
 					view.onScrollingFinished(index);
+					LoggerUtil.e(index+"");
 //					//记录当前页数 ---- 记录可不可点
 //					ZLApplication.Instance().onRepaintFinished();
 //					FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();

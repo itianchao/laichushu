@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.find;
 
+import com.laichushu.book.bean.netbean.CourseCommendation_Paramet;
 import com.laichushu.book.bean.netbean.FindCourseCommResult;
 import com.laichushu.book.bean.netbean.FindLessonListResult;
 import com.laichushu.book.bean.netbean.FindLessonList_Paramet;
@@ -51,7 +52,7 @@ public class FindPresenter extends BasePresenter<FindView> {
 
     //小组推荐
     public void loadFindCourseCommData() {
-        addSubscription(apiStores.findCourseCommendationDatails(),
+        addSubscription(apiStores.findCourseCommendationDatails(new CourseCommendation_Paramet(userId)),
                 new ApiCallback<FindCourseCommResult>() {
                     @Override
                     public void onSuccess(FindCourseCommResult model) {

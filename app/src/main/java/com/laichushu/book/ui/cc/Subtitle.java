@@ -1,9 +1,26 @@
 package com.laichushu.book.ui.cc;
 
+import com.laichushu.book.bean.otherbean.BaseBookEntity;
+import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.retrofit.ApiDownBack;
+import com.laichushu.book.retrofit.ApiStores;
+import com.laichushu.book.retrofit.AppClient;
+import com.laichushu.book.utils.ToastUtil;
+import com.laichushu.book.utils.UIUtil;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * 
@@ -70,30 +87,28 @@ public class Subtitle {
 	}
 
 	public void initSubtitleResource(final String url) {
-//		new Thread(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				try {
-//					OkHttpUtils
-//							.get()
-//							.url(url)
-//							.build()
-//							.execute(new StringCallback() {
-//								@Override
-//								public void onError(Call call, Exception e, int i) {
-//
-//								}
-//								@Override
-//								public void onResponse(String s, int i) {
-//									parseSubtitleStr(s);
-//								}
-//							});
-//				} catch (Exception e) {
-//					Log.e("CCVideoViewDemo", "" + e.getMessage());
-//				}
-//			}
-//		}).start();
+		ApiStores apiStores = AppClient.retrofit().create(ApiStores.class);
+		Call<ResponseBody> call = apiStores.downloadFile(url);
+		call.enqueue(new Callback<ResponseBody>() {
+			@Override
+			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+				if (response.isSuccessful()) {
+					try {
+						String s = response.body().string().toString();
+						parseSubtitleStr(s);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+
+				}
+			}
+
+			@Override
+			public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+			}
+		});
 	}
 
 	public String getSubtitleByTime(long time) {
