@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.otherbean.ProbationNumModle;
 
 /**
  * 图书详情
@@ -23,4 +24,8 @@ public interface BookDetailView {
     void SaveScoreLikeData(RewardResult modle, String type, ImageView likeIv);
     void collectSaveData(RewardResult modle);
     void getJurisdictionData(RewardResult modle);
+
+    void getProbationNumDataSuccess(ProbationNumModle model);
+
+    void getProbationNumDataFail(String msg);
 }

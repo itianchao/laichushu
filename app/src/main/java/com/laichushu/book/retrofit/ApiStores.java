@@ -10,6 +10,7 @@ import com.laichushu.book.bean.JsonBean.UrlResult;
 import com.laichushu.book.bean.netbean.*;
 import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.bean.otherbean.NoteListModle;
+import com.laichushu.book.bean.otherbean.ProbationNumModle;
 import com.laichushu.book.bean.otherbean.SpeakListModle;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
@@ -72,6 +73,9 @@ public interface ApiStores {
     //baseUrl
     String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
 
+    /***
+     * 注册登录
+     */
     //登录接口
     @POST("login/do")
     Observable<LoginModel> loginLoadData(@Body Login_Paramet paramet);
@@ -87,6 +91,10 @@ public interface ApiStores {
     //重置密码接口
     @POST("user/resetPwd")
     Observable<ForgetPwdModel> forgetPwdData(@Body ForgetPwd_Paramet paramet);
+
+    /***
+     * 首页
+     */
 
     //home轮播图接口
     @POST("carousel/list")
@@ -199,6 +207,14 @@ public interface ApiStores {
     //获取活动 通过活动Id查询活动详情
     @POST("activity/getActivityById")
     Observable<CampaignModel> getActivityById(@Body ActivityDetail_Paramet paramet);
+
+    //试读
+    @POST("chapter/probationArticle")
+    Observable<ProbationNumModle> getProbationNum(@Body ProbationNum_Paramet paramet);
+
+    /***
+     * 写作
+     */
 
     //获取素材列表接口
     @POST("material/list")
