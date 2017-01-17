@@ -125,13 +125,17 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
          *  ISREADER_NUMBER 试读页数
          */
 
-        FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
-        int current = fbReaderApp.getTextView().pagePosition().Current;
-        LoggerUtil.e(current+"");
+//        if (current>1){
+//            int paragraphIndex = fbReaderApp.getCurrentTOCElement(1).getReference().ParagraphIndex;
+//            LoggerUtil.e(current+"|"+paragraphIndex);
+//        }
+
         if (ConstantValue.ISREADER){
+            FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
+            int current = fbReaderApp.getTextView().pagePosition().Current;
             //如果当前页大于3 并且 是往下翻页
 
-            if (current == ConstantValue.ISREADER_NUMBER*3) {
+            if (current == ConstantValue.ISREADER_NUMBER*5) {
                 getAnimationProvider().doStep();
                 if (getAnimationProvider().getPageToScrollTo() == ZLView.PageIndex.next){
                     onDrawStatic(canvas);// 首次/页面跳转时调用,防止黑屏
