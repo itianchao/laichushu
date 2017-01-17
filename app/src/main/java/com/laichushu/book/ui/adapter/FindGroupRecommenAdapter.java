@@ -47,7 +47,7 @@ public class FindGroupRecommenAdapter extends RecyclerView.Adapter<FindGroupReco
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean",dataBean);
-                bundle.putInt("position",position);
+                bundle.putInt("position",-position-1);
                 UIUtil.openActivity(mActivity,FindGroupDetailActivity.class,bundle);
             }
         });

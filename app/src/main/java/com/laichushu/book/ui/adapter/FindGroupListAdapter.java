@@ -62,7 +62,7 @@ public class FindGroupListAdapter extends RecyclerView.Adapter<FindGroupListAdap
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bean",dataBean);
-                bundle.putInt("position",-position-1);
+                bundle.putInt("position",position);
                 UIUtil.openActivity(mActivity,FindGroupDetailActivity.class,bundle);
             }
         });
