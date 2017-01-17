@@ -12,6 +12,7 @@ import com.laichushu.book.bean.otherbean.CoverDirBean;
 import com.laichushu.book.bean.otherbean.NoteListModle;
 import com.laichushu.book.bean.otherbean.ProbationNumModle;
 import com.laichushu.book.bean.otherbean.SpeakListModle;
+import com.laichushu.book.bean.wechatpay.WxInfo;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
 import com.laichushu.book.mvp.entry.login.LoginModel;
@@ -71,7 +72,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL2;
 
     /***
      * 注册登录
@@ -504,9 +505,12 @@ public interface ApiStores {
     @POST("withdraw/apply")
     Observable<RewardResult> getWithdrawalsApplayDetails(@Body WithdrawalsApplay_Paramet paramet);
 
-    //我的钱包充值
+    //我的钱包充值-支付宝
     @POST("recharge/recharge")
-    Observable<RewardResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
+    Observable<AliPayResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
+    //我的钱包充值--微信
+    @POST("recharge/recharge")
+    Observable<WxInfo> getRechargeAppPayWXDetails(@Body RechargeAppPay_Paramet paramet);
 
     //我的服务者列表--合作
     @POST("servicer/findMyServerList")

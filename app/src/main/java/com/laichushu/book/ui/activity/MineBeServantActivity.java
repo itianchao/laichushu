@@ -3,6 +3,8 @@ package com.laichushu.book.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
@@ -23,6 +25,8 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.FindServerInfoModel;
+import com.laichushu.book.event.RefrushMineBeServiceEvent;
+import com.laichushu.book.event.RefrushWalletEvent;
 import com.laichushu.book.mvp.mine.mineservant.MineBeServantPresener;
 import com.laichushu.book.mvp.mine.mineservant.MineBeServantView;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -33,6 +37,8 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.yanzhenjie.album.Album;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.List;
@@ -48,10 +54,10 @@ import okhttp3.RequestBody;
 public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> implements MineBeServantView, View.OnClickListener {
 
     private ImageView ivBack;
-    private TextView tvTitle, tvServantType,tvAgreement;
+    private TextView tvTitle, tvServantType, tvAgreement;
     private RelativeLayout rlNickName, rlPostOffice, rlJobTitle, rlEmail, rlIdProve, rlServantType;
     private LinearLayout llItem;
-    private ImageView ivVisiting,vistingFront;
+    private ImageView ivVisiting, vistingFront;
     private EditText edNickName, edPostOffice, edJobTitle, edEmail, edIdProve, edIntroduce;
     private Button btnSubmit;
     private CheckBox checkBox;
@@ -59,6 +65,15 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
     private String curServantType = null;
     private int ACTIVITY_REQUEST_SELECT_PHOTO = 100;
     private String type = null;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                finish();
+            }
+        }
+    };
 
     //TODO 判断邮箱格式
     @Override
@@ -114,8 +129,12 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
             mvpPresenter.loadEditorInfoData(SharePrefManager.getUserId());
         }
 
-
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
 
     @Override
@@ -135,8 +154,8 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
             case R.id.tv_agreement:
                 //著作协议
                 Bundle bundle = new Bundle();
-                bundle.putString("type","1");
-                UIUtil.openActivity(mActivity,AgreementDetailsActivity.class,bundle);
+                bundle.putString("type", "1");
+                UIUtil.openActivity(mActivity, AgreementDetailsActivity.class, bundle);
                 break;
             case R.id.btn_servantSubmit:
                 //提交审核
@@ -172,6 +191,7 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
         dismissDialog();
         if (model.isSuccess()) {
             ToastUtil.showToast("请求已受理！");
+            handler.sendEmptyMessageDelayed(1, 1700);
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
@@ -266,6 +286,12 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBus.getDefault().postSticky(new RefrushMineBeServiceEvent(true));
     }
 
     /**

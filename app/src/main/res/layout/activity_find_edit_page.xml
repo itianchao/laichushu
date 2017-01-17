@@ -22,12 +22,13 @@
             android:layout_height="50dp"
             android:background="@color/backGray"
             android:gravity="center_horizontal"
+            android:layout_marginRight="24dp"
             android:orientation="horizontal">
 
             <CheckBox
                 android:id="@+id/rb_total_ranking"
                 style="@style/find_select"
-                android:text="综合排行" />
+                android:text="综合排名" />
 
             <CheckBox
                 android:id="@+id/rb_city"

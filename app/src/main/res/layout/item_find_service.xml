@@ -13,23 +13,35 @@
         android:id="@+id/rl_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:background="@color/white" >
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/rl_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginLeft="12dp">
 
             <ImageView
                 android:id="@+id/iv_userHeadImg"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="12dp"
-                android:layout_centerInParent="true"
                 android:layout_marginLeft="12dp"
-                />
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:id="@+id/tv_teamNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_userHeadImg"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:singleLine="true"
+                android:textColor="@color/characterGray"
+                android:textSize="@dimen/edit2" />
         </RelativeLayout>
 
         <LinearLayout
@@ -80,8 +92,8 @@
                     android:id="@+id/tv_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="24dp"
                     android:gravity="center|left"
+                    android:paddingRight="24dp"
                     android:textColor="@color/characterLightGray2"
                     android:textSize="@dimen/edit2" />
 

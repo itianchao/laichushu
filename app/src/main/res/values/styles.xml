@@ -189,7 +189,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:textSize">@dimen/edit</item>
-        <item name="android:paddingRight">30dp</item>
+        <item name="android:paddingRight">12dp</item>
         <item name="android:background">@color/white</item>
         <item name="android:drawableRight">@drawable/select_find_down</item>
         <item name="android:textColor">@drawable/select_home_color</item>

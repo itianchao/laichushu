@@ -1,11 +1,14 @@
 package com.laichushu.book.ui.activity;
 
-import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -44,6 +47,22 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
     private String curProCode = "";
     private String curCityCode = "";
     private int PAGE_NO = 1;
+
+    public String getCurProCode() {
+        return curProCode;
+    }
+
+    public void setCurProCode(String curProCode) {
+        this.curProCode = curProCode;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
 
     @Override
     protected FindEditPagePresenter createPresenter() {
@@ -97,7 +116,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
                 if (!rbRanking.isChecked()) {
                     rbRanking.setChecked(true);
                 }
-                mvpPresenter.showRankingDialog(mActivity, rbRanking, curProCode);
+                mvpPresenter.showRankingDialog(mActivity, rbRanking, getCurProCode());
                 break;
             case R.id.rb_city:
                 //城市
@@ -111,29 +130,31 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
     }
 
     @Override
-    public void getEditorListDataSuccess(FindEditorListModel model, String orderBy) {
-        editorDate.clear();
-        this.orderBy = orderBy;
+    public void getEditorListDataSuccess(FindEditorListModel model,String cityId, String orderByData) {
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mEditorRecyclerView.setPullLoadMoreCompleted();
             }
         }, 300);
+        if(editorDate.size()>0)
+        editorDate.clear();
+        setCurProCode(cityId);
+        setOrderBy(orderByData);
         if (model.isSuccess()) {
-            editorDate = model.getData();
-            if (!model.getData().isEmpty()) {
+            if (null!=model.getData()&&!model.getData().isEmpty()) {
+                editorDate = model.getData();
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast(model.getErrMsg());
-                ToastUtil.showToast(model.getErrMsg());
+                ToastUtil.showToast("没有更多数据");
             }
-
+            rangeAdapter.refreshAdapter(editorDate);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
-            ToastUtil.showToast("没有更多数据");
+            ToastUtil.showToast(model.getErrMsg());
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
-        rangeAdapter.refreshAdapter(editorDate);
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
     }
 
     @Override
@@ -157,7 +178,6 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
 
     @Override
     public void getDataFail(String msg) {
-
     }
 
     @Override
@@ -167,14 +187,18 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
 
     //选择城市
     public void initAreaSelector() {
-        View customerView = UIUtil.inflate(R.layout.item_pop_find_city, null);
-        final PopupWindow popupWindow = new PopupWindow(customerView,
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity, R.style.DialogStyle);
+        final AlertDialog alertDialog = dialogBuilder.create();
+        LayoutInflater inflater = LayoutInflater.from(mActivity);
+        View customerView = inflater.inflate(R.layout.item_pop_myview, null);
         WheelView wvProvince = ((WheelView) customerView.findViewById(R.id.wv_province));
         final WheelView wvCity = ((WheelView) customerView.findViewById(R.id.wv_city));
         TextView tvCancel = ((TextView) customerView.findViewById(R.id.tv_cancel));
         TextView tvSubmit = ((TextView) customerView.findViewById(R.id.tv_submit));
+        wvProvince.setSelectTextColor("#969696");
+        wvProvince.setLineColor("#969696");
+        wvCity.setSelectTextColor("#969696");
+        wvCity.setLineColor("#969696");
         wvProvince.setOffset(2);
         wvProvince.setSeletion(0);
         wvCity.setOffset(2);
@@ -200,24 +224,26 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow.dismiss();
+                alertDialog.dismiss();
             }
         });
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //提交数据
+                showDialog();
                 mvpPresenter.loadEditorListData(curProCode + curCityCode, orderBy);
-                popupWindow.dismiss();
+                alertDialog.dismiss();
             }
         });
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int xPos = mActivity.getWindowManager().getDefaultDisplay().getWidth() / 4;
-        int[] location = new int[2];
-        rbCity.getLocationOnScreen(location);
-        popupWindow.showAsDropDown(rbRanking,xPos, 0);
+        alertDialog.setView(customerView);
+        alertDialog.show();
+        WindowManager m = getWindowManager();
+        Display display = m.getDefaultDisplay();  //为获取屏幕宽、高
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setLayout(display.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT);
+        alertDialog.getWindow().setWindowAnimations(R.style.timepopwindow_anim_style);
+        alertDialog.show();
 
     }
 

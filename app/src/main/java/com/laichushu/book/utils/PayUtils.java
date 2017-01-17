@@ -102,8 +102,8 @@ public class PayUtils {
      * 支付宝支付
      * 调用SDK支付
      */
-    public void alipay(final Activity activity, String accounts, String tradeNo) {
-        String orderInfo = getOrderInfo("购买商品", "该测试商品的详细描述", accounts, tradeNo);
+    public void alipay(final Activity activity, String price, String tradeNo) {
+        String orderInfo = getOrderInfo("购买商品", "该测试商品的详细描述", price, tradeNo);
         /** 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！ */
         String sign = sign(orderInfo);
         try {

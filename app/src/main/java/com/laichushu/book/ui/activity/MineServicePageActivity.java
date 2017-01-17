@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindServiceCooperateMode;
 import com.laichushu.book.bean.netbean.FindServiceInfoModel;
+import com.laichushu.book.event.RefrushMineBeServiceEvent;
+import com.laichushu.book.event.RefrushWalletEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.mine.mineservice.MineServicePresenter;
 import com.laichushu.book.mvp.mine.mineservice.MineServiceView;
@@ -21,6 +23,10 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +79,7 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
         super.initData();
         tvTitle.setText("我的服务");
         tvRight.setText("成为服务者");
-        if (equals(ConstantValue.READER) || SharePrefManager.getType().equals(ConstantValue.SERVICER) || SharePrefManager.getType().equals(ConstantValue.AUTHOR)) {
+        if (SharePrefManager.getType().equals(ConstantValue.READER) || SharePrefManager.getType().equals(ConstantValue.SERVICER) || SharePrefManager.getType().equals(ConstantValue.AUTHOR)) {
             tvRight.setVisibility(View.VISIBLE);
         } else {
             tvRight.setVisibility(View.GONE);
@@ -111,7 +117,7 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
                     case 1:
                         ToastUtil.showToast("审核通过");
                         Bundle bundle = new Bundle();
-                        bundle.putParcelable("model",this.model);
+                        bundle.putParcelable("model", this.model);
                         UIUtil.openActivity(mActivity, MineAddServantActivity.class);
                         break;
                     case 2:
@@ -255,4 +261,11 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
         LoggerUtil.toJson(msg);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefrushMineBeServiceEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event.isRefursh) {
+            initData();
+        }
+    }
 }

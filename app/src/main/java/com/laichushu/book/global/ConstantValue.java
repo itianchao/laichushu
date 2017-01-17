@@ -141,8 +141,8 @@ public class ConstantValue {
 
     //baseUrl
     public static String API_LAICHUSHU_URL = "http://http://www.laichushu.com/";//来出书网站主页
-//    public static String API_HYPERLINK_URL = "http://192.168.1.103:8090/book/a/share";//张峰分享接口地址
-        public static String API_HYPERLINK_URL = "http://test1.laichushu.com/book-web/a/share";//web分享接口地址
+    //    public static String API_HYPERLINK_URL = "http://192.168.1.103:8090/book/a/share";//张峰分享接口地址
+    public static String API_HYPERLINK_URL = "http://test1.laichushu.com/book-web/a/share";//web分享接口地址
     public static String API_SERVER_URL1 = "http://192.168.1.103:8082/book-app/";//张峰
     public static String API_SERVER_URL2 = "http://192.168.1.150:8082/book-app/";//施大勇5
     public static String API_SERVER_URL3 = "http://test2.laichushu.com/book-app-web/";
@@ -170,19 +170,21 @@ public class ConstantValue {
     }
 
     //支付回调
-    public static final String ALIPAY_CALLBACK_URL = "";
+    public static  String ALIPAY_CALLBACK_URL = "";
     //微信ID
-    public static final String WECHAT_APPID = "wx4c34cc3d9bc5a38b";
+//    public static final String WECHAT_APPID = "wx4c34cc3d9bc5a38b";
+      public static final String WECHAT_APPID = "wx7dfc8d9e989402e3";
 
     // 商户PID
 //    public static final String PARTNER = "2088221508305679";//品维会
 //    public static final String PARTNER = "2088421691773363";//第二教室
-    public static final String PARTNER = "";//来出书
+    public static final String PARTNER = "2088311111593203";//来出书
     // 商户收款账号
 //    public static final String SELLER = "pwdzsw@163.com";//品维会
 //    public static final String SELLER = "zhongshuku@163.com";//第二教室
-    public static final String SELLER = "";//来出书
+    public static final String SELLER = "laichushu@cnipr.com";//来出书
     // 商户私钥，pkcs8格式
 //    public static final String RSA_PRIVATE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCS5eAva1/yAuQD7WVMWPkEMwlCuvS9Bm0CeYZOFfwIyuLDtNKqwvT5AmleGH962nKo8KMGf21jdRI1ZHl+vc1WVZ3fBDDi2ya93dOjhtDs+1YUDluoMC1IIGutO9uFuQaODyNrcmIA7fGLk6X1MlxvTzmIBQQMAWLFbSqHiluxQIDAQAB";
-    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMJLl4C9rX/IC5APtZUxY+QQzCUK69L0GbQJ5hk4V/AjK4sO00qrC9PkCaV4Yf3racqjwowZ/bWN1EjVkeX69zVZVnd8EMOLbJr3d06OG0Oz7VhQOW6gwLUgga60724W5Bo4PI2tyYgDt8YuTpfUyXG9POYgFBAwBYsVtKoeKW7FAgMBAAECgYA6+qNUyz89iMYpxvsB/OorswWlQPlxIfQjeNXGVhorpSF0pt1wzxdaDOD4v+BPKgUFJEzMJp+jWxhTu7D8NQCRQpXOCrHOkjbqa6B3A4Vux7+NGSXhq6h+M0Q8GoEJJLZPlq3EmymFXMrH8XoFO46HCWaTQ26rxbpWuuD6+UEYAQJBAP9i1mSKKfObbw7TVIzCg+RjhfdzNXPtiyq21OYbgw5F2z2lxEwrlhiDUX1n2h2Msqd02RyBtVjVT8cLVRF0yQECQQDCwyjYUbIEQEsK9iUJZXwiblmbulKVNaiwc/J0Mf07iCJzP+JO0+hQp+z0M9aVI7+tjdOYj4Iiiwyu15UawcHFAkEAlCo9hBr8d87nwcwts3RunKR45rU6f8WDBgcIwW+Yu0EgD0YK+r4W2KXnM0B7NMWaKLkL9RPzqFQpcqtKcVQ2AQJABjeMmjshX5ldy9/HluEycTbsjVgJQtIPrHJHDwZ5eukBkIQ9iR6ij9CMc88jzmbxu2yHkJskIE4n/XzMOaptsQJAUO+eZ0URvyCHAQOBjs3E749l1FJMj1LmDV1EiDDd8yDjLpDUbPFfhshLUWNjr/EqQtJgElfeZn8LsrxwhHo1Ng==";
+//    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMJLl4C9rX/IC5APtZUxY+QQzCUK69L0GbQJ5hk4V/AjK4sO00qrC9PkCaV4Yf3racqjwowZ/bWN1EjVkeX69zVZVnd8EMOLbJr3d06OG0Oz7VhQOW6gwLUgga60724W5Bo4PI2tyYgDt8YuTpfUyXG9POYgFBAwBYsVtKoeKW7FAgMBAAECgYA6+qNUyz89iMYpxvsB/OorswWlQPlxIfQjeNXGVhorpSF0pt1wzxdaDOD4v+BPKgUFJEzMJp+jWxhTu7D8NQCRQpXOCrHOkjbqa6B3A4Vux7+NGSXhq6h+M0Q8GoEJJLZPlq3EmymFXMrH8XoFO46HCWaTQ26rxbpWuuD6+UEYAQJBAP9i1mSKKfObbw7TVIzCg+RjhfdzNXPtiyq21OYbgw5F2z2lxEwrlhiDUX1n2h2Msqd02RyBtVjVT8cLVRF0yQECQQDCwyjYUbIEQEsK9iUJZXwiblmbulKVNaiwc/J0Mf07iCJzP+JO0+hQp+z0M9aVI7+tjdOYj4Iiiwyu15UawcHFAkEAlCo9hBr8d87nwcwts3RunKR45rU6f8WDBgcIwW+Yu0EgD0YK+r4W2KXnM0B7NMWaKLkL9RPzqFQpcqtKcVQ2AQJABjeMmjshX5ldy9/HluEycTbsjVgJQtIPrHJHDwZ5eukBkIQ9iR6ij9CMc88jzmbxu2yHkJskIE4n/XzMOaptsQJAUO+eZ0URvyCHAQOBjs3E749l1FJMj1LmDV1EiDDd8yDjLpDUbPFfhshLUWNjr/EqQtJgElfeZn8LsrxwhHo1Ng==";
+      public static final String RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALdfjlTNWG5tGML2JvEpIIZBu60FAGNOXFnLc8HHML2r4JY6aWL2rGwScb04nYLd8Pm8ekSyR0CrWVf/aSLzaAqfQtfWO8EQw5QUKQCyvfASqKiSIUDko4D3PK89WGco3xhdZQCT4H9PPrftTAS/PXOdlk2PX2oqLDaw7W7e8RktAgMBAAECgYBRC12Xo04TOAp6mForudaTH9g3pv895LMySJY3rbagDafsHZLYV1drSFeWnsAWx8qqRZ/wXq7ZKSIKn2qzNMrlLiIfan0q232tVsQlXKjPVenkQ0Tzkyq0oK8TVcoZ8DW4QDeZq3iLJMM8jcYUjB7mhnwJeSB+vEb7qU47WODHwQJBAPNG9/qL2JWYCkpfHIlZNgR358Srmh5Dxk5s6vKhlvDNTm+1jv0/L0JbJ1QOadaU7Q11W/JYySJ4POudxqjMn1ECQQDA9pWVvG3KoUz1n0EfyOZLF8QNur3Qr4pWVewlDOsDi/k7OYHOU7CR+NOuS+3YX9EDVtS8w6vwQfQzOYCtUP0dAkADXekSq5rMvzTtQJG5iOWJfEtV2nYgkxmMfk9mGjxnir/aJe4brSMvTOmnbSej053QQN6L5RSriHR3YlCch3BxAkEAr2x9OQ+A0MIrcPFDB15g3svQVJr8jYfIwAyFDnnb/fF2tzzkoWq8DzijWMV2iUsyfVKnPKS230lWdGtGbEpAkQJBAMkGK/jTQo5zcf2aRurUHC6bBlJpBWgo7FlRUxzO7TKU2JVOFZumxAc1icBc3yve/F2+N/1l6lkhLVt0qBmk3U0=";
 }

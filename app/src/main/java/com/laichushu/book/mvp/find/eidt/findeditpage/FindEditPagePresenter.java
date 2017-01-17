@@ -1,23 +1,15 @@
 package com.laichushu.book.mvp.find.eidt.findeditpage;
 
 import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-
 import com.google.gson.Gson;
-import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindEditorListModel;
 import com.laichushu.book.bean.netbean.FindEditorList_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindEditPageActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.widget.TypePopWindow;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
@@ -47,34 +39,22 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
      * @param v
      */
     public void showRankingDialog(final Activity mActicity,CheckBox v, final String curProcode) {
-        View customerView = UIUtil.inflate(R.layout.dialog_mechanis_manage_item);
-        final PopupWindow popupWindow = new PopupWindow(customerView,
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        ListView listView = (ListView) customerView.findViewById(R.id.lv_item);
-        List<String> data = new ArrayList<>();
-        data.clear();
-        data.add("合作人数");
-        data.add("评分人数");
-        data.add("总分");
-        ArrayAdapter adapter = new ArrayAdapter(mActicity, R.layout.spiner_item_layout, data);
-        listView.setAdapter(adapter);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int xPos = mActivity.getWindowManager().getDefaultDisplay().getWidth() / 2-v.getWidth()/2;
-        popupWindow.showAsDropDown(v,xPos,0);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        List<String> mlist = new ArrayList<>();
+        mlist.clear();
+        mlist.add("合作人数");
+        mlist.add("评分人数");
+        mlist.add("总分");
+        TypePopWindow popWindow = new TypePopWindow(mActivity, mlist);
+        popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void clickItem(int position) {
+                mvpView.showDialog();
                 loadEditorListData(curProcode, (position + 1) + "");
-                if (null != popupWindow) {
-                    popupWindow.dismiss();
-                }
-
             }
         });
-
+        popWindow.setWidth(v.getWidth());
+        popWindow.setHeight(UIUtil.dip2px(40) * mlist.size());
+        popWindow.showAsDropDown(v);
     }
 
     public FindEditorList_Paramet getEditorList_paramet() {
@@ -95,7 +75,7 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
      * @param cityId
      * @param orderBy
      */
-    public void loadEditorListData(String cityId, final String orderBy) {
+    public void loadEditorListData(final String cityId, final String orderBy) {
         getEditorList_paramet().setCityId(cityId);
         getEditorList_paramet().setOrderBy(orderBy);
         Logger.e("参加活动");
@@ -103,7 +83,7 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
         addSubscription(apiStores.getEditorListDatails(editorList_paramet), new ApiCallback<FindEditorListModel>() {
             @Override
             public void onSuccess(FindEditorListModel model) {
-                mvpView.getEditorListDataSuccess(model,orderBy);
+                mvpView.getEditorListDataSuccess(model,cityId,orderBy);
             }
 
             @Override

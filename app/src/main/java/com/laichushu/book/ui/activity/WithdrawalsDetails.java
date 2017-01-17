@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.AliPayResult;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
+import com.laichushu.book.bean.wechatpay.WxInfo;
 import com.laichushu.book.mvp.mine.wallet.WalletPresener;
 import com.laichushu.book.mvp.mine.wallet.WalletView;
 import com.laichushu.book.ui.base.MvpActivity2;
@@ -73,7 +75,12 @@ public class WithdrawalsDetails extends MvpActivity2<WalletPresener> implements 
         bean =getIntent().getParcelableExtra("bean");
         if (bean != null) {
             tvAccountNum.setText(bean.getBalance() + " 元");
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            UIUtil.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                }
+            }, 30);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
@@ -126,7 +133,12 @@ public class WithdrawalsDetails extends MvpActivity2<WalletPresener> implements 
     }
 
     @Override
-    public void getRechargePayDateSuccess(RewardResult model) {
+    public void getRechargePayDateSuccess(AliPayResult model) {
+
+    }
+
+    @Override
+    public void getRechargePayDateSuccess(WxInfo model) {
 
     }
 

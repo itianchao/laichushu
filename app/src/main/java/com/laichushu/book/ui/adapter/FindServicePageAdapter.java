@@ -55,8 +55,9 @@ public class FindServicePageAdapter extends RecyclerView.Adapter<FindServicePage
                 break;
         }
         holder.tvRealName.setText(dataBeen.get(position).getName());
+        holder.tvNum.setText(dataBeen.get(position).getCooperateNum() + "人已合作");
         holder.tvDeails.setText(dataBeen.get(position).getServiceIntroduce());
-        holder.ivImg.setOnClickListener(new View.OnClickListener() {
+        holder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                跳转服务主页
@@ -88,7 +89,7 @@ public class FindServicePageAdapter extends RecyclerView.Adapter<FindServicePage
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout rlItem;
-        public final TextView tvRealName, tvDeails;
+        public final TextView tvRealName, tvDeails, tvNum;
         public final ImageView ivImg;
         public final RatingBar rbNum;
 
@@ -99,6 +100,7 @@ public class FindServicePageAdapter extends RecyclerView.Adapter<FindServicePage
             rlItem = (RelativeLayout) root.findViewById(R.id.rl_item);
             ivImg = (ImageView) root.findViewById(R.id.iv_userHeadImg);
             tvRealName = (TextView) root.findViewById(R.id.tv_realName);
+            tvNum = (TextView) root.findViewById(R.id.tv_teamNum);
             tvDeails = (TextView) root.findViewById(R.id.tv_details);
             rbNum = (RatingBar) root.findViewById(R.id.rb_details);
             this.root = root;

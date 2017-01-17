@@ -46,8 +46,20 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
         holder.tvExperience.setText(dataBeen.get(position).getWorkingYears() + "年工作经验");
         holder.tvPublish.setText(dataBeen.get(position).getPress());
         holder.tvRealName.setText(dataBeen.get(position).getName());
-        holder.tvDegress.setText(dataBeen.get(position).getLevelName());
-        holder.ivImg.setOnClickListener(new View.OnClickListener() {
+        if (null != dataBeen.get(position).getLevel()) {
+            switch (dataBeen.get(position).getLevel()) {
+                case "1":
+                    GlideUitl.loadImg(context, R.drawable.icon_gold_medal2x, holder.tvDegress);
+                    break;
+                case "2":
+                    GlideUitl.loadImg(context, R.drawable.icon_silver_medal2x, holder.tvDegress);
+                    break;
+                case "3":
+                    GlideUitl.loadImg(context, R.drawable.icon_copper_medal2x, holder.tvDegress);
+                    break;
+            }
+        }
+        holder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                跳转编辑主页
@@ -79,8 +91,8 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout rlItem;
-        public final TextView tvTeamWork, tvExperience, tvPublish, tvRealName, tvDegress;
-        public final ImageView ivImg;
+        public final TextView tvTeamWork, tvExperience, tvPublish, tvRealName;
+        public final ImageView ivImg, tvDegress;
         public final View root;
 
         public ViewHolder(View root) {
@@ -91,7 +103,7 @@ public class TotalRanKingAdapter extends RecyclerView.Adapter<TotalRanKingAdapte
             tvExperience = (TextView) root.findViewById(R.id.tv_experience);
             tvPublish = (TextView) root.findViewById(R.id.tv_publish);
             tvRealName = (TextView) root.findViewById(R.id.tv_realName);
-            tvDegress = (TextView) root.findViewById(R.id.tv_authorDegree);
+            tvDegress = (ImageView) root.findViewById(R.id.tv_authorDegree);
             this.root = root;
         }
     }
