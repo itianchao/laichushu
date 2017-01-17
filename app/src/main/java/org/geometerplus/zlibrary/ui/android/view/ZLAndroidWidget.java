@@ -130,21 +130,15 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
         LoggerUtil.e(current+"");
         if (ConstantValue.ISREADER){
             //如果当前页大于3 并且 是往下翻页
-//            ConstantValue.ISREADER_NUMBER+1;
-            TOCTree tocTree = new TOCTree();
-            List<TOCTree> subtrees = tocTree.subtrees();
-            for (TOCTree subtree : subtrees) {
 
+            if (current == ConstantValue.ISREADER_NUMBER*3) {
+                getAnimationProvider().doStep();
+                if (getAnimationProvider().getPageToScrollTo() == ZLView.PageIndex.next){
+                    onDrawStatic(canvas);// 首次/页面跳转时调用,防止黑屏
+                    ZLApplication.Instance().onRepaintFinished();
+                    return;
+                }
             }
-//            LoggerUtil.e(paragraphIndex+"");
-//            if (current == ) {
-//                getAnimationProvider().doStep();
-//                if (getAnimationProvider().getPageToScrollTo() == ZLView.PageIndex.next){
-//                    onDrawStatic(canvas);// 首次/页面跳转时调用,防止黑屏
-//                    ZLApplication.Instance().onRepaintFinished();
-//                    return;
-//                }
-//            }
         }
         //翻页
         if (getAnimationProvider().inProgress()) {
