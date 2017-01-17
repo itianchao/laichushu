@@ -89,4 +89,11 @@
     <string name="subtitle">字幕</string>
     <string name="speed">倍速</string>
     <string name="account_info">账户信息</string>
+
+
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unsupported">不支持错误</string>
+    <string name="errcode_unknown">发送返回</string>
 </resources>

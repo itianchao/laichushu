@@ -12,6 +12,12 @@
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 支付宝 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 微信支付 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -63,6 +69,23 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="j8883asQZL2kwu1cDG9MGh578iq9YZzT" />
+        <!-- 支付宝 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <!--微信支付-->
+        <!--<receiver android:name="net.sourceforge.simcpux.AppRegister">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
         <!-- share -->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -1112,7 +1135,7 @@
         <activity android:name=".ui.activity.MineBeServantActivity" />
         <activity android:name=".ui.activity.MineAddServantActivity" />
         <activity android:name=".ui.activity.ImageShowerActivity" />
-        <activity android:name=".ui.activity.MechanismCollectActivity"></activity>
+        <activity android:name=".ui.activity.MechanismCollectActivity" />
     </application>
 
 </manifest>

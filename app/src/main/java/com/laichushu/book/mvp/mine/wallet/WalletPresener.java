@@ -1,10 +1,12 @@
 package com.laichushu.book.mvp.mine.wallet;
 
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.AliPayResult;
 import com.laichushu.book.bean.netbean.RechargeAppPay_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceRecord_Paramet;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
 import com.laichushu.book.bean.netbean.WithdrawalsApplay_Paramet;
+import com.laichushu.book.bean.wechatpay.WxInfo;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BaseActivity;
@@ -90,14 +92,37 @@ public class WalletPresener extends BasePresenter<WalletView> {
         });
     }
 
-    //钱包充值
-    public void loadRechargeData(String noney, String payPlate) {
+    //钱包充值---支付宝
+    public void loadRechargeData(String money, String payPlate) {
         mvpView.showDialog();
-        RechargeAppPay_Paramet recharge_Paramet_paramet = new RechargeAppPay_Paramet(userId, noney, payPlate);
+        RechargeAppPay_Paramet recharge_Paramet_paramet = new RechargeAppPay_Paramet(userId, money, payPlate);
         LoggerUtil.toJson(paramet);
-        addSubscription(apiStores.getRechargeAppPayDetails(recharge_Paramet_paramet), new ApiCallback<RewardResult>() {
+        addSubscription(apiStores.getRechargeAppPayDetails(recharge_Paramet_paramet), new ApiCallback<AliPayResult>() {
             @Override
-            public void onSuccess(RewardResult model) {
+            public void onSuccess(AliPayResult model) {
+                mvpView.getRechargePayDateSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+                mvpView.dismissDialog();
+            }
+        });
+    }
+//钱包充值---微信
+    public void loadRechargeWXData(String money, String payPlate) {
+        mvpView.showDialog();
+        RechargeAppPay_Paramet recharge_Paramet_paramet = new RechargeAppPay_Paramet(userId, money, payPlate);
+        LoggerUtil.toJson(recharge_Paramet_paramet);
+        addSubscription(apiStores.getRechargeAppPayWXDetails(recharge_Paramet_paramet), new ApiCallback<WxInfo>() {
+            @Override
+            public void onSuccess(WxInfo model) {
                 mvpView.getRechargePayDateSuccess(model);
             }
 

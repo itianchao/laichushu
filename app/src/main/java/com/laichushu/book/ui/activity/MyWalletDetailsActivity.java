@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.AliPayResult;
 import com.laichushu.book.bean.netbean.WalletBalanceReward;
+import com.laichushu.book.bean.wechatpay.WxInfo;
 import com.laichushu.book.event.RefrushWalletEvent;
 import com.laichushu.book.mvp.mine.wallet.WalletPresener;
 import com.laichushu.book.mvp.mine.wallet.WalletView;
@@ -132,7 +134,12 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
     }
 
     @Override
-    public void getRechargePayDateSuccess(RewardResult model) {
+    public void getRechargePayDateSuccess(AliPayResult model) {
+
+    }
+
+    @Override
+    public void getRechargePayDateSuccess(WxInfo model) {
 
     }
 
