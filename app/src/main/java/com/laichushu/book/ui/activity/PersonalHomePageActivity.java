@@ -589,6 +589,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     }
 
     public void reLoadDatas() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {

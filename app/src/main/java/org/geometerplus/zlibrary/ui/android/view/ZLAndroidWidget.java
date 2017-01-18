@@ -130,17 +130,33 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 //            LoggerUtil.e(current+"|"+paragraphIndex);
 //        }
 
-        if (ConstantValue.ISREADER){
+        if (ConstantValue.ISREADER) {
             FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
-            int current = fbReaderApp.getTextView().pagePosition().Current;
             //如果当前页大于3 并且 是往下翻页
-
-            if (current == ConstantValue.ISREADER_NUMBER*5) {
-                getAnimationProvider().doStep();
-                if (getAnimationProvider().getPageToScrollTo() == ZLView.PageIndex.next){
-                    onDrawStatic(canvas);// 首次/页面跳转时调用,防止黑屏
-                    ZLApplication.Instance().onRepaintFinished();
-                    return;
+            if (fbReaderApp.getCurrentTOCElement() != null) {
+                TOCTree parent = fbReaderApp.getCurrentTOCElement().Parent;
+                List<TOCTree>  subtrees = parent.subtrees();//目录
+                TOCTree currentTOCElement = fbReaderApp.getCurrentTOCElement();//当前章节
+                //如果当前章节的text == 试读的章节text，不让翻下一页了
+                if (subtrees.size() >= ConstantValue.ISREADER_NUMBER){
+                    if (currentTOCElement.getText().equals(subtrees.get(ConstantValue.ISREADER_NUMBER-1).getText())) {
+                        getAnimationProvider().doStep();
+                        if (getAnimationProvider().getPageToScrollTo() == ZLView.PageIndex.next) {
+                            onDrawStatic(canvas);// 首次/页面跳转时调用,防止黑屏
+                            ZLApplication.Instance().onRepaintFinished();
+                            return;
+                        }
+                    }
+                    for (int i = 0; i < subtrees.size(); i++) {
+                        if (currentTOCElement.getText().equals(subtrees.get(i).getText())){
+                            if (i>ConstantValue.ISREADER_NUMBER-1){
+                                getAnimationProvider().doStep();
+                                onDrawStatic(canvas);// 首次/页面跳转时调用,防止黑屏
+                                ZLApplication.Instance().onRepaintFinished();
+                                return;
+                            }
+                        }
+                    }
                 }
             }
         }
