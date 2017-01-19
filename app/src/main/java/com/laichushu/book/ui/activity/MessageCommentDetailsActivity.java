@@ -111,7 +111,6 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
             msgAdapter.refreshAdapter(commData);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
             ErrorReloadData(1);
         }
     }
@@ -198,7 +197,8 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     public void ErrorReloadData(final int flg) {
         if (flg == 1) {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+//            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ToastUtil.showToast(R.string.errMsg_data);
         }
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override

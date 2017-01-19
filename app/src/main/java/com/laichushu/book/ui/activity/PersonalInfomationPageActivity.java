@@ -45,15 +45,16 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
     private int PAGE_NO = 1;
     private MessageCommentResult.DataBean dataBean;
     private String sendId, msgId;
-    private Handler handler =new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if(msg.what==1){
+            if (msg.what == 1) {
                 finish();
             }
         }
     };
+
     @Override
     protected MessageCommentPresenter createPresenter() {
         return new MessageCommentPresenter(this);
@@ -143,19 +144,16 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
             }
         }, 300);
         if (model.isSuccess()) {
-            msgData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!msgData.isEmpty()) {
-                perAdapter.refreshAdapter(msgData);
+            if (null!=model.getData()&&!model.getData().isEmpty()) {
+                msgData = model.getData();
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
+            perAdapter.refreshAdapter(msgData);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
-            if (model.getData().size() == 0) {
-                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                ToastUtil.showToast("没有更多信息！");
-            }
+            ErrorReloadData(5);
         }
     }
 
@@ -190,7 +188,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
     public void getDelPerIdfoDataSuccess(RewardResult model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功！");
-            handler.sendEmptyMessageDelayed(1,1700);
+            handler.sendEmptyMessageDelayed(1, 1700);
         } else {
             ToastUtil.showToast("删除失败");
             LoggerUtil.e(model.getErrMsg());
@@ -231,8 +229,9 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
 
 
     @Override
-    public void getDataFail(String msg,int flg) {
+    public void getDataFail(String msg, int flg) {
         LoggerUtil.e(msg);
+        ErrorReloadData(flg);
     }
 
     @Override
@@ -244,5 +243,20 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
     public void dismissDialog() {
         dismissProgressDialog();
     }
-
+    public void ErrorReloadData(final int flg) {
+        if(flg==1){
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                if (flg == 5) {
+                    refreshPage(LoadingPager.PageState.STATE_LOADING);
+                    mvpPresenter.LoadPerDetailsData(sendId, msgId);
+                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 1) {
+                    ToastUtil.showToast(R.string.errMsg_data);
+                }
+            }
+        });
+    }
 }

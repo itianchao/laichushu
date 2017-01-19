@@ -115,11 +115,15 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     @Override
     public void getDataSuccess(HomeHotModel model) {
         if (model.isSuccess()) {
+            if (null != model.getData()) {
+                mData.clear();
+                mData.addAll(model.getData());
+                writeBookAdapter.setmData(mData);
+            } else {
+                ToastUtil.showToast(R.string.errMsg_empty);
+            }
             mRecyclerView.setPullLoadMoreCompleted();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            mData.clear();
-            mData.addAll(model.getData());
-            writeBookAdapter.setmData(mData);
             isLoad = false;
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -129,6 +133,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     /**
      * 修改签约状态
+     *
      * @param model
      * @param articleId
      */
@@ -137,7 +142,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         if (model.isSuccess()) {
             ToastUtil.showToast("修改成功");
             for (int i = 0; i < mData.size(); i++) {
-                if (mData.get(i).getArticleId().equals(articleId)){
+                if (mData.get(i).getArticleId().equals(articleId)) {
                     mData.get(i).setEdit(false);
                     mData.get(i).setDelete(false);
                     mData.get(i).setPermission(false);
@@ -277,11 +282,11 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
      * @param model
      */
     @Override
-    public void updateBookPermission(RewardResult model,String permission, int position) {
+    public void updateBookPermission(RewardResult model, String permission, int position) {
         if (model.isSuccess()) {
             HomeHotModel.DataBean dataBean = mData.get(position);
             dataBean.setPermission(permission);
-            mData.set(position,dataBean);
+            mData.set(position, dataBean);
             ToastUtil.showToast("设置权限成功");
         } else {
             ToastUtil.showToast("设置权限失败");
@@ -465,7 +470,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         if (event.getIndex() != -1) {
             HomeHotModel.DataBean dataBean = mData.get(event.getIndex());
             dataBean.setMaterialPermission(event.getMaterialPermission());
-            mData.set(event.getIndex(),dataBean);
+            mData.set(event.getIndex(), dataBean);
         }
     }
 
