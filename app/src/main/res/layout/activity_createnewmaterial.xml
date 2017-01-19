@@ -52,7 +52,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@string/brief"
+            android:text="详 情 ："
             android:textColor="@color/black"
             android:textSize="@dimen/edit2" />
     </LinearLayout>

@@ -106,7 +106,6 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
             if (model.getData() != null) {
                 mData.addAll(model.getData());
                 mAdapter.setmData(mData);
-                mAdapter.notifyDataSetChanged();
             }
         } else {
             refursh();

@@ -43,7 +43,7 @@ public class MaterialListDirAdapter extends RecyclerView.Adapter<MaterialListDir
 
     @Override
     public void onBindViewHolder(DraftListViewHolder holder, final int position) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         holder.itemView.setLayoutParams(params);
         if (isGone) {
             holder.deleteIv.setVisibility(View.VISIBLE);
@@ -115,5 +115,6 @@ public class MaterialListDirAdapter extends RecyclerView.Adapter<MaterialListDir
 
     public void setmData(ArrayList<SourceMaterialDirModle.DataBean> mData) {
         this.mData = mData;
+        notifyDataSetChanged();
     }
 }

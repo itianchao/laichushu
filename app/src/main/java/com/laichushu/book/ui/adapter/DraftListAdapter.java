@@ -44,6 +44,7 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
     public void onBindViewHolder(DraftListViewHolder holder, final int position) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         holder.itemView.setLayoutParams(params);
+        final DraftModle.DataBean dataBean = mData.get(position);
         if (isGone) {
             holder.deleteIv.setVisibility(View.VISIBLE);
             holder.renameTv.setVisibility(View.INVISIBLE);
@@ -52,13 +53,24 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
             holder.deleteIv.setVisibility(View.GONE);
             holder.renameTv.setVisibility(View.VISIBLE);
             holder.reviseTv.setVisibility(View.GONE);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", dataBean.getName());
+                    bundle.putString("path", dataBean.getContentUrlApp());
+                    bundle.putString("content", dataBean.getContent());
+                    bundle.putString("name", dataBean.getName());
+                    bundle.putString("articleId",mActivity.getArticleId());
+                    UIUtil.openActivity(mActivity, NopublishBookActivity.class, bundle);
+                }
+            });
         }
-        final DraftModle.DataBean dataBean = mData.get(position);
         holder.nameTv.setText(dataBean.getName());
         holder.renameTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mvpPresenter.openRameDialog(dataBean.getId(),position);
+                mvpPresenter.openRameDialog(dataBean.getId(),position, dataBean.getName());
             }
         });
         holder.reviseTv.setOnClickListener(new View.OnClickListener() {
@@ -71,19 +83,6 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
             @Override
             public void onClick(View v) {
                 mvpPresenter.openDeleteDialog(dataBean.getId(),position);
-            }
-        });
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("title", dataBean.getName());
-                bundle.putString("path", dataBean.getContentUrlApp());
-                bundle.putString("content", dataBean.getContent());
-                bundle.putString("name", dataBean.getName());
-                bundle.putString("articleId",mActivity.getArticleId());
-                UIUtil.openActivity(mActivity, NopublishBookActivity.class, bundle);
             }
         });
     }

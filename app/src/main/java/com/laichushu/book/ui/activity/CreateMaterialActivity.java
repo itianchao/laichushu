@@ -74,7 +74,7 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
         //mEditor.setBackgroundResource(R.drawable.bg);
         mEditor.setPadding(10, 10, 10, 10);
 //            mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
-        mEditor.setPlaceholder("请输入简介内容");
+        mEditor.setPlaceholder("请输入详情内容");
 
         mEditor.setOnTextChangeListener(new MineRichEditor.OnTextChangeListener() {
             @Override

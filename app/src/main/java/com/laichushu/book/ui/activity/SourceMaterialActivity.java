@@ -110,7 +110,6 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
             if (model.getData() != null) {
                 mData.addAll(model.getData());
                 mAdapter.setmData(mData);
-                mAdapter.notifyDataSetChanged();
             }
         } else {
             refursh();
@@ -125,7 +124,6 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
             ToastUtil.showToast("删除成功");
             mData.remove(index);
             mAdapter.setmData(mData);
-            mAdapter.notifyDataSetChanged();
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
@@ -139,7 +137,6 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
             SourceMaterialModle.DataBean dataBean = mData.get(index);
             dataBean.setName(name);
             mAdapter.setmData(mData);
-            mAdapter.notifyDataSetChanged();
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }

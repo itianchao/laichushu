@@ -1,6 +1,7 @@
 package com.laichushu.book.retrofit;
 
 
+import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -29,9 +30,11 @@ public abstract class ApiCallback<M> extends Subscriber<M> {
             Logger.e("code: ", code);
             if (code == 504) {
                 msg = "网络不给力";
+                ToastUtil.showToast("网络错误，请检查网络！");
             }
             if (code == 502 || code == 404) {
                 msg = "服务器异常，请稍后再试";
+                ToastUtil.showToast("服务器异常，请稍后再试！");
             }
             onFailure(code, msg);
         } else {

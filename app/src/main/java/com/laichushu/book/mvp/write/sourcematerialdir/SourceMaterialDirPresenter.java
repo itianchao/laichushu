@@ -165,7 +165,8 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
         TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
-        dialogTitleTv.setText("确认修改素材文件夹名称?");
+//        dialogTitleTv.setText("确认修改素材文件夹名称?");
+        dialogTitleTv.setText("修改素材文件夹名称?");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +176,7 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
         });
         //确认
         final EditText dialogEt = (EditText) customerView.findViewById(R.id.et_dialog);
-
+        dialogEt.setHint("");
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -319,7 +320,8 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
         TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
-        dialogTitleTv.setText("创建素材");
+//        dialogTitleTv.setText("创建素材");
+        dialogTitleTv.setText("添加文件夹");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -329,7 +331,8 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
         });
         //确认
         final EditText dialogEt = (EditText) customerView.findViewById(R.id.et_dialog);
-        dialogEt.setHint("请输入素材名称");
+//        dialogEt.setHint("请输入素材名称");
+        dialogEt.setHint("");
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

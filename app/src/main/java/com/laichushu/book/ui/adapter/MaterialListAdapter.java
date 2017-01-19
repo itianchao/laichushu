@@ -54,19 +54,21 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
         }
         final SourceMaterialModle.DataBean dataBean = mData.get(position);
         holder.nameTv.setText(dataBean.getName());
-        holder.renameTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mvpPresenter.openRameDialog(dataBean.getId(),position);
-            }
-        });
+        holder.renameTv.setText("编辑");
+//        重命名对话框注释掉
+//        holder.renameTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mvpPresenter.openRameDialog(dataBean.getId(),position);
+//            }
+//        });
         holder.deleteIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mvpPresenter.openDeleteDialog(dataBean.getId(),position);
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: 2016/11/22 跳转素材目录
@@ -74,12 +76,14 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
                 bundle.putString("articleId", dataBean.getArticleId());
                 bundle.putString("parentId", dataBean.getId());
                 bundle.putString("title", dataBean.getName());
-                bundle.putString("type","2");//1、新建2、编辑
-                bundle.putString("html",dataBean.getContentUrlPc());//url
-                bundle.putString("dir",mActivity.getMaterialTitle());//url
+                bundle.putString("type", "2");//1、新建2、编辑
+                bundle.putString("html", dataBean.getContentUrlPc());//url
+                bundle.putString("dir", mActivity.getMaterialTitle());//url
                 UIUtil.openActivity(mActivity, CreateMaterialActivity.class, bundle);
             }
-        });
+        };
+        holder.renameTv.setOnClickListener(listener);
+        holder.itemView.setOnClickListener(listener);
     }
 
     @Override
@@ -117,5 +121,6 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
 
     public void setmData(ArrayList<SourceMaterialModle.DataBean> mData) {
         this.mData = mData;
+        notifyDataSetChanged();
     }
 }

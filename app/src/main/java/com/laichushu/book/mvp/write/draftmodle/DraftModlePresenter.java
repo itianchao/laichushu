@@ -129,15 +129,16 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
 
     /**
      * 重命名对话框
-     *
-     * @param id
+     *  @param id
      * @param index
+     * @param text
      */
-    public void openRameDialog(final String id, final int index) {
+    public void openRameDialog(final String id, final int index, String text) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
         TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
-        dialogTitleTv.setText("确认修改目录名称?");
+//        dialogTitleTv.setText("确认修改目录名称?");
+        dialogTitleTv.setVisibility(View.GONE);
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +148,7 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
         });
         //确认
         final EditText dialogEt = (EditText) customerView.findViewById(R.id.et_dialog);
+        dialogEt.setText(text);
 
         customerView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +180,7 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
         TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
-        dialogTitleTv.setText("创建目录\n(添加内容请到pc端)");
+        dialogTitleTv.setText("添加目录\n(添加草稿内容请到PC端)");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
