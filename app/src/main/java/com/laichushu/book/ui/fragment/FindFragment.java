@@ -3,6 +3,7 @@ package com.laichushu.book.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +73,30 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     //小组
     private GroupRecomAdapter courseAdapter;
     private ArrayList<GroupListModle.DataBean> mCourseDate = new ArrayList<>();
+    private boolean frist = false;
+    private boolean second = false;
+    /**
+     * handler
+     */
+    private MyHandler mhandler = new MyHandler(this);
 
+    static class MyHandler extends Handler {
+        private WeakReference<FindFragment> weakReference;
+
+        MyHandler(FindFragment mFragment) {
+            weakReference = new WeakReference<>(mFragment);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            FindFragment mFragment = weakReference.get();
+            if (mFragment != null) {
+                if (mFragment.frist && mFragment.second) {
+                    mFragment.refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                }
+            }
+        }
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -230,7 +255,9 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
         if (model.isSuccess()) {
             mLessonDate = model.getData().getLessonList();
             classAdapter.refreshAdapter(mLessonDate);
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            frist = true;
+            Message msg = new Message();
+            mhandler.sendMessage(msg);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             ErrorReloadData();
@@ -248,7 +275,9 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
         if (model.isSuccess()) {
             mCourseDate = model.getData();
             courseAdapter.refreshAdapter(mCourseDate);
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            second = true;
+            Message msg = new Message();
+            mhandler.sendMessage(msg);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             ErrorReloadData();
@@ -321,8 +350,8 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
             @Override
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
-                mvpPresenter.loadFindLessonListCommData();
-                mvpPresenter.loadFindCourseCommData();
+                if (!frist) mvpPresenter.loadFindLessonListCommData();
+                if (!second) mvpPresenter.loadFindCourseCommData();
             }
         });
     }
