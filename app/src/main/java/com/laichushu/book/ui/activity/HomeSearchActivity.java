@@ -53,7 +53,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     private ListView searchLv;
     private ListView childLay;
     private PullLoadMoreRecyclerView bookRyv;
-    private String pageNo = "2";
+    private String pageNo = "1";
     private String search = "";
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private ArrayList<HomeHotModel.DataBean> mAllData = new ArrayList<>();

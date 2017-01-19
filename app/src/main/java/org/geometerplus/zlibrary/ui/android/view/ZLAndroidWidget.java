@@ -147,16 +147,6 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                             return;
                         }
                     }
-                    for (int i = 0; i < subtrees.size(); i++) {
-                        if (currentTOCElement.getText().equals(subtrees.get(i).getText())){
-                            if (i>ConstantValue.ISREADER_NUMBER-1){
-                                getAnimationProvider().doStep();
-                                onDrawStatic(canvas);// 首次/页面跳转时调用,防止黑屏
-                                ZLApplication.Instance().onRepaintFinished();
-                                return;
-                            }
-                        }
-                    }
                 }
             }
         }
