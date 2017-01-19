@@ -20,6 +20,7 @@ import com.laichushu.book.ui.activity.DraftModleActivity;
 import com.laichushu.book.ui.activity.MechanismListActivity;
 import com.laichushu.book.ui.activity.SourceMaterialDirActivity;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
@@ -129,7 +130,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                         case 0:
                             //目录
                             if (!dataBean.isEdit() | dataBean.getStatus().equals("3")) {
-
+                                ToastUtil.showToast("不可编辑目录");
                             } else {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("articleId", dataBean.getArticleId());
@@ -140,7 +141,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                         case 1:
                             //素材
                             if (!dataBean.isEdit() | dataBean.getStatus().equals("3")) {
-
+                                ToastUtil.showToast("不可编辑素材");
                             } else {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("articleId", dataBean.getArticleId());
@@ -155,7 +156,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                              * 删除
                              */
                             if (!dataBean.isDelete() | dataBean.getStatus().equals("3")) {//不能删除
-
+                                ToastUtil.showToast("不可进行删除操作");
                             } else {
                                 String articleId = dataBean.getArticleId();
                                 mvpPresenter.loadDelete(mActivity, articleId, position);

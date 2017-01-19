@@ -270,13 +270,13 @@ public class WritePresenter extends BasePresenter<WriteView> {
     /**
      * 修改签约状态
      */
-    public void getSignEditorDeta(String pressId, String articleId, String editorId) {
+    public void getSignEditorDeta(String pressId, final String articleId, String editorId) {
         LoggerUtil.e("修改签约状态");
         MySignEditor_paramet editParamet = new MySignEditor_paramet(pressId, articleId, editorId, userId);
         addSubscription(apiStores.getSignEditorDetails(editParamet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.getSignEditorDataSuccess(model);
+                mvpView.getSignEditorDataSuccess(model,articleId);
             }
 
             @Override

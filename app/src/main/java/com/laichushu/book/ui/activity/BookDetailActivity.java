@@ -57,7 +57,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
     private RelativeLayout nopublishRay;
     private LinearLayout publishLay, readLay, commentLay, likeLay;
     private TextView detailMarkTv, detailCommentTv, detailAuthorTv, detailTypeTv, detailWordTv,
-            detailMoneyTv, detailRewardTv, createtimeTv, refreshtimeTv, numberTv, subscriptionTv,
+            detailReadNumTv, createtimeTv, refreshtimeTv, numberTv, subscriptionTv,
             detailTitleTv, priceTv, lookupTv, probationTv, payTv, msgTv, rewardTv, briefTv,
             authorNameTv, authorTv2, individualTv, authorBriefTv, commentNumberTv;
     private RadioButton readerRbn, dresserRbn;
@@ -144,8 +144,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
         detailAuthorTv = (TextView) mSuccessView.findViewById(R.id.tv_detail_author);//作者
         detailTypeTv = (TextView) mSuccessView.findViewById(R.id.tv_detail_type);//分类
         detailWordTv = (TextView) mSuccessView.findViewById(R.id.tv_detail_word);//字数
-        detailMoneyTv = (TextView) mSuccessView.findViewById(R.id.tv_detail_money);//打赏金额
-        detailRewardTv = (TextView) mSuccessView.findViewById(R.id.tv_detail_reward);//打赏人数
+        detailReadNumTv = (TextView) mSuccessView.findViewById(R.id.tv_detail_read_num);//阅读人数
     }
 
     /**
@@ -289,9 +288,6 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                     position = 0;
                 }
                 break;
-            case R.id.tv_detail_reward:
-                mvpPresenter.getBalace2();
-                break;
             case R.id.iv_author_head:
                 //跳转用户主页
                 Bundle bundle = new Bundle();
@@ -398,16 +394,15 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
     private void getBookData() {
         GlideUitl.loadImg(this, articleData.getCoverUrl(), detailBookIv);//封面
         detailTitleTv.setText(articleData.getArticleName());//书名
-        detailCommentTv.setText("(" + articleData.getCommentNum() + ")评论");//评论数
+        detailCommentTv.setText("(" + articleData.getCommentNum() + "评论)");//评论数
         detailAuthorTv.setText(articleData.getAuthorName());//作者
         detailTypeTv.setText(articleData.getTopCategoryName());//分类
         detailWordTv.setText("约" + articleData.getWordNum() + "字");//字数
-        detailMoneyTv.setText(articleData.getAwardMoney() + "元");//打赏金额
-        detailRewardTv.setText(articleData.getAwardNum() + "人打赏");//打赏人
+        detailReadNumTv.setText(articleData.getBrowseNum() + "人");//阅读人数
         detailMarkTv.setText(articleData.getScore() + "分");//评分
         detailRatbarTv.setRating(articleData.getLevel());//星级
         briefTv.setText(articleData.getIntroduce());//简介
-        String msg = "收到的打赏：" + articleData.getAwardMoney() + "元(" + articleData.getAwardNum() + "人)";
+        String msg = "收到的打赏：" + articleData.getAwardMoney() + "元(" + articleData.getAwardNum() + "人打赏)";
         msgTv.setText(msg);
         if (articleData.isCollect()) {//已收藏
             comentIv.setImageResource(R.drawable.activity_keep2);
@@ -500,8 +495,8 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 authorTv.setText(dataBean.getAuthorName());//作者
                 typeTv.setText(dataBean.getTopCategoryName());//分类
                 wordTv.setText("约" + dataBean.getWordNum() + "字");//字数
-                moneyTv.setText(dataBean.getAwardMoney() + "元");//打赏金额
-                rewardTv.setText(dataBean.getAwardNum() + "人打赏");//打赏人
+                moneyTv.setText(dataBean.getAwardMoney() + "元");
+                rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
                 markTv.setText(dataBean.getScore() + "分");//评分
                 numRb.setRating(dataBean.getLevel());//星级
                 likeLay.addView(likeItemView);

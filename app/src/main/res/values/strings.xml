@@ -54,7 +54,7 @@
     <string name="comment_he_hint">回复TA</string>
     <string name="comment">轻触评论</string>
     <string name="reward_dialog">感谢你对作者的支持</string>
-    <string name="permission_dialog">发表前请设置阅读权限</string>
+    <string name="permission_dialog">设置阅读权限</string>
     <string name="sign_state_dialog">选择出版社及编辑</string>
     <string name="add_newbook">点击创建新书</string>
     <string name="draft">编辑目录</string>

@@ -127,10 +127,24 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
         }
     }
 
+    /**
+     * 修改签约状态
+     * @param model
+     * @param articleId
+     */
     @Override
-    public void getSignEditorDataSuccess(RewardResult model) {
+    public void getSignEditorDataSuccess(RewardResult model, String articleId) {
         if (model.isSuccess()) {
             ToastUtil.showToast("修改成功");
+            for (int i = 0; i < mData.size(); i++) {
+                if (mData.get(i).getArticleId().equals(articleId)){
+                    mData.get(i).setEdit(false);
+                    mData.get(i).setDelete(false);
+                    mData.get(i).setPermission(false);
+                    mData.get(i).setFreezeStatus("2");
+                    return;
+                }
+            }
         } else {
             ToastUtil.showToast("修改失败");
         }

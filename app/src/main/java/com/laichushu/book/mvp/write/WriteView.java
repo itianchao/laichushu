@@ -11,7 +11,7 @@ import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 public interface WriteView {
     void getDataSuccess(HomeHotModel model);
-    void getSignEditorDataSuccess(RewardResult model);
+    void getSignEditorDataSuccess(RewardResult model, String articleId);
     void deleteNewBook(RewardResult model, int position);
     void articleVote(RewardResult model);
     void getSignStateDeteSuccess(SignStateResult model,String articleId);

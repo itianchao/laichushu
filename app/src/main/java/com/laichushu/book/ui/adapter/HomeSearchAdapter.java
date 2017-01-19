@@ -26,6 +26,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
     private ArrayList<HomeHotModel.DataBean> mAllData;
     private HomeSearchActivity mActivity;
 
+
     public HomeSearchAdapter(ArrayList<HomeHotModel.DataBean> mAllData, HomeSearchActivity homeSearchActivity) {
         this.mAllData = mAllData;
         this.mActivity = homeSearchActivity;

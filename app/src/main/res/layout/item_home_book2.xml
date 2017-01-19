@@ -174,27 +174,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="收到打赏："
+                        android:text="阅读人数："
                         android:textColor="@color/main_text_color"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_detail_money"
+                        android:id="@+id/tv_detail_read_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:textColor="@color/main_text_color"
                         android:textSize="12sp"
-                        tools:text="7450元" />
-
-                    <TextView
-                        android:id="@+id/tv_detail_reward"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:textColor="@color/main_text_color"
-                        android:textSize="12sp"
-                        tools:text="(2029人打赏)" />
+                        tools:text="1008人" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
