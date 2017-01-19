@@ -286,7 +286,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
     }
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg,int flg) {
         Logger.e(msg);
     }
 

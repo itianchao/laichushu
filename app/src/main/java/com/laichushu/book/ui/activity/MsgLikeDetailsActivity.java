@@ -168,7 +168,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     }
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg,int flg) {
         Logger.e(msg);
     }
 

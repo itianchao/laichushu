@@ -231,7 +231,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
 
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg,int flg) {
         LoggerUtil.e(msg);
     }
 
