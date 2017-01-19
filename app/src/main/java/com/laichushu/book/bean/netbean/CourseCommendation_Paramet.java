@@ -9,7 +9,7 @@ public class CourseCommendation_Paramet {
     private String userId;
 
     public CourseCommendation_Paramet(String userId) {
-        userId = userId;
+        this.userId = userId;
     }
 
     public String getUserId() {
