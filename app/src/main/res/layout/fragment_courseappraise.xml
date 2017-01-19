@@ -47,7 +47,7 @@
             android:cursorVisible="true"
             android:imeOptions="actionSend"
             android:inputType="text"
-            android:hint="@string/comment_hint"
+            android:hint="@string/comment_hint_class"
             android:textColor="@color/edit2"
             android:textColorHint="@color/hint" />
 

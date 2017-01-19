@@ -61,7 +61,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,0);
             }
 
             @Override
@@ -82,7 +82,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,1);
             }
 
             @Override
@@ -101,7 +101,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,2);
             }
 
             @Override
@@ -127,7 +127,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg);
+                mvpView.getDataFail("code" + code + "msg:" + msg,3);
             }
 
             @Override
@@ -152,7 +152,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg);
+                mvpView.getDataFail("code" + code + "msg:" + msg,4);
             }
 
             @Override
@@ -176,7 +176,7 @@ public class BookcastPresener extends BasePresenter<BookcastView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg);
+                mvpView.getDataFail("code" + code + "msg:" + msg,5);
             }
 
             @Override

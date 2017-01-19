@@ -10,7 +10,7 @@ import com.laichushu.book.mvp.msg.notice.NoticeModle;
 public interface  AnnManagerView {
     void getAnnanageDataSuccess(NoticeModle modle);
     void getDeleteAnnDateSuccess(RewardResult modle);
-    void getDataFail(String msg);
+    void getDataFail(String msg,int flg);
     void shwoDialog();
     void dissmissDialog();
 }

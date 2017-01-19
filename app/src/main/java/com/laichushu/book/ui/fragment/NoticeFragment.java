@@ -108,7 +108,8 @@ public class NoticeFragment extends MvpFragment2<NoticePresenter> implements Not
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {
-
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.loadNoticeListData(id);
             }
         });
     }

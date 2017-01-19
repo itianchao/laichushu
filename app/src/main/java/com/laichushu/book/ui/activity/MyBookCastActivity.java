@@ -74,7 +74,6 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     @Override
     protected void initData() {
         rbScan.setChecked(true);
-        mvpPresenter.loadBrowserListData("1");
         tvTitle.setText("我的书架");
         tvManage.setText("管理");
         tvManage.setVisibility(View.VISIBLE);
@@ -93,6 +92,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         collAdapter = new BookCastCollAdapter(this, collData, mvpPresenter, isShowDelete);
         mCollRecyclerView.setAdapter(collAdapter);
         mCollRecyclerView.setOnPullLoadMoreListener(this);
+
+        mvpPresenter.loadBrowserListData("1");
     }
 
     @Override
@@ -139,9 +140,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 collDibble = false;
                 type = 1;
                 if (!scanDibble) {
-                    if (scanData.size() > 0)
-                        scanData.clear();
-                    mvpPresenter.loadBrowserListData("1");
+                    if (scanData.size() == 0)
+                        mvpPresenter.loadBrowserListData("1");
                 }
                 scanDibble = true;
                 break;
@@ -152,9 +152,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 scanDibble = false;
                 type = 2;
                 if (!collDibble) {
-                    if (collData.size() > 0)
-                        collData.clear();
-                    mvpPresenter.LoadCollectionData();
+                    if (collData.size() == 0)
+                        mvpPresenter.LoadCollectionData();
                 }
                 collDibble = true;
                 break;
@@ -166,13 +165,13 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         PAGE_NO = 1;
 
         if (type == 1) {
-            if(scanData.size()>0)
-            scanData.clear();
+            if (scanData.size() > 0)
+                scanData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.loadBrowserListData("1");//请求网络获取搜索列表
         } else if (type == 2) {
-            if(collData.size()>0)
-            collData.clear();
+            if (collData.size() > 0)
+                collData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
         }
@@ -202,18 +201,18 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             }
         }, 300);
         if (model.isSuccess()) {
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (null!=model.getData()&&!model.getData().isEmpty()) {
-                scanData=model.getData();
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                scanData = model.getData();
                 scanAdapter.refreshAdapter(scanData);
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast("没有更多数据");
+                ToastUtil.showToast(mActivity.getResources().getString(R.string.errMsg_empty));
             }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-//            ErrorReloadData();
+            if (PAGE_NO == 1)
+                ErrorReloadData(1);
         }
     }
 
@@ -227,18 +226,17 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             }
         }, 300);
         if (model.isSuccess()) {
-            if (null!=model.getData()&&!model.getData().isEmpty()) {
+            if (null != model.getData() && !model.getData().isEmpty()) {
                 collData = model.getData();
                 collAdapter.refreshAdapter(collData);
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast("没有更多数据");
+                ToastUtil.showToast(mActivity.getResources().getString(R.string.errMsg_empty));
             }
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -274,8 +272,9 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     }
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg, int flg) {
         Logger.e(msg);
+        ErrorReloadData(flg);
     }
 
     @Override
@@ -288,11 +287,21 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         dismissProgressDialog();
     }
 
-    public void ErrorReloadData() {
+    public void ErrorReloadData(final int flg) {
+        if(flg==1){
+            refreshPage(LoadingPager.PageState.STATE_LOADING);
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {
-                mvpPresenter.loadBrowserListData("1");
+                if (flg == 1) {
+                    mvpPresenter.loadBrowserListData("1");
+                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 5) {
+                    ToastUtil.showToast(R.string.errMsg_data);
+                } else {
+                    ToastUtil.showToast(R.string.errMsg_network);
+                }
             }
         });
     }

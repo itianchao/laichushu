@@ -19,7 +19,7 @@ public interface BookcastView {
 
     void getDeleteBookByIdDataSuccess(RewardResult modle, int position);
 
-    void getDataFail(String msg);
+    void getDataFail(String msg, int flg);
 
     void showDialog();
 

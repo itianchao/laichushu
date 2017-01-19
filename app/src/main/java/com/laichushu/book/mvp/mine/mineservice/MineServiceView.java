@@ -12,7 +12,7 @@ public interface MineServiceView {
 
     void dismissDialog();
 
-    void getDataFail(String msg);
+    void getDataFail(String msg,int flg);
 
     void getCollectionDataSuccess(FindServiceInfoModel model);
     void getCooperateDataSuccess(FindServiceCooperateMode model);
