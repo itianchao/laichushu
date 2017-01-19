@@ -1,11 +1,13 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -14,7 +16,9 @@ import com.laichushu.book.mvp.home.allcomment.AllCommentPresenter;
 import com.laichushu.book.mvp.home.allcomment.AllCommentView;
 import com.laichushu.book.mvp.home.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
-import com.laichushu.book.ui.base.MvpActivity;
+import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
@@ -31,14 +35,16 @@ import java.util.ArrayList;
  * 全部评论
  * Created by wangtong on 2016/10/27.
  */
-public class AllCommentActivity extends MvpActivity<AllCommentPresenter> implements View.OnClickListener, AllCommentView, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
-    private String pageNo = "1";
+public class AllCommentActivity extends MvpActivity2<AllCommentPresenter> implements View.OnClickListener, AllCommentView, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
+    private int pageNo = 1;
     private PullLoadMoreRecyclerView commentRyv;
     private ArrayList<ArticleCommentModle.DataBean> mData = new ArrayList<>();
     private String articleId;
     private CommentAllAdapter mAdapter;
     private EditText commentEt;
     private RatingBar numRb;
+    private boolean isScore;
+    private LinearLayout contentLay;
 
     @Override
     protected AllCommentPresenter createPresenter() {
@@ -46,31 +52,36 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
     }
 
     @Override
-    protected void initView() {
-        setContentView(R.layout.activity_allcomment);
-        initTitleBar("全部评论");
-        commentRyv = (PullLoadMoreRecyclerView)findViewById(R.id.ryv_comment);
-        commentEt = (EditText)findViewById(R.id.et_comment);
-        numRb = (RatingBar)findViewById(R.id.ratbar_num);
+    protected View createSuccessView() {
+        View mSuccessView = UIUtil.inflate(R.layout.activity_allcomment);
+        contentLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_content);
+        TextView titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
+        ImageView finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
+        commentRyv = (PullLoadMoreRecyclerView)mSuccessView.findViewById(R.id.ryv_comment);
+        commentEt = (EditText)mSuccessView.findViewById(R.id.et_comment);
+        numRb = (RatingBar)mSuccessView.findViewById(R.id.ratbar_num);
+
         commentRyv.setLinearLayout();
         mAdapter = new CommentAllAdapter(this, mData,mvpPresenter);
         commentRyv.setAdapter(mAdapter);
+        titleTv.setText("全部评论");
         commentRyv.setOnPullLoadMoreListener(this);
-        articleId = getIntent().getStringExtra("articleId");
         commentEt.setOnEditorActionListener(this);
+        finishIv.setOnClickListener(this);
+        return mSuccessView;
     }
 
-    /**
-     * 初始化标题
-     *
-     * @param title 标题名称
-     */
-    private void initTitleBar(String title) {
-        TextView titleTv = (TextView) findViewById(R.id.tv_title);
-        ImageView finishIv = (ImageView) findViewById(R.id.iv_title_finish);
-        titleTv.setText(title);
-        finishIv.setOnClickListener(this);
+    @Override
+    protected void initData() {
+        articleId = getIntent().getStringExtra("articleId");
+        isScore = getIntent().getBooleanExtra("isScore",false);
+        if (isScore){
+            contentLay.setVisibility(View.GONE);
+        }else {
+            contentLay.setVisibility(View.VISIBLE);
+        }
     }
+
     /**
      * 点击事件
      *
@@ -85,34 +96,43 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
         }
     }
 
+    /**
+     * 获取评论列表 成功
+     * @param model
+     */
     @Override
     public void getDataSuccess(ArticleCommentModle model) {
         hideLoading();
         UIUtil.postPullLoadMoreCompleted(commentRyv);
         if (model.isSuccess()) {
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (model.getData().size()!=0){
-                pageNo = Integer.parseInt(pageNo) + 1 + "";
+                pageNo++;
                 mData.addAll(model.getData());
                 mAdapter.setmData(mData);
                 mAdapter.notifyDataSetChanged();
             }
         }else {
-            ToastUtil.showToast(model.getErrorMsg());
+            reloadErrorBtn(model.getErrorMsg());
         }
     }
 
+    /**
+     * 发送评论
+     * @param model
+     */
     @Override
     public void getSendDataSuccess(SendCommentMoudle model) {
         if (model.isSuccess()) {
             ToastUtil.showToast("发送成功");
+            isScore = true;
+            contentLay.setVisibility(View.GONE);
             onRefresh();
+            Intent data = new Intent();
+            data.putExtra("isScore",isScore);
+            setResult(5,data);
         }else {
-            String errorMsg = model.getErrMsg();
-            if (errorMsg.contains("该用户已经评分了")){
-                ToastUtil.showToast(errorMsg);
-            }else {
-                ToastUtil.showToast("发送失败");
-            }
+            reloadErrorBtn(model.getErrMsg());
         }
     }
 
@@ -136,15 +156,13 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
             }
             mAdapter.setmData(mData);
         }else {
-            ToastUtil.showToast(model.getErrMsg());
+            reloadErrorBtn(model.getErrMsg());
         }
     }
 
     @Override
     public void getDataFail(String msg) {
-        ToastUtil.showToast("请检查网络");
-        UIUtil.postPullLoadMoreCompleted(commentRyv);
-        Logger.e(msg);
+        reloadErrorBtn(msg);
     }
 
     @Override
@@ -162,9 +180,9 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
      */
     @Override
     public void onRefresh() {
-        pageNo = "1";
+        pageNo = 1;
         mData.clear();
-        mvpPresenter.getParamet().setPageNo(pageNo);
+        mvpPresenter.getParamet().setPageNo(pageNo+"");
         mvpPresenter.loadAllCommentData(articleId);
     }
     /**
@@ -172,7 +190,7 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
      */
     @Override
     public void onLoadMore() {
-        mvpPresenter.getParamet().setPageNo(pageNo);
+        mvpPresenter.getParamet().setPageNo(pageNo+"");
         mvpPresenter.loadAllCommentData(articleId);
     }
 
@@ -202,5 +220,33 @@ public class AllCommentActivity extends MvpActivity<AllCommentPresenter> impleme
         super.finish();
         int commentNum = getIntent().getIntExtra("commentNum",0);
         EventBus.getDefault().postSticky(new RefurshBookCommentListEvent(true,commentNum));
+    }
+
+    /**
+     * 重新加载按钮
+     */
+    public void reloadErrorBtn(String msg) {
+        LoggerUtil.e(msg);
+        UIUtil.postPullLoadMoreCompleted(commentRyv);
+        if (pageNo == 1 && msg.contains("全部评论")) {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    refreshPage(LoadingPager.PageState.STATE_LOADING);
+                    mvpPresenter.loadAllCommentData(articleId);
+                }
+            });
+        } else {
+            if (msg.contains("全部评论")) {
+                ToastUtil.showToast("加载失败");
+            }else if(msg.contains("点赞")){
+                ToastUtil.showToast("点赞失败");
+            }else if (msg.contains("发送")){
+                ToastUtil.showToast("发送失败");
+            }else {
+                ToastUtil.showToast("请检查网络");
+            }
+        }
     }
 }

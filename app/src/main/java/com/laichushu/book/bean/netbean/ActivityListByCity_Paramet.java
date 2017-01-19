@@ -1,6 +1,7 @@
 package com.laichushu.book.bean.netbean;
 
 /**
+ * 首页 - 同城 参数
  * Created by PCPC on 2017/1/9.
  */
 

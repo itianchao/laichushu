@@ -1,5 +1,7 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -57,7 +59,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
     private TextView detailMarkTv, detailCommentTv, detailAuthorTv, detailTypeTv, detailWordTv,
             detailMoneyTv, detailRewardTv, createtimeTv, refreshtimeTv, numberTv, subscriptionTv,
             detailTitleTv, priceTv, lookupTv, probationTv, payTv, msgTv, rewardTv, briefTv,
-            authorNameTv,authorTv2, individualTv, authorBriefTv, commentNumberTv;
+            authorNameTv, authorTv2, individualTv, authorBriefTv, commentNumberTv;
     private RadioButton readerRbn, dresserRbn;
     private HomeHotModel.DataBean bean;
     private String type = "1";
@@ -210,8 +212,8 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 break;
             case R.id.iv_title_other://分享
                 //分享
-                String linkUrl= Base64Utils.getStringUrl(articleId,ConstantValue.SHARE_TYPR_BOOK);
-                ShareUtil.showShare(mActivity, linkUrl,linkUrl,bean.getCoverUrl(),bean.getIntroduce(),bean.getName());
+                String linkUrl = Base64Utils.getStringUrl(articleId, ConstantValue.SHARE_TYPR_BOOK);
+                ShareUtil.showShare(mActivity, linkUrl, linkUrl, bean.getCoverUrl(), bean.getIntroduce(), bean.getName());
                 break;
             case R.id.iv_title_another://收藏
                 mvpPresenter.collectSave(articleId, collectType, ConstantValue.BOOKCOMMENTTYPE);
@@ -220,6 +222,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("articleId", articleId);
                 bundle1.putInt("commentNum", articleData.getCommentNum());
+                bundle1.putBoolean("isScore", articleData.isScore());
                 UIUtil.openActivity(this, AllCommentActivity.class, bundle1);
                 break;
             case R.id.lay_read://阅读
@@ -228,12 +231,12 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                         ToastUtil.showToast("请打赏后阅读");
                     } else {
                         ConstantValue.ISREADER = false;
-                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(),articleData.getCoverUrl(),articleData.getIntroduce());//获取下载url
+                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(), articleData.getCoverUrl(), articleData.getIntroduce());//获取下载url
                     }
                 } else if (articleData.getStatus().equals("4")) {//已出版购买后才能阅读
                     if (articleData.isPurchase()) {//购买
                         ConstantValue.ISREADER = false;
-                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(),articleData.getCoverUrl(),articleData.getIntroduce());//获取下载url
+                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(), articleData.getCoverUrl(), articleData.getIntroduce());//获取下载url
                     } else {//未购买
                         ToastUtil.showToast("请购买后阅读");
                     }
@@ -310,7 +313,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             GlideUitl.loadRandImg(this, authorData.getPhoto(), authorHeadIv);
             authorTv2.setText("已发表");
             authorNameTv.setText(authorData.getNickName());//名字
-            authorBriefTv.setText(authorData.getAuthorIntroduction());//简介
+            authorBriefTv.setText(TextUtils.isEmpty(authorData.getAuthorIntroduction()) ? "暂无作者简介" : authorData.getAuthorIntroduction());//简介
             individualTv.setText(authorData.getArticleNum() + "");//出版数量
         }
     }
@@ -330,10 +333,11 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
         if (model.isSuccess()) {
             ToastUtil.showToast("购买成功");
             payTv.setText("已购买");
+            payTv.setBackgroundColor(Color.GRAY);
             articleData.setIsPurchase(true);
             bean.setIsPurchase(true);
             articleData.setPurchase(true);
-            if (articleData.isPurchase()){//电子书
+            if (articleData.isPurchase()) {//电子书
                 probationTv.setVisibility(View.INVISIBLE);
             }
         } else {
@@ -371,9 +375,8 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             getArticleCommentData(scoreReaderData);//评论
             getStatue();
         } else {
-            ToastUtil.showToast(modle.getErrMsg());
+//            ToastUtil.showToast(modle.getErrMsg());
             refrushErrorView();
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
     }
 
@@ -385,7 +388,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
     @Override
     public void getBookDataError(String msg) {
         LoggerUtil.e(msg);
-        refreshPage(LoadingPager.PageState.STATE_ERROR);
+
         refrushErrorView();
     }
 
@@ -441,9 +444,9 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             publishLay.setVisibility(View.VISIBLE);
             String price = "￥ " + articleData.getPrice();
             priceTv.setText(price);//价格
-            if (articleData.getStatus().equals("2")||articleData.isPurchase()){//电子书
+            if (articleData.getStatus().equals("2") || articleData.isPurchase()) {//电子书
                 probationTv.setVisibility(View.INVISIBLE);
-            }else {
+            } else {
                 probationTv.setVisibility(View.VISIBLE);
                 probationTv.setOnClickListener(this);//免费试读按钮
             }
@@ -465,8 +468,10 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
         }
         if (articleData.isPurchase()) {
             payTv.setText("已购买");
+            payTv.setBackgroundColor(Color.GRAY);
         } else {
             payTv.setText("购买");
+            payTv.setBackgroundColor(Color.RED);
         }
     }
 
@@ -621,7 +626,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("bean", dataBean);
                     bundle.putString("type", type);
-                    bundle.putString("tag","replay");
+                    bundle.putString("tag", "replay");
                     UIUtil.openActivity(mActivity, CommentDetailActivity.class, bundle);
                 }
             });
@@ -681,7 +686,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             double maxLimit = model.getData().getMaxLimit();
             double minLimit = model.getData().getMinLimit();
             String accepterId = articleData.getAuthorId();
-            mvpPresenter.openReward(balance + "", accepterId, articleId,maxLimit,minLimit);
+            mvpPresenter.openReward(balance + "", accepterId, articleId, maxLimit, minLimit);
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
@@ -794,6 +799,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
 
     /**
      * 获取试读 成功
+     *
      * @param model
      */
     @Override
@@ -803,8 +809,8 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             ConstantValue.ISREADER_NUMBER = endLimit;
             ConstantValue.ISREADER = true;
             String url = model.getData().getUrl();
-            mvpPresenter.openFile(url,articleId, articleData.getAuthorId(),articleData.getCoverUrl(),articleData.getIntroduce());//获取下载url
-        }else {
+            mvpPresenter.openFile(url, articleId, articleData.getAuthorId(), articleData.getCoverUrl(), articleData.getIntroduce());//获取下载url
+        } else {
             ToastUtil.showToast("试读失败");
             LoggerUtil.e(model.getErrMsg());
         }
@@ -812,6 +818,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
 
     /**
      * 获取试读 失败
+     *
      * @param msg
      */
     @Override
@@ -890,7 +897,11 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
         this.bean = bean;
     }
 
+    /**
+     * 重新加载
+     */
     public void refrushErrorView() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {
@@ -898,5 +909,14 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 mvpPresenter.getBookById(articleId);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 5){
+            boolean isScore = data.getBooleanExtra("isScore", false);
+            articleData.setScore(isScore);
+        }
     }
 }

@@ -70,19 +70,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/hint" />
+
     <TextView
+        android:layout_marginTop="@dimen/afc_5dp"
         android:id="@+id/tv_lookup"
+        android:background="@drawable/shape_rectangle_fill_hint"
         android:gravity="center"
         android:text="@string/lookup_allcomment"
         android:textColor="@color/edit"
         android:layout_width="match_parent"
         android:layout_height="35dp" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/hint" />
+
 </LinearLayout>

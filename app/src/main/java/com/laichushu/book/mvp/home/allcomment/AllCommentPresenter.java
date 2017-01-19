@@ -139,7 +139,6 @@ public class AllCommentPresenter extends BasePresenter<AllCommentView> {
         Logger.e("发送评论");
         CourseScoreSave_Paramet paramet = new CourseScoreSave_Paramet(sourceId+"",sourceType2,starLevel,content,userId);
         Logger.json(new Gson().toJson(paramet));
-
         addSubscription(apiStores.courseScoreSave(paramet), new ApiCallback<SendCommentMoudle>() {
             @Override
             public void onSuccess(SendCommentMoudle model) {

@@ -1,5 +1,8 @@
 package com.laichushu.book.mvp.home.bookdetail;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 import java.util.ArrayList;
@@ -108,7 +111,7 @@ public class BookDetailModle {
             this.scoreReaderData = scoreReaderData;
         }
 
-        public static class ArticleDataBean {
+        public static class ArticleDataBean implements Parcelable {
             /**
              * articleId : 216
              * articleName : 愿无岁月可回头
@@ -154,6 +157,7 @@ public class BookDetailModle {
             private boolean isAward;
             private boolean isCollect;
             private boolean isPurchase;
+            private boolean isScore;
             private boolean isSubscribe;
             private int level;
             private double score;
@@ -164,6 +168,14 @@ public class BookDetailModle {
             private int wordNum;
             private String topCategoryName;
             private double price;
+
+            public boolean isScore() {
+                return isScore;
+            }
+
+            public void setScore(boolean score) {
+                isScore = score;
+            }
 
             public double getPrice() {
                 return price;
@@ -412,6 +424,89 @@ public class BookDetailModle {
             public void setWordNum(int wordNum) {
                 this.wordNum = wordNum;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.articleId);
+                dest.writeString(this.articleName);
+                dest.writeString(this.authorId);
+                dest.writeString(this.authorName);
+                dest.writeDouble(this.awardMoney);
+                dest.writeInt(this.awardNum);
+                dest.writeInt(this.browseNum);
+                dest.writeInt(this.commentNum);
+                dest.writeString(this.coverName);
+                dest.writeString(this.coverUrl);
+                dest.writeString(this.createDate);
+                dest.writeString(this.expressStatus);
+                dest.writeString(this.freezeStatus);
+                dest.writeString(this.introduce);
+                dest.writeByte(this.isAward ? (byte) 1 : (byte) 0);
+                dest.writeByte(this.isCollect ? (byte) 1 : (byte) 0);
+                dest.writeByte(this.isPurchase ? (byte) 1 : (byte) 0);
+                dest.writeByte(this.isScore ? (byte) 1 : (byte) 0);
+                dest.writeByte(this.isSubscribe ? (byte) 1 : (byte) 0);
+                dest.writeInt(this.level);
+                dest.writeDouble(this.score);
+                dest.writeString(this.status);
+                dest.writeInt(this.subscribeNum);
+                dest.writeString(this.topCategoryId);
+                dest.writeString(this.updateDate);
+                dest.writeInt(this.wordNum);
+                dest.writeString(this.topCategoryName);
+                dest.writeDouble(this.price);
+            }
+
+            public ArticleDataBean() {
+            }
+
+            protected ArticleDataBean(Parcel in) {
+                this.articleId = in.readString();
+                this.articleName = in.readString();
+                this.authorId = in.readString();
+                this.authorName = in.readString();
+                this.awardMoney = in.readDouble();
+                this.awardNum = in.readInt();
+                this.browseNum = in.readInt();
+                this.commentNum = in.readInt();
+                this.coverName = in.readString();
+                this.coverUrl = in.readString();
+                this.createDate = in.readString();
+                this.expressStatus = in.readString();
+                this.freezeStatus = in.readString();
+                this.introduce = in.readString();
+                this.isAward = in.readByte() != 0;
+                this.isCollect = in.readByte() != 0;
+                this.isPurchase = in.readByte() != 0;
+                this.isScore = in.readByte() != 0;
+                this.isSubscribe = in.readByte() != 0;
+                this.level = in.readInt();
+                this.score = in.readDouble();
+                this.status = in.readString();
+                this.subscribeNum = in.readInt();
+                this.topCategoryId = in.readString();
+                this.updateDate = in.readString();
+                this.wordNum = in.readInt();
+                this.topCategoryName = in.readString();
+                this.price = in.readDouble();
+            }
+
+            public static final Parcelable.Creator<ArticleDataBean> CREATOR = new Parcelable.Creator<ArticleDataBean>() {
+                @Override
+                public ArticleDataBean createFromParcel(Parcel source) {
+                    return new ArticleDataBean(source);
+                }
+
+                @Override
+                public ArticleDataBean[] newArray(int size) {
+                    return new ArticleDataBean[size];
+                }
+            };
         }
 
         public static class AuthorDataBean {

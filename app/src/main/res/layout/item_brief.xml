@@ -26,6 +26,5 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="5dp"
         android:textColor="@color/edit"
-        android:maxLength="70"
         android:textSize="@dimen/edit3" />
 </LinearLayout>
