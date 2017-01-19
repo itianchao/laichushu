@@ -6,17 +6,17 @@ package com.laichushu.book.bean.netbean;
  */
 
 public class CourseCommendation_Paramet {
-    private String UserId;
+    private String userId;
 
     public CourseCommendation_Paramet(String userId) {
-        UserId = userId;
+        userId = userId;
     }
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        UserId = userId;
+        userId = userId;
     }
 }
