@@ -143,7 +143,7 @@ public class RegistPresenter extends BasePresenter<RegistView> {
             return isCheck = false;
         }
         if (!Validator.isUsername(phone)) {
-            ToastUtil.showToast("您输入的帐号含有汉字或特殊字符，请重新输入！");
+            ToastUtil.showToast("账号或密码错误！");
             return isCheck = false;
         }
 

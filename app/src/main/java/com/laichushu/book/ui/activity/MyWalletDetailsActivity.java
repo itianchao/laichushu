@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implements WalletView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
-    private TextView tvTitle, tvBalanceShow;
+    private TextView tvTitle, tvBalanceShow, tvTransRecord;
     private Button btnRecharge, btnWithdrawals;
     private PullLoadMoreRecyclerView mRecordRecyclerView;
     private List<WalletBalanceReward.DataBean> recordData = new ArrayList<>();
@@ -53,6 +53,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
         EventBus.getDefault().register(this);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
+        tvTransRecord = ((TextView) inflate.findViewById(R.id.tv_transRecord));
         tvBalanceShow = ((TextView) inflate.findViewById(R.id.tv_balanceShow));
         btnRecharge = ((Button) inflate.findViewById(R.id.btn_Recharge));
         btnWithdrawals = ((Button) inflate.findViewById(R.id.btn_withdrawals));
@@ -114,6 +115,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
             recordData = model.getData();
             tvBalanceShow.setText(model.getBalance() + "");
             if (!recordData.isEmpty()) {
+                tvTransRecord.setVisibility(View.VISIBLE);
                 recordAdapter.refreshAdapter(recordData);
                 PAGE_NO++;
             } else {
@@ -121,9 +123,9 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
             }
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
-                refreshPage(LoadingPager.PageState.STATE_ERROR);
-                ToastUtil.showToast(model.getErrMsg());
-                reLoadData();
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ToastUtil.showToast(model.getErrMsg());
+            reLoadData();
         }
 
     }

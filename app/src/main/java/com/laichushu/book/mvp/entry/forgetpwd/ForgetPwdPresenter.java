@@ -125,7 +125,7 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
             ToastUtil.showToast("手机号11位！");
             return isCheck = false;
         } else if (newPwd.length() < 6 || rePwd.length() < 6) {
-            ToastUtil.showToast("密码至少6位！");
+            ToastUtil.showToast("账号或密码错误！");
             return isCheck = false;
         }
         if (!Validator.isMobile(phone)) {
@@ -133,7 +133,7 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
             return isCheck = false;
         }
         if (!Validator.isUsername(newPwd) || !Validator.isUsername(rePwd)) {
-            ToastUtil.showToast("您输入的密码含有汉字或特殊字符，请重新输入！");
+            ToastUtil.showToast("账号或密码错误！");
             return isCheck = false;
         }
         if (code.length() < 4) {
@@ -143,7 +143,7 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
             ToastUtil.showToast("验证码位数不正确，请重新输入！");
             return isCheck = false;
         } else if (!Validator.isUsername(code)) {
-            ToastUtil.showToast("您输入的验证码含有汉字或特殊字符，请重新输入！");
+            ToastUtil.showToast("账号或密码错误！");
             return isCheck = false;
         }
         return isCheck = true;

@@ -111,7 +111,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         ivGreadDetails = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetails));
         ivGreadDetail = ((ImageView) inflate.findViewById(R.id.iv_perGradeDetail));
         ivHeadImg = ((ImageView) inflate.findViewById(R.id.iv_PerHeadImg));
-        ivAnother = (ImageView) inflate.findViewById(R.id.iv_title_another);
+        ivAnother = (ImageView) inflate.findViewById(R.id.iv_title_other);
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_middleLeft));
         tvNickName = ((TextView) inflate.findViewById(R.id.tv_PerNickName));
         tvAuthorAgree = ((TextView) inflate.findViewById(R.id.tv_perRealName));
@@ -189,7 +189,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             public void onSuccess(HomeUserResult result) {
                 if (result.isSuccess()) {
                     //初始化个人信息
-                    headResult=result;
+                    headResult = result;
                     GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHeadImg, R.drawable.icon_percentre_defhead2x);
                     tvNickName.setText(result.getNickName());
                     if (!TextUtils.isEmpty(result.getLevelType())) {
@@ -244,11 +244,11 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             case R.id.iv_title_finish:
                 this.finish();
                 break;
-            case R.id.iv_title_another:
+            case R.id.iv_title_other:
                 Bundle bunTopic = new Bundle();
                 UIUtil.openActivity(this, HomePublishTopicActivity.class, bunTopic);
                 break;
-            case R.id.iv_title_other:
+            case R.id.iv_title_another:
                 //编辑
                 break;
             case R.id.iv_perGradeDetail:

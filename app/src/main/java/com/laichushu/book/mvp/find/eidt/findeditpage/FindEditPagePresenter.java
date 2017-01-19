@@ -2,6 +2,7 @@ package com.laichushu.book.mvp.find.eidt.findeditpage;
 
 import android.app.Activity;
 import android.widget.CheckBox;
+
 import com.google.gson.Gson;
 import com.laichushu.book.bean.netbean.FindEditorListModel;
 import com.laichushu.book.bean.netbean.FindEditorList_Paramet;
@@ -38,18 +39,25 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
      * @param mActicity
      * @param v
      */
-    public void showRankingDialog(final Activity mActicity,CheckBox v, final String curProcode) {
+    public void showRankingDialog(final Activity mActicity, CheckBox v, final String curProcode) {
         List<String> mlist = new ArrayList<>();
         mlist.clear();
+        mlist.add("工作年限");
         mlist.add("合作人数");
-        mlist.add("评分人数");
-        mlist.add("总分");
+        mlist.add("评价人数");
+        mlist.add("评价分数");
         TypePopWindow popWindow = new TypePopWindow(mActivity, mlist);
-        popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener(){
+        popWindow.setListItemClickListener(new TypePopWindow.IListItemClickListener() {
             @Override
             public void clickItem(int position) {
                 mvpView.showDialog();
-                loadEditorListData(curProcode, (position + 1) + "");
+                if (position == 0) {
+                    loadEditorListData(curProcode, "");
+                } else {
+                    loadEditorListData(curProcode, position + "");
+                }
+
+
             }
         });
         popWindow.setWidth(v.getWidth());
@@ -83,7 +91,7 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
         addSubscription(apiStores.getEditorListDatails(editorList_paramet), new ApiCallback<FindEditorListModel>() {
             @Override
             public void onSuccess(FindEditorListModel model) {
-                mvpView.getEditorListDataSuccess(model,cityId,orderBy);
+                mvpView.getEditorListDataSuccess(model, cityId, orderBy);
             }
 
             @Override

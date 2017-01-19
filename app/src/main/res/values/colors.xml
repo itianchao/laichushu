@@ -10,6 +10,7 @@
     <!--浅灰-->
     <color name="frenchGrey">#F2F2F2</color>
     <color name="bgGrey">#F1F1F1</color>
+    <color name="bgAbout">#EAEAEA</color>
     <color name="Grey">#aaa</color>
     <color name="backGray">#F5F5F5</color>
     <color name="characterGray">#1F1D1E</color>

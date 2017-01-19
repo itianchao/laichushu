@@ -129,8 +129,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         PAGE_NO = 1;
-       scanAdapter.setShow(false);
-       collAdapter.setShow(false);
+        scanAdapter.setShow(false);
+        collAdapter.setShow(false);
         switch (checkedId) {
             case R.id.rb_scan:
                 //点击浏览
@@ -139,7 +139,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 collDibble = false;
                 type = 1;
                 if (!scanDibble) {
-                    scanData.clear();
+                    if (scanData.size() > 0)
+                        scanData.clear();
                     mvpPresenter.loadBrowserListData("1");
                 }
                 scanDibble = true;
@@ -151,7 +152,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 scanDibble = false;
                 type = 2;
                 if (!collDibble) {
-                    collData.clear();
+                    if (collData.size() > 0)
+                        collData.clear();
                     mvpPresenter.LoadCollectionData();
                 }
                 collDibble = true;
@@ -164,10 +166,12 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         PAGE_NO = 1;
 
         if (type == 1) {
+            if(scanData.size()>0)
             scanData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.loadBrowserListData("1");//请求网络获取搜索列表
         } else if (type == 2) {
+            if(collData.size()>0)
             collData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
@@ -198,13 +202,13 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             }
         }, 300);
         if (model.isSuccess()) {
-            scanData = model.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!scanData.isEmpty()) {
+            if (null!=model.getData()&&!model.getData().isEmpty()) {
+                scanData=model.getData();
                 scanAdapter.refreshAdapter(scanData);
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast("没有更多数据");
             }
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -223,19 +227,18 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
             }
         }, 300);
         if (model.isSuccess()) {
-            collData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!collData.isEmpty()) {
+            if (null!=model.getData()&&!model.getData().isEmpty()) {
+                collData = model.getData();
                 collAdapter.refreshAdapter(collData);
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast("没有更多数据");
             }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
         }
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override

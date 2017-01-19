@@ -8,13 +8,17 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.laichushu.book.event.RefrushWalletEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.bean.alipay.PayResult;
 import com.laichushu.book.bean.alipay.SignUtils;
 import com.laichushu.book.bean.wechatpay.WxInfo;
+import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -73,12 +77,6 @@ public class PayUtils {
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
-                        UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                AppManager.getInstance().killAllTopActivity();
-                            }
-                        }, 1700);
                         // TODO  刷新我的订单
                     } else {
                         // 判断resultStatus 为非"9000"则代表可能支付失败
@@ -90,6 +88,15 @@ public class PayUtils {
                             Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    //刷新钱包首页
+                    // EventBus.getDefault().postSticky(new RefrushWalletEvent(true));
+                    UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            UIUtil.openActivity(AppManager.getTopActivity(), MyWalletDetailsActivity.class);
+                        }
+                    }, 1700);
+
                     break;
                 }
                 default:

@@ -68,7 +68,7 @@ public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implement
                     finish();
                 }
             }, 1700);
-        }else {
+        } else {
             ToastUtil.showToast(model.getErrMsg());
         }
     }
@@ -108,9 +108,8 @@ public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implement
                 String phone = phoneEt.getText().toString().trim();
                 String newPwd = newPwdEt.getText().toString().trim();
                 String rePwd = rePwdEt.getText().toString().trim();
-                if (mvpPresenter.check(code,phone,newPwd,rePwd)) {
-                    //请求网络校验
-                    mvpPresenter.reset(phone,newPwd,rePwd);
+                if (mvpPresenter.check(code, phone, newPwd, rePwd)) {
+                    mvpPresenter.reset(phone, newPwd, rePwd);
                 }
                 break;
         }

@@ -55,7 +55,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
     private TextView detailMarkTv, detailCommentTv, detailAuthorTv, detailTypeTv, detailWordTv,
             detailMoneyTv, detailRewardTv, createtimeTv, refreshtimeTv, numberTv, subscriptionTv,
             detailTitleTv, priceTv, lookupTv, probationTv, payTv, msgTv, rewardTv, briefTv,
-            authorNameTv, individualTv, authorBriefTv, commentNumberTv;
+            authorNameTv,authorTv2, individualTv, authorBriefTv, commentNumberTv;
     private RadioButton readerRbn, dresserRbn;
     private HomeHotModel.DataBean bean;
     private String type = "1";
@@ -172,6 +172,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
         briefTv = (TextView) mSuccessView.findViewById(R.id.tv_brief);
         authorHeadIv = (ImageView) mSuccessView.findViewById(R.id.iv_author_head);
         authorNameTv = (TextView) mSuccessView.findViewById(R.id.tv_author_name);
+        authorTv2 = (TextView) mSuccessView.findViewById(R.id.textView2);
         individualTv = (TextView) mSuccessView.findViewById(R.id.tv_individual);
         authorBriefTv = (TextView) mSuccessView.findViewById(R.id.tv_author_brief);
         rewardTv.setOnClickListener(this);
@@ -304,6 +305,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
     public void getAuthorDetailData() {
         if (authorData != null) {
             GlideUitl.loadRandImg(this, authorData.getPhoto(), authorHeadIv);
+            authorTv2.setText("已发表");
             authorNameTv.setText(authorData.getNickName());//名字
             authorBriefTv.setText(authorData.getAuthorIntroduction());//简介
             individualTv.setText(authorData.getArticleNum() + "");//出版数量
@@ -767,7 +769,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 bean.setCollect(false);
             }
         } else {
-            ToastUtil.showToast(model.getErrMsg());
+            ToastUtil.showToast("收藏失败");
         }
     }
 

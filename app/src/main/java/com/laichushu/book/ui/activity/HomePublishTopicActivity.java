@@ -69,7 +69,7 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                     break;
             }
         } else {
-            tvTitle.setText("发表话题");
+            tvTitle.setText("发表新话题");
             tvRight.setText("发表");
         }
         tvRight.setVisibility(View.VISIBLE);
@@ -210,7 +210,7 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
      */
     public void sendPartyMsg() {
         showProgressDialog();
-        NoticesSave_Paramet saveParamet = new NoticesSave_Paramet(SharePrefManager.getUserId(),partyId, edAddTitle.getText().toString(), edAddContent.getText().toString());
+        NoticesSave_Paramet saveParamet = new NoticesSave_Paramet(SharePrefManager.getUserId(), partyId, edAddTitle.getText().toString(), edAddContent.getText().toString());
         addSubscription(apiStores.getNoticesSaveList(saveParamet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult result) {
@@ -242,6 +242,7 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
 
         });
     }
+
     //我的服务--添加服务
     public void addServiceMsg() {
         showProgressDialog();
