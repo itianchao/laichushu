@@ -45,7 +45,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final HomeHotModel.DataBean dataBean = mAllData.get(position);
         GlideUitl.loadImg(mActivity, dataBean.getCoverUrl(), holder.bookIv);
@@ -73,7 +73,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("bean", dataBean);
+                bundle.putParcelable("bean", mAllData.get(position));
                 bundle.putString("pageMsg", "首页搜索");
                 UIUtil.openActivity(mActivity, BookDetailActivity.class, bundle);
             }

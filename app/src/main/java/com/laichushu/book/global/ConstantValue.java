@@ -106,6 +106,10 @@ public class ConstantValue {
     public static String SHARE_TYPR_TOPIC = "8";//话题
     public static String SHARE_TYPR_GROUP = "9";//小组
 
+    //试读
+    public static boolean ISREADER = false;
+    public static int ISREADER_NUMBER = 3;
+
     public static class FB_READER {
 
         // 打开非本地书籍

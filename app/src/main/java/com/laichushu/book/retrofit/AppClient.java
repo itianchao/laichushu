@@ -2,6 +2,7 @@ package com.laichushu.book.retrofit;
 
 import com.laichushu.book.BuildConfig;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.MD5Util;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -46,7 +47,7 @@ public class AppClient {
                             Request request = chain.request()
                                     .newBuilder()
                                     .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                                    .addHeader("gis", SharePrefManager.getToken())
+                                    .addHeader("gis", MD5Util.MD5Encode(SharePrefManager.getToken()))
                                     .addHeader("diu", SharePrefManager.getUserId())
                                     .build();
                             return chain.proceed(request);

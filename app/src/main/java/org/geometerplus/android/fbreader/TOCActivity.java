@@ -38,6 +38,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -269,6 +271,21 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
         protected boolean runTreeItem(ZLTree<?> tree) {
             if (super.runTreeItem(tree)) {
                 return true;
+            }
+            if (ConstantValue.ISREADER) {
+                FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
+                if (fbReaderApp.getCurrentTOCElement() != null) {
+                    TOCTree parent = fbReaderApp.getCurrentTOCElement().Parent;
+                    List<TOCTree>  subtrees = parent.subtrees();//目录
+                    for (int i = 0; i < subtrees.size(); i++) {
+                        if (((TOCTree)tree).getText().equals(subtrees.get(i).getText())){
+                            if (i> ConstantValue.ISREADER_NUMBER-1){
+                                ToastUtil.showToast("购买后才可阅读");
+                                return false;
+                            }
+                        }
+                    }
+                }
             }
             openBookText((TOCTree) tree);
             return true;

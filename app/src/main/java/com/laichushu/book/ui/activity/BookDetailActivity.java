@@ -9,10 +9,12 @@ import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.BalanceBean;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.otherbean.ProbationNumModle;
 import com.laichushu.book.event.RefrushHomeCategroyEvent;
 import com.laichushu.book.event.RefrushHomeSearchEvent;
 import com.laichushu.book.event.RefrushWriteFragmentEvent;
@@ -225,15 +227,18 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                     if (!articleData.isAward()) {
                         ToastUtil.showToast("请打赏后阅读");
                     } else {
+                        ConstantValue.ISREADER = false;
                         mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(),articleData.getCoverUrl(),articleData.getIntroduce());//获取下载url
                     }
                 } else if (articleData.getStatus().equals("4")) {//已出版购买后才能阅读
                     if (articleData.isPurchase()) {//购买
+                        ConstantValue.ISREADER = false;
                         mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(),articleData.getCoverUrl(),articleData.getIntroduce());//获取下载url
                     } else {//未购买
                         ToastUtil.showToast("请购买后阅读");
                     }
                 } else {//未出版
+                    ConstantValue.ISREADER = false;
                     mvpPresenter.loadJurisdiction(articleId);
                 }
                 break;
@@ -251,9 +256,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 }
                 break;
             case R.id.tv_probation://免费试读
-//                BaseBookEntity baseBookEntity = new BaseBookEntity();
-//                baseBookEntity.setBook_path(ConstantValue.LOCAL_PATH.SD_PATH + "test.epub");
-//                UIUtil.startBookFBReaderActivity(this, baseBookEntity, articleId, articleData.getAuthorId());
+                mvpPresenter.getProbationNum(bean.getArticleId());
                 break;
             case R.id.tv_pay://购买
                 //弹出对话框确认
@@ -787,6 +790,33 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
+    }
+
+    /**
+     * 获取试读 成功
+     * @param model
+     */
+    @Override
+    public void getProbationNumDataSuccess(ProbationNumModle model) {
+        if (model.isSuccess()) {
+            int endLimit = model.getData().getEndLimit();
+            ConstantValue.ISREADER_NUMBER = endLimit;
+            ConstantValue.ISREADER = true;
+            String url = model.getData().getUrl();
+            mvpPresenter.openFile(url,articleId, articleData.getAuthorId(),articleData.getCoverUrl(),articleData.getIntroduce());//获取下载url
+        }else {
+            ToastUtil.showToast("试读失败");
+            LoggerUtil.e(model.getErrMsg());
+        }
+    }
+
+    /**
+     * 获取试读 失败
+     * @param msg
+     */
+    @Override
+    public void getProbationNumDataFail(String msg) {
+        ToastUtil.showToast("试读失败");
     }
 
 

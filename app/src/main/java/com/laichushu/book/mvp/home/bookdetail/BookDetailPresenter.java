@@ -18,11 +18,13 @@ import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.DownloadEpubFilePermission_Paramet;
 import com.laichushu.book.bean.netbean.FindByBookId_Paramet;
 import com.laichushu.book.bean.netbean.Jurisdiction_Paramet;
+import com.laichushu.book.bean.netbean.ProbationNum_Paramet;
 import com.laichushu.book.bean.netbean.Purchase_Paramet;
 import com.laichushu.book.bean.netbean.RewardMoney_Paramet;
 import com.laichushu.book.bean.netbean.SubscribeArticle_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.bean.otherbean.BaseBookEntity;
+import com.laichushu.book.bean.otherbean.ProbationNumModle;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.retrofit.ApiDownBack;
@@ -411,6 +413,10 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
         });
     }
 
+    /**
+     * 阅读权限
+     * @param articleId
+     */
     public void loadJurisdiction(String articleId) {
         mvpView.showLoading();
         Jurisdiction_Paramet paramet = new Jurisdiction_Paramet(articleId, userId, "1", "1000");
@@ -435,6 +441,35 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     }
 
     /**
+     * 试读
+     * @param articleId
+     */
+    public void getProbationNum(String articleId) {
+        mvpView.showLoading();
+        Logger.e("试读");
+        ProbationNum_Paramet paramet = new ProbationNum_Paramet(articleId);
+        Logger.json(new Gson().toJson(paramet));
+        addSubscription(apiStores.getProbationNum(paramet), new ApiCallback<ProbationNumModle>() {
+            @Override
+            public void onSuccess(ProbationNumModle model) {
+                mvpView.hideLoading();
+                mvpView.getProbationNumDataSuccess(model);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.hideLoading();
+                mvpView.getProbationNumDataFail("code+" + code + "/msg:" + msg);
+            }
+
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
+    }
+
+    /**
      * 获取下载url接口文件
      *
      * @param articleId
@@ -447,16 +482,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             public void onSuccess(UrlResult modle) {
                 if (modle.isSuccess()) {
                     String url = modle.getData();
-                    String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
-                    if (new File(path).exists()) {
-                        mvpView.hideLoading();
-                        BaseBookEntity baseBookEntity = new BaseBookEntity();
-                        baseBookEntity.setBook_path(path);
-                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author, photo, brife);
-                    } else {
-                        downloadEpub(url, articleId, author, photo, brife);
-                    }
-
+                    openFile(url, articleId, author, photo, brife);
                 } else {
                     ToastUtil.showToast(modle.getErrMsg());
                     mvpView.hideLoading();
@@ -478,6 +504,27 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
     }
 
     /**
+     * 打开or下载文件
+     * @param url
+     * @param articleId
+     * @param author
+     * @param photo
+     * @param brife
+     */
+    public void openFile(String url, String articleId, String author, String photo, String brife) {
+        mvpView.showLoading();
+        String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
+        if (new File(path).exists()) {
+            mvpView.hideLoading();
+            BaseBookEntity baseBookEntity = new BaseBookEntity();
+            baseBookEntity.setBook_path(path);
+            UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author, photo, brife);
+        } else {
+            downloadEpub(url, articleId, author, photo, brife);
+        }
+    }
+
+    /**
      * 下载epub文件
      *
      * @param url
@@ -492,8 +539,8 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     boolean writtenToDisk = ApiDownBack.writeResponseBodyToDisk(response.body(), articleId, "epub");
+                    mvpView.hideLoading();
                     if (writtenToDisk) {
-                        mvpView.hideLoading();
                         String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
                         BaseBookEntity baseBookEntity = new BaseBookEntity();
                         baseBookEntity.setBook_path(path);
