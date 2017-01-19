@@ -96,7 +96,7 @@ public class FindEditPagePresenter extends BasePresenter<FindEditPageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,1);
             }
 
             @Override

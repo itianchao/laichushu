@@ -47,7 +47,7 @@ import java.util.List;
  */
 
 public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPagePresenter> implements FindServiceMainPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
-    private ImageView ivBack, ivHeadImg, ivCollect,ivShare;
+    private ImageView ivBack, ivHeadImg, ivCollect, ivShare;
     private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum;
     private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView, mServiceRecyclerView;
     private LinearLayout llFindMsg, llTeamwork, llCommentList;
@@ -160,8 +160,8 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 break;
             case R.id.iv_title_other:
                 //分享
-                String linkUrl= Base64Utils.getStringUrl(userId,ConstantValue.SHARE_TYPR_SERVICE);
-                ShareUtil.showShare(mActivity, linkUrl,linkUrl,dataBean.getPhoto(),dataBean.getServiceIntroduce(),dataBean.getNickName());
+                String linkUrl = Base64Utils.getStringUrl(userId, ConstantValue.SHARE_TYPR_SERVICE);
+                ShareUtil.showShare(mActivity, linkUrl, linkUrl, dataBean.getPhoto(), dataBean.getServiceIntroduce(), dataBean.getNickName());
                 break;
             case R.id.iv_title_another:
                 //收藏
@@ -293,11 +293,13 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
             }
         }, 300);
         if (model.isSuccess()) {
-            if (model.getData().size() != 0) {
+            if (null != model.getData() && model.getData().size() != 0) {
                 PAGE_NO++;
                 commDate = model.getData();
-                commAdapter.refreshAdapter(commDate);
+            } else {
+                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty));
             }
+            commAdapter.refreshAdapter(commDate);
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
@@ -476,13 +478,15 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
     }
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg,int flg) {
         LoggerUtil.e(msg);
+        ErrorReloadData(flg);
     }
 
     @Override
-    public void getDataFail5(String msg) {
+    public void getDataFail5(String msg,int flg) {
         LoggerUtil.e(msg);
+        ErrorReloadData(flg);
     }
 
     @Override
@@ -495,6 +499,22 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         dismissProgressDialog();
     }
 
-
+    public void ErrorReloadData(final int flg) {
+        if (flg == 1) {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                if (flg == 1) {
+                    mvpPresenter.loadServerInfoData(userId);
+                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 5 | flg == 6 | flg == 7 | flg == 8 | flg == 9| flg == 10) {
+                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_data));
+                } else {
+                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_network));
+                }
+            }
+        });
+    }
 }
 

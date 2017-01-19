@@ -53,7 +53,7 @@ public class AnnManagerPresenter extends BasePresenter<AnnManagerView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,1);
             }
 
             @Override
@@ -76,7 +76,7 @@ public class AnnManagerPresenter extends BasePresenter<AnnManagerView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,2);
             }
 
             @Override

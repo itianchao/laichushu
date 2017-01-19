@@ -106,18 +106,17 @@ public class AnnounMangeActivity extends MvpActivity2<AnnManagerPresenter> imple
         }, 300);
         ;
         if (model.isSuccess()) {
-            annDate = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (!annDate.isEmpty()) {
+                annDate = model.getData();
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
             adapter.refreshAdapter(annDate);
-        } else {
-            adapter.refreshAdapter(annDate);
-            ToastUtil.showToast(model.getErrMsg());
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
+            ErrorReloadData(1);
         }
     }
 
@@ -135,8 +134,9 @@ public class AnnounMangeActivity extends MvpActivity2<AnnManagerPresenter> imple
     }
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg, int flg) {
         Logger.e(msg);
+        ErrorReloadData(flg);
     }
 
     @Override
@@ -170,9 +170,27 @@ public class AnnounMangeActivity extends MvpActivity2<AnnManagerPresenter> imple
             initData();
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    public void ErrorReloadData(final int flg) {
+        if (flg == 1) {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                if (flg == 1) {
+                    mvpPresenter.loadAnnManageDate(partyId);
+                } else if (flg == 2) {
+                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_data));
+                }
+            }
+        });
+    }
 }
+

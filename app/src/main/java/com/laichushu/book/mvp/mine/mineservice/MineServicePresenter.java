@@ -37,6 +37,7 @@ public class MineServicePresenter extends BasePresenter<MineServiceView> {
     //服务收藏
     private MyArticBooklist_paramet coll_paramet = new MyArticBooklist_paramet(userId, pageNo, pageSize, ConstantValue.COLLECTSERVICE_TYPE, ConstantValue.COLLECTSERVICE_TYPE);
     public void LoadCollectionData() {
+        mvpView.showDialog();
         LoggerUtil.toJson(coll_paramet);
         addSubscription(apiStores.getCollectServiceDateList(coll_paramet), new ApiCallback<FindServiceInfoModel>() {
             @Override
@@ -45,11 +46,12 @@ public class MineServicePresenter extends BasePresenter<MineServiceView> {
             }
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,2);
             }
 
             @Override
             public void onFinish() {
+                mvpView.dismissDialog();
             }
         });
     }
@@ -74,7 +76,7 @@ public class MineServicePresenter extends BasePresenter<MineServiceView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,1);
             }
 
             @Override

@@ -49,7 +49,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
     private TextView activityNameTv;
     private ImageView activityImgIv;
     private TextView detailsTv;
-    private LinearLayout parentLay,parentLayContainer;
+    private LinearLayout parentLay, parentLayContainer;
     private ImageView stateIv;
     private ImageView comentIv;
     private HomeHotModel.DataBean bean;
@@ -135,8 +135,8 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
                 break;
             case R.id.iv_title_other://分享
                 //分享
-                String linkUrl= Base64Utils.getStringUrl(activityId, ConstantValue.SHARE_TYPR_ACTIVITY);
-                ShareUtil.showShare(mActivity, linkUrl,linkUrl,bean.getCoverUrl(),bean.getIntroduce(),bean.getName());
+                String linkUrl = Base64Utils.getStringUrl(activityId, ConstantValue.SHARE_TYPR_ACTIVITY);
+                ShareUtil.showShare(mActivity, linkUrl, linkUrl, bean.getCoverUrl(), bean.getIntroduce(), bean.getName());
                 break;
             case R.id.iv_title_another://评论
                 //打开参加活动的图书
@@ -165,7 +165,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
         final View customerView = UIUtil.inflate(R.layout.dialog_join);
         ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
-        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0,null);
+        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0, null);
         joinLv.setAdapter(joinAdapter);
 
         //取消
@@ -296,8 +296,10 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             dataBean = modle.getData();
             setData(dataBean);//活动详情
-            if (dataBean.getResult() != null) {
-                getResultData(dataBean.getResult());//活动结果
+            if (null != modle.getData() && null != modle.getData().getResult()) {
+                getResultData(dataBean.getResult());//
+            }else{
+//                ToastUtil.showToast(mActivity.getResources().getString(R.string.errMsg_empty));
             }
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
@@ -338,7 +340,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_join);
         ListView joinLv = (ListView) customerView.findViewById(R.id.lv_join);
-        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0,null);
+        final JoinActivityAdapter joinAdapter = new JoinActivityAdapter(mArticleData, 0, null);
         joinLv.setAdapter(joinAdapter);
 
         //取消

@@ -40,8 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePresenter> implements FindEditMainPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
-    private ImageView ivBack, ivHeadImg,ivCollect,ivGrade,ivShare;
-    private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum,tvGrade;
+    private ImageView ivBack, ivHeadImg, ivCollect, ivGrade, ivShare;
+    private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum, tvGrade;
     private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView;
     private LinearLayout llFindMsg, llTeamwork, llCommentList;
     private String userId = null;
@@ -62,6 +62,7 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
 
     private String type = null;
     private FindEditorInfoModel model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +144,8 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
                 break;
             case R.id.iv_title_other:
                 //分享
-                String linkUrl= Base64Utils.getStringUrl(userId,ConstantValue.SHARE_TYPR_EDITOR);
-                ShareUtil.showShare(mActivity, linkUrl,linkUrl,model.getData().getPhoto(),model.getData().getServiceIntroduce(),model.getData().getNickName());
+                String linkUrl = Base64Utils.getStringUrl(userId, ConstantValue.SHARE_TYPR_EDITOR);
+                ShareUtil.showShare(mActivity, linkUrl, linkUrl, model.getData().getPhoto(), model.getData().getServiceIntroduce(), model.getData().getNickName());
                 break;
             case R.id.iv_title_another:
                 //收藏
@@ -205,7 +206,7 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
             GlideUitl.loadRandImg(mActivity, model.getData().getPhoto(), ivHeadImg);
             tvRealName.setText(model.getData().getName());
             if (model.getData().getScore() != 0) {
-                switch ((int)model.getData().getScore()) {
+                switch ((int) model.getData().getScore()) {
                     case 1:
                         tvGrade.setText("金牌作家");
                         GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivGrade);
@@ -264,15 +265,19 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
             }
         }, 300);
         if (model.isSuccess()) {
-            if (model.getData().size() != 0) {
+            if (null != model.getData() && model.getData().size() > 0) {
                 PAGE_NO++;
                 commDate = model.getData();
-                commAdapter.refreshAdapter(commDate);
+            } else {
+                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty));
             }
+            commAdapter.refreshAdapter(commDate);
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
+            ErrorReloadData(1);
         }
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
     }
 
     @Override
@@ -414,13 +419,15 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
 
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg, int flg) {
         LoggerUtil.e(msg);
+        ErrorReloadData(flg);
     }
 
     @Override
-    public void getDataFail5(String msg) {
+    public void getDataFail5(String msg, int flg) {
         LoggerUtil.e(msg);
+        ErrorReloadData(flg);
     }
 
     @Override
@@ -433,5 +440,21 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
         dismissProgressDialog();
     }
 
-
+    public void ErrorReloadData(final int flg) {
+        if (flg == 1) {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                if (flg == 1) {
+                    mvpPresenter.loadEditorInfoData(userId);
+                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 5 | flg == 6 | flg == 7 | flg == 8 | flg == 9) {
+                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_data));
+                } else {
+                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_network));
+                }
+            }
+        });
+    }
 }

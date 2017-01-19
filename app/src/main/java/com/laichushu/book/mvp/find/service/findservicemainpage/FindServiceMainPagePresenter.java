@@ -115,7 +115,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,5);
             }
 
             @Override
@@ -146,7 +146,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,7);
             }
 
             @Override
@@ -247,7 +247,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail5("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail5("code+" + code + "/msg:" + msg,10);
             }
 
             @Override
@@ -271,7 +271,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,1);
             }
 
             @Override
@@ -304,7 +304,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,3);
             }
 
             @Override
@@ -329,7 +329,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,4);
             }
 
             @Override
@@ -359,7 +359,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,6);
             }
 
             @Override
@@ -392,7 +392,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,2);
             }
 
             @Override
@@ -415,7 +415,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,8);
             }
 
             @Override
@@ -437,7 +437,7 @@ public class FindServiceMainPagePresenter extends BasePresenter<FindServiceMainP
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,9);
             }
 
             @Override

@@ -13,7 +13,9 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
 public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.OnClickListener {
@@ -62,40 +64,58 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
             @Override
             public void onSuccess(GradeRemarksResult result) {
                 if (result.isSuccess()) {
-                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                    total.setText(result.getGrade() + "分，为");
-                    tvRemarks.setText(result.getRemarks());
-                    Drawable drawable = null;
-                    switch (result.getType()) {
-                        case 1:
-                            //"金牌";
-                            drawable = mActivity.getResources().getDrawable(R.drawable.icon_gold_medal2x);
-                            break;
-                        case 2:
-                            // "银牌";
-                            drawable = mActivity.getResources().getDrawable(R.drawable.icon_silver_medal2x);
-                            break;
-                        case 3:
-                            //"铜牌";
-                            drawable = mActivity.getResources().getDrawable(R.drawable.icon_copper_medal2x);
-                            break;
+                    if(null!=result){
+                        total.setText(result.getGrade() + "分，为");
+                        tvRemarks.setText(result.getRemarks());
+                        Drawable drawable = null;
+                        switch (result.getType()) {
+                            case 1:
+                                //"金牌";
+                                drawable = mActivity.getResources().getDrawable(R.drawable.icon_gold_medal2x);
+                                break;
+                            case 2:
+                                // "银牌";
+                                drawable = mActivity.getResources().getDrawable(R.drawable.icon_silver_medal2x);
+                                break;
+                            case 3:
+                                //"铜牌";
+                                drawable = mActivity.getResources().getDrawable(R.drawable.icon_copper_medal2x);
+                                break;
+                        }
+                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                        flg.setCompoundDrawables(drawable, null, null, null);
+                        flg.setText(result.getTypeName());
+                    }else{
+                        ToastUtil.showToast(R.string.errMsg_empty);
                     }
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                    flg.setCompoundDrawables(drawable, null, null, null);
-                    flg.setText(result.getTypeName());
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 } else {
-                    refreshPage(LoadingPager.PageState.STATE_ERROR);
+                    ErrorReloadData(1);
                 }
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                refreshPage(LoadingPager.PageState.STATE_ERROR);
+                LoggerUtil.e(msg);
+                ErrorReloadData(1);
             }
 
             @Override
             public void onFinish() {
 
+            }
+        });
+    }
+    public void ErrorReloadData(final int flg) {
+        if(flg==1){
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                if (flg == 1) {
+                    getRemarks();
+                }
             }
         });
     }

@@ -24,6 +24,7 @@ import com.laichushu.book.ui.adapter.TotalRanKingAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.WheelView;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -130,29 +131,29 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
     }
 
     @Override
-    public void getEditorListDataSuccess(FindEditorListModel model,String cityId, String orderByData) {
+    public void getEditorListDataSuccess(FindEditorListModel model, String cityId, String orderByData) {
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mEditorRecyclerView.setPullLoadMoreCompleted();
             }
         }, 300);
-        if(editorDate.size()>0)
-        editorDate.clear();
+        if (editorDate.size() > 0)
+            editorDate.clear();
         setCurProCode(cityId);
         setOrderBy(orderByData);
         if (model.isSuccess()) {
-            if (null!=model.getData()&&!model.getData().isEmpty()) {
+            if (null != model.getData() && !model.getData().isEmpty()) {
                 editorDate = model.getData();
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast("没有更多数据");
+                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty));
             }
             rangeAdapter.refreshAdapter(editorDate);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ErrorReloadData(1);
         }
 
     }
@@ -177,7 +178,9 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
     }
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg, int flg) {
+        LoggerUtil.toJson(msg);
+        ErrorReloadData(flg);
     }
 
     @Override
@@ -319,5 +322,21 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
             }
         }
         return cityDate;
+    }
+
+    public void ErrorReloadData(final int flg) {
+        if (flg == 1)
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                if (flg == 1) {
+                    mvpPresenter.loadEditorListData(curProCode, orderBy);
+                } else {
+                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_network));
+                }
+
+            }
+        });
     }
 }

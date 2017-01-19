@@ -106,7 +106,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,1);
             }
 
             @Override
@@ -139,7 +139,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,2);
             }
 
             @Override
@@ -174,7 +174,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,3);
             }
 
             @Override
@@ -206,7 +206,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,4);
             }
 
             @Override
@@ -239,7 +239,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,5);
             }
 
             @Override
@@ -271,7 +271,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg);
+                mvpView.getDataFail("code" + code + "msg:" + msg,6);
             }
 
             @Override
@@ -293,7 +293,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg);
+                mvpView.getDataFail("code" + code + "msg:" + msg,7);
             }
 
             @Override
@@ -321,7 +321,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg);
+                mvpView.getDataFail("code" + code + "msg:" + msg,8);
             }
 
             @Override
@@ -348,7 +348,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("删除评论");
+                mvpView.getDataFail("删除评论",8);
                 mvpView.dismissDialog();
             }
 

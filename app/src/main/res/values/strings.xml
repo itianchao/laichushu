@@ -51,6 +51,7 @@
     <string name="marking">轻触打分</string>
     <string name="comment_hint">请留下你对本书的想法及感受</string>
     <string name="comment_hint_edit">请留下你对本编辑者的想法及感受</string>
+    <string name="comment_hint_class">请留下你对本课程的想法及感受</string>
     <string name="comment_he_hint">回复TA</string>
     <string name="comment">轻触评论</string>
     <string name="reward_dialog">感谢你对作者的支持</string>
@@ -97,4 +98,9 @@
     <string name="errcode_deny">充值被拒绝!</string>
     <string name="errcode_unsupported">充值失败,不支持的错误!</string>
     <string name="errcode_unknown">充值失败,未知的错误!</string>
+
+    <string name="errMsg_empty">没有更多数据!</string>
+    <string name="errMsg_data">数据加载失败!</string>
+    <string name="errMsg_network">网络连接失败!</string>
+
 </resources>

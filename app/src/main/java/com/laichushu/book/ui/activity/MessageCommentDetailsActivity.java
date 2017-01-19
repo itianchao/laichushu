@@ -102,17 +102,17 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
             }
         }, 300);
         if (model.isSuccess()) {
-            commData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!commData.isEmpty()) {
-                msgAdapter.refreshAdapter(commData);
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                commData = model.getData();
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
-        } else {
+            msgAdapter.refreshAdapter(commData);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            ToastUtil.showToast("没有更多信息！");
+        } else {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            ErrorReloadData(1);
         }
     }
 
@@ -151,8 +151,6 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         if (model.isSuccess()) {
             //跳转图书详情页
             Bundle bundle = new Bundle();
-//        String bd = gson.toJson(model, BookDetailsModle.class);
-//        HomeHotModel.DataBean homeHotModel = gson.fromJson(bd, new TypeToken<HomeHotModel.DataBean>() {}.getType());
             HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
             bundle.putParcelable("bean", dataBean);
             bundle.putString("pageMsg", "消息喜欢");
@@ -180,11 +178,12 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
     }
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg, int flg) {
         LoggerUtil.e(msg);
         if (msg.equals("删除评论")) {
             ToastUtil.showToast("删除失败");
         }
+        ErrorReloadData(flg);
     }
 
     @Override
@@ -197,5 +196,20 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         dismissProgressDialog();
     }
 
-
+    public void ErrorReloadData(final int flg) {
+        if (flg == 1) {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        }
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                if (flg == 1) {
+                    refreshPage(LoadingPager.PageState.STATE_LOADING);
+                    mvpPresenter.LoaCommentdData();
+                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 5 | flg == 6 | flg == 7 | flg == 8) {
+                    ToastUtil.showToast(R.string.errMsg_data);
+                }
+            }
+        });
+    }
 }

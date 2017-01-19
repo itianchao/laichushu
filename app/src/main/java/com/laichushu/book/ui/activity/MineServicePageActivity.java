@@ -148,8 +148,8 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
                 collDibble = false;
                 type = 1;
                 if (!scanDibble) {
-                    coopData.clear();
-                    mvpPresenter.LoadCooperateData();
+                    if (coopData.size() == 0)
+                        mvpPresenter.LoadCooperateData();
                 }
                 scanDibble = true;
                 break;
@@ -160,8 +160,8 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
                 scanDibble = false;
                 type = 2;
                 if (!collDibble) {
-                    collData.clear();
-                    mvpPresenter.LoadCollectionData();
+                    if (collData.size() == 0)
+                        mvpPresenter.LoadCollectionData();
                 }
                 collDibble = true;
                 break;
@@ -179,17 +179,15 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
             }
         }, 300);
         if (model.isSuccess()) {
-            collData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!collData.isEmpty()) {
-                collAdapter.refreshAdapter(collData);
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                collData = model.getData();
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty));
             }
+            collAdapter.refreshAdapter(collData);
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
@@ -205,25 +203,24 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
             }
         }, 300);
         if (model.isSuccess()) {
-            coopData = model.getData();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!collData.isEmpty()) {
-                coopAdapter.refreshAdapter(coopData);
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                coopData = model.getData();
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty));
             }
-        } else {
-            ToastUtil.showToast(model.getErrMsg());
+            coopAdapter.refreshAdapter(coopData);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        } else {
+            ErrorReloadData(1);
         }
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
     }
 
     @Override
     public void onRefresh() {
         PAGE_NO = 1;
-
         if (type == 1) {
             coopData.clear();
             mvpPresenter.getCoop_paramet().setPageNo(PAGE_NO + "");
@@ -257,8 +254,9 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
     }
 
     @Override
-    public void getDataFail(String msg) {
+    public void getDataFail(String msg, int flg) {
         LoggerUtil.toJson(msg);
+        ErrorReloadData(flg);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -267,5 +265,22 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
         if (event.isRefursh) {
             initData();
         }
+    }
+
+    public void ErrorReloadData(final int flg) {
+        if (flg == 1)
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                if (flg == 1) {
+                    mvpPresenter.LoadCooperateData();
+                } else if (flg == 2) {
+                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_data));
+                } else {
+                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_network));
+                }
+            }
+        });
     }
 }

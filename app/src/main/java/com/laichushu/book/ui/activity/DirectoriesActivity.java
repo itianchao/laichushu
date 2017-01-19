@@ -76,11 +76,13 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
     @Override
     public void getDataSuccess(MaterialListModel model) {
         if (model.isSuccess()) {
-            if (model.getData() != null) {
+            if (null!=model.getData()) {
                 mData = model.getData();
-                directoriesAdapter.setmData(mData);
-                directoriesAdapter.notifyDataSetChanged();
+            }else{
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
+            directoriesAdapter.setmData(mData);
+            directoriesAdapter.notifyDataSetChanged();
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }
@@ -94,11 +96,13 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
     @Override
     public void getBookListData(BookMoudle model) {
         if (model.isSuccess()) {
-            if (model.getData() != null) {
+            if (null!=model.getData()) {
                 mBookdata = model.getData();
-                bookListAdapter.setmBookdata(mBookdata);
-                bookListAdapter.notifyDataSetChanged();
+            }else{
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
+            bookListAdapter.setmBookdata(mBookdata);
+            bookListAdapter.notifyDataSetChanged();
         } else {
             ToastUtil.showToast(model.getErrMsg());
         }

@@ -26,9 +26,9 @@ public interface FindEditMainPageView {
     void getArticleVoteDataSuccess(RewardResult model);
     void getSendMsgToPartyDataSuccess(RewardResult model);
 
-    void getDataFail(String msg);
+    void getDataFail(String msg,int flg);
 
-    void getDataFail5(String msg);
+    void getDataFail5(String msg,int flg);
 
     void showDialog();
 

@@ -29,7 +29,7 @@ public interface MessageCommentView {
 
     void messageDeleteCommentSuccess(RewardResult model, int position);
 
-    void getDataFail(String msg);
+    void getDataFail(String msg,int flg);
 
     void showDialog();
 

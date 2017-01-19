@@ -69,9 +69,9 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
         commentRyv.setAdapter(mAdapter);
         lessonId = getArguments().getInt("lessonId");
         isComment = getArguments().getBoolean("isComment");
-        if(!isComment){
+        if (!isComment) {
             commentLay.setVisibility(View.GONE);
-        }else {
+        } else {
             commentLay.setVisibility(View.VISIBLE);
         }
         mvpPresenter.loadAllCommentData(lessonId);
@@ -129,7 +129,7 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
             ToastUtil.showToast("发送成功");
             onRefresh();
             isComment = false;//能不能评论 false不能评论
-            ((FindClassVideoDetailActivity)getActivity()).getMdata().setComment(true);
+            ((FindClassVideoDetailActivity) getActivity()).getMdata().setComment(true);
             commentLay.setVisibility(View.GONE);
         } else {
             String errorMsg = model.getErrMsg();
@@ -142,16 +142,16 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
     }
 
     @Override
-    public void SaveScoreLikeData(RewardResult model, String type,int position) {
+    public void SaveScoreLikeData(RewardResult model, String type, int position) {
         if (model.isSuccess()) {
             if (type.equals("0")) {//点赞
                 Logger.e("点赞");
                 mData.get(position).setIsLike(true);
-                mData.get(position).setLikeNum(mData.get(position).getLikeNum()+1);
+                mData.get(position).setLikeNum(mData.get(position).getLikeNum() + 1);
             } else {//取消赞
                 Logger.e("取消赞");
                 mData.get(position).setIsLike(false);
-                mData.get(position).setLikeNum(mData.get(position).getLikeNum()-1);
+                mData.get(position).setLikeNum(mData.get(position).getLikeNum() - 1);
             }
             mAdapter.setmData(mData);
         } else {
@@ -192,12 +192,10 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
         } else {
             if (msg.contains("全部评论")) {
                 ToastUtil.showToast("加载失败");
-            }else if(msg.contains("点赞")){
+            } else if (msg.contains("点赞")) {
                 ToastUtil.showToast("点赞失败");
-            }else if (msg.contains("发送")){
+            } else if (msg.contains("发送")) {
                 ToastUtil.showToast("发送失败");
-            }else {
-                ToastUtil.showToast("请检查网络");
             }
 
         }

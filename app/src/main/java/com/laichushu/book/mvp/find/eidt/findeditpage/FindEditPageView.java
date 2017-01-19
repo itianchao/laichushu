@@ -12,7 +12,7 @@ public interface FindEditPageView {
     void getEditorListDataSuccess(FindEditorListModel model,String cityId,String orderBy);
     void showDialog();
 
-    void getDataFail(String msg);
+    void getDataFail(String msg,int flg);
 
     void dismissDialog();
 }

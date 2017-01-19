@@ -70,10 +70,12 @@ public class PartActivity extends MvpActivity<PartPresenter> implements PartView
     @Override
     public void getDataSuccess(PartModel model) {
         if (model.isSuccess()) {
-            if (model.getData() != null) {
+            if (null!=model.getData()) {
                 mPartdata = model.getData();
                 partListAdapter.setmPartdata(mPartdata);
                 partListAdapter.notifyDataSetChanged();
+            }else{
+                ToastUtil.showToast(mActivity.getResources().getString(R.string.errMsg_empty));
             }
         }else {
             ToastUtil.showToast(model.getErrMsg());
