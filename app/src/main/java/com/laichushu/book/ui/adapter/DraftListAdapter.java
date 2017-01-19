@@ -49,6 +49,12 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
             holder.deleteIv.setVisibility(View.VISIBLE);
             holder.renameTv.setVisibility(View.INVISIBLE);
             holder.reviseTv.setVisibility(View.GONE);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mvpPresenter.openDeleteDialog(dataBean.getId(),position);
+                }
+            });
         } else {
             holder.deleteIv.setVisibility(View.GONE);
             holder.renameTv.setVisibility(View.VISIBLE);
