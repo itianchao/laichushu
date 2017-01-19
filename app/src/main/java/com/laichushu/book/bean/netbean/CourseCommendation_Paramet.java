@@ -17,6 +17,6 @@ public class CourseCommendation_Paramet {
     }
 
     public void setUserId(String userId) {
-        userId = userId;
+        this.userId = userId;
     }
 }
