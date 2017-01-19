@@ -207,6 +207,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
         if (model.isSuccess()) {
             if (type.equals("0")) {
                 joinTv.setText("已参加");
+                joinTv.setBackgroundColor(mActivity.getResources().getColor(R.color.Grey));
                 bean.setApplyAmount(bean.getApplyAmount() + 1);
                 numTv.setText("报名人数：" + bean.getApplyAmount() + "人");
             } else {
@@ -413,6 +414,7 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
             GlideUitl.loadImg(this, dataBean.getImgUrl(), activityImgIv);
             if (dataBean.isParticipate()) {
                 joinTv.setText("已参加");
+                joinTv.setBackgroundColor(mActivity.getResources().getColor(R.color.Grey));
             } else {
                 joinTv.setText("参加活动");
             }

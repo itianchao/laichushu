@@ -1,6 +1,7 @@
 package com.laichushu.book.ui.activity;
 
 import android.content.res.Configuration;
+import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
 import android.view.Display;
 import android.view.Gravity;
@@ -160,7 +161,7 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
             } else if (errMsg.contains(UIUtil.getString(R.string.errMsg5))) {
                 ToastUtil.showToast(UIUtil.getString(R.string.errMsg5));
             } else {
-                ToastUtil.showToast(UIUtil.getString(R.string.errMsg1));
+                ToastUtil.showToast(errMsg);
             }
             UIUtil.postStartActivity(mActivity, LoginActivity.class);
         }
@@ -332,12 +333,12 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
         super.onConfigurationChanged(newConfig);
         // Checks whether a hardware keyboard is available
         if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
-                ToastUtil.showToast("软键盘弹起");
-            } else if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
-                ToastUtil.showToast("软键盘关闭");
-                pwdEt.clearFocus();
-                repwdEt.clearFocus();
-            }
+            ToastUtil.showToast("软键盘弹起");
+        } else if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
+            ToastUtil.showToast("软键盘关闭");
+            pwdEt.clearFocus();
+            repwdEt.clearFocus();
+        }
 
     }
 }

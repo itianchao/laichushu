@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="title">25sp</dimen>
     <dimen name="editBig">48sp</dimen>
-    <dimen name="edit">14sp</dimen>
+    <dimen name="edit">16sp</dimen>
     <dimen name="editTop">17sp</dimen>
 
     <dimen name="edit2">15sp</dimen>

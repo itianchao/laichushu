@@ -151,9 +151,7 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             moreIv.setVisibility(View.VISIBLE);
             moreIv.setOnClickListener(this);
         } else {
-            moreIv.setVisibility(View.INVISIBLE);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0, 0);
-            moreIv.setLayoutParams(params);
+            moreIv.setVisibility(View.GONE);
         }
     }
 

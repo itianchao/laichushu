@@ -1,7 +1,5 @@
 package com.laichushu.book.ui.activity;
 
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.AliPayResult;
@@ -24,6 +21,7 @@ import com.laichushu.book.mvp.mine.wallet.WalletPresener;
 import com.laichushu.book.mvp.mine.wallet.WalletView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.PayUtils;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -40,18 +38,17 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     private CheckBox rbAlipay, rbWechat;
     private Button btnSubmit;
     private EditText edMoney;
-    private String money = null, payPlate = "2";
+    private String money = null, payPlate = ConstantValue.ALIPAY_PLATE;
     private WalletBalanceReward bean;
-    private String mPayUrl;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 1) {
-                finish();
-            }
-        }
-    };
+//    private Handler handler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            if (msg.what == 1) {
+//                finish();
+//            }
+//        }
+//    };
 
     @Override
     protected WalletPresener createPresenter() {
@@ -86,7 +83,7 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                 if (isChecked) {
                     rbAlipay.setChecked(true);
                     rbWechat.setChecked(false);
-                    payPlate = "2";
+                    payPlate = ConstantValue.ALIPAY_PLATE;
                 }
 
             }
@@ -98,7 +95,7 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                 if (isChecked) {
                     rbAlipay.setChecked(false);
                     rbWechat.setChecked(true);
-                    payPlate = "1";
+                    payPlate = ConstantValue.WXPAY_PLATE;
                 }
 
             }
@@ -132,9 +129,9 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
                             ToastUtil.showToast("不能超过小数点后两位");
                         } else {
                             btnSubmit.setClickable(false);
-                            if(payPlate.equals("2")){
+                            if (payPlate.equals(ConstantValue.ALIPAY_PLATE)) {
                                 mvpPresenter.loadRechargeData(money, payPlate);
-                            }else{
+                            } else {
                                 mvpPresenter.loadRechargeWXData(money, payPlate);
                             }
 
@@ -165,11 +162,11 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     @Override
     public void getRechargePayDateSuccess(AliPayResult model) {
         if (model.isSuccess()) {
-            if (payPlate.equals("2")) {
+            if (payPlate.equals(ConstantValue.ALIPAY_PLATE)) {
                 ConstantValue.ALIPAY_CALLBACK_URL = model.getData().getNotifyUrl();
-                PayUtils.getInstance(mActivity).alipay(mActivity, "0.01", model.getData().getOrderCode());
+                PayUtils.getInstance(mActivity).alipay(mActivity, money, model.getData().getOrderCode());
+//                handler.sendEmptyMessageDelayed(1, 3700);
             }
-            handler.sendEmptyMessageDelayed(1, 1700);
         } else {
             ToastUtil.showToast("充值失败！");
             btnSubmit.setClickable(true);
@@ -179,22 +176,22 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
 
     @Override
     public void getRechargePayDateSuccess(WxInfo model) {
-      if(model.isSuccess()){
-          if (payPlate.equals("1")){
-              PayUtils.getInstance(mActivity).wechatPay(model);
-          }
-          handler.sendEmptyMessageDelayed(1, 1700);
-      } else {
-          ToastUtil.showToast("充值失败！");
-          btnSubmit.setClickable(true);
-      }
+        if (model.isSuccess()) {
+            if (payPlate.equals(ConstantValue.WXPAY_PLATE)) {
+                PayUtils.getInstance(mActivity).wechatPay(model);
+//                handler.sendEmptyMessageDelayed(1, 3700);
+            }
+        } else {
+            ToastUtil.showToast("充值失败！");
+            btnSubmit.setClickable(true);
+        }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
 
     }
 
     @Override
     public void getDataFail(String msg) {
-
+        LoggerUtil.e(msg);
     }
 
     @Override

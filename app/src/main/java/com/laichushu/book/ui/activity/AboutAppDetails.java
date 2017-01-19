@@ -38,7 +38,7 @@ public class AboutAppDetails extends MvpActivity2 implements View.OnClickListene
         super.initData();
         tvTitle.setText("关于来出书");
         tvTitle.setVisibility(View.VISIBLE);
-        GlideUitl.loadCornersImg(mActivity,R.drawable.ic_launcher,20,appIcon,R.drawable.ic_launcher);
+//        GlideUitl.loadCornersImg(mActivity,R.drawable.ic_launcher,20,appIcon,R.drawable.ic_launcher);
         ivBack.setOnClickListener(this);
         UIUtil.postDelayed(new Runnable() {
             @Override

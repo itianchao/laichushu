@@ -62,7 +62,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             usernameEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         } else if (password.length() < 6) {
-            ToastUtil.showToast("密码至少6位！");
+            ToastUtil.showToast("账号或密码错误！");
             passwordEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         }
@@ -72,7 +72,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             return isLogin = false;
         }
         if (!Validator.isUsername(password)) {
-            ToastUtil.showToast("您输入的密码含有汉字或特殊字符，请重新输入！");
+            ToastUtil.showToast("账号或密码错误！");
             passwordEt.startAnimation(ShakeAnim.shakeAnimation(3));
             return isLogin = false;
         }

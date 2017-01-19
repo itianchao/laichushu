@@ -124,7 +124,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             } else if (errMsg.contains(UIUtil.getString(R.string.errMsg5))) {
                 ToastUtil.showToast(UIUtil.getString(R.string.errMsg5));
             } else {
-                ToastUtil.showToast(UIUtil.getString(R.string.errMsg1));
+                ToastUtil.showToast(errMsg);
             }
         }
     }

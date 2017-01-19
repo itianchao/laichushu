@@ -34,26 +34,28 @@
             android:layout_below="@+id/edit_top"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="24dp"
-            android:text="茶机加工"
             android:layout_toRightOf="@+id/iv_userHeadImg"
+            android:text="茶机加工"
             android:textColor="@color/white"
             android:textSize="@dimen/edit2" />
+
         <TextView
             android:id="@+id/iv_userGradeContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
             android:layout_below="@+id/tv_userRealName"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/iv_userHeadImg"
             android:textColor="@color/characterLightGray"
-            android:textSize="@dimen/edit"/>
+            android:textSize="@dimen/edit" />
+
         <ImageView
             android:id="@+id/iv_userGrade"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_marginLeft="12dp"
             android:layout_below="@+id/tv_userRealName"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/iv_userGradeContent" />
 
@@ -157,77 +159,77 @@
             <include layout="@layout/item_brief" />
         </ScrollView>
 
+        <LinearLayout
+            android:id="@+id/ll_commentList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ll_commentList"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="@string/marking"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/edit2" />
-
-                    <RatingBar
-                        android:id="@+id/ratbar_num"
-                        style="@style/foodRatingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="3dp"
-                        android:isIndicator="false"
-                        android:numStars="5"
-                        android:rating="3"
-                        android:stepSize="1" />
-                </LinearLayout>
-
-                <include layout="@layout/line" />
-
-                <EditText
-                    android:id="@+id/et_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="85dp"
-                    android:background="@null"
-                    android:cursorVisible="true"
-                    android:hint="@string/comment_hint"
-                    android:imeOptions="actionSend"
-                    android:inputType="text"
-                    android:paddingLeft="12dp"
-                    android:textSize="@dimen/edit"
-                    android:textColor="@color/characterGray"
-                    android:textColorHint="@color/hint" />
-
-                <include layout="@layout/line" />
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="全部评论"
+                    android:text="@string/marking"
                     android:textColor="@color/black"
                     android:textSize="@dimen/edit2" />
 
-                <include layout="@layout/line" />
-
-                <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-                    android:id="@+id/ryv_commentList"
-                    android:layout_width="match_parent"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/white"
-                    android:layout_height="wrap_content" />
+                <RatingBar
+                    android:id="@+id/ratbar_num"
+                    style="@style/foodRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="120dp"
+                    android:layout_marginTop="3dp"
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:rating="3"
+                    android:stepSize="1" />
             </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <EditText
+                android:id="@+id/et_comment"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:hint="@string/comment_hint_edit"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+                android:paddingLeft="12dp"
+                android:textColor="@color/characterGray"
+                android:textColorHint="@color/hint"
+                android:textSize="@dimen/edit" />
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="全部评论"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edit2" />
+
+            <include layout="@layout/line" />
+
+            <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+                android:id="@+id/ryv_commentList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/white" />
+        </LinearLayout>
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_case"

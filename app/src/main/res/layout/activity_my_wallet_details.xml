@@ -37,28 +37,28 @@
             android:layout_marginLeft="12dp"
             android:paddingLeft="12dp"
             android:paddingTop="12dp"
-            android:textColor="@color/characterLightGray"
+            android:textColor="@color/white"
             android:textSize="@dimen/editBig"
+            android:text="0.00"
             android:textStyle="bold" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/btn_Recharge"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_below="@+id/rl_head"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="15dp"
         android:text="充 值"
         style="@style/button_login_style"
-        android:textColor="@color/white"
         android:textSize="@dimen/edit" />
 
     <Button
         android:id="@+id/btn_withdrawals"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_below="@+id/btn_Recharge"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
@@ -77,6 +77,7 @@
         android:paddingLeft="24dp"
         android:paddingTop="24dp"
         android:text="交易记录"
+        android:visibility="gone"
         android:textColor="@color/characterLightGray2"
         android:textSize="@dimen/edit"
          />

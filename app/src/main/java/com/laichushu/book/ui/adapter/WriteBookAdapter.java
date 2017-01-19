@@ -227,7 +227,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.authorTv.setText(dataBean.getAuthorName());
         holder.numRb.setRating(dataBean.getLevel());
         holder.commentTv.setText("(" + dataBean.getCommentNum() + "评论)");
-        holder.wordTv.setText("约" + dataBean.getWordNum());
+        holder.wordTv.setText("约" + dataBean.getWordNum()+"字");
         holder.moneyTv.setText(dataBean.getAwardMoney() + "元");
         holder.rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
 
