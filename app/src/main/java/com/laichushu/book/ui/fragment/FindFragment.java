@@ -192,6 +192,9 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
      */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (position % (mTitleData.size() == 0 ? 1 : mTitleData.size()) == mTitleData.size() - 1) {
+            return;
+        }
         int move = (int) ((position % (mTitleData.size() == 0 ? 1 : mTitleData.size()) + positionOffset) * range);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);

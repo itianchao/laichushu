@@ -118,10 +118,10 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
     }
 
     //获取用户作品列表 userId==targetId
-    ArticleBookList_Paramet bookList = new ArticleBookList_Paramet("", pageNo, pageSize, "");
+    ArticleBookList_Paramet bookList = new ArticleBookList_Paramet(userId, pageNo, pageSize, "");
 
     public void getUserBookListDate(String userId) {
-        bookList.setUserId(userId);
+        bookList.setAuthorId(userId);
         addSubscription(apiStores.getArticleBookList(bookList), new ApiCallback<HomeHotModel>() {
             @Override
             public void onSuccess(HomeHotModel model) {

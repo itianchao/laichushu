@@ -49,7 +49,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
 
     public void getArticleBookList() {
         LoggerUtil.e("获取创作列表");
-        ArticleBookList_Paramet paramet = new ArticleBookList_Paramet(ConstantValue.USERID, pageNo, ConstantValue.PAGESIZE1, "");
+        ArticleBookList_Paramet paramet = new ArticleBookList_Paramet(ConstantValue.USERID, pageNo, ConstantValue.PAGESIZE1, ConstantValue.USERID);
         LoggerUtil.toJson(paramet);
         addSubscription(apiStores.getArticleBookList(paramet), new ApiCallback<HomeHotModel>() {
             @Override

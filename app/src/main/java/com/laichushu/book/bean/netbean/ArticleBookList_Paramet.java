@@ -9,13 +9,13 @@ public class ArticleBookList_Paramet {
     private String userId;
     private String pageNo;
     private String pageSize;
-    private String targetId;
+    private String authorId;
 
-    public ArticleBookList_Paramet(String userId, String pageNo, String pageSize, String targetId) {
+    public ArticleBookList_Paramet(String userId, String pageNo, String pageSize, String authorId) {
         this.userId = userId;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
-        this.targetId = targetId;
+        this.authorId = authorId;
     }
 
     public String getUserId() {
@@ -42,11 +42,11 @@ public class ArticleBookList_Paramet {
         this.pageSize = pageSize;
     }
 
-    public String getTargetId() {
-        return targetId;
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setTargetId(String targetId) {
-        this.targetId = targetId;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 }
