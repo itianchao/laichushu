@@ -25,7 +25,6 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
 
     private ArrayList<HomeHotModel.DataBean> mAllData;
     private HomeSearchActivity mActivity;
-    private View itemView;
 
     public HomeSearchAdapter(ArrayList<HomeHotModel.DataBean> mAllData, HomeSearchActivity homeSearchActivity) {
         this.mAllData = mAllData;
@@ -40,7 +39,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        itemView = UIUtil.inflate(R.layout.item_home_book);
+        View itemView = UIUtil.inflate(R.layout.item_home_book);
         return new ViewHolder(itemView);
     }
 
@@ -69,7 +68,7 @@ public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.Vi
                 GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1,  holder.bookStatueIv);
                 break;
         }
-        itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
