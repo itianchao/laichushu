@@ -188,46 +188,47 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             @Override
             public void onSuccess(HomeUserResult result) {
                 if (result.isSuccess()) {
-                    //初始化个人信息
-                    headResult = result;
-                    GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHeadImg, R.drawable.icon_percentre_defhead2x);
-                    tvNickName.setText(result.getNickName());
-                    if (!TextUtils.isEmpty(result.getLevelType())) {
-                        ivGreadDetail.setClickable(true);
-                        ivGreadDetails.setVisibility(View.VISIBLE);
-                        switch (result.getLevelType()) {
-                            case "1":
-                                tvAuthorAgree.setText("金牌作家");
-                                GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivPerGrade);
-                                break;
-                            case "2":
-                                tvAuthorAgree.setText("银牌作家");
-                                GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, ivPerGrade);
-                                break;
-                            case "3":
-                                tvAuthorAgree.setText("铜牌作家");
-                                GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, ivPerGrade);
-                                break;
+                    if (null != result) {//初始化个人信息
+                        headResult = result;
+                        GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHeadImg, R.drawable.icon_percentre_defhead2x);
+                        tvNickName.setText(result.getNickName());
+                        if (!TextUtils.isEmpty(result.getLevelType())) {
+                            ivGreadDetail.setClickable(true);
+                            ivGreadDetails.setVisibility(View.VISIBLE);
+                            switch (result.getLevelType()) {
+                                case "1":
+                                    tvAuthorAgree.setText("金牌作家");
+                                    GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivPerGrade);
+                                    break;
+                                case "2":
+                                    tvAuthorAgree.setText("银牌作家");
+                                    GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, ivPerGrade);
+                                    break;
+                                case "3":
+                                    tvAuthorAgree.setText("铜牌作家");
+                                    GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, ivPerGrade);
+                                    break;
+                            }
+                        } else {
+                            ivPerGrade.setVisibility(View.GONE);
+                            ivGreadDetail.setClickable(false);
+                            ivGreadDetails.setVisibility(View.GONE);
+                            tvAuthorAgree.setText("暂无等级");
                         }
+                        headLoadState = true;
+                        Message msg = new Message();
+                        mhandler.sendMessage(msg);
                     } else {
-                        ivPerGrade.setVisibility(View.GONE);
-                        ivGreadDetail.setClickable(false);
-                        ivGreadDetails.setVisibility(View.GONE);
-                        tvAuthorAgree.setText("暂无等级");
+                        ToastUtil.showToast(R.string.errMsg_empty);
                     }
-                    headLoadState = true;
-                    Message msg = new Message();
-                    mhandler.sendMessage(msg);
                 } else {
-                    refreshPage(LoadingPager.PageState.STATE_ERROR);
-                    reLoadDatas();
+                    reLoadDatas(1);
                 }
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                refreshPage(LoadingPager.PageState.STATE_ERROR);
-                reLoadDatas();
+                reLoadDatas(1);
             }
 
             @Override
@@ -283,9 +284,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
         }, 300);
         if (model.isSuccess()) {
-            dyData = model.getData();
-            if (!dyData.isEmpty()) {
-                dyAdapter.refreshAdapter(dyData);
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                dyData = model.getData();
                 PAGE_NO++;
             } else {
                 if (PAGE_NO == 1) {
@@ -293,13 +293,12 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                     tvTips.setText("您还没有添加动态，赶快点击右上角去添加吧！");
                 }
             }
+            dyAdapter.refreshAdapter(dyData);
             dyLoadState = true;
             Message msg = new Message();
-            mhandler.sendMessage(msg);
+            mhandler.sendMessageDelayed(msg, 1000);
         } else {
-
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
-            reLoadDatas();
+            reLoadDatas(2);
         }
     }
 
@@ -319,17 +318,18 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
         }, 300);
         if (model.isSuccess()) {
-            focusMeData = model.getData();
-            if (!focusMeData.isEmpty()) {
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                focusMeData = model.getData();
                 PAGE_NO++;
             } else {
-
+                tvTips.setVisibility(View.VISIBLE);
+                tvTips.setText("您还未被其他用户关注！");
             }
+            fmAdapter.refreshAdapter(focusMeData);
         } else {
-            tvTips.setVisibility(View.VISIBLE);
-            tvTips.setText("您还未被其他用户关注！");
+            ToastUtil.showToast(R.string.errMsg_empty);
         }
-        fmAdapter.refreshAdapter(focusMeData);
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     /**
@@ -348,18 +348,18 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
         }, 300);
         if (model.isSuccess()) {
-            focusBeData = model.getData();
-            if (!focusBeData.isEmpty()) {
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                focusBeData = model.getData();
                 PAGE_NO++;
             } else {
-
+                tvTips.setVisibility(View.VISIBLE);
+                tvTips.setText("您还没有关注其他用户，赶快去添加吧！");
             }
-        } else {
             fbAdapter.refreshAdapter(focusBeData);
-            tvTips.setVisibility(View.VISIBLE);
-            tvTips.setText("您还没有关注其他用户，赶快去添加吧！");
+        } else {
+            ToastUtil.showToast(model.getErrMsg());
         }
-        fbAdapter.refreshAdapter(focusBeData);
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     /**
@@ -460,9 +460,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
 
     @Override
-    public void getDataFail(String msg) {
-        reLoadDatas();
+    public void getDataFail(String msg, int flg) {
         Logger.e(msg);
+        dismissDialog();
+        reLoadDatas(flg);
     }
 
     @Override
@@ -487,7 +488,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 dibbleFoMe = false;
                 type = 1;
                 if (!dibbleDy) {
-                    dyData.clear();
+                    if (dyData.size() > 0)
+                        dyData.clear();
                     mvpPresenter.LoadData();
                 }
                 dibbleDy = true;
@@ -499,7 +501,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 dibbleFo = false;
                 type = 2;
                 if (!dibbleFoMe) {
-                    focusMeData.clear();
+                    if (focusMeData.size() > 0)
+                        focusMeData.clear();
                     showProgressDialog();
                     mvpPresenter.LoadFocusMeData();
                 }
@@ -512,7 +515,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 dibbleFoMe = false;
                 type = 3;
                 if (!dibbleFo) {
-                    focusBeData.clear();
+                    if (focusBeData.size() > 0)
+                        focusBeData.clear();
                     showProgressDialog();
                     mvpPresenter.LoadFocusBeData();
                 }
@@ -588,31 +592,28 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         EventBus.getDefault().unregister(this);
     }
 
-    public void reLoadDatas() {
-        refreshPage(LoadingPager.PageState.STATE_ERROR);
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                refreshPage(LoadingPager.PageState.STATE_LOADING);
-                switch (type) {
-                    case 1:
-                        if (!headLoadState)
+    public void reLoadDatas(final int flg) {
+        if (flg == 1 | flg == 2) {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    switch (flg) {
+                        case 1:
+                            refreshPage(LoadingPager.PageState.STATE_LOADING);
                             initHeadInfo();
-                        if (!dyLoadState)
+                        case 2:
+                            refreshPage(LoadingPager.PageState.STATE_LOADING);
                             mvpPresenter.LoadData();
-                        break;
-                    case 2:
-                        mvpPresenter.LoadFocusMeData();
-                        break;
-                    case 3:
-                        mvpPresenter.LoadFocusBeData();
-                        break;
-                    default:
-                        initHeadInfo();
-                        break;
+                            break;
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ToastUtil.showToast(R.string.errMsg_data_exception);
+        }
+
+
     }
 
 }

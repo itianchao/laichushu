@@ -421,11 +421,13 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
     @Override
     public void getDataFail(String msg, int flg) {
         LoggerUtil.e(msg);
+        dismissDialog();
         ErrorReloadData(flg);
     }
 
     @Override
     public void getDataFail5(String msg, int flg) {
+        dismissDialog();
         LoggerUtil.e(msg);
         ErrorReloadData(flg);
     }
@@ -443,18 +445,19 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
     public void ErrorReloadData(final int flg) {
         if (flg == 1) {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-        }
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                if (flg == 1) {
-                    mvpPresenter.loadEditorInfoData(userId);
-                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 5 | flg == 6 | flg == 7 | flg == 8 | flg == 9) {
-                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_data));
-                } else {
-                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_network));
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    if (flg == 1) {
+                        refreshPage(LoadingPager.PageState.STATE_LOADING);
+                        mvpPresenter.loadEditorInfoData(userId);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ToastUtil.showToast(mActivity.getString(R.string.errMsg_data_exception));
+        }
+
+
     }
 }

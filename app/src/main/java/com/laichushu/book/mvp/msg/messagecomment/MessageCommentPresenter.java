@@ -31,6 +31,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
     private String userId = ConstantValue.USERID;
     private String msgType;
     private String subType;
+    private String senderName;
 
     //初始化构造
     public MessageCommentPresenter(MessageCommentView view) {
@@ -77,6 +78,14 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
         this.subType = subType;
     }
 
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
     public MessageComment_Paramet getParamet() {
         return paramet;
     }
@@ -106,7 +115,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg,1);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg, 1);
             }
 
             @Override
@@ -139,7 +148,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg,2);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg, 2);
             }
 
             @Override
@@ -174,7 +183,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg,3);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg, 3);
             }
 
             @Override
@@ -193,7 +202,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
     }
 
     //私信列表
-    private PerInformation_Paramet infoParamet = new PerInformation_Paramet(userId, pageNo, pageSize);
+    private PerInformation_Paramet infoParamet = new PerInformation_Paramet(userId, pageNo, pageSize,senderName);
 
     public void LoadPerInfoDetailsData() {
 
@@ -206,7 +215,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg,4);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg, 4);
             }
 
             @Override
@@ -239,7 +248,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg,5);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg, 5);
             }
 
             @Override
@@ -271,7 +280,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg,6);
+                mvpView.getDataFail("code" + code + "msg:" + msg, 6);
             }
 
             @Override
@@ -293,7 +302,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg,7);
+                mvpView.getDataFail("code" + code + "msg:" + msg, 7);
             }
 
             @Override
@@ -321,7 +330,7 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code" + code + "msg:" + msg,8);
+                mvpView.getDataFail("code" + code + "msg:" + msg, 8);
             }
 
             @Override
@@ -333,28 +342,30 @@ public class MessageCommentPresenter extends BasePresenter<MessageCommentView> {
 
     /**
      * 删除消息评论
+     *
      * @param position 位置
-     * @param id id
+     * @param id       id
      */
-    public void messageDeleteComment(final int position, String id){
-       mvpView.showDialog();
+    public void messageDeleteComment(final int position, String id) {
+        mvpView.showDialog();
         DeleteMsg_Paramet paramet = new DeleteMsg_Paramet(id);
         addSubscription(apiStores.deleteMsgDetails(paramet), new ApiCallback<RewardResult>() {
             @Override
             public void onSuccess(RewardResult model) {
-                mvpView.messageDeleteCommentSuccess(model,position);
+                mvpView.messageDeleteCommentSuccess(model, position);
                 mvpView.dismissDialog();
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("删除评论",8);
+                mvpView.getDataFail("删除评论", 8);
                 mvpView.dismissDialog();
             }
 
             @Override
             public void onFinish() {
-                mvpView.dismissDialog();;
+                mvpView.dismissDialog();
+                ;
             }
         });
     }

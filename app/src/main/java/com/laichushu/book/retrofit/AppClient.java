@@ -1,13 +1,9 @@
 package com.laichushu.book.retrofit;
 
 import com.laichushu.book.BuildConfig;
-import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.MD5Util;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
-import com.orhanobut.logger.Logger;
-
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 

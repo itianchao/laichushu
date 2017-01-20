@@ -6,14 +6,12 @@ import com.laichushu.book.bean.netbean.CourseScoreSave_Paramet;
 import com.laichushu.book.bean.netbean.TopicDetailCommentList_Paramet;
 import com.laichushu.book.bean.netbean.TopicDyLike_Paramet;
 import com.laichushu.book.global.ConstantValue;
-import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.SaveComment_Paramet;
 import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.AllCommentActivity;
 
 /**
  * 全部评论

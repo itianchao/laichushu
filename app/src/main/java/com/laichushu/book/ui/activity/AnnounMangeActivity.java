@@ -136,6 +136,7 @@ public class AnnounMangeActivity extends MvpActivity2<AnnManagerPresenter> imple
     @Override
     public void getDataFail(String msg, int flg) {
         Logger.e(msg);
+        dismissProgressDialog();
         ErrorReloadData(flg);
     }
 
@@ -180,17 +181,19 @@ public class AnnounMangeActivity extends MvpActivity2<AnnManagerPresenter> imple
     public void ErrorReloadData(final int flg) {
         if (flg == 1) {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-        }
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                if (flg == 1) {
-                    mvpPresenter.loadAnnManageDate(partyId);
-                } else if (flg == 2) {
-                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_data));
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    if (flg == 1) {
+                        refreshPage(LoadingPager.PageState.STATE_LOADING);
+                        mvpPresenter.loadAnnManageDate(partyId);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ToastUtil.showToast(mActivity.getString(R.string.errMsg_data_exception));
+        }
+
     }
 }
 

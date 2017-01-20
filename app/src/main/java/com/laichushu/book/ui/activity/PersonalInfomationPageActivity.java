@@ -144,7 +144,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
             }
         }, 300);
         if (model.isSuccess()) {
-            if (null!=model.getData()&&!model.getData().isEmpty()) {
+            if (null != model.getData() && !model.getData().isEmpty()) {
                 msgData = model.getData();
                 PAGE_NO++;
             } else {
@@ -231,6 +231,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
     @Override
     public void getDataFail(String msg, int flg) {
         LoggerUtil.e(msg);
+        dismissDialog();
         ErrorReloadData(flg);
     }
 
@@ -243,20 +244,22 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
     public void dismissDialog() {
         dismissProgressDialog();
     }
+
     public void ErrorReloadData(final int flg) {
-        if(flg==1){
+        if (flg == 5) {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-        }
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                if (flg == 5) {
-                    refreshPage(LoadingPager.PageState.STATE_LOADING);
-                    mvpPresenter.LoadPerDetailsData(sendId, msgId);
-                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 1) {
-                    ToastUtil.showToast(R.string.errMsg_data);
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    if (flg == 5) {
+                        refreshPage(LoadingPager.PageState.STATE_LOADING);
+                        mvpPresenter.LoadPerDetailsData(sendId, msgId);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ToastUtil.showToast(R.string.errMsg_data_exception);
+        }
+
     }
 }

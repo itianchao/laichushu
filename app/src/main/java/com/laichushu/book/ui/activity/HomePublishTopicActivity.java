@@ -195,6 +195,7 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
             public void onFailure(int code, String msg) {
                 LoggerUtil.e(msg);
                 refreshPage(LoadingPager.PageState.STATE_ERROR);
+                ToastUtil.showToast(R.string.errMsg_data_exception);
             }
 
             @Override
@@ -233,6 +234,7 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
             public void onFailure(int code, String msg) {
                 LoggerUtil.e(msg);
                 refreshPage(LoadingPager.PageState.STATE_ERROR);
+                ToastUtil.showToast(R.string.errMsg_data_exception);
             }
 
             @Override
@@ -269,6 +271,7 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
             public void onFailure(int code, String msg) {
                 LoggerUtil.e(msg);
                 refreshPage(LoadingPager.PageState.STATE_ERROR);
+                ToastUtil.showToast(R.string.errMsg_data_exception);
             }
 
             @Override

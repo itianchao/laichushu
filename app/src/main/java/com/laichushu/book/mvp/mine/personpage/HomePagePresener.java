@@ -83,7 +83,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,2);
             }
 
             @Override
@@ -110,12 +110,12 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,3);
             }
 
             @Override
             public void onFinish() {
-
+mvpView.dismissDialog();
             }
         });
     }
@@ -141,12 +141,12 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,4);
             }
 
             @Override
             public void onFinish() {
-
+mvpView.dismissDialog();
             }
         });
     }
@@ -174,7 +174,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,5);
             }
 
             @Override
@@ -207,7 +207,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,6);
             }
 
             @Override
@@ -237,7 +237,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,7);
             }
 
             @Override
@@ -261,7 +261,7 @@ public class HomePagePresener extends BasePresenter<HomePageView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail("code+" + code + "/msg:" + msg,8);
             }
 
             @Override

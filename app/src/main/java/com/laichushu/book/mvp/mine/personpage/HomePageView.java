@@ -22,7 +22,7 @@ public interface HomePageView {
 
     void getFocusMeStatus(HomeFocusResult model, boolean isFocus, HomePersonFocusResult.DataBean dataBean, int position, int type);
 
-    void getDataFail(String msg);
+    void getDataFail(String msg,int flg);
 
     void showDialog();
 

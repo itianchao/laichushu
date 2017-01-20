@@ -122,7 +122,7 @@ public class DragImageView extends ImageView {
             start_Top = top;
             start_Left = left;
             start_Bottom = bottom;
-            start_Right = right+1;
+            start_Right = right;
         }
 
     }
@@ -198,7 +198,7 @@ public class DragImageView extends ImageView {
 
             /** 获取相应的l，t,r ,b **/
             left = current_x - start_x;
-            right = current_x + this.getWidth() - start_x+1;
+            right = current_x + this.getWidth() - start_x;
             top = current_y - start_y;
             bottom = current_y - start_y + this.getHeight();
 
@@ -210,7 +210,7 @@ public class DragImageView extends ImageView {
                 }
                 if (right <= screen_W) {
                     left = screen_W - this.getWidth();
-                    right = screen_W+1;
+                    right = screen_W;
                 }
             } else {
                 left = this.getLeft();
@@ -270,7 +270,7 @@ public class DragImageView extends ImageView {
      * 实现处理拖动
      **/
     private void setPosition(int left, int top, int right, int bottom) {
-        this.layout(left, top, right+1, bottom);
+        this.layout(left, top, right, bottom);
     }
 
     /**
@@ -286,9 +286,9 @@ public class DragImageView extends ImageView {
             current_Top = this.getTop() - disY;
             current_Right = this.getRight() + disX;
             current_Bottom = this.getBottom() + disY;
-
-            this.setFrame(current_Left, current_Top, current_Right,
-                    current_Bottom);
+            if (current_Right > 0)
+                this.setFrame(current_Left, current_Top, current_Right,
+                        current_Bottom);
             /***
              * 此时因为考虑到对称，所以只做一遍判断就可以了。
              */
@@ -353,11 +353,13 @@ public class DragImageView extends ImageView {
             }
 
             if (isControl_H || isControl_V) {
-                this.setFrame(current_Left, current_Top, current_Right,
-                        current_Bottom);
+                if (current_Right > 0)
+                    this.setFrame(current_Left, current_Top, current_Right,
+                            current_Bottom);
             } else {
-                this.setFrame(current_Left+1, current_Top+1, current_Right+1,
-                        current_Bottom+1);
+                if (current_Right > 0)
+                    this.setFrame(current_Left, current_Top, current_Right,
+                            current_Bottom);
                 isScaleAnim = true;// 开启缩放动画
             }
 
@@ -431,7 +433,7 @@ public class DragImageView extends ImageView {
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        onProgressUpdate(new Integer[]{left, top, right+1, bottom});
+                        onProgressUpdate(new Integer[]{left, top, right, bottom});
                     }
                 });
 
@@ -451,7 +453,8 @@ public class DragImageView extends ImageView {
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    setFrame(values[0], values[1], values[2], values[3]);
+                    if (values[2] > 0)
+                        setFrame(values[0], values[1], values[2], values[3]);
                 }
             });
 

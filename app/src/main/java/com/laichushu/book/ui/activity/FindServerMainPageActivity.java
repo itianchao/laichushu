@@ -478,14 +478,16 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
     }
 
     @Override
-    public void getDataFail(String msg,int flg) {
+    public void getDataFail(String msg, int flg) {
         LoggerUtil.e(msg);
+        dismissDialog();
         ErrorReloadData(flg);
     }
 
     @Override
-    public void getDataFail5(String msg,int flg) {
+    public void getDataFail5(String msg, int flg) {
         LoggerUtil.e(msg);
+        dismissDialog();
         ErrorReloadData(flg);
     }
 
@@ -502,19 +504,19 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
     public void ErrorReloadData(final int flg) {
         if (flg == 1) {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-        }
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                if (flg == 1) {
-                    mvpPresenter.loadServerInfoData(userId);
-                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 5 | flg == 6 | flg == 7 | flg == 8 | flg == 9| flg == 10) {
-                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_data));
-                } else {
-                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_network));
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    if (flg == 1) {
+                        refreshPage(LoadingPager.PageState.STATE_LOADING);
+                        mvpPresenter.loadServerInfoData(userId);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ToastUtil.showToast(mActivity.getString(R.string.errMsg_data_exception));
+        }
+
     }
 }
 

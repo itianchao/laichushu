@@ -8,12 +8,13 @@ import java.io.Serializable;
 
 public class PerInformation_Paramet implements Serializable {
 
-    private String userId, pageNo, pageSize;
+    private String userId, pageNo, pageSize, senderName;
 
-    public PerInformation_Paramet(String userId, String pageNo, String pageSize) {
+    public PerInformation_Paramet(String userId, String pageNo, String pageSize, String senderName) {
         this.userId = userId;
         this.pageNo = pageNo;
         this.pageSize = pageSize;
+        this.senderName = senderName;
     }
 
     public String getUserId() {
@@ -38,5 +39,13 @@ public class PerInformation_Paramet implements Serializable {
 
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 }

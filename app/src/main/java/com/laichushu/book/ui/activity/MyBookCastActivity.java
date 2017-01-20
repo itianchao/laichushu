@@ -140,8 +140,9 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 collDibble = false;
                 type = 1;
                 if (!scanDibble) {
-                    if (scanData.size() == 0)
-                        mvpPresenter.loadBrowserListData("1");
+                    if (scanData.size() > 0)
+                        scanData.clear();
+                    mvpPresenter.loadBrowserListData("1");
                 }
                 scanDibble = true;
                 break;
@@ -152,8 +153,9 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 scanDibble = false;
                 type = 2;
                 if (!collDibble) {
-                    if (collData.size() == 0)
-                        mvpPresenter.LoadCollectionData();
+                    if (collData.size() > 0)
+                        collData.clear();
+                    mvpPresenter.LoadCollectionData();
                 }
                 collDibble = true;
                 break;
@@ -274,6 +276,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     @Override
     public void getDataFail(String msg, int flg) {
         Logger.e(msg);
+        dismissDialog();
         ErrorReloadData(flg);
     }
 
@@ -288,21 +291,20 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     }
 
     public void ErrorReloadData(final int flg) {
-        if(flg==1){
-            refreshPage(LoadingPager.PageState.STATE_LOADING);
+        if (flg == 1) {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-        }
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                if (flg == 1) {
-                    mvpPresenter.loadBrowserListData("1");
-                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 5) {
-                    ToastUtil.showToast(R.string.errMsg_data);
-                } else {
-                    ToastUtil.showToast(R.string.errMsg_network);
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    if (flg == 1) {
+                        refreshPage(LoadingPager.PageState.STATE_LOADING);
+                        mvpPresenter.loadBrowserListData("1");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ToastUtil.showToast(R.string.errMsg_data_exception);
+        }
+
     }
 }

@@ -215,15 +215,15 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
             }
         }, 300);
         if (model.isSuccess()) {
-            subData = model.getData();
-            if (!subData.isEmpty()) {
-                subAdapter.refreshAdapter(subData);
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                subData = model.getData();
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
+            subAdapter.refreshAdapter(subData);
         } else {
-
+            ToastUtil.showToast(model.getErrMSg());
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
@@ -286,7 +286,9 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
     }
 
     @Override
-    public void getDataFail(String msg,int flg) {
+    public void getDataFail(String msg, int flg) {
+        dismissDialog();
+        ToastUtil.showToast(R.string.errMsg_data_exception);
         Logger.e(msg);
     }
 

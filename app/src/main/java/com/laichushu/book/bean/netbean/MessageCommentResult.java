@@ -15,7 +15,16 @@ public class MessageCommentResult implements Serializable {
      */
 
     private boolean success;
+    private String errMSg;
     private List<DataBean> data;
+
+    public String getErrMSg() {
+        return errMSg;
+    }
+
+    public void setErrMSg(String errMSg) {
+        this.errMSg = errMSg;
+    }
 
     public boolean isSuccess() {
         return success;

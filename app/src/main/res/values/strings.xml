@@ -100,7 +100,7 @@
     <string name="errcode_unknown">充值失败,未知的错误!</string>
 
     <string name="errMsg_empty">没有更多数据!</string>
-    <string name="errMsg_data">数据加载失败!</string>
-    <string name="errMsg_network">网络连接失败!</string>
+    <string name="errMsg_data_exception">数据加载异常!</string>
+    <string name="errMsg_networks">网络连接失败!</string>
 
 </resources>

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
-import com.google.gson.Gson;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.BookDetailsModle;
@@ -21,13 +20,8 @@ import com.laichushu.book.bean.netbean.HomeFocusResult;
 import com.laichushu.book.bean.netbean.HomePersonFocusResult;
 import com.laichushu.book.bean.netbean.HomeUseDyrResult;
 import com.laichushu.book.bean.netbean.HomeUserResult;
-import com.laichushu.book.bean.netbean.PersonalCentreResult;
-import com.laichushu.book.db.Cache_Json;
-import com.laichushu.book.db.Cache_JsonDao;
-import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.event.RefrushHomePageEvent;
 import com.laichushu.book.event.RefrushUserPageEvent;
-import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.mvp.mine.userhomepage.UserHomePagePresener;
@@ -262,7 +256,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleFoHe = false;
                 type = 1;
                 if (!dibbleDy) {
-                    dyData.clear();
+                    if (dyData.size() > 0)
+                        dyData.clear();
                     mvpPresenter.getUserDynmicDate(userId);
                 }
                 dibbleDy = true;
@@ -275,7 +270,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleFoHe = false;
                 type = 2;
                 if (!dibbleWorks) {
-                    worksData.clear();
+                    if (worksData.size() > 0)
+                        worksData.clear();
                     showProgressDialog();
                     mvpPresenter.getUserBookListDate(userId);
                 }
@@ -289,7 +285,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleFoHe = false;
                 type = 3;
                 if (!dibbleheFo) {
-                    focusMeData.clear();
+                    if (focusMeData.size() > 0)
+                        focusMeData.clear();
                     showProgressDialog();
                     mvpPresenter.getUserHeFocusDate(userId);
                 }
@@ -303,7 +300,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleheFo = false;
                 type = 4;
                 if (!dibbleFoHe) {
-                    focusBeData.clear();
+                    if (focusBeData.size() > 0)
+                        focusBeData.clear();
                     showProgressDialog();
                     mvpPresenter.getUserFocusHeDate(userId);
                 }
@@ -316,52 +314,56 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     public void getUserHeadDateSuccess(HomeUserResult result) {
 
         if (result.isSuccess()) {
-            userBean = result;
-            GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
-            nickName.setText(result.getNickName());
-            if (null != result.getLevelType()) {
-                ivGradeDetail.setClickable(true);
-                ivGradeDetails.setVisibility(View.VISIBLE);
-                switch (result.getLevelType()) {
-                    case "1":
-                        tvAuthorGrade.setText("金牌作家");
-                        GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivGrade);
-                        break;
-                    case "2":
-                        tvAuthorGrade.setText("银牌作家");
-                        GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, ivGrade);
-                        break;
-                    case "3":
-                        tvAuthorGrade.setText("铜牌作家");
-                        GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, ivGrade);
-                        break;
-                }
-            } else {
-                ivGrade.setVisibility(View.GONE);
-                ivGradeDetails.setVisibility(View.GONE);
-                ivGradeDetail.setClickable(false);
-                tvAuthorGrade.setText("暂无等级");
-            }
-
-            if (result.isBeFocused()) {
-                btnFocus.setText("已关注");
-            } else {
-                btnFocus.setText("关注");
-            }
-            //判断当前用户类型
-            if (null != result.getType()) {
-                if (result.getType().equals(ConstantValue.SERVICER)) {
-                    userType = ConstantValue.SHARE_TYPR_SERVICE;
+            if (null != result) {
+                userBean = result;
+                GlideUitl.loadRandImg(mActivity, result.getPhoto(), ivHead);
+                nickName.setText(result.getNickName());
+                if (null != result.getLevelType()) {
+                    ivGradeDetail.setClickable(true);
+                    ivGradeDetails.setVisibility(View.VISIBLE);
+                    switch (result.getLevelType()) {
+                        case "1":
+                            tvAuthorGrade.setText("金牌作家");
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_gold_medal2x, ivGrade);
+                            break;
+                        case "2":
+                            tvAuthorGrade.setText("银牌作家");
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_silver_medal2x, ivGrade);
+                            break;
+                        case "3":
+                            tvAuthorGrade.setText("铜牌作家");
+                            GlideUitl.loadImg(mActivity, R.drawable.icon_copper_medal2x, ivGrade);
+                            break;
+                    }
                 } else {
-                    userType = ConstantValue.SHARE_TYPR_EDITOR;
+                    ivGrade.setVisibility(View.GONE);
+                    ivGradeDetails.setVisibility(View.GONE);
+                    ivGradeDetail.setClickable(false);
+                    tvAuthorGrade.setText("暂无等级");
                 }
+
+                if (result.isBeFocused()) {
+                    btnFocus.setText("已关注");
+                } else {
+                    btnFocus.setText("关注");
+                }
+                //判断当前用户类型
+                if (null != result.getType()) {
+                    if (result.getType().equals(ConstantValue.SERVICER)) {
+                        userType = ConstantValue.SHARE_TYPR_SERVICE;
+                    } else {
+                        userType = ConstantValue.SHARE_TYPR_EDITOR;
+                    }
+                }
+
+            } else {
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
             headLoadState = true;
             Message msg = new Message();
             mhandler.sendMessage(msg);
         } else {
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
-            reLoadDatas();
+            reLoadDatas(1);
         }
 
     }
@@ -665,15 +667,17 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     }
 
     @Override
-    public void getDataFail1(String errorMsg) {
-        refreshPage(LoadingPager.PageState.STATE_ERROR);
-        reLoadDatas();
+    public void getDataFail1(String errorMsg, int flg) {
+        Logger.e(errorMsg);
+        dismissDialog();
+        reLoadDatas(flg);
     }
 
     @Override
-    public void getDataFail(String errorMsg) {
-        reLoadDatas();
+    public void getDataFail(String errorMsg, int flg) {
         Logger.e(errorMsg);
+        dismissDialog();
+        reLoadDatas(flg);
     }
 
     @Override
@@ -792,32 +796,28 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }
     }
 
-    public void reLoadDatas() {
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                refreshPage(LoadingPager.PageState.STATE_LOADING);
-                switch (type) {
-                    case 1:
-                        if (!dyLoadState)
-                            mvpPresenter.getUserDynmicDate(userId);
-                        if (!headLoadState)
+    public void reLoadDatas(int flg) {
+        if (flg == 1 | flg == 2) {
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    switch (type) {
+                        case 1:
+                            refreshPage(LoadingPager.PageState.STATE_LOADING);
                             mvpPresenter.getUserHeadDate(userId);
-                        break;
-                    case 2:
-                        mvpPresenter.getUserBookListDate(userId);
-                        break;
-                    case 3:
-                        mvpPresenter.getUserHeFocusDate(userId);
-                        break;
-                    case 4:
-                        mvpPresenter.getUserFocusHeDate(userId);
-                        break;
-                    default:
-                        mvpPresenter.getUserHeadDate(userId);
-                        break;
+                            break;
+                        case 2:
+                            refreshPage(LoadingPager.PageState.STATE_LOADING);
+                            mvpPresenter.getUserDynmicDate(userId);
+                            break;
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ToastUtil.showToast(R.string.errMsg_data_exception);
+        }
+
+
     }
 }

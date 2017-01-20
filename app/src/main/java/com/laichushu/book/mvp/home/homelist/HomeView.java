@@ -1,5 +1,4 @@
 package com.laichushu.book.mvp.home.homelist;
-
 /**
  * 首页页面
  * Created by wangtong on 2016/10/12.

@@ -7,12 +7,15 @@ import com.laichushu.book.bean.netbean.ActivityListByCity_Paramet;
 import com.laichushu.book.bean.netbean.ActivityList_Paramet;
 import com.laichushu.book.bean.netbean.HomeAllBook_Paramet;
 import com.laichushu.book.bean.netbean.HomeHot_Paramet;
+import com.laichushu.book.bean.netbean.MessageCommentResult;
+import com.laichushu.book.bean.netbean.PerInformation_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.BookDetailActivity;
 import com.laichushu.book.ui.activity.CampaignActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.HomeFragment;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
@@ -27,7 +30,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
     private String userId = ConstantValue.USERID;
     private HomeAllBook_Paramet paramet = paramet = new HomeAllBook_Paramet("1", pageSize, pageNo, userId);
     private ActivityList_Paramet activityListParamet = new ActivityList_Paramet(pageNo2, pageSize, userId);
-   private  ActivityListByCity_Paramet city_paramet=new ActivityListByCity_Paramet(userId,"",pageNo,pageSize);
+    private ActivityListByCity_Paramet city_paramet = new ActivityListByCity_Paramet(userId, "", pageNo, pageSize);
 
     private int state = 1;
     private HomeFragment homeFragment;
@@ -39,22 +42,22 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
     public void loadHomeCarouseData() {
         mvpView.showLoading();
-        addSubscription(apiStores.homeCarouselData(),new ApiCallback<HomeModel>() {
-                    @Override
-                    public void onSuccess(HomeModel model) {
-                        mvpView.getDataSuccess(model);
-                    }
+        addSubscription(apiStores.homeCarouselData(), new ApiCallback<HomeModel>() {
+            @Override
+            public void onSuccess(HomeModel model) {
+                mvpView.getDataSuccess(model);
+            }
 
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        mvpView.getDataFail("code+" + code + "/msg:" + msg);
-                    }
+            @Override
+            public void onFailure(int code, String msg) {
+                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+            }
 
-                    @Override
-                    public void onFinish() {
-                        mvpView.hideLoading();
-                    }
-                });
+            @Override
+            public void onFinish() {
+                mvpView.hideLoading();
+            }
+        });
     }
 
     public void loadHomeHotData() {

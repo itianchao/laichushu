@@ -182,6 +182,7 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         if (msg.equals("删除评论")) {
             ToastUtil.showToast("删除失败");
         }
+        dismissDialog();
         ErrorReloadData(flg);
     }
 
@@ -197,19 +198,19 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     public void ErrorReloadData(final int flg) {
         if (flg == 1) {
-//            refreshPage(LoadingPager.PageState.STATE_ERROR);
-            ToastUtil.showToast(R.string.errMsg_data);
-        }
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                if (flg == 1) {
-                    refreshPage(LoadingPager.PageState.STATE_LOADING);
-                    mvpPresenter.LoaCommentdData();
-                } else if (flg == 2 | flg == 3 | flg == 4 | flg == 5 | flg == 6 | flg == 7 | flg == 8) {
-                    ToastUtil.showToast(R.string.errMsg_data);
+            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    if (flg == 1) {
+                        refreshPage(LoadingPager.PageState.STATE_LOADING);
+                        mvpPresenter.LoaCommentdData();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ToastUtil.showToast(R.string.errMsg_data_exception);
+        }
+
     }
 }

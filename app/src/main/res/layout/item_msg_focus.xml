@@ -63,6 +63,15 @@
                     android:layout_marginTop="18dp"
                     android:textColor="@color/characterGray"
                     android:textSize="@dimen/edit2" />
+                <TextView
+                    android:id="@+id/tv_focusTimes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="36dp"
+                    android:layout_marginTop="18dp"
+                    android:textColor="@color/characterGray"
+                    android:textSize="@dimen/edit2" />
 
                 <TextView
                     android:id="@+id/tv_focusName"

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.db.Search_History;
 import com.laichushu.book.event.RefrushHomeSearchEvent;
 import com.laichushu.book.global.ConstantValue;
@@ -21,7 +22,10 @@ import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.adapter.HomeSearchAdapter;
 import com.laichushu.book.ui.adapter.HomeSearchHistoryAdapter;
 import com.laichushu.book.ui.adapter.HomeSearchHotHistoryAdapter;
+import com.laichushu.book.ui.adapter.HomeSearchMsgAdapter;
+import com.laichushu.book.ui.adapter.MessageLikeAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -52,7 +56,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     private LinearLayout searchLay;
     private ListView searchLv;
     private ListView childLay;
-    private PullLoadMoreRecyclerView bookRyv;
+    private PullLoadMoreRecyclerView bookRyv, msgRyv;
     private String pageNo = "1";
     private String search = "";
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
@@ -68,6 +72,11 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     private HomeSearchHotHistoryAdapter mHotAdapter;
     private String type = ConstantValue.SEARCH_TYPE_BOOK;
 
+    private String TYPE;
+    private HomeSearchMsgAdapter searchAdapter;
+    private List<MessageCommentResult.DataBean> msgData = new ArrayList<>();
+    private int PAGE_NO = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,18 +88,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-    @Override
-    protected void initData() {
-        mvpPresenter.loadHotSearchData();
-        mvpPresenter.setupDatabase();
-        dao = mvpPresenter.getSearch_historyDao();
-        if (getHistoryList() != null) {
-            this.list.addAll(getHistoryList());
-            Collections.reverse(list);
-            historyAdapter = new HomeSearchHistoryAdapter(this.list, this);
-            searchLv.setAdapter(historyAdapter);
-        }
-    }
+
 
     @Override
     protected HomeSearchPresenter createPresenter() {
@@ -107,6 +105,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         searchLv = (ListView) mSuccessView.findViewById(R.id.lv_history);//搜索历史的容器
         childLay = (ListView) mSuccessView.findViewById(R.id.lay_hot_child);//hot容器
         bookRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_book);//搜索结果
+        msgRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_perMsg);//搜索结果
         emptyIv = (ImageView) mSuccessView.findViewById(R.id.iv_empty);//搜索结果
         finishIV.setOnClickListener(this);
         clearTv.setOnClickListener(this);
@@ -118,9 +117,42 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         childLay.setOnItemClickListener(this);
         mAdapter = new HomeSearchAdapter(mAllData, this);
         bookRyv.setAdapter(mAdapter);
-        mHotAdapter = new HomeSearchHotHistoryAdapter(mHotData,this);
+        mHotAdapter = new HomeSearchHotHistoryAdapter(mHotData, this);
         childLay.setAdapter(mHotAdapter);
         return mSuccessView;
+    }
+
+    @Override
+    protected void initData() {
+        TYPE = getIntent().getStringExtra("typeMsg");
+
+        //初始化mRecyclerView
+        msgRyv.setGridLayout(1);
+        msgRyv.setFooterViewText("加载中");
+        searchAdapter = new HomeSearchMsgAdapter(this, msgData);
+        msgRyv.setAdapter(searchAdapter);
+        msgRyv.setOnPullLoadMoreListener(this);
+
+
+        if (null == TYPE) {
+            mvpPresenter.loadHotSearchData();
+            mvpPresenter.setupDatabase();
+            dao = mvpPresenter.getSearch_historyDao();
+            if (getHistoryList() != null) {
+                this.list.addAll(getHistoryList());
+                Collections.reverse(list);
+                historyAdapter = new HomeSearchHistoryAdapter(this.list, this);
+                searchLv.setAdapter(historyAdapter);
+            }
+        } else {
+            UIUtil.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                }
+            }, 30);
+        }
+
     }
 
     @Override
@@ -137,12 +169,12 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 mAllData.addAll(mData);
                 mAdapter.setmAllData(mAllData);
                 pageNo = Integer.parseInt(pageNo) + 1 + "";
-            }else {
-                if (mvpPresenter.getParamet().getPageNo().equals("1")){
+            } else {
+                if (mvpPresenter.getParamet().getPageNo().equals("1")) {
                     emptyIv.setVisibility(View.VISIBLE);
                     searchLay.setVisibility(View.GONE);
                     bookRyv.setVisibility(View.GONE);
-                }else {
+                } else {
                     ToastUtil.showToast("没有更多数据了");
                 }
             }
@@ -156,6 +188,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
 
     /**
      * 热门搜索接口成功回调
+     *
      * @param model 回调模型
      */
     @Override
@@ -164,16 +197,40 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
             two = false;
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             mHotData.clear();
-            if (model.getData()!=null&&!model.getData().isEmpty()){
+            if (model.getData() != null && !model.getData().isEmpty()) {
                 mHotData.addAll(model.getData());
                 mHotAdapter.setmData(mHotData);
             }
-        }else {
+        } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             two = true;
             initListener();
             ToastUtil.showToast(model.getErrMsg());
         }
+    }
+
+    @Override
+    public void getPerInfoListDateSuccess(MessageCommentResult model) {
+        LoggerUtil.toJson(model);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                msgRyv.setPullLoadMoreCompleted();
+            }
+        }, 300);
+        if (model.isSuccess()) {
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                msgData.clear();
+                msgData = model.getData();
+                PAGE_NO++;
+            } else {
+                ToastUtil.showToast(R.string.errMsg_empty);
+            }
+            searchAdapter.refreshAdapter(msgData);
+        } else {
+            ToastUtil.showToast(R.string.errMsg_data_exception);
+        }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -183,8 +240,10 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         initListener();
         refreshPage(LoadingPager.PageState.STATE_ERROR);
     }
+
     /**
      * 热门搜索接口失败回调
+     *
      * @param msg 错误信息
      */
     @Override
@@ -229,51 +288,60 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            //处理事件
-            mAllData.clear();
-            search = searchEt.getText().toString().trim();
-            refreshPage(LoadingPager.PageState.STATE_LOADING);
-            mvpPresenter.LoadData(search);
-            boolean isSearch = true;
-            if (list.size() != 0) {
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).getHistory().equals(search)) {
-                        isSearch = false;
-                        Search_History history1 = list.get(i);
-                        Search_History history2 = list.get((list.size() - 1));
-                        list.set(i, history2);
-                        list.set(list.size() - 1, history1);
-                        mAdapter.notifyDataSetChanged();
-                        dao.updateInTx(history1, history2);
-                        break;
-                    }
-                }
-            }
-            if (isSearch) {//判断是否相同
-                //将记录添加到数据库中
-                Search_History history = new Search_History(null, type,search);
+            if (null == TYPE) {
+                //处理事件
+                mAllData.clear();
+                search = searchEt.getText().toString().trim();
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.LoadData(search);
+                boolean isSearch = true;
                 if (list.size() != 0) {
-                    for (int i = list.size(); i > 0; i--) {
-                        if (i == list.size()) {
-                            list.add(list.get(i - 1));
-                        } else {
-                            list.set(i, list.get(i - 1));
-                        }
-                        if (i == 1) {
-                            list.remove(1);
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i).getHistory().equals(search)) {
+                            isSearch = false;
+                            Search_History history1 = list.get(i);
+                            Search_History history2 = list.get((list.size() - 1));
+                            list.set(i, history2);
+                            list.set(list.size() - 1, history1);
+                            mAdapter.notifyDataSetChanged();
+                            dao.updateInTx(history1, history2);
+                            break;
                         }
                     }
                 }
-                list.add(0, history);
-                dao.insert(history);
+                if (isSearch) {//判断是否相同
+                    //将记录添加到数据库中
+                    Search_History history = new Search_History(null, type, search);
+                    if (list.size() != 0) {
+                        for (int i = list.size(); i > 0; i--) {
+                            if (i == list.size()) {
+                                list.add(list.get(i - 1));
+                            } else {
+                                list.set(i, list.get(i - 1));
+                            }
+                            if (i == 1) {
+                                list.remove(1);
+                            }
+                        }
+                    }
+                    list.add(0, history);
+                    dao.insert(history);
 
-                if (list.size() > 5) {
-                    dao.delete(list.get(5));
-                    list.remove(5);
+                    if (list.size() > 5) {
+                        dao.delete(list.get(5));
+                        list.remove(5);
+                    }
+                    historyAdapter.setList(list);
+                    historyAdapter.notifyDataSetChanged();
                 }
-                historyAdapter.setList(list);
-                historyAdapter.notifyDataSetChanged();
+            } else {
+                if (msgData.size() > 0)
+                    msgData.clear();
+                search = searchEt.getText().toString().trim();
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.LoadPerInfoDetailsData(search);
             }
+
         }
         return false;
     }
@@ -283,10 +351,18 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
      */
     @Override
     public void onRefresh() {
-        mAllData.clear();
-        pageNo = "1";
-        mvpPresenter.getParamet().setPageNo(pageNo);
-        mvpPresenter.LoadData(search);//请求网络获取搜索列表
+        PAGE_NO = 1;
+        if (null == TYPE) {
+            mAllData.clear();
+            pageNo = "1";
+            mvpPresenter.getParamet().setPageNo(pageNo);
+            mvpPresenter.LoadData(search);//请求网络获取搜索列表
+        } else {
+            msgData.clear();
+            mvpPresenter.getMsgParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadPerInfoDetailsData(search);
+        }
+
     }
 
     /**
@@ -294,8 +370,14 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
      */
     @Override
     public void onLoadMore() {
-        mvpPresenter.getParamet().setPageNo(pageNo);
-        mvpPresenter.LoadData(search);//请求网络获取搜索列表
+        if(null==TYPE){
+            mvpPresenter.getParamet().setPageNo(pageNo);
+            mvpPresenter.LoadData(search);//请求网络获取搜索列表
+        }else{
+            mvpPresenter.getMsgParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.LoadPerInfoDetailsData(search);
+        }
+
     }
 
     public List<Search_History> getHistoryList() {
@@ -309,7 +391,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch(parent.getId()){
+        switch (parent.getId()) {
             case R.id.lv_history:
                 searchEt.setText(list.get(position).getHistory());
                 onEditorAction(searchEt, EditorInfo.IME_ACTION_SEARCH, null);
@@ -320,20 +402,22 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 break;
         }
     }
-    public void initListener(){
+
+    public void initListener() {
         mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
             @Override
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
-                if (one){
+                if (one) {
                     mvpPresenter.LoadData(search);
                 }
-                if (two){
+                if (two) {
                     mvpPresenter.loadHotSearchData();
                 }
             }
         });
     }
+
     /**
      * 刷新 首页分类
      *

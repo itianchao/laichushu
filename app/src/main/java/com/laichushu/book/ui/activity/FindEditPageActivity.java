@@ -180,6 +180,7 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
     @Override
     public void getDataFail(String msg, int flg) {
         LoggerUtil.toJson(msg);
+        dismissDialog();
         ErrorReloadData(flg);
     }
 
@@ -332,8 +333,6 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
             public void reLoadData() {
                 if (flg == 1) {
                     mvpPresenter.loadEditorListData(curProCode, orderBy);
-                } else {
-                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_network));
                 }
 
             }

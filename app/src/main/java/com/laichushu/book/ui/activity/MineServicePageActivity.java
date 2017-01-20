@@ -148,8 +148,9 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
                 collDibble = false;
                 type = 1;
                 if (!scanDibble) {
-                    if (coopData.size() == 0)
-                        mvpPresenter.LoadCooperateData();
+                    if (coopData.size() > 0)
+                        coopData.clear();
+                    mvpPresenter.LoadCooperateData();
                 }
                 scanDibble = true;
                 break;
@@ -160,8 +161,9 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
                 scanDibble = false;
                 type = 2;
                 if (!collDibble) {
-                    if (collData.size() == 0)
-                        mvpPresenter.LoadCollectionData();
+                    if (collData.size() >= 0)
+                        collData.clear();
+                    mvpPresenter.LoadCollectionData();
                 }
                 collDibble = true;
                 break;
@@ -256,6 +258,7 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
     @Override
     public void getDataFail(String msg, int flg) {
         LoggerUtil.toJson(msg);
+        dismissDialog();
         ErrorReloadData(flg);
     }
 
@@ -268,19 +271,21 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
     }
 
     public void ErrorReloadData(final int flg) {
-        if (flg == 1)
+        if (flg == 1) {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
-        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
-            @Override
-            public void reLoadData() {
-                if (flg == 1) {
-                    mvpPresenter.LoadCooperateData();
-                } else if (flg == 2) {
-                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_data));
-                } else {
-                    ToastUtil.showToast(mActivity.getString(R.string.errMsg_network));
+            mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+                @Override
+                public void reLoadData() {
+                    if (flg == 1) {
+                        refreshPage(LoadingPager.PageState.STATE_LOADING);
+                        mvpPresenter.LoadCooperateData();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ToastUtil.showToast(mActivity.getString(R.string.errMsg_data_exception));
+        }
+
+
     }
 }

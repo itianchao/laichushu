@@ -416,17 +416,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
 
                 holder.ivFocusNotice.setVisibility(View.VISIBLE);
                 GlideUitl.loadRandImg(context, R.drawable.msg_subscribe2x, holder.ivFocusNotice);
-                holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
-//                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
-//                holder.tvFocusName.setText("您订阅");
-//                holder.tvFocusContent1.setVisibility(View.VISIBLE);
-//                holder.tvFocusContent2.setVisibility(View.VISIBLE);
-//                holder.tvFocusContent3.setVisibility(View.VISIBLE);
-//                holder.tvFocusContent4.setVisibility(View.VISIBLE);
-//                holder.tvFocusContent1.setText(dataBeen.get(position).getAuthorName());
-//                holder.tvFocusContent2.setText("的作品:");
-//                holder.tvFocusContent3.setText("《" + dataBeen.get(position).getSourceName() + "》");
-//                holder.tvFocusContent4.setText("更新了!");
+                holder.tvFocusTimes.setText(dataBeen.get(position).getSendTime());
                 holder.ivFocusIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -440,26 +430,6 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                         }
                     }
                 });
-//                holder.tvFocusContent1.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //跳转用户主页
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable("userId", dataBeen.get(position).getSenderId());
-//                        if (SharePrefManager.getUserId().equals(dataBeen.get(position).getSenderId())) {
-//                            UIUtil.openActivity(context, PersonalHomePageActivity.class, bundle);
-//                        } else {
-//                            UIUtil.openActivity(context, UserHomePageActivity.class, bundle);
-//                        }
-//                    }
-//                });
-//                //跳转图书详情
-//                holder.tvFocusContent3.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        messageCommentPresenter.loadBookDetailsByid(dataBeen.get(position).getArticleId());
-//                    }
-//                });
                 holder.ivFocusDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -477,16 +447,6 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.tvFocusName.setText(dataBeen.get(position).getContent());
                 holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterLightGray2));
                 holder.tvFocusContent.setVisibility(View.GONE);
-//                holder.llFocusItem.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //活动详情
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("type","activity");
-//                        bundle.putSerializable("activityDetails", dataBeen.get(position));
-//                            UIUtil.openActivity(context, CampaignActivity.class, bundle);
-//                    }
-//                });
                 holder.ivFocusDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -502,7 +462,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                 holder.ivFocusIcon.setVisibility(View.INVISIBLE);
                 holder.tvFocusTime.setText(dataBeen.get(position).getSendTime());
                 holder.tvFocusName.setText(dataBeen.get(position).getContent());
-                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.black));
+                holder.tvFocusName.setTextColor(context.getResources().getColor(R.color.characterGray));
                 holder.tvFocusContent.setVisibility(View.GONE);
                 holder.ivFocusDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -547,7 +507,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
         public Button btnWallet;
         public ImageView ivRewardDelete;
         //关注
-        public TextView tvFocusTime, tvFocusName, tvFocusContent, tvFocusContent1, tvFocusContent2, tvFocusContent3, tvFocusContent4;
+        public TextView tvFocusTime, tvFocusTimes,tvFocusName, tvFocusContent, tvFocusContent1, tvFocusContent2, tvFocusContent3, tvFocusContent4;
         public ImageView ivFocusIcon, ivFocusNotice, ivFocusDelete;
         public LinearLayout llFocusItem;
 
@@ -584,6 +544,7 @@ public class MessageLikeAdapter extends RecyclerView.Adapter<MessageLikeAdapter.
                     ivFocusNotice = (ImageView) root.findViewById(R.id.iv_focusNoticeIcon);
                     ivFocusDelete = (ImageView) root.findViewById(R.id.iv_deleteMsg);
                     tvFocusTime = (TextView) root.findViewById(R.id.tv_focusTime);
+                    tvFocusTimes = (TextView) root.findViewById(R.id.tv_focusTimes);
                     tvFocusName = (TextView) root.findViewById(R.id.tv_focusName);
                     tvFocusContent = (TextView) root.findViewById(R.id.tv_focusContent);
                     tvFocusContent1 = (TextView) root.findViewById(R.id.tv_focusContent1);

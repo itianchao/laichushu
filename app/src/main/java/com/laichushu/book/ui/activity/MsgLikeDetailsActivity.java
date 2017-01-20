@@ -20,6 +20,7 @@ import com.laichushu.book.mvp.msg.messagecomment.MessageCommentView;
 import com.laichushu.book.ui.adapter.MessageLikeAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ModelUtils;
 import com.laichushu.book.utils.ToastUtil;
@@ -40,6 +41,7 @@ import java.util.List;
 public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter> implements MessageCommentView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
     private TextView tvTitle;
+    private ImageView ivSearch;
     private PullLoadMoreRecyclerView mRecyclerView;
     private MessageLikeAdapter msgAdapter;
     private List<MessageCommentResult.DataBean> likeData = new ArrayList<>();
@@ -60,6 +62,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
         EventBus.getDefault().register(this);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
+        ivSearch = ((ImageView) inflate.findViewById(R.id.iv_title_other));
         mRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_likeMsg);
         return inflate;
     }
@@ -70,6 +73,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
         builder = new GsonBuilder();
         gson = builder.create();
         type = getIntent().getStringExtra("type");
+        ivSearch.setVisibility(View.INVISIBLE);
         switch (type) {
             case "1":
                 //喜欢
@@ -93,6 +97,8 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
             case "4":
                 //私信
                 tvTitle.setText("私信");
+                ivSearch.setClickable(true);
+                ivSearch.setVisibility(View.VISIBLE);
                 mvpPresenter.LoadPerInfoDetailsData();
                 break;
             case "5":
@@ -116,6 +122,9 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
         }
         tvTitle.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
+        ivSearch.setOnClickListener(this);
+
+        GlideUitl.loadImg(mActivity, R.drawable.find_search2x, ivSearch);
         //初始化mRecyclerView
         mRecyclerView.setGridLayout(1);
         mRecyclerView.setFooterViewText("加载中");
@@ -137,6 +146,11 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
             case R.id.iv_title_finish:
                 this.finish();
                 break;
+            case R.id.iv_title_other:
+                Bundle bundle = new Bundle();
+                bundle.putString("typeMsg", "msg");
+                UIUtil.openActivity(mActivity, HomeSearchActivity.class, bundle);
+                break;
         }
     }
 
@@ -151,25 +165,25 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
             }
         }, 300);
         if (model.isSuccess()) {
-            likeData = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (!likeData.isEmpty()) {
-                msgAdapter.refreshAdapter(likeData);
+            if (null != model.getData() && !model.getData().isEmpty()) {
+                likeData = model.getData();
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
+            msgAdapter.refreshAdapter(likeData);
         } else {
-            if (model.getData().size() == 0) {
-                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                ToastUtil.showToast("没有更多信息！");
-            }
+            ToastUtil.showToast(R.string.errMsg_data_exception);
         }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
-    public void getDataFail(String msg,int flg) {
+    public void getDataFail(String msg, int flg) {
         Logger.e(msg);
+        dismissDialog();
+        ToastUtil.showToast(R.string.errMsg_data_exception);
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     @Override
@@ -233,20 +247,18 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
             }
         }, 300);
         if (model.isSuccess()) {
-            if (!model.getData().isEmpty()) {
+            if (null != model.getData() && !model.getData().isEmpty()) {
                 likeData.clear();
                 likeData = model.getData();
-                msgAdapter.refreshAdapter(likeData);
                 PAGE_NO++;
             } else {
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            msgAdapter.refreshAdapter(likeData);
         } else {
-            if (model.getData().size() == 0) {
-                ToastUtil.showToast("没有更多信息！");
-            }
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            ToastUtil.showToast(R.string.errMsg_data_exception);
         }
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     /**
@@ -283,8 +295,6 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
         if (model.isSuccess()) {
             //跳转图书详情页
             Bundle bundle = new Bundle();
-//        String bd = gson.toJson(model, BookDetailsModle.class);
-//        HomeHotModel.DataBean homeHotModel = gson.fromJson(bd, new TypeToken<HomeHotModel.DataBean>() {}.getType());
             HomeHotModel.DataBean dataBean = ModelUtils.bean2HotBean(model);
             bundle.putParcelable("bean", dataBean);
             bundle.putString("pageMsg", "消息喜欢");

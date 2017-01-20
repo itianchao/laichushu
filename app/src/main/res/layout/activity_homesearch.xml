@@ -131,6 +131,18 @@
             android:src="@drawable/ic_empty_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_perMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/iv_empty_msg"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_empty_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </FrameLayout>
 
 </LinearLayout>

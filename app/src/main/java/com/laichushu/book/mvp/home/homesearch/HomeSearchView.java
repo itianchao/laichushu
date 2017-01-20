@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.home.homesearch;
 
+import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 /**
@@ -10,6 +11,7 @@ public interface HomeSearchView {
     void getDataSuccess(HomeHotModel model);
 
     void getHotSearchDataSuccess(HomeSearchModel model);
+    void getPerInfoListDateSuccess(MessageCommentResult model);
 
     void getDataFail(String msg);
 

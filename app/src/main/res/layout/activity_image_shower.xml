@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/black"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/edit_top"
         layout="@layout/page_title" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
 
-    <WebView
-        android:id="@+id/webadd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:visibility="gone" />
-
-    <com.laichushu.book.ui.widget.DragImageView
-        android:id="@+id/div_show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_top"
-        android:background="@color/black"
-        android:scaleType="fitXY" />
-</RelativeLayout>
+        <com.laichushu.book.ui.widget.MyZoomImageView
+            android:id="@+id/div_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+</LinearLayout>
