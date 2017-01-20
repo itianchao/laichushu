@@ -61,8 +61,8 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private boolean pause = false;
     private Runnable refreshThread = new Runnable() {
         public void run() {
-            homeVp.setCurrentItem(++item);
             if (!pause) {
+                homeVp.setCurrentItem(++item);
                 mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
             }else {
                 mRefreshWidgetHandler.removeCallbacksAndMessages(null);
