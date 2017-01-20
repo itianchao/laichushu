@@ -57,18 +57,29 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private HomeTitleViewPagerAdapter adapter;
     private HomeRecyclerAdapter mAdapter;
     private int item;
-    private Handler mRefreshWidgetHandler = new Handler();
-    private boolean pause = false;
-    private Runnable refreshThread = new Runnable() {
-        public void run() {
+    private AutoScrollHandler mRefreshWidgetHandler = new AutoScrollHandler();
+
+    private class AutoScrollHandler extends Handler {
+        boolean pause = false;
+
+        @Override
+        public void handleMessage(Message msg) {
             if (!pause) {
-                homeVp.setCurrentItem(++item);
-                mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
-            }else {
-                mRefreshWidgetHandler.removeCallbacksAndMessages(null);
+                homeVp.setCurrentItem(homeVp.getCurrentItem() + 1);
             }
+            sendEmptyMessageDelayed(msg.what, 3000);
         }
-    };
+
+        void startLoop() {
+            pause = false;
+            removeCallbacksAndMessages(null);
+            sendEmptyMessageDelayed(1, 3000);
+        }
+
+        void stopLoop() {
+            removeCallbacksAndMessages(null);
+        }
+    }
     private LinearLayout searchLyt;
     private String pageNo = "2";//全部不加在
     private String type = "1";//类型
@@ -333,11 +344,10 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     public void onPageScrollStateChanged(int state) {
         switch (state) {
             case ViewPager.SCROLL_STATE_DRAGGING:
-                pause = true;
+                mRefreshWidgetHandler.pause = true;
                 break;
             case ViewPager.SCROLL_STATE_IDLE:
-                pause = false;
-                mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+                mRefreshWidgetHandler.pause = false;
                 break;
         }
     }
@@ -402,13 +412,13 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     @Override
     public void onStart() {
         super.onStart();
-        mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+        mRefreshWidgetHandler.sendEmptyMessageDelayed(1, 3000);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mRefreshWidgetHandler.removeCallbacks(refreshThread);
+        mRefreshWidgetHandler.removeCallbacksAndMessages(null);
     }
 
     public void setType(String type) {
