@@ -3,6 +3,7 @@ package com.laichushu.book.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -57,10 +58,15 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
     private HomeRecyclerAdapter mAdapter;
     private int item;
     private Handler mRefreshWidgetHandler = new Handler();
+    private boolean pause = false;
     private Runnable refreshThread = new Runnable() {
         public void run() {
             homeVp.setCurrentItem(++item);
-            mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+            if (!pause) {
+                mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+            }else {
+                mRefreshWidgetHandler.removeCallbacksAndMessages(null);
+            }
         }
     };
     private LinearLayout searchLyt;
@@ -73,6 +79,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     //获取对应的城市code
     private String cityId = null;
+
 
     @Override
     public void onAttach(Context context) {
@@ -324,6 +331,15 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
 
     @Override
     public void onPageScrollStateChanged(int state) {
+        switch (state) {
+            case ViewPager.SCROLL_STATE_DRAGGING:
+                pause = true;
+                break;
+            case ViewPager.SCROLL_STATE_IDLE:
+                pause = false;
+                mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+                break;
+        }
     }
 
     /**
