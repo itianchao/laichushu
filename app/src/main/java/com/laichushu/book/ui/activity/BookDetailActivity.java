@@ -658,7 +658,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
     @Override
     public void getBalanceData(BalanceBean model) {
         if (model.isSuccess()) {
-            double balance = model.getData().getMoney();
+            String balance = model.getData().getMoney();
             if (!payTv.getText().toString().equals("已购买")) {
                 double payMoney = articleData.getPrice();
                 double price = articleData.getPrice();
@@ -677,7 +677,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
     @Override
     public void getBalance2Data(BalanceBean model) {
         if (model.isSuccess()) {
-            double balance = model.getData().getMoney();
+            String balance = model.getData().getMoney();
             double maxLimit = model.getData().getMaxLimit();
             double minLimit = model.getData().getMinLimit();
             String accepterId = articleData.getAuthorId();

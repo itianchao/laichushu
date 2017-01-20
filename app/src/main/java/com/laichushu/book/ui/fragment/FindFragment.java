@@ -53,16 +53,8 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private int item;
     private int range;
     private LinearLayout lineLyt;
-    private Handler mRefreshWidgetHandler = new Handler();
     private RecyclerView mLessonRecyclerView, mCourseRecyclerView;
     private GridView gvLesson;
-    private Runnable refreshThread = new Runnable() {
-
-        public void run() {
-            findVp.setCurrentItem(++item);
-            mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
-        }
-    };
     //标签列表
     private int img[] = {R.drawable.home_course2x, R.drawable.home_group2x, R.drawable.home_server2x, R.drawable.home_agency2x, R.drawable.home_editor2x};
     private String title[] = {"课程", "小组", "服务", "机构", "编辑"};
@@ -97,6 +89,30 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
             }
         }
     }
+    private AutoScrollHandler mRefreshWidgetHandler = new AutoScrollHandler();
+
+    private class AutoScrollHandler extends Handler {
+        boolean pause = false;
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (!pause) {
+                findVp.setCurrentItem(findVp.getCurrentItem() + 1);
+            }
+            sendEmptyMessageDelayed(msg.what, 3000);
+        }
+
+        void startLoop() {
+            pause = false;
+            removeCallbacksAndMessages(null);
+            sendEmptyMessageDelayed(1, 3000);
+        }
+
+        void stopLoop() {
+            removeCallbacksAndMessages(null);
+        }
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -203,13 +219,13 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public void onStart() {
         super.onStart();
-        mRefreshWidgetHandler.postDelayed(refreshThread, 5000);
+        mRefreshWidgetHandler.sendEmptyMessageDelayed(1, 3000);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mRefreshWidgetHandler.removeCallbacks(refreshThread);
+        mRefreshWidgetHandler.removeCallbacksAndMessages(null);
     }
 
     /**
@@ -235,7 +251,14 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        switch (state) {
+            case ViewPager.SCROLL_STATE_DRAGGING:
+                mRefreshWidgetHandler.pause = true;
+                break;
+            case ViewPager.SCROLL_STATE_IDLE:
+                mRefreshWidgetHandler.pause = false;
+                break;
+        }
     }
 
     /**

@@ -322,7 +322,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         //弹窗
         list.clear();
         list.add(new BookSelectOptionBean("举报", R.drawable.icon_report));
-        list.add(new BookSelectOptionBean("书签", R.drawable.bookdetail_read));
+        list.add(new BookSelectOptionBean("书签", R.drawable.icon_bookmark));
         list.add(new BookSelectOptionBean("分享", R.drawable.icon_share));
         selectIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -532,7 +532,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             public void onSuccess(BalanceBean model) {
                 dismissProgressDialog();
                 if (model.isSuccess()) {
-                    double balance = model.getData().getMoney();
+                    String balance = model.getData().getMoney();
                     double maxLimit = model.getData().getMaxLimit();
                     double minLimit = model.getData().getMinLimit();
                     String accepterId = getIntent().getStringExtra("authorId");

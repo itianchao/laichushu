@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.db.Search_History;
 import com.laichushu.book.db.Search_HistoryDao;
-import com.laichushu.book.ui.activity.FindClassSearchActivity;
+import com.laichushu.book.ui.activity.FindCourseSearchActivity;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.List;
@@ -21,8 +21,8 @@ import java.util.List;
 
 public class ClassSearchHistoryAdapter extends BaseAdapter {
     private List<Search_History> list;
-    private FindClassSearchActivity mActivity;
-    public ClassSearchHistoryAdapter(List<Search_History> list, FindClassSearchActivity mActivity) {
+    private FindCourseSearchActivity mActivity;
+    public ClassSearchHistoryAdapter(List<Search_History> list, FindCourseSearchActivity mActivity) {
         this.list = list;
         this.mActivity = mActivity;
     }

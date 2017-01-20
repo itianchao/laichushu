@@ -139,10 +139,9 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
             ToastUtil.showToast("修改成功");
             for (int i = 0; i < mData.size(); i++) {
                 if (mData.get(i).getArticleId().equals(articleId)){
-                    mData.get(i).setEdit(false);
-                    mData.get(i).setDelete(false);
-                    mData.get(i).setPermission(false);
-                    mData.get(i).setFreezeStatus("2");
+                    //修改出版中
+                    mData.get(i).setStatus("3");
+                    writeBookAdapter.setmData(mData);
                     return;
                 }
             }
@@ -156,7 +155,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         if (model.isSuccess()) {
             ToastUtil.showToast("投稿成功");
         } else {
-            ToastUtil.showToast("投稿失败");
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 

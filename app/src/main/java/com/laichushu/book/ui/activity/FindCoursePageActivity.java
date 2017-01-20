@@ -98,7 +98,7 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
             case R.id.iv_title_other://搜索
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", position);
-                UIUtil.openActivity(mActivity, FindClassSearchActivity.class, bundle);
+                UIUtil.openActivity(mActivity, FindCourseSearchActivity.class, bundle);
         }
     }
 

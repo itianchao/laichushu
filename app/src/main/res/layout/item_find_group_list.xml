@@ -31,6 +31,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:maxLength="20"
+        android:textColor="@color/black"
         tools:text="来出书项目组1231321231231231231231231312321321313123312312312312313" />
     <TextView
         android:id="@+id/tv_group_number"

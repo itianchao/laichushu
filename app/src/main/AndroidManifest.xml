@@ -409,11 +409,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.activity.FindClassSearchActivity"
+            android:name=".ui.activity.FindCourseSearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.activity.FindClassVideoDetailActivity"
+            android:name=".ui.activity.FindCourseVideoDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -422,7 +422,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.activity.FindClassDocDetailActivity"
+            android:name=".ui.activity.FindCourseDocDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 

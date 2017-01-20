@@ -45,39 +45,45 @@ public class MaterialListDirAdapter extends RecyclerView.Adapter<MaterialListDir
     public void onBindViewHolder(DraftListViewHolder holder, final int position) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         holder.itemView.setLayoutParams(params);
+        final SourceMaterialDirModle.DataBean dataBean = mData.get(position);
         if (isGone) {
             holder.deleteIv.setVisibility(View.VISIBLE);
             holder.renameTv.setVisibility(View.INVISIBLE);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mvpPresenter.openDeleteDialog(dataBean.getId(), position);
+                }
+            });
+            holder.deleteIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mvpPresenter.openDeleteDialog(dataBean.getId(), position);
+                }
+            });
         } else {
             holder.deleteIv.setVisibility(View.GONE);
             holder.renameTv.setVisibility(View.VISIBLE);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: 2016/11/22 跳转素材目录
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", dataBean.getName());
+                    bundle.putString("parentId", dataBean.getId());
+                    bundle.putString("articleId", dataBean.getArticleId());
+                    bundle.putString("dir", dataBean.getName());
+                    UIUtil.openActivity(mActivity, SourceMaterialActivity.class, bundle);
+                }
+            });
+            holder.nameTv.setText(dataBean.getName());
+            holder.renameTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mvpPresenter.openRenameDialog(dataBean.getId(), position);
+                }
+            });
         }
-        final SourceMaterialDirModle.DataBean dataBean = mData.get(position);
-        holder.nameTv.setText(dataBean.getName());
-        holder.renameTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mvpPresenter.openRenameDialog(dataBean.getId(), position);
-            }
-        });
-        holder.deleteIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mvpPresenter.openDeleteDialog(dataBean.getId(), position);
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: 2016/11/22 跳转素材目录
-                Bundle bundle = new Bundle();
-                bundle.putString("title", dataBean.getName());
-                bundle.putString("parentId", dataBean.getId());
-                bundle.putString("articleId", dataBean.getArticleId());
-                bundle.putString("dir", dataBean.getName());
-                UIUtil.openActivity(mActivity, SourceMaterialActivity.class, bundle);
-            }
-        });
     }
 
     @Override

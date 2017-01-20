@@ -30,7 +30,7 @@ import cn.sharesdk.framework.ShareSDK;
  * Created by wangtong on 2017/1/6.
  */
 
-public class FindClassDocDetailActivity extends MvpActivity2<DocDetailPresenter> implements DocDetailView, View.OnClickListener {
+public class FindCourseDocDetailActivity extends MvpActivity2<DocDetailPresenter> implements DocDetailView, View.OnClickListener {
 
     private ImageView backIv, bookIv;
     public TextView titleTv, nameTv, downloadTv, categroyTv, timeTv;

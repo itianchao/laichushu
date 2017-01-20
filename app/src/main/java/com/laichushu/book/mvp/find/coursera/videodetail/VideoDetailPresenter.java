@@ -10,7 +10,7 @@ import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.LessonDetail_Paramet;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
+import com.laichushu.book.ui.activity.FindCourseVideoDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.cc.MediaPlayFragment;
 import com.laichushu.book.ui.fragment.CourseAboutFragment;
@@ -26,7 +26,7 @@ import com.laichushu.book.utils.LoggerUtil;
  */
 
 public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
-    private FindClassVideoDetailActivity mActivity;
+    private FindCourseVideoDetailActivity mActivity;
     private CourseIntroFragment courseIntro;
     private CourseSpeakFragment courseSpeak;
     private CourseNoteFragment courseNote;
@@ -38,7 +38,7 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
 
     public VideoDetailPresenter(VideoDetailView view) {
         attachView(view);
-        mActivity = (FindClassVideoDetailActivity) view;
+        mActivity = (FindCourseVideoDetailActivity) view;
     }
 
     /**

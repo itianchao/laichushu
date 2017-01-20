@@ -145,6 +145,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 searchLv.setAdapter(historyAdapter);
             }
         } else {
+            searchLay.setVisibility(View.GONE);
             UIUtil.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -270,9 +271,12 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 }
                 break;
             case R.id.et_search:
-                searchLay.setVisibility(View.VISIBLE);
-                bookRyv.setVisibility(View.GONE);
-                emptyIv.setVisibility(View.GONE);
+                if(null==TYPE){
+                    searchLay.setVisibility(View.VISIBLE);
+                    bookRyv.setVisibility(View.GONE);
+                    emptyIv.setVisibility(View.GONE);
+                }
+
                 break;
         }
     }

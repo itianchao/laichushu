@@ -38,6 +38,7 @@ public abstract class ApiCallback<M> extends Subscriber<M> {
             }
             onFailure(code, msg);
         } else {
+            ToastUtil.showToast("网络错误，请检查网络！");
             onFailure(0, e.getMessage());
         }
         onFinish();

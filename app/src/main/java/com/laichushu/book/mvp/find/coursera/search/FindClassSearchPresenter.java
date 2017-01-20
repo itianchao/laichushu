@@ -1,7 +1,5 @@
 package com.laichushu.book.mvp.find.coursera.search;
 
-import android.text.TextUtils;
-
 import com.laichushu.book.bean.netbean.LessonList_Paramet;
 import com.laichushu.book.db.DaoSession;
 import com.laichushu.book.db.Search_History;
@@ -10,9 +8,8 @@ import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.FindClassSearchActivity;
+import com.laichushu.book.ui.activity.FindCourseSearchActivity;
 import com.laichushu.book.ui.base.BasePresenter;
-import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.LoggerUtil;
 
 import java.util.List;
@@ -25,7 +22,7 @@ import de.greenrobot.dao.query.Query;
  */
 
 public class FindClassSearchPresenter extends BasePresenter<FindClassSearchView> {
-    private FindClassSearchActivity mActivity;
+    private FindCourseSearchActivity mActivity;
 
     private String pageNo = "1";
     private String pageSize = ConstantValue.PAGESIZE1;
@@ -35,7 +32,7 @@ public class FindClassSearchPresenter extends BasePresenter<FindClassSearchView>
 
     public FindClassSearchPresenter(FindClassSearchView view) {
         attachView(view);
-        mActivity = (FindClassSearchActivity) view;
+        mActivity = (FindCourseSearchActivity) view;
     }
 
     /**

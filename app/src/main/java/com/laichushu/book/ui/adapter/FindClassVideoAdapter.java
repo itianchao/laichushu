@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
-import com.laichushu.book.ui.activity.FindClassDocDetailActivity;
-import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
+import com.laichushu.book.ui.activity.FindCourseDocDetailActivity;
+import com.laichushu.book.ui.activity.FindCourseVideoDetailActivity;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
@@ -50,11 +50,11 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
                 if (bean.getFileType().equals("1")) {
                     Bundle bundle = new Bundle();
                     bundle.putString("lessonId",bean.getId());
-                    UIUtil.openActivity(mActivity, FindClassVideoDetailActivity.class,bundle);
+                    UIUtil.openActivity(mActivity, FindCourseVideoDetailActivity.class,bundle);
                 }else {
                     Bundle bundle = new Bundle();
                     bundle.putString("lessonId",bean.getId());
-                    UIUtil.openActivity(mActivity, FindClassDocDetailActivity.class,bundle);
+                    UIUtil.openActivity(mActivity, FindCourseDocDetailActivity.class,bundle);
                 }
 
             }

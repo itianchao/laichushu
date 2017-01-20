@@ -38,7 +38,7 @@ public class BalanceBean {
          */
 
         private String userId;
-        private double money;
+        private String money;
         private double minLimit;
         private double maxLimit;
 
@@ -50,11 +50,11 @@ public class BalanceBean {
             this.userId = userId;
         }
 
-        public double getMoney() {
+        public String getMoney() {
             return money;
         }
 
-        public void setMoney(double money) {
+        public void setMoney(String money) {
             this.money = money;
         }
 
