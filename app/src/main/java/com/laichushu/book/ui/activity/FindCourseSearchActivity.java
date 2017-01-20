@@ -35,7 +35,7 @@ import java.util.List;
  * Created by wangtong on 2017/1/6.
  */
 
-public class FindClassSearchActivity extends MvpActivity2<FindClassSearchPresenter> implements FindClassSearchView, View.OnClickListener, TextView.OnEditorActionListener, PullLoadMoreRecyclerView.PullLoadMoreListener, AdapterView.OnItemClickListener {
+public class FindCourseSearchActivity extends MvpActivity2<FindClassSearchPresenter> implements FindClassSearchView, View.OnClickListener, TextView.OnEditorActionListener, PullLoadMoreRecyclerView.PullLoadMoreListener, AdapterView.OnItemClickListener {
     private PullLoadMoreRecyclerView mRecyclerView;
     private ImageView finishIV;
     private EditText searchEt;

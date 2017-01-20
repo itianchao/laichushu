@@ -28,6 +28,7 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
     private DraftModleActivity mActivity;
     private ArrayList<DraftModle.DataBean> mData;
     private DraftModlePresenter mvpPresenter;
+
     public DraftListAdapter(DraftModleActivity draftModleActivity, ArrayList<DraftModle.DataBean> mData, DraftModlePresenter mvpPresenter) {
         this.mActivity = draftModleActivity;
         this.mData = mData;
@@ -52,7 +53,13 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mvpPresenter.openDeleteDialog(dataBean.getId(),position);
+                    mvpPresenter.openDeleteDialog(dataBean.getId(), position);
+                }
+            });
+            holder.deleteIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mvpPresenter.openDeleteDialog(dataBean.getId(), position);
                 }
             });
         } else {
@@ -67,30 +74,18 @@ public class DraftListAdapter extends RecyclerView.Adapter<DraftListAdapter.Draf
                     bundle.putString("path", dataBean.getContentUrlApp());
                     bundle.putString("content", dataBean.getContent());
                     bundle.putString("name", dataBean.getName());
-                    bundle.putString("articleId",mActivity.getArticleId());
+                    bundle.putString("articleId", mActivity.getArticleId());
                     UIUtil.openActivity(mActivity, NopublishBookActivity.class, bundle);
                 }
             });
+            holder.nameTv.setText(dataBean.getName());
+            holder.renameTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mvpPresenter.openRameDialog(dataBean.getId(), position, dataBean.getName());
+                }
+            });
         }
-        holder.nameTv.setText(dataBean.getName());
-        holder.renameTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mvpPresenter.openRameDialog(dataBean.getId(),position, dataBean.getName());
-            }
-        });
-        holder.reviseTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        holder.deleteIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mvpPresenter.openDeleteDialog(dataBean.getId(),position);
-            }
-        });
     }
 
     @Override

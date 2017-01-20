@@ -15,9 +15,8 @@ import com.laichushu.book.mvp.home.allcomment.AllCommentPresenter;
 import com.laichushu.book.mvp.home.allcomment.AllCommentView;
 import com.laichushu.book.mvp.home.allcomment.SendCommentMoudle;
 import com.laichushu.book.mvp.home.bookdetail.ArticleCommentModle;
-import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
+import com.laichushu.book.ui.activity.FindCourseVideoDetailActivity;
 import com.laichushu.book.ui.adapter.CommentAllAdapter;
-import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.LoggerUtil;
@@ -129,7 +128,7 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
             ToastUtil.showToast("发送成功");
             onRefresh();
             isComment = false;//能不能评论 false不能评论
-            ((FindClassVideoDetailActivity) getActivity()).getMdata().setComment(true);
+            ((FindCourseVideoDetailActivity) getActivity()).getMdata().setComment(true);
             commentLay.setVisibility(View.GONE);
         } else {
             String errorMsg = model.getErrMsg();

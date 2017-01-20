@@ -16,7 +16,7 @@
     <EditText
         android:id="@+id/et_dialog"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:background="@color/white"
         android:gravity="center"
         android:hint="点击重命名"

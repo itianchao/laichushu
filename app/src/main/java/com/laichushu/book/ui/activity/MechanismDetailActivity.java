@@ -175,11 +175,12 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
             // TODO: 2016/12/19 刷新 写作页面
             EventBus.getDefault().postSticky(new RefurshWriteFragment(true));
         } else {
-            if (model.getErrMsg().contains("已经投稿")) {
-                ToastUtil.showToast("投稿失败，此出版社已经投稿了");
-            } else {
-                ToastUtil.showToast("投稿失败");
-            }
+//            if (model.getErrMsg().contains("已经投稿")) {
+//                ToastUtil.showToast("投稿失败，此出版社已经投稿了");
+//            } else {
+//                ToastUtil.showToast("投稿失败");
+//            }
+            ToastUtil.showToast(model.getErrMsg());
         }
     }
 

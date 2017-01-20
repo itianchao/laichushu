@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.cc;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -47,7 +46,7 @@ import android.widget.TextView;
 import com.bokecc.sdk.mobile.exception.ErrorCode;
 import com.bokecc.sdk.mobile.play.DWMediaPlayer;
 import com.laichushu.book.R;
-import com.laichushu.book.ui.activity.FindClassVideoDetailActivity;
+import com.laichushu.book.ui.activity.FindCourseVideoDetailActivity;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
@@ -127,7 +126,7 @@ public class MediaPlayFragment extends Fragment implements
 	private RelativeLayout  rlPlay;
 	private WindowManager wm;
 	private ImageView ivFullscreen;
-	private FindClassVideoDetailActivity mActivity;
+	private FindCourseVideoDetailActivity mActivity;
 	private static final String VIDEOID = "videoId";
 	private static final String ISLOCALPLAY = "isLocalPlay";
 
@@ -144,17 +143,17 @@ public class MediaPlayFragment extends Fragment implements
 		super.onAttach(context);
 		this.videoId = getArguments().getString(VIDEOID);
 		this.isLocalPlay = getArguments().getBoolean(ISLOCALPLAY);
-		this.mActivity = (FindClassVideoDetailActivity) getActivity();
+		this.mActivity = (FindCourseVideoDetailActivity) getActivity();
 	}
 
 	public MediaPlayFragment() {
 		//在该Fragment的构造函数中注册mTouchListener的回调
 		if(mListener!=null && getActivity()!=null){
-			((FindClassVideoDetailActivity)getActivity()).registerMyTouchListener(mListener);
-			((FindClassVideoDetailActivity)getActivity()).registerMyBackListener(mListener);
+			((FindCourseVideoDetailActivity)getActivity()).registerMyTouchListener(mListener);
+			((FindCourseVideoDetailActivity)getActivity()).registerMyBackListener(mListener);
 		}
 	}
-	private FindClassVideoDetailActivity.MyListener mListener = new FindClassVideoDetailActivity.MyListener(){
+	private FindCourseVideoDetailActivity.MyListener mListener = new FindCourseVideoDetailActivity.MyListener(){
 		@Override
 		public void onTouchEvent(KeyEvent event) {
 			// 监测音量变化
@@ -356,7 +355,7 @@ public class MediaPlayFragment extends Fragment implements
 		player.setOnErrorListener(this);
 		player.setOnVideoSizeChangedListener(this);
 		player.setOnInfoListener(this);
-		videoIdText.setText(videoId);
+		videoIdText.setText("");
 		try {
 
 			if (!isLocalPlay) {// 播放线上视频
@@ -1075,8 +1074,8 @@ public class MediaPlayFragment extends Fragment implements
 			networkInfoTimerTask.cancel();
 		}
 		if(mListener!=null && getActivity()!=null){
-			((FindClassVideoDetailActivity)getActivity()).unRegisterMyTouchListener(mListener);
-			((FindClassVideoDetailActivity)getActivity()).unRegisterMyBackListener(mListener);
+			((FindCourseVideoDetailActivity)getActivity()).unRegisterMyTouchListener(mListener);
+			((FindCourseVideoDetailActivity)getActivity()).unRegisterMyBackListener(mListener);
 		}
 		super.onDestroy();
 		EventBus.getDefault().unregister(this);

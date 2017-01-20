@@ -170,13 +170,12 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 购买确认对话框
-     *
-     * @param articleId
+     *  @param articleId
      * @param payMoney
      * @param balance
      * @param price
      */
-    public void showdialog(final String articleId, final String payMoney, double balance, double price, String bookName, String authorName) {
+    public void showdialog(final String articleId, final String payMoney, String balance, double price, String bookName, String authorName) {
 
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
         final View customerView = UIUtil.inflate(R.layout.dialog_pay);

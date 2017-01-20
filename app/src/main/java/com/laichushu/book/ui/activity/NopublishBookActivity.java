@@ -198,12 +198,12 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
             public void onSuccess(BalanceBean model) {
                 dismissProgressDialog();
                 if (model.isSuccess()) {
-                    double balance = model.getData().getMoney();
+                    String balance = model.getData().getMoney();
                     double maxLimit = model.getData().getMaxLimit();
                     double minLimit = model.getData().getMinLimit();
                     String accepterId = getIntent().getStringExtra("authorId");
                     String articleId = getIntent().getStringExtra("articleId");
-                    openReward(balance + "", accepterId, articleId, maxLimit, minLimit);
+                    openReward(balance, accepterId, articleId, maxLimit, minLimit);
                 } else {
                     ToastUtil.showToast(model.getErrMsg());
                 }

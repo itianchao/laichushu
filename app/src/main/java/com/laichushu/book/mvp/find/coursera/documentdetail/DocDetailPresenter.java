@@ -12,14 +12,12 @@ import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailModle;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.retrofit.ApiDownBack;
-import com.laichushu.book.ui.activity.FindClassDocDetailActivity;
+import com.laichushu.book.ui.activity.FindCourseDocDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.CourseAppraiseFragment;
 import com.laichushu.book.ui.fragment.CourseIntroFragment;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
-
-import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -32,7 +30,7 @@ import retrofit2.Response;
  */
 
 public class DocDetailPresenter extends BasePresenter<DocDetailView> {
-    private FindClassDocDetailActivity mActivity;
+    private FindCourseDocDetailActivity mActivity;
     private CourseIntroFragment courseIntro;
     private CourseAppraiseFragment courseAppraise;
     private String userId = ConstantValue.USERID;
@@ -41,7 +39,7 @@ public class DocDetailPresenter extends BasePresenter<DocDetailView> {
 
     public DocDetailPresenter(DocDetailView view) {
         attachView(view);
-        mActivity = (FindClassDocDetailActivity) view;
+        mActivity = (FindCourseDocDetailActivity) view;
     }
 
     /**

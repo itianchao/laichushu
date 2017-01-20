@@ -256,11 +256,11 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
         if (model.isSuccess()) {
             ToastUtil.showToast("投稿成功，15日内通知审核结果");
         } else {
-            if (model.getErrMsg().contains("已经投稿")) {
-                ToastUtil.showToast("投稿失败，此出版社已经投稿了");
-            } else {
-                ToastUtil.showToast("投稿失败");
-            }
+//            if (model.getErrMsg().contains("已经投稿")) {
+                ToastUtil.showToast(model.getErrMsg());
+//            } else {
+//                ToastUtil.showToast("投稿失败");
+//            }
         }
 
     }

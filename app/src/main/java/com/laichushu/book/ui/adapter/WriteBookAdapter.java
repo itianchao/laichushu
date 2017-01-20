@@ -68,6 +68,9 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                 case "2":
                     GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue3, holder.bookStatueIv);
                     break;
+                case "3":
+                    GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue4, holder.bookStatueIv);
+                    break;
                 default:
                     GlideUitl.loadImg(mActivity, R.drawable.icon_book_statue1, holder.bookStatueIv);
                     break;
@@ -93,7 +96,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             imageView = (ImageView) itemView.findViewById(R.id.iv_stripIcon);
             textView = (TextView) itemView.findViewById(R.id.tv_stripContent);
             //如果是冻结和已出版 全灰色
-            if (dataBean.getStatus().equals("4") || dataBean.getFreezeStatus().equals("2")) {
+            if (dataBean.getStatus().equals("4") || dataBean.getFreezeStatus().equals("2") || dataBean.getStatus().equals("3")) {
                 imageView.setImageResource(grayImgArray[i]);
                 holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
             } else {
@@ -110,7 +113,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                 }
             }
 
-            if (dataBean.isDelete() && i == 2) {//可删除
+            if (dataBean.isDelete() && i == 2 && !dataBean.getStatus().equals("3")) {//可删除
                 imageView.setImageResource(mStrip.get(i).getDrawble());
             } else if (!dataBean.isDelete() && i == 2) {//不可删除
                 imageView.setImageResource(grayImgArray[i]);
@@ -123,7 +126,16 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (dataBean.getStatus().equals("4") || dataBean.getFreezeStatus().equals("2")) {
+                    if (dataBean.getStatus().equals("3")) {
+                        ToastUtil.showToast("签约确认之后不能对该书进行操作");
+                        return;
+                    }
+                    if (dataBean.getFreezeStatus().equals("2")) {
+                        ToastUtil.showToast("不能对已冻结的书进行操作");
+                        return;
+                    }
+                    if (dataBean.getStatus().equals("4")) {
+                        ToastUtil.showToast("不能对已出版的书进行操作");
                         return;
                     }
                     switch (finalJ) {
@@ -228,7 +240,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         holder.authorTv.setText(dataBean.getAuthorName());
         holder.numRb.setRating(dataBean.getLevel());
         holder.commentTv.setText("(" + dataBean.getCommentNum() + "评论)");
-        holder.wordTv.setText("约" + dataBean.getWordNum()+"字");
+        holder.wordTv.setText("约" + dataBean.getWordNum() + "字");
         holder.moneyTv.setText(dataBean.getAwardMoney() + "元");
         holder.rewardTv.setText("(" + dataBean.getAwardNum() + "人打赏)");
 

@@ -32,7 +32,7 @@ import cn.sharesdk.framework.ShareSDK;
  * Created by wangtong on 2017/1/6.
  */
 
-public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresenter> implements VideoDetailView, View.OnClickListener {
+public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPresenter> implements VideoDetailView, View.OnClickListener {
 
     private ImageView backIv;
     private TextView titleTv;
@@ -99,7 +99,7 @@ public class FindClassVideoDetailActivity extends MvpActivity2<VideoDetailPresen
                 break;
             case R.id.iv_collection://收藏
                 String type;
-                if (mdata.getIsCollect().equals("1")) {//未收藏
+                if (mdata.getIsCollect().equals("2")) {//未收藏
                     type = "0";
                 }else {
                     type = "1";
