@@ -19,12 +19,26 @@
             android:id="@+id/tv_headSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/iv_HeadSend"
-            android:padding="8dp"
+            android:background="@drawable/chat_receive2x"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="16dp"
             android:textColor="@color/characterLightGray1"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_senderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_headSend"
+            android:layout_marginTop="12dp"
+            android:layout_centerHorizontal="true"
+            android:padding="6dp"
+            android:background="@color/LightGrey"
+            android:textColor="@color/characterLightGray1"
+            android:textStyle="bold" />
+
     </RelativeLayout>
 
 </LinearLayout>

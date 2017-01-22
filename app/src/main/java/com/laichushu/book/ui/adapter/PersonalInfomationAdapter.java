@@ -33,7 +33,7 @@ public class PersonalInfomationAdapter extends RecyclerView.Adapter<PersonalInfo
 
     @Override
     public int getItemViewType(int position) {
-        if (dataBeen.get((dataBeen.size()-1)-position).getSenderId().equals(SharePrefManager.getUserId())) {
+        if (dataBeen.get((dataBeen.size() - 1) - position).getSenderId().equals(SharePrefManager.getUserId())) {
             return TYPE1;
         } else {
             return TYPE2;
@@ -65,12 +65,14 @@ public class PersonalInfomationAdapter extends RecyclerView.Adapter<PersonalInfo
 
     @Override
     public void onBindViewHolder(PersonalInfomationAdapter.ViewHolder holder, int position) {
-        if (dataBeen.get((dataBeen.size()-1)-position).getSenderId().equals(SharePrefManager.getUserId())) {
-            GlideUitl.loadRandImg(context, dataBeen.get((dataBeen.size()-1)-position).getSenderPhoto(), ((ViewHolder1) holder).ivReceive);
-            ((ViewHolder1) holder).tvReceive.setText(dataBeen.get((dataBeen.size()-1)-position).getContent());
+        if (dataBeen.get((dataBeen.size() - 1) - position).getSenderId().equals(SharePrefManager.getUserId())) {
+            GlideUitl.loadRandImg(context, dataBeen.get((dataBeen.size() - 1) - position).getSenderPhoto(), ((ViewHolder1) holder).ivReceive);
+            ((ViewHolder1) holder).tvReceive.setText(dataBeen.get((dataBeen.size() - 1) - position).getContent());
+            ((ViewHolder1) holder).receiveTime.setText(dataBeen.get((dataBeen.size() - 1) - position).getCreateDate());
         } else {
-            GlideUitl.loadRandImg(context, dataBeen.get((dataBeen.size()-1)-position).getSenderPhoto(), ((ViewHolder2) holder).ivSend);
-            ((ViewHolder2) holder).tvSend.setText(dataBeen.get((dataBeen.size()-1)-position).getContent());
+            GlideUitl.loadRandImg(context, dataBeen.get((dataBeen.size() - 1) - position).getSenderPhoto(), ((ViewHolder2) holder).ivSend);
+            ((ViewHolder2) holder).tvSend.setText(dataBeen.get((dataBeen.size() - 1) - position).getContent());
+            ((ViewHolder2) holder).sendTime.setText(dataBeen.get((dataBeen.size() - 1) - position).getCreateDate());
         }
 
     }
@@ -95,12 +97,13 @@ public class PersonalInfomationAdapter extends RecyclerView.Adapter<PersonalInfo
 
     public class ViewHolder1 extends ViewHolder {
         //left
-        public  TextView tvReceive;
-        public final ImageView ivReceive;
+        public TextView tvReceive, receiveTime;
+        public ImageView ivReceive;
 
         public ViewHolder1(View root) {
             super(root);
             tvReceive = (TextView) root.findViewById(R.id.tv_msgReceive);
+            receiveTime = (TextView) root.findViewById(R.id.tv_receiveTime);
             ivReceive = (ImageView) root.findViewById(R.id.iv_HeadReceive);
         }
     }
@@ -108,17 +111,13 @@ public class PersonalInfomationAdapter extends RecyclerView.Adapter<PersonalInfo
     public class ViewHolder2 extends ViewHolder {
 
         //right
-
-
-        public final TextView tvSend;
-        public final ImageView ivSend;
-
+        public TextView tvSend, sendTime;
+        public ImageView ivSend;
 
         public ViewHolder2(View root) {
             super(root);
-
-
             tvSend = (TextView) root.findViewById(R.id.tv_headSend);
+            sendTime = (TextView) root.findViewById(R.id.tv_senderTime);
             ivSend = (ImageView) root.findViewById(R.id.iv_HeadSend);
         }
     }

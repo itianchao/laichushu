@@ -47,7 +47,7 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
         final CourseraModle.DataBean.LessonListBean bean = dataBeen.get(position);
         GlideUitl.loadImg(context, bean.getThumbUrl(), holder.ivImg);
         holder.tvItem.setText(bean.getName());
-        holder.tvPlayNum.setText(bean.getClickNum()+"");
+        holder.tvPlayNum.setText("播放量"+bean.getClickNum()+"");
         holder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

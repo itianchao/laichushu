@@ -113,7 +113,7 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         if (null != bean.getAdmin() && SharePrefManager.getUserId().equals(bean.getAdmin())) {
             moreIv.setVisibility(View.VISIBLE);
         } else {
-            moreIv.setVisibility(View.INVISIBLE);
+            moreIv.setVisibility(View.GONE);
         }
         titleTv.setText("机构详情");//设置标题
         GlideUitl.loadImg(mActivity, R.drawable.mechanism_detail_bg, mechanismIv);//设置机构图片

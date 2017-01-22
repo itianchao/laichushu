@@ -38,18 +38,19 @@
 
         <ImageView
             android:id="@+id/iv_perGrade"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_alignTop="@+id/tv_PerNickName"
             android:layout_marginLeft="12dp"
             android:layout_toRightOf="@+id/tv_PerNickName" />
 
         <ImageView
             android:id="@+id/iv_perGradeDetails"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_alignTop="@+id/tv_PerNickName"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_alignTop="@+id/iv_perGrade"
             android:layout_marginLeft="6dp"
+            android:layout_marginTop="2dp"
             android:layout_toRightOf="@+id/iv_perGrade"
             android:visibility="invisible" />
 

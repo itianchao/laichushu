@@ -66,7 +66,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
     private Search_HistoryDao dao;
     private HomeSearchHistoryAdapter historyAdapter;
     private List<Search_History> list = new ArrayList<>();
-    private ImageView emptyIv;
+    private ImageView emptyIv,emptyMsgIv;
     private boolean one = false;
     private boolean two = false;
     private HomeSearchHotHistoryAdapter mHotAdapter;
@@ -107,6 +107,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
         bookRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_book);//搜索结果
         msgRyv = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_perMsg);//搜索结果
         emptyIv = (ImageView) mSuccessView.findViewById(R.id.iv_empty);//搜索结果
+        emptyMsgIv = (ImageView) mSuccessView.findViewById(R.id.iv_empty_msg);//搜索结果
         finishIV.setOnClickListener(this);
         clearTv.setOnClickListener(this);
         searchEt.setOnClickListener(this);
@@ -225,7 +226,14 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 msgData = model.getData();
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast(R.string.errMsg_empty);
+                if (mvpPresenter.getMsgParamet().getPageNo().equals("1")) {
+                    emptyMsgIv.setVisibility(View.VISIBLE);
+                    searchLay.setVisibility(View.GONE);
+                    msgRyv.setVisibility(View.GONE);
+                } else {
+                    ToastUtil.showToast(R.string.errMsg_empty);
+                }
+
             }
             searchAdapter.refreshAdapter(msgData);
         } else {
@@ -344,6 +352,7 @@ public class HomeSearchActivity extends MvpActivity2<HomeSearchPresenter> implem
                 search = searchEt.getText().toString().trim();
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
                 mvpPresenter.LoadPerInfoDetailsData(search);
+                msgRyv.setVisibility(View.VISIBLE);
             }
 
         }

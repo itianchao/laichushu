@@ -8,7 +8,6 @@ import com.laichushu.book.R;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
-import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
 /**

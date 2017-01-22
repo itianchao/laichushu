@@ -138,7 +138,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
         tvTitle.setText("个人主页");
         tvTitle.setVisibility(View.VISIBLE);
-        GlideUitl.loadImg(mActivity, R.drawable.activity_comment, ivAnother);
+        GlideUitl.loadImg(mActivity, R.drawable.my_reset2x, ivAnother);
         GlideUitl.loadImg(mActivity, R.drawable.icon_geade_details2x, ivGreadDetails);
 
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);

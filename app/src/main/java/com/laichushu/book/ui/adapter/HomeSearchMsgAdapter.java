@@ -36,13 +36,12 @@ public class HomeSearchMsgAdapter extends RecyclerView.Adapter<HomeSearchMsgAdap
 
     @Override
     public HomeSearchMsgAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = UIUtil.inflate(R.layout.item_msg_reward);
+        View itemView = UIUtil.inflate(R.layout.item_msg_focus);
         return new HomeSearchMsgAdapter.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(HomeSearchMsgAdapter.ViewHolder holder, final int position) {
-        //私信
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         GlideUitl.loadRandImg(context, dataBeen.get(position).getSenderPhoto(), holder.ivFocusIcon);
         holder.tvFocusTime.setText(dataBeen.get(position).getCreateDate());
         holder.tvFocusName.setText(dataBeen.get(position).getContent());
@@ -88,15 +87,16 @@ public class HomeSearchMsgAdapter extends RecyclerView.Adapter<HomeSearchMsgAdap
         if (listData.size() > 0) {
             dataBeen.clear();
             dataBeen.addAll(listData);
-            this.notifyDataSetChanged();
         }
+        this.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View root;
+
         public TextView tvFocusTime, tvFocusTimes, tvFocusName, tvFocusContent, tvFocusContent1, tvFocusContent2, tvFocusContent3, tvFocusContent4;
         public ImageView ivFocusIcon, ivFocusNotice, ivFocusDelete;
         public LinearLayout llFocusItem;
+        public View root;
 
         public ViewHolder(View root) {
             super(root);

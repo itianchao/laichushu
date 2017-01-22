@@ -9,11 +9,13 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.laichushu.book.event.RefrushWalletEvent;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.bean.alipay.PayResult;
 import com.laichushu.book.bean.alipay.SignUtils;
 import com.laichushu.book.bean.wechatpay.WxInfo;
 import com.laichushu.book.ui.activity.MyWalletDetailsActivity;
+import com.laichushu.book.ui.activity.RechargeDetailsActivity;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -93,6 +95,7 @@ public class PayUtils {
                     UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            AppManager.getInstance().killActivity(RechargeDetailsActivity.class);
                             UIUtil.openActivity(AppManager.getTopActivity(), MyWalletDetailsActivity.class);
                         }
                     }, 1700);

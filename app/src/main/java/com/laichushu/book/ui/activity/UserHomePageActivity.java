@@ -153,7 +153,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         ivAnthor.setVisibility(View.VISIBLE);
         ivOther.setVisibility(View.VISIBLE);
         GlideUitl.loadImg(mActivity, R.drawable.icon_book_comment, ivAnthor);
-        ivOther.setImageResource(R.drawable.icon_more2x);
+        ivOther.setImageResource(R.drawable.activity_share);
         GlideUitl.loadImg(mActivity, R.drawable.icon_geade_details2x, ivGradeDetails);
 
         ivBack.setOnClickListener(this);

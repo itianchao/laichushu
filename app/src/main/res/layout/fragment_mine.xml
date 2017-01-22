@@ -49,7 +49,8 @@
                         <TextView
                             android:id="@+id/tv_mineNickName"
                             style="@style/new_up"
-                            android:drawableRight="@drawable/bookdetail_write" />
+                            android:textColor="@color/characterGray"
+                            android:drawableRight="@drawable/my_edit_new2x" />
 
                         <ImageView
                             android:id="@+id/iv_mineHeadInto"
