@@ -13,6 +13,7 @@ public class Idea_Table {
     private Integer x;
     private Integer y;
     private String content;
+    private String progress;
 
     public Idea_Table() {
     }
@@ -21,7 +22,7 @@ public class Idea_Table {
         this.id = id;
     }
 
-    public Idea_Table(Long id, Integer bookId, String Uid, String styleId, Integer x, Integer y, String content) {
+    public Idea_Table(Long id, Integer bookId, String Uid, String styleId, Integer x, Integer y, String content, String progress) {
         this.id = id;
         this.bookId = bookId;
         this.Uid = Uid;
@@ -29,6 +30,7 @@ public class Idea_Table {
         this.x = x;
         this.y = y;
         this.content = content;
+        this.progress = progress;
     }
 
     public Long getId() {
@@ -85,6 +87,14 @@ public class Idea_Table {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
     }
 
 }

@@ -29,11 +29,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import com.laichushu.book.bean.otherbean.XYBookMarkListBean;
+import com.laichushu.book.db.Idea_Table;
+import com.laichushu.book.db.Idea_TableDao;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ToastUtil;
+import com.laichushu.book.utils.UIUtil;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
@@ -135,11 +142,11 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
             //如果当前页大于3 并且 是往下翻页
             if (fbReaderApp.getCurrentTOCElement() != null) {
                 TOCTree parent = fbReaderApp.getCurrentTOCElement().Parent;
-                List<TOCTree>  subtrees = parent.subtrees();//目录
+                List<TOCTree> subtrees = parent.subtrees();//目录
                 TOCTree currentTOCElement = fbReaderApp.getCurrentTOCElement();//当前章节
                 //如果当前章节的text == 试读的章节text，不让翻下一页了
-                if (subtrees.size() >= ConstantValue.ISREADER_NUMBER){
-                    if (currentTOCElement.getText().equals(subtrees.get(ConstantValue.ISREADER_NUMBER-1).getText())) {
+                if (subtrees.size() >= ConstantValue.ISREADER_NUMBER) {
+                    if (currentTOCElement.getText().equals(subtrees.get(ConstantValue.ISREADER_NUMBER - 1).getText())) {
                         getAnimationProvider().doStep();
                         if (getAnimationProvider().getPageToScrollTo() == ZLView.PageIndex.next) {
                             onDrawStatic(canvas);// 首次/页面跳转时调用,防止黑屏
@@ -150,6 +157,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                 }
             }
         }
+
         //翻页
         if (getAnimationProvider().inProgress()) {
             onDrawInScrolling(canvas);// 翻页过程中调用
@@ -460,6 +468,21 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                 myScreenIsTouched = false;
                 break;
             case MotionEvent.ACTION_DOWN:
+                //======================想法
+                if (FBReaderApp.Instance()!=null){
+                    Idea_TableDao dao = BaseApplication.getDaoSession(BaseApplication.getContext()).getIdea_TableDao();
+                    String progress = ((FBReaderApp)FBReaderApp.Instance()).getTextView().pagePositionPec();
+                    List<Idea_Table> list = dao.queryBuilder().where(Idea_TableDao.Properties.Progress.eq(progress)
+                    ).build().list();
+                    for (Idea_Table bean : list) {
+                        int dip = UIUtil.dip2px(20);
+                        if ((event.getX() >= bean.getX() - dip && event.getX() <= bean.getX() + dip) && ((event.getY() >= bean.getY() - dip && event.getY() <= bean.getY() + dip))) {
+                            ToastUtil.showToast(bean.getContent());
+                            return false;
+                        }
+                    }
+                }
+                //======================翻页或其他
                 if (!isShowIdea) {
                     if (myPendingShortClickRunnable != null) {
                         removeCallbacks(myPendingShortClickRunnable);
