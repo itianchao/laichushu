@@ -134,7 +134,9 @@ class SelectionPopup extends PopupPanel implements View.OnClickListener {
                 Application.runAction(ActionCode.SELECTION_SHARE);
                 break;
             case R.id.selection_panel_close:
-                Application.runAction(ActionCode.SELECTION_CLEAR);
+//                Application.runAction(ActionCode.SELECTION_CLEAR);
+                postEvent();
+                Application.runAction(ActionCode.SELECTION_BOOKMARK,1,1,1,1,1,1,1);
                 break;
             case R.id.selection_panel_bookmark:
                 Application.runAction(ActionCode.SELECTION_BOOKMARK, myBookmark,10706404, 1);
