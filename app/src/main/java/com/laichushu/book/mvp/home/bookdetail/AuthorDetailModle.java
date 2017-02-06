@@ -1,10 +1,12 @@
 package com.laichushu.book.mvp.home.bookdetail;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * 图书详情 - 作者详情
  * Created by wangtong on 2016/11/3.
  */
-public class AuthorDetailModle {
+public class AuthorDetailModle extends BaseModel {
 
     /**
      * success : true

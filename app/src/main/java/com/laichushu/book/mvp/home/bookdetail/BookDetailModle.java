@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.home.bookdetail;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.bean.netbean.BaseModel;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/12/21.
  */
 
-public class BookDetailModle {
+public class BookDetailModle extends BaseModel {
 
     /**
      * data : {"articleData":{"articleId":"216","articleName":"愿无岁月可回头","authorId":"150","authorName":"无尽之夏","awardMoney":540,"awardNum":7,"browseNum":7,"commentNum":5,"coverName":"20161209194753.jpg","coverUrl":"http://101.254.183.67:9980/group1/M00/00/1A/wKiTPlhKmfCAWIm6AAEuwbmelvg817.jpg","createDate":"2016-12-09 19:47","expressStatus":"0","freezeStatus":"1","introduce":"的点点滴滴点点滴滴","isAward":false,"isCollect":false,"isPurchase":false,"isSubscribe":false,"level":4,"score":8,"status":"1","subscribeNum":3,"topCategoryId":"1","updateDate":"2016-12-16 11:31","wordNum":0},"authorData":{"articleNum":4,"authorId":"150","authorIntroduction":"","nickName":"无尽之夏","photo":"http://101.254.183.67:9980/group1/M00/00/1F/wKiTPlhSE0uAZ7BfAAEuwbmelvg627.jpg"},"bestLikeData":[{"articleId":"253","articleName":"琥珀世界","authorId":"173","authorName":"琥珀","awardMoney":0,"awardNum":0,"browseNum":2,"commentNum":2,"coverUrl":"http://101.254.183.67:9980/group1/M00/00/1E/wKiTPlhQsIiAReXpAAFRtujQZxI008.jpg","createDate":"2016-12-14 10:38","expressStatus":"0","freezeStatus":"1","introduce":"琥珀世界","isAward":false,"isCollect":false,"isPurchase":false,"isSubscribe":false,"level":4,"score":9,"status":"1","subscribeNum":2,"topCategoryId":"63","topCategoryName":"二次元","updateDate":"2016-12-15 16:14","wordNum":10018}],"scoreCattleData":[{"articleId":"216","commentTime":"2016-12-20 15:46:12","content":"我是大咖哦","isLike":false,"likeNum":0,"nickName":"永生","photo":"","replyNum":0,"sourceId":"121","userId":"195"}],"scoreReaderData":[{"articleId":"216","commentTime":"2016-12-16 10:56:53","content":"狗哈哈哈","isLike":false,"likeNum":0,"nickName":"逗你玩","photo":"http://101.254.183.67:9980/group1/M00/00/22/wKiTPlhTUauAXN3_AAAH6nNWI3k479.jpg","replyNum":1,"sourceId":"97","userId":"180"},{"articleId":"216","commentTime":"2016-12-16 11:15:50","content":"你好","isLike":false,"likeNum":0,"nickName":"大酒神","photo":"http://101.254.183.67:9980/group1/M00/00/23/wKiTPlhXqMOAafndAACiakRLsdc478.jpg","replyNum":1,"sourceId":"98","userId":"175"},{"articleId":"216","commentTime":"2016-12-16 13:31:24","content":"请留下你对本书的想法及感受","isLike":false,"likeNum":2,"nickName":"喵了个咪呀！在线","photo":"http://101.254.183.67:9980/group1/M00/00/21/wKiTPlhTSfaARvIgAADEH4vElKc174.jpg","replyNum":0,"sourceId":"100","userId":"159"},{"articleId":"216","commentTime":"2016-12-15 14:08:30","content":"某人的微笑，一如那年的夏天，阳光明媚","isLike":false,"likeNum":6,"nickName":"好好先生","photo":"http://101.254.183.67:9980/group1/M00/00/24/wKiTPlhX5umAdjSOAADFt00Uye4513.jpg","replyNum":2,"sourceId":"89","userId":"151"}],"success":true}

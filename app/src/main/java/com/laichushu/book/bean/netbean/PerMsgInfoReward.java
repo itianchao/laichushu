@@ -7,7 +7,7 @@ import java.util.List;
  * Created by PCPC on 2016/12/2.
  */
 
-public class PerMsgInfoReward implements Serializable {
+public class PerMsgInfoReward extends BaseModel implements Serializable {
 
     /**
      * success : true

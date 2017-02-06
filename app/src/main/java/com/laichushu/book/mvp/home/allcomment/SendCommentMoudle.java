@@ -1,10 +1,12 @@
 package com.laichushu.book.mvp.home.allcomment;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * 发送评论
  * Created by wangtong on 2016/11/4.
  */
-public class SendCommentMoudle {
+public class SendCommentMoudle extends BaseModel {
     private boolean success;
     private String errMsg;
 

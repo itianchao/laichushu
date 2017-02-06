@@ -3,12 +3,14 @@ package com.laichushu.book.mvp.write.directories;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  * Created by wangtong on 2016/11/7.
  */
-public class BookMoudle {
+public class BookMoudle extends BaseModel {
 
     /**
      * success : true

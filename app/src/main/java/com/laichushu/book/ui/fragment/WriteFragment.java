@@ -68,7 +68,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     private String pressId, editId;
     private int currentPos;
     private AlertDialog alertDialog = null;
-
+    private int PAGE_NO = 1;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +119,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
                 mData.clear();
                 mData.addAll(model.getData());
                 writeBookAdapter.setmData(mData);
+                PAGE_NO++;
             } else {
                 ToastUtil.showToast(R.string.errMsg_empty);
             }
@@ -391,6 +392,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
                 mData.clear();
+                mvpPresenter.getBookList_paramet().setPageNo(PAGE_NO+"");
                 mvpPresenter.getArticleBookList();
             }
         });
@@ -417,14 +419,17 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
 
     @Override
     public void onRefresh() {
+        PAGE_NO=1;
         refreshPage(LoadingPager.PageState.STATE_LOADING);
         mData.clear();
+        mvpPresenter.getBookList_paramet().setPageNo(PAGE_NO+"");
         mvpPresenter.getArticleBookList();
     }
 
     @Override
     public void onLoadMore() {
-
+        mvpPresenter.getBookList_paramet().setPageNo(PAGE_NO+"");
+        mvpPresenter.getArticleBookList();
     }
 
     @Override

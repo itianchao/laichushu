@@ -1,12 +1,14 @@
 package com.laichushu.book.mvp.home.homesearch;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  * home页搜索
  * Created by wangtong on 2016/10/31.
  */
-public class HomeSearchModel {
+public class HomeSearchModel  extends BaseModel {
 
     /**
      * success : true

@@ -52,7 +52,8 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.READ_PHONE_STATE,
-                            Manifest.permission.CAMERA)
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.ACCESS_COARSE_LOCATION)
                     .request();
         }else {
             ObjectAnimator mAnimator = ObjectAnimator.ofFloat(splashIv, "alpha", 0, 0.25f, 0.5f, 0.75f, 1);

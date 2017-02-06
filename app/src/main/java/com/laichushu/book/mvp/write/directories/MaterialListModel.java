@@ -3,13 +3,15 @@ package com.laichushu.book.mvp.write.directories;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  *  素材列表
  * Created by wangtong on 2016/11/7.
  */
-public class MaterialListModel {
+public class MaterialListModel extends BaseModel {
 
     /**
      * data : [{"articleId":"74","id":"175","name":"绱犳潗涓�","parentId":"173"},{"articleId":"74","id":"177","name":"绱犳潗浜�","parentId":"173"}]

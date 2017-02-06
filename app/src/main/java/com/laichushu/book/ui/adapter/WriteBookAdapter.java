@@ -236,7 +236,8 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             }
         });
         holder.titleTv.setText(dataBean.getArticleName());
-        holder.typeTv.setText(dataBean.getTopCategoryName());
+        holder.typeTv.setVisibility(View.INVISIBLE);
+//        holder.typeTv.setText(dataBean.getTopCategoryName());
         holder.authorTv.setText(dataBean.getAuthorName());
         holder.numRb.setRating(dataBean.getLevel());
         holder.commentTv.setText("(" + dataBean.getCommentNum() + "评论)");

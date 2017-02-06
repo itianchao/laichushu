@@ -1,10 +1,12 @@
 package com.laichushu.book.mvp.home.campaign;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * 参加活动
  * Created by wangtong on 2016/11/4.
  */
-public class CampaignJoinModel {
+public class CampaignJoinModel extends BaseModel {
     private boolean success;
     private String errMsg;
 

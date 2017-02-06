@@ -11,7 +11,7 @@ import java.util.List;
  * Created by PCPC on 2016/12/29.
  */
 
-public class FindServiceInfoModel implements Parcelable {
+public class FindServiceInfoModel extends BaseModel implements Parcelable {
 
     /**
      * success : true

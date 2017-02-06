@@ -1,6 +1,8 @@
 package com.laichushu.book.bean.wechatpay;
 
-public class WxInfo
+import com.laichushu.book.bean.netbean.BaseModel;
+
+public class WxInfo extends BaseModel
 {
 
 	/**

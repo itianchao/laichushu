@@ -1,11 +1,13 @@
 package com.laichushu.book.mvp.home.campaign;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  * 活动详情modle
  */
-public class CampaignModel {
+public class CampaignModel extends BaseModel {
 
     /**
      * data : {"activityId":"24","activityName":"出版机构来合作吧","applyAmount":8,"beginTime":"2016-12-10","creator":"1","detail":"坚持\u201c先授权，后传播\u201d的理念，在电子图书内容领域占有明显优势，取得国内近三百家出版机构的合法授权，拥有数字内容二十余万种。","endTime":"2016-12-31","imgUrl":"http://101.254.183.67:9980/group1/M00/00/1A/wKiTPlhLphGABV-6AAAx0RvBjB8311.jpg","isParticipate":true,"result":[{"activityId":"24","articleId":"231","articleName":"啊啊","authorId":"159","nickName":"喵了个","photo":"http://101.254.183.67:9980/group1/M00/00/24/wKiTPlhaLl-AfxDVAACxsQe_PVo348.jpg","resultDesn":"","resultType":1},{"activityId":"24","articleId":"222","articleName":"夏了一个夏天","authorId":"150","nickName":"无尽之夏","photo":"http://101.254.183.67:9980/group1/M00/00/1F/wKiTPlhSE0uAZ7BfAAEuwbmelvg627.jpg","resultDesn":"","resultType":2}],"status":"4"}

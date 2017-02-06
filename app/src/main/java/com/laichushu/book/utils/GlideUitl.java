@@ -167,4 +167,20 @@ public class GlideUitl {
             Glide.with(mContext).load(R.drawable.icon_percentre_defhead2x).bitmapTransform(new RoundedCornersTransformation(mContext, radius, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(1000).into(mImageView);
         }
     }
+    /**
+     * 加载失败默认图片
+     *
+     * @param mContext
+     * @param path
+     * @param mImageView
+     * @param
+     */
+    public static void loadCornersImg(Context mContext, int radius, String path, int width,int height,ImageView mImageView) {
+        if (!TextUtils.isEmpty(path)) {
+            //原图处理成圆角，如果是四周都是圆角则是RoundedCornersTransformation.CornerType.ALL
+            Glide.with(mContext).load(path).bitmapTransform(new RoundedCornersTransformation(mContext, radius, 8, RoundedCornersTransformation.CornerType.ALL)).override(width, height).error(R.drawable.icon_percentre_defhead2x).fitCenter().crossFade(1000).into(mImageView);
+        } else {
+            Glide.with(mContext).load(R.drawable.icon_percentre_defhead2x).bitmapTransform(new RoundedCornersTransformation(mContext, radius, 8, RoundedCornersTransformation.CornerType.ALL)).override(width, height).error(R.drawable.icon_percentre_defhead2x).fitCenter().crossFade(1000).into(mImageView);
+        }
+    }
 }

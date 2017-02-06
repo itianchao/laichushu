@@ -47,11 +47,11 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
     public void onBindViewHolder(ViewHolder holder, final int position) {
         int width = (UIUtil.getScreenWidth() / 2) - 24;
         LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
-                width, width / 5 * 3
+                width, width / 5 * 2
         );
         holder.ivImg.setLayoutParams(linearParams);
         final CourseraModle.DataBean.LessonListBean bean = dataBeen.get(position);
-        GlideUitl.loadImg(context, bean.getThumbUrl(), width, width / 5 * 3, holder.ivImg);
+        GlideUitl.loadImg(context, bean.getThumbUrl(), width, width / 5 * 2, holder.ivImg);
         holder.tvItem.setText(bean.getName());
         holder.tvPlayNum.setText("播放量" + bean.getClickNum() + "");
         holder.llItem.setOnClickListener(new View.OnClickListener() {

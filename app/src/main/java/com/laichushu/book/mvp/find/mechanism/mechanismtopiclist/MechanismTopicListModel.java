@@ -3,13 +3,15 @@ package com.laichushu.book.mvp.find.mechanism.mechanismtopiclist;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  * 话题数据模型
  * Created by wangtong on 2016/11/26.
  */
-public class MechanismTopicListModel {
+public class MechanismTopicListModel extends BaseModel {
 
     /**
      * success : false

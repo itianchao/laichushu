@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by PCPC on 2016/11/24.
  */
 
-public class PersonInfoResultReward implements Serializable {
+public class PersonInfoResultReward extends BaseModel implements Serializable {
 
     /**
      * success : true

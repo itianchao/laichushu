@@ -7,7 +7,7 @@ import java.util.List;
  * Created by PCPC on 2016/12/5.
  */
 
-public class CampaignDetailsModel implements Serializable {
+public class CampaignDetailsModel extends BaseModel implements Serializable {
 
     /**
      * id : 11

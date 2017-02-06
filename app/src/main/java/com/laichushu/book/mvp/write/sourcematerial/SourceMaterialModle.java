@@ -1,5 +1,7 @@
 package com.laichushu.book.mvp.write.sourcematerial;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +9,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/11/22.
  */
 
-public class SourceMaterialModle {
+public class SourceMaterialModle extends BaseModel {
     private boolean success;
     private String errMsg;
     private ArrayList<DataBean> data;

@@ -1,13 +1,15 @@
 package com.laichushu.book.mvp.mine.bookcast;
 
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.List;
 
 /**
  * Created by PCPC on 2016/11/21.
  */
 
-public class BookCastModle {
+public class BookCastModle extends BaseModel {
 
     /**
      * success : true

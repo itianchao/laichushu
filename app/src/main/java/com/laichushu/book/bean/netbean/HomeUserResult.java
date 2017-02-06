@@ -5,7 +5,7 @@ package com.laichushu.book.bean.netbean;
  * Created by PCPC on 2016/11/22.
  */
 
-public class HomeUserResult {
+public class HomeUserResult extends BaseModel{
 
     /**
      * photo :

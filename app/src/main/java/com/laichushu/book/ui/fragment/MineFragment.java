@@ -49,9 +49,9 @@ import java.util.List;
  * Created by wangtong on 2016/10/17.
  */
 public class MineFragment extends MvpFragment2<MinePresenter> implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, MineView {
-    private TextView tvTitle, tvMineName, tvMinebookNum;
+    private TextView tvTitle, tvMineName, tvMinebookNum, tvEditMsg;
     private ImageView ivMineHead, ivMineHeadInto;
-    private RelativeLayout rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice, rlBody;
+    private RelativeLayout rlMainHead, rlHead, rlManage, rlBookCast, rlWallet, rlService, rlGeneralSetting, rlAdvice, rlBody;
     private PersonalCentreResult res = new PersonalCentreResult();
     private Cache_JsonDao cache_jsonDao;
     private SwipeRefreshLayout dataSwipe;
@@ -67,11 +67,13 @@ public class MineFragment extends MvpFragment2<MinePresenter> implements View.On
         EventBus.getDefault().register(this);
         mRootView.findViewById(R.id.iv_title_finish).setVisibility(View.GONE);
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title);
+        tvEditMsg = (TextView) mRootView.findViewById(R.id.tv_mineNickName);
         ivMineHead = (ImageView) mRootView.findViewById(R.id.iv_minaHead);
         ivMineHeadInto = (ImageView) mRootView.findViewById(R.id.iv_mineHeadInto);
         tvMineName = (TextView) mRootView.findViewById(R.id.tv_mineNickName);
         tvMinebookNum = (TextView) mRootView.findViewById(R.id.tv_mineBookNum);
         rlHead = ((RelativeLayout) mRootView.findViewById(R.id.rl_mainHead));
+        rlMainHead = ((RelativeLayout) mRootView.findViewById(R.id.rl_mainHead));
         rlBody = ((RelativeLayout) mRootView.findViewById(R.id.rl_headBody));
         rlManage = (RelativeLayout) mRootView.findViewById(R.id.rl_manage);
         rlBookCast = (RelativeLayout) mRootView.findViewById(R.id.rl_bookCast);
@@ -84,6 +86,8 @@ public class MineFragment extends MvpFragment2<MinePresenter> implements View.On
         dataSwipe.setColorSchemeColors(UIUtil.getColor(R.color.global));
         //initListener
         rlHead.setOnClickListener(this);
+        tvEditMsg.setOnClickListener(this);
+        rlMainHead.setOnClickListener(this);
         rlManage.setOnClickListener(this);
         rlBookCast.setOnClickListener(this);
         rlWallet.setOnClickListener(this);
@@ -131,7 +135,7 @@ public class MineFragment extends MvpFragment2<MinePresenter> implements View.On
             public void run() {
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             }
-        },0);
+        }, 0);
         res = result;
     }
 
@@ -144,14 +148,14 @@ public class MineFragment extends MvpFragment2<MinePresenter> implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.rl_mainHead:
             case R.id.iv_minaHead:
-                //作品管理
-                Bundle homePage = new Bundle();
-                UIUtil.openActivity(mActivity, PersonalHomePageActivity.class, homePage);
+            case R.id.rl_headBody:
+            case R.id.iv_mineHeadInto:
+                //个人主页
+                UIUtil.openActivity(mActivity, PersonalHomePageActivity.class);
                 break;
             case R.id.tv_mineNickName:
-            case R.id.iv_mineHeadInto:
-            case R.id.rl_headBody:
                 Intent editAct = new Intent(mActivity, EditMyselfeInforActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result", res);

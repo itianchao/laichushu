@@ -1,5 +1,7 @@
 package com.laichushu.book.mvp.find.group.member;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +9,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/12/30.
  */
 
-public class FindGroupMemberModle {
+public class FindGroupMemberModle extends BaseModel {
 
     /**
      * data : [{"id":"280","name":"大酒神","photo":"group1/M00/00/23/wKiTPlhXqMOAafndAACiakRLsdc478.jpg","role":"1","status":"3","teamId":"282","userId":"175"}]

@@ -6,7 +6,7 @@ import java.util.List;
  * Created by PCPC on 2016/12/26.
  */
 
-public class FindEditorListModel {
+public class FindEditorListModel extends BaseModel{
 
     /**
      * success : true

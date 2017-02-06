@@ -1,5 +1,7 @@
 package com.laichushu.book.mvp.find.coursera.video;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +9,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2017/1/9.
  */
 
-public class CourseraModle {
+public class CourseraModle extends BaseModel{
 
     /**
      * success : true

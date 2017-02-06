@@ -1,6 +1,7 @@
 
 package com.laichushu.book.bean.JsonBean;
 
+import com.laichushu.book.bean.netbean.BaseModel;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 
 /**
@@ -8,7 +9,7 @@ import com.laichushu.book.mvp.home.homelist.HomeHotModel;
  * Created by wangtong on 2016/12/17.
  */
 
-public class HomeTitleBean {
+public class HomeTitleBean extends BaseModel {
     private boolean success;
 
     private String errMsg;

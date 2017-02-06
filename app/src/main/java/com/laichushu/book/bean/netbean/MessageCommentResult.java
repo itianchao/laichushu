@@ -7,7 +7,7 @@ import java.util.List;
  * Created by PCPC on 2016/11/28.
  */
 
-public class MessageCommentResult implements Serializable {
+public class MessageCommentResult extends BaseModel implements Serializable {
 
     /**
      * success : true

@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
+        android:layout_marginTop="8dp"
         android:paddingRight="5dp">
 
         <ImageView
@@ -40,8 +41,9 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_alignRight="@+id/ll_item"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/icon_delete"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/close"
         android:scaleType="fitCenter"
         android:visibility="gone" />
 

@@ -1,10 +1,12 @@
 package com.laichushu.book.mvp.entry.regist2;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * 注册数据模型
  * Created by wangtong on 2016/10/12.
  */
-public class RegistModel2 {
+public class RegistModel2 extends BaseModel {
 
     /**
      * success : 请求成功

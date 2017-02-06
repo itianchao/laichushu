@@ -40,7 +40,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
     private List<HomeHotModel.DataBean> collData = new ArrayList<>();
     private MyBookCastAdapter scanAdapter;
     private BookCastCollAdapter collAdapter;
-    private boolean isShowDelete;
+    private boolean isShowDelete = false;
     /**
      * 当前是否连续点击
      */
@@ -49,6 +49,14 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
      * type 1: 浏览  2：收藏
      */
     private int type = 1;
+
+    public boolean isShowDelete() {
+        return isShowDelete;
+    }
+
+    public void setShowDelete(boolean showDelete) {
+        isShowDelete = showDelete;
+    }
 
     @Override
     protected BookcastPresener createPresenter() {
@@ -83,7 +91,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         //初始化mRecyclerView Scan
         mRecyclerView.setGridLayout(3);
         mRecyclerView.setFooterViewText("加载中");
-        scanAdapter = new MyBookCastAdapter(this, scanData, mvpPresenter, isShowDelete);
+        scanAdapter = new MyBookCastAdapter(this, scanData, mvpPresenter,isShowDelete());
         mRecyclerView.setAdapter(scanAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
         //初始化mRecyclerView Coll
@@ -106,20 +114,26 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 if (type == 1) {
                     if (null != scanData && scanData.size() > 0) {
                         if (scanAdapter.isShow()) {
+                            tvManage.setText("管理");
                             scanAdapter.setShow(false);
                         } else {
                             scanAdapter.setShow(true);
+                            tvManage.setText("完成");
                         }
-                        scanAdapter.refreshAdapter(scanData);
+                       setShowDelete(scanAdapter.isShow());
+                        scanAdapter.notifyDataSetChanged();
                     }
                 } else {
                     if (null != collData && collData.size() > 0) {
                         if (collAdapter.isShow()) {
+                            tvManage.setText("管理");
                             collAdapter.setShow(false);
                         } else {
+                            tvManage.setText("完成");
                             collAdapter.setShow(true);
                         }
-                        collAdapter.refreshAdapter(collData);
+                        setShowDelete(collAdapter.isShow());
+                        collAdapter.notifyDataSetChanged();
                     }
                 }
 
@@ -205,10 +219,11 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         if (model.isSuccess()) {
             if (null != model.getData() && !model.getData().isEmpty()) {
                 scanData = model.getData();
+                scanAdapter.setShow(isShowDelete());
                 scanAdapter.refreshAdapter(scanData);
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast(mActivity.getResources().getString(R.string.errMsg_empty));
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
@@ -230,6 +245,7 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         if (model.isSuccess()) {
             if (null != model.getData() && !model.getData().isEmpty()) {
                 collData = model.getData();
+                collAdapter.setShow(isShowDelete());
                 collAdapter.refreshAdapter(collData);
                 PAGE_NO++;
             } else {

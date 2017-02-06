@@ -3,13 +3,15 @@ package com.laichushu.book.mvp.home.homelist;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  * 首页热门
  * Created by wangtong on 2016/11/1.
  */
-public class HomeHotModel implements Parcelable {
+public class HomeHotModel extends BaseModel implements Parcelable {
 
     /**
      * success : true

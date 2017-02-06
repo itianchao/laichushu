@@ -27,11 +27,12 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
     private List<HomeHotModel.DataBean> dataBeen;
     private BookcastPresener bookcastPresener;
     private boolean isShow;
-    public MyBookCastAdapter(MyBookCastActivity context, List<HomeHotModel.DataBean> dataBean, BookcastPresener bookcastPresener,boolean isShow) {
+
+    public MyBookCastAdapter(MyBookCastActivity context, List<HomeHotModel.DataBean> dataBean, BookcastPresener bookcastPresener, boolean isShow) {
         this.context = context;
         this.dataBeen = dataBean;
         this.bookcastPresener = bookcastPresener;
-        this.isShow=isShow;
+        this.isShow = isShow;
     }
 
     @Override
@@ -42,12 +43,12 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        int width=(UIUtil.getScreenWidth()/3)-24;
+        int width = (UIUtil.getScreenWidth() / 3) - 24;
         RelativeLayout.LayoutParams linearParams = new RelativeLayout.LayoutParams(
-                width,(width/3)*4
+                width, (width / 3) * 4
         );
         holder.ivImg.setLayoutParams(linearParams);
-        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(),width,(width/3)*4, holder.ivImg);
+        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), width, (width / 3) * 4, holder.ivImg);
         holder.tvItem.setText(dataBeen.get(position).getArticleName());
         if (isShow) {
             holder.ivDelete.setVisibility(View.VISIBLE);
@@ -81,15 +82,16 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
 
     public void refreshAdapter(List<HomeHotModel.DataBean> listData) {
         dataBeen.clear();
-        if (listData.size() > 0) {
-            dataBeen.addAll(listData);
-            this.notifyDataSetChanged();
-        }
+        dataBeen.addAll(listData);
+        this.notifyDataSetChanged();
+
     }
+
     public void deleteDataRefresh(int pos) {
         dataBeen.remove(pos);
         this.notifyDataSetChanged();
     }
+
     public boolean isShow() {
         return isShow;
     }

@@ -1,12 +1,14 @@
 package com.laichushu.book.mvp.write.directories;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.List;
 
 /**
  * 素材目录内容
  * Created by wangtong on 2016/11/7.
  */
-public class MaterialContentModel {
+public class MaterialContentModel extends BaseModel {
 
     /**
      * success : true

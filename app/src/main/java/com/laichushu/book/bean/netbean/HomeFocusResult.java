@@ -4,7 +4,7 @@ package com.laichushu.book.bean.netbean;
  * Created by PCPC on 2016/11/23.
  */
 
-public class HomeFocusResult {
+public class HomeFocusResult extends BaseModel{
     private boolean success;
     private String errorCode, errMsg;
 

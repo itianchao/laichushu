@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by PCPC on 2016/12/19.
  */
 
-public class FindCourseCommResult {
+public class FindCourseCommResult extends BaseModel {
 
     /**
      * success : true

@@ -1,5 +1,6 @@
 package com.laichushu.book.mvp.find.group.groupsearch;
 
+import com.laichushu.book.bean.netbean.BaseModel;
 import com.laichushu.book.mvp.find.group.GroupListModle;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/12/28.
  */
 
-public class FindGroupModle {
+public class FindGroupModle extends BaseModel {
 
     /**
      * data : {"teamList":[{"code":"100002","id":"278","joinNum":1,"joinStatus":"3","leaderId":"175","name":"盗墓组","photo":"http://101.254.183.67:9980/group1/M00/00/2D/wKiTPlhjPcGAdqnDAAGYxkrTmC8271.jpg","remarks":"盗一波墓","status":"0"},{"id":"144","joinNum":1,"joinStatus":"-1","leaderId":"152","name":"盗墓笔记","photo":"http://101.254.183.67:9980/group1/M00/00/1E/wKiTPlhQ_yiAZOwsAAAhreXm-XY808.jpg","status":"1"}],"totalPage":2}

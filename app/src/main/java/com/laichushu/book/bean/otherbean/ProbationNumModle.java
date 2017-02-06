@@ -1,11 +1,13 @@
 package com.laichushu.book.bean.otherbean;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * 参数
  * Created by wangtong on 2017/1/17.
  */
 
-public class ProbationNumModle {
+public class ProbationNumModle extends BaseModel {
 
     /**
      * success : true

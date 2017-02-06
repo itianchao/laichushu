@@ -1,12 +1,14 @@
 package com.laichushu.book.mvp.msg.notice;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  * 公告数据模型
  * Created by wangtong on 2016/10/12.
  */
-public class NoticeModle {
+public class NoticeModle extends BaseModel {
     private boolean success;
     private String errMsg;
     private ArrayList<DataBean> data;

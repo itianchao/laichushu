@@ -1,11 +1,13 @@
 package com.laichushu.book.mvp.write.creatnewdraft;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * 创建草稿 modle
  * Created by wangtong on 2016/11/17.
  */
 
-public class CreateNewDraftModle {
+public class CreateNewDraftModle extends BaseModel {
 
     /**
      * success : true

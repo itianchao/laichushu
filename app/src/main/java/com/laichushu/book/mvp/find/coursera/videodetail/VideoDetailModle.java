@@ -1,11 +1,13 @@
 package com.laichushu.book.mvp.find.coursera.videodetail;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * 视频详情
  * Created by wangtong on 2017/1/10.
  */
 
-public class VideoDetailModle {
+public class VideoDetailModle extends BaseModel {
 
     /**
      * success : true

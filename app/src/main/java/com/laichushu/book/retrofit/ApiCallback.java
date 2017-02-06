@@ -1,7 +1,17 @@
 package com.laichushu.book.retrofit;
 
 
+import android.text.TextUtils;
+
+import com.laichushu.book.bean.netbean.BaseModel;
+import com.laichushu.book.db.Cache_Json;
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.ui.activity.LoginActivity;
+import com.laichushu.book.utils.AppManager;
+import com.laichushu.book.utils.DialogUtil;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
+import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -10,8 +20,7 @@ import rx.Subscriber;
 /**
  * retrofit 回调方法
  */
-public abstract class ApiCallback<M> extends Subscriber<M> {
-
+public abstract class ApiCallback<M extends BaseModel> extends Subscriber<M> {
     public abstract void onSuccess(M model);
 
     public abstract void onFailure(int code, String msg);
@@ -47,7 +56,15 @@ public abstract class ApiCallback<M> extends Subscriber<M> {
 
     @Override
     public void onNext(M model) {
+        //104 非法签名  105  空
+        if(!TextUtils.isEmpty(model.getErrCode())){
+            if(model.getErrCode().equals("104")){
+                DialogUtil.showDialog();
+                return;
+            }
+        }
         onSuccess(model);
+
     }
 
     @Override

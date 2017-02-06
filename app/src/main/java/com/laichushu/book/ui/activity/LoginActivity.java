@@ -12,13 +12,19 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.db.Cache_Json;
+import com.laichushu.book.db.Cache_JsonDao;
+import com.laichushu.book.db.DaoSession;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.entry.login.LoginModel;
 import com.laichushu.book.mvp.entry.login.LoginPresenter;
 import com.laichushu.book.mvp.entry.login.LoginView;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.utils.AMUtils;
+import com.laichushu.book.utils.AppManager;
 import com.laichushu.book.utils.DialogUtil;
+import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -68,6 +74,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         usernameEt.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         addEditListen();
+
     }
 
     //控制器
@@ -125,6 +132,12 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
                 ToastUtil.showToast(UIUtil.getString(R.string.errMsg5));
             } else {
                 ToastUtil.showToast(errMsg);
+                if(errMsg.contains("非法签名")){
+                    SharePrefManager.setLoginInfo("");
+                    SharePrefManager.setUserId(null);
+                    AppManager.getInstance().killAllActivity();
+                    UIUtil.openActivity(mActivity, LoginActivity.class);
+                }
             }
         }
     }
@@ -133,7 +146,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     public void getDataFail(String msg) {
         loginBtn.setEnabled(true);
         hideLoading();
-        toastShow("网络连接失败");
+        toastShow(msg);
         Logger.e("网络失败原因：", msg);
     }
 

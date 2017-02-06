@@ -41,13 +41,15 @@ public class GroupRecomAdapter extends RecyclerView.Adapter<GroupRecomAdapter.Vi
 
     @Override
     public void onBindViewHolder(GroupRecomAdapter.ViewHolder holder, final int position) {
-        int width=(UIUtil.getScreenWidth()/4)-(12*8);
+//        int width=(UIUtil.getScreenWidth()/4)-(12*8);
+        int width=(960/4)-(12*12);
         LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
                 width,width
         );
+
         holder.hot1Iv.setLayoutParams(linearParams);
         final GroupListModle.DataBean dataBean = dataBeen.get(position);
-        GlideUitl.loadCornersImg(mActivity, 50, dataBean.getPhoto(), holder.hot1Iv);
+        GlideUitl.loadCornersImg(mActivity, 50, dataBean.getPhoto(),width,width, holder.hot1Iv);
         holder.tvNAme.setText(dataBean.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
