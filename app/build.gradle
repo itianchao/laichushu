@@ -122,4 +122,9 @@ dependencies {
     compile files('libs/libammsdk.jar')
     compile files('libs/alipaySdk-20160516.jar')
     compile files('libs/CCSDK.jar')
+    compile('io.socket:socket.io-client:0.7.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+        //        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
 }

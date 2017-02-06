@@ -41,6 +41,18 @@ public class LessonList_Paramet {
         this.pageSize = pageSize;
     }
 
+    /**
+     * 直播
+     * @param lessonType
+     * @param pageNo
+     * @param pageSize
+     */
+    public LessonList_Paramet(String lessonType, String pageNo, String pageSize) {
+        this.lessonType = lessonType;
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+    }
+
 
     public String getLessonType() {
         return lessonType;

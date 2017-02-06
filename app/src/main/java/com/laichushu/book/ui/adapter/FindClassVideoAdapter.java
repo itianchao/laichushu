@@ -44,7 +44,7 @@ public class FindClassVideoAdapter extends RecyclerView.Adapter<FindClassVideoAd
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         holder.itemView.setLayoutParams(params);
         final CourseraModle.DataBean.LessonListBean bean = mData.get(position);
-        holder.photoIv.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bean.getFileType().equals("1")) {
