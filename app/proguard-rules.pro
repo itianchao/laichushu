@@ -59,3 +59,8 @@
 #FBReader»ìÏý end
 -keepattributes InnerClasses
 -dontoptimize
+#cc直播
+-keep public class com.bokecc.sdk.mobile.**{*;}
+-keep public class tv.**{*;}
+-keep public interface com.bokecc.sdk.mobile.**{*;}
+-keep public class org.webrtc.**{*;}

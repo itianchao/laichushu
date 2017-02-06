@@ -14,11 +14,15 @@
         android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb_live"
+            style="@style/mechanism_select"
+            android:checked="true"
+            android:text="直播" />
 
         <RadioButton
             android:id="@+id/rb_video"
             style="@style/mechanism_select"
-            android:checked="true"
             android:text="视频" />
 
         <RadioButton

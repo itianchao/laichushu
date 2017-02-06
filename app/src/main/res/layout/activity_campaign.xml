@@ -19,12 +19,12 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="270dp">
 
                 <ImageView
                     android:id="@+id/iv_activity_img"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="270dp"
                     android:scaleType="centerCrop"
                     tools:src="@drawable/img_default" />
 

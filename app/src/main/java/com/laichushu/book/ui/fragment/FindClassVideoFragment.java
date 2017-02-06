@@ -69,6 +69,7 @@ public class FindClassVideoFragment extends MvpFragment2<FindClassVideoPresenter
     protected void initData() {
         rankingTv.setOnClickListener(this);
         categroyTv.setOnClickListener(this);
+        emptyIv.setOnClickListener(this);
         mvpPresenter.loadVideoList(false);
     }
 
@@ -174,6 +175,9 @@ public class FindClassVideoFragment extends MvpFragment2<FindClassVideoPresenter
             case R.id.tv_categroy:
                 ArrayList<String> mlist2 = mvpPresenter.fromArrayList(mCategoryList);
                 showPopWindow(v, mlist2, 1);
+                break;
+            case R.id.iv_empty:
+                onRefresh();
                 break;
         }
     }

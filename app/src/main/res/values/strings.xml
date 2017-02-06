@@ -98,9 +98,19 @@
     <string name="errcode_deny">充值被拒绝!</string>
     <string name="errcode_unsupported">充值失败,不支持的错误!</string>
     <string name="errcode_unknown">充值失败,未知的错误!</string>
-
+    <!-- cc 直播 -->
     <string name="errMsg_empty">没有更多数据!</string>
     <string name="errMsg_data_exception">数据加载异常!</string>
     <string name="errMsg_networks">网络连接失败!</string>
+    <string name = "cm_not_start">主播未开启连麦功能</string>
+    <string name = "cm_applying">连麦申请中</string>
+
+    <string name = "cm_disconnect_video">挂断视频连麦</string>
+
+    <string name="pref_speakerphone_key">speakerphone_preference</string>
+    <string name="pref_speakerphone_title">Speakerphone.</string>
+    <string name="pref_speakerphone_dlg">Speakerphone.</string>
+    <string name="pref_speakerphone_default">auto</string>
+
 
 </resources>

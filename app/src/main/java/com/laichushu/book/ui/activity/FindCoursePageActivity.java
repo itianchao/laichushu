@@ -12,6 +12,7 @@ import com.laichushu.book.R;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.fragment.FindClassDocFragment;
+import com.laichushu.book.ui.fragment.FindClassLiveFragment;
 import com.laichushu.book.ui.fragment.FindClassMineFragment;
 import com.laichushu.book.ui.fragment.FindClassVideoFragment;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -26,11 +27,12 @@ import com.laichushu.book.utils.UIUtil;
 public class FindCoursePageActivity extends MvpActivity2 implements View.OnClickListener {
     private ImageView ivBack, searchIv;
     private TextView tvTitle;
-    private RadioButton videoRbn, docRbn, mineRbn;
+    private RadioButton liveRbn,videoRbn, docRbn, mineRbn;
     private int position = -1;
     private FindClassVideoFragment videoFragment;
     private FindClassDocFragment docFragment;
     private FindClassMineFragment mineFragment;
+    private FindClassLiveFragment liveFragment;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -43,6 +45,7 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
         ivBack = ((ImageView) mSuccessView.findViewById(R.id.iv_title_finish));
         searchIv = ((ImageView) mSuccessView.findViewById(R.id.iv_title_other));
         tvTitle = ((TextView) mSuccessView.findViewById(R.id.tv_title));
+        liveRbn = ((RadioButton) mSuccessView.findViewById(R.id.rb_live));//直播
         videoRbn = ((RadioButton) mSuccessView.findViewById(R.id.rb_video));//视频
         docRbn = ((RadioButton) mSuccessView.findViewById(R.id.rb_doc));//文档
         mineRbn = ((RadioButton) mSuccessView.findViewById(R.id.rb_mine));//我的
@@ -55,6 +58,7 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
         tvTitle.setText("课程");
         GlideUitl.loadImg(mActivity, R.drawable.search_icon, searchIv);
         ivBack.setOnClickListener(this);
+        liveRbn.setOnClickListener(this);
         videoRbn.setOnClickListener(this);
         docRbn.setOnClickListener(this);
         mineRbn.setOnClickListener(this);
@@ -65,7 +69,7 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
                 refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             }
         }, 30);
-        onClick(videoRbn);
+        onClick(liveRbn);
     }
 
     @Override
@@ -74,7 +78,14 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
             case R.id.iv_title_finish:
                 this.finish();
                 break;
-            case R.id.rb_video://视频呢
+            case R.id.rb_live://直播
+                if (position != 3) {
+                    position = 3;
+                    searchIv.setVisibility(View.VISIBLE);
+                    setTabSelection(position);
+                }
+                break;
+            case R.id.rb_video://视频
                 if (position != 0) {
                     position = 0;
                     searchIv.setVisibility(View.VISIBLE);
@@ -134,6 +145,14 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
                     transaction.show(mineFragment);
                 }
                 break;
+            case 3:
+                if (liveFragment == null) {
+                    liveFragment = new FindClassLiveFragment();
+                    transaction.add(R.id.fay_content, liveFragment);
+                } else {
+                    transaction.show(liveFragment);
+                }
+                break;
         }
         transaction.commitAllowingStateLoss();
     }
@@ -142,5 +161,6 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
         if (videoFragment != null) transaction.hide(videoFragment);
         if (docFragment != null) transaction.hide(docFragment);
         if (mineFragment != null) transaction.hide(mineFragment);
+        if (liveFragment != null) transaction.hide(liveFragment);
     }
 }

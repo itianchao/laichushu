@@ -91,6 +91,10 @@ public class CourseraModle {
              * speakerName : 姘哥敓
              * remarks :
              * ccVideoId : 82B79DAAB32E88F09C33DC5901307461
+             *                 "broadcastDesc": "222222222222阿斯顿发",
+             "broadcastId": "11CEEA8D8193AB639C33DC5901307461",
+             "broadcastName": "课程直播测试",
+             "broadcastPass": "123456",
              */
 
             private String id;
@@ -104,10 +108,46 @@ public class CourseraModle {
             private int clickNum;
             private String speakerName;
             private String remarks;
+            private String broadcastDesc;//直播间desc
+            private String broadcastId;//直播间id
+            private String broadcastName;//直播间name
+            private String broadcastPass;//直播间password
             private String ccVideoId;
             private int downloadNum;
             private int collectionNum;
             private double averageStar;
+
+            public String getBroadcastDesc() {
+                return broadcastDesc;
+            }
+
+            public void setBroadcastDesc(String broadcastDesc) {
+                this.broadcastDesc = broadcastDesc;
+            }
+
+            public String getBroadcastId() {
+                return broadcastId;
+            }
+
+            public void setBroadcastId(String broadcastId) {
+                this.broadcastId = broadcastId;
+            }
+
+            public String getBroadcastName() {
+                return broadcastName;
+            }
+
+            public void setBroadcastName(String broadcastName) {
+                this.broadcastName = broadcastName;
+            }
+
+            public String getBroadcastPass() {
+                return broadcastPass;
+            }
+
+            public void setBroadcastPass(String broadcastPass) {
+                this.broadcastPass = broadcastPass;
+            }
 
             public double getAverageStar() {
                 return averageStar;
