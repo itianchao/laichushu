@@ -30,6 +30,7 @@ public class Idea_TableDao extends AbstractDao<Idea_Table, Long> {
         public final static Property X = new Property(4, Integer.class, "x", false, "X");
         public final static Property Y = new Property(5, Integer.class, "y", false, "Y");
         public final static Property Content = new Property(6, String.class, "content", false, "CONTENT");
+        public final static Property Progress = new Property(7, String.class, "progress", false, "PROGRESS");
     };
 
 
@@ -51,7 +52,8 @@ public class Idea_TableDao extends AbstractDao<Idea_Table, Long> {
                 "\"STYLE_ID\" TEXT," + // 3: styleId
                 "\"X\" INTEGER," + // 4: x
                 "\"Y\" INTEGER," + // 5: y
-                "\"CONTENT\" TEXT);"); // 6: content
+                "\"CONTENT\" TEXT," + // 6: content
+                "\"PROGRESS\" TEXT);"); // 7: progress
     }
 
     /** Drops the underlying database table. */
@@ -99,6 +101,11 @@ public class Idea_TableDao extends AbstractDao<Idea_Table, Long> {
         if (content != null) {
             stmt.bindString(7, content);
         }
+ 
+        String progress = entity.getProgress();
+        if (progress != null) {
+            stmt.bindString(8, progress);
+        }
     }
 
     /** @inheritdoc */
@@ -117,7 +124,8 @@ public class Idea_TableDao extends AbstractDao<Idea_Table, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // styleId
             cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // x
             cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // y
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // content
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // content
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // progress
         );
         return entity;
     }
@@ -132,6 +140,7 @@ public class Idea_TableDao extends AbstractDao<Idea_Table, Long> {
         entity.setX(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
         entity.setY(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
         entity.setContent(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setProgress(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     /** @inheritdoc */

@@ -35,10 +35,14 @@ import android.widget.RelativeLayout;
 import com.laichushu.book.R;
 import com.laichushu.book.utils.ToastUtil;
 
+import org.fbreader.util.FBReaderWindowUtil;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.fbreader.book.Bookmark;
 
+/**
+ * 编辑想法对话框
+ */
 public class BookmarksEditActivity extends Activity {
     private final BookCollectionShadow myCollection = new BookCollectionShadow();
     private Bookmark myBookmark;
@@ -117,6 +121,7 @@ public class BookmarksEditActivity extends Activity {
         saveTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FBReaderWindowUtil.saveBookmark(myBookmark,editor.getText().toString());
                 myCollection.bindToService(BookmarksEditActivity.this, new Runnable() {
                     public void run() {
                         myBookmark.setText(editor.getText().toString());

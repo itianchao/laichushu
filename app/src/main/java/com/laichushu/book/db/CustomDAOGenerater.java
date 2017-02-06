@@ -45,6 +45,7 @@ public class CustomDAOGenerater {
         idea.addIntProperty("x");
         idea.addIntProperty("y");
         idea.addStringProperty("content");
+        idea.addStringProperty("progress");
 
         //第二个参数指定生成文件的本次存储路径,AndroidStudio工程指定到当前工程的java路径
         new DaoGenerator().generateAll(schema, "D:\\laichushu\\app\\src\\main\\java");

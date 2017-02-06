@@ -53,6 +53,7 @@ import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.text.view.ZLTextHighlighting;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
@@ -474,10 +475,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
     private int offsetY;
     private int position = 0;
-    private ArrayList<XYBookMarkListBean> xlist = new ArrayList<>();
     private FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
+
     public void drawLine(int[] xs, int[] ys, ZLTextHighlighting mbookmark) {
-        clearOnClickList();
         offsetY = (int) myTextPaint.getTextSize();
         LinkedList<Integer> tmpXs = new LinkedList<>();
         LinkedList<Integer> tmpYs = new LinkedList<>();
@@ -600,9 +600,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         myOutlinePaint.setColor(tmp);
         myOutlinePaint.setStrokeWidth(tmpSize);
     }
+
     //处理
     private String dispose(ZLTextHighlighting h, int x, int y) {
-        FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
+        final FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
         BookCollectionShadow collection = (BookCollectionShadow) fbReaderApp.Collection;
         List<Bookmark> allmark = new ArrayList<>();
         BookmarkQuery query = new BookmarkQuery(fbReaderApp.getCurrentBook(), 10000);
@@ -625,10 +626,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         //=======================================================
         Idea_TableDao dao = BaseApplication.getDaoSession(BaseApplication.getContext()).getIdea_TableDao();
         List<Idea_Table> list = dao.queryBuilder().where(Idea_TableDao.Properties.BookId.eq(mbookmark.getBookId())
-                , Idea_TableDao.Properties.Content.eq(mbookmark.getText())
-                , Idea_TableDao.Properties.Uid.eq(mbookmark.getUid())).build().list();
+                , Idea_TableDao.Properties.Content.eq(mbookmark.getText())).build().list();
         if (list == null || list.isEmpty()) {
-            Idea_Table entity = new Idea_Table(null, (int) mbookmark.getBookId(), mbookmark.getUid(), mbookmark.getStyleId() + "", x, y, mbookmark.getText());
+            String progress = fbReaderApp.getTextView().pagePositionPec();
+            Idea_Table entity = new Idea_Table(null, (int) mbookmark.getBookId(), mbookmark.getUid(), mbookmark.getStyleId() + "", x, y, mbookmark.getText(),progress);
             dao.insert(entity);
         } else {
             Idea_Table idea_table = list.get(0);
@@ -638,32 +639,15 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
         }
         int length = 1;
         if (!list.isEmpty()) {
-            xlist.add(new XYBookMarkListBean(x,y,list.get(0)));
             length = list.get(0).getContent().length();
-            if (length == 0){
+            if (length == 0) {
                 length = 1;
             }
         }
-        FBReader.myMainView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                FBReader.myMainView.setShowIdea(false);
-                if (event.getAction() == MotionEvent.ACTION_DOWN){
-                    for (XYBookMarkListBean bean : xlist) {
-                        int dip = UIUtil.dip2px(20);
-                        if ((event.getX() >= bean.getX() - dip && event.getX() <= bean.getX()  + dip) && ((event.getY() >= bean.getY()  - dip && event.getY() <= bean.getY() + dip))){
-                            FBReader.myMainView.setShowIdea(true);
-                            ToastUtil.showToast(bean.getI().getContent());
-                            return false;
-                        }
 
-                    }
-                }
-                return  FBReader.myMainView.onTouchEvent(event);
-            }
-        });
         return "1";
     }
+
     @Override
     public void drawLine(int[] xs, int[] ys) {
 
@@ -701,11 +685,4 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
     public void fillCircle(int x, int y, int radius) {
         myCanvas.drawCircle(x, y, radius, myFillPaint);
     }
-//                if ((event.getX() > x - 20 && event.getX() < x + 20) && ((event.getY() > y - 10 && event.getY() < y + 10))) {
-    public void clearOnClickList(){
-        if (fbReaderApp.getTextView().pagePosition().Current != position){
-            xlist.clear();
-        }
-    }
-
 }

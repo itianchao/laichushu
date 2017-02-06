@@ -23,6 +23,7 @@ import android.content.Intent;
 
 import com.laichushu.book.event.TransmitBookMarkEvent3;
 
+import org.fbreader.util.FBReaderWindowUtil;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.bookmark.BookmarksEditActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -89,7 +90,19 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 //			}
 //		}));
 //		BaseActivity.showToast(toast);
-        } else {
+        } else if (params.length > 5){
+            if (bookmark == null){
+                Reader.getTextView().clearSelection();
+            }else {
+                myCollection.bindToService(baseApplication, new Runnable() {
+                    public void run() {
+                        myCollection.deleteBookmark(bookmark);
+                        bookmark = null;
+                    }
+                });
+                FBReaderWindowUtil.deleteBookmarkForIdea_Table(bookmark);
+            }
+        }else {
             if (bookmark == null) {
                 bookmark = (Bookmark) params[0];
                 if (bookmark == null) {
@@ -110,6 +123,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 //            event.setMyBookmark(bookmark);
 //            EventBus.getDefault().postSticky(event);
         }
+        myCollection.unbind();
         EventBus.getDefault().unregister(this);
     }
 

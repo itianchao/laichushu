@@ -38,10 +38,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
+import com.laichushu.book.db.Idea_Table;
+import com.laichushu.book.db.Idea_TableDao;
+import com.laichushu.book.global.BaseApplication;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
+import org.fbreader.util.FBReaderWindowUtil;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.bookmark.BookmarksEditActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -276,10 +280,10 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                 FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
                 if (fbReaderApp.getCurrentTOCElement() != null) {
                     TOCTree parent = fbReaderApp.getCurrentTOCElement().Parent;
-                    List<TOCTree>  subtrees = parent.subtrees();//目录
+                    List<TOCTree> subtrees = parent.subtrees();//目录
                     for (int i = 0; i < subtrees.size(); i++) {
-                        if (((TOCTree)tree).getText().equals(subtrees.get(i).getText())){
-                            if (i> ConstantValue.ISREADER_NUMBER-1){
+                        if (((TOCTree) tree).getText().equals(subtrees.get(i).getText())) {
+                            if (i > ConstantValue.ISREADER_NUMBER - 1) {
                                 ToastUtil.showToast("购买后才可阅读");
                                 return false;
                             }
@@ -416,14 +420,16 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
         myCollection.unbind();
         super.onDestroy();
     }
+
     private boolean isBookMark;
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         final int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
         BaseAdapter adapter = null;
-        if (isBookMark){//判断点开的是那个页面
+        if (isBookMark) {//判断点开的是那个页面
             adapter = bookmarkAdapter;
-        }else {
+        } else {
             adapter = myThisBookAdapter;
         }
 
@@ -435,16 +441,17 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
             case EDIT_ITEM_ID://编辑想法
                 final Intent intent = new Intent(this, BookmarksEditActivity.class);
                 intent.putExtra("bgColor", bgValue);
-                intent.putExtra("type",true);
+                intent.putExtra("type", true);
                 FBReaderIntents.putBookmarkExtra(intent, bookmark);
                 OrientationUtil.startActivity(this, intent);
                 return true;
             case DELETE_ITEM_ID://删除想法
                 myCollection.deleteBookmark(bookmark);
-                if (isBookMark){
+                FBReaderWindowUtil.deleteBookmarkForIdea_Table(bookmark);
+                if (isBookMark) {
                     bookmarkAdapter.myBookmarksList.remove(bookmark);
                     bookmarkAdapter.notifyDataSetChanged();
-                    if (bookmarkAdapter.myBookmarksList.size() == 0){
+                    if (bookmarkAdapter.myBookmarksList.size() == 0) {
                         emptyRl.setVisibility(View.VISIBLE);
                         markLv.setVisibility(View.INVISIBLE);
                     }
@@ -517,7 +524,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
             if (old != null && areEqualsForView(old, b)) {
                 return;
             }
-            if (b.getStyleId()==5){
+            if (b.getStyleId() == 5) {
                 return;
             }
             runOnUiThread(new Runnable() {
@@ -709,7 +716,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
 
         @Override
         public final Bookmark getItem(int position) {
-            return myBookmarksList.get(position) ;
+            return myBookmarksList.get(position);
         }
 
         @Override
@@ -722,16 +729,16 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
             Viewholder holder = null;
             if (convertView != null) {
                 holder = (Viewholder) convertView.getTag();
-            }else {
+            } else {
                 convertView = UIUtil.inflate(R.layout.item_bookmark);
                 holder = new Viewholder(convertView);
                 convertView.setTag(holder);
             }
 
-            if (myBookmarksList.size()>0){//隐藏空界面
+            if (myBookmarksList.size() > 0) {//隐藏空界面
                 markLv.setVisibility(View.VISIBLE);
                 emptyRl.setVisibility(View.INVISIBLE);
-            }else {//显示空界面
+            } else {//显示空界面
                 emptyRl.setVisibility(View.VISIBLE);
                 markLv.setVisibility(View.INVISIBLE);
             }
@@ -741,10 +748,10 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
             String text = currentTOCElement.getText().toString();
             String content = getItem(position).getText().toString();
 //            holder.tv.setText("章节："+text+"     "+"第"+paragraphIndex+"段");
-            if (content.length()>5){
-                content = content.substring(0,4);
+            if (content.length() > 5) {
+                content = content.substring(0, 4);
             }
-            holder.tv.setText("章节："+text+"     "+content+"......");
+            holder.tv.setText("章节：" + text + "     " + content + "......");
 
             return convertView;
         }
@@ -756,6 +763,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                 gotoBookmark(bookmark);
             }
         }
+
         public void addAll(final List<Bookmark> bookmarks) {
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -777,7 +785,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
             if (old != null && areEqualsForView(old, b)) {
                 return;
             }
-            if (b.getStyleId()!=5){
+            if (b.getStyleId() != 5) {
                 return;
             }
             runOnUiThread(new Runnable() {
@@ -795,6 +803,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                 }
             });
         }
+
         private boolean areEqualsForView(Bookmark b0, Bookmark b1) {
             return
                     b0.getStyleId() == b1.getStyleId() &&
@@ -802,12 +811,14 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                             b0.getTimestamp(Bookmark.DateType.Latest).equals(b1.getTimestamp(Bookmark.DateType.Latest));
         }
 
-        class Viewholder{
+        class Viewholder {
             TextView tv;
+
             public Viewholder(View itemView) {
                 tv = (TextView) itemView.findViewById(R.id.tv_item);
             }
         }
+
         public void removeAll(final Collection<Bookmark> bookmarks) {
             if (bookmarks.isEmpty()) {
                 return;
@@ -819,6 +830,7 @@ public class TOCActivity extends Activity implements IBookCollection.Listener<Bo
                 }
             });
         }
+
         public List<Bookmark> bookmarks() {
             return Collections.unmodifiableList(myBookmarksList);
         }
