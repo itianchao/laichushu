@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/rl_editHeadImg"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="240dp"
         android:background="@drawable/mine_bg">
 
         <include
@@ -41,7 +41,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_alignTop="@+id/tv_PerNickName"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/tv_PerNickName" />
 
         <ImageView
@@ -79,15 +79,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_perRealName"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:drawableLeft="@drawable/bookdetail_write"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:drawablePadding="8dp"
             android:background="@color/global"
-            android:padding="8dp"
-            android:text="跳转到个人中心"
+            android:padding="5dp"
+            android:text="个人信息"
             android:textColor="@color/white"
-            android:textSize="@dimen/edit" />
+            android:textSize="@dimen/edit1" />
     </RelativeLayout>
 
     <LinearLayout

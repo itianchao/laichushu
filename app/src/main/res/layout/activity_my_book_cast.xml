@@ -13,13 +13,13 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/bookCast_top"
         android:layout_centerHorizontal="true"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <RadioGroup
             android:id="@+id/rg_bookList"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/white"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -38,19 +38,17 @@
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_bookCast"
             android:layout_width="match_parent"
-            android:gravity="center"
             android:layout_height="match_parent"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
+            android:gravity="center" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_bookCastColl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
+            android:background="@color/white"
             android:gravity="center"
             android:visibility="gone" />
 

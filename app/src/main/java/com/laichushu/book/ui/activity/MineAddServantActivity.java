@@ -7,13 +7,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
-import com.laichushu.book.bean.netbean.FindMyServerList_Paramet;
 import com.laichushu.book.bean.netbean.FindServerItemList_Paramet;
 import com.laichushu.book.bean.netbean.FindServiceCooperateMode;
 import com.laichushu.book.bean.netbean.FindServiceItemListModel;
-import com.laichushu.book.event.RefrushHomePageEvent;
 import com.laichushu.book.event.RefrushMineBeServiceEvent;
-import com.laichushu.book.event.RefrushUserPageEvent;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.adapter.MineAddServiceAdapter;
@@ -43,7 +40,7 @@ public class MineAddServantActivity extends MvpActivity2 implements View.OnClick
     private FindServiceCooperateMode model;
     private int pageNo = 1;
     private String pageSize = ConstantValue.PAGESIZE4;
-    private FindServerItemList_Paramet coop_paramet = new FindServerItemList_Paramet(SharePrefManager.getUserId(), "","", pageNo + "", pageSize);
+    private FindServerItemList_Paramet coop_paramet = new FindServerItemList_Paramet(SharePrefManager.getUserId(), "", "", pageNo + "", pageSize);
 
     @Override
 
@@ -95,13 +92,13 @@ public class MineAddServantActivity extends MvpActivity2 implements View.OnClick
                     }
                 }, 300);
                 if (model.isSuccess()) {
-                    serviceDate = model.getData();
                     refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-                    if (!serviceDate.isEmpty()) {
+                    if (null != model.getData() && !model.getData().isEmpty()) {
+                        serviceDate = model.getData();
                         addServiceAdapter.refreshAdapter(serviceDate);
                         pageNo++;
                     } else {
-
+                        ToastUtil.showToast(model.getErrMsg());
                     }
                 } else {
                     ToastUtil.showToast(model.getErrMsg());
@@ -139,15 +136,15 @@ public class MineAddServantActivity extends MvpActivity2 implements View.OnClick
                 break;
             case R.id.tv_title_right:
                 //添加服务
-                Bundle bundle=new Bundle();
-                bundle.putString("type","service");
-                UIUtil.openActivity(mActivity, HomePublishTopicActivity.class,bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "service");
+                UIUtil.openActivity(mActivity, HomePublishTopicActivity.class, bundle);
                 break;
             case R.id.rl_serviceDetails:
                 //我的资料
-                Bundle showDetails=new Bundle();
-                showDetails.putString("type","serviceShow");
-                UIUtil.openActivity(mActivity, MineBeServantActivity.class,showDetails);
+                Bundle showDetails = new Bundle();
+                showDetails.putString("type", "serviceShow");
+                UIUtil.openActivity(mActivity, MineBeServantActivity.class, showDetails);
                 break;
         }
     }
@@ -165,6 +162,7 @@ public class MineAddServantActivity extends MvpActivity2 implements View.OnClick
         getCoop_paramet().setPageNo(pageNo + "");
         getData();
     }
+
     @Override
     public void finish() {
         EventBus.getDefault().postSticky(new RefrushMineBeServiceEvent(true));

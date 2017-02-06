@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -44,21 +45,26 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+        int width = (UIUtil.getScreenWidth() / 2) - 24;
+        LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
+                width, width / 5 * 3
+        );
+        holder.ivImg.setLayoutParams(linearParams);
         final CourseraModle.DataBean.LessonListBean bean = dataBeen.get(position);
-        GlideUitl.loadImg(context, bean.getThumbUrl(), holder.ivImg);
+        GlideUitl.loadImg(context, bean.getThumbUrl(), width, width / 5 * 3, holder.ivImg);
         holder.tvItem.setText(bean.getName());
-        holder.tvPlayNum.setText("播放量"+bean.getClickNum()+"");
+        holder.tvPlayNum.setText("播放量" + bean.getClickNum() + "");
         holder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bean.getFileType().equals("1")) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("lessonId",bean.getId());
-                    UIUtil.openActivity(context, FindCourseVideoDetailActivity.class,bundle);
-                }else {
+                    bundle.putString("lessonId", bean.getId());
+                    UIUtil.openActivity(context, FindCourseVideoDetailActivity.class, bundle);
+                } else {
                     Bundle bundle = new Bundle();
-                    bundle.putString("lessonId",bean.getId());
-                    UIUtil.openActivity(context, FindCourseDocDetailActivity.class,bundle);
+                    bundle.putString("lessonId", bean.getId());
+                    UIUtil.openActivity(context, FindCourseDocDetailActivity.class, bundle);
                 }
 
             }

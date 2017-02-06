@@ -36,7 +36,7 @@
         <EditText
             android:id="@+id/et_sendmsg"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/shape_rectangle_btn_state"
             android:hint="发表下自己的意见吧"

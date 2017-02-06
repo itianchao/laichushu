@@ -5,12 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.mvp.mine.bookcast.BookcastPresener;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.ui.activity.MyBookCastActivity;
+import com.laichushu.book.ui.activity.WithdrawalsDetails;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -40,7 +42,12 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(),60,80, holder.ivImg);
+        int width=(UIUtil.getScreenWidth()/3)-24;
+        RelativeLayout.LayoutParams linearParams = new RelativeLayout.LayoutParams(
+                width,(width/3)*4
+        );
+        holder.ivImg.setLayoutParams(linearParams);
+        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(),width,(width/3)*4, holder.ivImg);
         holder.tvItem.setText(dataBeen.get(position).getArticleName());
         if (isShow) {
             holder.ivDelete.setVisibility(View.VISIBLE);
@@ -92,7 +99,7 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final LinearLayout llItem;
+        public final RelativeLayout llItem;
         public final TextView tvItem;
         public final ImageView ivImg;
         public final ImageView ivDelete;
@@ -100,7 +107,7 @@ public class MyBookCastAdapter extends RecyclerView.Adapter<MyBookCastAdapter.Vi
 
         public ViewHolder(View root) {
             super(root);
-            llItem = (LinearLayout) root.findViewById(R.id.ll_item);
+            llItem = (RelativeLayout) root.findViewById(R.id.rl_item);
             tvItem = (TextView) root.findViewById(R.id.tv_item);
             ivImg = (ImageView) root.findViewById(R.id.iv_img);
             ivDelete = (ImageView) root.findViewById(R.id.iv_deleteBook);

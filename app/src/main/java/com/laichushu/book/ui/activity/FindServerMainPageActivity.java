@@ -48,7 +48,7 @@ import java.util.List;
 
 public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPagePresenter> implements FindServiceMainPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
     private ImageView ivBack, ivHeadImg, ivCollect, ivShare;
-    private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum;
+    private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum, tvEmptyTips;
     private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView, mServiceRecyclerView;
     private LinearLayout llFindMsg, llTeamwork, llCommentList;
     private String userId = null;
@@ -104,6 +104,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
         tvIntroduction = (TextView) inflate.findViewById(R.id.tv_brief);
         scrollBrief = (ScrollView) inflate.findViewById(R.id.scroll_brief);
         llCommentList = (LinearLayout) inflate.findViewById(R.id.ll_commentList);
+        tvEmptyTips = (TextView) inflate.findViewById(R.id.tv_empTips);
         return inflate;
     }
 
@@ -189,6 +190,8 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        PAGE_NO = 1;
+        tvEmptyTips.setVisibility(View.GONE);
         switch (checkedId) {
             case R.id.rb_introduce:
                 //简介
@@ -297,7 +300,7 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 PAGE_NO++;
                 commDate = model.getData();
             } else {
-                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty));
+                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty_comment));
             }
             commAdapter.refreshAdapter(commDate);
         } else {
@@ -315,7 +318,10 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
             if (!model.getData().isEmpty()) {
                 mvpPresenter.openTeamworkDialog(mArticleData, userId);
             } else {
-                ToastUtil.showToast("您还没有作品");
+                if(PAGE_NO==1){
+                    tvEmptyTips.setVisibility(View.VISIBLE);
+                    tvEmptyTips.setText(R.string.errMsg_empty_workList);
+                }
             }
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -363,6 +369,11 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 caseDate.clear();
                 caseDate = model.getData();
                 caseAdapter.refreshAdapter(caseDate);
+            }else{
+                if(PAGE_NO==1){
+                    tvEmptyTips.setVisibility(View.VISIBLE);
+                    tvEmptyTips.setText(R.string.errMsg_empty_workList);
+                }
             }
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -390,6 +401,11 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 serviceDate.clear();
                 serviceDate = model.getData();
                 serviceAdapter.refreshAdapter(serviceDate);
+            } else {
+                if(PAGE_NO==1){
+                    tvEmptyTips.setVisibility(View.VISIBLE);
+                    tvEmptyTips.setText(R.string.errMsg_empty_workList);
+                }
             }
         } else {
             ToastUtil.showToast(model.getErrMsg());

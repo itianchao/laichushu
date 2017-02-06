@@ -118,7 +118,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/bookCast_top"
         android:layout_centerHorizontal="true"
-        android:background="@color/white"
+        android:background="@color/backGray"
         android:orientation="vertical">
 
 
@@ -126,6 +126,7 @@
             android:id="@+id/rg_editorList"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/white"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -148,7 +149,14 @@
         </RadioGroup>
 
         <include layout="@layout/item_distance2" />
-
+        <TextView
+            android:id="@+id/tv_empTips"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/characterGray"
+            android:textSize="@dimen/edit2"
+            android:visibility="gone" />
         <ScrollView
             android:id="@+id/scroll_brief"
             android:layout_width="match_parent"
@@ -234,7 +242,7 @@
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_case"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="12dp"
             android:background="@color/white"

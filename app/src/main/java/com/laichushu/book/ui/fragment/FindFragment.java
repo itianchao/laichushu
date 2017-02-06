@@ -54,7 +54,6 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private int range;
     private LinearLayout lineLyt;
     private RecyclerView mLessonRecyclerView, mCourseRecyclerView;
-    private GridView gvLesson;
     //标签列表
     private int img[] = {R.drawable.home_course2x, R.drawable.home_group2x, R.drawable.home_server2x, R.drawable.home_agency2x, R.drawable.home_editor2x};
     private String title[] = {"课程", "小组", "服务", "机构", "编辑"};

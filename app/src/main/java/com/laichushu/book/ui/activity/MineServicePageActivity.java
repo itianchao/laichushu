@@ -37,7 +37,7 @@ import java.util.List;
 public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> implements MineServiceView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private ImageView ivBack;
-    private TextView tvTitle, tvRight;
+    private TextView tvTitle, tvRight,tvEmptyTips;
     private PullLoadMoreRecyclerView mCooprerateRecyclerView, mCollectRecyclerView;
     private RadioGroup radioGroup;
     private int PAGE_NO = 1;
@@ -71,6 +71,7 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
         mCooprerateRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_cooperate);
         mCollectRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_collection);
         radioGroup = ((RadioGroup) inflate.findViewById(R.id.rg_serviceList));
+        tvEmptyTips=(TextView)inflate.findViewById(R.id.tv_empTips);
         return inflate;
     }
 
@@ -140,6 +141,7 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         PAGE_NO = 1;
+        tvEmptyTips.setVisibility(View.GONE);
         switch (checkedId) {
             case R.id.rb_cooperate:
                 //点击合作
@@ -185,7 +187,10 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
                 collData = model.getData();
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty));
+                if (PAGE_NO == 1) {
+                    tvEmptyTips.setVisibility(View.VISIBLE);
+                    tvEmptyTips.setText(R.string.errMsg_empty_workList);
+                }
             }
             collAdapter.refreshAdapter(collData);
         } else {
@@ -210,7 +215,10 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
                 coopData = model.getData();
                 PAGE_NO++;
             } else {
-                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty));
+                if (PAGE_NO == 1) {
+                    tvEmptyTips.setVisibility(View.VISIBLE);
+                    tvEmptyTips.setText(R.string.errMsg_empty_workList);
+                }
             }
             coopAdapter.refreshAdapter(coopData);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);

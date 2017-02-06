@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -40,8 +41,13 @@ public class GroupRecomAdapter extends RecyclerView.Adapter<GroupRecomAdapter.Vi
 
     @Override
     public void onBindViewHolder(GroupRecomAdapter.ViewHolder holder, final int position) {
+        int width=(UIUtil.getScreenWidth()/4)-(12*8);
+        LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
+                width,width
+        );
+        holder.hot1Iv.setLayoutParams(linearParams);
         final GroupListModle.DataBean dataBean = dataBeen.get(position);
-        GlideUitl.loadCornersImg(mActivity, 60, dataBean.getPhoto(), holder.hot1Iv);
+        GlideUitl.loadCornersImg(mActivity, 50, dataBean.getPhoto(), holder.hot1Iv);
         holder.tvNAme.setText(dataBean.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

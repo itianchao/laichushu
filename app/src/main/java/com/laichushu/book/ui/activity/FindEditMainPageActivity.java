@@ -41,7 +41,7 @@ import java.util.List;
 
 public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePresenter> implements FindEditMainPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
     private ImageView ivBack, ivHeadImg, ivCollect, ivGrade, ivShare;
-    private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum, tvGrade;
+    private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum, tvGrade, tvEmptyTips;
     private PullLoadMoreRecyclerView mCaseRecyclerView, mCommentRecyclerView;
     private LinearLayout llFindMsg, llTeamwork, llCommentList;
     private String userId = null;
@@ -95,6 +95,7 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
         tvIntroduction = (TextView) inflate.findViewById(R.id.tv_brief);
         scrollBrief = (ScrollView) inflate.findViewById(R.id.scroll_brief);
         llCommentList = (LinearLayout) inflate.findViewById(R.id.ll_commentList);
+        tvEmptyTips = (TextView) inflate.findViewById(R.id.tv_empTips);
         return inflate;
     }
 
@@ -172,6 +173,8 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        PAGE_NO = 1;
+        tvEmptyTips.setVisibility(View.GONE);
         switch (checkedId) {
             case R.id.rb_introduce:
                 //简介
@@ -269,7 +272,7 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
                 PAGE_NO++;
                 commDate = model.getData();
             } else {
-                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty));
+                ToastUtil.showToast(mActivity.getString(R.string.errMsg_empty_comment));
             }
             commAdapter.refreshAdapter(commDate);
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
@@ -285,11 +288,11 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
         dismissDialog();
         if (model.isSuccess()) {
             mArticleData.clear();
-            mArticleData.addAll(model.getData());
             if (!model.getData().isEmpty()) {
+                mArticleData.addAll(model.getData());
                 mvpPresenter.openTeamworkDialog(mArticleData, userId);
             } else {
-                ToastUtil.showToast("您还没有作品");
+                ToastUtil.showToast(R.string.errMsg_empty_workList);
             }
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -325,6 +328,7 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
     @Override
     public void getEditorFindArticleDataSuccess(HomeHotModel model) {
         dismissDialog();
+        caseDate.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -333,12 +337,17 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
         }, 300);
         if (model.isSuccess()) {
             if (model.getData().size() != 0) {
-                PAGE_NO++;
-                caseDate.clear();
                 caseDate = model.getData();
                 caseAdapter.refreshAdapter(caseDate);
+                PAGE_NO++;
+            } else {
+                if (PAGE_NO == 1) {
+                    tvEmptyTips.setVisibility(View.VISIBLE);
+                    tvEmptyTips.setText(R.string.errMsg_empty_workList);
+                }
             }
         } else {
+
             ToastUtil.showToast(model.getErrMsg());
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
