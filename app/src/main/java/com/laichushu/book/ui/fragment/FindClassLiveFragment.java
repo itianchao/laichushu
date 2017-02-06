@@ -8,7 +8,7 @@ import com.laichushu.book.bean.netbean.LessonList_Paramet;
 import com.laichushu.book.mvp.find.coursera.live.FindClassLivePresenter;
 import com.laichushu.book.mvp.find.coursera.live.FindClassLiveView;
 import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
-import com.laichushu.book.ui.adapter.FindClassVideoAdapter;
+import com.laichushu.book.ui.adapter.FindClassLiveAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.base.MvpFragment2;
 import com.laichushu.book.ui.widget.LoadingPager;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class FindClassLiveFragment extends MvpFragment2<FindClassLivePresenter> implements FindClassLiveView, PullLoadMoreRecyclerView.PullLoadMoreListener, View.OnClickListener {
 
     private PullLoadMoreRecyclerView mRecyclerView;
-    private FindClassVideoAdapter mAdapter;
+    private FindClassLiveAdapter mAdapter;
     public int pageNo = 1;
     private ArrayList<CourseraModle.DataBean.LessonListBean> mData = new ArrayList<>();
     private ArrayList<CourseraModle.DataBean.LessonCategoryListBean> mCategoryList = new ArrayList<>();
@@ -50,7 +50,7 @@ public class FindClassLiveFragment extends MvpFragment2<FindClassLivePresenter> 
         mRecyclerView = (PullLoadMoreRecyclerView) mSuccessView.findViewById(R.id.ryv_video);//容器
         emptyIv = (ImageView) mSuccessView.findViewById(R.id.iv_empty);//空页面
         mRecyclerView.setLinearLayout();
-        mAdapter = new FindClassVideoAdapter((MvpActivity2) mActivity, mData);
+        mAdapter = new FindClassLiveAdapter((MvpActivity2) mActivity, mData);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnPullLoadMoreListener(this);
         return mSuccessView;
