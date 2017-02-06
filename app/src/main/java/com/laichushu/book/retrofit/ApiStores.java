@@ -72,7 +72,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL4;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL;
 
     /***
      * 注册登录
@@ -508,6 +508,7 @@ public interface ApiStores {
     //我的钱包充值-支付宝
     @POST("recharge/recharge")
     Observable<AliPayResult> getRechargeAppPayDetails(@Body RechargeAppPay_Paramet paramet);
+
     //我的钱包充值--微信
     @POST("recharge/recharge")
     Observable<WxInfo> getRechargeAppPayWXDetails(@Body RechargeAppPay_Paramet paramet);

@@ -57,8 +57,8 @@
 
     <ImageView
         android:id="@+id/iv_title_finish"
-        android:layout_width="25dp"
-        android:layout_height="50dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_centerVertical="true"
         android:padding="5dp"
         android:src="@drawable/icon_finish2x" />

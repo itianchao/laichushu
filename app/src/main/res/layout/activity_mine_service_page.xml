@@ -13,13 +13,14 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/bookCast_top"
         android:layout_centerHorizontal="true"
-        android:background="@color/white"
+        android:background="@color/backGray"
         android:orientation="vertical">
 
         <RadioGroup
             android:id="@+id/rg_serviceList"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/white"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -37,18 +38,25 @@
         </RadioGroup>
 
         <include layout="@layout/item_distance2" />
-
+        <TextView
+            android:id="@+id/tv_empTips"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/characterGray"
+            android:textSize="@dimen/edit2"
+            android:visibility="gone" />
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_cooperate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@color/white" />
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/ryv_collection"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@color/white"
             android:visibility="gone" />

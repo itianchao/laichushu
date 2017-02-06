@@ -47,11 +47,20 @@ public class WritePresenter extends BasePresenter<WriteView> {
         attachView(view);
     }
 
+    public ArticleBookList_Paramet getBookList_paramet() {
+        return bookList_paramet;
+    }
+
+    public void setBookList_paramet(ArticleBookList_Paramet bookList_paramet) {
+        this.bookList_paramet = bookList_paramet;
+    }
+
+    ArticleBookList_Paramet bookList_paramet = new ArticleBookList_Paramet(ConstantValue.USERID, pageNo, ConstantValue.PAGESIZE1, ConstantValue.USERID);
     public void getArticleBookList() {
         LoggerUtil.e("获取创作列表");
-        ArticleBookList_Paramet paramet = new ArticleBookList_Paramet(ConstantValue.USERID, pageNo, ConstantValue.PAGESIZE1, ConstantValue.USERID);
-        LoggerUtil.toJson(paramet);
-        addSubscription(apiStores.getArticleBookList(paramet), new ApiCallback<HomeHotModel>() {
+
+        LoggerUtil.toJson(bookList_paramet);
+        addSubscription(apiStores.getArticleBookList(bookList_paramet), new ApiCallback<HomeHotModel>() {
             @Override
             public void onSuccess(HomeHotModel model) {
                 mvpView.getDataSuccess(model);

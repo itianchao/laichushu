@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by PCPC on 2017/1/17.
  */
 
-public class AliPayResult implements Parcelable {
+public class AliPayResult extends BaseModel implements Parcelable {
 
     /**
      * success : true

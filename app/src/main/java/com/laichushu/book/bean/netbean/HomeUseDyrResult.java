@@ -7,7 +7,7 @@ import java.util.List;
  * Created by PCPC on 2016/11/22.
  */
 
-public class HomeUseDyrResult implements Serializable {
+public class HomeUseDyrResult extends BaseModel implements Serializable {
 
     /**
      * success : true

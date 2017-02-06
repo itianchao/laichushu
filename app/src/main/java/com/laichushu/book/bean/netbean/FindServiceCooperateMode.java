@@ -10,7 +10,7 @@ import java.util.List;
  * Created by PCPC on 2016/12/31.
  */
 
-public class FindServiceCooperateMode implements Parcelable {
+public class FindServiceCooperateMode extends BaseModel implements Parcelable {
 
 
     /**

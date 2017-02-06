@@ -7,7 +7,7 @@ import java.util.List;
  * Created by PCPC on 2016/12/13.
  */
 
-public class SignStateResult implements Serializable {
+public class SignStateResult extends BaseModel implements Serializable {
 
     /**
      * success : true

@@ -1,10 +1,12 @@
 package com.laichushu.book.bean.JsonBean;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * Created by wangtong on 2016/12/14.
  */
 
-public class UrlResult {
+public class UrlResult  extends BaseModel {
     private boolean success;
     private String errMsg;
     /**

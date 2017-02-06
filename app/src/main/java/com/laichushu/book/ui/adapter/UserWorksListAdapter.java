@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -38,7 +39,12 @@ public class UserWorksListAdapter extends RecyclerView.Adapter<UserWorksListAdap
 
     @Override
     public void onBindViewHolder(UserWorksListAdapter.ViewHolder holder, final int position) {
-        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(), holder.ivImg);
+        int width=(UIUtil.getScreenWidth()/3)-24;
+        RelativeLayout.LayoutParams linearParams = new RelativeLayout.LayoutParams(
+                width,(width/3)*4
+        );
+        holder.ivImg.setLayoutParams(linearParams);
+        GlideUitl.loadImg(context, dataBeen.get(position).getCoverUrl(),width,(width/3)*4, holder.ivImg);
         holder.tvItem.setText(dataBeen.get(position).getArticleName());
         holder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,14 +75,14 @@ public class UserWorksListAdapter extends RecyclerView.Adapter<UserWorksListAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final LinearLayout llItem;
+        public final RelativeLayout llItem;
         public final TextView tvItem;
         public final ImageView ivImg;
         public final View root;
 
         public ViewHolder(View root) {
             super(root);
-            llItem = (LinearLayout) root.findViewById(R.id.ll_item);
+            llItem = (RelativeLayout) root.findViewById(R.id.ll_item);
             tvItem = (TextView) root.findViewById(R.id.tv_item);
             ivImg = (ImageView) root.findViewById(R.id.iv_img);
             this.root = root;

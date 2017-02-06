@@ -40,7 +40,7 @@ public class ImageShowerActivity extends MvpActivity2 implements View.OnClickLis
         View mSuccessView = UIUtil.inflate(R.layout.activity_image_shower);
         divShow = (MyZoomImageView) mSuccessView.findViewById(R.id.div_show);
         ivBack = ((ImageView) mSuccessView.findViewById(R.id.iv_title_finish));
-        tvTitle = ((TextView) mSuccessView.findViewById(R.id.tv_middleLeft));
+        tvTitle = ((TextView) mSuccessView.findViewById(R.id.tv_title));
         return mSuccessView;
     }
 
@@ -48,7 +48,7 @@ public class ImageShowerActivity extends MvpActivity2 implements View.OnClickLis
     protected void initData() {
         super.initData();
         url = getIntent().getStringExtra("path");
-        tvTitle.setText("头像展示");
+        tvTitle.setText("用户头像");
 
         ivBack.setOnClickListener(this);
 

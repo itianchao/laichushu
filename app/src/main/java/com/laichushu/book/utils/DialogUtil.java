@@ -32,6 +32,7 @@ public class DialogUtil {
                 Intent intent = new Intent(UIUtil.getContext(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 UIUtil.getContext().startActivity(intent);
+                AppManager.getInstance().killAllActivity();
                 android.os.Process.killProcess(android.os.Process.myPid());
             }
         }, 1600);

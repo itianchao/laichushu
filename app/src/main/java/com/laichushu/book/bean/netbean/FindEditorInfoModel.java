@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by PCPC on 2016/12/27.
  */
 
-public class FindEditorInfoModel implements Parcelable {
+public class FindEditorInfoModel extends BaseModel implements Parcelable {
 
     /**
      * success : true

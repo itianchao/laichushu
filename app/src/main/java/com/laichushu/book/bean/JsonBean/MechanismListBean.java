@@ -3,6 +3,8 @@ package com.laichushu.book.bean.JsonBean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  * Created by wt on 2016/11/24.
  */
 
-public class MechanismListBean implements Parcelable {
+public class MechanismListBean extends BaseModel implements Parcelable {
 
 
     /**

@@ -3,6 +3,7 @@ package com.laichushu.book.mvp.msg.topic.topicdetail;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.bean.netbean.BaseModel;
 import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * 话题详情数据模型
  * Created by wangtong on 2016/10/12.
  */
-public class TopicdetailModel implements Parcelable {
+public class TopicdetailModel extends BaseModel implements Parcelable {
 
     /**
      * success : true

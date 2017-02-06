@@ -3,13 +3,15 @@ package com.laichushu.book.mvp.home.commentdetail;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  * 评价详情 modle
  * Created by wangtong on 2016/11/4.
  */
-public class CommentDetailModle {
+public class CommentDetailModle extends BaseModel {
 
     /**
      * success : true

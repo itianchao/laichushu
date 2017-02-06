@@ -10,7 +10,7 @@ import java.util.List;
  * Created by PCPC on 2016/12/9.
  */
 
-public class BookDetailsModle implements Parcelable {
+public class BookDetailsModle extends BaseModel implements Parcelable {
 
     /**
      * success : true

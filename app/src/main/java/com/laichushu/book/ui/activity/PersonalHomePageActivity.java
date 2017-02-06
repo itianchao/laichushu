@@ -286,6 +286,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         if (model.isSuccess()) {
             if (null != model.getData() && !model.getData().isEmpty()) {
                 dyData = model.getData();
+                dyAdapter.refreshAdapter(dyData);
                 PAGE_NO++;
             } else {
                 if (PAGE_NO == 1) {
@@ -293,7 +294,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                     tvTips.setText("您还没有添加动态，赶快点击右上角去添加吧！");
                 }
             }
-            dyAdapter.refreshAdapter(dyData);
             dyLoadState = true;
             Message msg = new Message();
             mhandler.sendMessageDelayed(msg, 1000);
@@ -322,8 +322,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 focusMeData = model.getData();
                 PAGE_NO++;
             } else {
-                tvTips.setVisibility(View.VISIBLE);
-                tvTips.setText("您还未被其他用户关注！");
+                if (PAGE_NO == 1) {
+                    tvTips.setVisibility(View.VISIBLE);
+                    tvTips.setText("您还未被其他用户关注！");
+                }
             }
             fmAdapter.refreshAdapter(focusMeData);
         } else {
@@ -352,8 +354,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 focusBeData = model.getData();
                 PAGE_NO++;
             } else {
-                tvTips.setVisibility(View.VISIBLE);
-                tvTips.setText("您还没有关注其他用户，赶快去添加吧！");
+                if (PAGE_NO == 1) {
+                    tvTips.setVisibility(View.VISIBLE);
+                    tvTips.setText("您还没有关注其他用户，赶快去添加吧！");
+                }
             }
             fbAdapter.refreshAdapter(focusBeData);
         } else {

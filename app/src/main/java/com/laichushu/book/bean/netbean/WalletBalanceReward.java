@@ -11,7 +11,7 @@ import java.util.List;
  * Created by PCPC on 2016/11/26.
  */
 
-public class WalletBalanceReward implements Parcelable {
+public class WalletBalanceReward extends BaseModel implements Parcelable {
 
     /**
      * balance : 90.0

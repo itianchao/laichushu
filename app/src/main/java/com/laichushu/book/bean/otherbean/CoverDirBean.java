@@ -1,5 +1,7 @@
 package com.laichushu.book.bean.otherbean;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 
@@ -8,7 +10,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/11/23.
  */
 
-public class CoverDirBean {
+public class CoverDirBean extends BaseModel {
 
     /**
      * success : true

@@ -1,5 +1,7 @@
 package com.laichushu.book.bean.otherbean;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  * Created by wangtong on 2017/1/10.
  */
 
-public class SpeakListModle {
+public class SpeakListModle extends BaseModel {
 
     /**
      * success : true

@@ -1,12 +1,14 @@
 package com.laichushu.book.mvp.write.draftmodle;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  * 草稿模式数据模型
  * Created by wangtong on 2016/10/12.
  */
-public class DraftModle {
+public class DraftModle extends BaseModel {
 
     /**
      * success : true

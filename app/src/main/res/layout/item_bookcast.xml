@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_item"
-    android:layout_width="wrap_content"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="8dp"
         android:paddingRight="5dp">
 
         <ImageView
             android:id="@+id/iv_img"
-            android:layout_width="60dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/default_shape"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
             android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/tv_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="15dp"
+            android:layout_below="@+id/iv_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="4dp"
+            android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:scaleType="fitCenter"
+            android:singleLine="true"
             android:textColor="@color/characterGray"
-            android:textSize="@dimen/edit" />
-    </LinearLayout>
+            android:textSize="@dimen/edit1" />
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/iv_deleteBook"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_marginLeft="70dp"
+        android:layout_alignRight="@+id/ll_item"
+        android:layout_marginTop="4dp"
         android:layout_marginRight="4dp"
-        android:background="@drawable/icon_delete"
+        android:background="@drawable/close"
         android:scaleType="fitCenter"
         android:visibility="gone" />
+
 </RelativeLayout>

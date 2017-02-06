@@ -30,8 +30,7 @@
                 android:paddingRight="8dp"
                 android:text="当前账户余额"
                 android:textColor="@color/albumPrimaryBlack"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit1"/>
 
             <TextView
                 android:id="@+id/tv_accountMoney"
@@ -41,8 +40,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
                 android:textColor="@color/auditing"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit1" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -62,8 +60,7 @@
                 android:paddingRight="8dp"
                 android:text="提取金额"
                 android:textColor="@color/albumPrimaryBlack"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit1" />
 
             <EditText
                 android:id="@+id/ed_inputNum"
@@ -83,7 +80,7 @@
                 android:paddingLeft="12dp"
                 android:paddingTop="4dp"
                 android:textColor="@color/albumPrimaryBlack"
-                android:textSize="@dimen/edit"
+                android:textSize="@dimen/edit1"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -106,8 +103,7 @@
                 android:paddingRight="8dp"
                 android:text="提取账户"
                 android:textColor="@color/albumPrimaryBlack"
-                android:textSize="@dimen/edit"
-                android:textStyle="bold" />
+                android:textSize="@dimen/edit1" />
 
             <EditText
                 android:id="@+id/ed_inputAcc"
@@ -124,7 +120,7 @@
                 android:paddingLeft="12dp"
                 android:textColorHint="@color/characterLightGray2"
                 android:textColor="@color/albumPrimaryBlack"
-                android:textSize="@dimen/edit"
+                android:textSize="@dimen/edit1"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

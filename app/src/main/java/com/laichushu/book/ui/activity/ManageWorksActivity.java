@@ -52,7 +52,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private boolean isLoad = true;
     private ArrayList<MyTabStrip> mStrip = new ArrayList<>();
-    private int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x,R.drawable.icon_delete2x,R.drawable.icon_publishl2x, R.drawable.icon_submission2x, R.drawable.icon_sign2x};
+    private int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x, R.drawable.icon_delete2x, R.drawable.icon_publishl2x, R.drawable.icon_submission2x, R.drawable.icon_sign2x};
     private String title[] = {"编辑目录", "编辑素材", "删除", "发表", "投稿", "签约状态"};
     //-------------
     private SignStateResult model = new SignStateResult();
@@ -60,6 +60,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     final List<String> editList = new ArrayList<>();//编辑
     private String pressId, editId;
     private int currentPos;
+    private int PAGE_NO = 1;
 
     @Override
     protected WritePresenter createPresenter() {
@@ -78,7 +79,6 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         mRecyclerView.setLinearLayout();
         mRecyclerView.setScrollbarFadingEnabled(false);
         mRecyclerView.setOnPullLoadMoreListener(this);
-        mRecyclerView.setPushRefreshEnable(false);
         return manageView;
     }
 
@@ -122,6 +122,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
             mData.addAll(model.getData());
             writeBookAdapter.setmData(mData);
             isLoad = false;
+            PAGE_NO++;
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             refurshData();
@@ -130,6 +131,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
 
     /**
      * 修改签约状态
+     *
      * @param model
      * @param articleId
      */
@@ -138,7 +140,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         if (model.isSuccess()) {
             ToastUtil.showToast("修改成功");
             for (int i = 0; i < mData.size(); i++) {
-                if (mData.get(i).getArticleId().equals(articleId)){
+                if (mData.get(i).getArticleId().equals(articleId)) {
                     //修改出版中
                     mData.get(i).setStatus("3");
                     writeBookAdapter.setmData(mData);
@@ -242,7 +244,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
             WindowManager m = mActivity.getWindowManager();
             Display display = m.getDefaultDisplay();  //为获取屏幕宽、高
             alertDialog.getWindow().setGravity(Gravity.CENTER);
-            alertDialog.getWindow().setLayout(display.getWidth() - UIUtil.dip2px(60), display.getHeight() / 2- UIUtil.dip2px(80));
+            alertDialog.getWindow().setLayout(display.getWidth() - UIUtil.dip2px(60), display.getHeight() / 2 - UIUtil.dip2px(80));
             alertDialog.getWindow().setWindowAnimations(R.style.periodpopwindow_anim_style);
             alertDialog.show();
         } else {
@@ -270,11 +272,11 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
      * @param model
      */
     @Override
-    public void updateBookPermission(RewardResult model,String permission, int position) {
+    public void updateBookPermission(RewardResult model, String permission, int position) {
         if (model.isSuccess()) {
             HomeHotModel.DataBean dataBean = mData.get(position);
             dataBean.setPermission(permission);
-            mData.set(position,dataBean);
+            mData.set(position, dataBean);
             ToastUtil.showToast("设置权限成功");
         } else {
             ToastUtil.showToast("设置权限失败");
@@ -338,6 +340,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         LoggerUtil.e(msg);
         hideLoading();
     }
+
     @Override
     public void showLoading() {
         showProgressDialog();
@@ -354,6 +357,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
             public void reLoadData() {
                 refreshPage(LoadingPager.PageState.STATE_LOADING);
                 mData.clear();
+                mvpPresenter.getBookList_paramet().setPageNo(PAGE_NO + "");
                 mvpPresenter.getArticleBookList();
             }
         });
@@ -380,6 +384,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         super.finish();
         EventBus.getDefault().postSticky(new RefrushMineEvent(true));
     }
+
     private void updateDB() {
         Cache_JsonDao cache_jsonDao = BaseApplication.getDaoSession(this).getCache_JsonDao();
         List<Cache_Json> cache_jsons = cache_jsonDao.queryBuilder()
@@ -387,35 +392,42 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         Cache_Json cache_json = cache_jsons.get(0);
         PersonalCentreResult result = new Gson().fromJson(cache_json.getJson(), PersonalCentreResult.class);
         if (result.getArticleCount() != null) {
-            result.setArticleCount(Integer.parseInt(result.getArticleCount())-1+"");
-        }else {
+            result.setArticleCount(Integer.parseInt(result.getArticleCount()) - 1 + "");
+        } else {
             result.setArticleCount("0");
         }
         cache_json.setJson(new Gson().toJson(result));
         cache_jsonDao.update(cache_json);
     }
+
     @Override
     public void onRefresh() {
         refreshPage(LoadingPager.PageState.STATE_LOADING);
+        PAGE_NO = 1;
         mData.clear();
+        mvpPresenter.getBookList_paramet().setPageNo(PAGE_NO + "");
         mvpPresenter.getArticleBookList();
     }
 
     @Override
     public void onLoadMore() {
-
+        mvpPresenter.getBookList_paramet().setPageNo(PAGE_NO + "");
+        mvpPresenter.getArticleBookList();
     }
+
     /**
      * 修改详情页后刷新数据
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RefrushWriteFragmentEvent event){
+    public void onEvent(RefrushWriteFragmentEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (event.isRefursh()) {
             onRefresh();
         }
     }
+
     /**
      * 修改 素材权限
      *
@@ -427,7 +439,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         if (event.getIndex() != -1) {
             HomeHotModel.DataBean dataBean = mData.get(event.getIndex());
             dataBean.setMaterialPermission(event.getMaterialPermission());
-            mData.set(event.getIndex(),dataBean);
+            mData.set(event.getIndex(), dataBean);
         }
     }
 

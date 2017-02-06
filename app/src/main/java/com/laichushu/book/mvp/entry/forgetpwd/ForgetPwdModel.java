@@ -1,10 +1,12 @@
 package com.laichushu.book.mvp.entry.forgetpwd;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * 重置密码数据模型
  * Created by wangtong on 2016/10/12.
  */
-public class ForgetPwdModel {
+public class ForgetPwdModel extends BaseModel {
 
     /**
      * success : false

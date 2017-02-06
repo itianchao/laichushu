@@ -7,7 +7,7 @@ import java.util.List;
  * Created by PCPC on 2016/11/23.
  */
 
-public class HomePersonFocusResult implements Serializable {
+public class HomePersonFocusResult extends BaseModel implements Serializable {
 
     /**
      * success : true

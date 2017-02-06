@@ -1,5 +1,7 @@
 package com.laichushu.book.mvp.home.homecategory;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +9,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/11/10.
  */
 
-public class CategoryModle {
+public class CategoryModle extends BaseModel {
 
     /**
      * success : true

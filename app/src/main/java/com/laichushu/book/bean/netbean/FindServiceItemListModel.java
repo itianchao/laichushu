@@ -10,7 +10,7 @@ import java.util.List;
  * Created by PCPC on 2016/12/31.
  */
 
-public class FindServiceItemListModel implements Parcelable {
+public class FindServiceItemListModel extends BaseModel implements Parcelable {
 
     /**
      * success : true

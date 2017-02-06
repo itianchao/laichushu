@@ -3,6 +3,8 @@ package com.laichushu.book.mvp.find.group;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +12,7 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/12/27.
  */
 
-public class GroupListModle {
+public class GroupListModle extends BaseModel {
 
     /**
      * data : [{"code":"100001","id":"275","joinNum":1,"joinStatus":"2","leaderId":"175","name":"绗竴缁�","photo":"group1/M00/00/2C/wKiTPlhiFGWAdd2OAADnEgoKhPs609.jpg","remarks":"灏辨槸涓�涓粍","status":"0"}]

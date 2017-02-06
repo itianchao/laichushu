@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by PCPC on 2016/12/30.
  */
 
-public class FindServerInfoModel implements Parcelable {
+public class FindServerInfoModel extends BaseModel implements Parcelable {
 
     /**
      * success : true

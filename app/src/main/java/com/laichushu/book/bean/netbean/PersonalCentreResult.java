@@ -11,7 +11,7 @@ import java.util.Date;
  * @Class Name PersonalHomeNotify
  * @Create In 2016年10月13日
  */
-public class PersonalCentreResult implements Serializable {
+public class PersonalCentreResult extends BaseModel implements Serializable {
 
     /**
      * serialVersionUID
@@ -45,7 +45,7 @@ public class PersonalCentreResult implements Serializable {
     /*
      *  错误码对应常量:ErrorCode
      */
-    private String errCode;
+//    private String errCode;
     /*
      *  错误信息
      */
@@ -175,16 +175,16 @@ public class PersonalCentreResult implements Serializable {
      *
      * @return 错误码对应常量:ErrorCode
      */
-    public String getErrCode() {
-        return this.errCode;
-    }
+//    public String getErrCode() {
+//        return this.errCode;
+//    }
 
     /**
      * 错误码对应常量:ErrorCode
      */
-    public void setErrCode(String errCode) {
-        this.errCode = errCode;
-    }
+//    public void setErrCode(String errCode) {
+//        this.errCode = errCode;
+//    }
 
     /**
      * 错误信息

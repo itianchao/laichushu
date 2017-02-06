@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by PCPC on 2016/11/25.
  */
 
-public class GradeRemarksResult implements Serializable {
+public class GradeRemarksResult extends BaseModel implements Serializable {
     private boolean success;
     private String remarks,grade,typeName;
     private int type;

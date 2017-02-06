@@ -1,12 +1,14 @@
 package com.laichushu.book.mvp.home.campaign;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 import java.util.ArrayList;
 
 /**
  * 作者作品
  * Created by wangtong on 2016/11/4.
  */
-public class AuthorWorksModle {
+public class AuthorWorksModle extends BaseModel {
 
     /**
      * success : true

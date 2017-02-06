@@ -1,11 +1,13 @@
 package com.laichushu.book.bean.JsonBean;
 
+import com.laichushu.book.bean.netbean.BaseModel;
+
 /**
  * 查询余额
  * Created by wangtong on 2016/11/8.
  */
 
-public class BalanceBean {
+public class BalanceBean extends BaseModel {
 
     /**
      * success : true

@@ -70,14 +70,12 @@ public class GlideUitl {
      */
     public static void loadImg(Context mContext, String path, int width, int height, ImageView mImageView) {
         if (!TextUtils.isEmpty(path)) {
-
-
-            Glide.with(mContext).load(path).override(UIUtil.dip2px(width), UIUtil.dip2px(height)).centerCrop().into(mImageView);
-
+            Glide.with(mContext).load(path).error(R.drawable.img_default).override(width, height).centerCrop().into(mImageView);
         } else {
-            Glide.with(mContext).load(R.drawable.img_default).override(UIUtil.dip2px(width), UIUtil.dip2px(height)).centerCrop().into(mImageView);
+            Glide.with(mContext).load(R.drawable.img_default).override(width, height).centerCrop().into(mImageView);
         }
     }
+
     /**
      * 指定大小加载图片
      *
@@ -88,14 +86,15 @@ public class GlideUitl {
      * @param mImageView 控件
      */
     public static void loadImg(Context mContext, int path, int width, int height, ImageView mImageView) {
-        if (path!=0) {
+        if (path != 0) {
 
-            Glide.with(mContext).load(path).override(UIUtil.dip2px(width), UIUtil.dip2px(height)).centerCrop().into(mImageView);
+            Glide.with(mContext).load(path).error(R.drawable.img_default).override(width, height).centerCrop().into(mImageView);
 
         } else {
-            Glide.with(mContext).load(R.drawable.img_default).override(UIUtil.dip2px(width), UIUtil.dip2px(height)).centerCrop().into(mImageView);
+            Glide.with(mContext).load(R.drawable.img_default).override(width, height).centerCrop().into(mImageView);
         }
     }
+
     /**
      * 快速加载圆形图片
      *
@@ -105,7 +104,7 @@ public class GlideUitl {
      */
     public static void loadRandImg(Context mContext, String path, ImageView mImageView) {
         if (!TextUtils.isEmpty(path)) {
-            Glide.with(mContext).load(path).asBitmap().fitCenter().transform(new GlideCircleTransform(mContext)).error(R.drawable.icon_percentre_defhead2x).into(mImageView);
+            Glide.with(mContext).load(path).asBitmap().fitCenter().error(R.drawable.icon_percentre_defhead2x).transform(new GlideCircleTransform(mContext)).error(R.drawable.icon_percentre_defhead2x).into(mImageView);
         } else {
             Glide.with(mContext).load(R.drawable.icon_percentre_defhead2x).centerCrop().transform(new GlideCircleTransform(mContext)).into(mImageView);
         }
@@ -143,7 +142,7 @@ public class GlideUitl {
      * @param mImageView
      * @param loadErrorImage
      */
-    public static void loadCornersImg(Context mContext, int path,int radius, ImageView mImageView, int loadErrorImage) {
+    public static void loadCornersImg(Context mContext, int path, int radius, ImageView mImageView, int loadErrorImage) {
         if (0 != path) {
             //原图处理成圆角，如果是四周都是圆角则是RoundedCornersTransformation.CornerType.ALL
             Glide.with(mContext).load(path).bitmapTransform(new RoundedCornersTransformation(mContext, radius, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(1000).into(mImageView);
@@ -160,12 +159,28 @@ public class GlideUitl {
      * @param mImageView
      * @param
      */
-    public static void loadCornersImg(Context mContext,int radius, String path, ImageView mImageView) {
+    public static void loadCornersImg(Context mContext, int radius, String path, ImageView mImageView) {
         if (!TextUtils.isEmpty(path)) {
             //原图处理成圆角，如果是四周都是圆角则是RoundedCornersTransformation.CornerType.ALL
             Glide.with(mContext).load(path).bitmapTransform(new RoundedCornersTransformation(mContext, radius, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(1000).into(mImageView);
         } else {
             Glide.with(mContext).load(R.drawable.icon_percentre_defhead2x).bitmapTransform(new RoundedCornersTransformation(mContext, radius, 0, RoundedCornersTransformation.CornerType.ALL)).crossFade(1000).into(mImageView);
+        }
+    }
+    /**
+     * 加载失败默认图片
+     *
+     * @param mContext
+     * @param path
+     * @param mImageView
+     * @param
+     */
+    public static void loadCornersImg(Context mContext, int radius, String path, int width,int height,ImageView mImageView) {
+        if (!TextUtils.isEmpty(path)) {
+            //原图处理成圆角，如果是四周都是圆角则是RoundedCornersTransformation.CornerType.ALL
+            Glide.with(mContext).load(path).bitmapTransform(new RoundedCornersTransformation(mContext, radius, 8, RoundedCornersTransformation.CornerType.ALL)).override(width, height).error(R.drawable.icon_percentre_defhead2x).fitCenter().crossFade(1000).into(mImageView);
+        } else {
+            Glide.with(mContext).load(R.drawable.icon_percentre_defhead2x).bitmapTransform(new RoundedCornersTransformation(mContext, radius, 8, RoundedCornersTransformation.CornerType.ALL)).override(width, height).error(R.drawable.icon_percentre_defhead2x).fitCenter().crossFade(1000).into(mImageView);
         }
     }
 }
