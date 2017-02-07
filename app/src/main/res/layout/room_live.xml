@@ -218,13 +218,53 @@
         android:orientation="vertical"
         android:visibility="invisible" >
 
+        <include layout="@layout/item_distance"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_marginLeft="10dp"
+                tools:text="马化腾的创业坎坷之路"
+                android:textColor="@color/edit2"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_download"
+                android:src="@drawable/icon_download"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/iv_collection"
+                android:src="@drawable/icon_praise_no"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/iv_reward"
+                android:src="@drawable/reward"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <include layout="@layout/item_distance"/>
+
         <RadioGroup
             android:id="@+id/rg_title"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
             android:visibility="invisible" >
-
+            <RadioButton
+                android:id="@+id/rbn_brief"
+                style="@style/rb_style"
+                android:text="简介" />
             <RadioButton
                 android:id="@+id/rb_chat"
                 style="@style/rb_style"
@@ -236,11 +276,13 @@
                 android:text="文档" />
 
             <RadioButton
+                android:visibility="gone"
                 android:id="@+id/rb_qa"
                 style="@style/rb_style"
                 android:text="问答" />
 
             <RadioButton
+                android:visibility="gone"
                 android:id="@+id/rb_connect_mic"
                 style="@style/rb_style"
                 android:text="连麦" />

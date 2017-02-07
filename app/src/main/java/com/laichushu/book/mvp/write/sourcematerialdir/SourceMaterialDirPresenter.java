@@ -321,7 +321,7 @@ public class SourceMaterialDirPresenter extends BasePresenter<SourceMaterialDirV
         final View customerView = UIUtil.inflate(R.layout.dialog_rename);
         TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
 //        dialogTitleTv.setText("创建素材");
-        dialogTitleTv.setText("添加文件夹");
+        dialogTitleTv.setText("添加素材文件夹");
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override

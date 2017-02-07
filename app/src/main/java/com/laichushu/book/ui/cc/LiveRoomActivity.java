@@ -116,7 +116,7 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 	private EditText etFullscreen;
 	private Button btnFullscreenSendMsg;
 	private BarrageLayout mBarrageLayout;
-	private RadioButton rbChat, rbPic, rbQa, rbConnectMic;
+	private RadioButton rbChat, rbPic, rbQa, rbConnectMic,rbRief;
 	private RadioGroup rgTitle;
 	private List<RadioButton> rbs = new ArrayList<RadioButton>();
 
@@ -206,24 +206,42 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
     private void initPagerItemView() {
     	LayoutInflater inflater = LayoutInflater.from(this);
 
-    	View chatView = inflater.inflate(R.layout.chat_layout, null);
+		View briefView = inflater.inflate(R.layout.item_brief, null);//简介
+		pagerViewList.add(briefView);
+		initbriefLayout(briefView);
+
+    	View chatView = inflater.inflate(R.layout.chat_layout, null);//聊天
     	pagerViewList.add(chatView);
     	initChatLayout(chatView);
 
-    	View picView = inflater.inflate(R.layout.pic_layout, null);
+    	View picView = inflater.inflate(R.layout.pic_layout, null);//文档
     	pagerViewList.add(picView);
     	initPicLayout(picView);
 
-    	View qaView = inflater.inflate(R.layout.qa_layout, null);
-    	pagerViewList.add(qaView);
-		initQaLayout(qaView);
-
-		View connectMicView = inflater.inflate(R.layout.cm_layout, null);
-		pagerViewList.add(connectMicView);
-		initCmLayout(connectMicView);
+//    	View qaView = inflater.inflate(R.layout.qa_layout, null);//问答
+//    	pagerViewList.add(qaView);
+//		initQaLayout(qaView);
+//
+//		View connectMicView = inflater.inflate(R.layout.cm_layout, null);//连麦
+//		pagerViewList.add(connectMicView);
+//		initCmLayout(connectMicView);
     }
 
-    private void initChatLayout(View view) {
+	/**
+	 * 简介
+	 * @param view
+	 */
+	private void initbriefLayout(View view) {
+		TextView briefviewTv = (TextView) view.findViewById(R.id.tv_brief);
+		String brief = getIntent().getStringExtra("brief");
+		briefviewTv.setText(brief);
+	}
+
+	/**
+	 * 聊天
+	 * @param view
+	 */
+	private void initChatLayout(View view) {
     	swiPublicPrivate = (Switch) view.findViewById(R.id.swi);
     	swiPublicPrivate.performClick();
 
@@ -457,8 +475,39 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
         initPlayer();
         initDwLive();
         initRoomShow();
+		initRawards();
         HttpUtil.LOG_LEVEL = HttpUtil.HttpLogLevel.DETAIL;
+
     }
+
+	/**
+	 * 中间条目 标题、下载、收藏、打赏
+	 */
+	private void initRawards() {
+		ImageView rewardIv = (ImageView) findViewById(R.id.iv_reward);
+		ImageView collectionIv = (ImageView) findViewById(R.id.iv_collection);
+		ImageView downloadIv = (ImageView) findViewById(R.id.iv_download);
+		TextView titleTv = (TextView) findViewById(R.id.tv_title);
+		titleTv.setText("");
+		rewardIv.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+		collectionIv.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+		downloadIv.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+	}
 
 	private LinearLayout llBottomLayout;
 	private TextView tvPlayMsg;
@@ -538,8 +587,12 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch(checkedId) {
-					case R.id.rb_chat:
+					case R.id.rbn_brief:
 						mPager.setCurrentItem(0);
+						break;
+					case R.id.rb_chat:
+						int indexChat = rbs.indexOf(rbChat);
+						mPager.setCurrentItem(indexChat);
 						break;
 					case R.id.rb_pic:
 						int indexPic = rbs.indexOf(rbPic);
@@ -556,11 +609,12 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 				}
 			}
 		});
-
+		rbRief = (RadioButton) findViewById(R.id.rbn_brief);
 		rbChat = (RadioButton) findViewById(R.id.rb_chat);
 		rbPic = (RadioButton) findViewById(R.id.rb_pic);
 		rbQa = (RadioButton) findViewById(R.id.rb_qa);
 		rbConnectMic = (RadioButton) findViewById(R.id.rb_connect_mic);
+		rbs.add(rbRief);
 		rbs.add(rbChat);
 		rbs.add(rbPic);
 		rbs.add(rbQa);
@@ -569,18 +623,18 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 
     private void initRoomShow() {
     	if (!"1".equals(qaStr)) {
-    		pagerViewList.remove(2);
-    		rbs.remove(2);
+    		pagerViewList.remove(3);
+    		rbs.remove(3);
     		rbQa.setVisibility(View.GONE);
     	}
     	if (!"1".equals(pdfStr)) {
-    		pagerViewList.remove(1);
-    		rbs.remove(1);
+    		pagerViewList.remove(2);
+    		rbs.remove(2);
     		rbPic.setVisibility(View.GONE);
     	}
     	if (!"1".equals(chatStr)) {
-    		pagerViewList.remove(0);
-    		rbs.remove(0);
+    		pagerViewList.remove(1);
+    		rbs.remove(1);
     		rbChat.setVisibility(View.GONE);
     	}
     	if (rbs.size() > 0) {
