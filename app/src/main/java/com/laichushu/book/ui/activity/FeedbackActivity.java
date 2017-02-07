@@ -14,6 +14,7 @@ import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.JudgeUtil;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
@@ -135,6 +136,15 @@ private String conHint,accHint;
         if (TextUtils.isEmpty(edAccount.getText())) {
             ToastUtil.showToast("请输入邮箱/微信!");
             return false;
+        }
+        if(!TextUtils.isEmpty(edAccount.getText())){
+            if(edAccount.getText().toString().trim().contains("@")|edAccount.getText().toString().trim().contains(".")){
+                if(!JudgeUtil.isEmail(edAccount.getText().toString().trim())){
+                    ToastUtil.showToast("邮箱格式不正确!");
+                    return  false;
+                }
+            }
+
         }
         return true;
     }

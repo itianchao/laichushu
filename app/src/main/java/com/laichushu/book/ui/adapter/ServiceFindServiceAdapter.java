@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindServiceItemListModel;
 import com.laichushu.book.ui.activity.FindServerMainPageActivity;
+import com.laichushu.book.ui.activity.HomePublishTopicActivity;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
@@ -40,7 +42,10 @@ public class ServiceFindServiceAdapter extends RecyclerView.Adapter<ServiceFindS
         holder.ivInto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showToast("详情");
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "serviceShow");
+                bundle.putParcelable("databean",dataBeen.get(position));
+                UIUtil.openActivity(context, HomePublishTopicActivity.class, bundle);
             }
         });
     }

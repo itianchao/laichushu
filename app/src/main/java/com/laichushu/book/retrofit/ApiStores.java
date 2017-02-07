@@ -72,7 +72,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL4;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL2;
 
     /***
      * 注册登录

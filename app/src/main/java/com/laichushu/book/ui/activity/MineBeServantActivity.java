@@ -32,6 +32,7 @@ import com.laichushu.book.mvp.mine.mineservant.MineBeServantView;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
+import com.laichushu.book.utils.JudgeUtil;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
@@ -265,6 +266,14 @@ public class MineBeServantActivity extends MvpActivity2<MineBeServantPresener> i
             ToastUtil.showToast("请输入常用邮箱！");
             return false;
         }
+        if (!TextUtils.isEmpty(edEmail.getText().toString().trim())) {
+            if (!JudgeUtil.isEmail(edEmail.getText().toString().trim())) {
+                ToastUtil.showToast("邮箱格式不正确!");
+                return false;
+            }
+        }
+
+
         if (TextUtils.isEmpty(edIdProve.getText().toString().trim())) {
             ToastUtil.showToast("请输入身份证明人！");
             return false;

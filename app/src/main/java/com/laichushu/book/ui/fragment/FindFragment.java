@@ -9,7 +9,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.FindCourseCommResult;
-import com.laichushu.book.bean.netbean.FindLessonListResult;
 import com.laichushu.book.mvp.find.FindPresenter;
 import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
 import com.laichushu.book.mvp.find.group.GroupListModle;
