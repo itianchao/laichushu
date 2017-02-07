@@ -77,7 +77,6 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         addNewBookLay.setOnClickListener(this);
         mRecyclerView = (PullLoadMoreRecyclerView) manageView.findViewById(R.id.manage_book_list);
         mRecyclerView.setLinearLayout();
-        mRecyclerView.setScrollbarFadingEnabled(false);
         mRecyclerView.setOnPullLoadMoreListener(this);
         return manageView;
     }
