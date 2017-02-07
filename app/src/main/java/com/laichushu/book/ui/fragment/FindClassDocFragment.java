@@ -73,6 +73,7 @@ public class FindClassDocFragment extends MvpFragment2<FindClassDocPresenter> im
     @Override
     public void onRefresh() {
         pageNo = 1;
+        mvpPresenter.getParamet().setPageNo(pageNo + "");
         mData.clear();
         mvpPresenter.loadVideoList(true);
     }

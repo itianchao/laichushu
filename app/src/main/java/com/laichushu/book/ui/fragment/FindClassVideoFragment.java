@@ -79,6 +79,7 @@ public class FindClassVideoFragment extends MvpFragment2<FindClassVideoPresenter
     @Override
     public void onRefresh() {
         pageNo = 1;
+        mvpPresenter.getParamet().setPageNo(pageNo + "");
         mData.clear();
         mvpPresenter.loadVideoList(true);
     }
