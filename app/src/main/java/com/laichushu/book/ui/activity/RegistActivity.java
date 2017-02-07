@@ -145,6 +145,7 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() == 11) {
                     AMUtils.onInactive(mActivity, phoneEt);
+                    AMUtils.onActive(mActivity, codeEt);
                 }
             }
 

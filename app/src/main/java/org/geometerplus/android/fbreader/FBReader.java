@@ -513,7 +513,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             }
         });
         popWindow.setWidth(com.laichushu.book.utils.UIUtil.dip2px(90));
-        popWindow.setHeight(com.laichushu.book.utils.UIUtil.dip2px(100));
+        popWindow.setHeight(com.laichushu.book.utils.UIUtil.dip2px(150));
         popWindow.showAsDropDown(v, 0, com.laichushu.book.utils.UIUtil.dip2px(10));
     }
 

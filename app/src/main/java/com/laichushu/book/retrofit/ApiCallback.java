@@ -4,14 +4,10 @@ package com.laichushu.book.retrofit;
 import android.text.TextUtils;
 
 import com.laichushu.book.bean.netbean.BaseModel;
-import com.laichushu.book.db.Cache_Json;
-import com.laichushu.book.db.Cache_JsonDao;
-import com.laichushu.book.ui.activity.LoginActivity;
-import com.laichushu.book.utils.AppManager;
+import com.laichushu.book.global.ErrorCodeValue;
+import com.laichushu.book.utils.ArticleDialogUtil;
 import com.laichushu.book.utils.DialogUtil;
-import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
-import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -56,15 +52,37 @@ public abstract class ApiCallback<M extends BaseModel> extends Subscriber<M> {
 
     @Override
     public void onNext(M model) {
-        //104 非法签名  105  空
-        if(!TextUtils.isEmpty(model.getErrCode())){
-            if(model.getErrCode().equals("104")){
-                DialogUtil.showDialog();
-                return;
+        String code = model.getErrCode();
+        if(!TextUtils.isEmpty(code)){
+            switch(code){
+                case ErrorCodeValue.TOKEN_ILLEGAL:
+                    DialogUtil.showDialog();
+                    break;
+                case ErrorCodeValue.ARTICLE_DELETE:
+                    ArticleDialogUtil.showDialog("图书已被删除，页面即将关闭");
+                    break;
+                case ErrorCodeValue.ARTICLE_FREEZE:
+                    ArticleDialogUtil.showDialog("图书已被冻结，页面即将关闭");
+                    break;
+                case ErrorCodeValue.ARTICLE_UNONLINE:
+                    ArticleDialogUtil.showDialog("图书为线下图书，页面即将关闭");
+                    break;
+                case ErrorCodeValue.ARTICLE_ADD:
+                    ArticleDialogUtil.showDialog("图书已下架，页面即将关闭");
+                    break;
+                case ErrorCodeValue.ARTICLE_PUB:
+                    ArticleDialogUtil.showDialog("图书出版中，页面即将关闭");
+                    break;
+                case ErrorCodeValue.ARTICLE_NO_PERMISSION:
+                    ArticleDialogUtil.showDialog("图书权限不足，页面即将关闭");
+                    break;
+                case ErrorCodeValue.ARTICLE_NO_EXIST:
+                    ArticleDialogUtil.showDialog("图书不存在，页面即将关闭");
+                    break;
             }
+        }else {
+            onSuccess(model);
         }
-        onSuccess(model);
-
     }
 
     @Override

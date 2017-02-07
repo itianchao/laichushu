@@ -120,7 +120,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         createGroupTv.setOnClickListener(this);
         //设置标题图片
         GlideUitl.loadImg2(this, R.drawable.search_icon, searchIv);
-        GlideUitl.loadImg2(this, R.drawable.navigation_mine_normal, mineIv);
+        GlideUitl.loadImg2(this, R.drawable.find_mine_collect2x, mineIv);
         //设置名称
         titleTv.setText("小组");
         //创建adapter

@@ -55,7 +55,7 @@ public class WritePresenter extends BasePresenter<WriteView> {
         this.bookList_paramet = bookList_paramet;
     }
 
-    ArticleBookList_Paramet bookList_paramet = new ArticleBookList_Paramet(ConstantValue.USERID, pageNo, ConstantValue.PAGESIZE1, ConstantValue.USERID);
+    ArticleBookList_Paramet bookList_paramet = new ArticleBookList_Paramet(ConstantValue.USERID, pageNo, ConstantValue.PAGESIZE, ConstantValue.USERID);
     public void getArticleBookList() {
         LoggerUtil.e("获取创作列表");
 

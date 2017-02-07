@@ -130,6 +130,7 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
             bundle.putString("pdf", info.getPdfView());
             bundle.putString("qa", info.getQaView());
             bundle.putInt("dvr", roomInfo.getDvr());
+            bundle.putString("brief", roomInfo.getDesc());
             UIUtil.openActivity(mActivity, LiveRoomActivity.class,bundle);
         }
 

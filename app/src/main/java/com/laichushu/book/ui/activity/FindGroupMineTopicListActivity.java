@@ -101,6 +101,7 @@ public class FindGroupMineTopicListActivity extends MvpActivity2<FindGroupMineTo
     @Override
     public void onRefresh() {
         pageNo = 1;
+        mData.clear();
         mvpPresenter.getParamet().setPageNo(pageNo+"");
         mvpPresenter.loadData(type);
     }
@@ -110,7 +111,7 @@ public class FindGroupMineTopicListActivity extends MvpActivity2<FindGroupMineTo
      */
     @Override
     public void onLoadMore() {
-        mvpPresenter.getParamet().setPageNo(pageNo+"");
+        mvpPresenter.loadData(type);
     }
 
     /**

@@ -48,7 +48,7 @@
 
     <GridView
         android:id="@+id/gv_child"
-        android:numColumns="2"
+        android:numColumns="1"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
