@@ -763,7 +763,7 @@ public class MediaPlayFragment extends Fragment implements
 		AlertDialog.OnClickListener onClickListener = new AlertDialog.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				mActivity.finish();
+//				mActivity.finish();
 			}
 
 		};

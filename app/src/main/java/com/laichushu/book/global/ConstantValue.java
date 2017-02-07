@@ -146,7 +146,7 @@ public class ConstantValue {
     public static String API_SERVER_URL1 = "http://192.168.1.103:8082/book-app/";//张峰
     public static String API_SERVER_URL2 = "http://192.168.1.150:8082/book-app/";//施大勇5
     public static String API_SERVER_URL3 = "http://test2.laichushu.com/book-app-web/";
-    public static String API_SERVER_URL4 = "http://192.168.1.138:8082/book-app/";//胡体勇
+    public static String API_SERVER_URL4 = "http://192.168.1.137:8082/book-app/";//胡体勇
     //    public static String API_SERVER_URL = "http://60.205.141.21:8099/";
 //    public static String API_SERVER_URL = "http://192.168.191.1:8082/book-app/";
 //    public static String API_SERVER_URL = "http://test2.laichushu.com/book-app-web/";

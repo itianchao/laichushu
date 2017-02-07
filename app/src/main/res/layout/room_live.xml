@@ -62,12 +62,12 @@
             android:text="准备中……"
             android:textColor="@android:color/white" />
 
-        <com.bokecc.live.barrageview.BarrageLayout
+        <com.laichushu.book.ui.cc.BarrageLayout
             android:id="@+id/bl_barrage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" >
-        </com.bokecc.live.barrageview.BarrageLayout>
+        </com.laichushu.book.ui.cc.BarrageLayout>
 
         <RelativeLayout
             android:id="@+id/rl_surfaceview_bottom"
