@@ -242,13 +242,13 @@
                 android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/iv_collection"
-                android:src="@drawable/icon_praise_no"
+                android:src="@drawable/icon_uncollect"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/iv_reward"
-                android:src="@drawable/reward"
+                android:src="@drawable/icon_pay"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
