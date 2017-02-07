@@ -49,6 +49,7 @@
         android:background="@drawable/shape_rectangle_fill_hint"
         android:gravity="center_vertical"
         android:hint="邮箱/微信号"
+        android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM@._"
         android:paddingLeft="12dp"
         android:paddingTop="12dp"
         android:textColor="@color/characterGray"

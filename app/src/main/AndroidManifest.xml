@@ -81,7 +81,7 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-        <!-- 微信支付回调-->
+        <!-- 微信支付回调 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"

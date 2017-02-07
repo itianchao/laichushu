@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.netbean.FindServiceItemListModel;
 import com.laichushu.book.bean.netbean.NoticesSave_Paramet;
 import com.laichushu.book.bean.netbean.PublishTopic_Paramet;
 import com.laichushu.book.bean.netbean.SaveServeItem_paramet;
@@ -27,12 +28,14 @@ import com.laichushu.book.utils.UIUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.List;
+
 public class HomePublishTopicActivity extends MvpActivity2 implements View.OnClickListener {
     private ImageView ivBack;
     private TextView tvTitle, tvRight;
     private EditText edAddTitle, edAddContent;
     private String type = null, partyId;
-
+    private FindServiceItemListModel.DataBean dataBeen;
     @Override
     protected View createSuccessView() {
         View inflate = UIUtil.inflate(R.layout.activity_home_publisha_topic);
@@ -62,6 +65,18 @@ public class HomePublishTopicActivity extends MvpActivity2 implements View.OnCli
                 case "service":
                     tvTitle.setText("添加服务");
                     tvRight.setText("保存");
+                    break;
+                case "serviceShow":
+                    dataBeen=getIntent().getParcelableExtra("databean");
+                    tvTitle.setText("服务详情");
+                    tvRight.setText(null);
+                    tvRight.setVisibility(View.INVISIBLE);
+                    edAddTitle.setText(dataBeen.getName());
+                    edAddContent.setText(dataBeen.getContent());
+                    edAddTitle.setFocusableInTouchMode(false);
+                    edAddContent.setFocusableInTouchMode(false);
+                    edAddTitle.setFocusable(false);
+                    edAddContent.setFocusable(false);
                     break;
                 case "2":
                     tvTitle.setText("发表新话题");

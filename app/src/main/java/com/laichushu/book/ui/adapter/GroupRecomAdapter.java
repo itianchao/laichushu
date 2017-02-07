@@ -41,34 +41,42 @@ public class GroupRecomAdapter extends RecyclerView.Adapter<GroupRecomAdapter.Vi
 
     @Override
     public void onBindViewHolder(GroupRecomAdapter.ViewHolder holder, final int position) {
-//        int width=(UIUtil.getScreenWidth()/4)-(12*8);
-        int width=(960/4)-(12*12);
+        int width = 0;
+        if (UIUtil.getScreenWidth() < 1000) {
+            width = (UIUtil.getScreenWidth() / 4) - (12 * 8);
+        } else {
+            width = (UIUtil.getScreenWidth() / 4) - (12 * 12);
+        }
+
         LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
-                width,width
+                width, width
         );
 
         holder.hot1Iv.setLayoutParams(linearParams);
         final GroupListModle.DataBean dataBean = dataBeen.get(position);
-        GlideUitl.loadCornersImg(mActivity, 50, dataBean.getPhoto(),width,width, holder.hot1Iv);
+        GlideUitl.loadCornersImg(mActivity, 80, dataBean.getPhoto(), holder.hot1Iv);
         holder.tvNAme.setText(dataBean.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("bean",dataBean);
-                bundle.putInt("position",position);
-                UIUtil.openActivity(mActivity,FindGroupDetailActivity.class,bundle);
+                bundle.putParcelable("bean", dataBean);
+                bundle.putInt("position", position);
+                UIUtil.openActivity(mActivity, FindGroupDetailActivity.class, bundle);
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return dataBeen == null ? 0 : dataBeen.size();
     }
+
     @Override
     public long getItemId(int position) {
         return position;
     }
+
     public void refreshAdapter(List<GroupListModle.DataBean> listData) {
         dataBeen.clear();
         if (listData.size() > 0) {

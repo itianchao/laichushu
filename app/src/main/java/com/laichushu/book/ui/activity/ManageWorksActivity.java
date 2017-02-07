@@ -78,6 +78,7 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
         mRecyclerView = (PullLoadMoreRecyclerView) manageView.findViewById(R.id.manage_book_list);
         mRecyclerView.setLinearLayout();
         mRecyclerView.setOnPullLoadMoreListener(this);
+        mRecyclerView.setPushRefreshEnable(false);
         return manageView;
     }
 
@@ -115,13 +116,18 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
 
     @Override
     public void getDataSuccess(HomeHotModel model) {
-        mRecyclerView.setPullLoadMoreCompleted();
         if (model.isSuccess()) {
+            if(null!=model.getData()){
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                mData.addAll(model.getData());
+                writeBookAdapter.setmData(mData);
+                PAGE_NO++;
+            } else {
+                ToastUtil.showToast(R.string.errMsg_empty);
+            }
+            mRecyclerView.setPullLoadMoreCompleted();
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            mData.addAll(model.getData());
-            writeBookAdapter.setmData(mData);
             isLoad = false;
-            PAGE_NO++;
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             refurshData();
