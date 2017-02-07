@@ -414,7 +414,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
      */
     @Override
     public void getUserHomeBookListSuccess(HomeHotModel result) {
-        dismissProgressDialog();
+        dismissDialog();
         worksData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -424,7 +424,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }, 300);
         if (result.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (null != result.getData()&&!result.getData().isEmpty()) {
+            if (null != result.getData() && !result.getData().isEmpty()) {
                 worksData = result.getData();
                 worksAdapter.refreshAdapter(worksData);
                 PAGE_NO++;
@@ -450,7 +450,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
      */
     @Override
     public void getUserHomeFocusHeSuccess(HomePersonFocusResult result) {
-        dismissProgressDialog();
+        dismissDialog();
         focusBeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -460,7 +460,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }, 300);
         if (result.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
-            if (null != result.getData()&&!result.getData().isEmpty()) {
+            if (null != result.getData() && !result.getData().isEmpty()) {
                 focusBeData = result.getData();
                 PAGE_NO++;
             } else {
@@ -469,14 +469,14 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                     tvTips.setText("暂时没有人关注Ta！");
                 }
             }
+            heAdapter.refreshAdapter(focusBeData);
         } else {
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (PAGE_NO == 1) {
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText(result.getErrMsg());
             }
         }
-        heAdapter.refreshAdapter(focusBeData);
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     /**
@@ -486,7 +486,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
      */
     @Override
     public void getUserHomeHeFocusSuccess(HomePersonFocusResult result) {
-        dismissProgressDialog();
+       dismissDialog();
         focusMeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -495,7 +495,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             }
         }, 300);
         if (result.isSuccess()) {
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (null != result.getData() && !result.getData().isEmpty()) {
                 focusMeData = result.getData();
                 PAGE_NO++;
@@ -505,15 +504,14 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                     tvTips.setText("Ta暂时未关注任何人！");
                 }
             }
-        } else {
             beAdapter.refreshAdapter(focusMeData);
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        } else {
             if (PAGE_NO == 1) {
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText(result.getErrMsg());
             }
         }
-        beAdapter.refreshAdapter(focusMeData);
+        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 
     /**
@@ -716,16 +714,16 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             mvpPresenter.getUserDynmicDate(userId);//动态
         } else if (type == 2) {
             worksData.clear();
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getBookList().setPageNo(PAGE_NO + "");
             mvpPresenter.getUserBookListDate(userId);//作品
         } else if (type == 3) {
-            focusBeData.clear();
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserHeFocusDate(userId);//他关注的
-        } else if (type == 4) {
             focusMeData.clear();
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getFocusBe_parmet().setPageNo(PAGE_NO + "");
             mvpPresenter.getUserHeFocusDate(userId);//关注他的
+        } else if (type == 4) {
+            focusBeData.clear();
+            mvpPresenter.getFocusBe_parmet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getUserFocusHeDate(userId);//他关注的
         }
     }
 
@@ -735,14 +733,14 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.getUserDynmicDate(userId);//请求网络获取搜索列表
         } else if (type == 2) {
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getBookList().setPageNo(PAGE_NO + "");
             mvpPresenter.getUserBookListDate(userId);//请求网络获取搜索列表
         } else if (type == 3) {
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getFocusBe_parmet().setPageNo(PAGE_NO + "");
             mvpPresenter.getUserHeFocusDate(userId);//请求网络获取搜索列表
         } else if (type == 4) {
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
-            mvpPresenter.getUserHeFocusDate(userId);//请求网络获取搜索列表
+            mvpPresenter.getFocusMe_parmet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getUserFocusHeDate(userId);//请求网络获取搜索列表
         }
     }
 

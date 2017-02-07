@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.activity;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -15,8 +14,6 @@ import com.laichushu.book.bean.netbean.BookDetailsModle;
 import com.laichushu.book.bean.netbean.MessageCommentResult;
 import com.laichushu.book.bean.netbean.PerMsgInfoReward;
 import com.laichushu.book.event.RefrushPerInfoEvent;
-import com.laichushu.book.event.RefrushWalletEvent;
-import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.home.homelist.HomeHotModel;
 import com.laichushu.book.mvp.msg.messagecomment.MessageCommentPresenter;
 import com.laichushu.book.mvp.msg.messagecomment.MessageCommentView;

@@ -329,7 +329,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             }
             fmAdapter.refreshAdapter(focusMeData);
         } else {
-            ToastUtil.showToast(R.string.errMsg_empty);
+            ToastUtil.showToast(model.getErrMsg());
         }
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }

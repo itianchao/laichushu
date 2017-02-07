@@ -39,7 +39,7 @@ public class MineAddServiceAdapter extends RecyclerView.Adapter<MineAddServiceAd
     @Override
     public void onBindViewHolder(MineAddServiceAdapter.ViewHolder holder, final int position) {
         holder.nickname.setText(dataBeen.get(position).getName());
-        holder.ivInto.setOnClickListener(new View.OnClickListener() {
+        holder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();

@@ -76,7 +76,7 @@ public class MineAddServantActivity extends MvpActivity2 implements View.OnClick
         addServiceAdapter = new MineAddServiceAdapter(this, serviceDate);
         mServiceRecyclerView.setAdapter(addServiceAdapter);
         mServiceRecyclerView.setOnPullLoadMoreListener(this);
-//获取服务
+       //获取服务
         getData();
     }
 

@@ -12,7 +12,7 @@
     <RelativeLayout
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/inclod_top"
         android:background="@color/global">
 
@@ -21,9 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="24dp"
             android:paddingLeft="12dp"
-            android:paddingTop="12dp"
+            android:paddingTop="8dp"
             android:text="余额账号(元)"
             android:textColor="@color/characterLightGray"
             android:textSize="@dimen/edit"
@@ -36,15 +36,31 @@
             android:layout_below="@+id/tv_balance"
             android:layout_marginLeft="12dp"
             android:paddingLeft="12dp"
+            android:layout_marginBottom="12dp"
             android:paddingTop="12dp"
+            android:text="0.00"
             android:textColor="@color/white"
             android:textSize="@dimen/editBig"
-            android:text="0.00"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_freezeStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_balanceShow"
+            android:layout_marginLeft="12dp"
+            android:paddingLeft="12dp"
+            android:text="账户已冻结"
+            android:textColor="@color/red"
+            android:textSize="@dimen/edit"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"
             android:textStyle="bold" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/btn_Recharge"
+        style="@style/button_login_style"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_below="@+id/rl_head"
@@ -52,18 +68,17 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="15dp"
         android:text="充 值"
-        style="@style/button_login_style"
         android:textSize="@dimen/edit" />
 
     <Button
         android:id="@+id/btn_withdrawals"
+        style="@style/button_login_style2"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_below="@+id/btn_Recharge"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="15dp"
-        style="@style/button_login_style2"
         android:text="提 现"
         android:textSize="@dimen/edit" />
 
@@ -77,10 +92,9 @@
         android:paddingLeft="24dp"
         android:paddingTop="24dp"
         android:text="交易记录"
-        android:visibility="gone"
         android:textColor="@color/characterLightGray2"
         android:textSize="@dimen/edit"
-         />
+        android:visibility="gone" />
 
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/ryv_transRecord"

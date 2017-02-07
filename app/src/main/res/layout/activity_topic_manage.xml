@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bgGrey">
+    android:background="@color/bgGrey"
+    android:fillViewport="true">
 
-    <include
-        layout="@layout/page_title" />
-    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-        android:id="@+id/ryv_topic_manager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="12dp" />
+        android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/include_top"
+            layout="@layout/page_title" />
 
-</LinearLayout>
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_topic_manager"
+            android:layout_below="@+id/include_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp" />
+    </RelativeLayout>
+
+</ScrollView>

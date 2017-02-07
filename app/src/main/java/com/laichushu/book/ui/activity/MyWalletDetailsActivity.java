@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implements WalletView, View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private ImageView ivBack;
-    private TextView tvTitle, tvBalanceShow, tvTransRecord;
+    private TextView tvTitle, tvBalanceShow, tvTransRecord,tvFreezeStatus ;
     private Button btnRecharge, btnWithdrawals;
     private PullLoadMoreRecyclerView mRecordRecyclerView;
     private List<WalletBalanceReward.DataBean> recordData = new ArrayList<>();
@@ -53,6 +53,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
         EventBus.getDefault().register(this);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
+        tvFreezeStatus = ((TextView) inflate.findViewById(R.id.tv_freezeStatus));
         tvTransRecord = ((TextView) inflate.findViewById(R.id.tv_transRecord));
         tvBalanceShow = ((TextView) inflate.findViewById(R.id.tv_balanceShow));
         btnRecharge = ((Button) inflate.findViewById(R.id.btn_Recharge));
@@ -114,12 +115,38 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
             bean = model;
             recordData = model.getData();
             tvBalanceShow.setText(model.getBalance() + "");
+            //TODO 账户状态
+            if(null!=model.getStatus()){
+                switch (model.getStatus()){
+                    case "1":
+                        tvFreezeStatus.setText("账户正常");
+                        tvFreezeStatus.setVisibility(View.VISIBLE);
+                        break;
+                    case "2":
+                        tvFreezeStatus.setText("账户已冻结");
+                        tvFreezeStatus.setVisibility(View.VISIBLE);
+                        btnRecharge.setBackgroundColor(mActivity.getResources().getColor(R.color.Grey));
+                        btnWithdrawals.setBackgroundColor(mActivity.getResources().getColor(R.color.Grey));
+                        btnRecharge.setClickable(false);
+                        btnWithdrawals.setClickable(false);
+                        break;
+                    case "3":
+                        tvFreezeStatus.setText("账户已被删除");
+                        tvFreezeStatus.setVisibility(View.VISIBLE);
+                        btnRecharge.setBackgroundResource(R.drawable.shape_rectangle_bg_gray);
+                        btnWithdrawals.setBackgroundResource(R.drawable.shape_rectangle_bg_gray);
+                        btnRecharge.setClickable(false);
+                        btnWithdrawals.setClickable(false);
+                        break;
+                }
+            }
+
             if (!recordData.isEmpty()) {
                 tvTransRecord.setVisibility(View.VISIBLE);
                 recordAdapter.refreshAdapter(recordData);
                 PAGE_NO++;
             } else {
-
+                ToastUtil.showToast(R.string.errMsg_empty);
             }
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {

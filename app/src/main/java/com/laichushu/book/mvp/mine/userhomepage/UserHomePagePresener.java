@@ -168,7 +168,7 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
 
             @Override
             public void onFinish() {
-
+mvpView.dismissDialog();
             }
         });
     }
@@ -201,7 +201,7 @@ public class UserHomePagePresener extends BasePresenter<UserHomePageView> {
 
             @Override
             public void onFinish() {
-
+                mvpView.dismissDialog();
             }
         });
     }

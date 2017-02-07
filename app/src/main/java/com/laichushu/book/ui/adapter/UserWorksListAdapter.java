@@ -67,7 +67,6 @@ public class UserWorksListAdapter extends RecyclerView.Adapter<UserWorksListAdap
     }
 
     public void refreshAdapter(List<HomeHotModel.DataBean> listData) {
-        dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);
             this.notifyDataSetChanged();

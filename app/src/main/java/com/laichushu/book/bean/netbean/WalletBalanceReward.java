@@ -22,6 +22,7 @@ public class WalletBalanceReward extends BaseModel implements Parcelable {
     private double balance;
     private String errMsg;
     private boolean success;
+    private String status;
     private List<DataBean> data;
 
     public String getErrMsg() {
@@ -30,6 +31,14 @@ public class WalletBalanceReward extends BaseModel implements Parcelable {
 
     public void setErrMsg(String errMsg) {
         this.errMsg = errMsg;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public double getBalance() {
