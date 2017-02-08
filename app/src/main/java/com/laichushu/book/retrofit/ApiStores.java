@@ -72,7 +72,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL3;
 
     /***
      * 注册登录
@@ -82,7 +82,8 @@ public interface ApiStores {
     Observable<LoginModel> loginLoadData(@Body Login_Paramet paramet);
 
     //校验手机号和验证码接口
-    @POST("register/valid")
+//    @POST("register/valid")
+    @POST("valid/code")
     Observable<RegistModel> registCode(@Body RegistValid_Paramet paramet);
 
     //注册接口
@@ -93,6 +94,9 @@ public interface ApiStores {
     @POST("user/resetPwd")
     Observable<ForgetPwdModel> forgetPwdData(@Body ForgetPwd_Paramet paramet);
 
+    //发送验证码的接口为：
+    @POST("msg/send")
+    Observable<RewardResult> sendMsg(@Body SendMsg_Paramet paramet);
     /***
      * 首页
      */
@@ -617,10 +621,6 @@ public interface ApiStores {
     //获取url下载接口
     @POST("chapter/download")
     Observable<UrlResult> downloadEpubFile(@Body DownloadEpubFilePermission_Paramet paramet);
-
-    //发送验证码的接口为：
-    @POST("msg/send")
-    Observable<RewardResult> sendMsg(@Body SendMsg_Paramet paramet);
 
     //下载文件
 //    @Streaming //大文件时要加不然会OOM

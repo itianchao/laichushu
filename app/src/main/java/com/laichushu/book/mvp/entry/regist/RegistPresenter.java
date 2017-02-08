@@ -161,7 +161,7 @@ public class RegistPresenter extends BasePresenter<RegistView> {
      * @param code
      */
     public void valid(String phone, String code) {
-        RegistValid_Paramet paramet = new RegistValid_Paramet(phone, code);
+        RegistValid_Paramet paramet = new RegistValid_Paramet(phone, code,type);
         addSubscription(apiStores.registCode(paramet), new ApiCallback<RegistModel>() {
             @Override
             public void onSuccess(RegistModel model) {

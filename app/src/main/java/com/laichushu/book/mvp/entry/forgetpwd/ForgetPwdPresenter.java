@@ -34,7 +34,6 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
 
     public void loadCode(String phone) {
         SendMsg_Paramet paramet = new SendMsg_Paramet(phone,type);
-
         LoggerUtil.e("校验code参数");
         LoggerUtil.toJson(new Gson().toJson(paramet));
         addSubscription(apiStores.sendMsg(paramet), new ApiCallback<RewardResult>() {
@@ -159,7 +158,7 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
     public void reset(String phone, String newPwd, String rePwd) {
         mvpView.showLoading();
         ForgetPwd_Paramet paramet = new ForgetPwd_Paramet(phone, newPwd, rePwd);
-        Logger.e("登录请求参数");
+        Logger.e("重置密码参数");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.forgetPwdData(paramet),
                 new ApiCallback<ForgetPwdModel>() {

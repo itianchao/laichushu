@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -142,10 +143,37 @@ public class LiveReplayActivity extends Activity implements SurfaceHolder.Callba
         initRoomShow();
         
         initPlayer();
-        
+		initRawards();
         HttpUtil.LOG_LEVEL = HttpUtil.HttpLogLevel.DETAIL;
     }
-    
+	/**
+	 * 中间条目 标题、下载、收藏、打赏
+	 */
+	private void initRawards() {
+		ImageView rewardIv = (ImageView) findViewById(R.id.iv_reward);
+		ImageView collectionIv = (ImageView) findViewById(R.id.iv_collection);
+		ImageView downloadIv = (ImageView) findViewById(R.id.iv_download);
+		TextView titleTv = (TextView) findViewById(R.id.tv_title);
+		titleTv.setText("");
+		rewardIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+		collectionIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+		downloadIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+	}
     private void initRoomShow() {
     	
     	Intent intent = getIntent();
@@ -154,7 +182,8 @@ public class LiveReplayActivity extends Activity implements SurfaceHolder.Callba
         chatStr = bundle.getString("chat");
         pdfStr = bundle.getString("pdf");
         qaStr = bundle.getString("qa");
-    	
+		tabHost.addTab(tabHost.newTabSpec("tab0").setIndicator("简介").setContent(R.id.lay_brief));
+
     	if ("1".equals(chatStr)) {
 			tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("聊天").setContent(R.id.msg_layout));  
 		}
@@ -218,6 +247,10 @@ public class LiveReplayActivity extends Activity implements SurfaceHolder.Callba
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
 		});
+		//
+		TextView briefviewTv = (TextView) findViewById(R.id.tv_brief);
+		String brief = getIntent().getStringExtra("brief");
+		briefviewTv.setText(brief);
     }
     
     private String chatStr, pdfStr, qaStr;

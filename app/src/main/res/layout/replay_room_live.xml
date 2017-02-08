@@ -87,6 +87,42 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical" >
+            <include layout="@layout/item_distance"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_marginLeft="10dp"
+                    tools:text="马化腾的创业坎坷之路"
+                    android:textColor="@color/edit2"
+                    android:textSize="16sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="6"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/iv_download"
+                    android:src="@drawable/icon_download"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/iv_collection"
+                    android:src="@drawable/icon_uncollect"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/iv_reward"
+                    android:src="@drawable/icon_pay"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <include layout="@layout/item_distance"/>
 
             <TabWidget
                 android:id="@android:id/tabs"
@@ -99,6 +135,16 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="#dddddd" >
+                <LinearLayout
+                    android:id="@+id/lay_brief"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical" >
+
+                    <include layout="@layout/item_brief"/>
+                </LinearLayout>
 
                 <com.bokecc.sdk.mobile.live.widget.DocView
                     android:id="@+id/replay_docView"
@@ -136,6 +182,7 @@
                         android:layout_weight="100" >
                     </ListView>
                 </LinearLayout>
+
             </FrameLayout>
         </LinearLayout>
     </TabHost>

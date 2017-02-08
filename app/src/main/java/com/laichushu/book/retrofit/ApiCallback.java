@@ -7,7 +7,7 @@ import com.laichushu.book.bean.netbean.BaseModel;
 import com.laichushu.book.global.ErrorCodeValue;
 import com.laichushu.book.utils.ArticleDialogUtil;
 import com.laichushu.book.utils.DialogUtil;
-import com.laichushu.book.utils.ToastUtil;
+import com.laichushu.book.utils.NetDialogUtil;
 import com.orhanobut.logger.Logger;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -35,26 +35,27 @@ public abstract class ApiCallback<M extends BaseModel> extends Subscriber<M> {
             Logger.e("code: ", code);
             if (code == 504) {
                 msg = "网络不给力";
-                ToastUtil.showToast("网络错误，请检查网络！");
+                onFailure(code, msg);
+                NetDialogUtil.showToast("网络错误，请检查网络！");
             }
             if (code == 502 || code == 404) {
                 msg = "服务器异常，请稍后再试";
-                ToastUtil.showToast("服务器异常，请稍后再试！");
+                onFailure(code, msg);
+                NetDialogUtil.showToast("服务器异常，请稍后再试！");
             }
             onFailure(code, msg);
         } else {
-            ToastUtil.showToast("网络错误，请检查网络！");
-            onFailure(0, e.getMessage());
+            onFailure(0, "网络错误，请检查网络！");
+            NetDialogUtil.showToast("网络错误，请检查网络！");
         }
         onFinish();
-
     }
 
     @Override
     public void onNext(M model) {
         String code = model.getErrCode();
-        if(!TextUtils.isEmpty(code)){
-            switch(code){
+        if (!TextUtils.isEmpty(code)) {
+            switch (code) {
                 case ErrorCodeValue.TOKEN_ILLEGAL:
                     DialogUtil.showDialog();
                     break;
@@ -80,7 +81,7 @@ public abstract class ApiCallback<M extends BaseModel> extends Subscriber<M> {
                     ArticleDialogUtil.showDialog("图书不存在，页面即将关闭");
                     break;
             }
-        }else {
+        } else {
             onSuccess(model);
         }
     }
