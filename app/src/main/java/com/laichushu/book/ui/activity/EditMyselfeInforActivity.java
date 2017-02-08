@@ -459,7 +459,21 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         }
         return result;
     }
-
+    /**
+     * 通过市名字获取省份代号
+     *
+     * @param province
+     * @return
+     */
+    private String getProCodeByCity(String province) {
+        String result = null;
+        for (int i = 0; i < city_idList.size(); i++) {
+            if (province.equals(city_idList.get(i).getCity())) {
+                result = city_idList.get(i).getCityCode();
+            }
+        }
+        return result;
+    }
     /**
      * @param proCode
      * @return 根据proCode查询城市
@@ -499,11 +513,19 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
         wvProvince.setItems(getProvonce());
         wvCity.setItems(getCity("01"));
         final String[] curProvince = {"北京市"};
+        final String[] curCity = {"北京市"};
         wvProvince.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(int position, String item) {
                 curProvince[0] = item;
                 wvCity.setItems(getCity(getProCodeByProvince(item)));
+                curCity[0] = getCity(getProCodeByProvince(item)).get(0);
+            }
+        });
+        wvCity.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+            @Override
+            public void onSelected(int position, String item) {
+                curCity[0] = item;
             }
         });
         tvCancel.setOnClickListener(new View.OnClickListener() {
@@ -516,8 +538,8 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
             @Override
             public void onClick(View v) {
                 //提交数据
-                tvCity.setText(curProvince[0]);
-                curProCode = getProCodeByProvince(curProvince[0]);
+                tvCity.setText(curProvince[0]+curCity[0]);
+                curProCode = getProCodeByProvince(curProvince[0])+getProCodeByCity(curCity[0]);
                 alertDialog.dismiss();
             }
         });

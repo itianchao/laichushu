@@ -121,7 +121,6 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
 
     @Override
     public void getDataFail(String msg) {
-        toastShow("请检查网络");
         Logger.e("网络失败原因：", msg);
     }
 
@@ -334,7 +333,7 @@ public class Regist2Activity extends MvpActivity<RegistPresenter2> implements Re
             @Override
             public void onClick(View v) {
                 //提交数据
-                addressTv.setText(curProvince[0]+"-"+curCity[0]);
+                addressTv.setText(curProvince[0]+curCity[0]);
                 curProCode = getProCodeByProvince(curProvince[0])+getProCodeByCity(curCity[0]);
                 alertDialog.dismiss();
             }

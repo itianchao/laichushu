@@ -79,7 +79,6 @@ public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implement
 
     @Override
     public void getDataFail(String msg) {
-        toastShow(msg);
         Logger.e("网络失败原因：", msg);
     }
 

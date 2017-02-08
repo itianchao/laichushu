@@ -92,7 +92,6 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
 
     @Override
     public void getDataFail(String msg) {
-        toastShow(msg);
         Logger.e("网络失败原因：", msg);
     }
 

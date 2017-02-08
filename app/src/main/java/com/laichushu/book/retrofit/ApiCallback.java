@@ -37,11 +37,13 @@ public abstract class ApiCallback<M extends BaseModel> extends Subscriber<M> {
                 msg = "网络不给力";
                 onFailure(code, msg);
                 NetDialogUtil.showToast("网络错误，请检查网络！");
+                return;
             }
             if (code == 502 || code == 404) {
                 msg = "服务器异常，请稍后再试";
                 onFailure(code, msg);
                 NetDialogUtil.showToast("服务器异常，请稍后再试！");
+                return;
             }
             onFailure(code, msg);
         } else {

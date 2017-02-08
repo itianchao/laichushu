@@ -135,7 +135,7 @@
                     android:textSize="@dimen/edit3"
                     tools:text="  个人简介，是当事人全面而简洁地介绍自身情况的一种书面表达方式。求职过程中撰写的个人简介是求职者向欲供职单位全面、简洁、条理清晰地自我介绍、自我推荐的文书。简介是应用写作学研究的一种日常应用文体。" />
             </LinearLayout>
-
+            <include layout="@layout/item_distance" />
             <LinearLayout
                 android:id="@+id/lay_result"
                 android:layout_width="match_parent"
@@ -149,11 +149,11 @@
                     android:gravity="center_vertical"
                     android:text="活动结果"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/edit2" />
-
+                    android:textSize="@dimen/edit2"
+                    android:id="@+id/textView8" />
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_height="0.5dp"
                     android:background="@color/frenchGrey" />
                 <LinearLayout
                     android:id="@+id/lay_container"
