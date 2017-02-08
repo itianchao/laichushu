@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="100dp"
-    android:layout_height="40dp"
+    android:layout_height="45dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/global"
     android:gravity="center_vertical"
@@ -19,7 +19,6 @@
         android:id="@+id/tv_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         tools:text="举报"
         android:textColor="@color/white" />
 </LinearLayout>

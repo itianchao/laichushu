@@ -113,39 +113,42 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
     }
 
     public boolean check(String code, String phone, String newPwd, String rePwd) {
-        boolean isCheck;
         if (phone.isEmpty()) {
-            ToastUtil.showToast("手机号不能为空！");
-            return isCheck = false;
+            ToastUtil.showToast("请输入手机号！");
+            return false;
         } else if (newPwd.isEmpty() || rePwd.isEmpty()) {
-            ToastUtil.showToast("密码不能为空！");
-            return isCheck = false;
+            ToastUtil.showToast("请输入密码！");
+            return false;
         } else if (phone.length() < 11) {
-            ToastUtil.showToast("手机号11位！");
-            return isCheck = false;
+            ToastUtil.showToast("手机号大于11位！");
+            return false;
         } else if (newPwd.length() < 6 || rePwd.length() < 6) {
             ToastUtil.showToast("账号或密码错误！");
-            return isCheck = false;
+            return false;
         }
         if (!Validator.isMobile(phone)) {
             ToastUtil.showToast("请输入正确的手机号!");
-            return isCheck = false;
+            return false;
         }
-        if (!Validator.isUsername(newPwd) || !Validator.isUsername(rePwd)) {
-            ToastUtil.showToast("账号或密码错误！");
-            return isCheck = false;
+        if(TextUtils.isEmpty(code)){
+            ToastUtil.showToast("请输入验证码!");
+            return false;
         }
-        if (code.length() < 4) {
-            ToastUtil.showToast("验证码位数不正确，请重新输入！");
-            return isCheck = false;
-        } else if (code.length() > 8) {
-            ToastUtil.showToast("验证码位数不正确，请重新输入！");
-            return isCheck = false;
-        } else if (!Validator.isUsername(code)) {
-            ToastUtil.showToast("账号或密码错误！");
-            return isCheck = false;
-        }
-        return isCheck = true;
+//        if (!Validator.isUsername(newPwd) || !Validator.isUsername(rePwd)) {
+//            ToastUtil.showToast("账号或密码错误！");
+//            return isCheck = false;
+//        }
+//        if (code.length() < 4) {
+//            ToastUtil.showToast("验证码位数不正确，请重新输入！");
+//            return isCheck = false;
+//        } else if (code.length() > 8) {
+//            ToastUtil.showToast("验证码位数不正确，请重新输入！");
+//            return isCheck = false;
+//        } else if (!Validator.isUsername(code)) {
+//            ToastUtil.showToast("账号或密码错误！");
+//            return isCheck = false;
+//        }
+        return true;
     }
 
     /***

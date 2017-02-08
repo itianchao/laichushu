@@ -63,6 +63,15 @@ public class FindGroupMemberModle extends BaseModel {
         private String teamId;
         private String userId;
         private boolean isFollow;//是否关注
+        private boolean isShowFollow;//显示
+
+        public boolean isShowFollow() {
+            return isShowFollow;
+        }
+
+        public void setShowFollow(boolean showFollow) {
+            isShowFollow = showFollow;
+        }
 
         public String getId() {
             return id;

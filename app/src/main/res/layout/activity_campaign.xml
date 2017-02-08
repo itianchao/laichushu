@@ -30,7 +30,7 @@
 
                 <ImageView
                     android:id="@+id/iv_activity_state"
-                    android:layout_width="55dp"
+                    android:layout_width="60dp"
                     android:layout_height="60dp"
                     tools:src="@drawable/activity_start" />
             </FrameLayout>

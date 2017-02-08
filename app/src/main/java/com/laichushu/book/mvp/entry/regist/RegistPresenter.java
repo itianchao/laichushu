@@ -116,16 +116,15 @@ public class RegistPresenter extends BasePresenter<RegistView> {
 
     //校验
     public boolean check(String phone, String code, boolean b) {
-        boolean isCheck;
 
         if (TextUtils.isEmpty(phone)) {
-            ToastUtil.showToast("帐号不能为空!");
-            return isCheck = false;
+            ToastUtil.showToast("请输入手机号!");
+            return false;
         }
-//        if(TextUtils.isEmpty(code)){
-//            ToastUtil.showToast("验证码不能为空!");
-//            return isCheck = false;
-//        }
+        if(TextUtils.isEmpty(code)){
+            ToastUtil.showToast("请输入验证码!");
+            return false;
+        }
 //        if (code.length()<4){
 //            ToastUtil.showToast("验证码位数不正确，请重新输入！");
 //            return isCheck = false;
@@ -140,18 +139,14 @@ public class RegistPresenter extends BasePresenter<RegistView> {
 //        }
         if (b) {
             ToastUtil.showToast("请同意来出书的用户协议!");
-            return isCheck = false;
-        }
-        if (!Validator.isUsername(phone)) {
-            ToastUtil.showToast("账号或密码错误！");
-            return isCheck = false;
+            return false;
         }
 
         if (!Validator.isMobile(phone)) {
             ToastUtil.showToast("请输入正确的手机号！");
-            return isCheck = false;
+            return false;
         }
-        return isCheck = true;
+        return true;
     }
 
     /**
