@@ -60,10 +60,10 @@ public class RegistPresenter2 extends BasePresenter<RegistView2> {
             ToastUtil.showToast("两次输入的密码不一致");
             return isCheck = false;
         }
-        if (!Validator.isUsername(pwd) && !Validator.isUsername(repwd)) {
-            ToastUtil.showToast("账号或密码错误");
-            return isCheck = false;
-        }
+//        if (!Validator.isUsername(pwd) && !Validator.isUsername(repwd)) {
+//            ToastUtil.showToast("账号或密码错误");
+//            return isCheck = false;
+//        }
         return isCheck = true;
     }
 

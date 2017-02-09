@@ -108,7 +108,7 @@ public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implement
                 String newPwd = newPwdEt.getText().toString().trim();
                 String rePwd = rePwdEt.getText().toString().trim();
                 if (mvpPresenter.check(code, phone, newPwd, rePwd)) {
-                    mvpPresenter.reset(phone, newPwd, rePwd);
+                    mvpPresenter.reset(phone, newPwd, rePwd,code);
                 }
                 break;
         }

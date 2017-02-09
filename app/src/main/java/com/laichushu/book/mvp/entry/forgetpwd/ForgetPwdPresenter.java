@@ -122,10 +122,11 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
         } else if (phone.length() < 11) {
             ToastUtil.showToast("手机号大于11位！");
             return false;
-        } else if (newPwd.length() < 6 || rePwd.length() < 6) {
-            ToastUtil.showToast("账号或密码错误！");
-            return false;
         }
+//        else if (newPwd.length() < 6 || rePwd.length() < 6) {
+//            ToastUtil.showToast("账号或密码错误！");
+//            return false;
+//        }
         if (!Validator.isMobile(phone)) {
             ToastUtil.showToast("请输入正确的手机号!");
             return false;
@@ -157,10 +158,11 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdView> {
      * @param phone
      * @param newPwd
      * @param rePwd
+     * @param code
      */
-    public void reset(String phone, String newPwd, String rePwd) {
+    public void reset( String phone, String newPwd, String rePwd,String code) {
         mvpView.showLoading();
-        ForgetPwd_Paramet paramet = new ForgetPwd_Paramet(phone, newPwd, rePwd);
+        ForgetPwd_Paramet paramet = new ForgetPwd_Paramet(phone, newPwd, rePwd,code);
         Logger.e("重置密码参数");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.forgetPwdData(paramet),
