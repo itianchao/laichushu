@@ -112,7 +112,11 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
         initRead();
         initCommentAndLike();
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("图书详情");
+    }
     /**
      * 初始化标题
      *

@@ -50,6 +50,7 @@ public abstract class MvpFragment2<P extends BasePresenter> extends BaseFragment
                 return MvpFragment2.this.createSuccessView();
             }
         };
+        mPage.mTitle.setVisibility(View.GONE);
         return mPage;
     }
     public abstract View createSuccessView();

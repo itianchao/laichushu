@@ -38,7 +38,6 @@ public class CategoryActivity extends MvpActivity2<CategoryPresenter> implements
     private GridView childGv;
     private CategoryParentAdapter categoryParentAdapter;
     private CategoryChildAdapter categoryChildAdapter;
-
     @Override
     protected void initData() {
         mvpPresenter.loadCategoryData();
@@ -61,7 +60,7 @@ public class CategoryActivity extends MvpActivity2<CategoryPresenter> implements
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            refrushErrorView();
         }
     }
 
@@ -69,7 +68,7 @@ public class CategoryActivity extends MvpActivity2<CategoryPresenter> implements
     public void getDataFail(String msg) {
         Logger.e(msg);
         ToastUtil.showToast("网络失败");
-        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        refrushErrorView();
     }
 
     @Override
@@ -97,6 +96,12 @@ public class CategoryActivity extends MvpActivity2<CategoryPresenter> implements
                 finish();
                 break;
         }
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("分类");
     }
 
     @Override
@@ -133,5 +138,18 @@ public class CategoryActivity extends MvpActivity2<CategoryPresenter> implements
                 dataBean.setPressd(false);
             }
         }
+    }
+    /**
+     * 重新加载
+     */
+    public void refrushErrorView() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.loadCategoryData();
+            }
+        });
     }
 }

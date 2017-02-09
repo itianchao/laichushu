@@ -15,6 +15,8 @@ import com.laichushu.book.mvp.home.commentdetail.CommentDetailModle;
 import com.laichushu.book.mvp.home.commentdetail.CommentDetailView;
 import com.laichushu.book.ui.adapter.CommentDetaileAdapter;
 import com.laichushu.book.ui.base.MvpActivity;
+import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.ToastUtil;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
  * 评论详情
  * Created by wangtong on 2016/11/4.
  */
-public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> implements CommentDetailView, PullLoadMoreRecyclerView.PullLoadMoreListener, View.OnClickListener {
+public class CommentDetailActivity extends MvpActivity2<CommentDetailPersenter> implements CommentDetailView, PullLoadMoreRecyclerView.PullLoadMoreListener, View.OnClickListener {
     private String pageNo = "1";
     private ImageView headIv;
     private TextView nameTv;
@@ -55,7 +57,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     private ArticleCommentModle.DataBean dataBean;
     private String type, tag;
     private ImageView commentIv;
-
+String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,28 +65,36 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     }
 
     @Override
-    protected void initView() {
-        setContentView(R.layout.activity_commentdetail);
-        commentRyv = (PullLoadMoreRecyclerView) findViewById(R.id.ryv_comment);
+    protected View createSuccessView() {
+        View inflate = UIUtil.inflate(R.layout.activity_commentdetail);
+        commentRyv = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_comment);
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
         commentRyv.setFooterViewText("加载中");
-        gradeDetailsIv = (ImageView) findViewById(R.id.iv_gradeDetail);
-        gradeNameTv = (TextView) findViewById(R.id.tv_gradeName);
-        headIv = (ImageView) findViewById(R.id.iv_comment_head);
-        nameTv = (TextView) findViewById(R.id.tv_comment_name);
-        contentTv = (TextView) findViewById(R.id.tv_comment_content);
-        timeTv = (TextView) findViewById(R.id.tv_comment_time);
-        likeIv = (ImageView) findViewById(R.id.iv_comment_like);
-        likeTv = (TextView) findViewById(R.id.tv_comment_like);
-        numberTv = (TextView) findViewById(R.id.tv_comment_number);
-        inIv = (ImageView) findViewById(R.id.iv_comment_in);
-        commentIv = (ImageView) findViewById(R.id.iv_comment);
-        rlComment = (RelativeLayout) findViewById(R.id.rl_commentItem);
-        edComment = (EditText) findViewById(R.id.et_comment);
+        gradeDetailsIv = (ImageView) inflate.findViewById(R.id.iv_gradeDetail);
+        gradeNameTv = (TextView) inflate.findViewById(R.id.tv_gradeName);
+        headIv = (ImageView) inflate.findViewById(R.id.iv_comment_head);
+        nameTv = (TextView) inflate.findViewById(R.id.tv_comment_name);
+        contentTv = (TextView) inflate.findViewById(R.id.tv_comment_content);
+        timeTv = (TextView) inflate.findViewById(R.id.tv_comment_time);
+        likeIv = (ImageView) inflate.findViewById(R.id.iv_comment_like);
+        likeTv = (TextView) inflate.findViewById(R.id.tv_comment_like);
+        numberTv = (TextView) inflate.findViewById(R.id.tv_comment_number);
+        inIv = (ImageView) inflate.findViewById(R.id.iv_comment_in);
+        commentIv = (ImageView) inflate.findViewById(R.id.iv_comment);
+        rlComment = (RelativeLayout) inflate.findViewById(R.id.rl_commentItem);
+        edComment = (EditText) inflate.findViewById(R.id.et_comment);
         mAdapter = new CommentDetaileAdapter(this, mData);
         commentRyv.setAdapter(mAdapter);
         headIv.setOnClickListener(this);
+
+        return inflate;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText(title);
     }
 
     /**
@@ -107,8 +117,10 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         commentId = dataBean.getSourceId();
         if (null == tag) {
             initTitleBar("评论详情");
+            title="评论详情";
         } else if (tag.equals("replay")) {
             initTitleBar("回复评论");
+            title="回复评论";
         }
         //评论者等级
         if (null != dataBean.getLevelType()) {
@@ -185,8 +197,10 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
                 mData.addAll(model.getData());
                 mAdapter.setmData(mData);
             }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
+            refrushErrorView();
         }
     }
 
@@ -195,6 +209,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
         ToastUtil.showToast("请检查网络");
         commentRyv.setPullLoadMoreCompleted();
         Logger.e(msg);
+        refrushErrorView();
     }
 
     @Override
@@ -232,6 +247,7 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
     protected CommentDetailPersenter createPresenter() {
         return new CommentDetailPersenter(this);
     }
+
 
     /**
      * 下拉刷新
@@ -297,5 +313,19 @@ public class CommentDetailActivity extends MvpActivity<CommentDetailPersenter> i
             dataBean.setReplyNum(Integer.parseInt(numberTv.getText().toString()) + 1);
             numberTv.setText(dataBean.getReplyNum() + "");//回复人数
         }
+    }
+
+    /**
+     * 重新加载
+     */
+    public void refrushErrorView() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.loadCommentData(commentId);
+            }
+        });
     }
 }

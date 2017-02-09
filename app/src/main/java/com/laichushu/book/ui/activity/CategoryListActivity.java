@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.laichushu.book.bean.netbean.HomeCategroyListBook_Paramet;
 import com.laichushu.book.event.RefrushHomeCategroyEvent;
 import com.laichushu.book.global.ConstantValue;
+import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 import com.laichushu.book.R;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
  * Created by wt on 2016/11/10.
  */
 
-public class CategoryListActivity extends BaseActivity implements View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
+public class CategoryListActivity extends MvpActivity2 implements View.OnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private String pageSize = ConstantValue.PAGESIZE1;
     private int pageNo = 1;
@@ -41,6 +44,7 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
     private ArrayList<HomeHotModel.DataBean> mData = new ArrayList<>();
     private ArrayList<HomeHotModel.DataBean> mAllData = new ArrayList<>();
     private CaregoryListAdapter mAdapter;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,21 +59,32 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    protected void initView() {
-        setContentView(R.layout.activity_categorylist);
-        titleTv = (TextView) findViewById(R.id.tv_title);
-        finishIv = (ImageView) findViewById(R.id.iv_title_finish);
-        categoryRyv = (PullLoadMoreRecyclerView) findViewById(R.id.ryv_category);
+    protected BasePresenter createPresenter() {
+        return null;
+    }
 
+    @Override
+    protected View createSuccessView() {
+        View inflate = UIUtil.inflate(R.layout.activity_categorylist);
+        titleTv = (TextView) inflate.findViewById(R.id.tv_title);
+        finishIv = (ImageView) inflate.findViewById(R.id.iv_title_finish);
+        categoryRyv = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_category);
         finishIv.setOnClickListener(this);
         categoryRyv.setLinearLayout();
         categoryRyv.setOnPullLoadMoreListener(this);
+        return inflate;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText(title);
     }
 
     @Override
     protected void initData() {
         String categoryId = getIntent().getStringExtra("categoryId");
-        String title = getIntent().getStringExtra("title");
+        title = getIntent().getStringExtra("title");
         titleTv.setText(title);
         getParamet().setCategoryId(categoryId);
         mAdapter = new CaregoryListAdapter(this, mAllData);
@@ -81,11 +96,11 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
      * 请求网络
      */
     public void loadDataForNet() {
-        showProgressDialog();
         addSubscription(apiStores.gethomeCategroyData(paramet), new ApiCallback<HomeHotModel>() {
 
             @Override
             public void onSuccess(HomeHotModel model) {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 loadResult(model);
             }
 
@@ -93,6 +108,7 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
             public void onFailure(int code, String msg) {
                 dismissProgressDialog();
                 Logger.e("code: " + code + "\nmsg " + msg);
+                refrushErrorView();
             }
 
             @Override
@@ -143,7 +159,7 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
      */
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.iv_title_finish:
                 finish();
                 break;
@@ -169,6 +185,7 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
         getParamet().setPageNo(pageNo + "");
         loadDataForNet();
     }
+
     /**
      * 刷新 首页分类
      *
@@ -184,5 +201,19 @@ public class CategoryListActivity extends BaseActivity implements View.OnClickLi
             }
         }
         mAdapter.setmAllData(mData);
+    }
+
+    /**
+     * 重新加载
+     */
+    public void refrushErrorView() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                loadDataForNet();
+            }
+        });
     }
 }

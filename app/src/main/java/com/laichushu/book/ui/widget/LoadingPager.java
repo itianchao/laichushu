@@ -5,7 +5,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.laichushu.book.utils.AppManager;
 import com.laichushu.book.utils.UIUtil;
 import com.laichushu.book.R;
 
@@ -18,6 +21,10 @@ import com.laichushu.book.R;
  *如果装在是成功的。那么久显示 createSuccessView
  */
 public abstract class LoadingPager extends FrameLayout {
+
+    public TextView tvTitle;
+    public View mTitle;
+
     //定义3种状态常量
     public enum PageState{
         STATE_LOADING,//加载中的状态
@@ -63,6 +70,15 @@ public abstract class LoadingPager extends FrameLayout {
         if(errorView==null){
             errorView = View.inflate(getContext(), R.layout.pager_error, null);
             Button btn_reload = (Button) errorView.findViewById(R.id.btn_reload);
+            tvTitle = (TextView) errorView.findViewById(R.id.tv_title);
+            mTitle = errorView.findViewById(R.id.lay_title);
+            ImageView backIv = (ImageView) errorView.findViewById(R.id.iv_title_finish);
+            backIv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppManager.getInstance().getTopActivity().finish();
+                }
+            });
             btn_reload.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

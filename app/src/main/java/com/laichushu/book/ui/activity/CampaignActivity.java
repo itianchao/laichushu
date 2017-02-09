@@ -69,7 +69,11 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
         findViewById();
         return mSuccessView;
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("活动详情");
+    }
 
     /**
      * 初始化标题

@@ -81,7 +81,11 @@ public class AllCommentActivity extends MvpActivity2<AllCommentPresenter> implem
             contentLay.setVisibility(View.VISIBLE);
         }
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("全部评论");
+    }
     /**
      * 点击事件
      *

@@ -56,7 +56,11 @@ public class AnnounMangeActivity extends MvpActivity2<AnnManagerPresenter> imple
         mRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_ann_manager);
         return inflate;
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("公告管理");
+    }
     @Override
     protected void initData() {
         super.initData();

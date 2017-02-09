@@ -46,7 +46,12 @@ public class AgreementDetailsActivity extends MvpActivity2 implements View.OnCli
             titleTv.setText("著作权保护声明");
         }
         finishIv.setOnClickListener(this);
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
 
     @Override
