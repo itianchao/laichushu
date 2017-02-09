@@ -151,7 +151,7 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
             mdata = model.getData();
             titleTv.setText(mdata.getName());
             if (mdata.getIsCollect().equals("2")) {//未收藏
-                GlideUitl.loadImg(mActivity,R.drawable.icon_praise_no,collectionIv);
+                GlideUitl.loadImg(mActivity,R.drawable.icon_uncollect,collectionIv);
             }else {//已收藏
                 GlideUitl.loadImg(mActivity,R.drawable.icon_praise_yes2x,collectionIv);
             }
@@ -190,7 +190,7 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
             }else {//取消
                 ToastUtil.showToast("取消收藏成功");
                 mdata.setIsCollect("2");
-                GlideUitl.loadImg(mActivity, R.drawable.icon_praise_no, collectionIv);
+                GlideUitl.loadImg(mActivity, R.drawable.icon_uncollect, collectionIv);
             }
         }else {
             if (type.equals("0")) {//收藏
