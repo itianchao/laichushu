@@ -430,7 +430,7 @@ public class UIUtil {
      * @param articleId
      * @param authorId
      */
-    public static void startBookFBReaderActivity(Activity activity, BaseBookEntity baseBookEntity, String articleId, String authorId, String photo, String brife) {
+    public static void startBookFBReaderActivity(Activity activity, BaseBookEntity baseBookEntity, String articleId, String authorId, String photo, String brife,String bookName) {
         if (baseBookEntity == null || activity == null)
             return;
         Intent intent = new Intent(activity, FBReader.class);
@@ -440,6 +440,7 @@ public class UIUtil {
         intent.putExtra("authorId", authorId);
         intent.putExtra("photo", photo);
         intent.putExtra("brife", brife);
+        intent.putExtra("bookName",bookName);
         activity.startActivity(intent);
     }
 

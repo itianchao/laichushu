@@ -507,8 +507,10 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                     String articleId = getIntent().getStringExtra("articleId");
                     String photo = getIntent().getStringExtra("photo");
                     String brife = getIntent().getStringExtra("brife");
+                    String bookName = getIntent().getStringExtra("bookName");
+                    String shareContent = "#来出书邀请您看好书#一起来看<<"+bookName+">>吧！";
                     String linkUrl= Base64Utils.getStringUrl(articleId,ConstantValue.SHARE_TYPR_BOOK);
-                    ShareUtil.showShare(FBReader.this, linkUrl,linkUrl,photo,brife,titleTv.getText().toString());
+                    ShareUtil.showShare(FBReader.this, linkUrl,shareContent,photo,brife,titleTv.getText().toString());
                 }
             }
         });

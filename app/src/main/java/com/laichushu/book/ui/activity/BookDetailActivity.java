@@ -211,8 +211,9 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                 break;
             case R.id.iv_title_other://分享
                 //分享
+                String shareContent = "#来出书邀请您看好书#一起来看<<" + bean.getArticleName() + ">>吧!";
                 String linkUrl = Base64Utils.getStringUrl(articleId, ConstantValue.SHARE_TYPR_BOOK);
-                ShareUtil.showShare(mActivity, linkUrl, linkUrl, bean.getCoverUrl(), bean.getIntroduce(), bean.getName());
+                ShareUtil.showShare(mActivity, linkUrl, shareContent, bean.getCoverUrl(), bean.getIntroduce(), bean.getName());
                 break;
             case R.id.iv_title_another://收藏
                 mvpPresenter.collectSave(articleId, collectType, ConstantValue.BOOKCOMMENTTYPE);
@@ -230,12 +231,12 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
                         ToastUtil.showToast("请打赏后阅读");
                     } else {
                         ConstantValue.ISREADER = false;
-                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(), articleData.getCoverUrl(), articleData.getIntroduce());//获取下载url
+                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(), articleData.getCoverUrl(), articleData.getIntroduce(),articleData.getArticleName());//获取下载url
                     }
                 } else if (articleData.getStatus().equals("4")) {//已出版购买后才能阅读
                     if (articleData.isPurchase()) {//购买
                         ConstantValue.ISREADER = false;
-                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(), articleData.getCoverUrl(), articleData.getIntroduce());//获取下载url
+                        mvpPresenter.getDownloadUrl(articleId, articleData.getAuthorId(), articleData.getCoverUrl(), articleData.getIntroduce(),articleData.getArticleName());//获取下载url
                     } else {//未购买
                         ToastUtil.showToast("请购买后阅读");
                     }
@@ -786,6 +787,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
         if (model.isSuccess()) {
             Bundle bundle = new Bundle();
             bundle.putString("articleId", articleId);
+            bundle.putString("bookName",articleData.getArticleName() );
             UIUtil.openActivity(this, DirectoriesActivity.class, bundle);
         } else {
             ToastUtil.showToast(model.getErrMsg());
@@ -804,7 +806,8 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
             ConstantValue.ISREADER_NUMBER = endLimit;
             ConstantValue.ISREADER = true;
             String url = model.getData().getUrl();
-            mvpPresenter.openFile(url, articleId, articleData.getAuthorId(), articleData.getCoverUrl(), articleData.getIntroduce());//获取下载url
+            String bookName=articleData.getArticleName();
+            mvpPresenter.openFile(url, bookName,articleId, articleData.getAuthorId(), articleData.getCoverUrl(), articleData.getIntroduce());//获取下载url
         } else {
             ToastUtil.showToast("试读失败");
             LoggerUtil.e(model.getErrMsg());
@@ -909,7 +912,7 @@ public class BookDetailActivity extends MvpActivity2<BookDetailPresenter> implem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 5){
+        if (resultCode == 5) {
             boolean isScore = data.getBooleanExtra("isScore", false);
             articleData.setScore(isScore);
         }

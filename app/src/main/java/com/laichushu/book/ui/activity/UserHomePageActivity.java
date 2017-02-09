@@ -62,8 +62,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     private PullLoadMoreRecyclerView mDyRecyclerView, mWorksRecyclerView, mHeFocusRecyclerView, mFocusHeRecyclerView;
     private UserDynamicAdapter dyAdapter;
     private UserWorksListAdapter worksAdapter;
-    private UserHeFoucsAdapter beAdapter;//关注他的
-    private UserFocusHeAdapter heAdapter;//他关注的
+    private UserHeFoucsAdapter heAdapter;//他关注的
+    private UserFocusHeAdapter beAdapter;//关注他的
     private RadioGroup radioGroup;
     private List<HomeUseDyrResult.DataBean> dyData = new ArrayList<>();
     private List<HomeHotModel.DataBean> worksData = new ArrayList<>();
@@ -145,8 +145,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         pulls.clear();
         pulls.add(mDyRecyclerView);
         pulls.add(mWorksRecyclerView);
-        pulls.add(mHeFocusRecyclerView);
         pulls.add(mFocusHeRecyclerView);
+        pulls.add(mHeFocusRecyclerView);
 
         tvTitle.setText("用户主页");
         tvTitle.setVisibility(View.VISIBLE);
@@ -176,18 +176,21 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         worksAdapter = new UserWorksListAdapter(this, worksData, mvpPresenter);
         mWorksRecyclerView.setAdapter(worksAdapter);
         mWorksRecyclerView.setOnPullLoadMoreListener(this);
-        //初始化mRecyclerView 关注他的
-        mHeFocusRecyclerView.setGridLayout(1);
-        mHeFocusRecyclerView.setFooterViewText("加载中");
-        beAdapter = new UserHeFoucsAdapter(this, focusBeData, mvpPresenter, 1);
-        mHeFocusRecyclerView.setAdapter(beAdapter);
-        mHeFocusRecyclerView.setOnPullLoadMoreListener(this);
+
         //初始化mRecyclerView 他关注的
         mFocusHeRecyclerView.setGridLayout(1);
         mFocusHeRecyclerView.setFooterViewText("加载中");
-        heAdapter = new UserFocusHeAdapter(this, focusMeData, mvpPresenter, 2);
+        heAdapter = new UserHeFoucsAdapter(this, focusMeData, mvpPresenter, 2);
         mFocusHeRecyclerView.setAdapter(heAdapter);
         mFocusHeRecyclerView.setOnPullLoadMoreListener(this);
+
+        //初始化mRecyclerView 关注他的
+        mHeFocusRecyclerView.setGridLayout(1);
+        mHeFocusRecyclerView.setFooterViewText("加载中");
+        beAdapter = new UserFocusHeAdapter(this, focusBeData, mvpPresenter, 1);
+        mHeFocusRecyclerView.setAdapter(beAdapter);
+        mHeFocusRecyclerView.setOnPullLoadMoreListener(this);
+
         // 初始化头像+动态
         dataBean = (HomePersonFocusResult.DataBean) getIntent().getSerializableExtra("bean");
         flg = getIntent().getIntExtra("type", 0);
@@ -230,9 +233,9 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 break;
             case R.id.iv_title_other:
                 //分享 TODO 当前用户类型是否是服务者
-
+                String shareContent = "#来出书为您推荐出书人#一起来看" + userBean.getNickName()+ "吧!";
                 String linkUrl = Base64Utils.getStringUrl(userId, userType);
-                ShareUtil.showShare(mActivity, linkUrl, linkUrl, userBean.getPhoto(), userBean.getIntroduce(), userBean.getNickName());
+                ShareUtil.showShare(mActivity, linkUrl, shareContent, userBean.getPhoto(), userBean.getIntroduce(), userBean.getNickName());
                 break;
             case R.id.iv_userHeadImg:
                 //展示头像
@@ -469,7 +472,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                     tvTips.setText("暂时没有人关注Ta！");
                 }
             }
-            heAdapter.refreshAdapter(focusBeData);
+            beAdapter.refreshAdapter(focusBeData);
         } else {
             if (PAGE_NO == 1) {
                 tvTips.setVisibility(View.VISIBLE);
@@ -504,7 +507,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                     tvTips.setText("Ta暂时未关注任何人！");
                 }
             }
-            beAdapter.refreshAdapter(focusMeData);
+            heAdapter.refreshAdapter(focusMeData);
         } else {
             if (PAGE_NO == 1) {
                 tvTips.setVisibility(View.VISIBLE);

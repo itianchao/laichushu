@@ -15,7 +15,7 @@
         android:layout_height="49dp" />
     <View
         android:layout_below="@+id/tv_parent"
-        android:background="@color/hint"
+        android:background="@color/red"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
     <View

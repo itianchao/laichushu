@@ -49,8 +49,9 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
             public void onClick(View v) {
                 // TODO: 2016/11/26  分享
                 //分享
-                String linkUrl= Base64Utils.getStringUrl(dataBean.getId(), ConstantValue.SHARE_TYPR_NOTIC);
-                ShareUtil.showShare(mActivity, linkUrl,linkUrl,"",dataBean.getContent(),dataBean.getPartyName());
+                String shareContent = "#来出书为您推荐机构广告#";
+                String linkUrl = Base64Utils.getStringUrl(dataBean.getId(), ConstantValue.SHARE_TYPR_NOTIC);
+                ShareUtil.showShare(mActivity, linkUrl, shareContent, "", dataBean.getContent(), dataBean.getPartyName());
 
             }
         });

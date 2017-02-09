@@ -107,8 +107,9 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
                 mvpPresenter.collectSave(lessonId,type);
                 break;
             case R.id.iv_share://分享
+                String shareContent = "#来出书为您推荐"+titleTv.getText().toString().trim()+"#";
                 String linkUrl= Base64Utils.getStringUrl(lessonId, ConstantValue.SHARE_TYPR_COURSE);
-                ShareUtil.showShare(mActivity, linkUrl,linkUrl,logoUrl,introduce,title);
+                ShareUtil.showShare(mActivity, linkUrl,shareContent,logoUrl,introduce,title);
                 break;
             case R.id.rbn_brief://简介
                 if (index != 0) {

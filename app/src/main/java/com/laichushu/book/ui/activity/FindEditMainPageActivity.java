@@ -39,6 +39,10 @@ import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 2017年2月9日11:19:01
+ * 编辑主页
+ */
 public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePresenter> implements FindEditMainPageView, View.OnClickListener, RadioGroup.OnCheckedChangeListener, PullLoadMoreRecyclerView.PullLoadMoreListener, TextView.OnEditorActionListener {
     private ImageView ivBack, ivHeadImg, ivCollect, ivGrade, ivShare;
     private TextView tvTitle, tvRealName, tvIntroduction, tvTeamNum, tvGrade, tvEmptyTips;
@@ -145,8 +149,9 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
                 break;
             case R.id.iv_title_other:
                 //分享
+                String shareContent = "#来出书为您推荐出书人"+model.getData().getName()+"#";
                 String linkUrl = Base64Utils.getStringUrl(userId, ConstantValue.SHARE_TYPR_EDITOR);
-                ShareUtil.showShare(mActivity, linkUrl, linkUrl, model.getData().getPhoto(), model.getData().getServiceIntroduce(), model.getData().getNickName());
+                ShareUtil.showShare(mActivity, linkUrl, shareContent, model.getData().getPhoto(), model.getData().getServiceIntroduce(), model.getData().getNickName());
                 break;
             case R.id.iv_title_another:
                 //收藏

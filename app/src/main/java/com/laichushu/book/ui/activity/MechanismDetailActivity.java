@@ -272,8 +272,9 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 break;
             case R.id.iv_title_another:
                 //分享
+                String shareContent = "#来出书为您推荐机构"+ mechanismTv.getText().toString().trim() + "#";
                  String linkUrl=Base64Utils.getStringUrl(bean.getId(),ConstantValue.SHARE_TYPR_MECHMIA);
-                ShareUtil.showShare(mActivity, linkUrl,linkUrl,bean.getLogoUrl(),bean.getIntroduce(),bean.getName());
+                ShareUtil.showShare(mActivity, linkUrl,shareContent,bean.getLogoUrl(),bean.getIntroduce(),bean.getName());
                 break;
             case R.id.iv_title_finish:
                 finish();

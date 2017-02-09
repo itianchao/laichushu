@@ -161,8 +161,9 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
                 break;
             case R.id.iv_title_other:
                 //分享
+                String shareContent = "#来出书为您推荐出书人#一起来看"+dataBean.getName()+"吧!";
                 String linkUrl = Base64Utils.getStringUrl(userId, ConstantValue.SHARE_TYPR_SERVICE);
-                ShareUtil.showShare(mActivity, linkUrl, linkUrl, dataBean.getPhoto(), dataBean.getServiceIntroduce(), dataBean.getNickName());
+                ShareUtil.showShare(mActivity, linkUrl, shareContent, dataBean.getPhoto(), dataBean.getServiceIntroduce(), dataBean.getNickName());
                 break;
             case R.id.iv_title_another:
                 //收藏

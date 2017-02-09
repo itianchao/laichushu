@@ -55,7 +55,7 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
     private ImageView rewardMoneyIv;
     private ImageView shareIv;
     private String articleId;
-    private String name, content, logo;
+    private String name, content, logo, bookName;
 
     @Override
     protected void initView() {
@@ -94,6 +94,7 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
         logo = getIntent().getStringExtra("logo");
         content = getIntent().getStringExtra("content");
         articleId = getIntent().getStringExtra("articleId");
+        bookName = getIntent().getStringExtra("bookName");
         // 设置可以访问文件
         mWebView.getSettings().setAllowFileAccess(true);
         //如果访问的页面中有Javascript，则webview必须设置支持Javascript
@@ -137,8 +138,9 @@ public class NopublishBookActivity extends BaseActivity implements View.OnClickL
                 if (null == name)
                     name = mActivity.getResources().getString(R.string.app_name);
 
+                String shareContent = "#来出书邀请您看好书#一起来看<<" + bookName + ">>吧!";
                 String linkUrl = Base64Utils.getStringUrl(articleId, ConstantValue.SHARE_TYPR_BOOK);
-                ShareUtil.showShare(mActivity, linkUrl, linkUrl, logo, content, name);
+                ShareUtil.showShare(mActivity, linkUrl, shareContent, logo, content, name);
                 break;
         }
     }

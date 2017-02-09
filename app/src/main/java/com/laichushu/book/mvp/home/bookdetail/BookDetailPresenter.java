@@ -170,7 +170,8 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 购买确认对话框
-     *  @param articleId
+     *
+     * @param articleId
      * @param payMoney
      * @param balance
      * @param price
@@ -414,6 +415,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 阅读权限
+     *
      * @param articleId
      */
     public void loadJurisdiction(String articleId) {
@@ -441,6 +443,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 试读
+     *
      * @param articleId
      */
     public void getProbationNum(String articleId) {
@@ -473,7 +476,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
      *
      * @param articleId
      */
-    public void getDownloadUrl(final String articleId, final String author, final String photo, final String brife) {
+    public void getDownloadUrl(final String articleId, final String author, final String photo, final String brife,final String bookName) {
         mvpView.showLoading();
         DownloadEpubFilePermission_Paramet paramet = new DownloadEpubFilePermission_Paramet(articleId);
         addSubscription(apiStores.downloadEpubFile(paramet), new ApiCallback<UrlResult>() {
@@ -481,7 +484,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
             public void onSuccess(UrlResult modle) {
                 if (modle.isSuccess()) {
                     String url = modle.getData();
-                    openFile(url, articleId, author, photo, brife);
+                    openFile(url,bookName,articleId, author, photo, brife);
                 } else {
                     ToastUtil.showToast(modle.getErrMsg());
                     mvpView.hideLoading();
@@ -504,20 +507,22 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
 
     /**
      * 打开or下载文件
+     *
      * @param url
+     * @param bookName
      * @param articleId
      * @param author
      * @param photo
      * @param brife
      */
-    public void openFile(String url, String articleId, String author, String photo, String brife) {
+    public void openFile(String url, String bookName, String articleId, String author, String photo, String brife) {
         mvpView.showLoading();
         String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
         if (new File(path).exists()) {
             mvpView.hideLoading();
             BaseBookEntity baseBookEntity = new BaseBookEntity();
             baseBookEntity.setBook_path(path);
-            UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author, photo, brife);
+            UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author, photo, brife,bookName);
         } else {
             downloadEpub(url, articleId, author, photo, brife);
         }
@@ -543,7 +548,7 @@ public class BookDetailPresenter extends BasePresenter<BookDetailView> {
                         String path = ConstantValue.LOCAL_PATH.SD_PATH + articleId + ".epub";
                         BaseBookEntity baseBookEntity = new BaseBookEntity();
                         baseBookEntity.setBook_path(path);
-                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author, photo, brife);
+                        UIUtil.startBookFBReaderActivity(mActivity, baseBookEntity, articleId, author, photo, brife,null);
                     } else {
                         ToastUtil.showToast("请检查网络");
                     }

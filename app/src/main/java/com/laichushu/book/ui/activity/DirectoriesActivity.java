@@ -33,7 +33,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
     private RadioButton materialRbn;
     private RadioButton dirRbn;
     private ListView dirLv;
-    private String articleId;
+    private String articleId,bookName;
     private ArrayList<MaterialListModel.DataBean> mData = new ArrayList<>();
     private DirectoriesAdapter directoriesAdapter;
     private ListView bookLv;
@@ -64,6 +64,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
     @Override
     protected void initData() {
         articleId = getIntent().getStringExtra("articleId");//图书Id
+        bookName = getIntent().getStringExtra("bookName");//图书Id
         mvpPresenter.loadMaterialListData(articleId);
         mvpPresenter.loadBookData(articleId);
     }
@@ -154,6 +155,7 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
                 bundle.putString("path", path);
                 bundle.putString("title", name);
                 bundle.putString("name", name);
+                bundle.putString("bookName", bookName);
                 bundle.putString("content",  mBookdata.get(position).getContent());
                 bundle.putString("parentId", parentId);
                 bundle.putString("type", "1");

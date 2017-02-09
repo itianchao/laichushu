@@ -110,12 +110,12 @@ public abstract class PlatformPage extends OnekeySharePage {
 		adapter.setIndicator(vInd);
 		mvp.setAdapter(adapter);
 
-		lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,150);
+		lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,300);
 		lp.setMargins(0,0,0,0);
 		LinearLayout buttonLayout2 = new LinearLayout(activity);
 		buttonLayout2.setBackgroundColor(Color.WHITE);
 
-		LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,110);
+		LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		lp22.setMargins(20, 20, 20, 20);
 		Button button2 = new Button(activity);
 		button2.setText("取消分享");

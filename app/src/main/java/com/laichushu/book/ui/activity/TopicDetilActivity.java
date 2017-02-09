@@ -327,10 +327,11 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             case R.id.iv_title_another:
                 //分享
                 String linkUrl = Base64Utils.getStringUrl(topicId, ConstantValue.SHARE_TYPR_TOPIC);
+                String shareContent = "#来出书邀请您参与小组话题#";
                 if (("homepage").equals(type)) {
-                    ShareUtil.showShare(mActivity, linkUrl, linkUrl, homeBean.getCreaterPhoto(), homeBean.getContent(), homeBean.getTitle());
+                    ShareUtil.showShare(mActivity, linkUrl, shareContent, homeBean.getCreaterPhoto(), homeBean.getContent(), homeBean.getTitle());
                 }else{
-                    ShareUtil.showShare(mActivity, linkUrl, linkUrl, bean.getCreaterPhoto(), bean.getContent(), bean.getTitle());
+                    ShareUtil.showShare(mActivity, linkUrl, shareContent, bean.getCreaterPhoto(), bean.getContent(), bean.getTitle());
                 }
 
                 break;

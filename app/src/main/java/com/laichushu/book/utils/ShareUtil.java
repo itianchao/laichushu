@@ -8,21 +8,22 @@ import com.laichushu.book.ui.share.onekeyshare.OnekeyShare;
 
 /**
  * Created by PCPC on 2017/1/10.
+ * 分享
  */
 
 public class ShareUtil {
 
     /**
      * @param context
-     * @param bookDetailUrl
+     * @param shareContent
      * @param imgUrl
-     * @param qqContent
+     * @param shareQQContent
      * @param rootName
      */
     //share
     public static void showShare(Context context, String linkUrl,
-                                  String bookDetailUrl, String imgUrl, String qqContent,
-                                  String rootName) {
+                                 String shareContent, String imgUrl, String shareQQContent,
+                                 String rootName) {
         OnekeyShare oks = null;
         if (oks == null)
             oks = new OnekeyShare();
@@ -34,7 +35,7 @@ public class ShareUtil {
         // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
         oks.setTitleUrl(linkUrl);
         // text是分享文本，所有平台都需要这个字段
-        oks.setText(qqContent + bookDetailUrl);
+        oks.setText(shareContent + linkUrl);
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
         oks.setImageUrl(imgUrl);
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
@@ -42,7 +43,7 @@ public class ShareUtil {
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl(linkUrl);
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment(qqContent);
+        oks.setComment(shareContent);
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(rootName);
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用

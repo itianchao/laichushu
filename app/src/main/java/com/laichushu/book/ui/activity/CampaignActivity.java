@@ -135,8 +135,9 @@ public class CampaignActivity extends MvpActivity2<CampaignPresenter> implements
                 break;
             case R.id.iv_title_other://分享
                 //分享
+                String shareContent = "#来出书邀请您参加活动测试#";
                 String linkUrl = Base64Utils.getStringUrl(activityId, ConstantValue.SHARE_TYPR_ACTIVITY);
-                ShareUtil.showShare(mActivity, linkUrl, linkUrl, bean.getCoverUrl(), bean.getIntroduce(), bean.getName());
+                ShareUtil.showShare(mActivity, linkUrl, shareContent, bean.getCoverUrl(), bean.getIntroduce(), bean.getName());
                 break;
             case R.id.iv_title_another://评论
                 //打开参加活动的图书

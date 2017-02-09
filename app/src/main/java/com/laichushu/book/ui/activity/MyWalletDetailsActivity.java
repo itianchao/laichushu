@@ -122,7 +122,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
                     case "1":
 //                        tvFreezeStatus.setText("账户正常");
                         tvFreezeStatus.setText("");
-                        tvFreezeStatus.setVisibility(View.VISIBLE);
+                        tvFreezeStatus.setVisibility(View.GONE);
                         break;
                     case "2":
                         tvFreezeStatus.setText("账户已冻结");
@@ -138,7 +138,7 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
                     case "3":
 //                        tvFreezeStatus.setText("账户已被删除");
                         tvFreezeStatus.setText("");
-                        tvFreezeStatus.setVisibility(View.VISIBLE);
+                        tvFreezeStatus.setVisibility(View.GONE);
                         btnRecharge.setBackgroundResource(R.drawable.shape_rectangle_bg_gray);
                         btnWithdrawals.setBackgroundResource(R.drawable.shape_rectangle_bg_gray);
                         btnRecharge.setClickable(false);
