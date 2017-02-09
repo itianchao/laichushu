@@ -119,7 +119,7 @@
                 <TextView
                     android:id="@+id/tv_like"
                     style="@style/new_up"
-                    android:drawableLeft="@drawable/icon_praise_no"
+                    android:drawableLeft="@drawable/icon_uncollect"
                     android:drawablePadding="5dp"
                     tools:text="收藏" />
             </LinearLayout>
