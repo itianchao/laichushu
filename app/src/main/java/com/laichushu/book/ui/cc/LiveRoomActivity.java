@@ -96,10 +96,10 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
     private Switch swiPublicPrivate;
     private ImageButton sendMsgBtn;
     private Button btnFullScreen, changeSource, changeSoundVideo, changeQuality;
-    private ImageButton sendQABtn;
-    private EditText etMsg, etQA;
+//    private ImageButton sendQABtn;
+    private EditText etMsg;//, etQA;
     private TextView tvCount;
-    private ListView lvChat, lvQA;
+    private ListView lvChat;//, lvQA;
     private MyChatListViewAdapter chatAdapter;
     private MyQAListViewAdapter qaAdapter;
     private List<ChatMessage> chatMsgs = new ArrayList<ChatMessage>();
@@ -163,7 +163,7 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
                     	qaMsg.setQuestion(question);
                     	qaMap.put(questionId, qaMsg);
                     	qaAdapter.notifyDataSetChanged();
-                    	lvQA.setSelection(qaMap.size() - 1);
+//                    	lvQA.setSelection(qaMap.size() - 1);
                 	}
                     break;
                 case ANSWER:
@@ -176,7 +176,7 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
                 	QAMsg qaMsg = qaMap.get(qaId);
                 	qaMsg.setAnswer(answer);
                 	qaAdapter.notifyDataSetChanged();
-                	lvQA.setSelection(indexQa);
+//                	lvQA.setSelection(indexQa);
                     break;
                 case USER_COUNT:
                     tvCount.setText("在线：" + (Integer)msg.obj + "人");
@@ -319,28 +319,28 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
     	docView = (DocView) view.findViewById(R.id.live_docView);
     }
 
-	private LinearLayout llApply;
-	private TextView tvCmInfo, tvCmTips, tvCmVideoTips;
-	private Button btnApplyVideo,btnDisconnectCm;
+//	private LinearLayout llApply;
+//	private TextView tvCmInfo, tvCmTips, tvCmVideoTips;
+//	private Button btnApplyVideo,btnDisconnectCm;
 
-	private void initCmLayout(View v) {
-		llApply = (LinearLayout) v.findViewById(R.id.ll_apply);
-		tvCmInfo = (TextView) v.findViewById(R.id.tv_cm);
-
-		btnApplyVideo = (Button) v.findViewById(R.id.btn_connect_video);
-		btnApplyVideo.setOnClickListener(cmOnclickListener);
-
-		btnDisconnectCm = (Button) v.findViewById(R.id.btn_disconnect_cm);
-		btnDisconnectCm.setOnClickListener(cmOnclickListener);
-
-		tvCmTips = (TextView) findViewById(R.id.tv_cm_tips);
-		tvCmVideoTips = (TextView) findViewById(R.id.tv_cm_video_tips);
-	}
+//	private void initCmLayout(View v) {
+//		llApply = (LinearLayout) v.findViewById(R.id.ll_apply);
+//		tvCmInfo = (TextView) v.findViewById(R.id.tv_cm);
+//
+//		btnApplyVideo = (Button) v.findViewById(R.id.btn_connect_video);
+//		btnApplyVideo.setOnClickListener(cmOnclickListener);
+//
+//		btnDisconnectCm = (Button) v.findViewById(R.id.btn_disconnect_cm);
+//		btnDisconnectCm.setOnClickListener(cmOnclickListener);
+//
+//		tvCmTips = (TextView) findViewById(R.id.tv_cm_tips);
+//		tvCmVideoTips = (TextView) findViewById(R.id.tv_cm_video_tips);
+//	}
 
 	private void hideCmLayout() {
-		llApply.setVisibility(View.INVISIBLE);
-		tvCmInfo.setVisibility(View.INVISIBLE);
-		btnDisconnectCm.setVisibility(View.INVISIBLE);
+//		llApply.setVisibility(View.INVISIBLE);
+//		tvCmInfo.setVisibility(View.INVISIBLE);
+//		btnDisconnectCm.setVisibility(View.INVISIBLE);
 	}
 
 	boolean isVideo = false;
@@ -359,17 +359,17 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 					hideCmLayout();
 
 					isVideo = true;
-					tvCmInfo.setVisibility(View.VISIBLE);
-					tvCmInfo.setText("视频" + getText(R.string.cm_applying));
-					tvCmVideoTips.setVisibility(View.VISIBLE);
-					tvCmVideoTips.setText("申请中……");
+//					tvCmInfo.setVisibility(View.VISIBLE);
+//					tvCmInfo.setText("视频" + getText(R.string.cm_applying));
+//					tvCmVideoTips.setVisibility(View.VISIBLE);
+//					tvCmVideoTips.setText("申请中……");
 					localRender.setVisibility(View.VISIBLE);
 					dwLive.startRtcConnect();
 					break;
 				case R.id.btn_disconnect_cm:
 					hideCmLayout();
 					dwLive.disConnectSpeak();
-					llApply.setVisibility(View.VISIBLE);
+//					llApply.setVisibility(View.VISIBLE);
 					break;
 			}
 		}
@@ -377,16 +377,16 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 
 
     private void initQaLayout(View view) {
-      sendQABtn = (ImageButton) view.findViewById(R.id.btn_qa);
-      sendQABtn.setOnClickListener(LiveRoomActivity.this);
+//      sendQABtn = (ImageButton) view.findViewById(R.id.btn_qa);
+//      sendQABtn.setOnClickListener(LiveRoomActivity.this);
 
-      lvQA = (ListView) view.findViewById(R.id.lv_qa);
-      etQA = (EditText) view.findViewById(R.id.et_qa);
+//      lvQA = (ListView) view.findViewById(R.id.lv_qa);
+//      etQA = (EditText) view.findViewById(R.id.et_qa);
     }
 
     private void initLvQa() {
     	qaAdapter = new MyQAListViewAdapter(this, viewer, qaMap);
-    	lvQA.setAdapter(qaAdapter);
+//    	lvQA.setAdapter(qaAdapter);
     }
 
 
@@ -645,7 +645,7 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
     	}
     	initPager();
     	initLvChat();
-    	initLvQa();
+//    	initLvQa();
     }
 
 	private void initDwLive() {
@@ -725,7 +725,7 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 		dwLive.onDestroy();
 		imm = null;
 		etMsg = null;
-		etQA = null;
+//		etQA = null;
 		etFullscreen = null;
 		localRender.release();
 		remoteRender.release();
@@ -1099,8 +1099,8 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 		hideCmLayout();
 		isSpeaking = false;
 		isVideo = false;
-		tvCmInfo.setVisibility(View.VISIBLE);
-		tvCmInfo.setText(getText(R.string.cm_not_start));
+//		tvCmInfo.setVisibility(View.VISIBLE);
+//		tvCmInfo.setText(getText(R.string.cm_not_start));
 		sv.setVisibility(View.VISIBLE);
 	}
 
@@ -1117,13 +1117,13 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 					hideVideoRenderAndTips();
 					hideCmLayout();
                     if (isAllowSpeak) {
-                        llApply.setVisibility(View.VISIBLE);
+//                        llApply.setVisibility(View.VISIBLE);
                     } else {
                         //TODO 是否需要加上断开语音
 						isSpeaking = false;
 						isVideo = false;
-                        tvCmInfo.setVisibility(View.VISIBLE);
-                        tvCmInfo.setText(getText(R.string.cm_not_start));
+//                        tvCmInfo.setVisibility(View.VISIBLE);
+//                        tvCmInfo.setText(getText(R.string.cm_not_start));
 						sv.setVisibility(View.VISIBLE);
                     }
                 }
@@ -1168,13 +1168,13 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 					isSpeaking = true;
 
                     hideCmLayout();
-                    btnDisconnectCm.setVisibility(View.VISIBLE);
-
-					tvCmVideoTips.setVisibility(View.INVISIBLE);
-					tvCmTips.setVisibility(View.VISIBLE);
+//                    btnDisconnectCm.setVisibility(View.VISIBLE);
+//
+//					tvCmVideoTips.setVisibility(View.INVISIBLE);
+//					tvCmTips.setVisibility(View.VISIBLE);
 					dwLive.removeLocalRender();
 
-					btnDisconnectCm.setText(getText(R.string.cm_disconnect_video));
+//					btnDisconnectCm.setText(getText(R.string.cm_disconnect_video));
 
 					startCmTimer();
                 }
@@ -1223,7 +1223,7 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 			sv.setVisibility(View.VISIBLE);
 			hideCmLayout();
 			isVideo = false;
-			llApply.setVisibility(View.VISIBLE);
+//			llApply.setVisibility(View.VISIBLE);
 			isSpeaking = false;
 			stopCmTimer();
 		}
@@ -1232,8 +1232,8 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 	private void hideVideoRenderAndTips() {
 		localRender.setVisibility(View.GONE);
 		remoteRender.setVisibility(View.GONE);
-		tvCmTips.setVisibility(View.INVISIBLE);
-		tvCmVideoTips.setVisibility(View.INVISIBLE);
+//		tvCmTips.setVisibility(View.INVISIBLE);
+//		tvCmVideoTips.setVisibility(View.INVISIBLE);
 	}
 
 	private Timer cmTimer;
@@ -1257,7 +1257,7 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						tvCmTips.setText(formatTime(cmCount++));
+//						tvCmTips.setText(formatTime(cmCount++));
 						if (!isNetworkConnected()) {
 							start10sTimerTask();
 						} else {
@@ -1353,17 +1353,17 @@ public class LiveRoomActivity extends FragmentActivity implements SurfaceHolder.
             case R.id.btn_msg:
                 sendChatMsg(false);
                 break;
-            case R.id.btn_qa:
-                String qaMsg = etQA.getText().toString().trim();
-                if (!"".equals(qaMsg)) {
-                    try {
-                        dwLive.sendQuestionMsg(qaMsg);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                etQA.setText("");
-                hideEditTextSoftInput(etQA);
+            case R.id.btn_qa://问答
+//                String qaMsg = etQA.getText().toString().trim();
+//                if (!"".equals(qaMsg)) {
+//                    try {
+//                        dwLive.sendQuestionMsg(qaMsg);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                etQA.setText("");
+//                hideEditTextSoftInput(etQA);
                 break;
             case R.id.btn_full_screen:
             	if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
