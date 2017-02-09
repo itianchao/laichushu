@@ -15,11 +15,13 @@ public class ForgetPwd_Paramet {
     private String loginName;
     private String newPwd;
     private String confirmPwd;
+    private String code;
 
-    public ForgetPwd_Paramet(String loginName, String newPwd, String confirmPwd) {
+    public ForgetPwd_Paramet(String loginName, String newPwd, String confirmPwd, String code) {
         this.loginName = loginName;
         this.newPwd = newPwd;
         this.confirmPwd = confirmPwd;
+        this.code = code;
     }
 
     public String getLoginName() {
@@ -44,5 +46,13 @@ public class ForgetPwd_Paramet {
 
     public void setConfirmPwd(String confirmPwd) {
         this.confirmPwd = confirmPwd;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
