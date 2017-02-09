@@ -48,8 +48,8 @@ public class DirectoriesActivity extends MvpActivity<DirectoriesPresenter> imple
         dirRbn = (RadioButton) findViewById(R.id.rbn_dir);
         dirLv = (ListView) findViewById(R.id.lv_dir);
         bookLv = (ListView) findViewById(R.id.lv_book);
-        dirLv.setVisibility(View.VISIBLE);
-        bookLv.setVisibility(View.GONE);
+        bookLv.setVisibility(View.VISIBLE);
+        dirLv.setVisibility(View.GONE);
         finishIv.setOnClickListener(this);
         materialRbn.setOnClickListener(this);
         dirRbn.setOnClickListener(this);

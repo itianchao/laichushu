@@ -60,26 +60,13 @@
 
     <Button
         android:id="@+id/btn_Recharge"
-        style="@style/button_login_style"
+        style="@style/button_login_style1"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_below="@+id/rl_head"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+
         android:layout_marginTop="15dp"
         android:text="充 值"
-        android:textSize="@dimen/edit" />
-
-    <Button
-        android:id="@+id/btn_withdrawals"
-        style="@style/button_login_style2"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@+id/btn_Recharge"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="15dp"
-        android:text="提 现"
         android:textSize="@dimen/edit" />
 
     <TextView
@@ -103,4 +90,14 @@
         android:layout_below="@+id/tv_transRecord"
         android:layout_marginTop="12dp"
         android:background="@color/white" />
+
+    <Button
+        android:id="@+id/btn_withdrawals"
+        style="@style/button_login_style2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="19dp"
+        android:text="提 现"
+        android:textSize="@dimen/edit"
+        android:layout_below="@+id/btn_Recharge"/>
 </RelativeLayout>

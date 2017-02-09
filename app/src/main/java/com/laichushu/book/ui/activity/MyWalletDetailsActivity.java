@@ -1,5 +1,6 @@
 package com.laichushu.book.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -119,7 +120,8 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
             if(null!=model.getStatus()){
                 switch (model.getStatus()){
                     case "1":
-                        tvFreezeStatus.setText("账户正常");
+//                        tvFreezeStatus.setText("账户正常");
+                        tvFreezeStatus.setText("");
                         tvFreezeStatus.setVisibility(View.VISIBLE);
                         break;
                     case "2":
@@ -129,14 +131,21 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
                         btnWithdrawals.setBackgroundColor(mActivity.getResources().getColor(R.color.Grey));
                         btnRecharge.setClickable(false);
                         btnWithdrawals.setClickable(false);
+                        btnRecharge.setBackgroundDrawable(UIUtil.getResources().getDrawable(R.drawable.shape_rectangle_normal_gray2));
+                        btnWithdrawals.setBackgroundDrawable(UIUtil.getResources().getDrawable(R.drawable.shape_rectangle_normal_gray2));
+                        btnWithdrawals.setTextColor(Color.WHITE);
                         break;
                     case "3":
-                        tvFreezeStatus.setText("账户已被删除");
+//                        tvFreezeStatus.setText("账户已被删除");
+                        tvFreezeStatus.setText("");
                         tvFreezeStatus.setVisibility(View.VISIBLE);
                         btnRecharge.setBackgroundResource(R.drawable.shape_rectangle_bg_gray);
                         btnWithdrawals.setBackgroundResource(R.drawable.shape_rectangle_bg_gray);
                         btnRecharge.setClickable(false);
                         btnWithdrawals.setClickable(false);
+                        btnRecharge.setBackgroundDrawable(UIUtil.getResources().getDrawable(R.drawable.shape_rectangle_normal_gray2));
+                        btnWithdrawals.setBackgroundDrawable(UIUtil.getResources().getDrawable(R.drawable.shape_rectangle_normal_gray2));
+                        btnWithdrawals.setTextColor(Color.WHITE);
                         break;
                 }
             }

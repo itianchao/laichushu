@@ -43,6 +43,7 @@ public class AgreementDetailsActivity extends MvpActivity2 implements View.OnCli
         if (type.equals("1")){
             agreementContentTv.setText(UIUtil.getString(R.string.agreementcontent2));
             agreementTitleTv.setText("著作权保护声明");
+            titleTv.setText("著作权保护声明");
         }
         finishIv.setOnClickListener(this);
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);

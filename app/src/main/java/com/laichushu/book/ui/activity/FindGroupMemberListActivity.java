@@ -20,6 +20,7 @@ import com.laichushu.book.mvp.find.group.member.FindGroupMemberView;
 import com.laichushu.book.ui.adapter.FindGroupMemberAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
+import com.laichushu.book.utils.ListUtil;
 import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
@@ -104,9 +105,13 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMemberPre
                 mData = modle.getData();
                 for (int i = mData.size() - 1; i >= 0; i--) {
                     if (mData.get(i).getUserId().equals(ConstantValue.USERID)) {
-                        mData.remove(i);
+                        mData.get(i).setShowFollow(true);//判断
                     }
-
+                    if (i>=1){
+                        if (mData.get(i).getRole().equals("1")) {
+                            ListUtil.indexExChange(mData,i,0);
+                        }
+                    }
                 }
                 mAdapter.setmData(mData);
             }else {

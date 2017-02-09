@@ -146,7 +146,6 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     public void getDataFail(String msg) {
         loginBtn.setEnabled(true);
         hideLoading();
-        toastShow(msg);
         Logger.e("网络失败原因：", msg);
     }
 

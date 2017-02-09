@@ -22,6 +22,11 @@ public class ArticleDialogUtil {
                 mLoadDialog.dismiss();
             }
         }, 1600);
-        AppManager.getTopActivity().finish();
+        UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AppManager.getTopActivity().finish();
+            }
+        }, 1700);
     }
 }

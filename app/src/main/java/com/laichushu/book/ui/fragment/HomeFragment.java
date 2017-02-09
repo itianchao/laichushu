@@ -177,7 +177,7 @@ public class HomeFragment extends MvpFragment<HomePresenter> implements HomeView
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             if (i > 0) {
-                params.leftMargin = UIUtil.px2dip(10);
+                params.leftMargin = UIUtil.px2dip(15);
             }
             imageView.setLayoutParams(params);
             lineLyt.addView(imageView);
