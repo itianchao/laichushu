@@ -124,6 +124,11 @@ public class CreatNewDraftActivity extends MvpActivity2<CreateNewDraftPersenter>
             ToastUtil.showToast("创建失败");
         }
     }
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("创建目录");
+    }
 
     /**
      * 本地图片转换成网络图片

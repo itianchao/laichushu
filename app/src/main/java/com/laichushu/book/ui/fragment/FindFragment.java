@@ -125,12 +125,13 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public View createSuccessView() {
         View mRootView = UIUtil.inflate(R.layout.fragment_find);
+        View mFooterView = UIUtil.inflate(R.layout.fragment_find_footer);
         findVp = (ViewPager) mRootView.findViewById(R.id.vp_find_title);
         pointIv = (ImageView) mRootView.findViewById(R.id.iv_red_point);
         lineLyt = (LinearLayout) mRootView.findViewById(R.id.ll_container_find);
         llContainer = (LinearLayout) mRootView.findViewById(R.id.ll_tab);
         mLessonRecyclerView = (RecyclerView) mRootView.findViewById(R.id.ryv_find_lesson);
-        mCourseRecyclerView = (RecyclerView) mRootView.findViewById(R.id.ryv_find_course);
+        mCourseRecyclerView = (RecyclerView) mFooterView.findViewById(R.id.ryv_find_course);
         return mRootView;
     }
 

@@ -80,6 +80,11 @@ public class FindCourseDocDetailActivity extends MvpActivity2<DocDetailPresenter
         mvpPresenter.loadVideoDetailData(lessonId);
         titleTv.setText("文档详情");
     }
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("文档详情");
+    }
 
     @Override
     public void onClick(View v) {

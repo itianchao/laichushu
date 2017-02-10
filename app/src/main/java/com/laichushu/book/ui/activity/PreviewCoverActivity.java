@@ -63,23 +63,12 @@ public class PreviewCoverActivity extends MvpActivity2 implements View.OnClickLi
         titleTv.setText(title);
         preDetails.setText(bookType+"\n"+ SharePrefManager.getNickName());
         GlideUitl.loadImg(mActivity,url,270,350,coverIv);
-        // 设置可以访问文件
-//        mWebView.getSettings().setAllowFileAccess(true);
-//        //如果访问的页面中有Javascript，则webview必须设置支持Javascript
-//        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-//        mWebView.getSettings().setAllowFileAccess(true);
-//        mWebView.getSettings().setAppCacheEnabled(true); // 0722
-//        mWebView.getSettings().setDomStorageEnabled(true);
-//        mWebView.getSettings().setDatabaseEnabled(true);
-//        mWebView.loadUrl(url);
-//        mWebView.getSettings().setJavaScriptEnabled(true);
-//        mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-//        mWebView.requestFocus();
-//        mWebView.setWebViewClient(wvc);
-////        mWebView.setWebChromeClient(wcc);LayoutAlgorithm.SINGLE_COLUMN
-//
-//        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
 
     @Override

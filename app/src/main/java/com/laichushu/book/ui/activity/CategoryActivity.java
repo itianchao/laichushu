@@ -88,7 +88,11 @@ public class CategoryActivity extends MvpActivity2<CategoryPresenter> implements
         finishIv.setOnClickListener(this);
         return successView;
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("分类");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -97,13 +101,6 @@ public class CategoryActivity extends MvpActivity2<CategoryPresenter> implements
                 break;
         }
     }
-
-    @Override
-    protected void initView() {
-        super.initView();
-        mPage.tvTitle.setText("分类");
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch(parent.getId()){

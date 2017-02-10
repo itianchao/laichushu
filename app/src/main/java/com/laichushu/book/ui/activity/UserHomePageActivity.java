@@ -206,7 +206,11 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         mvpPresenter.getUserDynmicDate(userId);
 
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("用户主页");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -259,8 +263,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleFoHe = false;
                 type = 1;
                 if (!dibbleDy) {
-                    if (dyData.size() > 0)
-                        dyData.clear();
+//                    if (dyData.size() > 0)
+//                        dyData.clear();
                     mvpPresenter.getUserDynmicDate(userId);
                 }
                 dibbleDy = true;
@@ -273,8 +277,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleFoHe = false;
                 type = 2;
                 if (!dibbleWorks) {
-                    if (worksData.size() > 0)
-                        worksData.clear();
+//                    if (worksData.size() > 0)
+//                        worksData.clear();
                     showProgressDialog();
                     mvpPresenter.getUserBookListDate(userId);
                 }
@@ -288,8 +292,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleFoHe = false;
                 type = 3;
                 if (!dibbleheFo) {
-                    if (null != focusMeData && focusMeData.size() > 0)
-                        focusMeData.clear();
+//                    if (null != focusMeData && focusMeData.size() > 0)
+//                        focusMeData.clear();
                     showProgressDialog();
                     mvpPresenter.getUserHeFocusDate(userId);
                 }
@@ -303,8 +307,8 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
                 dibbleheFo = false;
                 type = 4;
                 if (!dibbleFoHe) {
-                    if (null != focusBeData && focusBeData.size() > 0)
-                        focusBeData.clear();
+//                    if (null != focusBeData && focusBeData.size() > 0)
+//                        focusBeData.clear();
                     showProgressDialog();
                     mvpPresenter.getUserFocusHeDate(userId);
                 }
@@ -378,7 +382,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
      */
     @Override
     public void getUserHomeDyDateSuccess(HomeUseDyrResult result) {
-        dyData.clear();
         tvTips.setVisibility(View.GONE);
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -388,6 +391,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }, 300);
         if (result.isSuccess()) {
             if (null != result.getData() && !result.getData().isEmpty()) {
+                dyData.clear();
                 dyData = result.getData();
                 dyAdapter.refreshAdapter(dyData);
                 PAGE_NO++;
@@ -418,7 +422,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     public void getUserHomeBookListSuccess(HomeHotModel result) {
         dismissDialog();
-        worksData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -428,6 +431,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         if (result.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (null != result.getData() && !result.getData().isEmpty()) {
+                worksData.clear();
                 worksData = result.getData();
                 worksAdapter.refreshAdapter(worksData);
                 PAGE_NO++;
@@ -454,7 +458,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     public void getUserHomeFocusHeSuccess(HomePersonFocusResult result) {
         dismissDialog();
-        focusBeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -464,6 +467,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         if (result.isSuccess()) {
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             if (null != result.getData() && !result.getData().isEmpty()) {
+                focusBeData.clear();
                 focusBeData = result.getData();
                 PAGE_NO++;
             } else {
@@ -490,7 +494,6 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     @Override
     public void getUserHomeHeFocusSuccess(HomePersonFocusResult result) {
        dismissDialog();
-        focusMeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -499,6 +502,7 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
         }, 300);
         if (result.isSuccess()) {
             if (null != result.getData() && !result.getData().isEmpty()) {
+                focusMeData.clear();
                 focusMeData = result.getData();
                 PAGE_NO++;
             } else {
@@ -712,19 +716,19 @@ public class UserHomePageActivity extends MvpActivity2<UserHomePagePresener> imp
     public void onRefresh() {
         PAGE_NO = 1;
         if (type == 1) {
-            dyData.clear();
+//            dyData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.getUserDynmicDate(userId);//动态
         } else if (type == 2) {
-            worksData.clear();
+//            worksData.clear();
             mvpPresenter.getBookList().setPageNo(PAGE_NO + "");
             mvpPresenter.getUserBookListDate(userId);//作品
         } else if (type == 3) {
-            focusMeData.clear();
+//            focusMeData.clear();
             mvpPresenter.getFocusBe_parmet().setPageNo(PAGE_NO + "");
             mvpPresenter.getUserHeFocusDate(userId);//关注他的
         } else if (type == 4) {
-            focusBeData.clear();
+//            focusBeData.clear();
             mvpPresenter.getFocusBe_parmet().setPageNo(PAGE_NO + "");
             mvpPresenter.getUserFocusHeDate(userId);//他关注的
         }

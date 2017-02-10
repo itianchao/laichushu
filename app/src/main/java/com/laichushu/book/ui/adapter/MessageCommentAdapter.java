@@ -142,7 +142,7 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
             @Override
             public void onClick(View v) {
                 //删除
-                dataBeen.remove(position);
+//                dataBeen.remove(position);
                 String id = dataBeen.get(position).getId();
                 messageCommentPresenter.messageDeleteComment(position, id);
             }
@@ -163,8 +163,8 @@ public class MessageCommentAdapter extends RecyclerView.Adapter<MessageCommentAd
         dataBeen.clear();
         if (listData.size() > 0) {
             dataBeen.addAll(listData);
-            this.notifyDataSetChanged();
         }
+        this.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

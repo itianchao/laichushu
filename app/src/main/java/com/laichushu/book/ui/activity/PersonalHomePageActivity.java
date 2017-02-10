@@ -178,7 +178,11 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         mvpPresenter.LoadData();
         selectLine(0);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("个人主页");
+    }
     /**
      * 个人信息
      */
@@ -275,7 +279,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
 
     @Override
     public void getDyDataSuccess(HomeUseDyrResult model) {
-        dyData.clear();
         tvTips.setVisibility(View.GONE);
         UIUtil.postDelayed(new Runnable() {
             @Override
@@ -285,6 +288,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         }, 300);
         if (model.isSuccess()) {
             if (null != model.getData() && !model.getData().isEmpty()) {
+                dyData.clear();
                 dyData = model.getData();
                 dyAdapter.refreshAdapter(dyData);
                 PAGE_NO++;
@@ -310,7 +314,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     @Override
     public void getFocusMeDataSuccess(HomePersonFocusResult model) {
         dismissProgressDialog();
-        dyData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -319,6 +322,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         }, 300);
         if (model.isSuccess()) {
             if (null != model.getData() && !model.getData().isEmpty()) {
+                dyData.clear();
                 focusMeData = model.getData();
                 PAGE_NO++;
             } else {
@@ -342,7 +346,6 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     @Override
     public void getFocusBeDataSuccess(HomePersonFocusResult model) {
         dismissProgressDialog();
-        focusBeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -351,6 +354,7 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
         }, 300);
         if (model.isSuccess()) {
             if (null != model.getData() && !model.getData().isEmpty()) {
+                focusBeData.clear();
                 focusBeData = model.getData();
                 PAGE_NO++;
             } else {
@@ -492,8 +496,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 dibbleFoMe = false;
                 type = 1;
                 if (!dibbleDy) {
-                    if (dyData.size() > 0)
-                        dyData.clear();
+//                    if (dyData.size() > 0)
+//                        dyData.clear();
                     mvpPresenter.LoadData();
                 }
                 dibbleDy = true;
@@ -505,8 +509,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 dibbleFo = false;
                 type = 2;
                 if (!dibbleFoMe) {
-                    if (focusMeData.size() > 0)
-                        focusMeData.clear();
+//                    if (focusMeData.size() > 0)
+//                        focusMeData.clear();
                     showProgressDialog();
                     mvpPresenter.LoadFocusMeData();
                 }
@@ -519,8 +523,8 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
                 dibbleFoMe = false;
                 type = 3;
                 if (!dibbleFo) {
-                    if (focusBeData.size() > 0)
-                        focusBeData.clear();
+//                    if (focusBeData.size() > 0)
+//                        focusBeData.clear();
                     showProgressDialog();
                     mvpPresenter.LoadFocusBeData();
                 }
@@ -533,16 +537,13 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
     public void onRefresh() {
         PAGE_NO = 1;
         if (type == 1) {
-            dyData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadData();//请求网络获取搜索列表
         } else if (type == 2) {
-            focusMeData.clear();
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getParamet2().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadFocusMeData();//请求网络获取搜索列表
         } else if (type == 3) {
-            focusBeData.clear();
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getParamet3().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadFocusBeData();//请求网络获取搜索列表
         }
     }
@@ -553,12 +554,10 @@ public class PersonalHomePageActivity extends MvpActivity2<HomePagePresener> imp
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadData();//请求网络获取搜索列表
         } else if (type == 2) {
-            focusMeData.clear();
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getParamet2().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadFocusMeData();//请求网络获取搜索列表
         } else if (type == 3) {
-            focusBeData.clear();
-            mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
+            mvpPresenter.getParamet3().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadFocusBeData();//请求网络获取搜索列表
         }
     }

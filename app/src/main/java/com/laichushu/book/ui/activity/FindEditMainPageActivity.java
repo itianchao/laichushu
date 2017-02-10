@@ -133,14 +133,23 @@ public class FindEditMainPageActivity extends MvpActivity2<FindEditMainPagePrese
 
         if (TextUtils.isEmpty(userId)) {
             ToastUtil.showToast("加载失败");
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            UIUtil.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                }
+            }, 30);
         } else {
             mvpPresenter.loadEditorInfoData(userId);
         }
 
         scrollBrief.setVisibility(View.VISIBLE);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("个人主页");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

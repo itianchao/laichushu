@@ -1,11 +1,9 @@
 package com.laichushu.book.mvp.find.coursera.mine;
 
-import android.text.TextUtils;
-
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
 import com.laichushu.book.retrofit.ApiCallback;
-import com.laichushu.book.ui.activity.MineCourseList_Paramet;
+import com.laichushu.book.bean.netbean.MineCourseList_Paramet;
 import com.laichushu.book.ui.base.BasePresenter;
 import com.laichushu.book.ui.fragment.FindClassMineFragment;
 import com.laichushu.book.ui.widget.LoadingPager;

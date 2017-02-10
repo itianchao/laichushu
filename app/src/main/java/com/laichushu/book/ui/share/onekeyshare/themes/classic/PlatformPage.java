@@ -115,23 +115,24 @@ public abstract class PlatformPage extends OnekeySharePage {
 		LinearLayout buttonLayout2 = new LinearLayout(activity);
 		buttonLayout2.setBackgroundColor(Color.WHITE);
 
-		LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		lp22.setMargins(20, 20, 20, 20);
-		Button button2 = new Button(activity);
-		button2.setText("取消分享");
-		button2.setTextSize(16);
-		button2.setTextColor(Color.BLACK);
-		button2.setBackgroundColor(Color.WHITE);
-		button2.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				finish();
-			}
-		});
-		buttonLayout2.addView(button2,lp22);
-		llPanel.addView(buttonLayout2,lp);
+		//取消分享
+//		LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+//		lp22.setMargins(20, 20, 20, 20);
+//		Button button2 = new Button(activity);
+//		button2.setText("取消分享");
+//		button2.setTextSize(16);
+//		button2.setTextColor(Color.BLACK);
+//		button2.setBackgroundColor(Color.WHITE);
+//		button2.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				finish();
+//			}
+//		});
+//		buttonLayout2.addView(button2,lp22);
+//		llPanel.addView(buttonLayout2,lp);
 	}
 
 	protected abstract PlatformPageAdapter newAdapter(ArrayList<Object> cells);

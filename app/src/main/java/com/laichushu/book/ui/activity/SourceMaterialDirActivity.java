@@ -98,6 +98,11 @@ public class SourceMaterialDirActivity extends MvpActivity2<SourceMaterialDirPre
         isLoad = false;
 
     }
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("素材模式");
+    }
 
     @Override
     public void getDataSuccess(SourceMaterialDirModle model) {

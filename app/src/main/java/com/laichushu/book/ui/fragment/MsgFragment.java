@@ -207,7 +207,6 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
     @Override
     public void getMsgCommentDateSuccess(MessageCommentResult model) {
         dismissProgressDialog();
-        subData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -216,6 +215,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
         }, 300);
         if (model.isSuccess()) {
             if (null != model.getData() && !model.getData().isEmpty()) {
+                subData.clear();
                 subData = model.getData();
                 PAGE_NO++;
             } else {

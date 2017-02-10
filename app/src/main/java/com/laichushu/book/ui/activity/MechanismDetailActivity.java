@@ -139,7 +139,11 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
         }, 30);
         onClick(firstRbn);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("机构详情");
+    }
     @Override
     public void getDataSuccess(MechanisDetailModel model) {
         UIUtil.postDelayed(new Runnable() {

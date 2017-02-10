@@ -88,7 +88,11 @@ public class DraftModleActivity extends MvpActivity2<DraftModlePresenter> implem
         draftRyv.setAdapter(mAdapter);
         isLoad = false;
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("目录模式");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

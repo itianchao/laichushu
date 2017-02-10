@@ -103,7 +103,11 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
 
         mvpPresenter.loadBrowserListData("1");
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("我的书架");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -154,8 +158,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 collDibble = false;
                 type = 1;
                 if (!scanDibble) {
-                    if (scanData.size() > 0)
-                        scanData.clear();
+//                    if (scanData.size() > 0)
+//                        scanData.clear();
                     mvpPresenter.loadBrowserListData("1");
                 }
                 scanDibble = true;
@@ -167,8 +171,8 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
                 scanDibble = false;
                 type = 2;
                 if (!collDibble) {
-                    if (collData.size() > 0)
-                        collData.clear();
+//                    if (collData.size() > 0)
+//                        collData.clear();
                     mvpPresenter.LoadCollectionData();
                 }
                 collDibble = true;
@@ -181,13 +185,13 @@ public class MyBookCastActivity extends MvpActivity2<BookcastPresener> implement
         PAGE_NO = 1;
 
         if (type == 1) {
-            if (scanData.size() > 0)
-                scanData.clear();
+//            if (scanData.size() > 0)
+//                scanData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.loadBrowserListData("1");//请求网络获取搜索列表
         } else if (type == 2) {
-            if (collData.size() > 0)
-                collData.clear();
+//            if (collData.size() > 0)
+//                collData.clear();
             mvpPresenter.getParamet().setPageNo(PAGE_NO + "");
             mvpPresenter.LoadCollectionData();//请求网络获取搜索列表
         }

@@ -49,7 +49,7 @@ import com.laichushu.book.mvp.write.directories.MaterialListModel;
 import com.laichushu.book.mvp.write.draftmodle.DraftModle;
 import com.laichushu.book.mvp.write.sourcematerial.SourceMaterialModle;
 import com.laichushu.book.mvp.write.sourcematerialdir.SourceMaterialDirModle;
-import com.laichushu.book.ui.activity.MineCourseList_Paramet;
+import com.laichushu.book.bean.netbean.MineCourseList_Paramet;
 
 import java.util.Map;
 

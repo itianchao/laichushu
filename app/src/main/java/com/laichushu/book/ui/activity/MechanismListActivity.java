@@ -100,6 +100,12 @@ public class MechanismListActivity extends MvpActivity2 implements View.OnClickL
     int position = 0;
 
     @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("机构");
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_finish://关闭

@@ -143,7 +143,11 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
         mRecommendData = getIntent().getParcelableArrayListExtra("recommend");
         mRecommendAdapter.setmRecommendData(mRecommendData);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("小组");
+    }
     /**
      * 点击事件
      *

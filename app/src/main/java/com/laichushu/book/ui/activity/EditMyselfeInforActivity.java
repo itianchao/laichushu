@@ -146,7 +146,11 @@ public class EditMyselfeInforActivity extends MvpActivity2 implements View.OnCli
 
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("编辑个人信息");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

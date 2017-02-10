@@ -48,6 +48,7 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     private String title;
     private String articleId;
     private String dir;
+
     @Override
     protected SourceMaterialPresenter createPresenter() {
         return new SourceMaterialPresenter(this);
@@ -56,7 +57,6 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     @Override
     protected View createSuccessView() {
         View mSuccessView = UIUtil.inflate(R.layout.activity_sourcemateial);
-
         title = getIntent().getStringExtra("title");
         addTv = (TextView) mSuccessView.findViewById(R.id.tv_add);
         titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
@@ -95,12 +95,18 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
                 public void run() {
                     refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 }
-            },30);
+            }, 30);
         }
         mAdapter = new MaterialListAdapter(this, mData, mvpPresenter);
         mateialRyv.setAdapter(mAdapter);
         isLoad = false;
 
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText(title);
     }
 
     @Override
@@ -118,7 +124,7 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     }
 
     @Override
-    public void getDeleteMateialDataSuccess(RewardResult model,int index) {
+    public void getDeleteMateialDataSuccess(RewardResult model, int index) {
         hideLoading();
         if (model.isSuccess()) {
             ToastUtil.showToast("删除成功");
@@ -130,7 +136,7 @@ public class SourceMaterialActivity extends MvpActivity2<SourceMaterialPresenter
     }
 
     @Override
-    public void getMaterialRenameDataSuccess(RewardResult model, int index,String name) {
+    public void getMaterialRenameDataSuccess(RewardResult model, int index, String name) {
         hideLoading();
         if (model.isSuccess()) {
             ToastUtil.showToast("重命名成功");

@@ -80,7 +80,12 @@ public class IndentityAuthenActivity extends MvpActivity2 implements View.OnClic
         btnAuditing.setOnClickListener(this);
         ivFront.setOnClickListener(this);
         ivOpposite.setOnClickListener(this);
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
 
     @Override

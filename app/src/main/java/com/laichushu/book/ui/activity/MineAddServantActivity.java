@@ -76,8 +76,14 @@ public class MineAddServantActivity extends MvpActivity2 implements View.OnClick
         addServiceAdapter = new MineAddServiceAdapter(this, serviceDate);
         mServiceRecyclerView.setAdapter(addServiceAdapter);
         mServiceRecyclerView.setOnPullLoadMoreListener(this);
-       //获取服务
+        //获取服务
         getData();
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("我的服务");
     }
 
     public void getData() {
@@ -100,11 +106,12 @@ public class MineAddServantActivity extends MvpActivity2 implements View.OnClick
                     } else {
                         ToastUtil.showToast(model.getErrMsg());
                     }
+                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
                 } else {
                     ToastUtil.showToast(model.getErrMsg());
-                    refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                    refrushErrorView();
                 }
-                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
 
             }
 
@@ -175,5 +182,19 @@ public class MineAddServantActivity extends MvpActivity2 implements View.OnClick
         if (event.isRefursh) {
             onRefresh();
         }
+    }
+
+    /**
+     * 重新加载
+     */
+    public void refrushErrorView() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                getData();
+            }
+        });
     }
 }

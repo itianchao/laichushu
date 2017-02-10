@@ -154,7 +154,11 @@ public class TopicDetilActivity extends MvpActivity2<TopicDetailPresenter> imple
             moreIv.setVisibility(View.GONE);
         }
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("话题详情");
+    }
     /**
      * 评论列表
      *

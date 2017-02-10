@@ -73,6 +73,17 @@ public class FindGroupListActivity extends MvpActivity2<FindGroupListPresenter> 
         }
     }
 
+    @Override
+    protected void initView() {
+        super.initView();
+        if (type == 0) {
+            mPage.tvTitle.setText("我加入的小组");
+        } else if (type == 1) {
+            mPage.tvTitle.setText("我创建的小组");
+        }
+
+    }
+
     /**
      * 获取小组列表接口 成功
      *
@@ -123,14 +134,15 @@ public class FindGroupListActivity extends MvpActivity2<FindGroupListPresenter> 
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 4){//更新小组人数
+        if (resultCode == 4) {//更新小组人数
             Bundle bundle = data.getExtras();
             int argsMember = bundle.getInt("argsMember");
             int index = bundle.getInt("index");
             GroupListModle.DataBean bean = mGroupListdata.get(index);
-            bean.setJoinNum(bean.getJoinNum()+argsMember);
+            bean.setJoinNum(bean.getJoinNum() + argsMember);
         }
     }
 }
