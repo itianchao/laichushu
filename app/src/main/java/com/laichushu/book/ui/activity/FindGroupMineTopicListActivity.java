@@ -80,7 +80,11 @@ public class FindGroupMineTopicListActivity extends MvpActivity2<FindGroupMineTo
         mRecyclerView.setOnPullLoadMoreListener(this);
         mvpPresenter.loadData(type);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText(title);
+    }
     /**
      * 点击事件
      *

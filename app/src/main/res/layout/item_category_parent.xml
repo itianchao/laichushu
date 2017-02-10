@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/SpringGreen"
+    android:id="@+id/rl_parent"
     android:layout_height="50dp">
     <TextView
         android:id="@+id/tv_parent"
@@ -10,11 +11,11 @@
         tools:text="1231231231"
         android:textSize="@dimen/edit2"
         android:textColor="@color/edit"
-        android:background="@color/frenchGrey"
         android:layout_width="match_parent"
         android:layout_height="49dp" />
     <View
         android:background="@color/hint"
         android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_height="1dp"/>
-</LinearLayout>
+</RelativeLayout>

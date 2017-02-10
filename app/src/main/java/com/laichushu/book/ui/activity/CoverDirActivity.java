@@ -51,7 +51,11 @@ public class CoverDirActivity extends MvpActivity2 implements View.OnClickListen
         finishIv.setOnClickListener(this);
         return mSuccessView;
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("模版选择");
+    }
     @Override
     protected void initData() {
         bookname = getIntent().getStringExtra("bookname");

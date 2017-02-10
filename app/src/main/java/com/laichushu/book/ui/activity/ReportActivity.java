@@ -65,7 +65,12 @@ public class ReportActivity extends MvpActivity2 implements View.OnClickListener
      */
     @Override
     protected void initData() {
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);//每次进入都是成功的
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
 
     /**

@@ -103,7 +103,11 @@ public class FindGroupCreateNewActivity extends MvpActivity2 implements View.OnC
             markContentEt.setText(bean.getMarkContent());//里程碑
         }
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("创建小组");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

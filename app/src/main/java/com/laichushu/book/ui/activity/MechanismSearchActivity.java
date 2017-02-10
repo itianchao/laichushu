@@ -64,7 +64,12 @@ public class MechanismSearchActivity extends MvpActivity2<MechanismSearchPresent
     @Override
     protected void initData() {
         articleId = getIntent().getStringExtra("articleId");
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
 
     @Override

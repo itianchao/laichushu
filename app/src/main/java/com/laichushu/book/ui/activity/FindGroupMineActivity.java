@@ -57,7 +57,11 @@ public class FindGroupMineActivity extends MvpActivity2 implements AdapterView.O
             }
         }, 10);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("我的小组");
+    }
     private class FindGroupMineAdapter extends BaseAdapter {
 
         @Override

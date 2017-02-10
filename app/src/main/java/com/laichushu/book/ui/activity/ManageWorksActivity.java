@@ -113,7 +113,11 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
                 break;
         }
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("作品管理");
+    }
     @Override
     public void getDataSuccess(HomeHotModel model) {
         if (model.isSuccess()) {

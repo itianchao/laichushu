@@ -57,7 +57,11 @@ public class HomePageGradeDetailsActivity extends MvpActivity2 implements View.O
                 break;
         }
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("等级分类");
+    }
     public void getRemarks() {
         GradeDetails_Paramet paramet = new GradeDetails_Paramet(userID);
         addSubscription(apiStores.gradeDetails(paramet), new ApiCallback<GradeRemarksResult>() {

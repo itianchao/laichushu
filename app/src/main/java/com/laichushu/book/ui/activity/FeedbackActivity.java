@@ -83,6 +83,11 @@ private String conHint,accHint;
             }
         }, 30);
     }
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("意见反馈");
+    }
 
     @Override
     public void onClick(View v) {

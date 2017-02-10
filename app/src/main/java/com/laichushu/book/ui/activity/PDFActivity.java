@@ -31,6 +31,7 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
     private Integer pageNumber = 1;
     private TextView titleTv;
     private ImageView backIv;
+    private String title;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -50,7 +51,7 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
     protected void initData() {
         String path = getIntent().getStringExtra("path");
         String name = getIntent().getStringExtra("name");
-        String title = getIntent().getStringExtra("title");
+        title = getIntent().getStringExtra("title");
         backIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,12 +59,18 @@ public class PDFActivity extends MvpActivity2 implements OnPageChangeListener {
             }
         });
         titleTv.setText(title);
-        String url = ConstantValue.LOCAL_PATH.SD_PATH +title + name + ".pdf";
+        String url = ConstantValue.LOCAL_PATH.SD_PATH + title + name + ".pdf";
         if (new File(url).exists()) {
             display(url, false);
         } else {
             downloadPdf(path, title + name);
         }
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText(title);
     }
 
     /**

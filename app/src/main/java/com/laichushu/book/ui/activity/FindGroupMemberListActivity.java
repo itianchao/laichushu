@@ -82,7 +82,11 @@ public class FindGroupMemberListActivity extends MvpActivity2<FindGroupMemberPre
             mvpPresenter.getGroupMemberList(teamId);//成员列表
         }
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText(title);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

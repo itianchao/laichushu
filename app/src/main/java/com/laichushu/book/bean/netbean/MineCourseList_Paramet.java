@@ -1,4 +1,4 @@
-package com.laichushu.book.ui.activity;
+package com.laichushu.book.bean.netbean;
 
 /**
  * 发现 - 课程 - 我的收藏、我的下载、我的浏览

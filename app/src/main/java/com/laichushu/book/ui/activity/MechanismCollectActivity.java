@@ -67,7 +67,11 @@ public class MechanismCollectActivity extends MvpActivity2<MechanismCollectPrese
 
         mvpPresenter.LoadCollectionData();
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("我收藏的机构");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -98,7 +102,7 @@ public class MechanismCollectActivity extends MvpActivity2<MechanismCollectPrese
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            refrushErrorView();
         }
     }
 
@@ -159,5 +163,17 @@ public class MechanismCollectActivity extends MvpActivity2<MechanismCollectPrese
         LoggerUtil.e(msg);
     }
 
-
+    /**
+     * 重新加载
+     */
+    public void refrushErrorView() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.LoadCollectionData();
+            }
+        });
+    }
 }

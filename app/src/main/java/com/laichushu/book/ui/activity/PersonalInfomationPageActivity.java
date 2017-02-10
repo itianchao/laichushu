@@ -51,6 +51,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
             }
         }
     };
+    private View inflate;
 
     @Override
     protected MessageCommentPresenter createPresenter() {
@@ -59,7 +60,7 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
 
     @Override
     protected View createSuccessView() {
-        View inflate = UIUtil.inflate(R.layout.activity_personal_infomation_page);
+        inflate = UIUtil.inflate(R.layout.activity_personal_infomation_page);
         ivBack = ((ImageView) inflate.findViewById(R.id.iv_title_finish));
         tvTitle = ((TextView) inflate.findViewById(R.id.tv_title));
         tvRight = ((TextView) inflate.findViewById(R.id.tv_title_right));
@@ -91,6 +92,19 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
         sendId = dataBean.getSenderId();
         msgId = dataBean.getMsgId();
         mvpPresenter.LoadPerDetailsData(sendId, msgId);
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        if (mPage == null)
+            mPage = new LoadingPager(mActivity) {
+                @Override
+                public View createSuccessView() {
+                    return inflate;
+                }
+            };
+        mPage.tvTitle.setText(dataBean.getSenderName());
     }
 
     @Override

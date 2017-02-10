@@ -147,7 +147,11 @@ public class CreateMaterialActivity extends MvpActivity2<CreateNewMaterialPresen
             }.start();
         }
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText(title);
+    }
     @Override
     public void getCreateSourceMaterial(RewardResult model) {
         if (model.isSuccess()) {

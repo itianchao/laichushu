@@ -104,7 +104,11 @@ public class FindEditPageActivity extends MvpActivity2<FindEditPagePresenter> im
 
         mvpPresenter.loadEditorListData(curProCode, orderBy);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("编辑");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

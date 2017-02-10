@@ -3,6 +3,7 @@ package com.laichushu.book.ui.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -16,15 +17,16 @@ import java.util.ArrayList;
  * Created by wangtong on 2016/11/10.
  */
 
-public class CategoryParentAdapter extends BaseAdapter{
+public class CategoryParentAdapter extends BaseAdapter {
     private ArrayList<CategoryModle.DataBean> mParentData;
+
     public CategoryParentAdapter(ArrayList<CategoryModle.DataBean> mParentData) {
         this.mParentData = mParentData;
     }
 
     @Override
     public int getCount() {
-        return mParentData == null?0:mParentData.size();
+        return mParentData == null ? 0 : mParentData.size();
     }
 
     @Override
@@ -42,27 +44,30 @@ public class CategoryParentAdapter extends BaseAdapter{
         ViewHolder holder = null;
         if (convertView != null) {
             holder = (ViewHolder) convertView.getTag();
-        }else {
+        } else {
             convertView = UIUtil.inflate(R.layout.item_category_parent);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         }
         holder.parentTv.setText(mParentData.get(position).getName());
-        if (mParentData.get(position).isPressd()){
-            holder.parentTv.setBackgroundColor(UIUtil.getColor(R.color.SpringGreen));
+        if (mParentData.get(position).isPressd()) {
+            holder.rlParent.setBackgroundColor(UIUtil.getColor(R.color.SpringGreen));
             holder.parentTv.setTextColor(UIUtil.getColor(R.color.white));
-        }else {
-            holder.parentTv.setBackgroundColor(UIUtil.getColor(R.color.white));
+        } else {
+            holder.rlParent.setBackgroundColor(UIUtil.getColor(R.color.frenchGrey));
             holder.parentTv.setTextColor(UIUtil.getColor(R.color.edit));
         }
         return convertView;
     }
-    class ViewHolder{
+
+    class ViewHolder {
 
         private TextView parentTv;
+        private RelativeLayout rlParent;
 
         public ViewHolder(View itemView) {
-            parentTv = (TextView)itemView.findViewById(R.id.tv_parent);
+            parentTv = (TextView) itemView.findViewById(R.id.tv_parent);
+            rlParent = (RelativeLayout) itemView.findViewById(R.id.rl_parent);
         }
     }
 

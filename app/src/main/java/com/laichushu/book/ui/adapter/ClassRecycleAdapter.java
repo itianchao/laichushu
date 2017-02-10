@@ -30,6 +30,8 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
     private Activity context;
     private List<CourseraModle.DataBean.LessonListBean> dataBeen;
     private FindPresenter bookcastPresener;
+    private final int HEAD_VIEW = 1;
+    private final int FOOTER_VIEW = 2;
 
     public ClassRecycleAdapter(Activity context, List<CourseraModle.DataBean.LessonListBean> dataBean, FindPresenter bookcastPresener) {
         this.context = context;
@@ -41,6 +43,15 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = UIUtil.inflate(R.layout.item_class_find);
         return new ViewHolder(itemView);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position <= dataBeen.size()) {
+            return HEAD_VIEW;
+        } else {
+            return FOOTER_VIEW;
+        }
     }
 
     @Override

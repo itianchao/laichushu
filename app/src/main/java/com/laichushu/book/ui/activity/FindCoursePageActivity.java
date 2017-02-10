@@ -71,7 +71,11 @@ public class FindCoursePageActivity extends MvpActivity2 implements View.OnClick
         }, 30);
         onClick(liveRbn);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("课程");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

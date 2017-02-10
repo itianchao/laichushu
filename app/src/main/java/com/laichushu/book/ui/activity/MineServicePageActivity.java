@@ -105,7 +105,11 @@ public class MineServicePageActivity extends MvpActivity2<MineServicePresenter> 
 
         mvpPresenter.LoadCooperateData();
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("我的服务");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

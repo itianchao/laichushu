@@ -108,7 +108,11 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
         mvpPresenter.loadCategoryData();
         EventBus.getDefault().register(this);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("创建新书");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -176,7 +180,7 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(modle.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            refrushErrorView();
         }
     }
 
@@ -224,7 +228,7 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
     public void getDataFail(String msg) {
         hideLoading();
         Logger.e(msg);
-        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        refrushErrorView();
     }
 
     @Override
@@ -282,5 +286,18 @@ public class CreateNewBookActivity extends MvpActivity2<CreateNewBookPersenter> 
             path = event.url;
             GlideUitl.loadImg(mActivity, path, coverIv);
         }
+    }
+    /**
+     * 重新加载
+     */
+    public void refrushErrorView() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.loadCategoryData();
+            }
+        });
     }
 }

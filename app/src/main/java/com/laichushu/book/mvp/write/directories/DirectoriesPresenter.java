@@ -84,7 +84,7 @@ public class DirectoriesPresenter extends BasePresenter<DirectoriesView> {
 
             @Override
             public void onFailure(int code, String msg) {
-                mvpView.getDataFail("code+" + code + "/msg:" + msg);
+                mvpView.getDataFail2("code+" + code + "/msg:" + msg);
             }
 
             @Override

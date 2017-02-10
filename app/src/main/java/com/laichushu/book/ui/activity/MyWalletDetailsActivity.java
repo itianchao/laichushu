@@ -81,7 +81,11 @@ public class MyWalletDetailsActivity extends MvpActivity2<WalletPresener> implem
         //初始化钱包首页信息
         mvpPresenter.LoadWalletRecordData();
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("我的钱包");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

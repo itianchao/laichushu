@@ -152,7 +152,11 @@ public class FindServerMainPageActivity extends MvpActivity2<FindServiceMainPage
 
         scrollBrief.setVisibility(View.VISIBLE);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("个人主页");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

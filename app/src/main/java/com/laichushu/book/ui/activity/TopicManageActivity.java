@@ -80,7 +80,11 @@ public class TopicManageActivity extends MvpActivity2<TopicManagePresenter> impl
         }
 
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("话题管理");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -119,15 +123,16 @@ public class TopicManageActivity extends MvpActivity2<TopicManagePresenter> impl
         }, 300);
         if (model.isSuccess()) {
             topListDate = model.getData();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
             topicAdapter.refreshAdapter(topListDate);
             if (!topListDate.isEmpty()) {
                 PAGE_NO++;
             } else {
                 ToastUtil.showToast(model.getErrMsg());
             }
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
+            refrushErrorView();
         }
     }
 
@@ -200,5 +205,18 @@ public class TopicManageActivity extends MvpActivity2<TopicManagePresenter> impl
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+    /**
+     * 重新加载
+     */
+    public void refrushErrorView() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.loadMechanismTopicListData(partyId);
+            }
+        });
     }
 }

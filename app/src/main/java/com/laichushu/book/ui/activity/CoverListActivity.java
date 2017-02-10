@@ -68,7 +68,11 @@ public class CoverListActivity extends MvpActivity2<CoverDirPresenter> implement
         titleTv.setText(title);
         mvpPresenter.loadCoverListData(type);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText(title);
+    }
     /**
      * 请求 成功
      */

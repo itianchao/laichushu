@@ -49,7 +49,11 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         mRecyclerView = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_comment);
         return inflate;
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("评论");
+    }
     @Override
     protected void initData() {
         super.initData();
@@ -94,7 +98,6 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
 
     @Override
     public void getMsgCommentDateSuccess(MessageCommentResult model) {
-        commData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -103,6 +106,7 @@ public class MessageCommentDetailsActivity extends MvpActivity2<MessageCommentPr
         }, 300);
         if (model.isSuccess()) {
             if (null != model.getData() && !model.getData().isEmpty()) {
+                commData.clear();
                 commData = model.getData();
                 PAGE_NO++;
             } else {

@@ -66,24 +66,18 @@ public class HomePageDynamicAdapter extends RecyclerView.Adapter<HomePageDynamic
             public void onClick(View v) {
                 if (!dataBeen.get(position).isCollect()) {
                     //添加收藏
-//                    currentNum++;
                     type = "0";
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_yes2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
                     homePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type,dataBeen.get(position),position);
-//                    holder.tvCollect.setText("已收藏("+currentNum + ")");
-//                    dataBeen.get(position).setCollect(true);
                 } else {
                     //取消收藏
-//                    currentNum--;
                     type = "1";
                     Drawable drawable = context.getResources().getDrawable(R.drawable.icon_praise_no2x);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     holder.tvCollect.setCompoundDrawables(drawable, null, null, null);
                     homePagePresener.loadCollectSaveDate(dataBeen.get(position).getId(), ConstantValue.COLLECTTOPIC_TYPE, type,dataBeen.get(position),position);
-//                    holder.tvCollect.setText("收藏("+currentNum + ")");
-//                    dataBeen.get(position).setCollect(false);
                 }
             }
         });

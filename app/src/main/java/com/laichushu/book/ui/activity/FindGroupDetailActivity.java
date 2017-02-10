@@ -144,7 +144,11 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupDetailPresent
         mvpPresenter.getGroupTopicList(bean.getId());
         mvpPresenter.getGroupSuggestTopicList(bean.getId());
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("小组主页");
+    }
     @Override
     public void onClick(View v) {
         final Bundle bundle = new Bundle();

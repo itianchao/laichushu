@@ -9,6 +9,7 @@ public interface DirectoriesView {
     void getMaterialContentData(MaterialContentModel model);
     void getBookListData(BookMoudle model);
     void getDataFail(String msg);
+    void getDataFail2(String msg);
     void showLoading();
     void hideLoading();
 

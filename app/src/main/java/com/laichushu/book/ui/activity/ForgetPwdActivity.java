@@ -11,6 +11,7 @@ import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdModel;
 import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdPresenter;
 import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdView;
 import com.laichushu.book.ui.base.MvpActivity;
+import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -20,7 +21,7 @@ import com.laichushu.book.R;
  * 重置密码页面
  * Created by wangtong on 2016/10/12.
  */
-public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implements ForgetPwdView, View.OnClickListener {
+public class ForgetPwdActivity extends MvpActivity2<ForgetPwdPresenter> implements ForgetPwdView, View.OnClickListener {
 
     private TextView titleTv;
     private ImageView finishTv;
@@ -32,29 +33,34 @@ public class ForgetPwdActivity extends MvpActivity<ForgetPwdPresenter> implement
     private Button finishBtn;
 
     @Override
-    protected void initView() {
-        setContentView(R.layout.activity_forgetpwd);
-        titleTv = (TextView) findViewById(R.id.tv_title);
-        finishTv = (ImageView) findViewById(R.id.iv_title_finish);
-        phoneEt = (EditText) findViewById(R.id.et_phone);
-        codeEt = (EditText) findViewById(R.id.et_code);
-        newPwdEt = (EditText) findViewById(R.id.et_new_pwd);
-        rePwdEt = (EditText) findViewById(R.id.et_re_pwd);
-        codeTv = (TextView) findViewById(R.id.tv_getcode);
-        finishBtn = (Button) findViewById(R.id.bt_finish);
-    }
-
-    @Override
     protected void initData() {
         titleTv.setText("重置密码");
         codeTv.setOnClickListener(this);
         finishTv.setOnClickListener(this);
         finishBtn.setOnClickListener(this);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("重置密码");
+    }
     @Override
     protected ForgetPwdPresenter createPresenter() {
         return new ForgetPwdPresenter(this);
+    }
+
+    @Override
+    protected View createSuccessView() {
+        View inflate = UIUtil.inflate(R.layout.activity_forgetpwd);
+        titleTv = (TextView) inflate. findViewById(R.id.tv_title);
+        finishTv = (ImageView) inflate.findViewById(R.id.iv_title_finish);
+        phoneEt = (EditText) inflate.findViewById(R.id.et_phone);
+        codeEt = (EditText) inflate.findViewById(R.id.et_code);
+        newPwdEt = (EditText)inflate. findViewById(R.id.et_new_pwd);
+        rePwdEt = (EditText)inflate. findViewById(R.id.et_re_pwd);
+        codeTv = (TextView)inflate. findViewById(R.id.tv_getcode);
+        finishBtn = (Button)inflate. findViewById(R.id.bt_finish);
+        return inflate;
     }
 
     @Override

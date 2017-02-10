@@ -40,15 +40,6 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     private EditText edMoney;
     private String money = null, payPlate = ConstantValue.ALIPAY_PLATE;
     private WalletBalanceReward bean;
-//    private Handler handler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            if (msg.what == 1) {
-//                finish();
-//            }
-//        }
-//    };
 
     @Override
     protected WalletPresener createPresenter() {

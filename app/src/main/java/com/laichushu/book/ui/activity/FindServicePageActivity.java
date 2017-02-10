@@ -49,6 +49,7 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
     private String curCityCode = "";
     private String curServiceType = null;
     private int PAGE_NO = 1;
+    private boolean isFirst = true;
 
     @Override
     protected FindServicePagePresenter createPresenter() {
@@ -93,6 +94,12 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
         mServerRecyclerView.setOnPullLoadMoreListener(this);
 
         mvpPresenter.loadServerListData(curProCode, curServiceType, orderBy);
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("服务");
     }
 
     @Override
@@ -153,10 +160,10 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
             refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             ToastUtil.showToast(model.getErrMsg());
-            refreshPage(LoadingPager.PageState.STATE_ERROR);
+            if (isFirst)
+                refrushErrorView();
         }
-
-
+        isFirst = false;
     }
 
     @Override
@@ -305,6 +312,20 @@ public class FindServicePageActivity extends MvpActivity2<FindServicePagePresent
             }
         }
         return cityDate;
+    }
+
+    /**
+     * 重新加载
+     */
+    public void refrushErrorView() {
+        refreshPage(LoadingPager.PageState.STATE_ERROR);
+        mPage.setmListener(new LoadingPager.ReLoadDataListenListener() {
+            @Override
+            public void reLoadData() {
+                refreshPage(LoadingPager.PageState.STATE_LOADING);
+                mvpPresenter.loadServerListData(curProCode, curServiceType, orderBy + "");
+            }
+        });
     }
 }
 

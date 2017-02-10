@@ -157,7 +157,6 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
     @Override
     public void getMsgCommentDateSuccess(MessageCommentResult model) {
         LoggerUtil.toJson(model);
-        likeData.clear();
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -166,6 +165,7 @@ public class MsgLikeDetailsActivity extends MvpActivity2<MessageCommentPresenter
         }, 300);
         if (model.isSuccess()) {
             if (null != model.getData() && !model.getData().isEmpty()) {
+                likeData.clear();
                 likeData = model.getData();
                 PAGE_NO++;
             } else {
