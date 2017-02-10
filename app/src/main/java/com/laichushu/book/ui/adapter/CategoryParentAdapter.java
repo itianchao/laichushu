@@ -52,7 +52,7 @@ public class CategoryParentAdapter extends BaseAdapter{
             holder.parentTv.setBackgroundColor(UIUtil.getColor(R.color.SpringGreen));
             holder.parentTv.setTextColor(UIUtil.getColor(R.color.white));
         }else {
-            holder.parentTv.setBackgroundColor(UIUtil.getColor(R.color.white));
+            holder.parentTv.setBackgroundColor(UIUtil.getColor(R.color.frenchGrey));
             holder.parentTv.setTextColor(UIUtil.getColor(R.color.edit));
         }
         return convertView;

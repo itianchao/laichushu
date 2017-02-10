@@ -54,9 +54,18 @@ public class CreateMaterialDirActivity extends MvpActivity2<CreateNewMaterialDir
     @Override
     protected void initData() {
         articleId = getIntent().getStringExtra("articleId");
-        refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
-
+    @Override
+    protected void initView() {
+        super.initView();
+        mPage.tvTitle.setText("添加素材文件夹");
+    }
     /**
      * 获取资源文件夹
      *
