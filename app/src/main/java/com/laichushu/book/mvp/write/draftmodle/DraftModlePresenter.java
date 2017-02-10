@@ -178,9 +178,11 @@ public class DraftModlePresenter extends BasePresenter<DraftModleView> {
      */
     public void openNewDialog(final String articleId) {
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(mActivity);
-        final View customerView = UIUtil.inflate(R.layout.dialog_rename);
+        final View customerView = UIUtil.inflate(R.layout.dialog_rename2);
         TextView dialogTitleTv = (TextView) customerView.findViewById(R.id.tv_dialog_title);
-        dialogTitleTv.setText("添加目录\n(添加草稿内容请到PC端)");
+        TextView hintTv = (TextView) customerView.findViewById(R.id.tv_dialog_hint);
+        dialogTitleTv.setText("添加目录");//
+        hintTv.setText("添加草稿内容请到PC端");//
         //取消
         customerView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,12 +7,20 @@
     android:orientation="vertical">
     <TextView
         android:id="@+id/tv_dialog_title"
-        tools:text="创建目录"
+        tools:text="添加目录"
         android:gravity="center"
         android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+    <TextView
+        android:id="@+id/tv_dialog_hint"
+        tools:text="添加草稿内容请到PC端"
+        android:gravity="center"
+        android:textColor="@color/edit2"
         android:textSize="14sp"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="20dp" />
     <EditText
         android:layout_margin="5dp"
         android:id="@+id/et_dialog"

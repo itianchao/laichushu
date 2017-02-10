@@ -97,6 +97,7 @@ public class CourseraModle extends BaseModel{
              "broadcastId": "11CEEA8D8193AB639C33DC5901307461",
              "broadcastName": "课程直播测试",
              "broadcastPass": "123456",
+             isRecord
              */
 
             private String id;
@@ -118,6 +119,15 @@ public class CourseraModle extends BaseModel{
             private int downloadNum;
             private int collectionNum;
             private double averageStar;
+            private String isRecord;
+
+            public String getIsRecord() {
+                return isRecord;
+            }
+
+            public void setIsRecord(String isRecord) {
+                this.isRecord = isRecord;
+            }
 
             public String getBroadcastDesc() {
                 return broadcastDesc;

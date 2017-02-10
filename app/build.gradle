@@ -56,6 +56,9 @@ android {
         }
         jcenter()
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
 allprojects {
     repositories {

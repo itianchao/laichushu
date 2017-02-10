@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <EditText
+        android:cursorVisible="true"
         android:id="@+id/et_dialogMsg"
         android:layout_width="match_parent"
         android:layout_height="80dp"
