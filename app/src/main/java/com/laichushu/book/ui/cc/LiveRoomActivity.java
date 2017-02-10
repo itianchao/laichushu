@@ -1621,6 +1621,6 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RewardEvent event){
         String money = event.getMoney();
-
+        dwLive.sendPublicChatMsg(money);
     }
 }
