@@ -28,6 +28,7 @@ import com.laichushu.book.ui.activity.FindCourseDocDetailActivity;
 import com.laichushu.book.ui.activity.FindCourseVideoDetailActivity;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.cc.ConfigUtil;
+import com.laichushu.book.ui.cc.LiveReplayActivity;
 import com.laichushu.book.ui.cc.LiveRoomActivity;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
@@ -47,7 +48,7 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
     private MvpActivity2 mActivity;
     private ArrayList<CourseraModle.DataBean.LessonListBean> mData = new ArrayList<>();
     private DWLive dwLive = DWLive.getInstance();
-
+    private DWLiveReplay dwLiveReplay = DWLiveReplay.getInstance();
     public FindClassLiveAdapter(MvpActivity2 mActivity, ArrayList mData) {
         this.mActivity = mActivity;
         this.mData = mData;
@@ -71,8 +72,13 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
                 String userId = ConfigUtil.USERID;
                 String viewerName = SharePrefManager.getNickName();
                 LoggerUtil.e("roomId:"+roomId+" userId:"+userId+" viewerName:"+viewerName);
-                dwLive.setDWLiveLoginParams(dwLiveLoginListener, userId, roomId, viewerName);
-                dwLive.startLogin();
+                if (bean.getIsRecord().equals("0")){
+                    dwLive.setDWLiveLoginParams(dwLiveLoginListener, userId, roomId, viewerName);
+                    dwLive.startLogin();
+                }else {
+                    String currentLiveId = "51CDFC3162710AD0";
+                    dwLiveReplay.setLoginParams(dwLiveReplayLoginListener, userId, roomId, currentLiveId, viewerName);
+                }
             }
         });
         holder.nameTv.setText(bean.getBroadcastName());
@@ -156,6 +162,28 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
                     Toast.makeText(mActivity, failReplayReason, Toast.LENGTH_SHORT).show();
                     break;
             }
+        }
+    };
+    private DWLiveReplayLoginListener dwLiveReplayLoginListener = new DWLiveReplayLoginListener() {
+
+        @Override
+        public void onLogin(TemplateInfo templateInfo) {
+            Intent intent = new Intent(mActivity, LiveReplayActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("chat", templateInfo.getChatView());
+            bundle.putString("pdf", templateInfo.getPdfView());
+            bundle.putString("qa", templateInfo.getQaView());
+            bundle.putString("brief", templateInfo.getDescription());
+            intent.putExtras(bundle);
+            UIUtil.openActivity(mActivity, LiveReplayActivity.class,bundle);
+        }
+
+        @Override
+        public void onException(DWLiveException exception) {
+            Message msg = new Message();
+            msg.what = -2;
+            msg.obj = exception.getMessage();
+            mHandler.sendMessage(msg);
         }
     };
 }
