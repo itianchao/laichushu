@@ -72,7 +72,7 @@ import rx.Observable;
  */
 public interface ApiStores {
     //baseUrl
-    String API_SERVER_URL = ConstantValue.API_SERVER_URL1;
+    String API_SERVER_URL = ConstantValue.API_SERVER_URL4;
 
     /***
      * 注册登录
@@ -801,4 +801,7 @@ public interface ApiStores {
     @POST("lesson/lessonAbout")
     Observable<CourseraModle> getLessonAboutList(@Body LessonAbout_Paramet paramet);
 
+    //直播打赏接口
+    @POST("reward/saveLessonAward")
+    Observable<RewardResult> rewardMoney(@Body LiveRewardMoney_Paramet paramet);
 }

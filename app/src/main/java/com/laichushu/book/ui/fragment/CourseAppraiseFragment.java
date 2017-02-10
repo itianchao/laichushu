@@ -63,7 +63,7 @@ public class CourseAppraiseFragment extends MvpFragment2<AllCommentPresenter> im
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         mAdapter = new CommentAllAdapter(mActivity, mData, mvpPresenter);
         commentRyv.setAdapter(mAdapter);
         lessonId = getArguments().getInt("lessonId");

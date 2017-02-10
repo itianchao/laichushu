@@ -1,5 +1,7 @@
 package com.laichushu.book.bean.netbean;
 
+import com.laichushu.book.global.ConstantValue;
+
 /**
  * Created by PCPC on 2017/1/4.
  */
@@ -10,6 +12,7 @@ public class FindLessonList_Paramet {
     private String fileType;  // 文件类型（1：视频 2：文档）
     private String pageNo;
     private String pageSize;
+    private String userId = ConstantValue.USERID;
 
     public FindLessonList_Paramet(String lessonType, String sortWay, String fileType, String pageNo, String pageSize) {
         this.lessonType = lessonType;

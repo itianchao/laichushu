@@ -53,7 +53,7 @@ public class CourseAboutFragment extends MvpFragment2 implements PullLoadMoreRec
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         courseId = getArguments().getString("lessonId");
         loadData();
     }

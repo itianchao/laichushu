@@ -47,7 +47,7 @@ public class NoticeFragment extends MvpFragment2<NoticePresenter> implements Not
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
 
         id = ((MechanismDetailActivity) getActivity()).getBean().getId();
         if (mData.isEmpty()) {

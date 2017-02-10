@@ -47,7 +47,7 @@ public class TopicListFragment extends MvpFragment2<MechanismTopicListPresenter>
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         id = ((MechanismDetailActivity) getActivity()).getBean().getId();
         if (mData.isEmpty()) {
             mvpPresenter.loadMechanismTopicListData(id);

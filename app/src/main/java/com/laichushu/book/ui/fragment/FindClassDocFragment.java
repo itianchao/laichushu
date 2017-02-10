@@ -60,7 +60,7 @@ public class FindClassDocFragment extends MvpFragment2<FindClassDocPresenter> im
      * 初始化数据
      */
     @Override
-    protected void initData() {
+    public void initData() {
         rankingTv.setOnClickListener(this);
         categroyTv.setOnClickListener(this);
         emptyIv.setOnClickListener(this);

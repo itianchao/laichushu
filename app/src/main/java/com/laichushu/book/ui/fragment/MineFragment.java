@@ -104,7 +104,7 @@ public class MineFragment extends MvpFragment2<MinePresenter> implements View.On
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         super.initData();
         DaoSession daoSession = BaseApplication.getDaoSession(mActivity);
         cache_jsonDao = daoSession.getCache_JsonDao();

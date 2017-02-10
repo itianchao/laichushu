@@ -36,7 +36,7 @@ public class BriefFragment extends MvpFragment2 {
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         refreshPage(LoadingPager.PageState.STATE_SUCCESS);
     }
 }

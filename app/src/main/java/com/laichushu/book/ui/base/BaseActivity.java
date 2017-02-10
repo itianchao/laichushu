@@ -3,7 +3,10 @@ package com.laichushu.book.ui.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.Toast;
@@ -218,5 +221,17 @@ public class BaseActivity extends FragmentActivity {
     public void startActivity(Intent intent) {
         super.startActivity(intent);
         overridePendingTransition(R.anim.open_enter, R.anim.open_exit);
+    }
+    /**
+     * 设置fragment
+     */
+    public void setFragment(Fragment fragment, int layoutId){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        if (fragment != null) {
+            transaction.replace(layoutId, fragment);
+            transaction.commit();
+        }
     }
 }

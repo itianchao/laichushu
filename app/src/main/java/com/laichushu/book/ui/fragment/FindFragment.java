@@ -135,7 +135,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         super.initData();
         titleViewPager();
         //标签列表

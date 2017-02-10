@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
     android:padding="12dp"
+    android:id="@+id/lay_content"
     android:background="@android:color/transparent"
     android:orientation="vertical">
 

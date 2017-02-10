@@ -91,7 +91,7 @@ public class WriteFragment extends MvpFragment2<WritePresenter> implements Write
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         //初始化strip列表
         mStrip.clear();
         for (int i = 0; i < 6; i++) {

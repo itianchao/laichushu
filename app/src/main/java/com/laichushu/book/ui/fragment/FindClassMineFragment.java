@@ -66,7 +66,7 @@ public class FindClassMineFragment extends MvpFragment2<FindClassMinePresenter> 
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         onClick(collectionRbn);
     }
 

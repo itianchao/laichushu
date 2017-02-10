@@ -66,7 +66,7 @@ public class FindClassVideoFragment extends MvpFragment2<FindClassVideoPresenter
      * 初始化数据
      */
     @Override
-    protected void initData() {
+    public void initData() {
         rankingTv.setOnClickListener(this);
         categroyTv.setOnClickListener(this);
         emptyIv.setOnClickListener(this);

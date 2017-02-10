@@ -64,7 +64,7 @@ public class CourseNoteFragment extends MvpFragment2<NotePresenter> implements N
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         refreshPage(LoadingPager.PageState.STATE_LOADING);
         lessonId = getArguments().getString("lessonId");
         mvpPresenter.loadNoteData(lessonId);

@@ -110,16 +110,61 @@ public class CourseraModle extends BaseModel{
             private String thumbName;
             private int clickNum;
             private String speakerName;
+            private String speakerId;
             private String remarks;
             private String broadcastDesc;//直播间desc
             private String broadcastId;//直播间id
             private String broadcastName;//直播间name
             private String broadcastPass;//直播间password
+            private String recordVideoId;//录播视频id
+            private String replayUrl;//录播回放url
+            private String liveId;//直播Id
+            private String isRecord;
+            private String isCollect;
             private String ccVideoId;
             private int downloadNum;
             private int collectionNum;
             private double averageStar;
-            private String isRecord;
+
+            public String getSpeakerId() {
+                return speakerId;
+            }
+
+            public void setSpeakerId(String speakerId) {
+                this.speakerId = speakerId;
+            }
+
+            public String getIsCollect() {
+                return isCollect;
+            }
+
+            public void setIsCollect(String isCollect) {
+                this.isCollect = isCollect;
+            }
+
+            public String getRecordVideoId() {
+                return recordVideoId;
+            }
+
+            public void setRecordVideoId(String recordVideoId) {
+                this.recordVideoId = recordVideoId;
+            }
+
+            public String getReplayUrl() {
+                return replayUrl;
+            }
+
+            public void setReplayUrl(String replayUrl) {
+                this.replayUrl = replayUrl;
+            }
+
+            public String getLiveId() {
+                return liveId;
+            }
+
+            public void setLiveId(String liveId) {
+                this.liveId = liveId;
+            }
 
             public String getIsRecord() {
                 return isRecord;

@@ -1,5 +1,7 @@
 package com.laichushu.book.bean.netbean;
 
+import com.laichushu.book.global.ConstantValue;
+
 /**
  * 课程 - 视频 列表 or 文档列表
  * Created by wangtong on 2017/1/9.
@@ -13,6 +15,7 @@ public class LessonList_Paramet {
     private String pageSize;
     private String lessonName;
     private String lessonCategoryId;//分类是传id
+    private String userId = ConstantValue.USERID;//分类是传id
     /**
      * @param lessonType 课程类型1：点播2：直播
      * @param fileType 1：视频2：文档

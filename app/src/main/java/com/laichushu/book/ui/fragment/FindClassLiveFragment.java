@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import com.laichushu.book.R;
 import com.laichushu.book.bean.netbean.LessonList_Paramet;
+import com.laichushu.book.event.CollectEvent;
 import com.laichushu.book.mvp.find.coursera.live.FindClassLivePresenter;
 import com.laichushu.book.mvp.find.coursera.live.FindClassLiveView;
 import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
@@ -16,6 +17,10 @@ import com.laichushu.book.utils.LoggerUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -60,7 +65,8 @@ public class FindClassLiveFragment extends MvpFragment2<FindClassLivePresenter> 
      * 初始化数据
      */
     @Override
-    protected void initData() {
+    public void initData() {
+        EventBus.getDefault().register(this);
         emptyIv.setOnClickListener(this);
         mvpPresenter.loadVideoList(false);
     }
@@ -156,5 +162,17 @@ public class FindClassLiveFragment extends MvpFragment2<FindClassLivePresenter> 
                 onRefresh();
                 break;
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(CollectEvent event){
+        EventBus.getDefault().removeStickyEvent(event);
+        onRefresh();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

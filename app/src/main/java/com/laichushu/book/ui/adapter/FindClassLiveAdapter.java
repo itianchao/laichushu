@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.adapter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,10 +21,7 @@ import com.bokecc.sdk.mobile.live.pojo.Viewer;
 import com.bokecc.sdk.mobile.live.replay.DWLiveReplay;
 import com.bokecc.sdk.mobile.live.replay.DWLiveReplayLoginListener;
 import com.laichushu.book.R;
-import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.find.coursera.video.CourseraModle;
-import com.laichushu.book.ui.activity.FindCourseDocDetailActivity;
-import com.laichushu.book.ui.activity.FindCourseVideoDetailActivity;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.cc.ConfigUtil;
 import com.laichushu.book.ui.cc.LiveReplayActivity;
@@ -36,8 +32,6 @@ import com.laichushu.book.utils.SharePrefManager;
 import com.laichushu.book.utils.UIUtil;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 发现 - 课程 - 直播 适配器
@@ -49,6 +43,7 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
     private ArrayList<CourseraModle.DataBean.LessonListBean> mData = new ArrayList<>();
     private DWLive dwLive = DWLive.getInstance();
     private DWLiveReplay dwLiveReplay = DWLiveReplay.getInstance();
+
     public FindClassLiveAdapter(MvpActivity2 mActivity, ArrayList mData) {
         this.mActivity = mActivity;
         this.mData = mData;
@@ -60,24 +55,37 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
         return new ViewHolder(itemView);
     }
 
+    private String desc;
+    private String broadcastName;
+    private String sourceId;
+    private String isCollect;
+    private String accepterId;
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         holder.itemView.setLayoutParams(params);
         final CourseraModle.DataBean.LessonListBean bean = mData.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String roomId = bean.getBroadcastId();
                 String userId = ConfigUtil.USERID;
                 String viewerName = SharePrefManager.getNickName();
-                LoggerUtil.e("roomId:"+roomId+" userId:"+userId+" viewerName:"+viewerName);
-                if (bean.getIsRecord().equals("0")){
+                desc = bean.getBroadcastDesc();
+                broadcastName = bean.getBroadcastName();
+                sourceId = bean.getId();
+                isCollect = bean.getIsCollect();
+                accepterId = bean.getSpeakerId();
+                LoggerUtil.e("roomId:" + roomId + " userId:" + userId + " viewerName:" + viewerName);
+                if (bean.getIsRecord().equals("0")) {
                     dwLive.setDWLiveLoginParams(dwLiveLoginListener, userId, roomId, viewerName);
                     dwLive.startLogin();
-                }else {
-                    String currentLiveId = "51CDFC3162710AD0";
+                } else {
+                    String currentLiveId = bean.getLiveId();
                     dwLiveReplay.setLoginParams(dwLiveReplayLoginListener, userId, roomId, currentLiveId, viewerName);
+                    dwLiveReplay.startLogin();
                 }
             }
         });
@@ -127,6 +135,7 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
         this.mData = data;
         notifyDataSetChanged();
     }
+
     private DWLiveLoginListener dwLiveLoginListener = new DWLiveLoginListener() {
 
         @Override
@@ -136,8 +145,12 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
             bundle.putString("pdf", info.getPdfView());
             bundle.putString("qa", info.getQaView());
             bundle.putInt("dvr", roomInfo.getDvr());
-            bundle.putString("brief", roomInfo.getDesc());
-            UIUtil.openActivity(mActivity, LiveRoomActivity.class,bundle);
+            bundle.putString("brief", desc);
+            bundle.putString("broadcastName", broadcastName);
+            bundle.putString("sourceId", sourceId);
+            bundle.putString("isCollect", isCollect);
+            bundle.putString("accepterId", accepterId);
+            UIUtil.openActivity(mActivity, LiveRoomActivity.class, bundle);
         }
 
         @Override
@@ -152,7 +165,7 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
 
         @Override
         public void handleMessage(Message msg) {
-            switch(msg.what) {
+            switch (msg.what) {
                 case -1:
                     String failLiveReason = (String) msg.obj;
                     Toast.makeText(mActivity, failLiveReason, Toast.LENGTH_SHORT).show();
@@ -168,14 +181,16 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
 
         @Override
         public void onLogin(TemplateInfo templateInfo) {
-            Intent intent = new Intent(mActivity, LiveReplayActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("chat", templateInfo.getChatView());
             bundle.putString("pdf", templateInfo.getPdfView());
-            bundle.putString("qa", templateInfo.getQaView());
-            bundle.putString("brief", templateInfo.getDescription());
-            intent.putExtras(bundle);
-            UIUtil.openActivity(mActivity, LiveReplayActivity.class,bundle);
+            bundle.putString("qa", "2");
+            bundle.putString("brief", desc);
+            bundle.putString("broadcastName", broadcastName);
+            bundle.putString("sourceId", sourceId);
+            bundle.putString("isCollect", isCollect);
+            bundle.putString("accepterId", accepterId);
+            UIUtil.openActivity(mActivity, LiveReplayActivity.class, bundle);
         }
 
         @Override
@@ -186,4 +201,5 @@ public class FindClassLiveAdapter extends RecyclerView.Adapter<FindClassLiveAdap
             mHandler.sendMessage(msg);
         }
     };
+
 }

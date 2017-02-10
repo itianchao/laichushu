@@ -69,7 +69,7 @@ public class CourseSpeakFragment extends MvpFragment2 implements PullLoadMoreRec
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         cacelBtn.setOnClickListener(this);
         String lessonId = getArguments().getString("lessonId");
         loadSpeakListData(lessonId);

@@ -31,7 +31,7 @@ public class CourseIntroFragment extends MvpFragment2 {
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {

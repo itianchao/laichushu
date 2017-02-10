@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laichushu.book.R;
@@ -13,6 +14,7 @@ import com.laichushu.book.utils.UIUtil;
 
 public class LoadDialog extends Dialog {
     private TextView tv;
+    public LinearLayout contentLay;
 
     public LoadDialog(Context context) {
         super(context, R.style.loading_dialog);
@@ -23,7 +25,7 @@ public class LoadDialog extends Dialog {
         View contentView = View.inflate(getContext(), R.layout.setting_dialog_layout, null);
 
         Window win = this.getWindow();
-
+        contentLay = (LinearLayout) contentView.findViewById(R.id.lay_content);
         WindowManager.LayoutParams shareDialogParams = this.getWindow().getAttributes();
         shareDialogParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
         shareDialogParams.height = WindowManager.LayoutParams.WRAP_CONTENT;

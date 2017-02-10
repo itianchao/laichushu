@@ -25,7 +25,7 @@ public abstract class MvpFragment2<P extends BasePresenter> extends BaseFragment
         initData();
     }
 
-    protected void initData() {
+    public void initData() {
 
     }
 

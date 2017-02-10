@@ -74,7 +74,7 @@ public class MsgFragment extends MvpFragment2<MessageCommentPresenter> implement
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         super.initData();
         tvTitle.setText("消息");
         ivFinish.setVisibility(View.INVISIBLE);

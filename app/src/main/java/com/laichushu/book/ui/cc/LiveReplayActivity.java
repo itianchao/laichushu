@@ -1,6 +1,5 @@
 package com.laichushu.book.ui.cc;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -36,8 +35,12 @@ import com.bokecc.sdk.mobile.live.replay.pojo.ReplayQAMsg;
 import com.bokecc.sdk.mobile.live.util.HttpUtil;
 import com.bokecc.sdk.mobile.live.widget.DocView;
 import com.laichushu.book.R;
+import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.ui.adapter.MyReplayChatListViewAdapter;
 import com.laichushu.book.ui.adapter.MyReplayQAListViewAdapter;
+import com.laichushu.book.ui.base.BaseActivity;
+import com.laichushu.book.ui.fragment.CollectFragment;
+import com.laichushu.book.ui.fragment.RewardFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,171 +49,184 @@ import java.util.TreeSet;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
-public class LiveReplayActivity extends Activity implements SurfaceHolder.Callback, IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnBufferingUpdateListener, View.OnClickListener, IMediaPlayer.OnCompletionListener {
+public class LiveReplayActivity extends BaseActivity implements SurfaceHolder.Callback, IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnBufferingUpdateListener, View.OnClickListener, IMediaPlayer.OnCompletionListener {
 
-	private IjkMediaPlayer player;
+    private IjkMediaPlayer player;
     private SurfaceView sv;
     private SurfaceHolder holder;
     private DocView pv;
     private DWLiveReplay dwLiveReplay;
-    private Button playBtn; 
+    private Button playBtn;
     private ListView lvReplayChat, lvReplayQa;
     private RelativeLayout bl;
 
     private LinearLayout playControler;
     private SeekBar playSeekBar;
-    
+
     private TextView currentTime, totalTime;
-    
+
     private Button btnFullScreen;
-    
-	private Timer timer;
-	private TimerTask timerTask;
-	
-	private final int seekBarMax = 10000;
-	private TreeSet<ReplayQAMsg> qaMsgs;
-	private TreeSet<ReplayChatMsg> replayChatMsgs;
-	private MyReplayChatListViewAdapter myReplayChatListViewAdapter;
-	private MyReplayQAListViewAdapter myReplayQAListViewAdapter;
-	
-	private Handler handler = new Handler() {
 
-		@Override
-		public void handleMessage(Message msg) {
-			switch(msg.what) {
-				case 0:
-					if (player != null && player.isPlayable() && player.isPlaying()) {
-						long currentPosition = player.getCurrentPosition();
-						currentTime.setText(parseTime(currentPosition));
-						int progress = (int)(seekBarMax * (double)currentPosition / (double)player.getDuration()); 
-						playSeekBar.setProgress(progress);
-					}
-					break;
-				case 1:
-					myReplayQAListViewAdapter = new MyReplayQAListViewAdapter(getApplicationContext(), qaMsgs);
-					lvReplayQa.setAdapter(myReplayQAListViewAdapter);
-					myReplayQAListViewAdapter.notifyDataSetChanged();
-					break;
-				case 2:
-					myReplayChatListViewAdapter = new MyReplayChatListViewAdapter(getApplicationContext(), replayChatMsgs);
-					lvReplayChat.setAdapter(myReplayChatListViewAdapter);
-					myReplayChatListViewAdapter.notifyDataSetChanged();
-					break;
-			}
-		}
-	};
-	
-	private DWLiveReplayListener replayListener = new DWLiveReplayListener() {
-		
-		@Override
-		public void onQuestionAnswer(TreeSet<ReplayQAMsg> qaMsgs) {
-			LiveReplayActivity.this.qaMsgs = qaMsgs;
-			handler.sendEmptyMessage(1);
-		}
-		
-		@Override
-		public void onException(DWLiveException exception) {
-			Log.e("Demo", exception.getMessage() + "");
-		}
-		
-		@Override
-		public void onChatMessage(TreeSet<ReplayChatMsg> replayChatMsgs) {
-			LiveReplayActivity.this.replayChatMsgs = replayChatMsgs;
-			handler.sendEmptyMessage(2);
-		}
+    private Timer timer;
+    private TimerTask timerTask;
 
-		@Override
-		public void onInitFinished() {
-			handler.sendEmptyMessage(3);
-		}
-	};
-	
-	private boolean isPrepared = false;
-	private TabHost tabHost;
-	private WindowManager wm;
+    private final int seekBarMax = 10000;
+    private TreeSet<ReplayQAMsg> qaMsgs;
+    private TreeSet<ReplayChatMsg> replayChatMsgs;
+    private MyReplayChatListViewAdapter myReplayChatListViewAdapter;
+    private MyReplayQAListViewAdapter myReplayQAListViewAdapter;
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    if (player != null && player.isPlayable() && player.isPlaying()) {
+                        long currentPosition = player.getCurrentPosition();
+                        currentTime.setText(parseTime(currentPosition));
+                        int progress = (int) (seekBarMax * (double) currentPosition / (double) player.getDuration());
+                        playSeekBar.setProgress(progress);
+                    }
+                    break;
+                case 1:
+                    myReplayQAListViewAdapter = new MyReplayQAListViewAdapter(getApplicationContext(), qaMsgs);
+                    lvReplayQa.setAdapter(myReplayQAListViewAdapter);
+                    myReplayQAListViewAdapter.notifyDataSetChanged();
+                    break;
+                case 2:
+                    myReplayChatListViewAdapter = new MyReplayChatListViewAdapter(getApplicationContext(), replayChatMsgs);
+                    lvReplayChat.setAdapter(myReplayChatListViewAdapter);
+                    myReplayChatListViewAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
+
+    private DWLiveReplayListener replayListener = new DWLiveReplayListener() {
+
+        @Override
+        public void onQuestionAnswer(TreeSet<ReplayQAMsg> qaMsgs) {
+            LiveReplayActivity.this.qaMsgs = qaMsgs;
+            handler.sendEmptyMessage(1);
+        }
+
+        @Override
+        public void onException(DWLiveException exception) {
+            Log.e("Demo", exception.getMessage() + "");
+        }
+
+        @Override
+        public void onChatMessage(TreeSet<ReplayChatMsg> replayChatMsgs) {
+            LiveReplayActivity.this.replayChatMsgs = replayChatMsgs;
+            handler.sendEmptyMessage(2);
+        }
+
+        @Override
+        public void onInitFinished() {
+            handler.sendEmptyMessage(3);
+        }
+    };
+
+    private boolean isPrepared = false;
+    private TabHost tabHost;
+    private WindowManager wm;
+    private View titleLay;//标题
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.replay_room_live);
         wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        tabHost = (TabHost) findViewById(R.id.tabhost);  
-        tabHost.setup();  
+        tabHost = (TabHost) findViewById(R.id.tabhost);
+        tabHost.setup();
         tabHost.setVisibility(View.INVISIBLE);
-        
+
         init();
 
         initRoomShow();
-        
+
         initPlayer();
-		initRawards();
+        initRawards();
         HttpUtil.LOG_LEVEL = HttpUtil.HttpLogLevel.DETAIL;
     }
-	/**
-	 * 中间条目 标题、下载、收藏、打赏
-	 */
-	private void initRawards() {
-		ImageView rewardIv = (ImageView) findViewById(R.id.iv_reward);
-		ImageView collectionIv = (ImageView) findViewById(R.id.iv_collection);
-		ImageView downloadIv = (ImageView) findViewById(R.id.iv_download);
-		TextView titleTv = (TextView) findViewById(R.id.tv_title);
-		titleTv.setText("");
-		rewardIv.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
 
-			}
-		});
-		collectionIv.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+    /**
+     * 中间条目 标题、下载、收藏、打赏
+     */
+    private String userId = ConstantValue.USERID;
+    private String sourceType = ConstantValue.COLLECTCOURSE_TYPE;
 
-			}
-		});
-		downloadIv.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+    private void initRawards() {
+        TextView itemtitleTv = (TextView) findViewById(R.id.tv_itemtitle);
+        String broadcastName = getIntent().getStringExtra("broadcastName");
+        itemtitleTv.setText(broadcastName);
+        //收藏
+        String sourceId = getIntent().getStringExtra("sourceId");
+        String isCollect = getIntent().getStringExtra("isCollect");
+        CollectFragment fragment = new CollectFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("isCollect", isCollect);
+        bundle.putString("sourceId", sourceId);
+        fragment.setArguments(bundle);
+        setFragment(fragment, R.id.iv_collection);
+        //打赏
+        String accepterId = getIntent().getStringExtra("accepterId");
+        RewardFragment rewfragment = new RewardFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("accepterId", accepterId);
+        bundle2.putString("sourceId", sourceId);
+        rewfragment.setArguments(bundle2);
+        setFragment(rewfragment, R.id.iv_reward);
+    }
 
-			}
-		});
-	}
     private void initRoomShow() {
-    	
-    	Intent intent = getIntent();
+
+        Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        
+
         chatStr = bundle.getString("chat");
         pdfStr = bundle.getString("pdf");
         qaStr = bundle.getString("qa");
-		tabHost.addTab(tabHost.newTabSpec("tab0").setIndicator("简介").setContent(R.id.lay_brief));
+        tabHost.addTab(tabHost.newTabSpec("tab0").setIndicator("简介").setContent(R.id.lay_brief));
 
-    	if ("1".equals(chatStr)) {
-			tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("聊天").setContent(R.id.msg_layout));  
-		}
-		
-		if ("1".equals(pdfStr)) {
-			tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("文档").setContent(R.id.replay_docView));
-		}
-		
-		if ("1".equals(qaStr)) {
-			tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("问答").setContent(R.id.qa_layout));
-		}
-        
+        if ("1".equals(pdfStr)) {
+            tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("文档").setContent(R.id.replay_docView));
+        }
+        if ("1".equals(chatStr)) {
+            tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("聊天").setContent(R.id.msg_layout));
+        }
+
+        if ("1".equals(qaStr)) {
+            tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("问答").setContent(R.id.qa_layout));
+        }
+
         tabHost.setVisibility(View.VISIBLE);
     }
 
     private ProgressBar pbReplayLoading;
+
     private void init() {
-    	
-    	timer = new Timer();
-    	pbReplayLoading = (ProgressBar) findViewById(R.id.pb_replay_loading);
-    	bl = (RelativeLayout) findViewById(R.id.bl);
-    	bl.setOnClickListener(this);
-        
+        TextView titleTv = (TextView) findViewById(R.id.tv_title);
+        titleLay = findViewById(R.id.lay_title);
+        titleTv.setText("回放");
+        ImageView backIv = (ImageView) findViewById(R.id.iv_title_finish);
+        backIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        timer = new Timer();
+        pbReplayLoading = (ProgressBar) findViewById(R.id.pb_replay_loading);
+        bl = (RelativeLayout) findViewById(R.id.bl);
+        bl.setOnClickListener(this);
+
         lvReplayChat = (ListView) findViewById(R.id.lv_replay_chat);
-        
+
         lvReplayQa = (ListView) findViewById(R.id.lv_replay_qa);
-        
+
         pv = (DocView) findViewById(R.id.replay_docView);
         sv = (SurfaceView) findViewById(R.id.replay_sv);
         sv.setFocusable(true);
@@ -218,62 +234,65 @@ public class LiveReplayActivity extends Activity implements SurfaceHolder.Callba
         sv.setFocusableInTouchMode(true);
         holder = sv.getHolder();
         holder.addCallback(this);
-        
+
         currentTime = (TextView) findViewById(R.id.current_time);
         totalTime = (TextView) findViewById(R.id.total_time);
-        
+
         btnFullScreen = (Button) findViewById(R.id.btn_replay_fullscreen);
         btnFullScreen.setOnClickListener(this);
-        
+
         playControler = (LinearLayout) findViewById(R.id.play_control);
         playBtn = (Button) findViewById(R.id.play_btn);
         playBtn.setOnClickListener(this);
-        
+
         playSeekBar = (SeekBar) findViewById(R.id.play_seekBar);
         playSeekBar.setMax(seekBarMax);
         playSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				int currentPosition = seekBar.getProgress();
-				if (player.isPlayable()) {
-					player.seekTo(player.getDuration() * currentPosition / seekBar.getMax());
-				}
-			}
-			
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {}
-			
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
-		});
-		//
-		TextView briefviewTv = (TextView) findViewById(R.id.tv_brief);
-		String brief = getIntent().getStringExtra("brief");
-		briefviewTv.setText(brief);
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int currentPosition = seekBar.getProgress();
+                if (player.isPlayable()) {
+                    player.seekTo(player.getDuration() * currentPosition / seekBar.getMax());
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            }
+        });
+        //
+        TextView briefviewTv = (TextView) findViewById(R.id.tv_brief);
+        String brief = getIntent().getStringExtra("brief");
+        briefviewTv.setText(brief);
     }
-    
+
     private String chatStr, pdfStr, qaStr;
+
     private void initPlayer() {
-    	player = new IjkMediaPlayer();
+        player = new IjkMediaPlayer();
         player.setOnPreparedListener(this);
         player.setOnVideoSizeChangedListener(this);
         player.setOnErrorListener(this);
         player.setOnBufferingUpdateListener(this);
         player.setOnCompletionListener(this);
-        
+
         dwLiveReplay = DWLiveReplay.getInstance();
         dwLiveReplay.setReplayParams(player, pv, replayListener);
     }
 
     @Override
     protected void onDestroy() {
-    	player.pause();
-    	player.stop();
-    	player.release();
-		dwLiveReplay.onDestroy();
-		holder = null;
-		sv = null;
+        player.pause();
+        player.stop();
+        player.release();
+        dwLiveReplay.onDestroy();
+        holder = null;
+        sv = null;
         super.onDestroy();
     }
 
@@ -312,7 +331,7 @@ public class LiveReplayActivity extends Activity implements SurfaceHolder.Callba
         isPrepared = false;
         stopTimer();
         dwLiveReplay.stop();
-        
+
     }
 
     @Override
@@ -325,47 +344,47 @@ public class LiveReplayActivity extends Activity implements SurfaceHolder.Callba
         totalTime.setText(parseTime(player.getDuration()));
         startTimer();
     }
-    
+
     private String parseTime(long timeLong) {
-    	StringBuilder sb = new StringBuilder();
-    	timeLong = timeLong / 1000;
-    	long minuteTime = timeLong / 60;
-    	long secondTime = timeLong % 60;
-    	processTime(sb, minuteTime);
-    	sb.append(":");
-    	processTime(sb, secondTime);
-    	return sb.toString();
+        StringBuilder sb = new StringBuilder();
+        timeLong = timeLong / 1000;
+        long minuteTime = timeLong / 60;
+        long secondTime = timeLong % 60;
+        processTime(sb, minuteTime);
+        sb.append(":");
+        processTime(sb, secondTime);
+        return sb.toString();
     }
-    
+
     private void processTime(StringBuilder sb, long convertTime) {
-    	if (convertTime == 0) {
-    		sb.append("00");
-    	} else if (convertTime < 10 && convertTime >0) {
-    		sb.append("0"+convertTime);
-    	} else {
-    		sb.append(convertTime);
-    	}
+        if (convertTime == 0) {
+            sb.append("00");
+        } else if (convertTime < 10 && convertTime > 0) {
+            sb.append("0" + convertTime);
+        } else {
+            sb.append(convertTime);
+        }
     }
-    
+
     private void startTimer() {
-    	timerTask = new TimerTask() {
-			@Override
-			public void run() {
-				handler.sendEmptyMessage(0);
-			}
-		};
-		timer.schedule(timerTask, 0, 1000);
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(0);
+            }
+        };
+        timer.schedule(timerTask, 0, 1000);
     }
-    
+
     private void stopTimer() {
-    	if (timerTask != null) {
-    		timerTask.cancel();
-    	}
+        if (timerTask != null) {
+            timerTask.cancel();
+        }
     }
 
     @Override
     public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
-        Log.i("demo", "onVideoSizeChanged"+"width"+width+"height"+height);
+        Log.i("demo", "onVideoSizeChanged" + "width" + width + "height" + height);
         setSurfaceViewLayout();
     }
 
@@ -376,44 +395,45 @@ public class LiveReplayActivity extends Activity implements SurfaceHolder.Callba
     }
 
     @Override
-    public void onBufferingUpdate(IMediaPlayer mp, int percent) {}
+    public void onBufferingUpdate(IMediaPlayer mp, int percent) {
+    }
 
     @Override
     public void onClick(View view) {
-    	switch(view.getId()) {
-	    	case R.id.play_btn:
-	    		if (player.isPlaying()) {
-	    			player.pause();
-	    			playBtn.setText("开始");
-	    		} else {
-	    			player.start();
-	    			playBtn.setText("暂停");
-	    		}
-	    		break;
-	    	case R.id.bl:
-	    		if (isPrepared) {
-	    			if (playControler.getVisibility() == View.VISIBLE) {
-		    			playControler.setVisibility(View.INVISIBLE);
-		    		} else {
-		    			playControler.setVisibility(View.VISIBLE);
-		    		}
-	    		}
-	    		break;
-	    	case R.id.btn_replay_fullscreen:
-	    		if (isPortrait()) {
-	    			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-	    		} else {
-	    			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-	    		}
-	    		break;
-    	}
+        switch (view.getId()) {
+            case R.id.play_btn:
+                if (player.isPlaying()) {
+                    player.pause();
+                    playBtn.setText("开始");
+                } else {
+                    player.start();
+                    playBtn.setText("暂停");
+                }
+                break;
+            case R.id.bl:
+                if (isPrepared) {
+                    if (playControler.getVisibility() == View.VISIBLE) {
+                        playControler.setVisibility(View.INVISIBLE);
+                    } else {
+                        playControler.setVisibility(View.VISIBLE);
+                    }
+                }
+                break;
+            case R.id.btn_replay_fullscreen:
+                if (isPortrait()) {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                } else {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                }
+                break;
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if (isPrepared) {
-        	player.pause();
+            player.pause();
         }
     }
 
@@ -421,7 +441,7 @@ public class LiveReplayActivity extends Activity implements SurfaceHolder.Callba
     protected void onResume() {
         super.onResume();
         if (isPrepared) {
-        	player.start();
+            player.start();
         }
     }
 
@@ -431,80 +451,81 @@ public class LiveReplayActivity extends Activity implements SurfaceHolder.Callba
 //        	dwLiveReplay.stop();
 //        }
     }
-    
+
     @Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		
-		super.onConfigurationChanged(newConfig);
-		
-		if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-			tabHost.setVisibility(View.VISIBLE);
-			btnFullScreen.setBackgroundResource(R.drawable.fullscreen_close);
-		} else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-			tabHost.setVisibility(View.GONE);
-			btnFullScreen.setBackgroundResource(R.drawable.fullscreen_open);
-		}
-		
-		setSurfaceViewLayout();
-	}
+    public void onConfigurationChanged(Configuration newConfig) {
 
- // 设置surfaceview的布局
- 	private void setSurfaceViewLayout() {
- 		LayoutParams params = getScreenSizeParams();
- 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
- 		sv.setLayoutParams(params);
- 	}
+        super.onConfigurationChanged(newConfig);
 
- 	private LayoutParams getScreenSizeParams() {
-		int width = 600;
-		int height = 400;
-		if (isPortrait()) {
-			width = wm.getDefaultDisplay().getWidth();
-			height = wm.getDefaultDisplay().getHeight() / 3; //TODO 根据当前布局更改
-		} else {
-			width = wm.getDefaultDisplay().getWidth();
-			height = wm.getDefaultDisplay().getHeight();
-		}
-		
-		int vWidth = player.getVideoWidth();
-		if (vWidth == 0) {
-			vWidth = 600;
-		}
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            tabHost.setVisibility(View.VISIBLE);
+            titleLay.setVisibility(View.VISIBLE);
+            btnFullScreen.setBackgroundResource(R.drawable.fullscreen_close);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            tabHost.setVisibility(View.GONE);
+            titleLay.setVisibility(View.GONE);
+            btnFullScreen.setBackgroundResource(R.drawable.fullscreen_open);
+        }
 
-		int vHeight = player.getVideoHeight();
-		if (vHeight == 0) {
-			vHeight = 400;
-		}
+        setSurfaceViewLayout();
+    }
 
-		if (vWidth > width || vHeight > height) {
-			float wRatio = (float) vWidth / (float) width;
-			float hRatio = (float) vHeight / (float) height;
-			float ratio = Math.max(wRatio, hRatio);
+    // 设置surfaceview的布局
+    private void setSurfaceViewLayout() {
+        LayoutParams params = getScreenSizeParams();
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        sv.setLayoutParams(params);
+    }
 
-			width = (int) Math.ceil((float) vWidth / ratio);
-			height = (int) Math.ceil((float) vHeight / ratio);
-		} else {
-			float wRatio = (float) width / (float) vWidth;
-			float hRatio = (float) height / (float) vHeight;
-			float ratio = Math.min(wRatio, hRatio);
+    private LayoutParams getScreenSizeParams() {
+        int width = 600;
+        int height = 400;
+        if (isPortrait()) {
+            width = wm.getDefaultDisplay().getWidth();
+            height = wm.getDefaultDisplay().getHeight() / 3; //TODO 根据当前布局更改
+        } else {
+            width = wm.getDefaultDisplay().getWidth();
+            height = wm.getDefaultDisplay().getHeight();
+        }
 
-			width = (int) Math.ceil((float) vWidth * ratio);
-			height = (int) Math.ceil((float) vHeight * ratio);
-		}
-		LayoutParams params = new LayoutParams(width, height);
-		return params;
-	}
- 	
- // 获得当前屏幕的方向
- 	private boolean isPortrait() {
- 		int mOrientation = getApplicationContext().getResources().getConfiguration().orientation;
- 		if ( mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
- 			return false;
- 		} else{
- 			return true;
- 		}
- 	}
+        int vWidth = player.getVideoWidth();
+        if (vWidth == 0) {
+            vWidth = 600;
+        }
 
+        int vHeight = player.getVideoHeight();
+        if (vHeight == 0) {
+            vHeight = 400;
+        }
+
+        if (vWidth > width || vHeight > height) {
+            float wRatio = (float) vWidth / (float) width;
+            float hRatio = (float) vHeight / (float) height;
+            float ratio = Math.max(wRatio, hRatio);
+
+            width = (int) Math.ceil((float) vWidth / ratio);
+            height = (int) Math.ceil((float) vHeight / ratio);
+        } else {
+            float wRatio = (float) width / (float) vWidth;
+            float hRatio = (float) height / (float) vHeight;
+            float ratio = Math.min(wRatio, hRatio);
+
+            width = (int) Math.ceil((float) vWidth * ratio);
+            height = (int) Math.ceil((float) vHeight * ratio);
+        }
+        LayoutParams params = new LayoutParams(width, height);
+        return params;
+    }
+
+    // 获得当前屏幕的方向
+    private boolean isPortrait() {
+        int mOrientation = getApplicationContext().getResources().getConfiguration().orientation;
+        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

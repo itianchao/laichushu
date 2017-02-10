@@ -1,5 +1,7 @@
 package com.laichushu.book.utils;
 
+import android.graphics.Color;
+
 import com.laichushu.book.ui.widget.LoadDialog;
 
 
@@ -15,6 +17,7 @@ public class ArticleDialogUtil {
         mLoadDialog.setCancelable(false);
         mLoadDialog.setCanceledOnTouchOutside(false);
         mLoadDialog.setTitle(msg);
+        mLoadDialog.contentLay.setBackgroundColor(Color.WHITE);
         mLoadDialog.show();
         UIUtil.getMainThreadHandler().postDelayed(new Runnable() {
             @Override
@@ -27,6 +30,6 @@ public class ArticleDialogUtil {
             public void run() {
                 AppManager.getTopActivity().finish();
             }
-        }, 1700);
+        }, 1600);
     }
 }
