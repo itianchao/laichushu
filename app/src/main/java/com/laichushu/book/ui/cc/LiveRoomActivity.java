@@ -71,10 +71,12 @@ import com.laichushu.book.ui.adapter.MyQAListViewAdapter;
 import com.laichushu.book.ui.base.BaseActivity;
 import com.laichushu.book.ui.fragment.CollectFragment;
 import com.laichushu.book.ui.fragment.RewardFragment;
+import com.laichushu.book.utils.SharePrefManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
 import org.webrtc.EglBase;
 import org.webrtc.SurfaceViewRenderer;
 
@@ -99,7 +101,7 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
     private DocView docView;
 
     private Switch swiPublicPrivate;
-    private ImageButton sendMsgBtn;
+    private Button sendMsgBtn;
     private Button btnFullScreen, changeSource, changeSoundVideo, changeQuality;
     //    private ImageButton sendQABtn;
     private EditText etMsg;//, etQA;
@@ -253,8 +255,8 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
     private void initChatLayout(View view) {
         swiPublicPrivate = (Switch) view.findViewById(R.id.swi);
         swiPublicPrivate.performClick();
-
-        sendMsgBtn = (ImageButton) view.findViewById(R.id.btn_msg);
+        swiPublicPrivate.setVisibility(View.GONE);
+        sendMsgBtn = (Button) view.findViewById(R.id.btn_msg);
         sendMsgBtn.setOnClickListener(LiveRoomActivity.this);
 
         lvChat = (ListView) view.findViewById(R.id.lv_chat);
@@ -294,6 +296,7 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
 
     private void initSmileKeyboard(View view) {
         ivSmile = (ImageView) view.findViewById(R.id.iv_smile);
+        ivSmile.setVisibility(View.GONE);//隐藏表情
         ivSmile.setOnClickListener(this);
         ivKeyBoard = (ImageView) view.findViewById(R.id.iv_keyboard);
         ivKeyBoard.setOnClickListener(this);
@@ -667,7 +670,7 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
         }
         initPager();
         initLvChat();
-//    	initLvQa();
+    	initLvQa();
     }
 
     private void initDwLive() {
@@ -1404,14 +1407,15 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     hideEditTextSoftInput(etFullscreen);
-                    titleLay.setVisibility(View.GONE);
+                    titleLay.setVisibility(View.VISIBLE);
                 } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     hideEditTextSoftInput(etMsg);
                     gvEmoji.setVisibility(View.GONE);
-                    ivSmile.setVisibility(View.VISIBLE);
+//                    ivSmile.setVisibility(View.VISIBLE);
+                    ivSmile.setVisibility(View.GONE);
                     ivKeyBoard.setVisibility(View.GONE);
-                    titleLay.setVisibility(View.VISIBLE);
+                    titleLay.setVisibility(View.GONE);
                 }
                 break;
             case R.id.play_quality_change:
@@ -1462,7 +1466,8 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
 
     private void showNormalKeyBoard() {
         gvEmoji.setVisibility(View.GONE);
-        ivSmile.setVisibility(View.VISIBLE);
+//        ivSmile.setVisibility(View.VISIBLE);
+        ivSmile.setVisibility(View.GONE);
         ivKeyBoard.setVisibility(View.GONE);
         showBottomEditTextSoftInput();
     }
@@ -1486,7 +1491,8 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
         }
         etMsg.setText("");
         gvEmoji.setVisibility(View.GONE);
-        ivSmile.setVisibility(View.VISIBLE);
+        ivSmile.setVisibility(View.GONE);
+//        ivSmile.setVisibility(View.VISIBLE);
         ivKeyBoard.setVisibility(View.GONE);
         if (isKeyboard) {
             hideKeyBoardEditTextSoftInput();
@@ -1535,7 +1541,8 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
         if (isPortrait()) {
             if (gvEmoji.getVisibility() == View.VISIBLE) {
                 gvEmoji.setVisibility(View.GONE);
-                ivSmile.setVisibility(View.VISIBLE);
+//                ivSmile.setVisibility(View.VISIBLE);
+                ivSmile.setVisibility(View.GONE);
                 ivKeyBoard.setVisibility(View.GONE);
             } else {
                 super.onBackPressed();
@@ -1621,6 +1628,7 @@ public class LiveRoomActivity extends BaseActivity implements SurfaceHolder.Call
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RewardEvent event){
         String money = event.getMoney();
-        dwLive.sendPublicChatMsg(money);
+//        dwLive.sendPublicChatMsg(money);ry {
+        dwLive.sendPublicChatMsg("【"+"[em2_08]"+SharePrefManager.getNickName()+"给主讲打赏"+money+"元"+"】");
     }
 }
