@@ -12,6 +12,7 @@ import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdPresenter;
 import com.laichushu.book.mvp.entry.forgetpwd.ForgetPwdView;
 import com.laichushu.book.ui.base.MvpActivity;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.orhanobut.logger.Logger;
@@ -38,6 +39,12 @@ public class ForgetPwdActivity extends MvpActivity2<ForgetPwdPresenter> implemen
         codeTv.setOnClickListener(this);
         finishTv.setOnClickListener(this);
         finishBtn.setOnClickListener(this);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+            }
+        }, 30);
     }
     @Override
     protected void initView() {

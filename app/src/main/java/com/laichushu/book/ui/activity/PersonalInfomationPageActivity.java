@@ -104,7 +104,10 @@ public class PersonalInfomationPageActivity extends MvpActivity2<MessageCommentP
                     return inflate;
                 }
             };
-        mPage.tvTitle.setText(dataBean.getSenderName());
+        if(null!=dataBean){
+            mPage.tvTitle.setText(dataBean.getSenderName());
+        }
+
     }
 
     @Override

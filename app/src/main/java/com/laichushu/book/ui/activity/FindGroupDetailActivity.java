@@ -21,8 +21,10 @@ import com.laichushu.book.ui.adapter.MechanismTopicListAdapter;
 import com.laichushu.book.ui.base.MvpActivity2;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.ui.widget.TypePopWindow;
+import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.LoggerUtil;
+import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -227,6 +229,10 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupDetailPresent
                                     UIUtil.openActivity(mActivity, FindGroupCreateNewActivity.class,bundle);
                                     break;
                                 case 3://分享
+                                    //分享
+                                    String shareContent = "#来出书邀请您参加" + bean.getName() + "吧!";
+                                    String linkUrl = Base64Utils.getStringUrl(bean.getId(), ConstantValue.SHARE_TYPR_BOOK);
+                                    ShareUtil.showShare(mActivity, linkUrl, shareContent, bean.getPhoto(), bean.getMarkContent(), bean.getName());
                                     break;
                                 case 4://解散小组
                                     mvpPresenter.openDismissGroupDialog(bean.getId());

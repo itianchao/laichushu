@@ -127,7 +127,6 @@
                     android:digits="0123456789abcdefghigklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM"
                     android:gravity="right"
                     android:hint="@string/fillin"
-                    android:maxLength="14"
                     android:password="true"
                     android:singleLine="true" />
             </LinearLayout>

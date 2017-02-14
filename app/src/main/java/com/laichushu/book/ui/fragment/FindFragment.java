@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -51,7 +52,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     private int item;
     private int range;
     private LinearLayout lineLyt;
-    private RecyclerView mLessonRecyclerView, mCourseRecyclerView;
+    private PullLoadMoreRecyclerView mLessonRecyclerView;
     //标签列表
     private int img[] = {R.drawable.home_course2x, R.drawable.home_group2x, R.drawable.home_server2x, R.drawable.home_agency2x, R.drawable.home_editor2x};
     private String title[] = {"课程", "小组", "服务", "机构", "编辑"};
@@ -68,6 +69,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
      * handler
      */
     private MyHandler mhandler = new MyHandler(this);
+    private GridLayoutManager gridLayoutManager;
 
     static class MyHandler extends Handler {
         private WeakReference<FindFragment> weakReference;
@@ -75,6 +77,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
         MyHandler(FindFragment mFragment) {
             weakReference = new WeakReference<>(mFragment);
         }
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -86,6 +89,7 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
             }
         }
     }
+
     private AutoScrollHandler mRefreshWidgetHandler = new AutoScrollHandler();
 
     private class AutoScrollHandler extends Handler {
@@ -125,13 +129,11 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public View createSuccessView() {
         View mRootView = UIUtil.inflate(R.layout.fragment_find);
-        View mFooterView = UIUtil.inflate(R.layout.fragment_find_footer);
         findVp = (ViewPager) mRootView.findViewById(R.id.vp_find_title);
         pointIv = (ImageView) mRootView.findViewById(R.id.iv_red_point);
         lineLyt = (LinearLayout) mRootView.findViewById(R.id.ll_container_find);
         llContainer = (LinearLayout) mRootView.findViewById(R.id.ll_tab);
-        mLessonRecyclerView = (RecyclerView) mRootView.findViewById(R.id.ryv_find_lesson);
-        mCourseRecyclerView = (RecyclerView) mFooterView.findViewById(R.id.ryv_find_course);
+        mLessonRecyclerView = (PullLoadMoreRecyclerView) mRootView.findViewById(R.id.ryv_find_lesson);
         return mRootView;
     }
 
@@ -192,14 +194,12 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
 
         }
         //初始化精选课程
-        mLessonRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        classAdapter = new ClassRecycleAdapter(getActivity(), mLessonDate, mvpPresenter);
+        mLessonRecyclerView.setLinearLayout();
+        mLessonRecyclerView.setFooterViewText("加载中");
+        classAdapter = new ClassRecycleAdapter(getActivity(), mLessonDate, mCourseDate, mvpPresenter);
         mLessonRecyclerView.setAdapter(classAdapter);
-        //初始化小组推荐
-        mCourseRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 4));
-        courseAdapter = new GroupRecomAdapter(getActivity(), mCourseDate, mvpPresenter);
-        mCourseRecyclerView.setAdapter(courseAdapter);
-//        courseAdapter.setHeadView(mHeadView);
+        mLessonRecyclerView.setOnPullLoadMoreListener(this);
+
         mvpPresenter.loadFindLessonListCommData();
         mvpPresenter.loadFindCourseCommData();
     }
@@ -266,19 +266,21 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
      */
     @Override
     public void getLessonListDataSuccess(CourseraModle model) {
-//        UIUtil.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mRecyclerView.setPullLoadMoreCompleted();
-//            }
-//        }, 300);
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mLessonRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
         hideLoading();
         if (model.isSuccess()) {
             mLessonDate = model.getData().getLessonList();
-            classAdapter.refreshAdapter(mLessonDate);
+            classAdapter.refreshAdapter(mLessonDate, mCourseDate);
             frist = true;
             Message msg = new Message();
             mhandler.sendMessage(msg);
+            if(frist)
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             ErrorReloadData();
@@ -293,12 +295,20 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
     @Override
     public void getCourseDataSuccess(FindCourseCommResult model) {
         hideLoading();
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mLessonRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
         if (model.isSuccess()) {
             mCourseDate = model.getData();
-            courseAdapter.refreshAdapter(mCourseDate);
+            classAdapter.refreshAdapter(mLessonDate, mCourseDate);
             second = true;
             Message msg = new Message();
             mhandler.sendMessage(msg);
+            if(second)
+                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             ErrorReloadData();
@@ -355,12 +365,14 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
 
     @Override
     public void onRefresh() {
-
+        mvpPresenter.loadFindLessonListCommData();
+        mvpPresenter.loadFindCourseCommData();
     }
 
     @Override
     public void onLoadMore() {
-
+        mvpPresenter.loadFindLessonListCommData();
+        mvpPresenter.loadFindCourseCommData();
     }
 
     /**
