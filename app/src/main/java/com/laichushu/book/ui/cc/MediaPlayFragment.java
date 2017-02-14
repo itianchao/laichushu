@@ -329,7 +329,7 @@ public class MediaPlayFragment extends Fragment implements
 							.getCurrentPosition()));
 					skbProgress.setProgress((int) pos);
 				}
-			};
+			}
 		};
 
 		// 通过定时器和Handler来更新进度
@@ -631,8 +631,8 @@ public class MediaPlayFragment extends Fragment implements
 					setVisibility(View.GONE);
 					mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 				} else {//竖屏
-					mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 					setVisibility(View.VISIBLE);
+					mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 				}
 				break;
 			case R.id.playScreenSizeBtn:
@@ -642,7 +642,9 @@ public class MediaPlayFragment extends Fragment implements
 				subtitleMenu.showAsDropDown(v);
 				break;
 			case R.id.definitionBtn:
-				definitionMenu.showAsDropDown(v);
+				if(!isLocalPlay){
+					definitionMenu.showAsDropDown(v);
+				}
 				break;
 			}
 		}
@@ -1094,11 +1096,12 @@ public class MediaPlayFragment extends Fragment implements
 		
 		if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
 			mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 			ivFullscreen.setImageResource(R.drawable.fullscreen_close);
+			setVisibility(View.VISIBLE);
 		} else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
 			mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			ivFullscreen.setImageResource(R.drawable.fullscreen_open);
+			setVisibility(View.GONE);
 		}
 		
 		setSurfaceViewLayout();

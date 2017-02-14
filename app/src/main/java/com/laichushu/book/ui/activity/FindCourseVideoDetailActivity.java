@@ -1,20 +1,39 @@
 package com.laichushu.book.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
+import android.os.IBinder;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bokecc.sdk.mobile.download.Downloader;
+import com.bokecc.sdk.mobile.exception.ErrorCode;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
+import com.laichushu.book.bean.otherbean.DownloadInfo;
+import com.laichushu.book.global.CCDownloadFactory;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailModle;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailPresenter;
 import com.laichushu.book.mvp.find.coursera.videodetail.VideoDetailView;
 import com.laichushu.book.ui.base.MvpActivity2;
+import com.laichushu.book.ui.cc.ConfigUtil;
+import com.laichushu.book.ui.cc.DataSet;
+import com.laichushu.book.ui.cc.MediaUtil;
+import com.laichushu.book.ui.cc.ParamsUtil;
+import com.laichushu.book.ui.cc.download.DownloadService;
 import com.laichushu.book.ui.widget.LoadingPager;
 import com.laichushu.book.utils.Base64Utils;
 import com.laichushu.book.utils.GlideUitl;
@@ -23,7 +42,9 @@ import com.laichushu.book.utils.ShareUtil;
 import com.laichushu.book.utils.ToastUtil;
 import com.laichushu.book.utils.UIUtil;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.sharesdk.framework.ShareSDK;
 
@@ -47,6 +68,21 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
     private String title;
     private LinearLayout contentLay;
     private String ccVideoId;
+    private boolean isLocalPlay;
+    private DownloadedReceiver receiver;
+    public DownloadService.DownloadBinder binder;
+    public ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.i("service disconnected", name + "");
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            binder = (DownloadService.DownloadBinder) service;
+        }
+    };
+    private Intent service;
 
     public LinearLayout getContentLay() {
         return contentLay;
@@ -87,6 +123,10 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
         aboutRbn.setOnClickListener(this);
         lessonId = getIntent().getStringExtra("lessonId");
         mvpPresenter.loadVideoDetailData(lessonId);
+        receiver = new DownloadedReceiver();
+        registerReceiver(receiver, new IntentFilter(ConfigUtil.ACTION_DOWNLOADING));
+        service = new Intent(this, DownloadService.class);
+        bindService(service, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -96,6 +136,22 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
                 finish();
                 break;
             case R.id.iv_download://下载
+                List<DownloadInfo> downloadInfos = DataSet.getDownloadInfos();
+                for (DownloadInfo downloadInfo : downloadInfos) {
+//                    downloadInfo
+                }
+                for (String id : CCDownloadFactory.downloaderHashMap.keySet()) {
+                    if (id.equals(ccVideoId)){
+                        ToastUtil.showToast("视频下载中");
+                        return;
+                    }
+                }
+                if (isLocalPlay){
+                    ToastUtil.showToast("视频已下载");
+                }else {
+                    ToastUtil.showToast("开始下载视频");
+                    mvpPresenter.starDownload(ccVideoId);
+                }
                 break;
             case R.id.iv_collection://收藏
                 String type;
@@ -162,8 +218,18 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
             logoUrl = mdata.getThumbUrl();
             introduce = mdata.getRemarks();
             title = mdata.getName();
-            ccVideoId = mdata.getCcVideoId();
-            mvpPresenter.replaceFrameLayout(ccVideoId,false);//替换视频播放器
+//            ccVideoId = mdata.getCcVideoId();
+            ccVideoId = "920DA2A620CC9A459C33DC5901307461";
+
+            if (!TextUtils.isEmpty(ccVideoId)){
+                File file = MediaUtil.createFile(ccVideoId);
+                if (file.exists()){
+                    isLocalPlay = true;
+                }else {
+                    isLocalPlay = false;
+                }
+            }
+            mvpPresenter.replaceFrameLayout(ccVideoId, isLocalPlay);//替换视频播放器
         }else {
             reloadErrorBtn();
             LoggerUtil.e(model.getErrMsg());
@@ -231,12 +297,7 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
     public VideoDetailModle.DataBean getMdata() {
         return mdata;
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //停止shareSDK
-        ShareSDK.stopSDK(mActivity);
-    }
+
     /**
      * 接口回调
      */
@@ -306,6 +367,34 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
                 listener.onBackPressed();
             }
         }
+    }
+    private class DownloadedReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 若下载出现异常，提示用户处理
+            int errorCode = intent.getIntExtra("errorCode", ParamsUtil.INVALID);
+            if (errorCode == ErrorCode.NETWORK_ERROR.Value()) {
+                Toast.makeText(context, "网络异常，请检查", Toast.LENGTH_SHORT).show();
+            } else if (errorCode == ErrorCode.PROCESS_FAIL.Value()) {
+                Toast.makeText(context, "下载失败，请重试", Toast.LENGTH_SHORT).show();
+            } else if (errorCode == ErrorCode.INVALID_REQUEST.Value()) {
+                Toast.makeText(context, "下载失败，请检查帐户信息", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        //停止shareSDK
+        ShareSDK.stopSDK(mActivity);
+
+        if (serviceConnection != null) {
+             unbindService(serviceConnection);
+        }
+
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 
 }

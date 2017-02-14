@@ -1,6 +1,8 @@
 package com.laichushu.book.ui.base;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -131,6 +133,8 @@ public class BaseActivity extends FragmentActivity {
             Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
             exitTime = System.currentTimeMillis();
         } else {
+            NotificationManager systemService = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            systemService.cancelAll();
             AppManager.getInstance().killAllActivity();
             android.os.Process.killProcess(android.os.Process.myPid());
         }

@@ -7,7 +7,8 @@
     <FrameLayout
         android:background="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <FrameLayout
             android:id="@+id/fl_video"
             android:layout_width="match_parent"
@@ -16,6 +17,7 @@
         </FrameLayout>
         <ImageView
             android:id="@+id/iv_back"
+            android:visibility="gone"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/icon_finish2x"
@@ -26,8 +28,9 @@
     <LinearLayout
         android:id="@+id/lay_content"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_width="match_parent">
         <include layout="@layout/item_distance"/>
         <LinearLayout
             android:orientation="horizontal"
