@@ -124,7 +124,7 @@ public class RewardPresenter extends BasePresenter<RewardView> {
      */
     public void rewardMoney(String awarderId, String accepterId, String sourceId, final String money) {
         mvpView.showLoading();
-        LiveRewardMoney_Paramet paramet = new LiveRewardMoney_Paramet(awarderId, sourceId, sourceId, money);
+        LiveRewardMoney_Paramet paramet = new LiveRewardMoney_Paramet(awarderId, accepterId, sourceId, money);
         Logger.e("打赏参数");
         Logger.json(new Gson().toJson(paramet));
         addSubscription(apiStores.rewardMoney(paramet), new ApiCallback<RewardResult>() {

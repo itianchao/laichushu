@@ -13,7 +13,14 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+//        ndk {
+//            moduleName "DeflatingDecompressor-v3"
+//        }
     }
+//    sourceSets.main {
+//        jniLibs.srcDir 'src/main/libs'
+//        jni.srcDirs = []
+//    }
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']

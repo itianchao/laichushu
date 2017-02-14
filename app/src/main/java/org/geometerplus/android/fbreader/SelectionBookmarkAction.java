@@ -21,7 +21,12 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
 
+import com.google.gson.Gson;
+import com.laichushu.book.R;
+import com.laichushu.book.bean.otherbean.BookMarkIdeaJsonBean;
 import com.laichushu.book.event.TransmitBookMarkEvent3;
+import com.laichushu.book.utils.SharePrefManager;
+import com.laichushu.book.utils.StringUtil;
 
 import org.fbreader.util.FBReaderWindowUtil;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -29,10 +34,14 @@ import org.geometerplus.android.fbreader.bookmark.BookmarksEditActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.OrientationUtil;
 import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.book.BookmarkQuery;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 书签
@@ -57,7 +66,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
         if (params.length == 1) {//选择
             bookmark = (Bookmark) params[0];
             baseApplication.showSelectionPanel();
-        } else if (params.length == 2) {
+        } else if (params.length == 2) {//颜色
             //改变样式
             Bookmark bookmark = Reader.addSelectionBookmark();
             if (bookmark != null) {
@@ -90,10 +99,10 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 //			}
 //		}));
 //		BaseActivity.showToast(toast);
-        } else if (params.length > 5){
-            if (bookmark == null){
+        } else if (params.length > 5) {//删除
+            if (bookmark == null) {
                 Reader.getTextView().clearSelection();
-            }else {
+            } else {
                 myCollection.bindToService(baseApplication, new Runnable() {
                     public void run() {
                         myCollection.deleteBookmark(bookmark);
@@ -102,7 +111,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
                 });
                 FBReaderWindowUtil.deleteBookmarkForIdea_Table(bookmark);
             }
-        }else {
+        } else {//想法
             if (bookmark == null) {
                 bookmark = (Bookmark) params[0];
                 if (bookmark == null) {
@@ -111,13 +120,13 @@ public class SelectionBookmarkAction extends FBAndroidAction {
                     int mSelectColor = (int) params[1];
                     int styleId = (int) params[2];
                     if (bookmark != null) {
-                        bookmark.setText("");
+//                        bookmark.setText("");
                         changeColor(mSelectColor, styleId);
 //                        startActivity();
                     }
                 }
             } else {
-                startActivity();
+                startActivity();//打开pop
             }
 //            TransmitBookMarkEvent3 event = new TransmitBookMarkEvent3();
 //            event.setMyBookmark(bookmark);
@@ -139,7 +148,8 @@ public class SelectionBookmarkAction extends FBAndroidAction {
             }
         });
     }
-    public void startActivity(){
+
+    public void startActivity() {
         final Intent intent =
                 new Intent(BaseActivity.getApplicationContext(), BookmarksEditActivity.class);
         FBReaderIntents.putBookmarkExtra(intent, bookmark);
@@ -148,9 +158,61 @@ public class SelectionBookmarkAction extends FBAndroidAction {
         OrientationUtil.startActivity(BaseActivity, intent);
         bookmark = null;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(TransmitBookMarkEvent3 event) {
         EventBus.getDefault().removeStickyEvent(event);
         bookmark = event.getMyBookmark();
+    }
+
+    /**
+     * 查询合并想法
+     *
+     * @param bookmark
+     * @return
+     */
+    public Bookmark findBookMarkByDB(final Bookmark bookmark) {
+        myCollection.bindToService(baseApplication, new Runnable() {
+            public void run() {
+                FBReaderApp fbReaderApp = (FBReaderApp) FBReaderApp.Instance();
+                BookmarkQuery query = new BookmarkQuery(fbReaderApp.getCurrentBook(), 10000);
+                List<Bookmark> bookmarks = myCollection.bookmarks(query);
+                boolean b = true;
+                for (Bookmark bm : bookmarks) {
+                    b = false;
+                    int Index = bm.getEnd().getParagraphIndex();
+                    int endhIndex = bookmark.getEnd().getParagraphIndex();
+                    if ((Index == endhIndex)) {
+                        b = false;
+                        //合并想法Json
+                        String json = bm.getText();
+                        BookMarkIdeaJsonBean bean = new Gson().fromJson(json, BookMarkIdeaJsonBean.class);
+                        BookMarkIdeaJsonBean.DataBean databean = new BookMarkIdeaJsonBean.DataBean();
+                        databean.setContent(bookmark.getText());
+                        databean.setHear("");
+                        databean.setName(SharePrefManager.getNickName());
+                        databean.setTime(StringUtil.formatSystemTime());
+                        bean.getData().add(databean);
+                        json = new Gson().toJson(bean);
+                        bookmark.setText(json);
+                        break;
+                    }
+                }
+                if (b){//添加想法
+                    BookMarkIdeaJsonBean bean = new BookMarkIdeaJsonBean();
+                    ArrayList<BookMarkIdeaJsonBean.DataBean> datas = new ArrayList<>();
+                    BookMarkIdeaJsonBean.DataBean databean = new BookMarkIdeaJsonBean.DataBean();
+                    databean.setContent(bookmark.getText());
+                    databean.setHear("");
+                    databean.setName(SharePrefManager.getNickName());
+                    databean.setTime(StringUtil.formatSystemTime());
+                    datas.add(databean);
+                    bean.setData(datas);
+                    String json = new Gson().toJson(bean);
+                    bookmark.setText(json);
+                }
+            }
+        });
+        return bookmark;
     }
 }
