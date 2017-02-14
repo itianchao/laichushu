@@ -12,7 +12,7 @@ public class ConfigUtil {
 //	public final static String USERID = "B53E1087229317CA";//来出书
 
 	// 配置下载文件路径
-	public final static String DOWNLOAD_DIR = "CCDownload";
+	public final static String DOWNLOAD_DIR = "LDownload";
 	
 	// 配置视频回调地址
 	public final static String NOTIFY_URL = "http://www.example.com";

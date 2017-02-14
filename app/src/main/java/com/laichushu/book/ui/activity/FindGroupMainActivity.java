@@ -239,7 +239,7 @@ public class FindGroupMainActivity extends MvpActivity2<GroupMainPresenter> impl
                 pageNo++;
                 mvpPresenter.getParamet().setPageNo(pageNo + "");
             }
-            if (modle.getData().isEmpty()) {
+            if (pageNo != 1 && modle.getData().isEmpty()) {
                 ToastUtil.showToast("没用更多数据");
             }
             mTopicData.addAll(modle.getData());

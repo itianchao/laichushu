@@ -1,24 +1,42 @@
 package com.laichushu.book.mvp.find.coursera.videodetail;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.bokecc.sdk.mobile.download.Downloader;
 import com.laichushu.book.R;
 import com.laichushu.book.bean.JsonBean.RewardResult;
 import com.laichushu.book.bean.netbean.CollectSave_Paramet;
 import com.laichushu.book.bean.netbean.LessonDetail_Paramet;
+import com.laichushu.book.bean.otherbean.DownloadInfo;
 import com.laichushu.book.global.ConstantValue;
 import com.laichushu.book.retrofit.ApiCallback;
 import com.laichushu.book.ui.activity.FindCourseVideoDetailActivity;
 import com.laichushu.book.ui.base.BasePresenter;
+import com.laichushu.book.ui.cc.ConfigUtil;
+import com.laichushu.book.ui.cc.DataSet;
 import com.laichushu.book.ui.cc.MediaPlayFragment;
+import com.laichushu.book.ui.cc.MediaUtil;
+import com.laichushu.book.ui.cc.download.DownloadService;
 import com.laichushu.book.ui.fragment.CourseAboutFragment;
 import com.laichushu.book.ui.fragment.CourseAppraiseFragment;
 import com.laichushu.book.ui.fragment.CourseIntroFragment;
 import com.laichushu.book.ui.fragment.CourseNoteFragment;
 import com.laichushu.book.ui.fragment.CourseSpeakFragment;
 import com.laichushu.book.utils.LoggerUtil;
+
+import java.io.File;
+import java.util.Date;
+
+import static com.laichushu.book.global.CCDownloadFactory.downloaderHashMap;
 
 /**
  * 发现 - 课程 - 视频详情 Presenter
@@ -193,5 +211,29 @@ public class VideoDetailPresenter extends BasePresenter<VideoDetailView> {
         ft.replace(R.id.fl_video, fragment);
         //提交事物
         ft.commit();
+    }
+    public void starDownload(String title){
+        if (DataSet.hasDownloadInfo(title)) {
+            Toast.makeText(mActivity, "文件已存在", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        File file = MediaUtil.createFile(title);
+        if (file == null ){
+            Toast.makeText(mActivity, "创建文件失败", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Downloader downloader = new Downloader(file, title, ConfigUtil.USERID, ConfigUtil.API_KEY);
+        downloaderHashMap.put(title, downloader);
+        DataSet.addDownloadInfo(new DownloadInfo(title, title, 0, null, Downloader.WAIT, new Date()));
+
+        if (mActivity.binder == null || mActivity.binder.isStop()) {
+            Intent service = new Intent(mActivity, DownloadService.class);
+            service.putExtra("title", title);
+            mActivity.startService(service);
+        } else{
+            Intent intent = new Intent(ConfigUtil.ACTION_DOWNLOADING);
+            mActivity.sendBroadcast(intent);
+        }
     }
 }

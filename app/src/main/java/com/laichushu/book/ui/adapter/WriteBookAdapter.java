@@ -83,9 +83,9 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x, R.drawable.icon_delete2x, R.drawable.icon_publishl2x, R.drawable.icon_submission2x, R.drawable.icon_sign2x};
         int grayImgArray[] = {R.drawable.icon_draft_gray, R.drawable.icon_material_gray, R.drawable.icon_delete_gray, R.drawable.icon_publishl_gray, R.drawable.icon_submission_gray, R.drawable.icon_sign_gray};
         holder.llTab.removeAllViews();
-        if (dataBean.getExpressStatus().equals("0") || dataBean.getExpressStatus().equals("4")) {
+        if (dataBean.getExpressStatus().equals("0") || dataBean.getExpressStatus().equals("4")||dataBean.getExpressStatus().equals("3")) {
             mStrip.get(3).setTitle("发表");
-        } else {
+        }else {
             mStrip.get(3).setTitle("取消发表");
         }
         if (dataBean.getExpressStatus().equals("2")) {

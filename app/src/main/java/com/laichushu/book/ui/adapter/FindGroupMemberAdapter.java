@@ -73,6 +73,9 @@ public class FindGroupMemberAdapter extends RecyclerView.Adapter<FindGroupMember
             if (position==2){
                 offset = 2;
             }
+            if (position==0){
+                offset = 1;
+            }
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             holder.itemView.setLayoutParams(params);
             switch(position){
@@ -104,9 +107,9 @@ public class FindGroupMemberAdapter extends RecyclerView.Adapter<FindGroupMember
                         @Override
                         public void onClick(View v) {
                             if (((FindGroupMemberViewHolder) holder).colorTv.getText().equals("关注")) {
-                                mvpPresenter.loadAddFocus(dataBean.getUserId(), true, position);
+                                mvpPresenter.loadAddFocus(dataBean.getUserId(), true, position-offset);
                             } else {
-                                mvpPresenter.loadDelFocus(dataBean.getUserId(), false, position);
+                                mvpPresenter.loadDelFocus(dataBean.getUserId(), false, position-offset);
                             }
                         }
                     });
@@ -121,7 +124,7 @@ public class FindGroupMemberAdapter extends RecyclerView.Adapter<FindGroupMember
                                 @Override
                                 public void onClick(View v) {
                                     //同意 or 拒绝
-                                    mvpPresenter.showApplyMemberDialog(position, dataBean);
+                                    mvpPresenter.showApplyMemberDialog(position-offset, dataBean);
                                 }
                             });
                             break;
@@ -147,7 +150,7 @@ public class FindGroupMemberAdapter extends RecyclerView.Adapter<FindGroupMember
                     ((FindGroupMemberViewHolder) holder).deleteIv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mvpPresenter.showDeleteMemberDialog(position, dataBean);
+                            mvpPresenter.showDeleteMemberDialog(position-offset, dataBean);
                         }
                     });
                     break;
