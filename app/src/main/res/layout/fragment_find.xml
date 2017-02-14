@@ -17,103 +17,21 @@
 
     <include layout="@layout/item_distance" />
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
-
-        <LinearLayout
+        android:orientation="vertical">
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/ryv_find_lesson"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <TextView
-                    android:id="@+id/tv_class"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="24dp"
-                    android:text="精选课程"
-                    android:textColor="@color/characterGray"
-                    android:textSize="@dimen/edit3"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_classMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:drawableRight="@drawable/home_right2x"
-                    android:gravity="center_vertical"
-                    android:paddingRight="24dp"
-                    android:text="更多"
-                    android:visibility="gone"
-                    android:textColor="@color/characterGray"
-                    android:textSize="@dimen/edit4" />
-            </RelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/ryv_find_lesson"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cacheColorHint="@null"
-                android:fadingEdge="none"
-                android:overScrollFooter="@android:color/transparent"
-                android:overScrollHeader="@android:color/transparent"
-                android:overScrollMode="never"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
-
-            <!--<View-->
-                <!--android:id="@+id/view_line"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="15dp"-->
-                <!--android:background="@color/frenchGrey" />-->
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="40dp">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_course"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_alignParentLeft="true"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:paddingLeft="24dp"-->
-                    <!--android:text="推荐小组"-->
-                    <!--android:textColor="@color/characterGray"-->
-                    <!--android:textSize="@dimen/edit3"-->
-                    <!--android:textStyle="bold" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_courseMore"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:drawableRight="@drawable/home_right2x"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:paddingRight="24dp"-->
-                    <!--android:text="更多"-->
-                    <!--android:visibility="gone"-->
-                    <!--android:textColor="@color/characterGray"-->
-                    <!--android:textSize="@dimen/edit4" />-->
-            <!--</RelativeLayout>-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/ryv_find_course"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="bottom"-->
-                <!--android:cacheColorHint="@null"-->
-                <!--android:fadingEdge="none"-->
-                <!--android:overScrollMode="never" />-->
-        </LinearLayout>
-    </ScrollView>
+            android:cacheColorHint="@null"
+            android:fadingEdge="none"
+            android:overScrollFooter="@android:color/transparent"
+            android:overScrollHeader="@android:color/transparent"
+            android:overScrollMode="never"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp" />
+    </LinearLayout>
 </LinearLayout>
