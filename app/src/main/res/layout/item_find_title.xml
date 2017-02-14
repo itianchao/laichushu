@@ -33,6 +33,7 @@
             android:gravity="center_vertical"
             android:paddingRight="24dp"
             android:text="更多"
+            android:visibility="gone"
             android:textColor="@color/characterGray"
             android:textSize="@dimen/edit4" />
     </RelativeLayout>

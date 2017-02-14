@@ -1,6 +1,8 @@
 package com.laichushu.book.ui.activity;
 
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,9 +19,8 @@ public class AgreementDetailsActivity extends MvpActivity2 implements View.OnCli
 
     private TextView titleTv;
     private ImageView finishIv;
-    private TextView agreementContentTv;
-    private TextView agreementTitleTv;
-
+    private WebView wvContent;
+    private String type;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -30,22 +31,28 @@ public class AgreementDetailsActivity extends MvpActivity2 implements View.OnCli
     public View createSuccessView() {
         View inflate = UIUtil.inflate(R.layout.activity_agreement_details);
         titleTv = (TextView) inflate.findViewById(R.id.tv_title);
-        agreementContentTv = (TextView) inflate.findViewById(R.id.tv_agreement_content);
-        agreementTitleTv = (TextView) inflate.findViewById(R.id.tv_agreement_title);
         finishIv = (ImageView) inflate.findViewById(R.id.iv_title_finish);
         titleTv.setText("注册协议");
+        wvContent = (WebView) inflate.findViewById(R.id.wv_content);
         return inflate;
     }
 
     @Override
     protected void initData() {
         String type = getIntent().getStringExtra("type");
-        if (type.equals("1")){
-            agreementContentTv.setText(UIUtil.getString(R.string.agreementcontent2));
-            agreementTitleTv.setText("著作权保护声明");
-            titleTv.setText("著作权保护声明");
-        }
         finishIv.setOnClickListener(this);
+
+        wvContent.getSettings().setJavaScriptEnabled(true);
+        wvContent.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        wvContent.getSettings().setLoadWithOverviewMode(true);
+        if (type.equals("1")) {
+            wvContent.loadUrl("file:///android_asset/copyright.html");
+            titleTv.setText("著作权保护声明");
+        } else if (type.equals("user")) {
+            wvContent.loadUrl("file:///android_asset/regist.html");
+            titleTv.setText("用户注册协议");
+        }
+
         UIUtil.postDelayed(new Runnable() {
             @Override
             public void run() {

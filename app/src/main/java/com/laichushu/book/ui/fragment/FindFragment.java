@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -38,7 +35,6 @@ import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 发现
@@ -69,7 +65,6 @@ public class FindFragment extends MvpFragment2<FindPresenter> implements FindVie
      * handler
      */
     private MyHandler mhandler = new MyHandler(this);
-    private GridLayoutManager gridLayoutManager;
 
     static class MyHandler extends Handler {
         private WeakReference<FindFragment> weakReference;

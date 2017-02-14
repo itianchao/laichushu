@@ -124,7 +124,7 @@ public class RegistActivity extends MvpActivity<RegistPresenter> implements Regi
             case R.id.tv_agreement:
 //                new ServiceTermsDialog(mActivity).show();
                 Bundle bundle = new Bundle();
-                bundle.putString("type","0");
+                bundle.putString("type","user");
                 UIUtil.openActivity(mActivity,AgreementDetailsActivity.class,bundle);
                 break;
             case R.id.tv_code:
