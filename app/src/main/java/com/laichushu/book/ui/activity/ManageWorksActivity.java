@@ -120,9 +120,15 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
     }
     @Override
     public void getDataSuccess(HomeHotModel model) {
+        UIUtil.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 300);
         if (model.isSuccess()) {
             if(null!=model.getData()){
-                refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+                mData.clear();
                 mData.addAll(model.getData());
                 writeBookAdapter.setmData(mData);
                 PAGE_NO++;
@@ -130,8 +136,9 @@ public class ManageWorksActivity extends MvpActivity2<WritePresenter> implements
                 ToastUtil.showToast(R.string.errMsg_empty);
             }
             mRecyclerView.setPullLoadMoreCompleted();
-            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
+
             isLoad = false;
+            refreshPage(LoadingPager.PageState.STATE_SUCCESS);
         } else {
             refreshPage(LoadingPager.PageState.STATE_ERROR);
             refurshData();

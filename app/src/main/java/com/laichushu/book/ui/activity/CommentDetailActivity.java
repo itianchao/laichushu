@@ -57,7 +57,11 @@ public class CommentDetailActivity extends MvpActivity2<CommentDetailPersenter> 
     private ArticleCommentModle.DataBean dataBean;
     private String type, tag;
     private ImageView commentIv;
-String title;
+    String title;
+    private View inflate;
+    private TextView titleTv;
+    private ImageView finishIv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +70,9 @@ String title;
 
     @Override
     protected View createSuccessView() {
-        View inflate = UIUtil.inflate(R.layout.activity_commentdetail);
+        inflate = UIUtil.inflate(R.layout.activity_commentdetail);
+        titleTv = (TextView) inflate.findViewById(R.id.tv_title);
+        finishIv = (ImageView) inflate.findViewById(R.id.iv_title_finish);
         commentRyv = (PullLoadMoreRecyclerView) inflate.findViewById(R.id.ryv_comment);
         commentRyv.setLinearLayout();
         commentRyv.setOnPullLoadMoreListener(this);
@@ -103,8 +109,6 @@ String title;
      * @param title 标题名称
      */
     private void initTitleBar(String title) {
-        TextView titleTv = (TextView) findViewById(R.id.tv_title);
-        ImageView finishIv = (ImageView) findViewById(R.id.iv_title_finish);
         titleTv.setText(title);
         finishIv.setOnClickListener(this);
     }
@@ -117,10 +121,10 @@ String title;
         commentId = dataBean.getSourceId();
         if (null == tag) {
             initTitleBar("评论详情");
-            title="评论详情";
+            title = "评论详情";
         } else if (tag.equals("replay")) {
-            initTitleBar("回复评论");
-            title="回复评论";
+            initTitleBar("评论详情");
+            title = "评论详情";
         }
         //评论者等级
         if (null != dataBean.getLevelType()) {

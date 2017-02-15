@@ -45,6 +45,7 @@ public class AllCommentActivity extends MvpActivity2<AllCommentPresenter> implem
     private RatingBar numRb;
     private boolean isScore;
     private LinearLayout contentLay;
+    private TextView sendTv;
 
     @Override
     protected AllCommentPresenter createPresenter() {
@@ -56,6 +57,7 @@ public class AllCommentActivity extends MvpActivity2<AllCommentPresenter> implem
         View mSuccessView = UIUtil.inflate(R.layout.activity_allcomment);
         contentLay = (LinearLayout) mSuccessView.findViewById(R.id.lay_content);
         TextView titleTv = (TextView) mSuccessView.findViewById(R.id.tv_title);
+        sendTv = (TextView) mSuccessView.findViewById(R.id.tv_title_right);
         ImageView finishIv = (ImageView) mSuccessView.findViewById(R.id.iv_title_finish);
         commentRyv = (PullLoadMoreRecyclerView)mSuccessView.findViewById(R.id.ryv_comment);
         commentEt = (EditText)mSuccessView.findViewById(R.id.et_comment);
@@ -64,9 +66,11 @@ public class AllCommentActivity extends MvpActivity2<AllCommentPresenter> implem
         commentRyv.setLinearLayout();
         mAdapter = new CommentAllAdapter(this, mData,mvpPresenter);
         commentRyv.setAdapter(mAdapter);
+        sendTv.setText("发送");
         titleTv.setText("全部评论");
         commentRyv.setOnPullLoadMoreListener(this);
         commentEt.setOnEditorActionListener(this);
+        sendTv.setOnClickListener(this);
         finishIv.setOnClickListener(this);
         return mSuccessView;
     }
@@ -77,8 +81,10 @@ public class AllCommentActivity extends MvpActivity2<AllCommentPresenter> implem
         isScore = getIntent().getBooleanExtra("isScore",false);
         if (isScore){
             contentLay.setVisibility(View.GONE);
+            sendTv.setVisibility(View.GONE);
         }else {
             contentLay.setVisibility(View.VISIBLE);
+            sendTv.setVisibility(View.VISIBLE);
         }
     }
     @Override
@@ -96,6 +102,15 @@ public class AllCommentActivity extends MvpActivity2<AllCommentPresenter> implem
         switch (v.getId()) {
             case R.id.iv_title_finish:
                 finish();
+                break;
+            case R.id.tv_title_right:
+                String content = commentEt.getText().toString();
+                if (!TextUtils.isEmpty(content)){
+                    mvpPresenter.loadSendCommentData(articleId,content,(int)numRb.getRating()+"");
+                    commentEt.setText("");
+                }else {
+                    ToastUtil.showToast("请输入评论内容");
+                }
                 break;
         }
     }

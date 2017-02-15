@@ -306,7 +306,8 @@ public class MechanismDetailActivity extends MvpActivity2<MechanismDetailPresent
                 break;
             case R.id.tv_submission:
                 if (null != articleId) {
-                    mvpPresenter.openSelectBookDialog(articleId, bean.getId());
+//                    mvpPresenter.openSelectBookDialog(articleId, bean.getId());
+                    mvpPresenter.voteBook(articleId, bean.getId());
                 } else {
                     mvpPresenter.loadAuthorWorksData();
                 }

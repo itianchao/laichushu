@@ -19,6 +19,7 @@ import com.laichushu.book.ui.activity.FindCourseDocDetailActivity;
 import com.laichushu.book.ui.activity.FindCourseVideoDetailActivity;
 import com.laichushu.book.ui.activity.FindGroupDetailActivity;
 import com.laichushu.book.ui.fragment.FragmentFactory;
+import com.laichushu.book.ui.widget.RoundImageView;
 import com.laichushu.book.utils.GlideUitl;
 import com.laichushu.book.utils.UIUtil;
 
@@ -63,9 +64,9 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
     public int getItemViewType(int position) {
         if (position == 0) {
             return VIEW_HEADTITLE;
-        } else if (position <=lessonSize) {
+        } else if (position <= lessonSize) {
             return VIEW_HEAD;
-        } else if (position == lessonSize+1) {
+        } else if (position == lessonSize + 1) {
             return VIEW_TITLE;
         } else {
             return VIEW_BODY;
@@ -138,9 +139,9 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
             LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
                     width, width / 5 * 2
             );
-            if (dataBeen.size() > 0 && null != dataBeen.get(2 * position-2)) {
+            if (2 * position - 2 < dataBeen.size() && dataBeen.size() > 0 && null != dataBeen.get(2 * position - 2)) {
                 ((ViewHolder1) holder).ivImg.setLayoutParams(linearParams);
-                final CourseraModle.DataBean.LessonListBean bean = dataBeen.get(2 * position-2);
+                final CourseraModle.DataBean.LessonListBean bean = dataBeen.get(2 * position - 2);
                 GlideUitl.loadImg(context, bean.getThumbUrl(), width, width / 5 * 2, ((ViewHolder1) holder).ivImg);
                 ((ViewHolder1) holder).tvItem.setText(bean.getName());
                 ((ViewHolder1) holder).tvPlayNum.setText("播放量" + bean.getClickNum() + "");
@@ -159,7 +160,7 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
 
                     }
                 });
-                if (null != dataBeen.get(2 * position -1)) {
+                if (2 * position - 1 < dataBeen.size() && null != dataBeen.get(2 * position - 1)) {
                     ((ViewHolder1) holder).ivImg2.setLayoutParams(linearParams);
                     final CourseraModle.DataBean.LessonListBean bean2 = dataBeen.get(2 * position - 1);
                     GlideUitl.loadImg(context, bean2.getThumbUrl(), width, width / 5 * 2, ((ViewHolder1) holder).ivImg2);
@@ -208,7 +209,7 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
                     ((ViewHolder2) holder).llItem.setLayoutParams(linearParams);
                     ((ViewHolder2) holder).hot1Iv.setLayoutParams(imgParams);
                     final GroupListModle.DataBean dataBean = courseDate.get(position - courseSize);
-                    GlideUitl.loadCornersImg(context, 80, dataBean.getPhoto(), width, width, ((ViewHolder2) holder).hot1Iv);
+                    GlideUitl.loadCornersImg(context, 0, dataBean.getPhoto(), width, width, ((ViewHolder2) holder).hot1Iv);
                     ((ViewHolder2) holder).tvNAme.setText(dataBean.getName());
                     ((ViewHolder2) holder).hot1Iv.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -221,11 +222,11 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
                     });
                 }
                 //2
-                if (null != courseDate.get(position - courseSize + 1)) {
+                if (position - courseSize + 1 < courseDate.size() && null != courseDate.get(position - courseSize + 1)) {
                     ((ViewHolder2) holder).llItem2.setLayoutParams(linearParams);
                     ((ViewHolder2) holder).hot1Iv2.setLayoutParams(imgParams);
                     final GroupListModle.DataBean dataBean = courseDate.get(position - courseSize + 1);
-                    GlideUitl.loadCornersImg(context, 80, dataBean.getPhoto(), width, width, ((ViewHolder2) holder).hot1Iv2);
+                    GlideUitl.loadCornersImg(context, 0, dataBean.getPhoto(), width, width, ((ViewHolder2) holder).hot1Iv2);
                     ((ViewHolder2) holder).tvNAme2.setText(dataBean.getName());
                     ((ViewHolder2) holder).hot1Iv2.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -238,11 +239,11 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
                     });
                 }
                 //3
-                if (null != courseDate.get(position - courseSize + 2)) {
+                if (position - courseSize + 2 < courseDate.size() && null != courseDate.get(position - courseSize + 2)) {
                     ((ViewHolder2) holder).llItem3.setLayoutParams(linearParams);
                     ((ViewHolder2) holder).hot1Iv3.setLayoutParams(imgParams);
                     final GroupListModle.DataBean dataBean = courseDate.get(position - courseSize + 2);
-                    GlideUitl.loadCornersImg(context, 80, dataBean.getPhoto(), width, width, ((ViewHolder2) holder).hot1Iv3);
+                    GlideUitl.loadCornersImg(context, 0, dataBean.getPhoto(), width, width, ((ViewHolder2) holder).hot1Iv3);
                     ((ViewHolder2) holder).tvNAme3.setText(dataBean.getName());
                     ((ViewHolder2) holder).hot1Iv3.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -255,11 +256,11 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
                     });
                 }
                 //4
-                if (null != courseDate.get(position - courseSize + 3)) {
+                if (position - courseSize + 3 < courseDate.size() && null != courseDate.get(position - courseSize + 3)) {
                     ((ViewHolder2) holder).llItem4.setLayoutParams(linearParams);
                     ((ViewHolder2) holder).hot1Iv4.setLayoutParams(imgParams);
                     final GroupListModle.DataBean dataBean = courseDate.get(position - courseSize + 3);
-                    GlideUitl.loadCornersImg(context, 80, dataBean.getPhoto(), width, width, ((ViewHolder2) holder).hot1Iv4);
+                    GlideUitl.loadCornersImg(context, 0, dataBean.getPhoto(), width, width, ((ViewHolder2) holder).hot1Iv4);
                     ((ViewHolder2) holder).tvNAme4.setText(dataBean.getName());
                     ((ViewHolder2) holder).hot1Iv4.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -332,37 +333,37 @@ public class ClassRecycleAdapter extends RecyclerView.Adapter<ClassRecycleAdapte
 
     class ViewHolder2 extends ViewHolder {
         private LinearLayout llItem;
-        private ImageView hot1Iv;
+        private RoundImageView hot1Iv;
         private TextView tvNAme;
 
         private LinearLayout llItem2;
-        private ImageView hot1Iv2;
+        private RoundImageView hot1Iv2;
         private TextView tvNAme2;
 
         private LinearLayout llItem3;
-        private ImageView hot1Iv3;
+        private RoundImageView hot1Iv3;
         private TextView tvNAme3;
 
         private LinearLayout llItem4;
-        private ImageView hot1Iv4;
+        private RoundImageView hot1Iv4;
         private TextView tvNAme4;
 
         public ViewHolder2(View root) {
             super(root);
             llItem = (LinearLayout) root.findViewById(R.id.ll_item);
-            hot1Iv = (ImageView) root.findViewById(R.id.iv_hot1);
+            hot1Iv = (RoundImageView) root.findViewById(R.id.iv_hot1);
             tvNAme = (TextView) root.findViewById(R.id.tv_name1);
 
             llItem2 = (LinearLayout) root.findViewById(R.id.ll_item2);
-            hot1Iv2 = (ImageView) root.findViewById(R.id.iv_hot12);
+            hot1Iv2 = (RoundImageView) root.findViewById(R.id.iv_hot12);
             tvNAme2 = (TextView) root.findViewById(R.id.tv_name12);
 
             llItem3 = (LinearLayout) root.findViewById(R.id.ll_item3);
-            hot1Iv3 = (ImageView) root.findViewById(R.id.iv_hot13);
+            hot1Iv3 = (RoundImageView) root.findViewById(R.id.iv_hot13);
             tvNAme3 = (TextView) root.findViewById(R.id.tv_name13);
 
             llItem4 = (LinearLayout) root.findViewById(R.id.ll_item4);
-            hot1Iv4 = (ImageView) root.findViewById(R.id.iv_hot14);
+            hot1Iv4 = (RoundImageView) root.findViewById(R.id.iv_hot14);
             tvNAme4 = (TextView) root.findViewById(R.id.tv_name14);
         }
     }

@@ -21,8 +21,10 @@
     <string name="finish">完成</string>
     <string name="regist1">勾选代表您已经同意来出书的</string>
     <string name="newbook">勾选代表您已经同意来出书的</string>
+    <string name="beservice">勾选代表您已经同意来出书成为</string>
     <string name="regist2">用户协议</string>
     <string name="copyright">著作权保护声明</string>
+    <string name="service_copyright">服务者协议</string>
     <string name="next">下一步</string>
     <string name="select">请选择</string>
     <string name="fillin">请填写</string>

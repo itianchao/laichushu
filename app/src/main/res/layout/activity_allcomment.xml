@@ -51,6 +51,8 @@
             android:cursorVisible="true"
             android:imeOptions="actionSend"
             android:inputType="text"
+            android:textSize="@dimen/edit2"
+            android:paddingLeft="12dp"
             android:hint="@string/comment_hint"
             android:textColor="@color/edit2"
             android:textColorHint="@color/hint" />

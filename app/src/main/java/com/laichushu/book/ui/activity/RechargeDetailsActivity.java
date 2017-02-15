@@ -164,8 +164,9 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     public void getRechargePayDateSuccess(AliPayResult model) {
         if (model.isSuccess()) {
             if (payPlate.equals(ConstantValue.ALIPAY_PLATE)) {
-                ConstantValue.ALIPAY_CALLBACK_URL = model.getData().getNotifyUrl();
-                PayUtils.getInstance(mActivity).alipay(mActivity, money, model.getData().getOrderCode());
+//                ConstantValue.ALIPAY_CALLBACK_URL = model.getData().getNotifyUrl();
+//                PayUtils.getInstance(mActivity).alipay(mActivity, money, model.getData().getOrderCode());
+                ToastUtil.showToast("充值成功！");
                 handler.sendEmptyMessageDelayed(1, 3700);
             }
         } else {
@@ -179,7 +180,8 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     public void getRechargePayDateSuccess(WxInfo model) {
         if (model.isSuccess()) {
             if (payPlate.equals(ConstantValue.WXPAY_PLATE)) {
-                PayUtils.getInstance(mActivity).wechatPay(model);
+//                PayUtils.getInstance(mActivity).wechatPay(model);
+                ToastUtil.showToast("充值成功！");
                 handler.sendEmptyMessageDelayed(1, 3700);
             }
         } else {

@@ -34,7 +34,7 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initView() {
         setContentView(R.layout.activity_commentsend);
-        initTitleBar("发布评论");
+        initTitleBar("回复评论");
         commentEt = (EditText) findViewById(R.id.et_comment);
 //        commentEt.setOnEditorActionListener(this);
     }
@@ -54,7 +54,7 @@ public class CommentSendActivity extends BaseActivity implements View.OnClickLis
         ImageView finishIv = (ImageView) findViewById(R.id.iv_title_finish);
         tvSend = (TextView) findViewById(R.id.tv_title_right);
         titleTv.setText(title);
-        tvSend.setText("发表");
+        tvSend.setText("发送");
         finishIv.setOnClickListener(this);
         tvSend.setOnClickListener(this);
     }
