@@ -4,12 +4,12 @@ public class ConfigUtil {
 
 	// 配置API KEY
 //	public final static String API_KEY = "0zqmn9IRDbJK6B8UUSrp9eAtt5xI7dPK";//第二教室
-	public static final String API_KEY = "6By2s0ah11zxnuakrEzeT7ZmPK38QPCf";//测试
-//	public final static String API_KEY = "Agt6GNOub3epiiKkdfO0tfDutJXYzrZL";//来出书
+//	public static final String API_KEY = "6By2s0ah11zxnuakrEzeT7ZmPK38QPCf";//测试
+	public final static String API_KEY = "Agt6GNOub3epiiKkdfO0tfDutJXYzrZL";//来出书
 	// 配置帐户ID
 //	public final static String USERID = "B934DEE18E58D275";//第二教室
-	public final static String USERID = "046B4B9E0643ECF2";//测试
-//	public final static String USERID = "B53E1087229317CA";//来出书
+//	public final static String USERID = "046B4B9E0643ECF2";//测试
+	public final static String USERID = "B53E1087229317CA";//来出书
 
 	// 配置下载文件路径
 	public final static String DOWNLOAD_DIR = "LDownload";

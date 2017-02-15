@@ -136,10 +136,10 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
                 finish();
                 break;
             case R.id.iv_download://下载
-                List<DownloadInfo> downloadInfos = DataSet.getDownloadInfos();
-                for (DownloadInfo downloadInfo : downloadInfos) {
+//                List<DownloadInfo> downloadInfos = DataSet.getDownloadInfos();
+//                for (DownloadInfo downloadInfo : downloadInfos) {
 //                    downloadInfo
-                }
+//                }
                 for (String id : CCDownloadFactory.downloaderHashMap.keySet()) {
                     if (id.equals(ccVideoId)){
                         ToastUtil.showToast("视频下载中");
@@ -218,8 +218,8 @@ public class FindCourseVideoDetailActivity extends MvpActivity2<VideoDetailPrese
             logoUrl = mdata.getThumbUrl();
             introduce = mdata.getRemarks();
             title = mdata.getName();
-//            ccVideoId = mdata.getCcVideoId();
-            ccVideoId = "920DA2A620CC9A459C33DC5901307461";
+            ccVideoId = mdata.getCcVideoId();
+//            ccVideoId = "920DA2A620CC9A459C33DC5901307461";
 
             if (!TextUtils.isEmpty(ccVideoId)){
                 File file = MediaUtil.createFile(ccVideoId);

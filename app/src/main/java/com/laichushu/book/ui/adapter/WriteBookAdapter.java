@@ -83,9 +83,15 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
         int img[] = {R.drawable.icon_draft2x, R.drawable.icon_material2x, R.drawable.icon_delete2x, R.drawable.icon_publishl2x, R.drawable.icon_submission2x, R.drawable.icon_sign2x};
         int grayImgArray[] = {R.drawable.icon_draft_gray, R.drawable.icon_material_gray, R.drawable.icon_delete_gray, R.drawable.icon_publishl_gray, R.drawable.icon_submission_gray, R.drawable.icon_sign_gray};
         holder.llTab.removeAllViews();
-        if (dataBean.getExpressStatus().equals("0") || dataBean.getExpressStatus().equals("4")||dataBean.getExpressStatus().equals("3")) {
+        if (dataBean.getExpressStatus().equals("0") || dataBean.getExpressStatus().equals("4")) {
             mStrip.get(3).setTitle("发表");
-        }else {
+        } else if (dataBean.getExpressStatus().equals("3")) {
+            if (dataBean.getStatus().equals("3")){
+                mStrip.get(3).setTitle("发表");
+            }else {
+                mStrip.get(3).setTitle("已发表");
+            }
+        } else {
             mStrip.get(3).setTitle("取消发表");
         }
         if (dataBean.getExpressStatus().equals("2")) {
@@ -105,6 +111,10 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
 
                 if (!dataBean.isEdit() || dataBean.getStatus().equals("3")) {
                     if (i != 3 && i != 4 && i != 5) {
+                        imageView.setImageResource(grayImgArray[i]);
+                    }
+                    //已发表or制作中
+                    if (i == 3 && dataBean.getExpressStatus().equals("3")||dataBean.getExpressStatus().equals("2")) {
                         imageView.setImageResource(grayImgArray[i]);
                     }
                     holder.jurTv.setImageResource(R.drawable.icon_authority_gray);
@@ -127,7 +137,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                 @Override
                 public void onClick(View v) {
                     if (dataBean.getStatus().equals("3")) {
-                        ToastUtil.showToast("签约确认之后不能对该书进行操作");
+                        ToastUtil.showToast("暂不可进行此操作");
                         return;
                     }
                     if (dataBean.getFreezeStatus().equals("2")) {
@@ -180,6 +190,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
                              */
                             //发表状态为 制作中  电子书 则不可发表
                             if (dataBean.getExpressStatus().equals("2") || dataBean.getExpressStatus().equals("3")) {
+                                ToastUtil.showToast("暂不可进行此操作");
                                 return;
                             }
 
@@ -251,6 +262,7 @@ public class WriteBookAdapter extends RecyclerView.Adapter<WriteBookAdapter.Writ
             @Override
             public void onClick(View v) {
                 if (!dataBean.isEdit() || dataBean.getStatus().equals("4") || dataBean.getStatus().equals("2") || dataBean.getFreezeStatus().equals("2")) {
+                    ToastUtil.showToast("不可更改本书权限");
                     return;
                 }
                 //添加权限
