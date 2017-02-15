@@ -9,21 +9,23 @@
         android:layout_width="match_parent"
         android:background="@color/search"
         android:layout_height="50dp">
+
         <RadioButton
             android:checked="true"
             android:id="@+id/rbn_all"
             android:text="@string/all"
-            android:layout_marginRight="1dp"
+            android:layout_marginRight="0.5dp"
             style="@style/radiubutton_home" />
+
         <RadioButton
             android:id="@+id/rbn_activity"
             android:text="@string/activity"
-            android:layout_marginRight="1dp"
+            android:layout_marginRight="0.5dp"
             style="@style/radiubutton_home" />
         <RadioButton
             android:id="@+id/rbn_citywide"
             android:text="@string/citywide"
-            android:layout_marginRight="1dp"
+            android:layout_marginRight="0.5dp"
             style="@style/radiubutton_home" />
         <RadioButton
             android:id="@+id/rbn_ranking"
