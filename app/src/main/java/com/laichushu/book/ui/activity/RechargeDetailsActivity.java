@@ -1,5 +1,7 @@
 package com.laichushu.book.ui.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +42,15 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
     private EditText edMoney;
     private String money = null, payPlate = ConstantValue.ALIPAY_PLATE;
     private WalletBalanceReward bean;
-
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                finish();
+            }
+        }
+    };
     @Override
     protected WalletPresener createPresenter() {
 
@@ -156,7 +166,7 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
             if (payPlate.equals(ConstantValue.ALIPAY_PLATE)) {
                 ConstantValue.ALIPAY_CALLBACK_URL = model.getData().getNotifyUrl();
                 PayUtils.getInstance(mActivity).alipay(mActivity, money, model.getData().getOrderCode());
-//                handler.sendEmptyMessageDelayed(1, 3700);
+                handler.sendEmptyMessageDelayed(1, 3700);
             }
         } else {
             ToastUtil.showToast("充值失败！");
@@ -170,7 +180,7 @@ public class RechargeDetailsActivity extends MvpActivity2<WalletPresener> implem
         if (model.isSuccess()) {
             if (payPlate.equals(ConstantValue.WXPAY_PLATE)) {
                 PayUtils.getInstance(mActivity).wechatPay(model);
-//                handler.sendEmptyMessageDelayed(1, 3700);
+                handler.sendEmptyMessageDelayed(1, 3700);
             }
         } else {
             ToastUtil.showToast("充值失败！");
