@@ -240,7 +240,9 @@ public class FindGroupDetailActivity extends MvpActivity2<FindGroupDetailPresent
                             }
                         } else {//成员：分享、加入小组or退出小组
                             if (position == 0){//分享
-
+                                String shareContent = "#来出书邀请您参加" + bean.getName() + "吧!";
+                                String linkUrl = Base64Utils.getStringUrl(bean.getId(), ConstantValue.SHARE_TYPR_BOOK);
+                                ShareUtil.showShare(mActivity, linkUrl, shareContent, bean.getPhoto(), bean.getMarkContent(), bean.getName());
                             }else {//加入小组or退出小组
                                 if (isJoin){//加入小组
                                     mvpPresenter.openLeaveGroupDialog(bean.getMemberId());
